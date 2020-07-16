@@ -1,0 +1,28 @@
+{
+  "name": "@ngworker/lumberjack",
+  "version": "1.0.0",
+  "peerDependencies": {
+    "@angular/common": "^10.0.4",
+    "@angular/core": "^10.0.4"
+  },
+  "dependencies": {
+    "tslib": "^2.0.0"
+  },
+  "keywords": [
+    "angular",
+    "angular 2",
+    "lumberjack"
+  ],
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/ngworker/lumberjack/issue"
+  },
+  "homepage": "https://github.com/ngworker/lumberjack#readme",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ngworker/lumberjack"
+  }
+}

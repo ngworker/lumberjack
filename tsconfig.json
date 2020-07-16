@@ -12,6 +12,12 @@
     },
     {
       "path": "./tsconfig.spec.json"
+    },
+    {
+      "path": "./projects/ngworker/lumberjack/tsconfig.lib.json"
+    },
+    {
+      "path": "./projects/ngworker/lumberjack/tsconfig.spec.json"
     }
-]
+  ]
 }
