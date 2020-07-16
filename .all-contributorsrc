@@ -9,6 +9,30 @@
   "imageSize": 100,
   "commit": true,
   "commitConvention": "angular",
-  "contributors": [],
+  "contributors": [
+    {
+      "login": "NachoVazquez",
+      "name": "Nacho Vazquez",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/9338604?v=4",
+      "profile": "https://github.com/NachoVazquez",
+      "contributions": [
+        "question",
+        "bug",
+        "business",
+        "code",
+        "doc",
+        "example",
+        "ideas",
+        "infra",
+        "maintenance",
+        "projectManagement",
+        "review",
+        "security",
+        "test",
+        "tool",
+        "userTesting"
+      ]
+    }
+  ],
   "contributorsPerLine": 7
 }
