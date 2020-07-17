@@ -1,9 +1,27 @@
-import { NgModule } from '@angular/core';
-import { LumberjackComponent } from './lumberjack.component';
+import { CommonModule } from '@angular/common';
+import { ModuleWithProviders, NgModule } from '@angular/core';
+
+import { defaultLogConfig } from './configs/default-log.config';
+import { LumberjackLogConfig, LumberjackLogConfigToken } from './configs/lumberjack-log.config';
+import { LogDriverConfigToken, defaultLogDriverConfig } from './configs/log-driver.config';
 
 @NgModule({
-  declarations: [LumberjackComponent],
-  imports: [],
-  exports: [LumberjackComponent],
+  imports: [CommonModule],
 })
-export class LumberjackModule {}
+export class NgLoggerModule {
+  static forRoot(config: LumberjackLogConfig = defaultLogConfig): ModuleWithProviders<NgLoggerModule> {
+    return {
+      ngModule: NgLoggerModule,
+      providers: [
+        {
+          provide: LumberjackLogConfigToken,
+          useValue: config,
+        },
+        {
+          provide: LogDriverConfigToken,
+          useValue: defaultLogDriverConfig,
+        },
+      ],
+    };
+  }
+}
