@@ -1,7 +1,7 @@
 import { LumberjackLogLevel } from './lumberjack-log-levels';
 
 /**
- * Represents a Lumberjack specific log.
+ * Represents a Lumberjack log.
  *
  */
 export interface LumberjackLog {

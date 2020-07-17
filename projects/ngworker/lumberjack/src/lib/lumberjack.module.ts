@@ -8,10 +8,10 @@ import { LogDriverConfigToken, defaultLogDriverConfig } from './configs/log-driv
 @NgModule({
   imports: [CommonModule],
 })
-export class NgLoggerModule {
-  static forRoot(config: LumberjackLogConfig = defaultLogConfig): ModuleWithProviders<NgLoggerModule> {
+export class LumberjackModule {
+  static forRoot(config: LumberjackLogConfig = defaultLogConfig): ModuleWithProviders<LumberjackModule> {
     return {
-      ngModule: NgLoggerModule,
+      ngModule: LumberjackModule,
       providers: [
         {
           provide: LumberjackLogConfigToken,
