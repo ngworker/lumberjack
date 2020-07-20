@@ -1,12 +1,12 @@
 import { TestBed, async } from '@angular/core/testing';
 import { AppComponent } from './app.component';
+import { ConsoleDriverModule, LumberjackModule } from '@ngworker/lumberjack';
 
 describe('AppComponent', () => {
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [
-        AppComponent
-      ],
+      declarations: [AppComponent],
+      imports: [LumberjackModule.forRoot(), ConsoleDriverModule.forRoot()],
     }).compileComponents();
   }));
 
