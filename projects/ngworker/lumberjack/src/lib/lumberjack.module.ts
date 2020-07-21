@@ -2,8 +2,8 @@ import { CommonModule } from '@angular/common';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { defaultLogConfig } from './configs/default-log.config';
+import { defaultLogDriverConfig, LogDriverConfigToken } from './configs/log-driver.config';
 import { LumberjackLogConfig, LumberjackLogConfigToken } from './configs/lumberjack-log.config';
-import { LogDriverConfigToken, defaultLogDriverConfig } from './configs/log-driver.config';
 
 @NgModule({
   imports: [CommonModule],

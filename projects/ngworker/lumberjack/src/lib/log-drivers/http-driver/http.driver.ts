@@ -1,6 +1,8 @@
 import { HttpClient } from '@angular/common/http';
+
 import { LumberjackLogLevel } from '../../lumberjack-log-levels';
 import { LogDriver } from '../log-driver';
+
 import { HttpDriverConfig } from './http-driver.config';
 
 interface HttpLogEntry {

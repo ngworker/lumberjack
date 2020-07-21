@@ -1,4 +1,5 @@
 import { InjectionToken } from '@angular/core';
+
 import { LumberjackLogLevel } from '../lumberjack-log-levels';
 
 export const LogDriverConfigToken: InjectionToken<LogDriverConfig> = new InjectionToken('__LOG_DRIVER_CONFIG__');

@@ -1,4 +1,5 @@
 import { InjectionToken } from '@angular/core';
+
 import { LogDriverConfig } from '../../configs/log-driver.config';
 
 export const HttpDriverConfigToken: InjectionToken<HttpDriverConfig> = new InjectionToken('__HTTP_DRIVER_CONFIG__');

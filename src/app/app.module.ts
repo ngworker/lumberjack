@@ -1,7 +1,7 @@
-import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
 
-import { LumberjackModule, ConsoleDriverModule } from '@ngworker/lumberjack';
+import { ConsoleDriverModule, LumberjackModule } from '@ngworker/lumberjack';
 
 import { AppComponent } from './app.component';
 
