@@ -1,4 +1,5 @@
 import { InjectionToken } from '@angular/core';
+
 import { LumberjackLog } from '../lumberjack-log';
 
 export const LumberjackLogConfigToken: InjectionToken<LumberjackLogConfig> = new InjectionToken(

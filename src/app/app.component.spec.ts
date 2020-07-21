@@ -1,31 +1,29 @@
-import { TestBed, async } from '@angular/core/testing';
-import { AppComponent } from './app.component';
+import { createComponentFactory, Spectator } from '@ngneat/spectator';
+
 import { ConsoleDriverModule, LumberjackModule } from '@ngworker/lumberjack';
 
+import { AppComponent } from './app.component';
+
 describe('AppComponent', () => {
-  beforeEach(async(() => {
-    TestBed.configureTestingModule({
-      declarations: [AppComponent],
-      imports: [LumberjackModule.forRoot(), ConsoleDriverModule.forRoot()],
-    }).compileComponents();
-  }));
+  let spectator: Spectator<AppComponent>;
+  const createComponent = createComponentFactory({
+    component: AppComponent,
+    imports: [LumberjackModule.forRoot(), ConsoleDriverModule.forRoot()],
+  });
+
+  beforeEach(() => {
+    spectator = createComponent();
+  });
 
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app).toBeTruthy();
+    expect(spectator.component).toBeTruthy();
   });
 
   it(`should have as title 'lumberjack'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('lumberjack');
+    expect(spectator.component.title).toEqual('lumberjack');
   });
 
   it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement;
-    expect(compiled.querySelector('.content span').textContent).toContain('lumberjack app is running!');
+    expect(spectator.query('.content span').textContent).toContain('lumberjack app is running!');
   });
 });

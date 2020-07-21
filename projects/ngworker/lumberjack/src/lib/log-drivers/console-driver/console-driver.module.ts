@@ -1,7 +1,9 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
+
 import { LogDriverConfig, LogDriverConfigToken } from '../../configs/log-driver.config';
-import { ConsoleDriver } from './console.driver';
 import { LogDriverToken } from '../log-driver';
+
+import { ConsoleDriver } from './console.driver';
 
 export function consoleFactory(config: LogDriverConfig): ConsoleDriver {
   return new ConsoleDriver(config);

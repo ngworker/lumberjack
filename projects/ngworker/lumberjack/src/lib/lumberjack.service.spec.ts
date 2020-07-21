@@ -1,8 +1,9 @@
-import { defaultLogConfig } from './configs/default-log.config';
 import { createServiceFactory, SpectatorService } from '@ngneat/spectator';
-import { LumberjackService } from './lumberjack.service';
-import { ConsoleDriverModule } from './log-drivers';
+
+import { defaultLogConfig } from './configs/default-log.config';
 import { LumberjackLogConfigToken } from './configs/lumberjack-log.config';
+import { ConsoleDriverModule } from './log-drivers';
+import { LumberjackService } from './lumberjack.service';
 
 describe('LumberjackService', () => {
   let spectator: SpectatorService<LumberjackService>;

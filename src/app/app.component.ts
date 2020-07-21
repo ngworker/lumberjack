@@ -1,10 +1,12 @@
-import { HelloForrest } from './log-types/info-logs';
-import { ForrestOnFire } from './log-types/error-logs';
 import { Component } from '@angular/core';
+
 import { LumberjackService } from '@ngworker/lumberjack';
 
+import { ForrestOnFire } from './log-types/error-logs';
+import { HelloForrest } from './log-types/info-logs';
+
 @Component({
-  selector: 'app-root',
+  selector: 'ngworker-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
