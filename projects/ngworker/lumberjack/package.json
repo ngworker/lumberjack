@@ -11,8 +11,14 @@
   "keywords": [
     "angular",
     "angular 2",
-    "lumberjack"
+    "lumberjack",
+    "logging"
   ],
+  "author": {
+    "name": "Nacho Vazquez",
+    "email": "nacho.vazquez.dev@gmail.com",
+    "url": "https://github.com/NachoVazquez"
+  },
   "license": "MIT",
   "publishConfig": {
     "access": "public"
