@@ -35,8 +35,6 @@ Lumberjack is a versatile Angular Logging library, specially defined to be exten
 
 ## Installation
 
-> This library is a WIP, therefore the first version has not been released yet! Stay tuned!
-
 ### NPM
 
 `npm install @ngworker/lumberjack --save-dev`
