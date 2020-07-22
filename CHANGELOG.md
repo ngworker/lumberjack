@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.1](https://github.com/ngworker/lumberjack/compare/v1.0.0...v1.0.1) (2020-07-22)
+
+
+### Bug Fixes
+
+* 🐛 readme and publish info ([#4](https://github.com/ngworker/lumberjack/issues/4)) ([0f63fe9](https://github.com/ngworker/lumberjack/commit/0f63fe9b6acb3d1295d45ef7b3d98ae8ef709224))
+
 ## 1.0.0 (2020-07-22)
 
 
