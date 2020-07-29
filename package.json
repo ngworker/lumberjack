@@ -16,7 +16,8 @@
     "build:lib": "ng build @ngworker/lumberjack && cp README.md ./dist/ngworker/lumberjack",
     "test:lib": "ng test @ngworker/lumberjack",
     "release": "cd projects/ngworker/lumberjack && standard-version --infile ../../../CHANGELOG.md",
-    "test:lib:headless": "cross-env CI=true npm run test:lib"
+    "test:lib:headless": "cross-env CI=true npm run test:lib",
+    "publish": "cd dist/ngworker/lumberjack && npm publish"
   },
   "private": true,
   "dependencies": {
