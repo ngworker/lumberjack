@@ -2,8 +2,6 @@
  <img width="40%" height="40%" src="./logo.svg">
 </p>
 
-<a href="https://www.vecteezy.com/free-vector/label">Label Vectors by Vecteezy</a>
-
 <br />
 
 [![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg?style=flat-square)]()
