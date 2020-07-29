@@ -1,6 +1,6 @@
 {
   "name": "@ngworker/lumberjack",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "peerDependencies": {
     "@angular/common": "^10.0.4",
     "@angular/core": "^10.0.4"
