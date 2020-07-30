@@ -2,6 +2,8 @@
  <img width="40%" height="40%" src="./logo.svg">
 </p>
 
+[Logo by Felipe Zambrano](http://instagram.com/octopez)
+
 <br />
 
 [![MIT](https://img.shields.io/packagist/l/doctrine/orm.svg?style=flat-square)]()
