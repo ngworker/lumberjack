@@ -1,4 +1,6 @@
 import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { tap } from 'rxjs/operators';
 
 import { LumberjackLogLevel } from '../../lumberjack-log-levels';
 import { LogDriver } from '../log-driver';
@@ -20,8 +22,8 @@ export class HttpDriver implements LogDriver {
 
   constructor(private http: HttpClient, public config: HttpDriverConfig) {}
 
-  logInfo(logEntry: string): void {
-    this.log(logEntry, LumberjackLogLevel.Info);
+  logInfo(logEntry: string): Observable<void> {
+    return this.log(logEntry, LumberjackLogLevel.Info);
   }
 
   logDebug(logEntry: string): void {
@@ -36,7 +38,7 @@ export class HttpDriver implements LogDriver {
     this.log(logEntry, LumberjackLogLevel.Warning);
   }
 
-  private log(logEntry: string, logLevel: LumberjackLogLevel): void {
+  private log(logEntry: string, logLevel: LumberjackLogLevel): Observable<void> {
     this.logWagon.push({ logEntry, level: logLevel });
 
     const { origin, storeUrl, logWagonSize } = this.config;
@@ -44,12 +46,7 @@ export class HttpDriver implements LogDriver {
     if (this.logWagon.length >= logWagonSize) {
       const logPackage: HttpLogPackage = { logWagon: this.logWagon, origin };
 
-      this.http.post(storeUrl, logPackage).subscribe({
-        next: () => {
-          // clear the wagon on success
-          this.logWagon = [];
-        },
-      });
+      return this.http.post<void>(storeUrl, logPackage).pipe(tap(() => (this.logWagon = [])));
     }
   }
 }
