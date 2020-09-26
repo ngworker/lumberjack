@@ -239,6 +239,10 @@ export class AppModule {}
 
 If not configuration is passed the default configuration is assumed.
 
+### HttpDriver
+
+For a more advanced example of a `driver` implementation check the [HttpDriver](https://github.com/ngworker/lumberjack/blob/master/projects/ngworker/lumberjack/src/lib/log-drivers/http-driver/README.md)
+
 ## Proposed Best Practices
 
 Every log can be represented as a combination of its level, message, and context. Using inline logs entries with the `LumberjackService` can cause structure duplication and-or de-standardization.

@@ -5,10 +5,10 @@ export class ConsoleDriver implements LogDriver {
   constructor(public config: LogDriverConfig) {}
 
   logInfo(logEntry: string): void {
-    console.log(logEntry);
+    console.info(logEntry);
   }
   logDebug(logEntry: string): void {
-    console.log(logEntry);
+    console.debug(logEntry);
   }
   logError(logEntry: string): void {
     console.error(logEntry);
