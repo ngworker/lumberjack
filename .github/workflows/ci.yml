@@ -23,9 +23,9 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm ci
-      - run: npm run lint
-      - run: npm run build
-      - run: npm run test:headless
-      - run: npm run build:lib
-      - run: npm run test:lib
+      - run: yarn
+      - run: yarn lint
+      - run: yarn build
+      - run: yarn test:headless
+      - run: yarn build:lib
+      - run: yarn test:lib
