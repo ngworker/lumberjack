@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { NgZone } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
+import { Observable, of, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { LumberjackLogLevel } from '../../lumberjack-log-levels';
@@ -27,16 +27,16 @@ export class HttpDriver implements LogDriver {
     return this.log(logEntry, LumberjackLogLevel.Info);
   }
 
-  logDebug(logEntry: string): void {
-    this.log(logEntry, LumberjackLogLevel.Debug);
+  logDebug(logEntry: string): Observable<void> {
+    return this.log(logEntry, LumberjackLogLevel.Debug);
   }
 
-  logError(logEntry: string): void {
-    this.log(logEntry, LumberjackLogLevel.Error);
+  logError(logEntry: string): Observable<void> {
+    return this.log(logEntry, LumberjackLogLevel.Error);
   }
 
-  logWarning(logEntry: string): void {
-    this.log(logEntry, LumberjackLogLevel.Warning);
+  logWarning(logEntry: string): Observable<void> {
+    return this.log(logEntry, LumberjackLogLevel.Warning);
   }
 
   private log(logEntry: string, logLevel: LumberjackLogLevel): Observable<void> {
@@ -46,6 +46,8 @@ export class HttpDriver implements LogDriver {
 
     if (this.logWagon.length >= logWagonSize) {
       return this.sendLogPackage().pipe(tap(() => (this.logWagon = [])));
+    } else {
+      of();
     }
   }
 
