@@ -5,10 +5,6 @@ import { LogDriverToken } from '../log-driver';
 
 import { ConsoleDriver } from './console.driver';
 
-export function consoleFactory(config: LogDriverConfig): ConsoleDriver {
-  return new ConsoleDriver(config);
-}
-
 @NgModule()
 export class ConsoleDriverModule {
   static forRoot(config: LogDriverConfig = defaultLogDriverConfig): ModuleWithProviders<ConsoleDriverModule> {
@@ -18,9 +14,8 @@ export class ConsoleDriverModule {
         { provide: LogDriverConfigToken, useValue: config },
         {
           provide: LogDriverToken,
-          useFactory: consoleFactory,
+          useClass: ConsoleDriver,
           multi: true,
-          deps: [LogDriverConfigToken],
         },
       ],
     };
