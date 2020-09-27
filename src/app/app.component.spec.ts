@@ -24,6 +24,6 @@ describe('AppComponent', () => {
   });
 
   it('should render title', () => {
-    expect(spectator.query('.content span').textContent).toContain('lumberjack app is running!');
+    expect(spectator.query('.content span')?.textContent).toContain('lumberjack app is running!');
   });
 });

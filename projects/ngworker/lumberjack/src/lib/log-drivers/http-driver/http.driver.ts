@@ -47,7 +47,7 @@ export class HttpDriver implements LogDriver {
     if (this.logWagon.length >= logWagonSize) {
       return this.sendLogPackage().pipe(tap(() => (this.logWagon = [])));
     } else {
-      of();
+      return of();
     }
   }
 
