@@ -29,25 +29,23 @@ const createConsoleDriver = ({
   return consoleDriver;
 };
 
-const expectNgModuleToBeImported = <TModule>(ngModuleType: Type<TModule>) => {
+const expectNgModuleToBeGuarded = <TModule>(ngModuleType: Type<TModule>) => {
   let ngModule: TModule | undefined;
+
+  TestBed.configureTestingModule({
+    imports: [ngModuleType],
+  });
 
   expect(() => {
     ngModule = TestBed.inject(ngModuleType);
   })
-    .withContext(`${ngModuleType.name} has not been imported`)
-    .not.toThrowError(new RegExp(`NullInjectorError.*${ngModuleType.name}`));
-
-  expect(ngModule).toBeInstanceOf(ngModuleType);
+    .withContext(`${ngModuleType.name} must guard against being imported directly`)
+    .toThrow();
 };
 
 describe(ConsoleDriverModule.name, () => {
-  it(`can be imported without using the ${ConsoleDriverModule.forRoot.name} method`, () => {
-    TestBed.configureTestingModule({
-      imports: [ConsoleDriverModule],
-    });
-
-    expectNgModuleToBeImported(ConsoleDriverModule);
+  it(`cannot be imported without using the ${ConsoleDriverModule.forRoot.name} method`, () => {
+    expectNgModuleToBeGuarded(ConsoleDriverModule);
   });
 
   describe(ConsoleDriverModule.forRoot.name, () => {

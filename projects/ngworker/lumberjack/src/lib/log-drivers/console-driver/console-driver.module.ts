@@ -1,23 +1,19 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { defaultLogDriverConfig, LogDriverConfig, LogDriverConfigToken } from '../../configs/log-driver.config';
-import { LogDriverToken } from '../log-driver';
 
-import { ConsoleDriver } from './console.driver';
+import { ConsoleDriverRootModule } from './console-driver-root.module';
 
 @NgModule()
 export class ConsoleDriverModule {
-  static forRoot(config: LogDriverConfig = defaultLogDriverConfig): ModuleWithProviders<ConsoleDriverModule> {
+  static forRoot(config: LogDriverConfig = defaultLogDriverConfig): ModuleWithProviders<ConsoleDriverRootModule> {
     return {
-      ngModule: ConsoleDriverModule,
-      providers: [
-        { provide: LogDriverConfigToken, useValue: config },
-        {
-          provide: LogDriverToken,
-          useClass: ConsoleDriver,
-          multi: true,
-        },
-      ],
+      ngModule: ConsoleDriverRootModule,
+      providers: [{ provide: LogDriverConfigToken, useValue: config }],
     };
+  }
+
+  constructor() {
+    throw new Error('Do not import ConsoleDriverModule directly. Use ConsoleDriverModule.forRoot.');
   }
 }
