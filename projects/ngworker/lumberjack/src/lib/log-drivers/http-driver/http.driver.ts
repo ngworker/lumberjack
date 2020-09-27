@@ -23,20 +23,20 @@ export class HttpDriver implements LogDriver {
 
   constructor(private http: HttpClient, public config: HttpDriverConfig, private ngZone: NgZone) {}
 
-  logInfo(logEntry: string): Observable<void> {
-    return this.log(logEntry, LumberjackLogLevel.Info);
+  logInfo(logEntry: string): void {
+    this.log(logEntry, LumberjackLogLevel.Info).subscribe();
   }
 
-  logDebug(logEntry: string): Observable<void> {
-    return this.log(logEntry, LumberjackLogLevel.Debug);
+  logDebug(logEntry: string): void {
+    this.log(logEntry, LumberjackLogLevel.Debug).subscribe();
   }
 
-  logError(logEntry: string): Observable<void> {
-    return this.log(logEntry, LumberjackLogLevel.Error);
+  logError(logEntry: string): void {
+    this.log(logEntry, LumberjackLogLevel.Error).subscribe();
   }
 
-  logWarning(logEntry: string): Observable<void> {
-    return this.log(logEntry, LumberjackLogLevel.Warning);
+  logWarning(logEntry: string): void {
+    this.log(logEntry, LumberjackLogLevel.Warning).subscribe();
   }
 
   private log(logEntry: string, logLevel: LumberjackLogLevel): Observable<void> {
