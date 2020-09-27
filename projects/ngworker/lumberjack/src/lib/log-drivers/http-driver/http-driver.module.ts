@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule, NgZone } from '@angular/core';
 
 import { LogDriverToken } from '../log-driver';
 
@@ -7,8 +7,8 @@ import { HttpDriverConfig, HttpDriverConfigToken } from './http-driver.config';
 import { HttpDriver } from './http.driver';
 
 // factory functions need to extracted and exported for AOT
-export function httpDriverFactory(httpClient: HttpClient, config: HttpDriverConfig): HttpDriver {
-  return new HttpDriver(httpClient, config);
+export function httpDriverFactory(httpClient: HttpClient, config: HttpDriverConfig, ngZone: NgZone): HttpDriver {
+  return new HttpDriver(httpClient, config, ngZone);
 }
 
 @NgModule()
@@ -21,7 +21,7 @@ export class HttpDriverModule {
         {
           provide: LogDriverToken,
           useFactory: httpDriverFactory,
-          deps: [HttpClient, HttpDriverConfigToken],
+          deps: [HttpClient, HttpDriverConfigToken, NgZone],
           multi: true,
         },
       ],

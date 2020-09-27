@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { NgZone } from '@angular/core';
+import { Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 import { LumberjackLogLevel } from '../../lumberjack-log-levels';
@@ -20,7 +21,7 @@ interface HttpLogPackage {
 export class HttpDriver implements LogDriver {
   logWagon: HttpLogEntry[] = [];
 
-  constructor(private http: HttpClient, public config: HttpDriverConfig) {}
+  constructor(private http: HttpClient, public config: HttpDriverConfig, private ngZone: NgZone) {}
 
   logInfo(logEntry: string): Observable<void> {
     return this.log(logEntry, LumberjackLogLevel.Info);
@@ -39,14 +40,31 @@ export class HttpDriver implements LogDriver {
   }
 
   private log(logEntry: string, logLevel: LumberjackLogLevel): Observable<void> {
+    const { logWagonSize } = this.config;
+
     this.logWagon.push({ logEntry, level: logLevel });
 
-    const { origin, storeUrl, logWagonSize } = this.config;
-
     if (this.logWagon.length >= logWagonSize) {
-      const logPackage: HttpLogPackage = { logWagon: this.logWagon, origin };
-
-      return this.http.post<void>(storeUrl, logPackage).pipe(tap(() => (this.logWagon = [])));
+      return this.sendLogPackage().pipe(tap(() => (this.logWagon = [])));
     }
+  }
+
+  private sendLogPackage(): Observable<void> {
+    const { origin, storeUrl } = this.config;
+    const logPackage: HttpLogPackage = { logWagon: this.logWagon, origin };
+
+    const logPackageSent = new Subject<void>();
+    const logPackageSent$ = logPackageSent.asObservable();
+
+    this.ngZone.runOutsideAngular(() => {
+      this.http.post<void>(storeUrl, logPackage).pipe(
+        tap(() => {
+          logPackageSent.next();
+          logPackageSent.complete();
+        })
+      );
+    });
+
+    return logPackageSent$;
   }
 }
