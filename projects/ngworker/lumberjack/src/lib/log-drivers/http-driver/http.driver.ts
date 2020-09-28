@@ -29,30 +29,30 @@ export class HttpDriver implements LogDriver {
   ) {}
 
   logInfo(logEntry: string): void {
-    this.log(logEntry, LumberjackLogLevel.Info).subscribe();
+    this.log(logEntry, LumberjackLogLevel.Info);
   }
 
   logDebug(logEntry: string): void {
-    this.log(logEntry, LumberjackLogLevel.Debug).subscribe();
+    this.log(logEntry, LumberjackLogLevel.Debug);
   }
 
   logError(logEntry: string): void {
-    this.log(logEntry, LumberjackLogLevel.Error).subscribe();
+    this.log(logEntry, LumberjackLogLevel.Error);
   }
 
   logWarning(logEntry: string): void {
-    this.log(logEntry, LumberjackLogLevel.Warning).subscribe();
+    this.log(logEntry, LumberjackLogLevel.Warning);
   }
 
-  private log(logEntry: string, logLevel: LumberjackLogLevel): Observable<void> {
+  private log(logEntry: string, logLevel: LumberjackLogLevel): void {
     const { logWagonSize } = this.config;
 
     this.logWagon.push({ logEntry, level: logLevel });
 
     if (this.logWagon.length >= logWagonSize) {
-      return this.sendLogPackage().pipe(tap(() => (this.logWagon = [])));
-    } else {
-      return of();
+      this.sendLogPackage()
+        .pipe(tap(() => (this.logWagon = [])))
+        .subscribe();
     }
   }
 
@@ -64,12 +64,15 @@ export class HttpDriver implements LogDriver {
     const logPackageSent$ = logPackageSent.asObservable();
 
     this.ngZone.runOutsideAngular(() => {
-      this.http.post<void>(storeUrl, logPackage).pipe(
-        tap(() => {
-          logPackageSent.next();
-          logPackageSent.complete();
-        })
-      );
+      this.http
+        .post<void>(storeUrl, logPackage)
+        .pipe(
+          tap(() => {
+            logPackageSent.next();
+            logPackageSent.complete();
+          })
+        )
+        .subscribe();
     });
 
     return logPackageSent$;
