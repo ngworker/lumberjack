@@ -1,6 +1,6 @@
 import { createComponentFactory, Spectator } from '@ngneat/spectator';
 
-import { ConsoleDriverModule, LumberjackModule } from '@ngworker/lumberjack';
+import { ConsoleDriverModule, HttpDriverModule, LumberjackModule } from '@ngworker/lumberjack';
 
 import { AppComponent } from './app.component';
 
@@ -8,7 +8,11 @@ describe('AppComponent', () => {
   let spectator: Spectator<AppComponent>;
   const createComponent = createComponentFactory({
     component: AppComponent,
-    imports: [LumberjackModule.forRoot(), ConsoleDriverModule.forRoot()],
+    imports: [
+      LumberjackModule.forRoot(),
+      ConsoleDriverModule.forRoot(),
+      HttpDriverModule.forRoot({ logWagonSize: 5, origin: 'ForrestAPP', storeUrl: '/api/logs' }),
+    ],
   });
 
   beforeEach(() => {
