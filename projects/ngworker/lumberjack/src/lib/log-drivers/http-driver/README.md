@@ -132,7 +132,7 @@ The logic of the private `log` method is simple. It stores in an in-memory list 
 
 Then the logs are attempted to be send. On success we clear the list of pending logs, otherwise, we keep adding items until the server recovers.
 
-The `sendLogPackage` method has been optimized to run outside **Angular** `ngZone`, avoiding unnecessary changeDetections cycles.
+The `sendLogPackage` method has been optimized to run outside **Angular**'s `NgZone`, avoiding unnecessary change detection cycles.
 
 ### `HttpDriverModule`
 
