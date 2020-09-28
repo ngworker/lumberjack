@@ -10,11 +10,10 @@ import { AppComponent } from './app.component';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    HttpClientModule,
     LumberjackModule.forRoot(),
     ConsoleDriverModule.forRoot(),
     HttpDriverModule.forRoot({
-      origin: 'MyApp',
+      origin: 'ForestApp',
       storeUrl: '/api/logs',
       logWagonSize: 2,
     }),
