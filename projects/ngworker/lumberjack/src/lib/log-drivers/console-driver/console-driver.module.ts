@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import { LogDriverConfig, LogDriverConfigToken } from '../../configs/log-driver.config';
+import { defaultLogDriverConfig, LogDriverConfig, LogDriverConfigToken } from '../../configs/log-driver.config';
 import { LogDriverToken } from '../log-driver';
 
 import { ConsoleDriver } from './console.driver';
@@ -11,7 +11,7 @@ export function consoleFactory(config: LogDriverConfig): ConsoleDriver {
 
 @NgModule()
 export class ConsoleDriverModule {
-  static forRoot(config: LogDriverConfig = {}): ModuleWithProviders<ConsoleDriverModule> {
+  static forRoot(config: LogDriverConfig = defaultLogDriverConfig): ModuleWithProviders<ConsoleDriverModule> {
     return {
       ngModule: ConsoleDriverModule,
       providers: [
