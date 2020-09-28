@@ -30,10 +30,10 @@ The rest of the `HttpDriver` is defined as follows
 export class HttpDriver implements LogDriver {
   logWagon: HttpLogEntry[] = [];
 
-  constructor(private http: HttpClient, public config: HttpDriverConfig) {}
+  constructor(private http: HttpClient, public config: HttpDriverConfig, private ngZone: NgZone) {}
 
-  logInfo(logEntry: string): Observable<void> {
-    return this.log(logEntry, LumberjackLogLevel.Info);
+  logInfo(logEntry: string): void {
+    this.log(logEntry, LumberjackLogLevel.Info);
   }
 
   logDebug(logEntry: string): void {
@@ -48,16 +48,38 @@ export class HttpDriver implements LogDriver {
     this.log(logEntry, LumberjackLogLevel.Warning);
   }
 
-  private log(logEntry: string, logLevel: LumberjackLogLevel): Observable<void> {
+  private log(logEntry: string, logLevel: LumberjackLogLevel): void {
+    const { logWagonSize } = this.config;
+
     this.logWagon.push({ logEntry, level: logLevel });
 
-    const { origin, storeUrl, logWagonSize } = this.config;
-
     if (this.logWagon.length >= logWagonSize) {
-      const logPackage: HttpLogPackage = { logWagon: this.logWagon, origin };
-
-      return this.http.post<void>(storeUrl, logPackage).pipe(tap(() => (this.logWagon = [])));
+      this.sendLogPackage()
+        .pipe(tap(() => (this.logWagon = [])))
+        .subscribe();
     }
+  }
+
+  private sendLogPackage(): Observable<void> {
+    const { origin, storeUrl } = this.config;
+    const logPackage: HttpLogPackage = { logWagon: this.logWagon, origin };
+
+    const logPackageSent = new Subject<void>();
+    const logPackageSent$ = logPackageSent.asObservable();
+
+    this.ngZone.runOutsideAngular(() => {
+      this.http
+        .post<void>(storeUrl, logPackage)
+        .pipe(
+          tap(() => {
+            logPackageSent.next();
+            logPackageSent.complete();
+          })
+        )
+        .subscribe();
+    });
+
+    return logPackageSent$;
   }
 }
 ```
@@ -93,15 +115,15 @@ export interface HttpDriverConfig extends LogDriverConfig {
 ### Log method
 
 ```typescript
-private log(logEntry: string, logLevel: LumberjackLogLevel): Observable<void> {
+private log(logEntry: string, logLevel: LumberjackLogLevel): void {
+    const { logWagonSize } = this.config;
+
     this.logWagon.push({ logEntry, level: logLevel });
 
-    const { origin, storeUrl, logWagonSize } = this.config;
-
     if (this.logWagon.length >= logWagonSize) {
-      const logPackage: HttpLogPackage = { logWagon: this.logWagon, origin };
-
-      return this.http.post<void>(storeUrl, logPackage).pipe(tap(() => (this.logWagon = [])));
+      this.sendLogPackage()
+        .pipe(tap(() => (this.logWagon = [])))
+        .subscribe();
     }
   }
 ```
@@ -110,14 +132,16 @@ The logic of the private `log` method is simple. It stores in an in-memory list 
 
 Then the logs are attempted to be send. On success we clear the list of pending logs, otherwise, we keep adding items until the server recovers.
 
+The `sendLogPackage` method has been optimized to run outside **Angular**'s `NgZone`, avoiding unnecessary change detection cycles.
+
 ### `HttpDriverModule`
 
 The `HttpDriverModule` is very similar to the `ConsoleDriverModule`
 
 ```typescript
 // factory functions need to extracted and exported for AOT
-export function httpDriverFactory(httpClient: HttpClient, config: HttpDriverConfig): HttpDriver {
-  return new HttpDriver(httpClient, config);
+export function httpDriverFactory(httpClient: HttpClient, config: HttpDriverConfig, ngZone: NgZone): HttpDriver {
+  return new HttpDriver(httpClient, config, ngZone);
 }
 
 @NgModule()
@@ -130,7 +154,7 @@ export class HttpDriverModule {
         {
           provide: LogDriverToken,
           useFactory: httpDriverFactory,
-          deps: [HttpClient, HttpDriverConfigToken],
+          deps: [HttpClient, HttpDriverConfigToken, NgZone],
           multi: true,
         },
       ],
@@ -139,7 +163,7 @@ export class HttpDriverModule {
 }
 ```
 
-The main difference would be the `deps` property, needed to inject the `HttpDriver` dependencies. In this case the `HttpClient` and the `HttpDriverConfigToken`.
+The main difference would be the `deps` property, needed to inject the `HttpDriver` dependencies. In this case the `HttpClient`, the `ngZone` and the `HttpDriverConfigToken`.
 
 Their usage is also very similar.
 

@@ -15,11 +15,10 @@ describe('LumberjackService', () => {
   const createService = createServiceFactory({
     service: LumberjackService,
     imports: [
-      HttpClientModule,
       ConsoleDriverModule.forRoot(),
       HttpDriverModule.forRoot({
         logWagonSize: 1,
-        origin: 'Test Center',
+        origin: 'TEST_LUMBERJACK_SERVICE',
         storeUrl: 'https://www.logstore.com',
         levels: [LumberjackLogLevel.Info, LumberjackLogLevel.Debug],
       }),

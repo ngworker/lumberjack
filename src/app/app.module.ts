@@ -1,13 +1,23 @@
+import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { ConsoleDriverModule, LumberjackModule } from '@ngworker/lumberjack';
+import { ConsoleDriverModule, HttpDriverModule, LumberjackModule } from '@ngworker/lumberjack';
 
 import { AppComponent } from './app.component';
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, LumberjackModule.forRoot(), ConsoleDriverModule.forRoot()],
+  imports: [
+    BrowserModule,
+    LumberjackModule.forRoot(),
+    ConsoleDriverModule.forRoot(),
+    HttpDriverModule.forRoot({
+      origin: 'ForestApp',
+      storeUrl: '/api/logs',
+      logWagonSize: 2,
+    }),
+  ],
   providers: [],
   bootstrap: [AppComponent],
 })
