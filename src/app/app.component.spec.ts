@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { createComponentFactory, Spectator } from '@ngneat/spectator';
 
 import { ConsoleDriverModule, HttpDriverModule, LumberjackModule } from '@ngworker/lumberjack';
@@ -9,6 +10,7 @@ describe('AppComponent', () => {
   const createComponent = createComponentFactory({
     component: AppComponent,
     imports: [
+      HttpClientModule,
       LumberjackModule.forRoot(),
       ConsoleDriverModule.forRoot(),
       HttpDriverModule.forRoot({ logWagonSize: 5, origin: 'ForrestAPP', storeUrl: '/api/logs' }),

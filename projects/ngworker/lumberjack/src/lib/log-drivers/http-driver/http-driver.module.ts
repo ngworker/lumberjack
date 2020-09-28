@@ -1,4 +1,4 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { ModuleWithProviders, NgModule, NgZone } from '@angular/core';
 
 import { LogDriverToken } from '../log-driver';
@@ -11,7 +11,7 @@ export function httpDriverFactory(httpClient: HttpClient, config: HttpDriverConf
   return new HttpDriver(httpClient, config, ngZone);
 }
 
-@NgModule({ imports: [HttpClientModule] })
+@NgModule()
 export class HttpDriverModule {
   static forRoot(config: HttpDriverConfig): ModuleWithProviders<HttpDriverModule> {
     return {
