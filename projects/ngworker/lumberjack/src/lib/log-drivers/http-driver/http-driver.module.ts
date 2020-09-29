@@ -10,7 +10,16 @@ export class HttpDriverModule {
   static forRoot(config: HttpDriverConfig): ModuleWithProviders<HttpDriverRootModule> {
     return {
       ngModule: HttpDriverRootModule,
-      providers: [{ provide: HttpDriverConfigToken, useValue: { ...defaultLogDriverConfig, ...config } }],
+      providers: [
+        {
+          deps: [LogDriverConfigToken],
+          provide: HttpDriverConfigToken,
+          useFactory: (logDriverConfig: LogDriverConfig): HttpDriverConfig => ({
+            ...logDriverConfig,
+            ...config,
+          }),
+        },
+      ],
     };
   }
 
