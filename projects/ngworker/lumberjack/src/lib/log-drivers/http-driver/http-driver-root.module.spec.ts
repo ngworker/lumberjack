@@ -6,4 +6,12 @@ describe(HttpDriverRootModule.name, () => {
 
     expect(() => new HttpDriverRootModule(rootInjectorInstance)).toThrowError(/multiple injectors/);
   });
+
+  it('does not guard the first injector that registers it', () => {
+    // tslint:disable-next-line: no-null-keyword
+    const optionalAngularDependency = null;
+
+    // @ts-expect-error
+    expect(() => new HttpDriverRootModule(optionalAngularDependency)).not.toThrow();
+  });
 });
