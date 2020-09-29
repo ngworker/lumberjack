@@ -22,7 +22,6 @@ const createHttpDriver = (
 ) => {
   TestBed.configureTestingModule({
     imports: [
-      HttpClientModule,
       isLumberjackModuleImportedFirst ? LumberjackModule.forRoot() : [],
       HttpDriverModule.forRoot(config),
       isLumberjackModuleImportedFirst ? [] : LumberjackModule.forRoot(),
