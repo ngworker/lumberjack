@@ -1,6 +1,6 @@
-import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
+import { expectNgModuleToBeGuarded } from '../../../../tests/expect-ng-module-to-be-guarded';
 import { defaultLogDriverConfig, LogDriverConfig } from '../../configs/log-driver.config';
 import { LumberjackLogLevel } from '../../lumberjack-log-levels';
 import { LumberjackModule } from '../../lumberjack.module';
@@ -27,20 +27,6 @@ const createConsoleDriver = ({
   const [consoleDriver] = (TestBed.inject(LogDriverToken) as unknown) as LogDriver[];
 
   return consoleDriver;
-};
-
-const expectNgModuleToBeGuarded = <TModule>(ngModuleType: Type<TModule>) => {
-  let ngModule: TModule | undefined;
-
-  TestBed.configureTestingModule({
-    imports: [ngModuleType],
-  });
-
-  expect(() => {
-    ngModule = TestBed.inject(ngModuleType);
-  })
-    .withContext(`${ngModuleType.name} must guard against being imported directly`)
-    .toThrow();
 };
 
 describe(ConsoleDriverModule.name, () => {

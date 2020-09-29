@@ -1,30 +1,23 @@
-import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { ModuleWithProviders, NgModule, NgZone } from '@angular/core';
+import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import { LogDriverToken } from '../log-driver';
-
+import { HttpDriverRootModule } from './http-driver-root.module';
 import { HttpDriverConfig, HttpDriverConfigToken } from './http-driver.config';
-import { HttpDriver } from './http.driver';
 
-// factory functions need to extracted and exported for AOT
-export function httpDriverFactory(httpClient: HttpClient, config: HttpDriverConfig, ngZone: NgZone): HttpDriver {
-  return new HttpDriver(httpClient, config, ngZone);
-}
-
-@NgModule({ imports: [HttpClientModule] })
+@NgModule()
 export class HttpDriverModule {
-  static forRoot(config: HttpDriverConfig): ModuleWithProviders<HttpDriverModule> {
+  static forRoot(config: HttpDriverConfig): ModuleWithProviders<HttpDriverRootModule> {
     return {
-      ngModule: HttpDriverModule,
+      ngModule: HttpDriverRootModule,
       providers: [
-        { provide: HttpDriverConfigToken, useValue: config },
         {
-          provide: LogDriverToken,
-          useFactory: httpDriverFactory,
-          deps: [HttpClient, HttpDriverConfigToken, NgZone],
-          multi: true,
+          provide: HttpDriverConfigToken,
+          useValue: config,
         },
       ],
     };
+  }
+
+  constructor() {
+    throw new Error('Do not import HttpDriverModule directly. Use HttpDriverModule.forRoot.');
   }
 }
