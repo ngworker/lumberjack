@@ -1,9 +1,20 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { InjectionToken, ModuleWithProviders, NgModule } from '@angular/core';
 
 import { LogDriverConfig, LogDriverConfigToken } from '../../configs/log-driver.config';
 
 import { HttpDriverRootModule } from './http-driver-root.module';
 import { HttpDriverConfig, HttpDriverConfigToken } from './http-driver.config';
+
+const PartialLogDriverConfigToken: InjectionToken<LogDriverConfig> = new InjectionToken(
+  '__PARTIAL_LOG_DRIVER_CONFIG__'
+);
+
+export function httpDriverConfigFactory(logDriverConfig: LogDriverConfig, config: HttpDriverConfig) {
+  return {
+    ...logDriverConfig,
+    ...config,
+  };
+}
 
 @NgModule()
 export class HttpDriverModule {
@@ -11,13 +22,11 @@ export class HttpDriverModule {
     return {
       ngModule: HttpDriverRootModule,
       providers: [
+        { provide: PartialLogDriverConfigToken, useValue: config },
         {
-          deps: [LogDriverConfigToken],
+          deps: [LogDriverConfigToken, PartialLogDriverConfigToken],
           provide: HttpDriverConfigToken,
-          useFactory: (logDriverConfig: LogDriverConfig): HttpDriverConfig => ({
-            ...logDriverConfig,
-            ...config,
-          }),
+          useFactory: httpDriverConfigFactory,
         },
       ],
     };
