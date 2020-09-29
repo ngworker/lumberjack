@@ -1,17 +1,34 @@
-import { HttpClientModule } from '@angular/common/http';
-import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { NgModule, NgZone, Optional, SkipSelf } from '@angular/core';
 
+import { LogDriverConfig, LogDriverConfigToken } from '../../configs/log-driver.config';
 import { LogDriverToken } from '../log-driver';
 
+import { HttpDriverConfig, HttpDriverConfigToken } from './http-driver.config';
 import { HttpDriver } from './http.driver';
+
+export function httpDriverFactory(
+  http: HttpClient,
+  logDriverConfig: LogDriverConfig,
+  httpDriverConfig: HttpDriverConfig,
+  ngZone: NgZone
+): HttpDriver {
+  const config: HttpDriverConfig = {
+    ...logDriverConfig,
+    ...httpDriverConfig,
+  };
+
+  return new HttpDriver(http, config, ngZone);
+}
 
 @NgModule({
   imports: [HttpClientModule],
   providers: [
     {
-      provide: LogDriverToken,
-      useClass: HttpDriver,
+      deps: [HttpClient, LogDriverConfigToken, HttpDriverConfigToken, NgZone],
       multi: true,
+      provide: LogDriverToken,
+      useFactory: httpDriverFactory,
     },
   ],
 })
