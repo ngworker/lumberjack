@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import { defaultLogDriverConfig } from '../../configs/log-driver.config';
+import { LogDriverConfig, LogDriverConfigToken } from '../../configs/log-driver.config';
 
 import { HttpDriverRootModule } from './http-driver-root.module';
 import { HttpDriverConfig, HttpDriverConfigToken } from './http-driver.config';
