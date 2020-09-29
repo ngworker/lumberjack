@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build --prod",
     "test": "ng test",
     "test:headless": "ng test --watch=false --browsers=ChromeHeadless",
     "lint": "ng lint",
@@ -13,7 +13,7 @@
     "hooks:pre-commit": "node hooks/pre-commit.js",
     "commit": "git-cz",
     "release:first": "yarn release -- --first-release",
-    "build:lib": "ng build @ngworker/lumberjack && npx copy README.md ./dist/ngworker/lumberjack",
+    "build:lib": "ng build --prod @ngworker/lumberjack && npx copy README.md ./dist/ngworker/lumberjack",
     "test:lib": "ng test @ngworker/lumberjack",
     "release": "cd projects/ngworker/lumberjack && standard-version --infile ../../../CHANGELOG.md",
     "test:lib:headless": "cross-env CI=true yarn test:lib",
