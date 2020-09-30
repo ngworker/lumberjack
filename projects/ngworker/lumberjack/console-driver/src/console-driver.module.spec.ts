@@ -1,10 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 
-import { expectNgModuleToBeGuarded } from '../../../../tests/expect-ng-module-to-be-guarded';
-import { defaultLogDriverConfig, LogDriverConfig } from '../../configs/log-driver.config';
-import { LumberjackLogLevel } from '../../lumberjack-log-levels';
-import { LumberjackModule } from '../../lumberjack.module';
-import { LogDriver, LogDriverToken } from '../log-driver';
+import {
+  defaultLogDriverConfig,
+  LogDriver,
+  LogDriverConfig,
+  LogDriverToken,
+  LumberjackLogLevel,
+  LumberjackModule,
+} from '@ngworker/lumberjack';
+
+import { expectNgModuleToBeGuarded } from '../../tests/expect-ng-module-to-be-guarded';
 
 import { ConsoleDriverModule } from './console-driver.module';
 import { ConsoleDriver } from './console.driver';

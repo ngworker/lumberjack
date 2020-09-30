@@ -1,7 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 
-import { LogDriverConfig, LogDriverConfigToken } from '../../configs/log-driver.config';
-import { LogDriver } from '../log-driver';
+import { LogDriver, LogDriverConfig, LogDriverConfigToken } from '@ngworker/lumberjack';
 
 @Injectable()
 export class ConsoleDriver implements LogDriver {

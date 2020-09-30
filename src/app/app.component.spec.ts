@@ -1,6 +1,8 @@
 import { createComponentFactory, Spectator } from '@ngneat/spectator';
 
-import { ConsoleDriverModule, HttpDriverModule, LumberjackModule } from '@ngworker/lumberjack';
+import { LumberjackModule } from '@ngworker/lumberjack';
+import { ConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
+import { HttpDriverModule } from '@ngworker/lumberjack/http-driver';
 
 import { AppComponent } from './app.component';
 

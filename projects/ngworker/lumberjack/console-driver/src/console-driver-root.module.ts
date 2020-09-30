@@ -1,6 +1,6 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 
-import { LogDriverToken } from '../log-driver';
+import { LogDriverToken } from '@ngworker/lumberjack';
 
 import { ConsoleDriver } from './console.driver';
 

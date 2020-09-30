@@ -2,7 +2,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { ConsoleDriverModule, HttpDriverModule, LumberjackModule } from '@ngworker/lumberjack';
+import { LumberjackModule } from '@ngworker/lumberjack';
+import { ConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
+import { HttpDriverModule } from '@ngworker/lumberjack/http-driver';
 
 import { AppComponent } from './app.component';
 

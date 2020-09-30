@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import { defaultLogDriverConfig, LogDriverConfig, LogDriverConfigToken } from '../../configs/log-driver.config';
+import { defaultLogDriverConfig, LogDriverConfig, LogDriverConfigToken } from '@ngworker/lumberjack';
 
 import { ConsoleDriverRootModule } from './console-driver-root.module';
 

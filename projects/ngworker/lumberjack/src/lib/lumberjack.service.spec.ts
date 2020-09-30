@@ -1,11 +1,13 @@
-import { HttpClientModule } from '@angular/common/http';
 import { createServiceFactory, SpectatorService } from '@ngneat/spectator';
+
+import { ConsoleDriverModule } from '../../console-driver/src/console-driver.module';
+import { ConsoleDriver } from '../../console-driver/src/console.driver';
+import { HttpDriverModule } from '../../http-driver/src/http-driver.module';
+import { HttpDriver } from '../../http-driver/src/http.driver';
 
 import { defaultLogConfig } from './configs/default-log.config';
 import { LumberjackLogConfigToken } from './configs/lumberjack-log.config';
-import { ConsoleDriverModule, HttpDriverModule, LogDriver, LogDriverToken } from './log-drivers';
-import { ConsoleDriver } from './log-drivers/console-driver/console.driver';
-import { HttpDriver } from './log-drivers/http-driver/http.driver';
+import { LogDriver, LogDriverToken } from './log-drivers';
 import { LumberjackLog } from './lumberjack-log';
 import { LumberjackLogLevel } from './lumberjack-log-levels';
 import { LumberjackService } from './lumberjack.service';
