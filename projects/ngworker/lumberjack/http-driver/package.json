@@ -1,10 +1,14 @@
 {
+  "name": "@ngworker/lumberjack/http-driver",
+  "private": true,
   "ngPackage": {
     "lib": {
       "entryFile": "./src/public_api.ts"
     }
   },
   "peerDependencies": {
-    "@angular/common/http": "^10.0.14"
+    "@angular/common": "^10.0.14",
+    "@angular/core": "^10.0.14",
+    "rxjs": "^6.5.5"
   }
 }
