@@ -1,9 +1,7 @@
 import { createServiceFactory, SpectatorService } from '@ngneat/spectator';
 
-import { ConsoleDriverModule } from '../../console-driver/src/console-driver.module';
-import { ConsoleDriver } from '../../console-driver/src/console.driver';
-import { HttpDriverModule } from '../../http-driver/src/http-driver.module';
-import { HttpDriver } from '../../http-driver/src/http.driver';
+import { ConsoleDriver, ConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
+import { HttpDriver, HttpDriverModule } from '@ngworker/lumberjack/http-driver';
 
 import { defaultLogConfig } from './configs/default-log.config';
 import { LumberjackLogConfigToken } from './configs/lumberjack-log.config';
