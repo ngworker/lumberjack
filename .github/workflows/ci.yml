@@ -24,7 +24,7 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm install @angular/core@${{ matrix.angular-version }} @angular/common@${{ matrix.angular-version }}
+      - run: npm install @angular/core@${{ matrix.ng-version }} @angular/common@${{ matrix.ng-version }}
       - run: yarn
       - run: yarn lint
       - run: yarn build
