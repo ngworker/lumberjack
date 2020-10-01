@@ -13,7 +13,7 @@ describe('AppComponent', () => {
     imports: [
       LumberjackModule.forRoot(),
       ConsoleDriverModule.forRoot(),
-      HttpDriverModule.forRoot({ logWagonSize: 5, origin: 'ForrestAPP', storeUrl: '/api/logs' }),
+      HttpDriverModule.forRoot({ logWagonSize: 5, origin: 'ForestAPP', storeUrl: '/api/logs' }),
     ],
   });
 

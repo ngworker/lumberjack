@@ -110,7 +110,7 @@ Then you can start logging.
 ```typescript
 this.lumberjack.log({
   level: LumberjackLogLevel.Info,
-  message: 'Hello Forrest',
+  message: 'Hello Forest',
   context: 'AppComponent',
 });
 ```
@@ -152,10 +152,10 @@ Every `log-driver` implements the interface `LogDriver`.
 ```typescript
 export interface LogDriver {
   config: LogDriverConfig;
-  logInfo(logEntry: string): void | Promise<void> | Observable<void>;
-  logDebug(logEntry: string): void | Promise<void> | Observable<void>;
-  logError(logEntry: string): void | Promise<void> | Observable<void>;
-  logWarning(logEntry: string): void | Promise<void> | Observable<void>;
+  logInfo(logEntry: string): void;
+  logDebug(logEntry: string): void;
+  logError(logEntry: string): void;
+  logWarning(logEntry: string): void;
 }
 ```
 
@@ -166,6 +166,7 @@ The above is the public API that every `log-driver` must implement.
 Let's see the easiest implementation of a `log-driver`, the `ConsoleDriver`
 
 ```typescript
+@Injectable()
 export class ConsoleDriver implements LogDriver {
   constructor(public config: LogDriverConfig) {}
 
@@ -188,38 +189,54 @@ There is nothing special about it, the only remarkable thing is that the config 
 
 ### `ConsoleDriverModule`
 
-The `DriverModules` provides the configuration and other dependencies to the `log-drivers`, while providing them (for DI), so the `LumberjackService` could inject them.
+The `DriverModule's` provides the configuration and other dependencies to the `log-drivers`. They also provide the `log-drivers`, making them available to the `LumberjackService`.
 
 ```typescript
-// factory functions need to be extracted and exported for AOT
-export function consoleFactory(config: LogDriverConfig): ConsoleDriver {
-  return new ConsoleDriver(config);
-}
-
 @NgModule()
 export class ConsoleDriverModule {
-  static forRoot(config: LogDriverConfig = {}): ModuleWithProviders {
+  static forRoot(config: LogDriverConfig = defaultLogDriverConfig): ModuleWithProviders<ConsoleDriverRootModule> {
     return {
-      ngModule: ConsoleDriverModule,
-      providers: [
-        { provide: LogDriverConfigToken, useValue: config },
-        {
-          provide: LogDriverToken,
-          useFactory: consoleFactory,
-          multi: true,
-          deps: [LogDriverConfigToken],
-        },
-      ],
+      ngModule: ConsoleDriverRootModule,
+      providers: [{ provide: LogDriverConfigToken, useValue: config }],
     };
+  }
+
+  constructor() {
+    throw new Error('Do not import ConsoleDriverModule directly. Use ConsoleDriverModule.forRoot.');
   }
 }
 ```
 
-As seen the `ConsoleDriverModule` receives a config which extends the `LogDriverConfig` and passes it to the `log-driver`.
+In this implementation the `ConsoleDriverModule` is protected from being used directly. Instead we should use the `forRoot()` method.
 
-But the most important thing about the `ConsoleDriverModule` is that it provides the `ConsoleDriver` using the `LogDriverToken` using the `multi` flag on.
+The `forRoot()` method provides the `LogDriverConfigToken` and returns the `ConsoleDriverRootModule` which holds the rest of the driver setup.
+
+```typescript
+@NgModule({
+  providers: [
+    {
+      provide: LogDriverToken,
+      useClass: ConsoleDriver,
+      multi: true,
+    },
+  ],
+})
+export class ConsoleDriverRootModule {
+  constructor(@Optional() @SkipSelf() maybeNgModuleFromParentInjector?: ConsoleDriverRootModule) {
+    if (maybeNgModuleFromParentInjector) {
+      throw new Error(
+        'ConsoleDriverModule.forRoot registered in multiple injectors. Only call it from your root injector such as in AppModule.'
+      );
+    }
+  }
+}
+```
+
+The most important thing about the `ConsoleDriverRootModule` is that it provides the `ConsoleDriver` using the `LogDriverToken` using the `multi` flag on.
 
 This allows us to provide multiple `log-drivers` at the same time and is the feature enabling the extensibility of the `lumberjack` library.
+
+`ConsoleDriverRootModule` is protected against multiple imports. Since `ConsoleDriverModule.forRoot()` should only be imported once.
 
 The last step is to import this module at the root module of our application as seen in the first usage section.
 
@@ -237,11 +254,11 @@ The last step is to import this module at the root module of our application as 
 export class AppModule {}
 ```
 
-If not configuration is passed the default configuration is assumed.
+If none configuration is passed the default configuration is assumed.
 
 ### HttpDriver
 
-For a more advanced example of a `driver` implementation check the [HttpDriver](https://github.com/ngworker/lumberjack/blob/master/projects/ngworker/lumberjack/src/lib/log-drivers/http-driver/README.md)
+For a more advanced example of a `driver` implementation check the [HttpDriver](https://github.com/ngworker/lumberjack/blob/master/projects/ngworker/lumberjack/http-driver/README.md)
 
 ## Proposed Best Practices
 
@@ -286,7 +303,7 @@ export function createInfoLog(message: string, context: string = ''): () => Lumb
 Once our creators are defined, we can start adding our logs following the chosen folder/file structure, but always respecting the log level folder distribution.
 
 ```typescript
-export const ExampleInfoLog = createInfoLog('Two Projects has been found at the organization', 'SceneEditorComponent');
+export const ExampleInfoLog = createInfoLog('The forest has two new trees', 'ForestComponent');
 ```
 
 By following these guidelines you ensure that your log levels aren't duplicated and that their structure is homogeneous across the workspace. They are also easy to find and modify.
@@ -297,11 +314,11 @@ Now that we have defined our first `LumberjackLog` creator let's use `Lumberjack
 
 ```typescript
 @Component({
-  selector: 'new-forrest',
-  templateUrl: './forrest.component.html',
-  styleUrls: ['./forrest.component.scss']
+  selector: 'new-forest',
+  templateUrl: './forest.component.html',
+  styleUrls: ['./forest.component.scss']
 })
-export class ForrestComponent {
+export class ForestComponent {
   ...
 
   constructor(
@@ -309,123 +326,6 @@ export class ForrestComponent {
     private logger: LumberjackService
   ) {
     this.logger.log(ExampleInfoLog());
-  }
-}
-```
-
-## Understanding the LumberjackService
-
-In previous sections, we have seen how easy is to create `log-drivers` that will be used across the application.
-
-We just need to implement the log-driver interface and provide our `log-driver` in its module using the `LogDriverToken` with the `multi` flag on.
-
-In this section, we will see the element that unifies all `log-drivers` in the application. The `LumberjackService`.
-
-Let start with is constructor and base declaration
-
-```typescript
-/**
- * Service responsible to add logs to the applications.
- *
- * It's API provides a single `log` method, which will load all `log-drivers`
- * provided through the application.
- *
- *
- */
-@Injectable({ providedIn: 'root' })
-export class LumberjackService {
-  constructor(
-    @Inject(LumberjackLogConfigToken) private config: LumberjackLogConfig,
-    // Each log-driver must be provided with multi. That way we can capture every provided log-driver
-    // and use it to log to its output.
-    @Inject(LogDriverToken) private logDrivers: LogDriver[]
-  ) {}
-}
-```
-
-This class is a singleton, tree-shakable, root-injector level service.
-
-Its constructor receives a `LumberjackLogConfig` with the global configuration of the library and a list with all the injected `log-drivers`.
-
-To be able to receive several implementations of the `LogDriverToken` they should be provided with `multi` as shown above.
-
-The public API of the service is a single `log` method.
-
-```typescript
-log(logItem: LumberjackLog): void {
-    const { format } = this.config;
-
-    for (const logDriver of this.logDrivers) {
-      if (this.canDriveLog(logDriver, logItem.level)) {
-        this.logToTheRightLevel(logDriver, logItem, format);
-      }
-    }
-  }
-```
-
-It just iterates over the available `log-drivers` and logs to the right level if possible.
-
-The rest of the implementation is shown below
-
-```typescript
-/**
- * Service responsible to add logs to the applications.
- *
- * It's API provides a single `log` method, which will load all `log-drivers`
- * provided through the application.
- *
- *
- */
-@Injectable({ providedIn: 'root' })
-export class LumberjackService {
-  constructor(
-    @Inject(LumberjackLogConfigToken) private config: LumberjackLogConfig,
-    // Each driver must be provided with multi. That way we can capture every provided driver
-    // and use it to log to its output.
-    @Inject(LogDriverToken) private logDrivers: LogDriver[]
-  ) {}
-
-  log(logItem: LumberjackLog): void {
-    const { format } = this.config;
-
-    for (const logDriver of this.logDrivers) {
-      if (this.canDriveLog(logDriver, logItem.level)) {
-        this.logToTheRightLevel(logDriver, logItem, format);
-      }
-    }
-  }
-
-  private canDriveLog(driver: LogDriver, level: LumberjackLogLevel): boolean {
-    return driver.config.levels === undefined || driver.config.levels.includes(level);
-  }
-
-  private logToTheRightLevel(
-    driver: LogDriver,
-    logItem: LumberjackLog,
-    format: (logEntry: LumberjackLog) => string
-  ): void {
-    switch (logItem.level) {
-      case LumberjackLogLevel.Info:
-        driver.logInfo(format(logItem));
-
-        break;
-      case LumberjackLogLevel.Error:
-        driver.logError(format(logItem));
-
-        break;
-      case LumberjackLogLevel.Warning:
-        driver.logWarning(format(logItem));
-
-        break;
-      case LumberjackLogLevel.Debug:
-        driver.logDebug(format(logItem));
-
-        break;
-      default:
-        driver.logInfo(format(logItem));
-
-        break;
-    }
   }
 }
 ```

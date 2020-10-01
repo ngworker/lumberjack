@@ -4,4 +4,4 @@ function createAppInfoLog(message: string): () => LumberjackLog {
   return createInfoLog(message, 'AppComponent');
 }
 
-export const HelloForrest = createAppInfoLog('HelloForrest');
+export const HelloForest = createAppInfoLog('HelloForest');
