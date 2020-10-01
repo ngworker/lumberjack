@@ -1,6 +1,4 @@
 {
-  "name": "@ngworker/lumberjack/console-driver",
-  "private": true,
   "ngPackage": {
     "lib": {
       "entryFile": "./src/public_api.ts"
