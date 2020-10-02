@@ -17,7 +17,8 @@
     "module": "es2020",
     "lib": ["es2018", "dom"],
     "paths": {
-      "@ngworker/lumberjack": ["projects/ngworker/lumberjack/src/public-api.ts"]
+      "@ngworker/lumberjack": ["projects/ngworker/lumberjack/src/public-api.ts"],
+      "@ngworker/lumberjack/*-driver": ["projects/ngworker/lumberjack/*-driver/src/public_api.ts"]
     }
   },
   "angularCompilerOptions": {

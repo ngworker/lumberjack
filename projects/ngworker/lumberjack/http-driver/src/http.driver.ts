@@ -3,8 +3,7 @@ import { Inject, Injectable, NgZone } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { LumberjackLogLevel } from '../../lumberjack-log-levels';
-import { LogDriver } from '../log-driver';
+import { LogDriver, LumberjackLogLevel } from '@ngworker/lumberjack';
 
 import { HttpDriverConfig, HttpDriverConfigToken } from './http-driver.config';
 

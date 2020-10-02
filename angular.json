@@ -129,7 +129,7 @@
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/ngworker/lumberjack/src/test.ts",
+            "main": "projects/ngworker/lumberjack/test.ts",
             "tsConfig": "projects/ngworker/lumberjack/tsconfig.spec.json",
             "karmaConfig": "projects/ngworker/lumberjack/karma.conf.js"
           }

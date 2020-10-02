@@ -4,4 +4,4 @@ function createAppErrorLog(message: string): () => LumberjackLog {
   return createErrorLog(message, 'AppComponent');
 }
 
-export const ForrestOnFire = createAppErrorLog('The forrest is on fire');
+export const ForestOnFire = createAppErrorLog('The forest is on fire');
