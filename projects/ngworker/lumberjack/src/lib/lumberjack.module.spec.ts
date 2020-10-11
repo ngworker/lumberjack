@@ -1,5 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
+import { expectNgModuleToBeGuarded } from '../../tests/expect-ng-module-to-be-guarded';
+
 import {
   defaultLogConfig,
   defaultLogDriverConfig,
@@ -10,17 +12,11 @@ import {
 import { LumberjackModule } from './lumberjack.module';
 
 describe(LumberjackModule.name, () => {
-  it('can be imported directly (without calling forRoot', () => {
-    const resolveLumberjackModule = () => TestBed.inject(LumberjackModule);
-
-    TestBed.configureTestingModule({
-      imports: [LumberjackModule],
-    });
-
-    expect(resolveLumberjackModule).not.toThrow();
+  it(`cannot be imported without using the ${LumberjackModule.forRoot.name} method`, () => {
+    expectNgModuleToBeGuarded(LumberjackModule);
   });
 
-  describe('forRoot', () => {
+  describe(LumberjackModule.forRoot.name, () => {
     it('accepts a log configuration', () => {
       const expectedConfig: LumberjackLogConfig = {
         format: ({ message }) => message,
