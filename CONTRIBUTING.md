@@ -7,20 +7,20 @@
 Start by installing all dependencies:
 
 ```bash
-npm i
+yarn
 ```
 
 Run the tests:
 
 ```bash
-npm test
+yarn test
 yarn e2e
 ```
 
 Run the playground app:
 
 ```bash
-npm start
+yarn start
 ```
 
 ## Building

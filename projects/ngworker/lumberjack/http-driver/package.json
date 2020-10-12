@@ -7,8 +7,8 @@
     }
   },
   "peerDependencies": {
-    "@angular/common": "^10.0.14",
-    "@angular/core": "^10.0.14",
+    "@angular/common": ">=8.0.0 <=latest",
+    "@angular/core": ">=8.0.0 <=latest",
     "rxjs": "^6.5.5"
   }
 }

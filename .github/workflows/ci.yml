@@ -16,6 +16,7 @@ jobs:
     strategy:
       matrix:
         node-version: [10.x, 12.x, 14.x]
+        angular-version: [8.0.0, 9.0.0, 10.0.0]
 
     steps:
       - uses: actions/checkout@v2
@@ -23,6 +24,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+      - name: Change to the right Angular version
+        uses: ngworker/angular-versions-action
+        with:
+          angular-version: ${{ matrix.angular-version }}
+
       - run: yarn
       - run: yarn lint
       - run: yarn build
