@@ -27,7 +27,7 @@ jobs:
       - name: Change to the right Angular version
         uses: ngworker/angular-versions-action@v1
         with:
-          angular-version: ${{ matrix.angular-version }}
+          angular_version: ${{ matrix.angular-version }}
 
       - run: yarn
       - run: yarn lint
