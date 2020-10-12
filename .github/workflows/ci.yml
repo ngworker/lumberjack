@@ -25,7 +25,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Change to the right Angular version
-        uses: ngworker/angular-versions-action
+        uses: ngworker/angular-versions-action@v1
         with:
           angular-version: ${{ matrix.angular-version }}
 
