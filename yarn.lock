@@ -1432,14 +1432,15 @@
     schematics-utilities "^1.1.1"
     tslib "^1.9.0"
 
-"@ngneat/spectator@latest":
-  version "5.13.3"
-  resolved "https://registry.yarnpkg.com/@ngneat/spectator/-/spectator-5.13.3.tgz#e02104fcd6938c921d6a792601ec609e665eafda"
-  integrity sha512-y85WJeowMW6nqoWCY1ZkiXUEGuBO7dpGUAcL2CQL+GZ2ldr8iEtH00jLIoqWaW4C9pqopficsM8oFYPJIS4b2w==
+"@ngneat/spectator@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/@ngneat/spectator/-/spectator-6.0.0.tgz#a71a926ad7cc1ef9d959ec18dd78748d3a629c50"
+  integrity sha512-kFllyooA8MpQFWRHJj2C2amZoNx4FTZNxMc79zbg4oGXlEQ2xlKCbky0R2Q2xmcsf0UZ3xXxBsT0Q+nJqCdlKg==
   dependencies:
     "@testing-library/dom" "6.1.0"
     jquery "3.5.0"
     replace-in-file "^4.1.3"
+    tslib "^2.0.0"
 
 "@ngtools/webpack@10.0.8":
   version "10.0.8"
