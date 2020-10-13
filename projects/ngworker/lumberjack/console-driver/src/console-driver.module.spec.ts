@@ -66,7 +66,7 @@ describe(ConsoleDriverModule.name, () => {
       expect(actualConfig).toEqual(expectedConfig);
     });
 
-    it('does not register the specified log driver configuration when the lumberjack module is imported after the console driver module', () => {
+    it('does register the specified log driver configuration when the lumberjack module is imported after the console driver module', () => {
       const expectedConfig: LogDriverConfig = {
         levels: [LumberjackLogLevel.Debug],
       };
@@ -77,7 +77,7 @@ describe(ConsoleDriverModule.name, () => {
       });
 
       const actualConfig = consoleDriver.config;
-      expect(actualConfig).not.toEqual(expectedConfig);
+      expect(actualConfig).toEqual(expectedConfig);
     });
   });
 });

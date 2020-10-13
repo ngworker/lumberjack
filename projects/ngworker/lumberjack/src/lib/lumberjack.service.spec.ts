@@ -43,10 +43,10 @@ describe('LumberjackService', () => {
       const drivers = spectator.inject<LogDriver[]>(LogDriverToken);
       const consoleDriver = drivers[0] as ConsoleDriver;
       const httpDriver = drivers[1] as HttpDriver;
-      const consoleSpyLogInfo = spyOn(consoleDriver, 'logInfo').and.callThrough();
-      const httpSpyLogInfo = spyOn(httpDriver, 'logInfo').and.callThrough();
-      const consoleSpyDebugInfo = spyOn(consoleDriver, 'logDebug').and.callThrough();
-      const httpSpyDebugInfo = spyOn(httpDriver, 'logDebug').and.callThrough();
+      const consoleSpyLogInfo = spyOn(consoleDriver, 'logInfo');
+      const httpSpyLogInfo = spyOn(httpDriver, 'logInfo');
+      const consoleSpyDebugInfo = spyOn(consoleDriver, 'logDebug');
+      const httpSpyDebugInfo = spyOn(httpDriver, 'logDebug');
 
       const infoLog: LumberjackLog = {
         context: 'Lumberjack Service',
@@ -73,8 +73,8 @@ describe('LumberjackService', () => {
     const drivers = spectator.inject<LogDriver[]>(LogDriverToken);
     const consoleDriver = drivers[0] as ConsoleDriver;
     const httpDriver = drivers[1] as HttpDriver;
-    const consoleSpyError = spyOn(consoleDriver, 'logError').and.callThrough();
-    const httpSpyError = spyOn(httpDriver, 'logError').and.callThrough();
+    const consoleSpyError = spyOn(consoleDriver, 'logError');
+    const httpSpyError = spyOn(httpDriver, 'logError');
 
     const errorLog: LumberjackLog = {
       context: 'Lumberjack Service',
