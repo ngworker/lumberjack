@@ -34,4 +34,4 @@ jobs:
       - run: yarn build
       - run: yarn test:headless
       - run: yarn build:lib
-      - run: yarn test:lib
+      - run: yarn test:lib:headless
