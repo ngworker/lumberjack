@@ -43,6 +43,18 @@ Lumberjack is a versatile Angular Logging library, specially defined to be exten
 
 `yarn add @ngworker/lumberjack`
 
+## Compatibility
+
+`Lumberjack` has tested compatibility with the following Angular versions.
+
+> If the version you are using is not listed, please rise an issue. This list only covers tested versions.
+
+| Angular        | Support  |
+| -------------- | -------- |
+| > 10.0.0        |   ✅    |
+| > 9.0.0         |   ✅    |
+| > 8.1.0         |   ✅    |
+
 ## Usage
 
 To start using this app just import it in your application root module.
