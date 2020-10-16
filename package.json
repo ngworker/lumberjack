@@ -18,7 +18,8 @@
     "release": "cd projects/ngworker/lumberjack && standard-version --infile ../../../CHANGELOG.md",
     "test:lib:headless": "cross-env CI=true yarn test:lib",
     "publish": "cd dist/ngworker/lumberjack && npm publish",
-    "ci": "yarn install && yarn lint && yarn build && yarn test:headless && yarn build:lib && yarn test:lib:headless"
+    "ci": "yarn install && yarn lint && yarn build && yarn test:headless && yarn build:lib && yarn test:lib:headless",
+    "format": "npx prettier --config prettier.config.js --write \"**/*.*\" \"!dist/**\" \"!yarn.lock\""
   },
   "private": true,
   "dependencies": {
