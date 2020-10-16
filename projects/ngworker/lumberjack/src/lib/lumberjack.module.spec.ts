@@ -26,7 +26,7 @@ describe(LumberjackModule.name, () => {
         imports: [LumberjackModule.forRoot(expectedConfig)],
       });
 
-      const actualConfig = TestBed.inject(LumberjackLogConfigToken);
+      const actualConfig = TestBed.get(LumberjackLogConfigToken);
       expect(actualConfig).toEqual(expectedConfig);
     });
 
@@ -35,7 +35,7 @@ describe(LumberjackModule.name, () => {
         imports: [LumberjackModule.forRoot()],
       });
 
-      const actualConfig = TestBed.inject(LumberjackLogConfigToken);
+      const actualConfig = TestBed.get(LumberjackLogConfigToken);
       expect(actualConfig).toEqual(defaultLogConfig);
     });
 
@@ -44,7 +44,7 @@ describe(LumberjackModule.name, () => {
         imports: [LumberjackModule.forRoot()],
       });
 
-      const actualConfig = TestBed.inject(LogDriverConfigToken);
+      const actualConfig = TestBed.get(LogDriverConfigToken);
       expect(actualConfig).toEqual(defaultLogDriverConfig);
     });
   });

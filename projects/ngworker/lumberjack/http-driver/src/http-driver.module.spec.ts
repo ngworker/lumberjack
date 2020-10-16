@@ -32,7 +32,7 @@ const createHttpDriver = (
     ],
   });
 
-  const [httpDriver] = (TestBed.inject(LogDriverToken) as unknown) as LogDriver[];
+  const [httpDriver] = (TestBed.get(LogDriverToken) as unknown) as LogDriver[];
 
   return httpDriver;
 };

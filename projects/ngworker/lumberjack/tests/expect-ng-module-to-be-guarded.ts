@@ -9,7 +9,7 @@ export const expectNgModuleToBeGuarded = <TModule>(ngModuleType: Type<TModule>) 
   });
 
   expect(() => {
-    ngModule = TestBed.inject(ngModuleType);
+    ngModule = TestBed.get(ngModuleType);
   })
     .withContext(`${ngModuleType.name} must guard against being imported directly`)
     .toThrow();

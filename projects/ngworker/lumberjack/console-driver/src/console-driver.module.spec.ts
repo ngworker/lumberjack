@@ -29,7 +29,7 @@ const createConsoleDriver = ({
     ],
   });
 
-  const [consoleDriver] = (TestBed.inject(LogDriverToken) as unknown) as LogDriver[];
+  const [consoleDriver] = (TestBed.get(LogDriverToken) as unknown) as LogDriver[];
 
   return consoleDriver;
 };

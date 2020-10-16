@@ -9,7 +9,7 @@ const allLogLevelsDisabled: LogDriverConfig = {
   levels: [],
 };
 const createEmptyDebugLog = createDebugLog('');
-const logEmptyDebugMessage = () => TestBed.inject(LumberjackService).log(createEmptyDebugLog());
+const logEmptyDebugMessage = () => TestBed.get(LumberjackService).log(createEmptyDebugLog());
 
 describe(LumberjackService.name, () => {
   it('accepts logs when no log drivers are registered', () => {
