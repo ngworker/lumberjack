@@ -26,7 +26,7 @@ jobs:
           node-version: ${{ matrix.node-version }}
 
       - name: Use Angular version ${{ matrix.angular-version }}
-        uses: ngworker/angular-versions-action@v1
+        uses: ngworker/angular-versions-action@v1.1.1
         with:
           angular_version: ${{ matrix.angular-version }}
 
