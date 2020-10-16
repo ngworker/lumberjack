@@ -11,7 +11,6 @@ describe(HttpDriverRootModule.name, () => {
     // tslint:disable-next-line: no-null-keyword
     const optionalAngularDependency = null;
 
-    // @ts-expect-error
-    expect(() => new HttpDriverRootModule(optionalAngularDependency)).not.toThrow();
+    expect(() => new HttpDriverRootModule(optionalAngularDependency as any)).not.toThrow();
   });
 });

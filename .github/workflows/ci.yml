@@ -16,7 +16,7 @@ jobs:
     strategy:
       matrix:
         node-version: [10.x, 12.x, 14.x]
-        angular-version: [8.0.0, 9.0.0, 10.0.0]
+        angular-version: [9.0.0, 10.0.0]
 
     steps:
       - uses: actions/checkout@v2
