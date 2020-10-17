@@ -2,7 +2,7 @@
   "name": "@ngworker/lumberjack",
   "version": "1.0.8",
   "peerDependencies": {
-    "@angular/core": ">=8.1.0 <=10.0.14"
+    "@angular/core": ">=8.1.3"
   },
   "dependencies": {
     "tslib": "^2.0.0"
