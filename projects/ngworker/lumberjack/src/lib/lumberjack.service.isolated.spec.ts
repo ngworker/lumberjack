@@ -72,9 +72,9 @@ describe(LumberjackService.name, () => {
         ],
       });
 
-      lumberjack = TestBed.inject(LumberjackService);
+      lumberjack = resolveDependency(LumberjackService);
 
-      const [logDriver] = (TestBed.inject(LogDriverToken) as unknown) as LogDriver[];
+      const [logDriver] = (resolveDependency(LogDriverToken) as unknown) as LogDriver[];
       spyOn(logDriver, 'logDebug');
       spyOn(logDriver, 'logError');
       spyOn(logDriver, 'logInfo');
