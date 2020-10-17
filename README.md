@@ -270,7 +270,7 @@ If none configuration is passed the default configuration is assumed.
 
 ### HttpDriver
 
-For a more advanced example of a `driver` implementation check the [HttpDriver](https://github.com/ngworker/lumberjack/blob/master/projects/ngworker/lumberjack/http-driver/README.md)
+For a more advanced example of a `driver` implementation check the [HttpDriver](https://github.com/ngworker/lumberjack/blob/main/projects/ngworker/lumberjack/http-driver/README.md)
 
 ## Proposed Best Practices
 
