@@ -1,4 +1,3 @@
-import { HttpClientModule } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 
 import {
@@ -9,7 +8,7 @@ import {
   LumberjackModule,
 } from '@ngworker/lumberjack';
 
-import { expectNgModuleToBeGuarded } from '../../tests/expect-ng-module-to-be-guarded';
+import { expectNgModuleToBeGuarded, resolveDependency } from '../../tests';
 
 import { HttpDriverConfig } from './http-driver.config';
 import { HttpDriverModule } from './http-driver.module';
@@ -32,7 +31,7 @@ const createHttpDriver = (
     ],
   });
 
-  const [httpDriver] = (TestBed.inject(LogDriverToken) as unknown) as LogDriver[];
+  const [httpDriver] = (resolveDependency(LogDriverToken) as unknown) as LogDriver[];
 
   return httpDriver;
 };

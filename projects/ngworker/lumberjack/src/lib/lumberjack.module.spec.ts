@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { expectNgModuleToBeGuarded } from '../../tests/expect-ng-module-to-be-guarded';
+import { expectNgModuleToBeGuarded, resolveDependency } from '../../tests';
 
 import {
   defaultLogConfig,
@@ -26,7 +26,7 @@ describe(LumberjackModule.name, () => {
         imports: [LumberjackModule.forRoot(expectedConfig)],
       });
 
-      const actualConfig = TestBed.inject(LumberjackLogConfigToken);
+      const actualConfig = resolveDependency(LumberjackLogConfigToken);
       expect(actualConfig).toEqual(expectedConfig);
     });
 
@@ -35,7 +35,7 @@ describe(LumberjackModule.name, () => {
         imports: [LumberjackModule.forRoot()],
       });
 
-      const actualConfig = TestBed.inject(LumberjackLogConfigToken);
+      const actualConfig = resolveDependency(LumberjackLogConfigToken);
       expect(actualConfig).toEqual(defaultLogConfig);
     });
 
@@ -44,7 +44,7 @@ describe(LumberjackModule.name, () => {
         imports: [LumberjackModule.forRoot()],
       });
 
-      const actualConfig = TestBed.inject(LogDriverConfigToken);
+      const actualConfig = resolveDependency(LogDriverConfigToken);
       expect(actualConfig).toEqual(defaultLogDriverConfig);
     });
   });

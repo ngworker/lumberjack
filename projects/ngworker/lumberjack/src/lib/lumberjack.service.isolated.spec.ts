@@ -1,5 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
+import { resolveDependency } from '../../tests';
+
 import { LogDriverConfig, LogDriverConfigToken } from './configs';
 import { createDebugLog } from './log-types';
 import { LumberjackModule } from './lumberjack.module';
@@ -9,7 +11,7 @@ const allLogLevelsDisabled: LogDriverConfig = {
   levels: [],
 };
 const createEmptyDebugLog = createDebugLog('');
-const logEmptyDebugMessage = () => TestBed.inject(LumberjackService).log(createEmptyDebugLog());
+const logEmptyDebugMessage = () => resolveDependency(LumberjackService).log(createEmptyDebugLog());
 
 describe(LumberjackService.name, () => {
   it('accepts logs when no log drivers are registered', () => {

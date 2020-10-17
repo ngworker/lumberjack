@@ -23,7 +23,7 @@ export class LumberjackService {
     // and use it to log to its output.
     @Optional() @Inject(LogDriverToken) logDrivers?: LogDriver[]
   ) {
-    logDrivers = logDrivers ?? [];
+    logDrivers = logDrivers || [];
     this.logDrivers = Array.isArray(logDrivers) ? logDrivers : [logDrivers];
   }
 

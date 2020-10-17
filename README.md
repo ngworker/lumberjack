@@ -10,7 +10,7 @@
 [![commitizen](https://img.shields.io/badge/commitizen-friendly-brightgreen.svg?style=flat-square)]()
 [![PRs](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)]()
 [![styled with prettier](https://img.shields.io/badge/styled_with-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
-[![All Contributors](https://img.shields.io/badge/all_contributors-0-orange.svg?style=flat-square)](#contributors-)
+[![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 [![ngworker](https://img.shields.io/badge/ngworker-%40-red)](https://github.com/ngworker/)
 [![spectator](https://img.shields.io/badge/tested%20with-spectator-2196F3.svg?style=flat-square)]()
 
@@ -42,6 +42,18 @@ Lumberjack is a versatile Angular Logging library, specially defined to be exten
 ### Yarn
 
 `yarn add @ngworker/lumberjack`
+
+## Compatibility
+
+`Lumberjack` has tested compatibility with the following Angular versions.
+
+> If the version you are using is not listed, please rise an issue. This list only covers tested versions.
+
+| Angular        | Support  |
+| -------------- | -------- |
+| > 10.0.x        |   ✅    |
+| > 9.0.x         |   ✅    |
+| > 8.1.x         |   ✅    |
 
 ## Usage
 

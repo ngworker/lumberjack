@@ -30,6 +30,7 @@ describe('AppComponent', () => {
   });
 
   it('should render title', () => {
-    expect(spectator.query('.content span')?.textContent).toContain('lumberjack app is running!');
+    const query = spectator.query('.content span');
+    expect(query && query.textContent).toContain('lumberjack app is running!');
   });
 });

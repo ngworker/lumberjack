@@ -16,6 +16,7 @@ jobs:
     strategy:
       matrix:
         node-version: [10.x, 12.x, 14.x]
+        angular-version: [8.1.x, 9.0.x, 10.0.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -23,9 +24,15 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: ${{ matrix.node-version }}
+
+      - name: Use Angular version ${{ matrix.angular-version }}
+        uses: ngworker/angular-versions-action@v2
+        with:
+          angular_version: ${{ matrix.angular-version }}
+
       - run: yarn
       - run: yarn lint
       - run: yarn build
       - run: yarn test:headless
       - run: yarn build:lib
-      - run: yarn test:lib
+      - run: yarn test:lib:headless

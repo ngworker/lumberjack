@@ -1,6 +1,8 @@
 import { Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
+import { resolveDependency } from './resolve-dependency';
+
 export const expectNgModuleToBeGuarded = <TModule>(ngModuleType: Type<TModule>) => {
   let ngModule: TModule | undefined;
 
@@ -9,7 +11,7 @@ export const expectNgModuleToBeGuarded = <TModule>(ngModuleType: Type<TModule>) 
   });
 
   expect(() => {
-    ngModule = TestBed.inject(ngModuleType);
+    ngModule = resolveDependency(ngModuleType);
   })
     .withContext(`${ngModuleType.name} must guard against being imported directly`)
     .toThrow();

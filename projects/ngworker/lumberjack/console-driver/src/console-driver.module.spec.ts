@@ -9,7 +9,7 @@ import {
   LumberjackModule,
 } from '@ngworker/lumberjack';
 
-import { expectNgModuleToBeGuarded } from '../../tests/expect-ng-module-to-be-guarded';
+import { expectNgModuleToBeGuarded, resolveDependency } from '../../tests';
 
 import { ConsoleDriverModule } from './console-driver.module';
 import { ConsoleDriver } from './console.driver';
@@ -29,7 +29,7 @@ const createConsoleDriver = ({
     ],
   });
 
-  const [consoleDriver] = (TestBed.inject(LogDriverToken) as unknown) as LogDriver[];
+  const [consoleDriver] = (resolveDependency(LogDriverToken) as unknown) as LogDriver[];
 
   return consoleDriver;
 };
