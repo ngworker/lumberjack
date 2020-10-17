@@ -1,8 +1,16 @@
 import { ClassProvider, Inject, Injectable, ModuleWithProviders, NgModule, Optional, SkipSelf } from '@angular/core';
 
-import { defaultLogDriverConfig, LogDriverConfig, LogDriverConfigToken } from '../src/lib/configs';
-import { LogDriver, LogDriverToken } from '../src/lib/log-drivers';
+import {
+  defaultLogDriverConfig,
+  LogDriver,
+  LogDriverConfig,
+  LogDriverConfigToken,
+  LogDriverToken,
+} from '@ngworker/lumberjack';
 
+/**
+ * No-op log driver.
+ */
 @Injectable()
 export class NoopDriver implements LogDriver {
   constructor(@Inject(LogDriverConfigToken) public config: LogDriverConfig) {}
@@ -18,6 +26,11 @@ const noopDriverProvider: ClassProvider = {
   multi: true,
 };
 
+/**
+ * Root service module for `NoopDriver`.
+ *
+ * Do not import directly. Import using `NoopDriverModule.forRoot` instead.
+ */
 @NgModule({
   providers: [{ provide: LogDriverConfigToken, useValue: defaultLogDriverConfig }, noopDriverProvider],
 })
@@ -31,6 +44,11 @@ export class NoopDriverRootModule {
   }
 }
 
+/**
+ * Service module for `NoopDriver`.
+ *
+ * Use static `forRoot` method to import it.
+ */
 @NgModule()
 export class NoopDriverModule {
   static forRoot(): ModuleWithProviders<NoopDriverRootModule> {

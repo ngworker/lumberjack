@@ -140,6 +140,32 @@
           }
         }
       }
+    },
+    "test-util": {
+      "projectType": "library",
+      "root": "projects/internal/test-util",
+      "sourceRoot": "projects/internal/test-util/src",
+      "prefix": "lib",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/internal/test-util/src/test.ts",
+            "tsConfig": "projects/internal/test-util/tsconfig.spec.json",
+            "karmaConfig": "projects/internal/test-util/karma.conf.js"
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": [
+              "projects/internal/test-util/tsconfig.lib.json",
+              "projects/internal/test-util/tsconfig.spec.json"
+            ],
+            "exclude": ["**/node_modules/**"]
+          }
+        }
+      }
     }
   },
   "defaultProject": "lumberjack"

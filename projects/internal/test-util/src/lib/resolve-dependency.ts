@@ -3,6 +3,12 @@ import { TestBed } from '@angular/core/testing';
 
 const inject: Function = (TestBed as any).inject || (TestBed as any).get;
 
+/**
+ * Resolve dependency from `TestBed`.
+ *
+ * Wrapper that prefers `TestBed.inject` over `TestBed.get`. Enables support for
+ * Angular versions 8 and earlier.
+ */
 export function resolveDependency<T>(
   token: Type<T> | InjectionToken<T> | AbstractType<T>,
   notFoundValue?: T,

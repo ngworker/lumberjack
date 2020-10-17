@@ -1,8 +1,9 @@
 import { StaticProvider } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
+import { NoopDriverModule, resolveDependency } from '@internal/test-util';
+
 import { ConsoleDriverModule } from '../../console-driver/src/console-driver.module';
-import { NoopDriverModule, resolveDependency } from '../../tests';
 
 import { LogDriverConfig, LogDriverConfigToken } from './configs';
 import { LogDriver, LogDriverToken } from './log-drivers';
