@@ -11,6 +11,7 @@ describe(HttpDriverRootModule.name, () => {
     // tslint:disable-next-line: no-null-keyword
     const optionalAngularDependency = null;
 
+    // tslint:disable-next-line: no-any
     expect(() => new HttpDriverRootModule(optionalAngularDependency as any)).not.toThrow();
   });
 });

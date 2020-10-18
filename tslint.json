@@ -1,5 +1,5 @@
 {
-  "extends": ["tslint-plugin-prettier", "tslint-config-prettier"],
+  "extends": ["tslint:recommended", "tslint-plugin-prettier", "tslint-config-prettier"],
   "rulesDirectory": ["codelyzer"],
   "rules": {
     "arrow-return-shorthand": true,
@@ -27,7 +27,7 @@
         "order": ["static-field", "instance-field", "static-method", "instance-method"]
       }
     ],
-    "no-any": false,
+    "no-any": true,
     "no-arg": true,
     "no-bitwise": true,
     "no-conflicting-lifecycle": true,

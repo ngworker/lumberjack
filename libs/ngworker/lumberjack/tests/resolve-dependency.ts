@@ -1,7 +1,11 @@
 import { AbstractType, InjectFlags, InjectionToken, Type } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-const inject: Function = (TestBed as any).inject || (TestBed as any).get;
+// tslint:disable-next-line: no-any
+type UnknownFunction = (...args: any[]) => any;
+
+// tslint:disable-next-line: no-any
+const inject: UnknownFunction = (TestBed as any).inject || (TestBed as any).get;
 
 export function resolveDependency<T>(
   token: Type<T> | InjectionToken<T> | AbstractType<T>,
