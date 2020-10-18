@@ -103,39 +103,36 @@
         }
       }
     },
-    "@ngworker/lumberjack": {
+    "ngworker-lumberjack": {
       "projectType": "library",
-      "root": "projects/ngworker/lumberjack",
-      "sourceRoot": "projects/ngworker/lumberjack/src",
+      "root": "libs/ngworker/lumberjack",
+      "sourceRoot": "libs/ngworker/lumberjack/src",
       "prefix": "lib",
       "architect": {
         "build": {
           "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
-            "tsConfig": "projects/ngworker/lumberjack/tsconfig.lib.json",
-            "project": "projects/ngworker/lumberjack/ng-package.json"
+            "tsConfig": "libs/ngworker/lumberjack/tsconfig.lib.json",
+            "project": "libs/ngworker/lumberjack/ng-package.json"
           },
           "configurations": {
             "production": {
-              "tsConfig": "projects/ngworker/lumberjack/tsconfig.lib.prod.json"
+              "tsConfig": "libs/ngworker/lumberjack/tsconfig.lib.prod.json"
             }
           }
         },
         "test": {
           "builder": "@angular-devkit/build-angular:karma",
           "options": {
-            "main": "projects/ngworker/lumberjack/test.ts",
-            "tsConfig": "projects/ngworker/lumberjack/tsconfig.spec.json",
-            "karmaConfig": "projects/ngworker/lumberjack/karma.conf.js"
+            "main": "libs/ngworker/lumberjack/test.ts",
+            "tsConfig": "libs/ngworker/lumberjack/tsconfig.spec.json",
+            "karmaConfig": "libs/ngworker/lumberjack/karma.conf.js"
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
-            "tsConfig": [
-              "projects/ngworker/lumberjack/tsconfig.lib.json",
-              "projects/ngworker/lumberjack/tsconfig.spec.json"
-            ],
+            "tsConfig": ["libs/ngworker/lumberjack/tsconfig.lib.json", "libs/ngworker/lumberjack/tsconfig.spec.json"],
             "exclude": ["**/node_modules/**"]
           }
         }
