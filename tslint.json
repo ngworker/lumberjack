@@ -1,4 +1,5 @@
 {
+  "extends": ["tslint-plugin-prettier", "tslint-config-prettier"],
   "rulesDirectory": ["codelyzer"],
   "rules": {
     "arrow-return-shorthand": true,
@@ -101,6 +102,5 @@
     "use-lifecycle-interface": true,
     "use-pipe-transform-interface": true,
     "variable-name": [true, "allow-leading-underscore", "ban-keywords"]
-  },
-  "extends": ["tslint-plugin-prettier", "tslint-config-prettier"]
+  }
 }
