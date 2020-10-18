@@ -13,32 +13,56 @@ on:
     branches: [main]
 
 jobs:
-  build:
+  lint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js LTS
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 12.x
+      - uses: c-hive/gha-yarn-cache@v1
+      - run: yarn install
+
+      - run: yarn lint
+
+  lib:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js LTS
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 12.x
+      - uses: c-hive/gha-yarn-cache@v1
+      - run: yarn install
+
+      - run: yarn build:lib
+      - run: yarn test:lib:headless
+
+  app:
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [10.x, 12.x]
         angular-version: [8.1.x, 9.0.x, 10.0.x, 10.1.x]
 
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v1
+        uses: actions/setup-node@v2-beta
         with:
           node-version: ${{ matrix.node-version }}
-
       - name: Use Angular version ${{ matrix.angular-version }}
         uses: ngworker/angular-versions-action@v2
         with:
           angular_version: ${{ matrix.angular-version }}
-
       - uses: c-hive/gha-yarn-cache@v1
-
       - run: yarn install
-      - run: yarn lint
+
       - run: yarn build
       - run: yarn test:headless
-      - run: yarn build:lib
-      - run: yarn test:lib:headless
-#      - run: yarn e2e # breaks on Node.js 14
+      - run: yarn e2e
