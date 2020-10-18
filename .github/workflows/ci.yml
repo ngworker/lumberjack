@@ -3,6 +3,9 @@
 
 name: Node.js CI
 
+env:
+  NODE_OPTIONS: --max_old_space_size=4096
+
 on:
   push:
     branches: [main]
@@ -30,7 +33,7 @@ jobs:
         with:
           angular_version: ${{ matrix.angular-version }}
 
-      - run: yarn
+      - run: yarn install --frozen-lockfile
       - run: yarn lint
       - run: yarn build
       - run: yarn test:headless
