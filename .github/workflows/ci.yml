@@ -33,7 +33,9 @@ jobs:
         with:
           angular_version: ${{ matrix.angular-version }}
 
-      - run: yarn install --frozen-lockfile
+      - uses: c-hive/gha-yarn-cache@v1
+
+      - run: yarn install
       - run: yarn lint
       - run: yarn build
       - run: yarn test:headless
