@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
+import { expectNgModuleToBeGuarded, resolveDependency } from '@internal/test-util';
 import {
   defaultLogDriverConfig,
   LogDriver,
@@ -8,8 +9,6 @@ import {
   LumberjackLogLevel,
   LumberjackModule,
 } from '@ngworker/lumberjack';
-
-import { expectNgModuleToBeGuarded, resolveDependency } from '../../tests';
 
 import { ConsoleDriverModule } from './console-driver.module';
 import { ConsoleDriver } from './console.driver';

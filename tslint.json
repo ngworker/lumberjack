@@ -61,9 +61,11 @@
       "rxjs/operators",
       "@angular/common/http",
       "@angular/platform-browser",
+      "@angular/platform-browser-dynamic",
       "@angular/core/testing",
       "@angular/fire/database",
       "@angular/material",
+      "@internal",
       "@ngworker",
       "zone.js"
     ],
@@ -78,7 +80,7 @@
       true,
       {
         "grouped-imports": true,
-        "groups": ["^@(?!ngworker).*|^[a-zA-Z].*", "^@ngworker.*", "^\\.\\./", "^\\./.*"]
+        "groups": ["^@(?!(ngworker|internal)).*|^[a-zA-Z].*", "^@(ngworker|internal).*", "^\\.\\./", "^\\./.*"]
       }
     ],
     "object-literal-sort-keys": false,

@@ -1,25 +1,19 @@
 # Lumberjack
 
-This library was generated with [Angular CLI](https://github.com/angular/angular-cli) version 10.0.4.
-
 ## Code scaffolding
 
-Run `ng generate component component-name --project lumberjack` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project lumberjack`.
+Run `ng generate component component-name --project ngworker-lumberjack` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module --project ngworker-lumberjack`.
 
-> Note: Don't forget to add `--project lumberjack` or else it will be added to the default project in your `angular.json` file.
+> Note: Don't forget to add `--project ngworker-lumberjack` or else it will be added to the default project in your `angular.json` file.
 
 ## Build
 
-Run `ng build lumberjack` to build the project. The build artifacts will be stored in the `dist/` directory.
+Run `ng build ngworker-lumberjack --prod` to build the project. The build artifacts will be stored in the `dist/ngworker/lumberjack` directory.
 
 ## Publishing
 
-After building your library with `ng build lumberjack`, go to the dist folder `cd dist/lumberjack` and run `npm publish`.
+After building your library with `ng build ngworker-lumberjack`, go to the dist folder `cd dist/ngworker/lumberjack` and run `npm publish`.
 
 ## Running unit tests
 
-Run `ng test lumberjack` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+Run `ng test ngworker-lumberjack` to execute the unit tests.

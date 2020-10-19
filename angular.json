@@ -80,6 +80,13 @@
             "assets": ["apps/lumberjack-app/src/favicon.ico", "apps/lumberjack-app/src/assets"],
             "styles": ["apps/lumberjack-app/src/styles.scss"],
             "scripts": []
+          },
+          "configurations": {
+            "ci": {
+              "browsers": "ChromeHeadless",
+              "progress": false,
+              "watch": false
+            }
           }
         },
         "lint": {
@@ -140,13 +147,50 @@
             "main": "libs/ngworker/lumberjack/test.ts",
             "tsConfig": "libs/ngworker/lumberjack/tsconfig.spec.json",
             "karmaConfig": "libs/ngworker/lumberjack/karma.conf.js"
+          },
+          "configurations": {
+            "ci": {
+              "browsers": "ChromeHeadless",
+              "progress": false,
+              "watch": false
+            }
           }
         },
         "lint": {
           "builder": "@angular-devkit/build-angular:tslint",
           "options": {
             "tsConfig": ["libs/ngworker/lumberjack/tsconfig.lib.json", "libs/ngworker/lumberjack/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**"]
+            "exclude": ["**/node_modules/**", "!libs/ngworker/lumberjack/**"]
+          }
+        }
+      }
+    },
+    "internal-test-util": {
+      "projectType": "library",
+      "root": "projects/internal/test-util",
+      "sourceRoot": "projects/internal/test-util/src",
+      "prefix": "lib",
+      "architect": {
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "libs/internal/test-util/src/test.ts",
+            "tsConfig": "libs/internal/test-util/tsconfig.spec.json",
+            "karmaConfig": "libs/internal/test-util/karma.conf.js"
+          },
+          "configurations": {
+            "ci": {
+              "browsers": "ChromeHeadless",
+              "progress": false,
+              "watch": false
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["libs/internal/test-util/tsconfig.lib.json", "libs/internal/test-util/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!libs/internal/test-util/**"]
           }
         }
       }

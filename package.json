@@ -6,7 +6,7 @@
     "start": "ng serve lumberjack-app",
     "build": "ng build lumberjack-app --prod",
     "test": "ng test lumberjack-app",
-    "test:headless": "yarn test --watch=false --browsers=ChromeHeadless",
+    "test:ci": "yarn test --configuration=ci",
     "lint": "ng lint",
     "e2e": "ng e2e lumberjack-app-e2e",
     "contributors:add": "all-contributors add",
@@ -15,10 +15,12 @@
     "release:first": "yarn release -- --first-release",
     "build:lib": "ng build ngworker-lumberjack --prod && npx copy README.md ./dist/ngworker/lumberjack",
     "test:lib": "ng test ngworker-lumberjack",
+    "test:lib:ci": "yarn test:lib --configuration=ci",
+    "test:internal": "ng test internal-test-util",
+    "test:internal:ci": "yarn test:internal --configuration=ci",
     "release": "cd libs/ngworker/lumberjack && standard-version --infile ../../../CHANGELOG.md",
-    "test:lib:headless": "cross-env CI=true yarn test:lib",
     "publish": "cd dist/ngworker/lumberjack && npm publish",
-    "ci": "yarn install && yarn lint && yarn build && yarn test:headless && yarn build:lib && yarn test:lib:headless && yarn e2e",
+    "ci": "yarn install && yarn lint && yarn build:lib && yarn test:internal:ci && yarn test:lib:ci && yarn build && yarn test:ci && yarn e2e",
     "format": "npx prettier --config prettier.config.js --write \"**/*.*\" \"!dist/**\" \"!yarn.lock\""
   },
   "private": true,
@@ -51,7 +53,6 @@
     "all-contributors-cli": "^6.8.1",
     "codelyzer": "^6.0.0",
     "copy": "~0.3.2",
-    "cross-env": "^5.2.1",
     "git-cz": "^3.3.0",
     "husky": "^3.1.0",
     "jasmine-core": "~3.5.0",
@@ -87,7 +88,7 @@
     "hooks": {
       "commit-msg": "commitlint -e $GIT_PARAMS",
       "pre-commit": "yarn hooks:pre-commit && lint-staged && yarn lint",
-      "pre-push": "yarn test:lib:headless"
+      "pre-push": "yarn test:lib:ci"
     }
   }
 }
