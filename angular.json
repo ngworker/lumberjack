@@ -167,8 +167,8 @@
     },
     "internal-test-util": {
       "projectType": "library",
-      "root": "projects/internal/test-util",
-      "sourceRoot": "projects/internal/test-util/src",
+      "root": "libs/internal/test-util",
+      "sourceRoot": "libs/internal/test-util/src",
       "prefix": "lib",
       "architect": {
         "test": {
