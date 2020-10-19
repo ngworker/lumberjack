@@ -20,13 +20,7 @@ const noLogsProvider: StaticProvider = {
   useValue: noLogsConfig,
 };
 const allLogsConfig: LogDriverConfig = {
-  levels: [
-    LumberjackLogLevel.Debug,
-    LumberjackLogLevel.Error,
-    LumberjackLogLevel.Info,
-    LumberjackLogLevel.Verbose,
-    LumberjackLogLevel.Warning,
-  ],
+  levels: [LumberjackLogLevel.Verbose],
 };
 const allLogsProvider: StaticProvider = {
   provide: LogDriverConfigToken,
