@@ -107,15 +107,17 @@ jobs:
           key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
             ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-
+      - run: yarn install
+
       - name: Use lumberjack library builds
         run: yarn use:dist
-      - run: yarn install
 
       - run: yarn build
       - run: yarn test:ci
 
   e2e:
     runs-on: ubuntu-latest
+    needs: lib
 
     strategy:
       matrix:
