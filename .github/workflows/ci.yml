@@ -16,13 +16,28 @@ jobs:
   lint:
     runs-on: ubuntu-latest
 
+    strategy:
+      matrix:
+        node-version: [12.x]
+        angular-version: [10.1.x]
+
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js LTS
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2-beta
         with:
-          node-version: 12.x
-      - uses: c-hive/gha-yarn-cache@v1
+          node-version: ${{ matrix.node-version }}
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-
       - run: yarn install
 
       - run: yarn lint
@@ -32,19 +47,30 @@ jobs:
 
     strategy:
       matrix:
+        node-version: [12.x]
         angular-version: [8.1.x, 9.0.x, 10.0.x, 10.1.x]
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js LTS
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2-beta
         with:
-          node-version: 12.x
+          node-version: ${{ matrix.node-version }}
       - name: Use Angular version ${{ matrix.angular-version }}
         uses: ngworker/angular-versions-action@v2
         with:
           angular_version: ${{ matrix.angular-version }}
-      - uses: c-hive/gha-yarn-cache@v1
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-
       - run: yarn install
 
       - run: yarn build:lib
@@ -68,7 +94,17 @@ jobs:
         uses: ngworker/angular-versions-action@v2
         with:
           angular_version: ${{ matrix.angular-version }}
-      - uses: c-hive/gha-yarn-cache@v1
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-
       - run: yarn install
 
       - run: yarn build
@@ -79,19 +115,30 @@ jobs:
 
     strategy:
       matrix:
+        node-version: [12.x]
         angular-version: [9.0.x, 10.0.x, 10.1.x]
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js LTS
+      - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2-beta
         with:
-          node-version: 12.x
+          node-version: ${{ matrix.node-version }}
       - name: Use Angular version ${{ matrix.angular-version }}
         uses: ngworker/angular-versions-action@v2
         with:
           angular_version: ${{ matrix.angular-version }}
-      - uses: c-hive/gha-yarn-cache@v1
+
+      - name: Get yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - uses: actions/cache@v2
+        id: yarn-cache # use this to check for `cache-hit` (`steps.yarn-cache.outputs.cache-hit != 'true'`)
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-
       - run: yarn install
 
       - run: yarn e2e
