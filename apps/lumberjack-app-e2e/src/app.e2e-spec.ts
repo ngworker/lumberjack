@@ -23,8 +23,8 @@ describe('workspace-project App', () => {
         !log.message.includes('/api/logs') &&
         !log.message.includes('polyfills.js')
     );
-    // tslint:disable-next-line: no-floating-promises
-    expect(filteredLogs).not.toContain(
+
+    await expect(filteredLogs).not.toContain(
       jasmine.objectContaining({
         level: logging.Level.SEVERE,
       } as logging.Entry)
