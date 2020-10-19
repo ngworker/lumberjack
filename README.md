@@ -285,7 +285,7 @@ Inspired on events from event-driven architectures and Redux/NgRx actions a Log 
 
 ```typescript
 /**
- * Represents a Nevco specific log.
+ * Represents a Lumberjack specific log.
  *
  * @export
  * @interface LumberjackLog
