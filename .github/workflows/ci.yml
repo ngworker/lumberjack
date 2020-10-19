@@ -73,4 +73,25 @@ jobs:
 
       - run: yarn build
       - run: yarn test:headless
+
+  e2e:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        angular-version: [9.0.x, 10.0.x, 10.1.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js LTS
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 12.x
+      - name: Use Angular version ${{ matrix.angular-version }}
+        uses: ngworker/angular-versions-action@v2
+        with:
+          angular_version: ${{ matrix.angular-version }}
+      - uses: c-hive/gha-yarn-cache@v1
+      - run: yarn install
+
       - run: yarn e2e
