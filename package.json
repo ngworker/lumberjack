@@ -21,7 +21,8 @@
     "release": "cd libs/ngworker/lumberjack && standard-version --infile ../../../CHANGELOG.md",
     "publish": "cd dist/ngworker/lumberjack && npm publish",
     "ci": "yarn install && yarn lint && yarn build:lib && yarn test:internal:ci && yarn test:lib:ci && yarn build && yarn test:ci && yarn e2e",
-    "format": "npx prettier --config prettier.config.js --write \"**/*.*\" \"!dist/**\" \"!yarn.lock\""
+    "format": "npx prettier --config prettier.config.js --write \"**/*.*\" \"!dist/**\" \"!yarn.lock\"",
+    "use:dist": "json -I -f tsconfig.json -e 'this.compilerOptions.paths[\"@ngworker/lumberjack\"] = [\"dist/ngworker/lumberjack\"]; this.compilerOptions.paths[\"@ngworker/lumberjack/*-driver\"] = [\"dist/ngworker/lumberjack/*-driver\"]'"
   },
   "private": true,
   "dependencies": {
@@ -57,6 +58,7 @@
     "husky": "^3.1.0",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~5.0.2",
+    "json": "^10.0.0",
     "karma": "~5.0.9",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage-istanbul-reporter": "~3.0.2",
