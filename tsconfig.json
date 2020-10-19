@@ -18,8 +18,8 @@
     "lib": ["es2018", "dom"],
     "paths": {
       "@internal/test-util": ["libs/internal/test-util/src/public_api.ts"],
-      "@ngworker/lumberjack": ["dist/ngworker/lumberjack"],
-      "@ngworker/lumberjack/*-driver": ["dist/ngworker/lumberjack/*-driver"]
+      "@ngworker/lumberjack": ["libs/ngworker/lumberjack/src/public-api.ts"],
+      "@ngworker/lumberjack/*-driver": ["libs/ngworker/lumberjack/*-driver/src/public_api.ts"]
     }
   },
   "angularCompilerOptions": {
