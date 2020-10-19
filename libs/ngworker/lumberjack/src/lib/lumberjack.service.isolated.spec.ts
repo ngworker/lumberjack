@@ -146,7 +146,7 @@ describe(LumberjackService.name, () => {
     });
   });
 
-  describe('Verbose logging', () => {
+  xdescribe('Verbose logging', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         imports: [
