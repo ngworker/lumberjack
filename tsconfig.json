@@ -17,6 +17,7 @@
     "module": "esnext",
     "lib": ["es2018", "dom"],
     "paths": {
+      "@internal/test-util": ["projects/internal/test-util/src/public_api.ts"],
       "@ngworker/lumberjack": ["projects/ngworker/lumberjack/src/public-api.ts"],
       "@ngworker/lumberjack/*-driver": ["projects/ngworker/lumberjack/*-driver/src/public_api.ts"]
     }

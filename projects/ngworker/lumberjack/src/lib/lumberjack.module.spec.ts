@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { expectNgModuleToBeGuarded, resolveDependency } from '../../tests';
+import { expectNgModuleToBeGuarded, resolveDependency } from '@internal/test-util';
 
 import {
   defaultLogConfig,
