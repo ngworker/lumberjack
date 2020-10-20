@@ -34,7 +34,6 @@
     "@angular/platform-browser": "~10.1.6",
     "@angular/platform-browser-dynamic": "~10.1.6",
     "@angular/router": "~10.1.6",
-    "@ngneat/lib": "^1.0.4",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
@@ -88,7 +87,7 @@
   },
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint -e $GIT_PARAMS",
+      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS",
       "pre-commit": "yarn hooks:pre-commit && lint-staged && yarn lint",
       "pre-push": "yarn test:lib:ci"
     }
