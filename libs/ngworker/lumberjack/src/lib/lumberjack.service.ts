@@ -38,7 +38,11 @@ export class LumberjackService {
   }
 
   private canDriveLog(driver: LogDriver, level: LumberjackLogLevel): boolean {
-    return driver.config.levels === undefined || driver.config.levels.includes(level);
+    return (
+      driver.config.levels === undefined ||
+      driver.config.levels.includes(LumberjackLogLevel.Verbose) ||
+      driver.config.levels.includes(level)
+    );
   }
 
   private logToTheRightLevel(
