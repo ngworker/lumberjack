@@ -21,7 +21,8 @@
     "release": "cd libs/ngworker/lumberjack && standard-version --infile ../../../CHANGELOG.md",
     "publish": "cd dist/ngworker/lumberjack && npm publish",
     "ci": "yarn install && yarn lint && yarn build:lib && yarn test:internal:ci && yarn test:lib:ci && yarn build && yarn test:ci && yarn e2e",
-    "format": "npx prettier --config prettier.config.js --write \"**/*.*\" \"!dist/**\" \"!yarn.lock\""
+    "format": "npx prettier --config prettier.config.js --write \"**/*.*\" \"!dist/**\" \"!yarn.lock\"",
+    "use:dist": "json -I -f tsconfig.json -e 'this.compilerOptions.paths[\"@ngworker/*\"] = [\"dist/ngworker/*\"]; delete this.compilerOptions.paths[\"@ngworker/lumberjack/*-driver\"]; delete this.compilerOptions.paths[\"@ngworker/lumberjack\"]'"
   },
   "private": true,
   "dependencies": {
@@ -33,7 +34,6 @@
     "@angular/platform-browser": "~10.1.6",
     "@angular/platform-browser-dynamic": "~10.1.6",
     "@angular/router": "~10.1.6",
-    "@ngneat/lib": "^1.0.4",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.0",
     "zone.js": "~0.10.3"
@@ -57,6 +57,7 @@
     "husky": "^3.1.0",
     "jasmine-core": "~3.5.0",
     "jasmine-spec-reporter": "~5.0.2",
+    "json": "^10.0.0",
     "karma": "~5.0.9",
     "karma-chrome-launcher": "~3.1.0",
     "karma-coverage-istanbul-reporter": "~3.0.2",
@@ -86,7 +87,7 @@
   },
   "husky": {
     "hooks": {
-      "commit-msg": "commitlint -e $GIT_PARAMS",
+      "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS",
       "pre-commit": "yarn hooks:pre-commit && lint-staged && yarn lint",
       "pre-push": "yarn test:lib:ci"
     }

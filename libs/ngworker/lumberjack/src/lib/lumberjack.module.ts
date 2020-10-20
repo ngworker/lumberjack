@@ -1,7 +1,6 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { defaultLogConfig } from './configs/default-log.config';
-import { defaultLogDriverConfig, LogDriverConfigToken } from './configs/log-driver.config';
 import { LumberjackLogConfig, LumberjackLogConfigToken } from './configs/lumberjack-log.config';
 import { LumberjackRootModule } from './lumberjack-root.module';
 
