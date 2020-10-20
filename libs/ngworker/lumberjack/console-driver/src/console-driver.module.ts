@@ -1,15 +1,16 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import { defaultLogDriverConfig, LogDriverConfig, LogDriverConfigToken } from '@ngworker/lumberjack';
+import { LogDriverConfig } from '@ngworker/lumberjack';
 
+import { ConsoleDriverConfigToken } from './console-driver-config.token';
 import { ConsoleDriverRootModule } from './console-driver-root.module';
 
 @NgModule()
 export class ConsoleDriverModule {
-  static forRoot(config: LogDriverConfig = defaultLogDriverConfig): ModuleWithProviders<ConsoleDriverRootModule> {
+  static forRoot(config?: LogDriverConfig): ModuleWithProviders<ConsoleDriverRootModule> {
     return {
       ngModule: ConsoleDriverRootModule,
-      providers: [{ provide: LogDriverConfigToken, useValue: config }],
+      providers: (config && [{ provide: ConsoleDriverConfigToken, useValue: config }]) || [],
     };
   }
 
