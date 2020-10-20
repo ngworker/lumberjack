@@ -1,7 +1,7 @@
 import { StaticProvider } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { NoopDriverModule, resolveDependency, SpyDriver, SpyDriverModule } from '@internal/test-util';
+import { NoopDriver, NoopDriverModule, resolveDependency, SpyDriver, SpyDriverModule } from '@internal/test-util';
 
 import { ConsoleDriverModule } from '../../console-driver/src/console-driver.module';
 
@@ -194,6 +194,68 @@ describe(LumberjackService.name, () => {
 
         expect(spyDriver.logWarning).toHaveBeenCalledTimes(1);
         expect(spyDriver.logWarning).toHaveBeenCalledWith(LumberjackLogLevel.Warning);
+      });
+    });
+  });
+
+  describe('Multiple log drivers', () => {
+    describe('when drivers have different log levels', () => {
+      beforeEach(() => {
+        TestBed.configureTestingModule({
+          imports: [
+            LumberjackModule.forRoot({
+              format: ({ level }) => level,
+            }),
+            SpyDriverModule.forRoot({
+              levels: [LumberjackLogLevel.Debug, LumberjackLogLevel.Info],
+            }),
+            NoopDriverModule.forRoot({
+              levels: [LumberjackLogLevel.Error, LumberjackLogLevel.Warning],
+            }),
+          ],
+          providers: [verboseLoggingProvider],
+        });
+
+        lumberjack = resolveDependency(LumberjackService);
+
+        const [_spyDriver, _noopDriver] = (resolveDependency(LogDriverToken) as unknown) as LogDriver[];
+        spyDriver = _spyDriver as SpyDriver;
+        noopDriver = _noopDriver as jasmine.SpyObj<NoopDriver>;
+        spyOn(noopDriver, 'logDebug');
+        spyOn(noopDriver, 'logError');
+        spyOn(noopDriver, 'logInfo');
+        spyOn(noopDriver, 'logWarning');
+      });
+
+      beforeEach(() => {
+        lumberjack.log(logCreators.debug());
+        lumberjack.log(logCreators.info());
+        lumberjack.log(logCreators.error());
+        lumberjack.log(logCreators.warning());
+      });
+
+      let lumberjack: LumberjackService;
+      let noopDriver: jasmine.SpyObj<NoopDriver>;
+      let spyDriver: SpyDriver;
+
+      it('then logs of configured levels are passed to each of them', () => {
+        expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
+        expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLogLevel.Debug);
+        expect(spyDriver.logInfo).toHaveBeenCalledTimes(1);
+        expect(spyDriver.logInfo).toHaveBeenCalledWith(LumberjackLogLevel.Info);
+
+        expect(noopDriver.logError).toHaveBeenCalledTimes(1);
+        expect(noopDriver.logError).toHaveBeenCalledWith(LumberjackLogLevel.Error);
+        expect(noopDriver.logWarning).toHaveBeenCalledTimes(1);
+        expect(noopDriver.logWarning).toHaveBeenCalledWith(LumberjackLogLevel.Warning);
+      });
+
+      xit('then logs of other levels are not passed to either of them', () => {
+        expect(spyDriver.logError).not.toHaveBeenCalled();
+        expect(spyDriver.logWarning).not.toHaveBeenCalled();
+
+        expect(noopDriver.logDebug).not.toHaveBeenCalled();
+        expect(noopDriver.logInfo).not.toHaveBeenCalled();
       });
     });
   });

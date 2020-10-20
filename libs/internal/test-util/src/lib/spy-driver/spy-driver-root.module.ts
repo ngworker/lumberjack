@@ -1,15 +1,11 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 
-import { defaultLogDriverConfig, LogDriverConfigToken, LogDriverToken } from '@ngworker/lumberjack';
+import { LogDriverToken } from '@ngworker/lumberjack';
 
-import { SpyDriver } from './spy-driver.service';
+import { SpyDriver } from './spy.driver';
 
 @NgModule({
   providers: [
-    {
-      provide: LogDriverConfigToken,
-      useValue: defaultLogDriverConfig,
-    },
     {
       provide: LogDriverToken,
       useClass: SpyDriver,
