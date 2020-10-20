@@ -250,7 +250,7 @@ describe(LumberjackService.name, () => {
         expect(noopDriver.logWarning).toHaveBeenCalledWith(LumberjackLogLevel.Warning);
       });
 
-      xit('then logs of other levels are not passed to either of them', () => {
+      it('then logs of other levels are not passed to either of them', () => {
         expect(spyDriver.logError).not.toHaveBeenCalled();
         expect(spyDriver.logWarning).not.toHaveBeenCalled();
 
