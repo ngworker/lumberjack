@@ -1,11 +1,11 @@
-import { LumberjackLogLevel } from './lumberjack-log-levels';
+import { LumberjackLogLevelComposable } from './lumberjack-log-levels';
 
 /**
  * Represents a Lumberjack log.
  *
  */
 export interface LumberjackLog {
-  level: LumberjackLogLevel;
+  level: LumberjackLogLevelComposable;
   message: string;
   context: string | undefined;
 }

@@ -8,3 +8,4 @@ export * from './lib/noop-driver/noop-driver.service';
 export * from './lib/spy-driver/spy-driver.module';
 export * from './lib/spy-driver/spy-driver.service';
 export * from './lib/resolve-dependency';
+export * from './lib/array-equality';

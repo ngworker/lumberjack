@@ -9,3 +9,5 @@ export enum LumberjackLogLevel {
   Warning = 'warn',
   Error = 'error',
 }
+
+export type LumberjackLogLevelComposable = Exclude<LumberjackLogLevel, LumberjackLogLevel.Verbose>;
