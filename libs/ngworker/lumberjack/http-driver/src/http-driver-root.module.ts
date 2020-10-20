@@ -1,5 +1,5 @@
 import { HttpClient, HttpClientModule } from '@angular/common/http';
-import { NgModule, NgZone, Optional, SkipSelf } from '@angular/core';
+import { Inject, NgModule, NgZone, Optional, SkipSelf } from '@angular/core';
 
 import { LogDriverConfig, LogDriverConfigToken, LogDriverToken } from '@ngworker/lumberjack';
 
@@ -32,7 +32,9 @@ export function httpDriverFactory(
   ],
 })
 export class HttpDriverRootModule {
-  constructor(@Optional() @SkipSelf() maybeNgModuleFromParentInjector?: HttpDriverRootModule) {
+  constructor(
+    @Optional() @SkipSelf() @Inject(HttpDriverRootModule) maybeNgModuleFromParentInjector?: HttpDriverRootModule
+  ) {
     if (maybeNgModuleFromParentInjector) {
       throw new Error(
         'HttpDriverModule.forRoot registered in multiple injectors. Only call it from your root injector such as in AppModule.'
