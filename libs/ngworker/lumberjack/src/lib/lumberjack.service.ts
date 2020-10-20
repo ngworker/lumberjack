@@ -1,9 +1,11 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 
+import { arrayEquals } from '@internal/test-util';
+
 import { LumberjackLogConfig, LumberjackLogConfigToken } from './configs/lumberjack-log.config';
 import { LogDriver, LogDriverToken } from './log-drivers';
 import { LumberjackLog } from './lumberjack-log';
-import { LumberjackLogLevel } from './lumberjack-log-levels';
+import { LumberjackLogLevel, LumberjackLogLevelComposable } from './lumberjack-log-levels';
 
 /**
  * Service responsible to add logs to the applications.
@@ -37,11 +39,11 @@ export class LumberjackService {
     }
   }
 
-  private canDriveLog(driver: LogDriver, level: LumberjackLogLevel): boolean {
+  private canDriveLog(driver: LogDriver, level: LumberjackLogLevelComposable): boolean {
     return (
       driver.config.levels === undefined ||
-      driver.config.levels.includes(LumberjackLogLevel.Verbose) ||
-      driver.config.levels.includes(level)
+      arrayEquals(driver.config.levels, [LumberjackLogLevel.Verbose]) ||
+      (driver.config.levels as LumberjackLogLevelComposable[]).includes(level)
     );
   }
 
