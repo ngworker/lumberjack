@@ -1,21 +1,22 @@
-import { createServiceFactory, SpectatorService } from '@ngneat/spectator';
+import { createHttpFactory, SpectatorService } from '@ngneat/spectator';
 
 import { ConsoleDriver, ConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
 import { HttpDriver, HttpDriverModule } from '@ngworker/lumberjack/http-driver';
 
-import { defaultLogConfig } from './configs/default-log.config';
-import { LumberjackLogConfigToken } from './configs/lumberjack-log.config';
 import { LogDriver, LogDriverToken } from './log-drivers';
 import { LumberjackLog } from './lumberjack-log';
 import { LumberjackLogLevel } from './lumberjack-log-levels';
+import { LumberjackModule } from './lumberjack.module';
 import { LumberjackService } from './lumberjack.service';
 
 describe('LumberjackService', () => {
-  let spectator: SpectatorService<LumberjackService>;
-  const createService = createServiceFactory({
+  const createService = createHttpFactory({
     service: LumberjackService,
     imports: [
-      ConsoleDriverModule.forRoot(),
+      LumberjackModule.forRoot(),
+      ConsoleDriverModule.forRoot({
+        levels: [LumberjackLogLevel.Verbose],
+      }),
       HttpDriverModule.forRoot({
         logWagonSize: 1,
         origin: 'TEST_LUMBERJACK_SERVICE',
@@ -23,31 +24,36 @@ describe('LumberjackService', () => {
         levels: [LumberjackLogLevel.Info, LumberjackLogLevel.Debug],
       }),
     ],
-    providers: [{ provide: LumberjackLogConfigToken, useValue: defaultLogConfig }],
-    mocks: [ConsoleDriver, HttpDriver],
   });
 
-  beforeEach(() => (spectator = createService()));
+  beforeEach(() => {
+    spectator = createService();
+    const [consoleDriver, httpDriver] = spectator.inject<LogDriver[]>(LogDriverToken);
+    consoleDriverSpy = consoleDriver as jasmine.SpyObj<ConsoleDriver>;
+    spyOn(consoleDriverSpy, 'logDebug');
+    spyOn(consoleDriverSpy, 'logError');
+    spyOn(consoleDriverSpy, 'logInfo');
+    spyOn(consoleDriverSpy, 'logWarning');
+    httpDriverSpy = httpDriver as jasmine.SpyObj<HttpDriver>;
+    spyOn(httpDriverSpy, 'logDebug');
+    spyOn(httpDriverSpy, 'logError');
+    spyOn(httpDriverSpy, 'logInfo');
+    spyOn(httpDriverSpy, 'logWarning');
+  });
+
+  let consoleDriverSpy: jasmine.SpyObj<ConsoleDriver>;
+  let httpDriverSpy: jasmine.SpyObj<HttpDriver>;
+  let spectator: SpectatorService<LumberjackService>;
 
   it('should be available with two drivers', () => {
     const drivers = spectator.inject<LogDriver[]>(LogDriverToken);
 
     expect(spectator.service).toBeTruthy();
-    expect(drivers.length).toBe(2);
-    expect(drivers[0]).toBeInstanceOf(ConsoleDriver);
-    expect(drivers[1]).toBeInstanceOf(HttpDriver);
+    expect(drivers).toEqual([jasmine.any(ConsoleDriver), jasmine.any(HttpDriver)]);
   });
 
   describe('log method', () => {
     it('should log to the right level', () => {
-      const drivers = spectator.inject<LogDriver[]>(LogDriverToken);
-      const consoleDriver = drivers[0] as ConsoleDriver;
-      const httpDriver = drivers[1] as HttpDriver;
-      const consoleSpyLogInfo = spyOn(consoleDriver, 'logInfo');
-      const httpSpyLogInfo = spyOn(httpDriver, 'logInfo');
-      const consoleSpyDebugInfo = spyOn(consoleDriver, 'logDebug');
-      const httpSpyDebugInfo = spyOn(httpDriver, 'logDebug');
-
       const infoLog: LumberjackLog = {
         context: 'Lumberjack Service',
         level: LumberjackLogLevel.Info,
@@ -60,22 +66,16 @@ describe('LumberjackService', () => {
       };
 
       spectator.service.log(infoLog);
-      expect(consoleSpyLogInfo).toHaveBeenCalledTimes(1);
-      expect(httpSpyLogInfo).toHaveBeenCalledTimes(1);
-      expect(consoleSpyDebugInfo).not.toHaveBeenCalled();
+      expect(consoleDriverSpy.logInfo).toHaveBeenCalledTimes(1);
+      expect(httpDriverSpy.logInfo).toHaveBeenCalledTimes(1);
+      expect(consoleDriverSpy.logDebug).not.toHaveBeenCalled();
       spectator.service.log(debugLog);
-      expect(consoleSpyDebugInfo).toHaveBeenCalledTimes(1);
-      expect(httpSpyDebugInfo).toHaveBeenCalledTimes(1);
+      expect(consoleDriverSpy.logDebug).toHaveBeenCalledTimes(1);
+      expect(httpDriverSpy.logDebug).toHaveBeenCalledTimes(1);
     });
   });
 
   it('should log to the configured levels', () => {
-    const drivers = spectator.inject<LogDriver[]>(LogDriverToken);
-    const consoleDriver = drivers[0] as ConsoleDriver;
-    const httpDriver = drivers[1] as HttpDriver;
-    const consoleSpyError = spyOn(consoleDriver, 'logError');
-    const httpSpyError = spyOn(httpDriver, 'logError');
-
     const errorLog: LumberjackLog = {
       context: 'Lumberjack Service',
       level: LumberjackLogLevel.Error,
@@ -83,7 +83,7 @@ describe('LumberjackService', () => {
     };
 
     spectator.service.log(errorLog);
-    expect(consoleSpyError).toHaveBeenCalledTimes(1);
-    expect(httpSpyError).not.toHaveBeenCalledTimes(1);
+    expect(consoleDriverSpy.logError).toHaveBeenCalledTimes(1);
+    expect(httpDriverSpy.logError).not.toHaveBeenCalled();
   });
 });
