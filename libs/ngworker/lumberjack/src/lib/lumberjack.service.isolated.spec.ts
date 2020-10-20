@@ -199,7 +199,7 @@ describe(LumberjackService.name, () => {
   });
 
   describe('Multiple log drivers', () => {
-    describe('when drivers have different log levels', () => {
+    describe('given drivers with different log levels', () => {
       beforeEach(() => {
         TestBed.configureTestingModule({
           imports: [
