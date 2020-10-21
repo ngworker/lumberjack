@@ -1,6 +1,6 @@
 import { InjectionToken } from '@angular/core';
 
-import { LumberjackLogLevel, LumberjackLogLevelComposable } from '../lumberjack-log-levels';
+import { LumberjackLogEntryLevel, LumberjackLogLevel } from '../lumberjack-log-levels';
 
 export const LogDriverConfigToken: InjectionToken<LogDriverConfig> = new InjectionToken('__LOG_DRIVER_CONFIG__');
 
@@ -11,7 +11,7 @@ export interface LogDriverConfig {
    * If undefined or [LumberjackLogLevel.Verbose] all levels are allowed.
    *
    */
-  levels?: LumberjackLogLevelComposable[] | [LumberjackLogLevel.Verbose];
+  levels?: LumberjackLogEntryLevel[] | [LumberjackLogLevel.Verbose];
 }
 
 export const defaultLogDriverConfig = {
