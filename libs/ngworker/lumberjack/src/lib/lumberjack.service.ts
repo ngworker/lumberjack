@@ -42,7 +42,7 @@ export class LumberjackService {
   private canDriveLog(driver: LogDriver, level: LumberjackLogLevelComposable): boolean {
     return (
       driver.config.levels === undefined ||
-      arrayEquals(driver.config.levels, [LumberjackLogLevel.Verbose]) ||
+      driver.config.levels.length === 1 && driver.config.levels[0] === LumberjackLogLevel.Verbose ||
       (driver.config.levels as LumberjackLogLevelComposable[]).includes(level)
     );
   }
