@@ -1,0 +1,15 @@
+{
+  "name": "@ngworker/lumberjack/firebase-driver",
+  "private": true,
+  "ngPackage": {
+    "lib": {
+      "entryFile": "./src/public_api.ts"
+    }
+  },
+  "peerDependencies": {
+    "@angular/common": ">=8.1.3",
+    "@angular/core": ">=8.1.3",
+    "@angular/fire": "^6.0.3",
+    "rxjs": "^6.5.5"
+  }
+}

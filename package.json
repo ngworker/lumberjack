@@ -30,13 +30,15 @@
     "@angular/common": "~10.1.6",
     "@angular/compiler": "~10.1.6",
     "@angular/core": "~10.1.6",
+    "@angular/fire": "^6.0.3",
     "@angular/forms": "~10.1.6",
     "@angular/platform-browser": "~10.1.6",
     "@angular/platform-browser-dynamic": "~10.1.6",
     "@angular/router": "~10.1.6",
     "rxjs": "~6.6.3",
     "tslib": "^2.0.0",
-    "zone.js": "~0.10.3"
+    "zone.js": "~0.10.3",
+    "firebase": "^7.13.1"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "~0.1001.7",
@@ -72,7 +74,13 @@
     "tslint": "~6.1.0",
     "tslint-config-prettier": "^1.18.0",
     "tslint-plugin-prettier": "^2.3.0",
-    "typescript": "~3.9.7"
+    "typescript": "~3.9.7",
+    "@angular-devkit/architect": ">= 0.900 < 0.1100",
+    "firebase-tools": "^8.0.0",
+    "fuzzy": "^0.1.3",
+    "inquirer": "^6.2.2",
+    "inquirer-autocomplete-prompt": "^1.0.1",
+    "open": "^7.0.3"
   },
   "config": {
     "commitizen": {
