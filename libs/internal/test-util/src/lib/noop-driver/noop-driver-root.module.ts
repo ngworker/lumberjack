@@ -1,15 +1,11 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 
-import { defaultLogDriverConfig, LogDriverConfigToken, LogDriverToken } from '@ngworker/lumberjack';
+import { LogDriverToken } from '@ngworker/lumberjack';
 
-import { NoopDriver } from './noop-driver.service';
+import { NoopDriver } from './noop.driver';
 
 @NgModule({
   providers: [
-    {
-      provide: LogDriverConfigToken,
-      useValue: defaultLogDriverConfig,
-    },
     {
       provide: LogDriverToken,
       useClass: NoopDriver,
@@ -21,7 +17,7 @@ export class NoopDriverRootModule {
   constructor(@Optional() @SkipSelf() maybeNgModuleFromParentInjector?: NoopDriverRootModule) {
     if (maybeNgModuleFromParentInjector) {
       throw new Error(
-        'ConsoleDriverModule.forRoot registered in multiple injectors. Only call it from your root injector such as in AppModule.'
+        'NoopDriverModule.forRoot registered in multiple injectors. Only call it from your root injector such as in AppModule.'
       );
     }
   }

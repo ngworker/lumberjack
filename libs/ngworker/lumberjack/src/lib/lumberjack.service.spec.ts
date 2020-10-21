@@ -1,89 +1,262 @@
-import { createServiceFactory, SpectatorService } from '@ngneat/spectator';
+import { StaticProvider } from '@angular/core';
+import { TestBed } from '@angular/core/testing';
 
-import { ConsoleDriver, ConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
-import { HttpDriver, HttpDriverModule } from '@ngworker/lumberjack/http-driver';
+import { NoopDriver, NoopDriverModule, resolveDependency, SpyDriver, SpyDriverModule } from '@internal/test-util';
 
-import { defaultLogConfig } from './configs/default-log.config';
-import { LumberjackLogConfigToken } from './configs/lumberjack-log.config';
+import { ConsoleDriverModule } from '../../console-driver/src/console-driver.module';
+
+import { LogDriverConfig, LogDriverConfigToken } from './configs';
 import { LogDriver, LogDriverToken } from './log-drivers';
-import { LumberjackLog } from './lumberjack-log';
+import { createDebugLog, createErrorLog, createInfoLog, createWarningLog } from './log-types';
 import { LumberjackLogLevel } from './lumberjack-log-levels';
+import { LumberjackModule } from './lumberjack.module';
 import { LumberjackService } from './lumberjack.service';
 
-describe('LumberjackService', () => {
-  let spectator: SpectatorService<LumberjackService>;
-  const createService = createServiceFactory({
-    service: LumberjackService,
-    imports: [
-      ConsoleDriverModule.forRoot(),
-      HttpDriverModule.forRoot({
-        logWagonSize: 1,
-        origin: 'TEST_LUMBERJACK_SERVICE',
-        storeUrl: 'https://www.logstore.com',
-        levels: [LumberjackLogLevel.Info, LumberjackLogLevel.Debug],
-      }),
-    ],
-    providers: [{ provide: LumberjackLogConfigToken, useValue: defaultLogConfig }],
-    mocks: [ConsoleDriver, HttpDriver],
-  });
+const noLogsConfig: LogDriverConfig = {
+  levels: [],
+};
+const noLogsProvider: StaticProvider = {
+  provide: LogDriverConfigToken,
+  useValue: noLogsConfig,
+};
+const allLogsConfig: LogDriverConfig = {
+  levels: [LumberjackLogLevel.Debug, LumberjackLogLevel.Error, LumberjackLogLevel.Info, LumberjackLogLevel.Warning],
+};
+const allLogsProvider: StaticProvider = {
+  provide: LogDriverConfigToken,
+  useValue: allLogsConfig,
+};
+const verboseLoggingConfig: LogDriverConfig = {
+  levels: [LumberjackLogLevel.Verbose],
+};
+const verboseLoggingProvider: StaticProvider = {
+  provide: LogDriverConfigToken,
+  useValue: verboseLoggingConfig,
+};
+const logCreators = {
+  debug: createDebugLog(''),
+  error: createErrorLog(''),
+  info: createInfoLog(''),
+  warning: createWarningLog(''),
+};
+const logEmptyDebugMessage = () => resolveDependency(LumberjackService).log(logCreators.debug());
 
-  beforeEach(() => (spectator = createService()));
+describe(LumberjackService.name, () => {
+  describe('Log drivers', () => {
+    it('accepts logs when no log drivers are registered', () => {
+      TestBed.configureTestingModule({
+        imports: [LumberjackModule.forRoot()],
+      });
 
-  it('should be available with two drivers', () => {
-    const drivers = spectator.inject<LogDriver[]>(LogDriverToken);
+      expect(logEmptyDebugMessage).not.toThrow();
+    });
 
-    expect(spectator.service).toBeTruthy();
-    expect(drivers.length).toBe(2);
-    expect(drivers[0]).toBeInstanceOf(ConsoleDriver);
-    expect(drivers[1]).toBeInstanceOf(HttpDriver);
-  });
+    it('accepts logs when a single log driver is registered', () => {
+      TestBed.configureTestingModule({
+        imports: [LumberjackModule.forRoot(), NoopDriverModule.forRoot()],
+      });
 
-  describe('log method', () => {
-    it('should log to the right level', () => {
-      const drivers = spectator.inject<LogDriver[]>(LogDriverToken);
-      const consoleDriver = drivers[0] as ConsoleDriver;
-      const httpDriver = drivers[1] as HttpDriver;
-      const consoleSpyLogInfo = spyOn(consoleDriver, 'logInfo');
-      const httpSpyLogInfo = spyOn(httpDriver, 'logInfo');
-      const consoleSpyDebugInfo = spyOn(consoleDriver, 'logDebug');
-      const httpSpyDebugInfo = spyOn(httpDriver, 'logDebug');
+      expect(logEmptyDebugMessage).not.toThrow();
+    });
 
-      const infoLog: LumberjackLog = {
-        context: 'Lumberjack Service',
-        level: LumberjackLogLevel.Info,
-        message: 'Testing a log info',
-      };
-      const debugLog: LumberjackLog = {
-        context: 'Lumberjack Service',
-        level: LumberjackLogLevel.Debug,
-        message: 'Testing a log debug',
-      };
+    it('accepts logs when multiple log drivers are registered', () => {
+      TestBed.configureTestingModule({
+        imports: [LumberjackModule.forRoot(), NoopDriverModule.forRoot(), ConsoleDriverModule.forRoot()],
+      });
 
-      spectator.service.log(infoLog);
-      expect(consoleSpyLogInfo).toHaveBeenCalledTimes(1);
-      expect(httpSpyLogInfo).toHaveBeenCalledTimes(1);
-      expect(consoleSpyDebugInfo).not.toHaveBeenCalled();
-      spectator.service.log(debugLog);
-      expect(consoleSpyDebugInfo).toHaveBeenCalledTimes(1);
-      expect(httpSpyDebugInfo).toHaveBeenCalledTimes(1);
+      expect(logEmptyDebugMessage).not.toThrow();
     });
   });
 
-  it('should log to the configured levels', () => {
-    const drivers = spectator.inject<LogDriver[]>(LogDriverToken);
-    const consoleDriver = drivers[0] as ConsoleDriver;
-    const httpDriver = drivers[1] as HttpDriver;
-    const consoleSpyError = spyOn(consoleDriver, 'logError');
-    const httpSpyError = spyOn(httpDriver, 'logError');
+  describe('Log types', () => {
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          LumberjackModule.forRoot({
+            format: ({ level }) => level,
+          }),
+          SpyDriverModule.forRoot(),
+        ],
+      });
 
-    const errorLog: LumberjackLog = {
-      context: 'Lumberjack Service',
-      level: LumberjackLogLevel.Error,
-      message: 'Testing a log error',
-    };
+      lumberjack = resolveDependency(LumberjackService);
 
-    spectator.service.log(errorLog);
-    expect(consoleSpyError).toHaveBeenCalledTimes(1);
-    expect(httpSpyError).not.toHaveBeenCalledTimes(1);
+      const [logDriver] = (resolveDependency(LogDriverToken) as unknown) as LogDriver[];
+      spyDriver = logDriver as SpyDriver;
+    });
+
+    let lumberjack: LumberjackService;
+    let spyDriver: SpyDriver;
+
+    it('logs a debug message to a log driver', () => {
+      lumberjack.log(logCreators.debug());
+
+      expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
+      expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLogLevel.Debug);
+    });
+
+    it('logs an error message to a log driver', () => {
+      lumberjack.log(logCreators.error());
+
+      expect(spyDriver.logError).toHaveBeenCalledTimes(1);
+      expect(spyDriver.logError).toHaveBeenCalledWith(LumberjackLogLevel.Error);
+    });
+
+    it('logs an info message to a log driver', () => {
+      lumberjack.log(logCreators.info());
+
+      expect(spyDriver.logInfo).toHaveBeenCalledTimes(1);
+      expect(spyDriver.logInfo).toHaveBeenCalledWith(LumberjackLogLevel.Info);
+    });
+
+    it('logs a warning to a log driver', () => {
+      lumberjack.log(logCreators.warning());
+
+      expect(spyDriver.logWarning).toHaveBeenCalledTimes(1);
+      expect(spyDriver.logWarning).toHaveBeenCalledWith(LumberjackLogLevel.Warning);
+    });
+  });
+
+  describe('Log levels', () => {
+    it('accepts logs when no log levels are enabled', () => {
+      TestBed.configureTestingModule({
+        imports: [LumberjackModule.forRoot()],
+        providers: [noLogsProvider],
+      });
+
+      expect(logEmptyDebugMessage).not.toThrow();
+    });
+
+    it('accepts logs when all log levels are enabled', () => {
+      TestBed.configureTestingModule({
+        imports: [LumberjackModule.forRoot()],
+        providers: [allLogsProvider],
+      });
+
+      expect(logEmptyDebugMessage).not.toThrow();
+    });
+
+    it('accepts logs when all log levels are enabled and a log driver is registered', () => {
+      TestBed.configureTestingModule({
+        imports: [LumberjackModule.forRoot(), NoopDriverModule.forRoot()],
+        providers: [allLogsProvider],
+      });
+
+      expect(logEmptyDebugMessage).not.toThrow();
+    });
+  });
+
+  describe('Verbose logging', () => {
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          LumberjackModule.forRoot({
+            format: ({ level }) => level,
+          }),
+          SpyDriverModule.forRoot(),
+        ],
+        providers: [verboseLoggingProvider],
+      });
+
+      lumberjack = resolveDependency(LumberjackService);
+
+      const [logDriver] = (resolveDependency(LogDriverToken) as unknown) as LogDriver[];
+      spyDriver = logDriver as SpyDriver;
+    });
+
+    let lumberjack: LumberjackService;
+    let spyDriver: SpyDriver;
+
+    describe('when a log driver is registered', () => {
+      it('debug entries are logged', () => {
+        lumberjack.log(logCreators.debug());
+
+        expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
+        expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLogLevel.Debug);
+      });
+
+      it('errors are logged', () => {
+        lumberjack.log(logCreators.error());
+
+        expect(spyDriver.logError).toHaveBeenCalledTimes(1);
+        expect(spyDriver.logError).toHaveBeenCalledWith(LumberjackLogLevel.Error);
+      });
+
+      it('info is logged', () => {
+        lumberjack.log(logCreators.info());
+
+        expect(spyDriver.logInfo).toHaveBeenCalledTimes(1);
+        expect(spyDriver.logInfo).toHaveBeenCalledWith(LumberjackLogLevel.Info);
+      });
+
+      it('warnings are logged', () => {
+        lumberjack.log(logCreators.warning());
+
+        expect(spyDriver.logWarning).toHaveBeenCalledTimes(1);
+        expect(spyDriver.logWarning).toHaveBeenCalledWith(LumberjackLogLevel.Warning);
+      });
+    });
+  });
+
+  describe('Multiple log drivers', () => {
+    describe('given drivers with different log levels', () => {
+      beforeEach(() => {
+        TestBed.configureTestingModule({
+          imports: [
+            LumberjackModule.forRoot({
+              format: ({ level }) => level,
+            }),
+            SpyDriverModule.forRoot({
+              levels: [LumberjackLogLevel.Debug, LumberjackLogLevel.Info],
+            }),
+            NoopDriverModule.forRoot({
+              levels: [LumberjackLogLevel.Error, LumberjackLogLevel.Warning],
+            }),
+          ],
+          providers: [verboseLoggingProvider],
+        });
+
+        lumberjack = resolveDependency(LumberjackService);
+
+        const [_spyDriver, _noopDriver] = (resolveDependency(LogDriverToken) as unknown) as LogDriver[];
+        spyDriver = _spyDriver as SpyDriver;
+        noopDriver = _noopDriver as jasmine.SpyObj<NoopDriver>;
+        spyOn(noopDriver, 'logDebug');
+        spyOn(noopDriver, 'logError');
+        spyOn(noopDriver, 'logInfo');
+        spyOn(noopDriver, 'logWarning');
+      });
+
+      beforeEach(() => {
+        lumberjack.log(logCreators.debug());
+        lumberjack.log(logCreators.info());
+        lumberjack.log(logCreators.error());
+        lumberjack.log(logCreators.warning());
+      });
+
+      let lumberjack: LumberjackService;
+      let noopDriver: jasmine.SpyObj<NoopDriver>;
+      let spyDriver: SpyDriver;
+
+      it('then logs of configured levels are passed to each of them', () => {
+        expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
+        expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLogLevel.Debug);
+        expect(spyDriver.logInfo).toHaveBeenCalledTimes(1);
+        expect(spyDriver.logInfo).toHaveBeenCalledWith(LumberjackLogLevel.Info);
+
+        expect(noopDriver.logError).toHaveBeenCalledTimes(1);
+        expect(noopDriver.logError).toHaveBeenCalledWith(LumberjackLogLevel.Error);
+        expect(noopDriver.logWarning).toHaveBeenCalledTimes(1);
+        expect(noopDriver.logWarning).toHaveBeenCalledWith(LumberjackLogLevel.Warning);
+      });
+
+      it('then logs of other levels are not passed to either of them', () => {
+        expect(spyDriver.logError).not.toHaveBeenCalled();
+        expect(spyDriver.logWarning).not.toHaveBeenCalled();
+
+        expect(noopDriver.logDebug).not.toHaveBeenCalled();
+        expect(noopDriver.logInfo).not.toHaveBeenCalled();
+      });
+    });
   });
 });

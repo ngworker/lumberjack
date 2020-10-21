@@ -3,7 +3,7 @@ import { Inject, Injectable, Optional } from '@angular/core';
 import { LumberjackLogConfig, LumberjackLogConfigToken } from './configs/lumberjack-log.config';
 import { LogDriver, LogDriverToken } from './log-drivers';
 import { LumberjackLog } from './lumberjack-log';
-import { LumberjackLogLevel } from './lumberjack-log-levels';
+import { LumberjackLogEntryLevel, LumberjackLogLevel } from './lumberjack-log-levels';
 
 /**
  * Service responsible to add logs to the applications.
@@ -37,8 +37,12 @@ export class LumberjackService {
     }
   }
 
-  private canDriveLog(driver: LogDriver, level: LumberjackLogLevel): boolean {
-    return driver.config.levels === undefined || driver.config.levels.includes(level);
+  private canDriveLog(driver: LogDriver, level: LumberjackLogEntryLevel): boolean {
+    return (
+      driver.config.levels === undefined ||
+      (driver.config.levels.length === 1 && driver.config.levels[0] === LumberjackLogLevel.Verbose) ||
+      (driver.config.levels as LumberjackLogEntryLevel[]).includes(level)
+    );
   }
 
   private logToTheRightLevel(
