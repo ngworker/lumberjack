@@ -8,10 +8,6 @@ describe(HttpDriverRootModule.name, () => {
   });
 
   it('does not guard the first injector that registers it', () => {
-    // tslint:disable-next-line: no-null-keyword
-    const optionalAngularDependency = null;
-
-    // tslint:disable-next-line: no-any
-    expect(() => new HttpDriverRootModule(optionalAngularDependency as any)).not.toThrow();
+    expect(() => new HttpDriverRootModule()).not.toThrow();
   });
 });

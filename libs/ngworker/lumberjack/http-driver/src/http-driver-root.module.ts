@@ -33,7 +33,12 @@ export function httpDriverFactory(
 })
 export class HttpDriverRootModule {
   constructor(
-    @Optional() @SkipSelf() @Inject(HttpDriverRootModule) maybeNgModuleFromParentInjector?: HttpDriverRootModule
+    // tslint:disable: no-any no-null-keyword
+    @Optional()
+    @SkipSelf()
+    @Inject(HttpDriverRootModule)
+    maybeNgModuleFromParentInjector: HttpDriverRootModule = null as any
+    // tslint:enable: no-any no-null-keyword
   ) {
     if (maybeNgModuleFromParentInjector) {
       throw new Error(
