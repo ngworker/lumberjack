@@ -15,7 +15,12 @@ import { ConsoleDriver } from './console.driver';
 })
 export class ConsoleDriverRootModule {
   constructor(
-    @Optional() @SkipSelf() @Inject(ConsoleDriverRootModule) maybeNgModuleFromParentInjector?: ConsoleDriverRootModule
+    // tslint:disable: no-any no-null-keyword
+    @Optional()
+    @SkipSelf()
+    @Inject(ConsoleDriverRootModule)
+    maybeNgModuleFromParentInjector: ConsoleDriverRootModule = null as any
+    // tslint:enable: no-any no-null-keyword
   ) {
     if (maybeNgModuleFromParentInjector) {
       throw new Error(
