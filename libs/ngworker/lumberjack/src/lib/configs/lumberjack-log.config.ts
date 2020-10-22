@@ -1,9 +1,22 @@
-import { InjectionToken } from '@angular/core';
+import { inject, InjectionToken } from '@angular/core';
 
 import { LumberjackLog } from '../lumberjack-log';
+import { LumberjackTimeService } from '../time';
 
 export const LumberjackLogConfigToken: InjectionToken<LumberjackLogConfig> = new InjectionToken(
-  '__LUMBERJACK_LOG_CONFIG__'
+  '__LUMBERJACK_LOG_CONFIG__',
+  {
+    factory: (): LumberjackLogConfig => {
+      const time = inject(LumberjackTimeService);
+
+      return {
+        format: (logEntry) =>
+          `${logEntry.level}  ${time.utcTimestampFor(time.getUnixEpochTicks())} [${logEntry.context}] ${
+            logEntry.message
+          }`,
+      };
+    },
+  }
 );
 
 export interface LumberjackLogConfig {
