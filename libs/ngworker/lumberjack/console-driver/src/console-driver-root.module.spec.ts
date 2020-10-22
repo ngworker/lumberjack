@@ -6,4 +6,8 @@ describe(ConsoleDriverRootModule.name, () => {
 
     expect(() => new ConsoleDriverRootModule(rootInjectorInstance)).toThrowError(/multiple injectors/);
   });
+
+  it('does not guard the first injector that registers it', () => {
+    expect(() => new ConsoleDriverRootModule()).not.toThrow();
+  });
 });

@@ -6,4 +6,8 @@ describe(LumberjackRootModule.name, () => {
 
     expect(() => new LumberjackRootModule(rootInjectorInstance)).toThrowError(/multiple injectors/);
   });
+
+  it('does not guard the first injector that registers it', () => {
+    expect(() => new LumberjackRootModule()).not.toThrow();
+  });
 });
