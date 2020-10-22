@@ -8,4 +8,8 @@ export interface LumberjackLog {
   level: LumberjackLogEntryLevel;
   message: string;
   context: string | undefined;
+  /**
+   * Unix epoch ticks (milliseconds).
+   */
+  timestamp: number;
 }

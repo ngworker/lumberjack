@@ -1,20 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 
-import { LumberjackService } from '@ngworker/lumberjack';
-
-import { ForestOnFire } from './log-types/error-logs';
-import { HelloForest } from './log-types/info-logs';
+import { AppLogger } from './app-logger.service';
 
 @Component({
   selector: 'ngworker-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'lumberjack';
 
-  constructor(private lumberjack: LumberjackService) {
-    this.lumberjack.log(HelloForest());
-    this.lumberjack.log(ForestOnFire());
+  constructor(private logger: AppLogger) {}
+
+  ngOnInit(): void {
+    this.logger.helloForest();
+    this.logger.forestOnFire();
   }
 }

@@ -10,10 +10,8 @@ export const LumberjackLogConfigToken: InjectionToken<LumberjackLogConfig> = new
       const time = inject(LumberjackTimeService);
 
       return {
-        format: (logEntry) =>
-          `${logEntry.level}  ${time.utcTimestampFor(time.getUnixEpochTicks())} [${logEntry.context}] ${
-            logEntry.message
-          }`,
+        format: ({ context, level, message, timestamp }) =>
+          `${level}  ${time.utcTimestampFor(timestamp)} ${context ? `[${context}]` : ''} ${message}`,
       };
     },
   }
