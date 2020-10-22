@@ -13,6 +13,7 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-2-orange.svg?style=flat-square)](#contributors-)
 [![ngworker](https://img.shields.io/badge/ngworker-%40-red)](https://github.com/ngworker/)
 [![spectator](https://img.shields.io/badge/tested%20with-spectator-2196F3.svg?style=flat-square)]()
+[![Wallaby.js](https://img.shields.io/badge/wallaby.js-powered-blue.svg?style=flat&logo=github)](https://wallabyjs.com/oss/)
 
 > Create Angular logs like a professional lumberjack
 
@@ -30,8 +31,12 @@ Lumberjack is a versatile Angular Logging library, specially defined to be exten
 ## Table of Contents
 
 - [Installation](#installation)
+- [Compatibility](#compatibility)
 - [Usage](#usage)
-- [FAQ](#faq)
+- [Log Drivers](#log-drivers)
+- [Proposed Best Practices](#proposed-best-practices)
+- [Wallaby.js](#wallaby.js)
+- [Contributors](#contributors)
 
 ## Installation
 
@@ -343,7 +348,16 @@ export class ForestComponent {
 }
 ```
 
-## Contributors ✨
+## Wallaby.js
+
+[![Wallaby.js](https://img.shields.io/badge/wallaby.js-powered-blue.svg?style=for-the-badge&logo=github)](https://wallabyjs.com/oss/)
+
+Contributors to this repository are welcome to use the
+[Wallaby.js OSS License](https://wallabyjs.com/oss/) to get
+test results immediately as you type, and see the results in
+your editor right next to your code.
+
+## Contributors
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
