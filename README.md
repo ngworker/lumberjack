@@ -352,7 +352,7 @@ export class ForestComponent {
 
 [![Wallaby.js](https://img.shields.io/badge/wallaby.js-powered-blue.svg?style=for-the-badge&logo=github)](https://wallabyjs.com/oss/)
 
-Contributors to this repository contributors are welcome to use the
+Contributors to this repository are welcome to use the
 [Wallaby.js OSS License](https://wallabyjs.com/oss/) to get
 test results immediately as you type, and see the results in
 your editor right next to your code.
