@@ -90,6 +90,7 @@ jobs:
 
   app:
     runs-on: ubuntu-latest
+    needs: lib
 
     strategy:
       matrix:
