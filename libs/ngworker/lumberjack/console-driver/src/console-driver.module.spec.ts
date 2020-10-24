@@ -3,11 +3,11 @@ import { TestBed } from '@angular/core/testing';
 import { expectNgModuleToBeGuarded, resolveDependency } from '@internal/test-util';
 import {
   defaultLogDriverConfig,
-  LogDriver,
   LogDriverConfig,
-  LogDriverToken,
   LumberjackLogLevel,
   LumberjackModule,
+  StringLogDriver,
+  StringLogDriverToken,
 } from '@ngworker/lumberjack';
 
 import { ConsoleDriverModule } from './console-driver.module';
@@ -28,7 +28,7 @@ const createConsoleDriver = ({
     ],
   });
 
-  const [consoleDriver] = (resolveDependency(LogDriverToken) as unknown) as LogDriver[];
+  const [consoleDriver] = (resolveDependency(StringLogDriverToken) as unknown) as StringLogDriver[];
 
   return consoleDriver;
 };

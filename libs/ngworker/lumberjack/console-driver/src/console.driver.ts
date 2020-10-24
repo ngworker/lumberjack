@@ -1,11 +1,11 @@
 import { Inject, Injectable } from '@angular/core';
 
-import { LogDriver, LogDriverConfig } from '@ngworker/lumberjack';
+import { LogDriverConfig, StringLogDriver } from '@ngworker/lumberjack';
 
 import { ConsoleDriverConfigToken } from './console-driver-config.token';
 
 @Injectable()
-export class ConsoleDriver implements LogDriver {
+export class ConsoleDriver implements StringLogDriver {
   constructor(@Inject(ConsoleDriverConfigToken) public config: LogDriverConfig) {}
 
   logInfo(logEntry: string): void {

@@ -86,6 +86,7 @@
     "object-literal-sort-keys": false,
     "prefer-conditional-expression": false,
     "prefer-const": true,
+    "prefer-for-of": false,
     "prettier": true,
     "radix": true,
     "template-banana-in-box": true,

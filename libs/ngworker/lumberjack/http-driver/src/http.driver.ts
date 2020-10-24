@@ -3,7 +3,7 @@ import { Inject, Injectable, NgZone } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
-import { LogDriver, LumberjackLogLevel } from '@ngworker/lumberjack';
+import { LumberjackLogLevel, StringLogDriver } from '@ngworker/lumberjack';
 
 import { HttpDriverConfig, HttpDriverConfigToken } from './http-driver-config.token';
 
@@ -18,7 +18,7 @@ interface HttpLogPackage {
 }
 
 @Injectable()
-export class HttpDriver implements LogDriver {
+export class HttpDriver implements StringLogDriver {
   logWagon: HttpLogEntry[] = [];
 
   constructor(
