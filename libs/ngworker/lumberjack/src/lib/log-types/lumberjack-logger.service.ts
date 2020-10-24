@@ -4,9 +4,7 @@ import { LumberjackLogEntryLevel, LumberjackLogLevel } from '../lumberjack-log-l
 import { LumberjackService } from '../lumberjack.service';
 import { LumberjackTimeService } from '../time';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export abstract class LumberjackLogger {
   constructor(private lumberjack: LumberjackService, private time: LumberjackTimeService) {}
 
