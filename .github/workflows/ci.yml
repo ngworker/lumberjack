@@ -61,7 +61,7 @@ jobs:
         with:
           angular_version: ${{ matrix.angular-version }}
 
-      - name: Variabæe-Yarn cache directory path
+      - name: Variable-Yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
       - name: Cache Yarn cache directory
