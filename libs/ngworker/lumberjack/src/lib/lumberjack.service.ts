@@ -21,8 +21,7 @@ export class LumberjackService {
     @Inject(LumberjackLogConfigToken) private config: LumberjackLogConfig,
     // Each driver must be provided with multi. That way we can capture every provided driver
     // and use it to log to its output.
-    // tslint:disable-next-line: no-any no-null-keyword
-    @Optional() @Inject(LogDriverToken) logDrivers: LogDriver[] = null as any
+    @Optional() @Inject(LogDriverToken) logDrivers: LogDriver[]
   ) {
     logDrivers = logDrivers || [];
     this.logDrivers = Array.isArray(logDrivers) ? logDrivers : [logDrivers];
