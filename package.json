@@ -22,7 +22,7 @@
     "publish": "cd dist/ngworker/lumberjack && npm publish",
     "ci": "yarn install && yarn lint && yarn build:lib && yarn test:internal:ci && yarn test:lib:ci && yarn build && yarn test:ci && yarn e2e",
     "format": "npx prettier --config prettier.config.js --write \"**/*.*\" \"!dist/**\" \"!yarn.lock\"",
-    "use:dist": "json -I -f tsconfig.json -e 'this.compilerOptions.paths = { \"@ngworker/lumberjack\": [\"dist/ngworker/lumberjack\"], \"@ngworker/lumberjack/*\": \"dist/lumberjack/*\" };'"
+    "use:dist": "npx json -I -f tsconfig.json -e 'this.compilerOptions.paths = { \"@ngworker/lumberjack\": [\"dist/ngworker/lumberjack\"], \"@ngworker/lumberjack/*\": [\"dist/lumberjack/*\"] };'"
   },
   "private": true,
   "dependencies": {
