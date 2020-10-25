@@ -3,7 +3,7 @@
   "private": true,
   "ngPackage": {
     "lib": {
-      "entryFile": "./src/public_api.ts"
+      "entryFile": "./src/index.ts"
     }
   },
   "peerDependencies": {

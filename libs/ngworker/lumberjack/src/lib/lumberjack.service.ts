@@ -4,6 +4,7 @@ import { LumberjackLogConfig, LumberjackLogConfigToken } from './configs/lumberj
 import { LogDriver, LogDriverToken } from './log-drivers';
 import { LumberjackLog } from './lumberjack-log';
 import { LumberjackLogEntryLevel, LumberjackLogLevel } from './lumberjack-log-levels';
+import { LumberjackRootModule } from './lumberjack-root.module';
 
 /**
  * Service responsible to add logs to the applications.
@@ -13,7 +14,7 @@ import { LumberjackLogEntryLevel, LumberjackLogLevel } from './lumberjack-log-le
  *
  *
  */
-@Injectable({ providedIn: 'root' })
+@Injectable({ providedIn: LumberjackRootModule })
 export class LumberjackService {
   private logDrivers: LogDriver[];
 

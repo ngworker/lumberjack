@@ -1,7 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
+import { HttpDriverConfig, HttpDriverConfigToken } from './http-driver-config.token';
 import { HttpDriverRootModule } from './http-driver-root.module';
-import { HttpDriverConfig, HttpDriverConfigToken } from './http-driver.config';
 
 @NgModule()
 export class HttpDriverModule {
