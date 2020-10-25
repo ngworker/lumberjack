@@ -59,7 +59,6 @@ Lumberjack is a versatile Angular Logging library, specially defined to be exten
 | > 10.1.x | ✅      |
 | > 10.0.x | ✅      |
 | > 9.0.x  | ✅      |
-| > 8.1.x  | ✅      |
 
 ## Usage
 
