@@ -21,7 +21,7 @@ export class LumberjackService {
     @Inject(LumberjackLogConfigToken) private config: LumberjackLogConfig,
     // Each driver must be provided with multi. That way we can capture every provided driver
     // and use it to log to its output.
-    @Optional() @Inject(LogDriverToken) logDrivers?: LogDriver[]
+    @Optional() @Inject(LogDriverToken) logDrivers: LogDriver[]
   ) {
     logDrivers = logDrivers || [];
     this.logDrivers = Array.isArray(logDrivers) ? logDrivers : [logDrivers];
