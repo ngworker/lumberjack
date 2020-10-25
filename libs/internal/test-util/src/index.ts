@@ -1,5 +1,5 @@
 /*
- * Public API Surface of test-util
+ * Public API Surface of @internal/test-util
  */
 
 export * from './lib/expect-ng-module-to-be-guarded';

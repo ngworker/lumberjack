@@ -5,7 +5,7 @@ import { tap } from 'rxjs/operators';
 
 import { LogDriver, LumberjackLogLevel } from '@ngworker/lumberjack';
 
-import { HttpDriverConfig, HttpDriverConfigToken } from './http-driver.config';
+import { HttpDriverConfig, HttpDriverConfigToken } from './http-driver-config.token';
 
 interface HttpLogEntry {
   logEntry: string;

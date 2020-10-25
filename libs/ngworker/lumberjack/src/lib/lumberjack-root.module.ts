@@ -12,12 +12,10 @@ import { defaultLogDriverConfig, LogDriverConfigToken } from './configs/log-driv
 })
 export class LumberjackRootModule {
   constructor(
-    // tslint:disable: no-any no-null-keyword
     @Optional()
     @SkipSelf()
     @Inject(LumberjackRootModule)
-    maybeNgModuleFromParentInjector: LumberjackRootModule = null as any
-    // tslint:enable: no-any no-null-keyword
+    maybeNgModuleFromParentInjector: LumberjackRootModule
   ) {
     if (maybeNgModuleFromParentInjector) {
       throw new Error(

@@ -28,11 +28,11 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
-      - name: Get yarn cache directory path
+      - name: Variable-Yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/cache@v2
-        id: yarn-cache
+      - name: Cache Yarn cache directory
+        uses: actions/cache@v2
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -42,13 +42,13 @@ jobs:
 
       - run: yarn lint
 
-  lib:
+  build:
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
         node-version: [12.x]
-        angular-version: [8.1.x, 9.0.x, 10.0.x, 10.1.x]
+        angular-version: [10.1.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -61,11 +61,11 @@ jobs:
         with:
           angular_version: ${{ matrix.angular-version }}
 
-      - name: Get yarn cache directory path
+      - name: Variable-Yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/cache@v2
-        id: yarn-cache
+      - name: Cache Yarn cache directory
+        uses: actions/cache@v2
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -73,72 +73,15 @@ jobs:
             ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-
       - run: yarn install
 
-      - name: Cache library build artifacts
-        uses: actions/cache@v2
-        id: lib-build-cache
+      - run: yarn build:lib
+      - uses: actions/upload-artifact@v2
         with:
+          name: lumberjack-package
           path: dist/ngworker/lumberjack
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-lumberjack-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-lumberjack-
-      - name: Build Lumberjack library
-        if: steps.lib-build-cache.outputs.cache-hit != 'true'
-        run: yarn build:lib
+          if-no-files-found: error
 
-      - run: yarn test:internal:ci
-      - run: yarn test:lib:ci
-
-  app:
+  lib:
     runs-on: ubuntu-latest
-
-    strategy:
-      matrix:
-        node-version: [10.x, 12.x]
-        angular-version: [8.1.x, 9.0.x, 10.0.x, 10.1.x]
-
-    steps:
-      - uses: actions/checkout@v2
-      - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2-beta
-        with:
-          node-version: ${{ matrix.node-version }}
-      - name: Use Angular version ${{ matrix.angular-version }}
-        uses: ngworker/angular-versions-action@v2
-        with:
-          angular_version: ${{ matrix.angular-version }}
-
-      - name: Get yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/cache@v2
-        id: yarn-cache
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-
-      - run: yarn install
-
-      - name: Use lumberjack library builds
-        run: yarn use:dist
-      - name: Cache library build artifacts
-        uses: actions/cache@v2
-        id: lib-build-cache
-        with:
-          path: dist/ngworker/lumberjack
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-lumberjack-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-lumberjack-
-      - name: Build Lumberjack library
-        if: steps.lib-build-cache.outputs.cache-hit != 'true'
-        run: yarn build:lib
-
-      - run: yarn build
-      - run: yarn test:ci
-
-  e2e:
-    runs-on: ubuntu-latest
-    needs: lib
 
     strategy:
       matrix:
@@ -156,11 +99,11 @@ jobs:
         with:
           angular_version: ${{ matrix.angular-version }}
 
-      - name: Get yarn cache directory path
+      - name: Variable-Yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
-      - uses: actions/cache@v2
-        id: yarn-cache
+      - name: Cache Yarn cache directory
+        uses: actions/cache@v2
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
           key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -168,18 +111,88 @@ jobs:
             ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-
       - run: yarn install
 
-      - name: Use lumberjack library builds
-        run: yarn use:dist
-      - name: Cache library build artifacts
-        uses: actions/cache@v2
-        id: lib-build-cache
+      - run: yarn test:internal:ci
+      - run: yarn test:lib:ci
+
+  app:
+    runs-on: ubuntu-latest
+    needs: build
+
+    strategy:
+      matrix:
+        node-version: [10.x, 12.x]
+        angular-version: [9.0.x, 10.0.x, 10.1.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2-beta
         with:
-          path: dist/ngworker/lumberjack
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-lumberjack-${{ github.sha }}
+          node-version: ${{ matrix.node-version }}
+      - name: Use Angular version ${{ matrix.angular-version }}
+        uses: ngworker/angular-versions-action@v2
+        with:
+          angular_version: ${{ matrix.angular-version }}
+
+      - name: Variable-Yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Cache Yarn cache directory
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-lumberjack-
-      - name: Build Lumberjack library
-        if: steps.lib-build-cache.outputs.cache-hit != 'true'
-        run: yarn build:lib
+            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-
+      - run: yarn install
+
+      - run: yarn delete-paths
+      - uses: actions/download-artifact@v2
+        with:
+          name: lumberjack-package
+          path: node_modules/@ngworker/lumberjack
+      - run: npx ngcc || true
+
+      - run: yarn test:ci
+      - run: yarn build
+
+  e2e:
+    runs-on: ubuntu-latest
+    needs: build
+
+    strategy:
+      matrix:
+        node-version: [12.x]
+        angular-version: [9.0.x, 10.0.x, 10.1.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Use Angular version ${{ matrix.angular-version }}
+        uses: ngworker/angular-versions-action@v2
+        with:
+          angular_version: ${{ matrix.angular-version }}
+
+      - name: Variable-Yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Cache Yarn cache directory
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-
+      - run: yarn install
+
+      - run: yarn delete-paths
+      - uses: actions/download-artifact@v2
+        with:
+          name: lumberjack-package
+          path: node_modules/@ngworker/lumberjack
+      - run: npx ngcc || true
 
       - run: yarn e2e
