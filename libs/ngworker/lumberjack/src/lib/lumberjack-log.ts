@@ -11,5 +11,5 @@ export interface LumberjackLog {
   /**
    * Unix epoch ticks (milliseconds).
    */
-  timestamp: number;
+  createdAt: number;
 }

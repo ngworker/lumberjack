@@ -26,7 +26,7 @@ export abstract class LumberjackLogger {
 
   private createLogger(level: LumberjackLogEntryLevel, message: string, context: string = ''): () => void {
     return () => {
-      this.lumberjack.log({ context, level, message, timestamp: this.time.getUnixEpochTicks() });
+      this.lumberjack.log({ context, level, message, createdAt: this.time.getUnixEpochTicks() });
     };
   }
 }
