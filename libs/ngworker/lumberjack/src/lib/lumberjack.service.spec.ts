@@ -1,16 +1,25 @@
 import { StaticProvider } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { NoopDriver, NoopDriverModule, resolveDependency, SpyDriver, SpyDriverModule } from '@internal/test-util';
+import {
+  createDebugLog,
+  createErrorLog,
+  createInfoLog,
+  createWarningLog,
+  NoopDriver,
+  NoopDriverModule,
+  resolveDependency,
+  SpyDriver,
+  SpyDriverModule,
+} from '@internal/test-util';
 
 import { ConsoleDriverModule } from '../../console-driver/src/console-driver.module';
 
 import { LogDriverConfig, LogDriverConfigToken } from './configs';
 import { LogDriver, LogDriverToken } from './log-drivers';
-import { LumberjackLogEntryLevel, LumberjackLogLevel } from './lumberjack-log-levels';
+import { LumberjackLogLevel } from './lumberjack-log-levels';
 import { LumberjackModule } from './lumberjack.module';
 import { LumberjackService } from './lumberjack.service';
-import { LumberjackTimeService } from './time';
 
 const noLogsConfig: LogDriverConfig = {
   levels: [],
@@ -34,28 +43,7 @@ const verboseLoggingProvider: StaticProvider = {
   useValue: verboseLoggingConfig,
 };
 
-const createLog = (level: LumberjackLogEntryLevel, message = '') => ({
-  context: 'Test',
-  createdAt: resolveDependency(LumberjackTimeService).getUnixEpochTicks(),
-  level,
-  message,
-});
-const createDebugLog = (message = '') => createLog(LumberjackLogLevel.Debug, message);
-const createErrorLog = (message = '') => createLog(LumberjackLogLevel.Error, message);
-const createInfoLog = (message = '') => createLog(LumberjackLogLevel.Info, message);
-const createWarningLog = (message = '') => createLog(LumberjackLogLevel.Warning, message);
-
-const logMessage = (level: LumberjackLogEntryLevel, message = '') =>
-  resolveDependency(LumberjackService).log({
-    context: 'Test',
-    createdAt: resolveDependency(LumberjackTimeService).getUnixEpochTicks(),
-    level,
-    message,
-  });
-const logDebugMessage = (message = '') => logMessage(LumberjackLogLevel.Debug, message);
-const logErrorMessage = (message = '') => logMessage(LumberjackLogLevel.Error, message);
-const logInfoMessage = (message = '') => logMessage(LumberjackLogLevel.Info, message);
-const logWarningMessage = (message = '') => logMessage(LumberjackLogLevel.Warning, message);
+const logDebugMessage = () => resolveDependency(LumberjackService).log(createDebugLog(''));
 
 describe(LumberjackService.name, () => {
   describe('Log drivers', () => {
