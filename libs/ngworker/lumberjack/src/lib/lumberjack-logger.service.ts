@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import { LumberjackLogEntryLevel, LumberjackLogLevel } from '../lumberjack-log-levels';
-import { LumberjackService } from '../lumberjack.service';
-import { LumberjackTimeService } from '../time';
+import { LumberjackLogEntryLevel, LumberjackLogLevel } from './lumberjack-log-levels';
+import { LumberjackService } from './lumberjack.service';
+import { LumberjackTimeService } from './time';
 
 @Injectable()
 export abstract class LumberjackLogger {
