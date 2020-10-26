@@ -8,25 +8,25 @@ import { LumberjackTimeService } from './time';
 export abstract class LumberjackLogger {
   constructor(private lumberjack: LumberjackService, private time: LumberjackTimeService) {}
 
-  protected createDebugLogger(message: string, context: string = ''): () => void {
+  protected createDebugLogger(message: string, context?: string): () => void {
     return this.createLogger(LumberjackLogLevel.Debug, message, context);
   }
 
-  protected createErrorLogger(message: string, context: string = ''): () => void {
+  protected createErrorLogger(message: string, context?: string): () => void {
     return this.createLogger(LumberjackLogLevel.Error, message, context);
   }
 
-  protected createInfoLogger(message: string, context: string = ''): () => void {
+  protected createInfoLogger(message: string, context?: string): () => void {
     return this.createLogger(LumberjackLogLevel.Info, message, context);
   }
 
-  protected createWarningLogger(message: string, context: string = ''): () => void {
+  protected createWarningLogger(message: string, context?: string): () => void {
     return this.createLogger(LumberjackLogLevel.Warning, message, context);
   }
 
-  private createLogger(level: LumberjackLogEntryLevel, message: string, context: string = ''): () => void {
+  private createLogger(level: LumberjackLogEntryLevel, message: string, context?: string): () => void {
     return () => {
-      this.lumberjack.log({ context, level, message, createdAt: this.time.getUnixEpochTicks() });
+      this.lumberjack.log({ context, createdAt: this.time.getUnixEpochTicks(), level, message });
     };
   }
 }
