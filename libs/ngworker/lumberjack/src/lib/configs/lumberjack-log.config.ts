@@ -10,7 +10,7 @@ export const LumberjackLogConfigToken: InjectionToken<LumberjackLogConfig> = new
       const time = inject(LumberjackTimeService);
 
       return {
-        format: ({ context, level, message, createdAt: timestamp }) =>
+        format: ({ context, createdAt: timestamp, level, message }) =>
           `${level}  ${time.utcTimestampFor(timestamp)} ${context ? `[${context}]` : ''} ${message}`,
       };
     },
