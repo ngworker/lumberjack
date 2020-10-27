@@ -21,7 +21,7 @@ const createHttpDriver = (
   }: {
     config: HttpDriverConfig;
     isLumberjackModuleImportedFirst?: boolean;
-  } = { config: { storeUrl: 'api/json', logWagonSize: 1, origin: 'TEST_MODULE' } }
+  } = { config: { levels: [LumberjackLogLevel.Verbose], storeUrl: 'api/json', logWagonSize: 1, origin: 'TEST_MODULE' } }
 ) => {
   TestBed.configureTestingModule({
     imports: [
@@ -65,6 +65,7 @@ describe(HttpDriverModule.name, () => {
 
     it('registers a default level configuration if none is specified', () => {
       const customHttpConfig: HttpDriverConfig = {
+        levels: [LumberjackLogLevel.Verbose],
         storeUrl: 'api/logstore',
         origin: 'TEST_MODULE',
         logWagonSize: 5,
