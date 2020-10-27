@@ -1,13 +1,22 @@
 import { StaticProvider } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { NoopDriver, NoopDriverModule, resolveDependency, SpyDriver, SpyDriverModule } from '@internal/test-util';
+import {
+  createDebugLog,
+  createErrorLog,
+  createInfoLog,
+  createWarningLog,
+  NoopDriver,
+  NoopDriverModule,
+  resolveDependency,
+  SpyDriver,
+  SpyDriverModule,
+} from '@internal/test-util';
 
 import { ConsoleDriverModule } from '../../console-driver/src/console-driver.module';
 
 import { LogDriverConfig, LogDriverConfigToken } from './configs';
 import { LogDriver, LogDriverToken } from './log-drivers';
-import { createDebugLog, createErrorLog, createInfoLog, createWarningLog } from './log-types';
 import { LumberjackLogLevel } from './lumberjack-log-levels';
 import { LumberjackModule } from './lumberjack.module';
 import { LumberjackService } from './lumberjack.service';
@@ -33,13 +42,8 @@ const verboseLoggingProvider: StaticProvider = {
   provide: LogDriverConfigToken,
   useValue: verboseLoggingConfig,
 };
-const logCreators = {
-  debug: createDebugLog(''),
-  error: createErrorLog(''),
-  info: createInfoLog(''),
-  warning: createWarningLog(''),
-};
-const logEmptyDebugMessage = () => resolveDependency(LumberjackService).log(logCreators.debug());
+
+const logDebugMessage = () => resolveDependency(LumberjackService).log(createDebugLog(''));
 
 describe(LumberjackService.name, () => {
   describe('Log drivers', () => {
@@ -48,7 +52,7 @@ describe(LumberjackService.name, () => {
         imports: [LumberjackModule.forRoot()],
       });
 
-      expect(logEmptyDebugMessage).not.toThrow();
+      expect(logDebugMessage).not.toThrow();
     });
 
     it('accepts logs when a single log driver is registered', () => {
@@ -56,7 +60,7 @@ describe(LumberjackService.name, () => {
         imports: [LumberjackModule.forRoot(), NoopDriverModule.forRoot()],
       });
 
-      expect(logEmptyDebugMessage).not.toThrow();
+      expect(logDebugMessage).not.toThrow();
     });
 
     it('accepts logs when multiple log drivers are registered', () => {
@@ -64,7 +68,7 @@ describe(LumberjackService.name, () => {
         imports: [LumberjackModule.forRoot(), NoopDriverModule.forRoot(), ConsoleDriverModule.forRoot()],
       });
 
-      expect(logEmptyDebugMessage).not.toThrow();
+      expect(logDebugMessage).not.toThrow();
     });
   });
 
@@ -89,28 +93,28 @@ describe(LumberjackService.name, () => {
     let spyDriver: SpyDriver;
 
     it('logs a debug message to a log driver', () => {
-      lumberjack.log(logCreators.debug());
+      lumberjack.log(createDebugLog());
 
       expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
       expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLogLevel.Debug);
     });
 
     it('logs an error message to a log driver', () => {
-      lumberjack.log(logCreators.error());
+      lumberjack.log(createErrorLog());
 
       expect(spyDriver.logError).toHaveBeenCalledTimes(1);
       expect(spyDriver.logError).toHaveBeenCalledWith(LumberjackLogLevel.Error);
     });
 
     it('logs an info message to a log driver', () => {
-      lumberjack.log(logCreators.info());
+      lumberjack.log(createInfoLog());
 
       expect(spyDriver.logInfo).toHaveBeenCalledTimes(1);
       expect(spyDriver.logInfo).toHaveBeenCalledWith(LumberjackLogLevel.Info);
     });
 
     it('logs a warning to a log driver', () => {
-      lumberjack.log(logCreators.warning());
+      lumberjack.log(createWarningLog());
 
       expect(spyDriver.logWarning).toHaveBeenCalledTimes(1);
       expect(spyDriver.logWarning).toHaveBeenCalledWith(LumberjackLogLevel.Warning);
@@ -124,7 +128,7 @@ describe(LumberjackService.name, () => {
         providers: [noLogsProvider],
       });
 
-      expect(logEmptyDebugMessage).not.toThrow();
+      expect(logDebugMessage).not.toThrow();
     });
 
     it('accepts logs when all log levels are enabled', () => {
@@ -133,7 +137,7 @@ describe(LumberjackService.name, () => {
         providers: [allLogsProvider],
       });
 
-      expect(logEmptyDebugMessage).not.toThrow();
+      expect(logDebugMessage).not.toThrow();
     });
 
     it('accepts logs when all log levels are enabled and a log driver is registered', () => {
@@ -142,7 +146,7 @@ describe(LumberjackService.name, () => {
         providers: [allLogsProvider],
       });
 
-      expect(logEmptyDebugMessage).not.toThrow();
+      expect(logDebugMessage).not.toThrow();
     });
   });
 
@@ -169,28 +173,28 @@ describe(LumberjackService.name, () => {
 
     describe('when a log driver is registered', () => {
       it('debug entries are logged', () => {
-        lumberjack.log(logCreators.debug());
+        lumberjack.log(createDebugLog());
 
         expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
         expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLogLevel.Debug);
       });
 
       it('errors are logged', () => {
-        lumberjack.log(logCreators.error());
+        lumberjack.log(createErrorLog());
 
         expect(spyDriver.logError).toHaveBeenCalledTimes(1);
         expect(spyDriver.logError).toHaveBeenCalledWith(LumberjackLogLevel.Error);
       });
 
       it('info is logged', () => {
-        lumberjack.log(logCreators.info());
+        lumberjack.log(createInfoLog());
 
         expect(spyDriver.logInfo).toHaveBeenCalledTimes(1);
         expect(spyDriver.logInfo).toHaveBeenCalledWith(LumberjackLogLevel.Info);
       });
 
       it('warnings are logged', () => {
-        lumberjack.log(logCreators.warning());
+        lumberjack.log(createWarningLog());
 
         expect(spyDriver.logWarning).toHaveBeenCalledTimes(1);
         expect(spyDriver.logWarning).toHaveBeenCalledWith(LumberjackLogLevel.Warning);
@@ -228,10 +232,10 @@ describe(LumberjackService.name, () => {
       });
 
       beforeEach(() => {
-        lumberjack.log(logCreators.debug());
-        lumberjack.log(logCreators.info());
-        lumberjack.log(logCreators.error());
-        lumberjack.log(logCreators.warning());
+        lumberjack.log(createDebugLog());
+        lumberjack.log(createInfoLog());
+        lumberjack.log(createErrorLog());
+        lumberjack.log(createWarningLog());
       });
 
       let lumberjack: LumberjackService;

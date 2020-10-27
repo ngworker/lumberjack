@@ -2,13 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { expectNgModuleToBeGuarded, resolveDependency } from '@internal/test-util';
 
-import {
-  defaultLogConfig,
-  defaultLogDriverConfig,
-  LogDriverConfigToken,
-  LumberjackLogConfig,
-  LumberjackLogConfigToken,
-} from './configs';
+import { defaultLogDriverConfig, LogDriverConfigToken, LumberjackLogConfig, LumberjackLogConfigToken } from './configs';
 import { LumberjackModule } from './lumberjack.module';
 
 describe(LumberjackModule.name, () => {
@@ -36,7 +30,9 @@ describe(LumberjackModule.name, () => {
       });
 
       const actualConfig = resolveDependency(LumberjackLogConfigToken);
-      expect(actualConfig).toEqual(defaultLogConfig);
+      expect(actualConfig).toEqual({
+        format: jasmine.any(Function),
+      });
     });
 
     it('provides a default log driver configuration', () => {

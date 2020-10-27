@@ -1,20 +1,14 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import { defaultLogConfig } from './configs/default-log.config';
 import { LumberjackLogConfig, LumberjackLogConfigToken } from './configs/lumberjack-log.config';
 import { LumberjackRootModule } from './lumberjack-root.module';
 
 @NgModule()
 export class LumberjackModule {
-  static forRoot(config: LumberjackLogConfig = defaultLogConfig): ModuleWithProviders<LumberjackRootModule> {
+  static forRoot(config?: LumberjackLogConfig): ModuleWithProviders<LumberjackRootModule> {
     return {
       ngModule: LumberjackRootModule,
-      providers: [
-        {
-          provide: LumberjackLogConfigToken,
-          useValue: config,
-        },
-      ],
+      providers: (config && [{ provide: LumberjackLogConfigToken, useValue: config }]) || [],
     };
   }
 
