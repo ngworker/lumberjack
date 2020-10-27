@@ -8,6 +8,10 @@ import { ConsoleDriverConfigToken } from './console-driver-config.token';
 export class ConsoleDriver implements LogDriver {
   constructor(@Inject(ConsoleDriverConfigToken) public config: LogDriverConfig) {}
 
+  logCritical(logEntry: string): void {
+    console.error(logEntry);
+  }
+
   logDebug(logEntry: string): void {
     console.debug(logEntry);
   }
@@ -18,6 +22,11 @@ export class ConsoleDriver implements LogDriver {
 
   logInfo(logEntry: string): void {
     console.info(logEntry);
+  }
+
+  logTrace(logEntry: string): void {
+    // tslint:disable-next-line: no-console
+    console.trace(logEntry);
   }
 
   logWarning(logEntry: string): void {

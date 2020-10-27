@@ -3,9 +3,11 @@
  *
  */
 export enum LumberjackLogLevel {
+  Critical = 'critical',
   Debug = 'debug',
   Error = 'error',
   Info = 'info',
+  Trace = 'trace',
   Verbose = 'verbose',
   Warning = 'warn',
 }
