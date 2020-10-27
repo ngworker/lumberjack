@@ -4,10 +4,10 @@
  */
 export enum LumberjackLogLevel {
   Debug = 'debug',
-  Verbose = 'verbose',
-  Info = 'info',
-  Warning = 'warn',
   Error = 'error',
+  Info = 'info',
+  Verbose = 'verbose',
+  Warning = 'warn',
 }
 
 export type LumberjackLogEntryLevel = Exclude<LumberjackLogLevel, LumberjackLogLevel.Verbose>;
