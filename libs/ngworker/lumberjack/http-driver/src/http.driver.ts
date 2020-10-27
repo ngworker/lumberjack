@@ -27,16 +27,16 @@ export class HttpDriver implements LogDriver {
     private ngZone: NgZone
   ) {}
 
-  logInfo(logEntry: string): void {
-    this.log(logEntry, LumberjackLogLevel.Info);
-  }
-
   logDebug(logEntry: string): void {
     this.log(logEntry, LumberjackLogLevel.Debug);
   }
 
   logError(logEntry: string): void {
     this.log(logEntry, LumberjackLogLevel.Error);
+  }
+
+  logInfo(logEntry: string): void {
+    this.log(logEntry, LumberjackLogLevel.Info);
   }
 
   logWarning(logEntry: string): void {
