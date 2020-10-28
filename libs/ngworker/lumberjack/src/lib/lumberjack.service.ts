@@ -48,28 +48,38 @@ export class LumberjackService {
 
   private logToTheRightLevel(
     driver: LogDriver,
-    logItem: LumberjackLog,
+    logEntry: LumberjackLog,
     format: (logEntry: LumberjackLog) => string
   ): void {
-    switch (logItem.level) {
+    const logMessage = format(logEntry);
+
+    switch (logEntry.level) {
       case LumberjackLogLevel.Info:
-        driver.logInfo(format(logItem));
+        driver.logInfo(logMessage);
 
         break;
       case LumberjackLogLevel.Error:
-        driver.logError(format(logItem));
+        driver.logError(logMessage);
 
         break;
       case LumberjackLogLevel.Warning:
-        driver.logWarning(format(logItem));
+        driver.logWarning(logMessage);
 
         break;
       case LumberjackLogLevel.Debug:
-        driver.logDebug(format(logItem));
+        driver.logDebug(logMessage);
+
+        break;
+      case LumberjackLogLevel.Critical:
+        driver.logCritical(logMessage);
+
+        break;
+      case LumberjackLogLevel.Trace:
+        driver.logTrace(logMessage);
 
         break;
       default:
-        driver.logInfo(format(logItem));
+        driver.logInfo(logMessage);
 
         break;
     }

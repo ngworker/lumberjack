@@ -101,7 +101,7 @@ describe(LumberjackService.name, () => {
     let lumberjack: LumberjackService;
     let spyDriver: SpyDriver;
 
-    xit('logs a critical error to a log driver', () => {
+    it('logs a critical error to a log driver', () => {
       lumberjack.log(createCriticalLog());
 
       expect(spyDriver.logCritical).toHaveBeenCalledTimes(1);
@@ -132,8 +132,8 @@ describe(LumberjackService.name, () => {
     it('logs a trace to a log driver', () => {
       lumberjack.log(createTraceLog());
 
-      expect(spyDriver.logInfo).toHaveBeenCalledTimes(1);
-      expect(spyDriver.logInfo).toHaveBeenCalledWith(LumberjackLogLevel.Trace);
+      expect(spyDriver.logTrace).toHaveBeenCalledTimes(1);
+      expect(spyDriver.logTrace).toHaveBeenCalledWith(LumberjackLogLevel.Trace);
     });
 
     it('logs a warning to a log driver', () => {
