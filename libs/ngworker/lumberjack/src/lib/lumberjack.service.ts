@@ -51,35 +51,35 @@ export class LumberjackService {
     logEntry: LumberjackLog,
     format: (logEntry: LumberjackLog) => string
   ): void {
-    const logMessage = format(logEntry);
+    const logText = format(logEntry);
 
     switch (logEntry.level) {
       case LumberjackLogLevel.Info:
-        driver.logInfo(logMessage);
+        driver.logInfo(logText);
 
         break;
       case LumberjackLogLevel.Error:
-        driver.logError(logMessage);
+        driver.logError(logText);
 
         break;
       case LumberjackLogLevel.Warning:
-        driver.logWarning(logMessage);
+        driver.logWarning(logText);
 
         break;
       case LumberjackLogLevel.Debug:
-        driver.logDebug(logMessage);
+        driver.logDebug(logText);
 
         break;
       case LumberjackLogLevel.Critical:
-        driver.logCritical(logMessage);
+        driver.logCritical(logText);
 
         break;
       case LumberjackLogLevel.Trace:
-        driver.logTrace(logMessage);
+        driver.logTrace(logText);
 
         break;
       default:
-        driver.logInfo(logMessage);
+        driver.logInfo(logText);
 
         break;
     }
