@@ -234,10 +234,10 @@ describe(LumberjackService.name, () => {
               format: ({ level }) => level,
             }),
             SpyDriverModule.forRoot({
-              levels: [LumberjackLogLevel.Debug, LumberjackLogLevel.Info],
+              levels: [LumberjackLogLevel.Debug, LumberjackLogLevel.Info, LumberjackLogLevel.Trace],
             }),
             NoopDriverModule.forRoot({
-              levels: [LumberjackLogLevel.Error, LumberjackLogLevel.Warning],
+              levels: [LumberjackLogLevel.Critical, LumberjackLogLevel.Error, LumberjackLogLevel.Warning],
             }),
           ],
           providers: [verboseLoggingProvider],
@@ -257,9 +257,11 @@ describe(LumberjackService.name, () => {
       });
 
       beforeEach(() => {
+        lumberjack.log(createCriticalLog());
         lumberjack.log(createDebugLog());
-        lumberjack.log(createInfoLog());
         lumberjack.log(createErrorLog());
+        lumberjack.log(createInfoLog());
+        lumberjack.log(createTraceLog());
         lumberjack.log(createWarningLog());
       });
 
@@ -272,7 +274,11 @@ describe(LumberjackService.name, () => {
         expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLogLevel.Debug);
         expect(spyDriver.logInfo).toHaveBeenCalledTimes(1);
         expect(spyDriver.logInfo).toHaveBeenCalledWith(LumberjackLogLevel.Info);
+        expect(spyDriver.logTrace).toHaveBeenCalledTimes(1);
+        expect(spyDriver.logTrace).toHaveBeenCalledWith(LumberjackLogLevel.Trace);
 
+        expect(noopDriver.logCritical).toHaveBeenCalledTimes(1);
+        expect(noopDriver.logCritical).toHaveBeenCalledWith(LumberjackLogLevel.Critical);
         expect(noopDriver.logError).toHaveBeenCalledTimes(1);
         expect(noopDriver.logError).toHaveBeenCalledWith(LumberjackLogLevel.Error);
         expect(noopDriver.logWarning).toHaveBeenCalledTimes(1);
@@ -280,11 +286,13 @@ describe(LumberjackService.name, () => {
       });
 
       it('then logs of other levels are not passed to either of them', () => {
+        expect(spyDriver.logCritical).not.toHaveBeenCalled();
         expect(spyDriver.logError).not.toHaveBeenCalled();
         expect(spyDriver.logWarning).not.toHaveBeenCalled();
 
         expect(noopDriver.logDebug).not.toHaveBeenCalled();
         expect(noopDriver.logInfo).not.toHaveBeenCalled();
+        expect(noopDriver.logTrace).not.toHaveBeenCalled();
       });
     });
   });
