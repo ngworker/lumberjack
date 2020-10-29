@@ -12,8 +12,16 @@ import { NoopDriverConfigToken } from './noop-driver-config.token';
 @Injectable()
 export class NoopDriver implements LogDriver {
   constructor(@Inject(NoopDriverConfigToken) public config: LogDriverConfig) {}
+
+  logCritical(logEntry: string): void {}
+
   logDebug(logEntry: string): void {}
+
   logError(logEntry: string): void {}
+
   logInfo(logEntry: string): void {}
+
+  logTrace(logEntry: string): void {}
+
   logWarning(logEntry: string): void {}
 }
