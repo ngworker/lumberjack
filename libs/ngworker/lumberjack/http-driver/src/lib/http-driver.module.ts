@@ -1,6 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { HttpDriverConfig, HttpDriverConfigToken } from './http-driver-config.token';
+import { HttpDriverOptions } from './http-driver-options';
 import { HttpDriverRootModule } from './http-driver-root.module';
 
 @NgModule()
@@ -12,6 +13,18 @@ export class HttpDriverModule {
         {
           provide: HttpDriverConfigToken,
           useValue: config,
+        },
+      ],
+    };
+  }
+
+  static withOptions(options: HttpDriverOptions): ModuleWithProviders<HttpDriverRootModule> {
+    return {
+      ngModule: HttpDriverRootModule,
+      providers: [
+        {
+          provide: HttpDriverConfigToken,
+          useValue: options,
         },
       ],
     };
