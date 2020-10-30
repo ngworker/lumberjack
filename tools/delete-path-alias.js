@@ -1,4 +1,4 @@
-import * as json from 'json';
+const json = require('json');
 
 function editJsonInPlace(filePath, commands) {
   json.main(['', '', '-f', filePath, '--in-place', '-e', `${commands.join('; ')};`]);
