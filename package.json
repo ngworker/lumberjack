@@ -22,7 +22,7 @@
     "publish": "cd dist/ngworker/lumberjack && npm publish",
     "ci": "yarn install && yarn lint && yarn build:lib && yarn test:internal:ci && yarn test:lib:ci && yarn build && yarn test:ci && yarn e2e",
     "format": "npx prettier --config prettier.config.js --write \"**/*.*\" \"!dist/**\" \"!yarn.lock\"",
-    "delete-paths": "npx json -I -f tsconfig.json -e 'delete this.compilerOptions.paths;'"
+    "delete-path-alias": "node tools/delete-path-alias.mjs"
   },
   "private": true,
   "dependencies": {

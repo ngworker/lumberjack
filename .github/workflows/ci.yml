@@ -146,7 +146,8 @@ jobs:
             ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-
       - run: yarn install
 
-      - run: yarn delete-paths
+      - run: yarn delete-path-alias @ngworker/lumberjack
+      - run: yarn delete-path-alias @ngworker/lumberjack/*-driver
       - uses: actions/download-artifact@v2
         with:
           name: lumberjack-package
@@ -188,7 +189,8 @@ jobs:
             ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-
       - run: yarn install
 
-      - run: yarn delete-paths
+      - run: yarn delete-path-alias @ngworker/lumberjack
+      - run: yarn delete-path-alias @ngworker/lumberjack/*-driver
       - uses: actions/download-artifact@v2
         with:
           name: lumberjack-package
