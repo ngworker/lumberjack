@@ -15,7 +15,7 @@ describe('AppComponent', () => {
       HttpClientTestingModule,
       LumberjackModule.forRoot(),
       ConsoleDriverModule.forRoot(),
-      HttpDriverModule.forRoot({ logWagonSize: 5, origin: 'ForestAPP', storeUrl: '/api/logs' }),
+      HttpDriverModule.forRoot({ origin: 'ForestAPP', storeUrl: '/api/logs' }),
     ],
   });
 

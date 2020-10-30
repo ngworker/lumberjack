@@ -1,7 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, NgZone } from '@angular/core';
-import { Observable, Subject } from 'rxjs';
-import { tap } from 'rxjs/operators';
+import { retry } from 'rxjs/operators';
 
 import { LogDriver, LumberjackLogLevel } from '@ngworker/lumberjack';
 
@@ -10,17 +9,11 @@ import { HttpDriverConfig, HttpDriverConfigToken } from './http-driver-config.to
 interface HttpLogEntry {
   logEntry: string;
   level: LumberjackLogLevel;
-}
-
-interface HttpLogPackage {
-  logWagon: HttpLogEntry[];
   origin: string;
 }
 
 @Injectable()
 export class HttpDriver implements LogDriver {
-  logWagon: HttpLogEntry[] = [];
-
   constructor(
     private http: HttpClient,
     @Inject(HttpDriverConfigToken) public config: HttpDriverConfig,
@@ -28,60 +21,42 @@ export class HttpDriver implements LogDriver {
   ) {}
 
   logCritical(logEntry: string): void {
-    this.log(logEntry, LumberjackLogLevel.Critical);
+    this.sendLog(logEntry, LumberjackLogLevel.Critical);
   }
 
   logDebug(logEntry: string): void {
-    this.log(logEntry, LumberjackLogLevel.Debug);
+    this.sendLog(logEntry, LumberjackLogLevel.Debug);
   }
 
   logError(logEntry: string): void {
-    this.log(logEntry, LumberjackLogLevel.Error);
+    this.sendLog(logEntry, LumberjackLogLevel.Error);
   }
 
   logInfo(logEntry: string): void {
-    this.log(logEntry, LumberjackLogLevel.Info);
+    this.sendLog(logEntry, LumberjackLogLevel.Info);
   }
 
   logTrace(logEntry: string): void {
-    this.log(logEntry, LumberjackLogLevel.Trace);
+    this.sendLog(logEntry, LumberjackLogLevel.Trace);
   }
 
   logWarning(logEntry: string): void {
-    this.log(logEntry, LumberjackLogLevel.Warning);
+    this.sendLog(logEntry, LumberjackLogLevel.Warning);
   }
 
-  private log(logEntry: string, logLevel: LumberjackLogLevel): void {
-    const { logWagonSize } = this.config;
-
-    this.logWagon.push({ logEntry, level: logLevel });
-
-    if (this.logWagon.length >= logWagonSize) {
-      this.sendLogPackage()
-        .pipe(tap(() => (this.logWagon = [])))
-        .subscribe();
-    }
-  }
-
-  private sendLogPackage(): Observable<void> {
+  private sendLog(logEntry: string, level: LumberjackLogLevel): void {
     const { origin, storeUrl } = this.config;
-    const logPackage: HttpLogPackage = { logWagon: this.logWagon, origin };
-
-    const logPackageSent = new Subject<void>();
-    const logPackageSent$ = logPackageSent.asObservable();
+    const httpLogEntry: HttpLogEntry = { logEntry, origin, level };
 
     this.ngZone.runOutsideAngular(() => {
       this.http
-        .post<void>(storeUrl, logPackage)
+        .post<void>(storeUrl, httpLogEntry)
         .pipe(
-          tap(() => {
-            logPackageSent.next();
-            logPackageSent.complete();
-          })
+          // use a more advance operator for production
+          // https://github.com/alex-okrushko/backoff-rxjs
+          retry(5)
         )
         .subscribe();
     });
-
-    return logPackageSent$;
   }
 }

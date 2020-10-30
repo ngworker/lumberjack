@@ -20,7 +20,7 @@ const createHttpDriver = (
   }: {
     config: HttpDriverConfig;
     isLumberjackModuleImportedFirst?: boolean;
-  } = { config: { storeUrl: 'api/json', logWagonSize: 1, origin: 'TEST_MODULE' } }
+  } = { config: { storeUrl: 'api/json', origin: 'TEST_MODULE' } }
 ) => {
   TestBed.configureTestingModule({
     imports: [
@@ -52,7 +52,6 @@ describe(HttpDriverModule.name, () => {
         levels: [LumberjackLogLevel.Error],
         storeUrl: 'api/logstore',
         origin: 'TEST_MODULE',
-        logWagonSize: 5,
       };
 
       const httpDriver = createHttpDriver({ config: expectedConfig });
@@ -65,7 +64,6 @@ describe(HttpDriverModule.name, () => {
       const customHttpConfig: HttpDriverConfig = {
         storeUrl: 'api/logstore',
         origin: 'TEST_MODULE',
-        logWagonSize: 5,
       };
       const expectedConfig: HttpDriverConfig = { ...defaultLogDriverConfig, ...customHttpConfig };
 
@@ -80,7 +78,6 @@ describe(HttpDriverModule.name, () => {
         levels: [LumberjackLogLevel.Debug],
         storeUrl: 'api/logstore',
         origin: 'TEST_MODULE',
-        logWagonSize: 5,
       };
 
       const httpDriver = createHttpDriver({

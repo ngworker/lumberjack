@@ -18,7 +18,6 @@ import { AppComponent } from './app.component';
     HttpDriverModule.forRoot({
       origin: 'ForestApp',
       storeUrl: '/api/logs',
-      logWagonSize: 2,
     }),
   ],
   providers: [],
