@@ -60,14 +60,7 @@ export class HttpDriver implements LogDriver {
     const httpLogEntry: HttpLogEntry = { logEntry, origin, level };
 
     this.ngZone.runOutsideAngular(() => {
-      this.http
-        .post<void>(storeUrl, httpLogEntry)
-        .pipe(
-          // use a more advance operator for production
-          // https://github.com/alex-okrushko/backoff-rxjs
-          retry(5)
-        )
-        .subscribe();
+      this.http.post<void>(storeUrl, httpLogEntry).pipe(retryWithDelay(5, 250)).subscribe();
     });
   }
 }
