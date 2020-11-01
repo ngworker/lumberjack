@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { expectNgModuleToBeGuarded, resolveDependency } from '@internal/test-util';
@@ -24,6 +25,7 @@ const createHttpDriver = (
 ) => {
   TestBed.configureTestingModule({
     imports: [
+      HttpClientTestingModule,
       isLumberjackModuleImportedFirst ? LumberjackModule.forRoot() : [],
       HttpDriverModule.forRoot(config),
       isLumberjackModuleImportedFirst ? [] : LumberjackModule.forRoot(),
