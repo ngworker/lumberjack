@@ -10,4 +10,3 @@ export * from './lib/lumberjack-logger.service';
 export * from './lib/lumberjack.module';
 export * from './lib/lumberjack.service';
 export * from './lib/time';
-export * from './lib/type-utilities/exclude-from-type';
