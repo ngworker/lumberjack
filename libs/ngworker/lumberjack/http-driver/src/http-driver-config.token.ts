@@ -19,4 +19,10 @@ export interface HttpDriverConfig extends LogDriverConfig {
    * The endpoint matching this url MUST support the POST method.
    */
   storeUrl: string;
+  /**
+   *
+   * The desired retry behavior options on failed requests
+   *
+   */
+  retryOptions: { attempts: number; delayMs: number };
 }

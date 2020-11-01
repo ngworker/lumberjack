@@ -18,6 +18,7 @@ import { AppComponent } from './app.component';
     HttpDriverModule.forRoot({
       origin: 'ForestApp',
       storeUrl: '/api/logs',
+      retryOptions: { attempts: 5, delayMs: 250 },
     }),
   ],
   providers: [],

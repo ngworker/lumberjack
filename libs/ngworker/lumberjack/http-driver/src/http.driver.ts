@@ -45,11 +45,15 @@ export class HttpDriver implements LogDriver {
   }
 
   private sendLog(logEntry: string, level: LumberjackLogLevel): void {
-    const { origin, storeUrl } = this.config;
+    const { origin, storeUrl, retryOptions } = this.config;
     const httpLogEntry: HttpLogEntry = { logEntry, origin, level };
 
     this.ngZone.runOutsideAngular(() => {
-      this.http.post<void>(storeUrl, httpLogEntry).pipe(retryWithDelay(5, 250)).subscribe();
+      // tslint:disable-next-line: no-non-null-assertion
+      this.http
+        .post<void>(storeUrl, httpLogEntry)
+        .pipe(retryWithDelay(retryOptions.attempts, retryOptions.delayMs))
+        .subscribe();
     });
   }
 }

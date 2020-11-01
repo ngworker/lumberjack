@@ -15,7 +15,11 @@ describe('AppComponent', () => {
       HttpClientTestingModule,
       LumberjackModule.forRoot(),
       ConsoleDriverModule.forRoot(),
-      HttpDriverModule.forRoot({ origin: 'ForestAPP', storeUrl: '/api/logs' }),
+      HttpDriverModule.forRoot({
+        origin: 'ForestAPP',
+        storeUrl: '/api/logs',
+        retryOptions: { attempts: 5, delayMs: 250 },
+      }),
     ],
   });
 

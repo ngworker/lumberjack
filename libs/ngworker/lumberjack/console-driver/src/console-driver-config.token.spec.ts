@@ -26,7 +26,7 @@ describe('ConsoleDriverConfigToken', () => {
     it('then that config is resolved', () => {
       const actualDriverConfig = resolveDependency(ConsoleDriverConfigToken);
 
-      expect(actualDriverConfig).not.toBe(debugDriverConfig);
+      expect(actualDriverConfig).toBe(debugDriverConfig);
     });
   });
 
@@ -40,7 +40,7 @@ describe('ConsoleDriverConfigToken', () => {
     it('then the value of the log driver config token is resolved', () => {
       const actualDriverConfig = resolveDependency(ConsoleDriverConfigToken);
 
-      expect(actualDriverConfig).not.toBe(verboseDriverConfig);
+      expect(actualDriverConfig).toBe(verboseDriverConfig);
     });
   });
 });

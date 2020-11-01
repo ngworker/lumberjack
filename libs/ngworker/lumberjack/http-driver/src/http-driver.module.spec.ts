@@ -1,3 +1,4 @@
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { expectNgModuleToBeGuarded, resolveDependency } from '@internal/test-util';
@@ -20,10 +21,11 @@ const createHttpDriver = (
   }: {
     config: HttpDriverConfig;
     isLumberjackModuleImportedFirst?: boolean;
-  } = { config: { storeUrl: 'api/json', origin: 'TEST_MODULE' } }
+  } = { config: { storeUrl: 'api/json', origin: 'TEST_MODULE', retryOptions: { attempts: 5, delayMs: 250 } } }
 ) => {
   TestBed.configureTestingModule({
     imports: [
+      HttpClientTestingModule,
       isLumberjackModuleImportedFirst ? LumberjackModule.forRoot() : [],
       HttpDriverModule.forRoot(config),
       isLumberjackModuleImportedFirst ? [] : LumberjackModule.forRoot(),
@@ -52,6 +54,7 @@ describe(HttpDriverModule.name, () => {
         levels: [LumberjackLogLevel.Error],
         storeUrl: 'api/logstore',
         origin: 'TEST_MODULE',
+        retryOptions: { attempts: 5, delayMs: 250 },
       };
 
       const httpDriver = createHttpDriver({ config: expectedConfig });
@@ -64,6 +67,7 @@ describe(HttpDriverModule.name, () => {
       const customHttpConfig: HttpDriverConfig = {
         storeUrl: 'api/logstore',
         origin: 'TEST_MODULE',
+        retryOptions: { attempts: 5, delayMs: 250 },
       };
       const expectedConfig: HttpDriverConfig = { ...defaultLogDriverConfig, ...customHttpConfig };
 
@@ -78,6 +82,7 @@ describe(HttpDriverModule.name, () => {
         levels: [LumberjackLogLevel.Debug],
         storeUrl: 'api/logstore',
         origin: 'TEST_MODULE',
+        retryOptions: { attempts: 5, delayMs: 250 },
       };
 
       const httpDriver = createHttpDriver({
