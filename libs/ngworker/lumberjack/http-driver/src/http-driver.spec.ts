@@ -96,7 +96,7 @@ describe(HttpDriver.name, () => {
 
     let req: TestRequest;
 
-    for (let index = 0; index < retryOptions.attempts; index++) {
+    for (let index = 0; index < retryOptions.attempts - 1; index++) {
       req = httpTestingController.expectOne(storeUrl);
       expect(req.cancelled).toBeFalse();
       expect(req.request.method).toEqual('POST');
