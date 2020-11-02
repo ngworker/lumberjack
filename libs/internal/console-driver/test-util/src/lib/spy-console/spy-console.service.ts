@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { ConsoleLogger } from '@ngworker/lumberjack/console-driver';
+import { LumberjackConsole } from '@ngworker/lumberjack/console-driver';
 
 /**
  * Spy console logger.
@@ -8,7 +8,7 @@ import { ConsoleLogger } from '@ngworker/lumberjack/console-driver';
  * Every method is a spy.
  */
 @Injectable()
-export class SpyConsoleLogger implements ConsoleLogger, jasmine.SpyObj<ConsoleLogger> {
+export class SpyConsole implements LumberjackConsole, jasmine.SpyObj<LumberjackConsole> {
   debug = jasmine.createSpy('debug');
 
   error = jasmine.createSpy('error');

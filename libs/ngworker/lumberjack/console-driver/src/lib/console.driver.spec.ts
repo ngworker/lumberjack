@@ -1,26 +1,26 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SpyConsoleLogger, SpyConsoleLoggerModule } from '@internal/console-driver/test-util';
+import { SpyConsole, SpyConsoleModule } from '@internal/console-driver/test-util';
 import { resolveDependency } from '@internal/test-util';
 import { LogDriver, LogDriverToken, LumberjackLogLevel } from '@ngworker/lumberjack';
 
 import { ConsoleDriverModule } from './console-driver.module';
-import { ConsoleLoggerToken } from './console-logger.token';
 import { ConsoleDriver } from './console.driver';
+import { LumberjackConsoleToken } from './lumberjack-console.token';
 
 describe(ConsoleDriver.name, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ConsoleDriverModule.forRoot({ levels: [LumberjackLogLevel.Verbose] }), SpyConsoleLoggerModule],
+      imports: [ConsoleDriverModule.forRoot({ levels: [LumberjackLogLevel.Verbose] }), SpyConsoleModule],
     });
 
     const [_driver] = (resolveDependency(LogDriverToken) as unknown) as LogDriver[];
     driver = _driver as ConsoleDriver;
-    spyLogger = resolveDependency(ConsoleLoggerToken) as SpyConsoleLogger;
+    spyLogger = resolveDependency(LumberjackConsoleToken) as SpyConsole;
   });
 
   let driver: ConsoleDriver;
-  let spyLogger: SpyConsoleLogger;
+  let spyLogger: SpyConsole;
 
   it("logs the critical level to the console's error channel", () => {
     const expectedMessage = LumberjackLogLevel.Critical;

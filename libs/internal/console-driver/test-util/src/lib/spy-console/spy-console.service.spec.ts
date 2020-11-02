@@ -1,11 +1,11 @@
-import { SpyConsoleLogger } from './spy-console-logger.service';
+import { SpyConsole } from './spy-console.service';
 
-describe(SpyConsoleLogger.name, () => {
+describe(SpyConsole.name, () => {
   beforeEach(() => {
-    spy = new SpyConsoleLogger();
+    spy = new SpyConsole();
   });
 
-  let spy: SpyConsoleLogger;
+  let spy: SpyConsole;
 
   it('can be passed a lot of arguments', () => {
     const hundredNumbers = Array(100)

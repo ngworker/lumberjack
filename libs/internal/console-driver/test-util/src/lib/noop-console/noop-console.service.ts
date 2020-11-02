@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { ConsoleLogger } from '@ngworker/lumberjack/console-driver';
+import { LumberjackConsole } from '@ngworker/lumberjack/console-driver';
 
 /**
  * No-op console logger.
@@ -8,7 +8,7 @@ import { ConsoleLogger } from '@ngworker/lumberjack/console-driver';
  * Every method is a no-op.
  */
 @Injectable()
-export class NoopConsoleLogger implements ConsoleLogger {
+export class NoopConsole implements LumberjackConsole {
   // tslint:disable: no-any
   debug(...data: any[]): void;
   debug(message?: any, ...optionalParams: any[]): void;

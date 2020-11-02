@@ -1,7 +1,7 @@
 import { StaticProvider } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { NoopConsoleLoggerModule } from '@internal/console-driver/test-util';
+import { NoopConsoleModule } from '@internal/console-driver/test-util';
 import {
   createCriticalLog,
   createDebugLog,
@@ -78,7 +78,7 @@ describe(LumberjackService.name, () => {
           LumberjackModule.forRoot(),
           NoopDriverModule.forRoot(),
           ConsoleDriverModule.forRoot(),
-          NoopConsoleLoggerModule,
+          NoopConsoleModule,
         ],
       });
 
