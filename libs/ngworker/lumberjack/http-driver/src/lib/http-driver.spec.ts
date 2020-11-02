@@ -1,3 +1,4 @@
+import { HttpRequest } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
@@ -6,7 +7,35 @@ import { LogDriver, LogDriverToken, LumberjackLogLevel, LumberjackModule } from 
 
 import { HttpDriverConfig } from './http-driver-config.token';
 import { HttpDriverModule } from './http-driver.module';
+import { HttpLogEntry } from './http-log-entry';
 import { HttpDriver } from './http.driver';
+
+/**
+ *
+ * Make given times calls to a function
+ *
+ */
+function repeat(times: number, fn: () => void): void {
+  return Array(times).fill(undefined).forEach(fn);
+}
+
+function generateLogEntry(logEntry: string, level: LumberjackLogLevel, origin: string): HttpLogEntry {
+  return {
+    logEntry,
+    level,
+    origin,
+  };
+}
+
+/**
+ *
+ * Flush the current fake http call with a service unavailable error
+ *
+ */
+// tslint:disable-next-line: no-any
+function failHttpWithErrorUnavailable(flush: (...args: any[]) => void) {
+  flush('Service Unavailable', { status: 503, statusText: 'Service Unavailable' });
+}
 
 describe(HttpDriver.name, () => {
   let httpDriver: LogDriver;
@@ -32,82 +61,80 @@ describe(HttpDriver.name, () => {
 
   describe('log to a http server using the right level', () => {
     [
-      [LumberjackLogLevel.Critical, 'logCritical'],
-      [LumberjackLogLevel.Debug, 'logDebug'],
-      [LumberjackLogLevel.Error, 'logError'],
-      [LumberjackLogLevel.Info, 'logInfo'],
-      [LumberjackLogLevel.Trace, 'logTrace'],
-      [LumberjackLogLevel.Warning, 'logWarning'],
-    ].forEach(([level, logMethodName]) => {
-      it('should send log to the configure url', () => {
-        // tslint:disable-next-line: no-any
-        (httpDriver as any)[logMethodName]('SOME LOG');
-        const body = {
-          logEntry: 'SOME LOG',
-          level,
-          origin: config.origin,
-        };
+      { level: LumberjackLogLevel.Critical, logMethod: (driver: LogDriver) => driver.logCritical },
+      { level: LumberjackLogLevel.Debug, logMethod: (driver: LogDriver) => driver.logDebug },
+      { level: LumberjackLogLevel.Error, logMethod: (driver: LogDriver) => driver.logError },
+      { level: LumberjackLogLevel.Info, logMethod: (driver: LogDriver) => driver.logInfo },
+      { level: LumberjackLogLevel.Trace, logMethod: (driver: LogDriver) => driver.logTrace },
+      { level: LumberjackLogLevel.Warning, logMethod: (driver: LogDriver) => driver.logWarning },
+    ].forEach(({ level, logMethod }) => {
+      it('sends a log to the configure url', () => {
+        const expectedBody = generateLogEntry('SOME LOG', level, config.origin);
 
-        const req = httpTestingController.expectOne(config.storeUrl);
-        expect(req.request.method).toEqual('POST');
-        expect(req.request.body).toEqual(body);
+        logMethod(httpDriver).call(httpDriver, 'SOME LOG');
+
+        const {
+          request: { body, method },
+        } = httpTestingController.expectOne(config.storeUrl);
+        expect(method).toEqual('POST');
+        expect(body).toEqual(expectedBody);
       });
     });
   });
 
-  it('should retry after two failure and then succeed', () => {
-    httpDriver.logCritical('SOME LOG');
-    const body = {
-      logEntry: 'SOME LOG',
-      level: LumberjackLogLevel.Critical,
-      origin: config.origin,
-    };
-
+  it('retries after two failures and then succeed', () => {
+    const expectedBody = generateLogEntry('SOME LOG', LumberjackLogLevel.Critical, config.origin);
     const { retryOptions, storeUrl } = config;
-
-    let req = httpTestingController.expectOne(storeUrl);
-    expect(req.request.method).toEqual('POST');
-    expect(req.request.body).toEqual(body);
-    req.flush('Service Unavailable', { status: 503, statusText: 'Service Unavailable' });
-
-    jasmine.clock().tick(retryOptions.delayMs);
-
-    req = httpTestingController.expectOne(storeUrl);
-    expect(req.request.method).toEqual('POST');
-    expect(req.request.body).toEqual(body);
-    req.flush('Service Unavailable', { status: 503, statusText: 'Service Unavailable' });
-
-    jasmine.clock().tick(retryOptions.delayMs);
-
-    req = httpTestingController.expectOne(config.storeUrl);
-    expect(req.request.method).toEqual('POST');
-    expect(req.request.body).toEqual(body);
-  });
-
-  it('should retry the config number of times after failures and then stop retrying', () => {
-    httpDriver.logCritical('SOME LOG');
-    const body = {
-      logEntry: 'SOME LOG',
-      level: LumberjackLogLevel.Critical,
-      origin: config.origin,
-    };
-
-    const { retryOptions, storeUrl } = config;
-
     let req: TestRequest;
 
-    for (let index = 0; index < retryOptions.attempts - 1; index++) {
+    httpDriver.logCritical('SOME LOG');
+
+    // fails twice, retries once
+    repeat(2, () => {
       req = httpTestingController.expectOne(storeUrl);
-      expect(req.cancelled).toBeFalse();
-      expect(req.request.method).toEqual('POST');
-      expect(req.request.body).toEqual(body);
-      req.flush('Service Unavailable', { status: 503, statusText: 'Service Unavailable' });
-
+      const {
+        // tslint:disable-next-line: no-shadowed-variable
+        request: { body, method },
+        flush,
+      } = req;
+      expect(method).toEqual('POST');
+      expect(body).toEqual(expectedBody);
+      failHttpWithErrorUnavailable(flush.bind(req));
       jasmine.clock().tick(retryOptions.delayMs);
-    }
+    });
+    // retries once more and succeeds
+    const {
+      request: { body, method },
+    } = httpTestingController.expectOne(config.storeUrl);
+    expect(method).toEqual('POST');
+    expect(body).toEqual(expectedBody);
+  });
 
-    req = httpTestingController.expectOne(config.storeUrl);
-    expect(req.cancelled).toBeTrue();
+  it('retries the config number of times after failures and then stop retrying', () => {
+    const expectedBody = generateLogEntry('SOME LOG', LumberjackLogLevel.Critical, config.origin);
+    let req: TestRequest;
+    const { retryOptions, storeUrl } = config;
+
+    httpDriver.logCritical('SOME LOG');
+
+    // Retries the configured number of times
+    repeat(retryOptions.attempts - 1, () => {
+      req = httpTestingController.expectOne(storeUrl);
+      const {
+        // tslint:disable-next-line: no-shadowed-variable
+        cancelled,
+        request: { method, body },
+        flush,
+      } = req;
+      expect(cancelled).toBeFalse();
+      expect(method).toEqual('POST');
+      expect(body).toEqual(expectedBody);
+      failHttpWithErrorUnavailable(flush.bind(req));
+      jasmine.clock().tick(retryOptions.delayMs);
+    });
+    // It cancels any request after the attempts are exhausted
+    const { cancelled } = httpTestingController.expectOne(config.storeUrl);
+    expect(cancelled).toBeTrue();
   });
 
   afterEach(() => {
