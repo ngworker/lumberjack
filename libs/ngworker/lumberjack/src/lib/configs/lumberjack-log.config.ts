@@ -1,7 +1,7 @@
 import { inject, InjectionToken } from '@angular/core';
 
 import { LumberjackLog } from '../lumberjack-log';
-import { LumberjackTimeService } from '../time';
+import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 export const LumberjackLogConfigToken: InjectionToken<LumberjackLogConfig> = new InjectionToken(
   '__LUMBERJACK_LOG_CONFIG__',

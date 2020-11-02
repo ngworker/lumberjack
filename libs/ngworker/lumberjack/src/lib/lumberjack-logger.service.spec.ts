@@ -11,7 +11,7 @@ import {
 
 import { LumberjackLogger } from './lumberjack-logger.service';
 import { LumberjackService } from './lumberjack.service';
-import { LumberjackTimeService } from './time';
+import { LumberjackTimeService } from './time/lumberjack-time.service';
 
 @Injectable({
   providedIn: 'root',
