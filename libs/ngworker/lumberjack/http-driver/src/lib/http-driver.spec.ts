@@ -5,7 +5,7 @@ import { TestBed } from '@angular/core/testing';
 import { resolveDependency } from '@internal/test-util';
 import { LogDriver, LogDriverToken, LumberjackLogLevel, LumberjackModule } from '@ngworker/lumberjack';
 
-import { HttpDriverConfig } from './http-driver-config.token';
+import { HttpDriverOptions } from './http-driver-options';
 import { HttpDriverModule } from './http-driver.module';
 import { HttpLogEntry } from './http-log-entry';
 import { HttpDriver } from './http.driver';
@@ -40,7 +40,7 @@ function failHttpWithErrorUnavailable(flush: (...args: any[]) => void) {
 describe(HttpDriver.name, () => {
   let httpDriver: LogDriver;
   let httpTestingController: HttpTestingController;
-  const config: HttpDriverConfig = {
+  const options: HttpDriverOptions = {
     storeUrl: 'api/json',
     origin: 'TEST_MODULE',
     retryOptions: { attempts: 5, delayMs: 250 },
@@ -48,7 +48,7 @@ describe(HttpDriver.name, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, LumberjackModule.forRoot(), HttpDriverModule.forRoot(config)],
+      imports: [HttpClientTestingModule, LumberjackModule.forRoot(), HttpDriverModule.withOptions(options)],
     });
 
     [httpDriver] = (resolveDependency(LogDriverToken) as unknown) as LogDriver[];
@@ -69,13 +69,13 @@ describe(HttpDriver.name, () => {
       { level: LumberjackLogLevel.Warning, logMethod: (driver: LogDriver) => driver.logWarning },
     ].forEach(({ level, logMethod }) => {
       it('sends a log to the configure url', () => {
-        const expectedBody = generateLogEntry('SOME LOG', level, config.origin);
+        const expectedBody = generateLogEntry('SOME LOG', level, options.origin);
 
         logMethod(httpDriver).call(httpDriver, 'SOME LOG');
 
         const {
           request: { body, method },
-        } = httpTestingController.expectOne(config.storeUrl);
+        } = httpTestingController.expectOne(options.storeUrl);
         expect(method).toEqual('POST');
         expect(body).toEqual(expectedBody);
       });
@@ -83,8 +83,8 @@ describe(HttpDriver.name, () => {
   });
 
   it('retries after two failures and then succeed', () => {
-    const expectedBody = generateLogEntry('SOME LOG', LumberjackLogLevel.Critical, config.origin);
-    const { retryOptions, storeUrl } = config;
+    const expectedBody = generateLogEntry('SOME LOG', LumberjackLogLevel.Critical, options.origin);
+    const { retryOptions, storeUrl } = options;
     let req: TestRequest;
 
     httpDriver.logCritical('SOME LOG');
@@ -105,15 +105,15 @@ describe(HttpDriver.name, () => {
     // retries once more and succeeds
     const {
       request: { body, method },
-    } = httpTestingController.expectOne(config.storeUrl);
+    } = httpTestingController.expectOne(options.storeUrl);
     expect(method).toEqual('POST');
     expect(body).toEqual(expectedBody);
   });
 
-  it('retries the config number of times after failures and then stop retrying', () => {
-    const expectedBody = generateLogEntry('SOME LOG', LumberjackLogLevel.Critical, config.origin);
+  it('retries the options number of times after failures and then stop retrying', () => {
+    const expectedBody = generateLogEntry('SOME LOG', LumberjackLogLevel.Critical, options.origin);
     let req: TestRequest;
-    const { retryOptions, storeUrl } = config;
+    const { retryOptions, storeUrl } = options;
 
     httpDriver.logCritical('SOME LOG');
 
@@ -133,7 +133,7 @@ describe(HttpDriver.name, () => {
       jasmine.clock().tick(retryOptions.delayMs);
     });
     // It cancels any request after the attempts are exhausted
-    const { cancelled } = httpTestingController.expectOne(config.storeUrl);
+    const { cancelled } = httpTestingController.expectOne(options.storeUrl);
     expect(cancelled).toBeTrue();
   });
 
