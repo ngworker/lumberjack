@@ -11,6 +11,7 @@ import {
 } from '@ngworker/lumberjack';
 
 import { HttpDriverConfig } from './http-driver-config.token';
+import { HttpDriverOptions } from './http-driver-options';
 import { HttpDriverModule } from './http-driver.module';
 import { HttpDriver } from './http.driver';
 
@@ -36,6 +37,28 @@ const createHttpDriver = (
 
   return httpDriver;
 };
+const createHttpDriverWithOptions = (
+  {
+    isLumberjackModuleImportedFirst = true,
+    options,
+  }: {
+    isLumberjackModuleImportedFirst?: boolean;
+    options: HttpDriverOptions;
+  } = { options: { storeUrl: 'api/json', logWagonSize: 1, origin: 'TEST_MODULE' } }
+) => {
+  TestBed.configureTestingModule({
+    imports: [
+      HttpClientTestingModule,
+      isLumberjackModuleImportedFirst ? LumberjackModule.forRoot() : [],
+      HttpDriverModule.withOptions(options),
+      isLumberjackModuleImportedFirst ? [] : LumberjackModule.forRoot(),
+    ],
+  });
+
+  const [httpDriver] = (resolveDependency(LogDriverToken) as unknown) as LogDriver[];
+
+  return httpDriver;
+};
 
 describe(HttpDriverModule.name, () => {
   it(`cannot be imported without using the ${HttpDriverModule.forRoot.name} method`, () => {
@@ -43,7 +66,7 @@ describe(HttpDriverModule.name, () => {
   });
 
   describe(HttpDriverModule.forRoot.name, () => {
-    it('provides the http driver', () => {
+    it('provides the HTTP driver', () => {
       const httpDriver = createHttpDriver();
 
       expect(httpDriver).toBeInstanceOf(HttpDriver);
@@ -92,6 +115,66 @@ describe(HttpDriverModule.name, () => {
       });
 
       const actualConfig = httpDriver.config;
+      expect(actualConfig).toEqual(expectedConfig);
+    });
+  });
+
+  describe(HttpDriverModule.withOptions.name, () => {
+    it('provides the HTTP driver', () => {
+      const httpDriver = createHttpDriverWithOptions();
+
+      expect(httpDriver).toBeInstanceOf(HttpDriver);
+    });
+
+    it('registers the specified options', () => {
+      const options: HttpDriverOptions = {
+        storeUrl: 'api/logstore',
+        origin: 'TEST_MODULE',
+        logWagonSize: 5,
+      };
+
+      const httpDriver = createHttpDriverWithOptions({ options });
+
+      const actualConfig = httpDriver.config;
+      const expectedConfig: HttpDriverConfig = {
+        ...options,
+        // tslint:disable-next-line: no-any
+        levels: jasmine.any(Array) as any,
+      };
+      expect(actualConfig).toEqual(expectedConfig);
+    });
+
+    it('gets common options from the log driver config', () => {
+      const options: HttpDriverOptions = {
+        storeUrl: 'api/logstore',
+        origin: 'TEST_MODULE',
+        logWagonSize: 5,
+      };
+
+      const httpDriver = createHttpDriverWithOptions({ options });
+
+      const { levels } = httpDriver.config;
+      expect(levels).toEqual([LumberjackLogLevel.Verbose]);
+    });
+
+    it('does register the specified log driver configuration when the lumberjack module is imported after the http driver module', () => {
+      const options: HttpDriverOptions = {
+        storeUrl: 'api/logstore',
+        origin: 'TEST_MODULE',
+        logWagonSize: 5,
+      };
+
+      const httpDriver = createHttpDriverWithOptions({
+        options,
+        isLumberjackModuleImportedFirst: false,
+      });
+
+      const actualConfig = httpDriver.config;
+      const expectedConfig: HttpDriverConfig = {
+        ...options,
+        // tslint:disable-next-line: no-any
+        levels: jasmine.any(Array) as any,
+      };
       expect(actualConfig).toEqual(expectedConfig);
     });
   });
