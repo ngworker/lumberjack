@@ -13,7 +13,7 @@ const verboseDriverConfig: LogDriverConfig = {
 };
 
 describe('ConsoleDriverConfigToken', () => {
-  describe('given a provided log driver config', () => {
+  describe('given a provided console driver config', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         providers: [
@@ -30,14 +30,14 @@ describe('ConsoleDriverConfigToken', () => {
     });
   });
 
-  describe('given no provided log driver config', () => {
+  describe('given no provided console driver config', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         providers: [{ provide: LogDriverConfigToken, useValue: verboseDriverConfig }],
       });
     });
 
-    it('then the value of the log driver config token is resolved', () => {
+    it('then the log driver config is resolved', () => {
       const actualDriverConfig = resolveDependency(ConsoleDriverConfigToken);
 
       expect(actualDriverConfig).toBe(verboseDriverConfig);

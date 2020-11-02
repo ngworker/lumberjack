@@ -126,7 +126,7 @@
     "ngworker-lumberjack": {
       "projectType": "library",
       "root": "libs/ngworker/lumberjack",
-      "sourceRoot": "libs/ngworker/lumberjack/src",
+      "sourceRoot": "libs/ngworker/lumberjack",
       "prefix": "lib",
       "architect": {
         "build": {
