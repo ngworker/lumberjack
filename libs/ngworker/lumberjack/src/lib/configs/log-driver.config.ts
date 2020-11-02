@@ -11,9 +11,9 @@ export interface LogDriverConfig {
    * If undefined or [LumberjackLogLevel.Verbose] all levels are allowed.
    *
    */
-  levels?: LumberjackLogEntryLevel[] | [LumberjackLogLevel.Verbose];
+  readonly levels: ReadonlyArray<LumberjackLogEntryLevel> | [LumberjackLogLevel.Verbose];
 }
 
-export const defaultLogDriverConfig = {
-  levels: undefined,
+export const defaultLogDriverConfig: LogDriverConfig = {
+  levels: [LumberjackLogLevel.Verbose],
 };
