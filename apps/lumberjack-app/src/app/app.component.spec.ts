@@ -1,6 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { createComponentFactory, Spectator } from '@ngneat/spectator';
 
+import { NoopConsoleModule } from '@internal/console-driver/test-util';
 import { LumberjackLogLevel, LumberjackModule } from '@ngworker/lumberjack';
 import { ConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
 import { HttpDriverModule } from '@ngworker/lumberjack/http-driver';
@@ -15,6 +16,7 @@ describe('AppComponent', () => {
       HttpClientTestingModule,
       LumberjackModule.forRoot(),
       ConsoleDriverModule.forRoot(),
+      NoopConsoleModule,
       HttpDriverModule.forRoot({
         levels: [LumberjackLogLevel.Error],
         logWagonSize: 5,
@@ -23,7 +25,6 @@ describe('AppComponent', () => {
       }),
     ],
   });
-
   beforeEach(() => {
     spectator = createComponent();
   });
