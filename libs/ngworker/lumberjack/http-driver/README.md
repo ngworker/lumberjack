@@ -56,11 +56,15 @@ export class HttpDriver implements LogDriver {
   }
 
   private sendLog(logEntry: string, level: LumberjackLogLevel): void {
-    const { origin, storeUrl } = this.config;
+    const { origin, storeUrl, retryOptions } = this.config;
     const httpLogEntry: HttpLogEntry = { logEntry, origin, level };
 
     this.ngZone.runOutsideAngular(() => {
-      this.http.post<void>(storeUrl, httpLogEntry).pipe(retryWithDelay(5, 250)).subscribe();
+      // tslint:disable-next-line: no-non-null-assertion
+      this.http
+        .post<void>(storeUrl, httpLogEntry)
+        .pipe(retryWithDelay(retryOptions.attempts, retryOptions.delayMs))
+        .subscribe();
     });
   }
 }
@@ -84,6 +88,12 @@ export interface HttpDriverConfig extends LogDriverConfig {
    * The endpoint matching this url MUST support the POST method.
    */
   storeUrl: string;
+  /**
+   *
+   * The desired retry behavior options on failed requests
+   *
+   */
+  retryOptions: { attempts: number; delayMs: number };
 }
 ```
 
@@ -91,11 +101,14 @@ The `sendLog` method has been optimized to run outside **Angular**'s `NgZone`, a
 
 ### `HttpDriverModule`
 
-The `HttpDriverModule` is very similar to the `ConsoleDriverModule`
+The `HttpDriverModule` is very similar to the `ConsoleDriverModule`, however now we have a `withOptions()` factory function that allows us to provide the `HttpDriverConfig` partially and to fall down to the defined defaults.
 
 ```typescript
 @NgModule()
 export class HttpDriverModule {
+  /**
+   * Pass a full HTTP driver configuration.
+   */
   static forRoot(config: HttpDriverConfig): ModuleWithProviders<HttpDriverRootModule> {
     return {
       ngModule: HttpDriverRootModule,
@@ -103,6 +116,22 @@ export class HttpDriverModule {
         {
           provide: HttpDriverConfigToken,
           useValue: config,
+        },
+      ],
+    };
+  }
+
+  /**
+   * Pass options exclusive to the HTTP driver configuration, but fall back on
+   * the log driver config for common options.
+   */
+  static withOptions(options: HttpDriverOptions): ModuleWithProviders<HttpDriverRootModule> {
+    return {
+      ngModule: HttpDriverRootModule,
+      providers: [
+        {
+          provide: HttpDriverConfigToken,
+          useValue: options,
         },
       ],
     };
@@ -175,8 +204,10 @@ The usage is also very similar.
     LumberjackModule.forRoot(),
     ConsoleDriverModule.forRoot(),
     HttpDriverModule.forRoot({
-      origin: 'MyApp',
-      storeUrl: environment.baseUrl,
+      levels: [LumberjackLogLevel.Error],
+      origin: 'ForestApp',
+      storeUrl: '/api/logs',
+      retryOptions: { attempts: 5, delayMs: 250 },
     }),
     ...
   ],
@@ -185,4 +216,4 @@ The usage is also very similar.
 export class AppModule {}
 ```
 
-Only this time we are passing our custom configuration object. Notice however that we are not passing the levels property, therefore all levels are supported (default).
+Only this time we are passing our custom configuration object.
