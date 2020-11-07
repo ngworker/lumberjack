@@ -40,7 +40,7 @@ describe(HttpDriver.name, () => {
       { level: LumberjackLogLevel.Trace, logMethod: (driver: LogDriver) => driver.logTrace },
       { level: LumberjackLogLevel.Warning, logMethod: (driver: LogDriver) => driver.logWarning },
     ].forEach(({ level, logMethod }) => {
-      it('sends a log to the configure url', () => {
+      it(`sends a ${level} log to the configured URL`, () => {
         logMethod(httpDriver).call(httpDriver, 'SOME LOG');
 
         expectRequest(httpTestingController, options, level);
@@ -48,7 +48,7 @@ describe(HttpDriver.name, () => {
     });
   });
 
-  it('retries after two failures and then succeed', () => {
+  it('retries after two failures and then succeeds', () => {
     httpDriver.logCritical('SOME LOG');
 
     repeatFunctionCalls(2, () => expectFailingRequest(httpTestingController, options));
@@ -56,7 +56,7 @@ describe(HttpDriver.name, () => {
     expectRequest(httpTestingController, options);
   });
 
-  it('retries the options number of times after failures and then stop retrying', () => {
+  it('retries the specified number of times after failures and then stops retrying', () => {
     httpDriver.logCritical('SOME LOG');
     const { retryOptions } = options;
 
