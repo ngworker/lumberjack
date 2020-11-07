@@ -1,13 +1,64 @@
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
-import { repeatFunctionCalls, resolveDependency } from '@internal/test-util';
+import { repeatSideEffect, resolveDependency } from '@internal/test-util';
 import { LogDriver, LogDriverToken, LumberjackLogLevel, LumberjackModule } from '@ngworker/lumberjack';
 
 import { HttpDriverOptions } from './http-driver-options';
 import { HttpDriverModule } from './http-driver.module';
 import { HttpLogEntry } from './http-log-entry';
 import { HttpDriver } from './http.driver';
+
+function expectRequest(
+  httpTestingController: HttpTestingController,
+  options: HttpDriverOptions,
+  level: LumberjackLogLevel = LumberjackLogLevel.Critical
+) {
+  const expectedBody = createHttpLogEntry(level, level, options.origin);
+
+  const {
+    request: { body, method },
+  } = httpTestingController.expectOne(options.storeUrl);
+  expect(method).toEqual('POST');
+  expect(body).toEqual(expectedBody);
+}
+
+function expectRequestToBeAborted(httpTestingController: HttpTestingController, options: HttpDriverOptions) {
+  const { cancelled } = httpTestingController.expectOne(options.storeUrl);
+  expect(cancelled).toBeTrue();
+}
+
+function expectFailingRequest(
+  httpTestingController: HttpTestingController,
+  options: HttpDriverOptions,
+  level: LumberjackLogLevel = LumberjackLogLevel.Critical
+) {
+  const expectedBody = createHttpLogEntry(level, LumberjackLogLevel.Critical, options.origin);
+  const { retryOptions, storeUrl } = options;
+  const req = httpTestingController.expectOne(storeUrl);
+  const {
+    cancelled,
+    request: { method, body },
+  } = req;
+
+  expect(cancelled).toBeFalse();
+  expect(method).toEqual('POST');
+  expect(body).toEqual(expectedBody);
+  respondWith503ServiceUnavailable(req);
+  jasmine.clock().tick(retryOptions.delayMs);
+}
+
+function respondWith503ServiceUnavailable(request: TestRequest) {
+  request.flush('Service Unavailable', { status: 503, statusText: 'Service Unavailable' });
+}
+
+function createHttpLogEntry(logEntry: string, level: LumberjackLogLevel, origin: string): HttpLogEntry {
+  return {
+    logEntry,
+    level,
+    origin,
+  };
+}
 
 describe(HttpDriver.name, () => {
   let httpDriver: LogDriver;
@@ -41,7 +92,7 @@ describe(HttpDriver.name, () => {
       { level: LumberjackLogLevel.Warning, logMethod: (driver: LogDriver) => driver.logWarning },
     ].forEach(({ level, logMethod }) => {
       it(`sends a ${level} log to the configured URL`, () => {
-        logMethod(httpDriver).call(httpDriver, 'SOME LOG');
+        logMethod(httpDriver).call(httpDriver, level);
 
         expectRequest(httpTestingController, options, level);
       });
@@ -49,18 +100,20 @@ describe(HttpDriver.name, () => {
   });
 
   it('retries after two failures and then succeeds', () => {
-    httpDriver.logCritical('SOME LOG');
+    httpDriver.logCritical(LumberjackLogLevel.Critical);
 
-    repeatFunctionCalls(2, () => expectFailingRequest(httpTestingController, options));
+    repeatSideEffect(2, () => expectFailingRequest(httpTestingController, options, LumberjackLogLevel.Critical));
 
     expectRequest(httpTestingController, options);
   });
 
   it('retries the specified number of times after failures and then stops retrying', () => {
-    httpDriver.logCritical('SOME LOG');
+    httpDriver.logCritical(LumberjackLogLevel.Critical);
     const { retryOptions } = options;
 
-    repeatFunctionCalls(retryOptions.attempts + 1, () => expectFailingRequest(httpTestingController, options));
+    repeatSideEffect(retryOptions.attempts + 1, () =>
+      expectFailingRequest(httpTestingController, options, LumberjackLogLevel.Critical)
+    );
     expectRequestToBeAborted(httpTestingController, options);
   });
 
@@ -69,50 +122,3 @@ describe(HttpDriver.name, () => {
     jasmine.clock().uninstall();
   });
 });
-
-function expectRequest(
-  httpTestingController: HttpTestingController,
-  options: HttpDriverOptions,
-  level: LumberjackLogLevel = LumberjackLogLevel.Critical
-) {
-  const expectedBody = generateLogEntry('SOME LOG', level, options.origin);
-
-  const {
-    request: { body, method },
-  } = httpTestingController.expectOne(options.storeUrl);
-  expect(method).toEqual('POST');
-  expect(body).toEqual(expectedBody);
-}
-
-function expectRequestToBeAborted(httpTestingController: HttpTestingController, options: HttpDriverOptions) {
-  const { cancelled } = httpTestingController.expectOne(options.storeUrl);
-  expect(cancelled).toBeTrue();
-}
-
-function expectFailingRequest(httpTestingController: HttpTestingController, options: HttpDriverOptions) {
-  const expectedBody = generateLogEntry('SOME LOG', LumberjackLogLevel.Critical, options.origin);
-  const { retryOptions, storeUrl } = options;
-  const req = httpTestingController.expectOne(storeUrl);
-  const {
-    cancelled,
-    request: { method, body },
-  } = req;
-
-  expect(cancelled).toBeFalse();
-  expect(method).toEqual('POST');
-  expect(body).toEqual(expectedBody);
-  respondWith503ServiceUnavailable(req);
-  jasmine.clock().tick(retryOptions.delayMs);
-}
-
-function respondWith503ServiceUnavailable(request: TestRequest) {
-  request.flush('Service Unavailable', { status: 503, statusText: 'Service Unavailable' });
-}
-
-function generateLogEntry(logEntry: string, level: LumberjackLogLevel, origin: string): HttpLogEntry {
-  return {
-    logEntry,
-    level,
-    origin,
-  };
-}
