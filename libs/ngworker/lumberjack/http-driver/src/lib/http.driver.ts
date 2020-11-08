@@ -44,10 +44,9 @@ export class HttpDriver implements LogDriver {
     const httpLogEntry: HttpLogEntry = { logEntry, origin, level };
 
     this.ngZone.runOutsideAngular(() => {
-      // tslint:disable-next-line: no-non-null-assertion
       this.http
         .post<void>(storeUrl, httpLogEntry)
-        .pipe(retryWithDelay(retryOptions.attempts, retryOptions.delayMs))
+        .pipe(retryWithDelay(retryOptions.maxRetries, retryOptions.delayMs))
         .subscribe();
     });
   }

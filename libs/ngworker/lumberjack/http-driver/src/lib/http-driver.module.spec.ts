@@ -20,7 +20,7 @@ function createHttpOptions(): HttpDriverOptions {
   return {
     storeUrl: 'api/logstore',
     origin: 'TEST_MODULE',
-    retryOptions: { attempts: 5, delayMs: 250 },
+    retryOptions: { maxRetries: 5, delayMs: 250 },
   };
 }
 
@@ -31,7 +31,7 @@ function createHttpConfig(
     levels,
     storeUrl: 'api/logstore',
     origin: 'TEST_MODULE',
-    retryOptions: { attempts: 5, delayMs: 250 },
+    retryOptions: { maxRetries: 5, delayMs: 250 },
   };
 }
 

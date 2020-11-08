@@ -66,7 +66,7 @@ describe(HttpDriver.name, () => {
   const options: HttpDriverOptions = {
     storeUrl: 'api/json',
     origin: 'TEST_MODULE',
-    retryOptions: { attempts: 5, delayMs: 250 },
+    retryOptions: { maxRetries: 5, delayMs: 250 },
   };
 
   beforeEach(() => {
@@ -111,7 +111,7 @@ describe(HttpDriver.name, () => {
     httpDriver.logCritical(LumberjackLogLevel.Critical);
     const { retryOptions } = options;
 
-    repeatSideEffect(retryOptions.attempts + 1, () =>
+    repeatSideEffect(retryOptions.maxRetries + 1, () =>
       expectFailingRequest(httpTestingController, options, LumberjackLogLevel.Critical)
     );
     expectRequestToBeAborted(httpTestingController, options);

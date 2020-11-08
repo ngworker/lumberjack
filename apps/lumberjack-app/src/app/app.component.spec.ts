@@ -19,7 +19,7 @@ describe('AppComponent', () => {
         levels: [LumberjackLogLevel.Error],
         origin: 'ForestAPP',
         storeUrl: '/api/logs',
-        retryOptions: { attempts: 5, delayMs: 250 },
+        retryOptions: { maxRetries: 5, delayMs: 250 },
       }),
     ],
   });

@@ -63,7 +63,7 @@ export class HttpDriver implements LogDriver {
       // tslint:disable-next-line: no-non-null-assertion
       this.http
         .post<void>(storeUrl, httpLogEntry)
-        .pipe(retryWithDelay(retryOptions.attempts, retryOptions.delayMs))
+        .pipe(retryWithDelay(retryOptions.maxRetries, retryOptions.delayMs))
         .subscribe();
     });
   }
@@ -93,7 +93,7 @@ export interface HttpDriverConfig extends LogDriverConfig {
    * The desired retry behavior options on failed requests
    *
    */
-  retryOptions: { attempts: number; delayMs: number };
+  retryOptions: { maxRetries: number; delayMs: number };
 }
 ```
 
@@ -207,7 +207,7 @@ The usage is also very similar.
       levels: [LumberjackLogLevel.Error],
       origin: 'ForestApp',
       storeUrl: '/api/logs',
-      retryOptions: { attempts: 5, delayMs: 250 },
+      retryOptions: { maxRetries: 5, delayMs: 250 },
     }),
     ...
   ],

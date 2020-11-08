@@ -24,5 +24,5 @@ export interface HttpDriverConfig extends LogDriverConfig {
    * The desired retry behavior options on failed requests
    *
    */
-  retryOptions: { attempts: number; delayMs: number };
+  retryOptions: { maxRetries: number; delayMs: number };
 }
