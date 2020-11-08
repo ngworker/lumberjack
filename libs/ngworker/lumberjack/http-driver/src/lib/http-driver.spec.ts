@@ -114,6 +114,7 @@ describe(HttpDriver.name, () => {
     repeatSideEffect(retryOptions.maxRetries + 1, () =>
       expectFailingRequest(httpTestingController, options, LumberjackLogLevel.Critical)
     );
+
     expectRequestToBeAborted(httpTestingController, options);
   });
 
