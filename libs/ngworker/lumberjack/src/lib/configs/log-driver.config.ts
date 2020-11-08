@@ -13,7 +13,3 @@ export interface LogDriverConfig {
    */
   readonly levels: ReadonlyArray<LumberjackLogEntryLevel> | [LumberjackLogLevel.Verbose];
 }
-
-export const defaultLogDriverConfig: LogDriverConfig = {
-  levels: [LumberjackLogLevel.Verbose],
-};

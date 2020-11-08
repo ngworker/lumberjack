@@ -3,9 +3,10 @@ import { TestBed } from '@angular/core/testing';
 
 import { expectNgModuleToBeGuarded, resolveDependency } from '@internal/test-util';
 import {
-  defaultLogDriverConfig,
   LogDriver,
+  LogDriverConfig,
   LogDriverToken,
+  LumberjackLogConfigToken,
   LumberjackLogLevel,
   LumberjackModule,
 } from '@ngworker/lumberjack';
@@ -93,11 +94,15 @@ describe(HttpDriverModule.name, () => {
         origin: 'TEST_MODULE',
         logWagonSize: 5,
       };
-      const expectedConfig: HttpDriverConfig = { ...defaultLogDriverConfig, ...customHttpConfig };
 
       const httpDriver = createHttpDriver({ config: customHttpConfig });
 
       const actualConfig = httpDriver.config;
+      const logConfig = resolveDependency(LumberjackLogConfigToken);
+      const defaultLogDriverConfig: LogDriverConfig = {
+        levels: logConfig.levels,
+      };
+      const expectedConfig: HttpDriverConfig = { ...defaultLogDriverConfig, ...customHttpConfig };
       expect(actualConfig).toEqual(expectedConfig);
     });
 
