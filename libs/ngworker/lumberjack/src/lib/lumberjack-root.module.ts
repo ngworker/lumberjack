@@ -1,12 +1,17 @@
 import { Inject, NgModule, Optional, SkipSelf } from '@angular/core';
 
 import { LogDriverConfig, LogDriverConfigToken, LumberjackLogConfig, LumberjackLogConfigToken } from './configs';
+import {
+  defaultDevelopmentLevels,
+  defaultProductionLevels,
+  LumberjackLogOptions,
+  LumberjackLogOptionsToken,
+} from './configs/lumberjack-log.config';
 import { isProductionEnvironmentToken } from './environment/is-production-environment.token';
-import { LumberjackLogLevel } from './lumberjack-log-levels';
 import { LumberjackTimeService } from './time/lumberjack-time.service';
 
 export function logConfigFactory(
-  options: Partial<LumberjackLogConfig> = {},
+  options: LumberjackLogOptions = {},
   isProductionEnvironment: boolean,
   time: LumberjackTimeService
 ): LumberjackLogConfig {
@@ -14,9 +19,7 @@ export function logConfigFactory(
     format({ context, createdAt: timestamp, level, message }) {
       return `${level}  ${time.utcTimestampFor(timestamp)} ${context ? `[${context}]` : ''} ${message}`;
     },
-    levels: isProductionEnvironment
-      ? [LumberjackLogLevel.Critical, LumberjackLogLevel.Error, LumberjackLogLevel.Info, LumberjackLogLevel.Warning]
-      : [LumberjackLogLevel.Verbose],
+    levels: isProductionEnvironment ? defaultProductionLevels : defaultDevelopmentLevels,
     ...options,
   };
 }
@@ -30,11 +33,7 @@ export function logDriverConfigFactory({ levels }: LumberjackLogConfig): LogDriv
 @NgModule({
   providers: [
     {
-      deps: [
-        [new Optional(), new SkipSelf(), LumberjackLogConfigToken],
-        isProductionEnvironmentToken,
-        LumberjackTimeService,
-      ],
+      deps: [LumberjackLogOptionsToken, isProductionEnvironmentToken, LumberjackTimeService],
       provide: LumberjackLogConfigToken,
       useFactory: logConfigFactory,
     },

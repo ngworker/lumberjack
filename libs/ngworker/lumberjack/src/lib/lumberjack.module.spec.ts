@@ -3,6 +3,12 @@ import { TestBed } from '@angular/core/testing';
 import { expectNgModuleToBeGuarded, resolveDependency } from '@internal/test-util';
 
 import { LogDriverConfig, LogDriverConfigToken, LumberjackLogConfig, LumberjackLogConfigToken } from './configs';
+import {
+  defaultDevelopmentLevels,
+  defaultProductionLevels,
+  LumberjackLogOptions,
+} from './configs/lumberjack-log.config';
+import { isProductionEnvironmentToken } from './environment/is-production-environment.token';
 import { LumberjackLogLevel } from './lumberjack-log-levels';
 import { LumberjackModule } from './lumberjack.module';
 
@@ -26,15 +32,65 @@ describe(LumberjackModule.name, () => {
       expect(actualConfig).toEqual(expectedConfig);
     });
 
-    it('provides a default log configuration', () => {
+    it('accepts a partial log configuration in development mode', () => {
+      const config: LumberjackLogOptions = {
+        format: ({ message }) => message,
+      };
+      const expectedConfig: LumberjackLogOptions = {
+        ...config,
+        levels: defaultDevelopmentLevels,
+      };
+
+      TestBed.configureTestingModule({
+        imports: [LumberjackModule.forRoot(config)],
+        providers: [{ provide: isProductionEnvironmentToken, useValue: false }],
+      });
+
+      const actualConfig = resolveDependency(LumberjackLogConfigToken);
+      expect(actualConfig).toEqual(expectedConfig as LumberjackLogConfig);
+    });
+
+    it('accepts a partial log configuration in production mode', () => {
+      const config: LumberjackLogOptions = {
+        format: ({ message }) => message,
+      };
+      const expectedConfig: LumberjackLogOptions = {
+        ...config,
+        levels: defaultProductionLevels,
+      };
+
+      TestBed.configureTestingModule({
+        imports: [LumberjackModule.forRoot(config)],
+        providers: [{ provide: isProductionEnvironmentToken, useValue: true }],
+      });
+
+      const actualConfig = resolveDependency(LumberjackLogConfigToken);
+      expect(actualConfig).toEqual(expectedConfig as LumberjackLogConfig);
+    });
+
+    it('provides a default log configuration in development mode', () => {
       TestBed.configureTestingModule({
         imports: [LumberjackModule.forRoot()],
+        providers: [{ provide: isProductionEnvironmentToken, useValue: false }],
       });
 
       const actualConfig = resolveDependency(LumberjackLogConfigToken);
       expect(actualConfig).toEqual({
         format: jasmine.any(Function),
-        levels: jasmine.any(Array),
+        levels: defaultDevelopmentLevels,
+      });
+    });
+
+    it('provides a default log configuration in production mode', () => {
+      TestBed.configureTestingModule({
+        imports: [LumberjackModule.forRoot()],
+        providers: [{ provide: isProductionEnvironmentToken, useValue: true }],
+      });
+
+      const actualConfig = resolveDependency(LumberjackLogConfigToken);
+      expect(actualConfig).toEqual({
+        format: jasmine.any(Function),
+        levels: defaultProductionLevels,
       });
     });
 
