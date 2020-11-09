@@ -6,6 +6,7 @@ import {
   defaultLogDriverConfig,
   LogDriver,
   LogDriverToken,
+  LumberjackLogEntryLevel,
   LumberjackLogLevel,
   LumberjackModule,
 } from '@ngworker/lumberjack';
@@ -15,6 +16,25 @@ import { HttpDriverOptions } from './http-driver-options';
 import { HttpDriverModule } from './http-driver.module';
 import { HttpDriver } from './http.driver';
 
+function createHttpOptions(): HttpDriverOptions {
+  return {
+    storeUrl: 'api/logstore',
+    origin: 'TEST_MODULE',
+    retryOptions: { maxRetries: 5, delayMs: 250 },
+  };
+}
+
+function createHttpConfig(
+  levels: ReadonlyArray<LumberjackLogEntryLevel> | [LumberjackLogLevel.Verbose]
+): HttpDriverConfig {
+  return {
+    levels,
+    storeUrl: 'api/logstore',
+    origin: 'TEST_MODULE',
+    retryOptions: { maxRetries: 5, delayMs: 250 },
+  };
+}
+
 const createHttpDriver = (
   {
     config,
@@ -22,7 +42,9 @@ const createHttpDriver = (
   }: {
     config: HttpDriverConfig;
     isLumberjackModuleImportedFirst?: boolean;
-  } = { config: { levels: [LumberjackLogLevel.Verbose], storeUrl: 'api/json', logWagonSize: 1, origin: 'TEST_MODULE' } }
+  } = {
+    config: createHttpConfig([LumberjackLogLevel.Verbose]),
+  }
 ) => {
   TestBed.configureTestingModule({
     imports: [
@@ -44,7 +66,7 @@ const createHttpDriverWithOptions = (
   }: {
     isLumberjackModuleImportedFirst?: boolean;
     options: HttpDriverOptions;
-  } = { options: { storeUrl: 'api/json', logWagonSize: 1, origin: 'TEST_MODULE' } }
+  } = { options: createHttpOptions() }
 ) => {
   TestBed.configureTestingModule({
     imports: [
@@ -73,12 +95,7 @@ describe(HttpDriverModule.name, () => {
     });
 
     it('registers the specified log driver configuration', () => {
-      const expectedConfig: HttpDriverConfig = {
-        levels: [LumberjackLogLevel.Error],
-        storeUrl: 'api/logstore',
-        origin: 'TEST_MODULE',
-        logWagonSize: 5,
-      };
+      const expectedConfig = createHttpConfig([LumberjackLogLevel.Error]);
 
       const httpDriver = createHttpDriver({ config: expectedConfig });
 
@@ -87,12 +104,7 @@ describe(HttpDriverModule.name, () => {
     });
 
     it('registers a default level configuration if none is specified', () => {
-      const customHttpConfig: HttpDriverConfig = {
-        levels: [LumberjackLogLevel.Verbose],
-        storeUrl: 'api/logstore',
-        origin: 'TEST_MODULE',
-        logWagonSize: 5,
-      };
+      const customHttpConfig = createHttpConfig([LumberjackLogLevel.Verbose]);
       const expectedConfig: HttpDriverConfig = { ...defaultLogDriverConfig, ...customHttpConfig };
 
       const httpDriver = createHttpDriver({ config: customHttpConfig });
@@ -102,12 +114,7 @@ describe(HttpDriverModule.name, () => {
     });
 
     it('does register the specified log driver configuration when the lumberjack module is imported after the http driver module', () => {
-      const expectedConfig: HttpDriverConfig = {
-        levels: [LumberjackLogLevel.Debug],
-        storeUrl: 'api/logstore',
-        origin: 'TEST_MODULE',
-        logWagonSize: 5,
-      };
+      const expectedConfig = createHttpConfig([LumberjackLogLevel.Debug]);
 
       const httpDriver = createHttpDriver({
         config: expectedConfig,
@@ -127,11 +134,7 @@ describe(HttpDriverModule.name, () => {
     });
 
     it('registers the specified options', () => {
-      const options: HttpDriverOptions = {
-        storeUrl: 'api/logstore',
-        origin: 'TEST_MODULE',
-        logWagonSize: 5,
-      };
+      const options = createHttpOptions();
 
       const httpDriver = createHttpDriverWithOptions({ options });
 
@@ -145,11 +148,7 @@ describe(HttpDriverModule.name, () => {
     });
 
     it('gets common options from the log driver config', () => {
-      const options: HttpDriverOptions = {
-        storeUrl: 'api/logstore',
-        origin: 'TEST_MODULE',
-        logWagonSize: 5,
-      };
+      const options = createHttpOptions();
 
       const httpDriver = createHttpDriverWithOptions({ options });
 
@@ -158,11 +157,7 @@ describe(HttpDriverModule.name, () => {
     });
 
     it('does register the specified log driver configuration when the lumberjack module is imported after the http driver module', () => {
-      const options: HttpDriverOptions = {
-        storeUrl: 'api/logstore',
-        origin: 'TEST_MODULE',
-        logWagonSize: 5,
-      };
+      const options = createHttpOptions();
 
       const httpDriver = createHttpDriverWithOptions({
         options,

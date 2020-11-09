@@ -7,3 +7,4 @@ export * from './lib/http-driver-options';
 export * from './lib/http-driver-root.module';
 export * from './lib/http-driver.module';
 export * from './lib/http.driver';
+export * from './lib/http-log-entry';

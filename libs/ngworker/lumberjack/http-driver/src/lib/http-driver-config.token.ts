@@ -19,11 +19,10 @@ export interface HttpDriverConfig extends LogDriverConfig {
    * The endpoint matching this url MUST support the POST method.
    */
   storeUrl: string;
-
   /**
    *
-   * Defines the amount of log that should be written before sending them to the log store.
+   * The desired retry behavior options on failed requests
    *
    */
-  logWagonSize: number;
+  retryOptions: { maxRetries: number; delayMs: number };
 }
