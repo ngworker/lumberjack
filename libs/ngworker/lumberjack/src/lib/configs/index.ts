@@ -1,2 +1,2 @@
 export * from './log-driver.config';
-export * from './lumberjack-log.config';
+export { LumberjackLogConfigToken, LumberjackLogConfig, LumberjackLogOptions } from './lumberjack-log.config';
