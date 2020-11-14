@@ -1,7 +1,7 @@
 import { inject, InjectionToken } from '@angular/core';
 
-import { LogDriverConfig, LogDriverConfigToken } from '@ngworker/lumberjack';
+import { LogDriverConfig, logDriverConfigToken } from '@ngworker/lumberjack';
 
-export const ConsoleDriverConfigToken = new InjectionToken<LogDriverConfig>('Console driver config', {
-  factory: () => inject(LogDriverConfigToken),
+export const consoleDriverConfigToken = new InjectionToken<LogDriverConfig>('__CONSOLE_DRIVER_CONFIG__', {
+  factory: () => inject(logDriverConfigToken),
 });

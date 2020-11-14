@@ -1,9 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 
 import { resolveDependency } from '@internal/test-util';
-import { LogDriverConfig, LogDriverConfigToken, LumberjackLogLevel } from '@ngworker/lumberjack';
+import { LogDriverConfig, logDriverConfigToken, LumberjackLogLevel } from '@ngworker/lumberjack';
 
-import { ConsoleDriverConfigToken } from './console-driver-config.token';
+import { consoleDriverConfigToken } from './console-driver-config.token';
 
 const debugDriverConfig: LogDriverConfig = {
   levels: [LumberjackLogLevel.Debug],
@@ -12,19 +12,19 @@ const verboseDriverConfig: LogDriverConfig = {
   levels: [LumberjackLogLevel.Verbose],
 };
 
-describe('ConsoleDriverConfigToken', () => {
+describe('consoleDriverConfigToken', () => {
   describe('given a provided console log driver config', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
         providers: [
-          { provide: LogDriverConfigToken, useValue: verboseDriverConfig },
-          { provide: ConsoleDriverConfigToken, useValue: debugDriverConfig },
+          { provide: logDriverConfigToken, useValue: verboseDriverConfig },
+          { provide: consoleDriverConfigToken, useValue: debugDriverConfig },
         ],
       });
     });
 
     it('then that config is resolved', () => {
-      const actualDriverConfig = resolveDependency(ConsoleDriverConfigToken);
+      const actualDriverConfig = resolveDependency(consoleDriverConfigToken);
 
       expect(actualDriverConfig).toBe(debugDriverConfig);
     });
@@ -33,12 +33,12 @@ describe('ConsoleDriverConfigToken', () => {
   describe('given no provided console log driver config', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        providers: [{ provide: LogDriverConfigToken, useValue: verboseDriverConfig }],
+        providers: [{ provide: logDriverConfigToken, useValue: verboseDriverConfig }],
       });
     });
 
     it('then the value of the log driver config is resolved', () => {
-      const actualDriverConfig = resolveDependency(ConsoleDriverConfigToken);
+      const actualDriverConfig = resolveDependency(consoleDriverConfigToken);
 
       expect(actualDriverConfig).toBe(verboseDriverConfig);
     });

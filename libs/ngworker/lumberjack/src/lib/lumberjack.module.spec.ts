@@ -2,15 +2,15 @@ import { TestBed } from '@angular/core/testing';
 
 import { expectNgModuleToBeGuarded, resolveDependency } from '@internal/test-util';
 
-import { LogDriverConfig, LogDriverConfigToken, LumberjackLogConfig, LumberjackLogConfigToken } from './configs';
-import {
-  defaultDevelopmentLevels,
-  defaultProductionLevels,
-  LumberjackLogOptions,
-} from './configs/lumberjack-log.config';
+import { LogDriverConfig, logDriverConfigToken, LumberjackLogConfig, lumberjackLogConfigToken } from './configs';
+import { defaultDevelopmentLevels } from './configs/default-development-levels';
+import { defaultProductionLevels } from './configs/default-production-levels';
+import { LumberjackLogOptions } from './configs/lumberjack-log.options';
 import { isProductionEnvironmentToken } from './environment/is-production-environment.token';
+import { LumberjackLog } from './lumberjack-log';
 import { LumberjackLogLevel } from './lumberjack-log-levels';
 import { LumberjackModule } from './lumberjack.module';
+import { LumberjackTimeService } from './time/lumberjack-time.service';
 
 describe(LumberjackModule.name, () => {
   it(`cannot be imported without using the ${LumberjackModule.forRoot.name} method`, () => {
@@ -28,7 +28,7 @@ describe(LumberjackModule.name, () => {
         imports: [LumberjackModule.forRoot(expectedConfig)],
       });
 
-      const actualConfig = resolveDependency(LumberjackLogConfigToken);
+      const actualConfig = resolveDependency(lumberjackLogConfigToken);
       expect(actualConfig).toEqual(expectedConfig);
     });
 
@@ -46,7 +46,7 @@ describe(LumberjackModule.name, () => {
         providers: [{ provide: isProductionEnvironmentToken, useValue: false }],
       });
 
-      const actualConfig = resolveDependency(LumberjackLogConfigToken);
+      const actualConfig = resolveDependency(lumberjackLogConfigToken);
       expect(actualConfig).toEqual(expectedConfig as LumberjackLogConfig);
     });
 
@@ -64,7 +64,7 @@ describe(LumberjackModule.name, () => {
         providers: [{ provide: isProductionEnvironmentToken, useValue: true }],
       });
 
-      const actualConfig = resolveDependency(LumberjackLogConfigToken);
+      const actualConfig = resolveDependency(lumberjackLogConfigToken);
       expect(actualConfig).toEqual(expectedConfig as LumberjackLogConfig);
     });
 
@@ -74,7 +74,7 @@ describe(LumberjackModule.name, () => {
         providers: [{ provide: isProductionEnvironmentToken, useValue: false }],
       });
 
-      const actualConfig = resolveDependency(LumberjackLogConfigToken);
+      const actualConfig = resolveDependency(lumberjackLogConfigToken);
       expect(actualConfig).toEqual({
         format: jasmine.any(Function),
         levels: defaultDevelopmentLevels,
@@ -87,7 +87,7 @@ describe(LumberjackModule.name, () => {
         providers: [{ provide: isProductionEnvironmentToken, useValue: true }],
       });
 
-      const actualConfig = resolveDependency(LumberjackLogConfigToken);
+      const actualConfig = resolveDependency(lumberjackLogConfigToken);
       expect(actualConfig).toEqual({
         format: jasmine.any(Function),
         levels: defaultProductionLevels,
@@ -98,13 +98,58 @@ describe(LumberjackModule.name, () => {
       TestBed.configureTestingModule({
         imports: [LumberjackModule.forRoot()],
       });
-      const logConfig = resolveDependency(LumberjackLogConfigToken);
+      const logConfig = resolveDependency(lumberjackLogConfigToken);
       const defaultLogDriverConfig: LogDriverConfig = {
         levels: logConfig.levels,
       };
 
-      const actualConfig = resolveDependency(LogDriverConfigToken);
+      const actualConfig = resolveDependency(logDriverConfigToken);
       expect(actualConfig).toEqual(defaultLogDriverConfig);
+    });
+
+    describe('default format function', () => {
+      const fakeTicks = Date.now();
+      let fakeTimestamp: string;
+      beforeEach(() => {
+        TestBed.configureTestingModule({
+          imports: [LumberjackModule.forRoot()],
+        });
+        const time = resolveDependency(LumberjackTimeService);
+        fakeTimestamp = time.utcTimestampFor(fakeTicks);
+      });
+
+      it('format correctly when having a context', () => {
+        const entryLogWithContext: LumberjackLog = {
+          context: 'TestSuite',
+          createdAt: fakeTicks,
+          level: LumberjackLogLevel.Critical,
+          message: 'Test Message',
+        };
+
+        const { context, level, message } = entryLogWithContext;
+
+        const expectedMessageWithContext = `${level}  ${fakeTimestamp} [${context}] ${message}`;
+
+        const { format } = resolveDependency(lumberjackLogConfigToken);
+
+        expect(format(entryLogWithContext)).toEqual(expectedMessageWithContext);
+      });
+
+      it('format correctly when having a context', () => {
+        const entryLogWithOutContext: LumberjackLog = {
+          createdAt: fakeTicks,
+          level: LumberjackLogLevel.Critical,
+          message: 'Test Message',
+        };
+
+        const { level, message } = entryLogWithOutContext;
+
+        const expectedMessageWithContext = `${level}  ${fakeTimestamp}  ${message}`;
+
+        const { format } = resolveDependency(lumberjackLogConfigToken);
+
+        expect(format(entryLogWithOutContext)).toEqual(expectedMessageWithContext);
+      });
     });
   });
 });
