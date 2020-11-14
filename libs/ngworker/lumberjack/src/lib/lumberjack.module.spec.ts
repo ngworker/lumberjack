@@ -118,7 +118,7 @@ describe(LumberjackModule.name, () => {
         fakeTimestamp = time.utcTimestampFor(fakeTicks);
       });
 
-      it('format correctly when having a context', () => {
+      it('formats a log entry with a context', () => {
         const entryLogWithContext: LumberjackLog = {
           context: 'TestSuite',
           createdAt: fakeTicks,
@@ -135,7 +135,7 @@ describe(LumberjackModule.name, () => {
         expect(format(entryLogWithContext)).toEqual(expectedMessageWithContext);
       });
 
-      it('format correctly when having a context', () => {
+      it('formats a log entry with no context', () => {
         const entryLogWithOutContext: LumberjackLog = {
           createdAt: fakeTicks,
           level: LumberjackLogLevel.Critical,
