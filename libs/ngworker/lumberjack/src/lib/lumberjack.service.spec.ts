@@ -9,6 +9,7 @@ import {
   createInfoLog,
   createTraceLog,
   createWarningLog,
+  ErrorThrowingDriverModule,
   NoopDriver,
   NoopDriverModule,
   resolveDependency,
@@ -83,6 +84,30 @@ describe(LumberjackService.name, () => {
       });
 
       expect(logDebugMessage).not.toThrow();
+    });
+
+    describe('Error-throwing log drivers', () => {
+      beforeEach(() => {
+        spyOn(console, 'error');
+      });
+
+      it('logs an error when a single log driver is registered', () => {
+        TestBed.configureTestingModule({
+          imports: [LumberjackModule.forRoot(), ErrorThrowingDriverModule.forRoot()],
+        });
+
+        expect(logDebugMessage).not.toThrow();
+        expect(console.error).toHaveBeenCalledTimes(1);
+      });
+
+      it('logs an errors when multiple log drivers are registered', () => {
+        TestBed.configureTestingModule({
+          imports: [LumberjackModule.forRoot(), NoopDriverModule.forRoot(), ErrorThrowingDriverModule.forRoot()],
+        });
+
+        expect(logDebugMessage).not.toThrow();
+        expect(console.error).toHaveBeenCalledTimes(1);
+      });
     });
   });
 
