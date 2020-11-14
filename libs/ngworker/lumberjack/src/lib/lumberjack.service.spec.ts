@@ -114,6 +114,26 @@ describe(LumberjackService.name, () => {
         expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
       });
 
+      it('accepts logs when multiple log drivers are registered', () => {
+        TestBed.configureTestingModule({
+          imports: [
+            LumberjackModule.forRoot({
+              format: ({ level }) => level,
+            }),
+            SpyDriverModule.forRoot(),
+            ErrorThrowingDriverModule.forRoot(),
+          ],
+        });
+        const logDrivers = (resolveDependency(LogDriverToken) as unknown) as LogDriver[];
+        const spyDriver = logDrivers[0] as SpyDriver;
+        const lumberjack = resolveDependency(LumberjackService);
+
+        lumberjack.log(createDebugLog());
+
+        expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
+        expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLogLevel.Debug);
+      });
+
       it('outputs an error mentioning the log entry and driver name', () => {
         TestBed.configureTestingModule({
           imports: [LumberjackModule.forRoot(), ErrorThrowingDriverModule.forRoot()],
