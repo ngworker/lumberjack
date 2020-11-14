@@ -17,7 +17,7 @@ export function logConfigFactory(
 ): LumberjackLogConfig {
   return {
     format({ context, createdAt: timestamp, level, message }) {
-      return `${level}  ${time.utcTimestampFor(timestamp)} ${context ? `[${context}]` : ''} ${message}`;
+      return `${level} ${time.utcTimestampFor(timestamp)}${context ? ` [${context}]` : ''} ${message}`;
     },
     levels: isProductionEnvironment ? defaultProductionLevels : defaultDevelopmentLevels,
     ...options,

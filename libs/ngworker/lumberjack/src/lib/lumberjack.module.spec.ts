@@ -128,7 +128,7 @@ describe(LumberjackModule.name, () => {
 
         const { context, level, message } = entryLogWithContext;
 
-        const expectedMessageWithContext = `${level}  ${fakeTimestamp} [${context}] ${message}`;
+        const expectedMessageWithContext = `${level} ${fakeTimestamp} [${context}] ${message}`;
 
         const { format } = resolveDependency(lumberjackLogConfigToken);
 
@@ -144,7 +144,7 @@ describe(LumberjackModule.name, () => {
 
         const { level, message } = entryLogWithOutContext;
 
-        const expectedMessageWithContext = `${level}  ${fakeTimestamp}  ${message}`;
+        const expectedMessageWithContext = `${level} ${fakeTimestamp} ${message}`;
 
         const { format } = resolveDependency(lumberjackLogConfigToken);
 
