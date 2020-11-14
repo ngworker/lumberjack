@@ -1,4 +1,4 @@
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Inject, Injectable, Optional, Type } from '@angular/core';
 
 import { LumberjackLogConfig, LumberjackLogConfigToken } from './configs/lumberjack-log.config';
 import { LogDriver, LogDriverToken } from './log-drivers';
@@ -58,9 +58,8 @@ export class LumberjackService {
   ): void {
     const thrownErrorMessage = (error as Error).message || String(error);
     const errorMessage = `Could not log message "${format(logEntry)}" to ${
-      // tslint:disable-next-line: no-any
-      (driver as any).name || 'the specificied log driver'
-    }. Error: ${thrownErrorMessage}`;
+      driver.constructor.name
+    }. Error: "${thrownErrorMessage}"`;
     console.error(errorMessage);
   }
 

@@ -9,6 +9,7 @@ import {
   createInfoLog,
   createTraceLog,
   createWarningLog,
+  ErrorThrowingDriver,
   ErrorThrowingDriverModule,
   NoopDriver,
   NoopDriverModule,
@@ -88,25 +89,42 @@ describe(LumberjackService.name, () => {
 
     describe('Error-throwing log drivers', () => {
       beforeEach(() => {
-        spyOn(console, 'error');
+        consoleErrorSpy = spyOn(console, 'error');
       });
 
-      it('logs an error when a single log driver is registered', () => {
+      let consoleErrorSpy: jasmine.Spy;
+
+      it('outputs an error when a single log driver is registered', () => {
         TestBed.configureTestingModule({
           imports: [LumberjackModule.forRoot(), ErrorThrowingDriverModule.forRoot()],
         });
 
         expect(logDebugMessage).not.toThrow();
-        expect(console.error).toHaveBeenCalledTimes(1);
+
+        expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
       });
 
-      it('logs an errors when multiple log drivers are registered', () => {
+      it('outputs an error when multiple log drivers are registered', () => {
         TestBed.configureTestingModule({
           imports: [LumberjackModule.forRoot(), NoopDriverModule.forRoot(), ErrorThrowingDriverModule.forRoot()],
         });
 
         expect(logDebugMessage).not.toThrow();
-        expect(console.error).toHaveBeenCalledTimes(1);
+
+        expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+      });
+
+      it('outputs an error mentioning the log entry and driver name', () => {
+        TestBed.configureTestingModule({
+          imports: [LumberjackModule.forRoot(), ErrorThrowingDriverModule.forRoot()],
+        });
+
+        logDebugMessage();
+
+        const [actualErrorMessage] = consoleErrorSpy.calls.mostRecent().args as ReadonlyArray<string>;
+        expect(actualErrorMessage).toMatch(
+          new RegExp(`^Could not log message ".*?" to ${ErrorThrowingDriver.name}. Error: ".*?"$`)
+        );
       });
     });
   });
