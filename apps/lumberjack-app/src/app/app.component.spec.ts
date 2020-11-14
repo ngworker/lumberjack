@@ -19,9 +19,9 @@ describe('AppComponent', () => {
       NoopConsoleModule,
       HttpDriverModule.forRoot({
         levels: [LumberjackLogLevel.Error],
-        logWagonSize: 5,
         origin: 'ForestAPP',
         storeUrl: '/api/logs',
+        retryOptions: { maxRetries: 5, delayMs: 250 },
       }),
     ],
   });

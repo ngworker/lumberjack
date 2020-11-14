@@ -14,82 +14,63 @@ The following are complementary interfaces for the `driver` implementation.
 interface HttpLogEntry {
   logEntry: string;
   level: LumberjackLogLevel;
-}
-
-interface HttpLogPackage {
-  logWagon: HttpLogEntry[];
   origin: string;
 }
 ```
 
-The `HttpLogPackage` is the object sent to the **Log Store**. It is composed of a `HttpLogEntry` list and an origin. A list is used to prevent overloading the **Log Store** with individual **POST** calls per log entry.
+The `HttpLogEntry` is the object sent to the **Log Store**.
 
 The rest of the `HttpDriver` is defined as follows
 
 ```typescript
 @Injectable()
 export class HttpDriver implements LogDriver {
-  logWagon: HttpLogEntry[] = [];
-
   constructor(
     private http: HttpClient,
     @Inject(httpDriverConfigToken) public config: HttpDriverConfig,
     private ngZone: NgZone
   ) {}
 
-  logInfo(logEntry: string): void {
-    this.log(logEntry, LumberjackLogLevel.Info);
+  logCritical(logEntry: string): void {
+    this.sendLog(logEntry, LumberjackLogLevel.Critical);
   }
 
   logDebug(logEntry: string): void {
-    this.log(logEntry, LumberjackLogLevel.Debug);
+    this.sendLog(logEntry, LumberjackLogLevel.Debug);
   }
 
   logError(logEntry: string): void {
-    this.log(logEntry, LumberjackLogLevel.Error);
+    this.sendLog(logEntry, LumberjackLogLevel.Error);
+  }
+
+  logInfo(logEntry: string): void {
+    this.sendLog(logEntry, LumberjackLogLevel.Info);
+  }
+
+  logTrace(logEntry: string): void {
+    this.sendLog(logEntry, LumberjackLogLevel.Trace);
   }
 
   logWarning(logEntry: string): void {
-    this.log(logEntry, LumberjackLogLevel.Warning);
+    this.sendLog(logEntry, LumberjackLogLevel.Warning);
   }
 
-  private log(logEntry: string, logLevel: LumberjackLogLevel): void {
-    const { logWagonSize } = this.config;
-
-    this.logWagon.push({ logEntry, level: logLevel });
-
-    if (this.logWagon.length >= logWagonSize) {
-      this.sendLogPackage()
-        .pipe(tap(() => (this.logWagon = [])))
-        .subscribe();
-    }
-  }
-
-  private sendLogPackage(): Observable<void> {
-    const { origin, storeUrl } = this.config;
-    const logPackage: HttpLogPackage = { logWagon: this.logWagon, origin };
-
-    const logPackageSent = new Subject<void>();
-    const logPackageSent$ = logPackageSent.asObservable();
+  private sendLog(logEntry: string, level: LumberjackLogLevel): void {
+    const { origin, storeUrl, retryOptions } = this.config;
+    const httpLogEntry: HttpLogEntry = { logEntry, origin, level };
 
     this.ngZone.runOutsideAngular(() => {
+      // tslint:disable-next-line: no-non-null-assertion
       this.http
-        .post<void>(storeUrl, logPackage)
-        .pipe(
-          tap(() => {
-            logPackageSent.next();
-            logPackageSent.complete();
-          })
-        )
+        .post<void>(storeUrl, httpLogEntry)
+        .pipe(retryWithDelay(retryOptions.maxRetries, retryOptions.delayMs))
         .subscribe();
     });
-
-    return logPackageSent$;
   }
 }
 ```
 
-This `driver` receives a `HttpClient`, a `NgZone` for optimizations porpoise and a custom configuration object that extends the `LogDriverConfig`.
+This `driver` receives a `HttpClient`, a `NgZone` for optimizations purpose and a custom configuration object that extends the `LogDriverConfig`.
 
 ```typescript
 export interface HttpDriverConfig extends LogDriverConfig {
@@ -107,45 +88,27 @@ export interface HttpDriverConfig extends LogDriverConfig {
    * The endpoint matching this url MUST support the POST method.
    */
   storeUrl: string;
-
   /**
    *
-   * Defines the amount of log that should be written before sending them to the log store.
+   * The desired retry behavior options on failed requests
    *
    */
-  logWagonSize: number;
+  retryOptions: { maxRetries: number; delayMs: number };
 }
 ```
 
-### Log method
-
-```typescript
-private log(logEntry: string, logLevel: LumberjackLogLevel): void {
-    const { logWagonSize } = this.config;
-
-    this.logWagon.push({ logEntry, level: logLevel });
-
-    if (this.logWagon.length >= logWagonSize) {
-      this.sendLogPackage()
-        .pipe(tap(() => (this.logWagon = [])))
-        .subscribe();
-    }
-  }
-```
-
-The logic of the private `log` method is simple. It stores in an in-memory list the written logs until the configured `logWagonSize` is reached.
-
-Then the logs are attempted to be send. On success we clear the list of pending logs, otherwise, we keep adding items until the server recovers.
-
-The `sendLogPackage` method has been optimized to run outside **Angular**'s `NgZone`, avoiding unnecessary change detection cycles.
+The `sendLog` method has been optimized to run outside **Angular**'s `NgZone`, avoiding unnecessary change detection cycles.
 
 ### `HttpDriverModule`
 
-The `HttpDriverModule` is very similar to the `ConsoleDriverModule`
+The `HttpDriverModule` is very similar to the `ConsoleDriverModule`, however now we have a `withOptions()` factory function that allows us to provide the `HttpDriverConfig` partially and to fall down to the defined defaults.
 
 ```typescript
 @NgModule()
 export class HttpDriverModule {
+  /**
+   * Pass a full HTTP driver configuration.
+   */
   static forRoot(config: HttpDriverConfig): ModuleWithProviders<HttpDriverRootModule> {
     return {
       ngModule: HttpDriverRootModule,
@@ -153,6 +116,22 @@ export class HttpDriverModule {
         {
           provide: httpDriverConfigToken,
           useValue: config,
+        },
+      ],
+    };
+  }
+
+  /**
+   * Pass options exclusive to the HTTP driver configuration, but fall back on
+   * the log driver config for common options.
+   */
+  static withOptions(options: HttpDriverOptions): ModuleWithProviders<HttpDriverRootModule> {
+    return {
+      ngModule: HttpDriverRootModule,
+      providers: [
+        {
+          provide: HttpDriverConfigToken,
+          useValue: options,
         },
       ],
     };
@@ -193,7 +172,14 @@ export function httpDriverFactory(
   ],
 })
 export class HttpDriverRootModule {
-  constructor(@Optional() @SkipSelf() maybeNgModuleFromParentInjector?: HttpDriverRootModule) {
+  constructor(
+    // tslint:disable: no-any no-null-keyword
+    @Optional()
+    @SkipSelf()
+    @Inject(HttpDriverRootModule)
+    maybeNgModuleFromParentInjector: HttpDriverRootModule = null as any
+    // tslint:enable: no-any no-null-keyword
+  ) {
     if (maybeNgModuleFromParentInjector) {
       throw new Error(
         'HttpDriverModule.forRoot registered in multiple injectors. Only call it from your root injector such as in AppModule.'
@@ -218,9 +204,10 @@ The usage is also very similar.
     LumberjackModule.forRoot(),
     ConsoleDriverModule.forRoot(),
     HttpDriverModule.forRoot({
-      origin: 'MyApp',
-      storeUrl: environment.baseUrl,
-      logWagonSize: 5
+      levels: [LumberjackLogLevel.Error],
+      origin: 'ForestApp',
+      storeUrl: '/api/logs',
+      retryOptions: { maxRetries: 5, delayMs: 250 },
     }),
     ...
   ],
@@ -229,4 +216,4 @@ The usage is also very similar.
 export class AppModule {}
 ```
 
-Only this time we are passing our custom configuration object. Notice however that we are not passing the levels property, therefore all levels are supported (default).
+Only this time we are passing our custom configuration object.

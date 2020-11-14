@@ -19,7 +19,7 @@ import { AppComponent } from './app.component';
       levels: [LumberjackLogLevel.Error],
       origin: 'ForestApp',
       storeUrl: '/api/logs',
-      logWagonSize: 2,
+      retryOptions: { maxRetries: 5, delayMs: 250 },
     }),
   ],
   providers: [],
