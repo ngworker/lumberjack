@@ -1,10 +1,10 @@
 import { resolveDependency } from '@internal/test-util';
 
-import { LumberjackConsoleToken } from './lumberjack-console.token';
+import { lumberjackConsoleToken } from './lumberjack-console.token';
 
-describe('LumberjackConsoleToken', () => {
+describe('lumberjackConsoleToken', () => {
   it('resolves to the console by default', () => {
-    const actualConsoleLogger = resolveDependency(LumberjackConsoleToken);
+    const actualConsoleLogger = resolveDependency(lumberjackConsoleToken);
 
     expect(actualConsoleLogger).toBe(console);
   });

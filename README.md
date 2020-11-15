@@ -214,7 +214,7 @@ export class ConsoleDriverModule {
   static forRoot(config: LogDriverConfig = defaultLogDriverConfig): ModuleWithProviders<ConsoleDriverRootModule> {
     return {
       ngModule: ConsoleDriverRootModule,
-      providers: [{ provide: LogDriverConfigToken, useValue: config }],
+      providers: [{ provide: logDriverConfigToken, useValue: config }],
     };
   }
 
@@ -226,13 +226,13 @@ export class ConsoleDriverModule {
 
 In this implementation the `ConsoleDriverModule` is protected from being used directly. Instead we should use the `forRoot()` method.
 
-The `forRoot()` method provides the `LogDriverConfigToken` and returns the `ConsoleDriverRootModule` which holds the rest of the driver setup.
+The `forRoot()` method provides the `logDriverConfigToken` and returns the `ConsoleDriverRootModule` which holds the rest of the driver setup.
 
 ```typescript
 @NgModule({
   providers: [
     {
-      provide: LogDriverToken,
+      provide: logDriverToken,
       useClass: ConsoleDriver,
       multi: true,
     },
@@ -249,7 +249,7 @@ export class ConsoleDriverRootModule {
 }
 ```
 
-The most important thing about the `ConsoleDriverRootModule` is that it provides the `ConsoleDriver` using the `LogDriverToken` using the `multi` flag on.
+The most important thing about the `ConsoleDriverRootModule` is that it provides the `ConsoleDriver` using the `logDriverToken` using the `multi` flag on.
 
 This allows us to provide multiple `log-drivers` at the same time and is the feature enabling the extensibility of the `lumberjack` library.
 

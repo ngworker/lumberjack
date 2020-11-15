@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 
 import { LogDriver, LogDriverConfig } from '@ngworker/lumberjack';
 
-import { NoopDriverConfigToken } from './noop-driver-config.token';
+import { noopDriverConfigToken } from './noop-driver-config.token';
 
 /**
  * No-op log driver.
@@ -11,7 +11,7 @@ import { NoopDriverConfigToken } from './noop-driver-config.token';
  */
 @Injectable()
 export class NoopDriver implements LogDriver {
-  constructor(@Inject(NoopDriverConfigToken) public config: LogDriverConfig) {}
+  constructor(@Inject(noopDriverConfigToken) public config: LogDriverConfig) {}
 
   logCritical(logEntry: string): void {}
 

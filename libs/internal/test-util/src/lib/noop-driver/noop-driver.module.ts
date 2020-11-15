@@ -2,7 +2,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { LogDriverConfig } from '@ngworker/lumberjack';
 
-import { NoopDriverConfigToken } from './noop-driver-config.token';
+import { noopDriverConfigToken } from './noop-driver-config.token';
 import { NoopDriverRootModule } from './noop-driver-root.module';
 
 /**
@@ -15,7 +15,7 @@ export class NoopDriverModule {
   static forRoot(config?: LogDriverConfig): ModuleWithProviders<NoopDriverRootModule> {
     return {
       ngModule: NoopDriverRootModule,
-      providers: (config && [{ provide: NoopDriverConfigToken, useValue: config }]) || [],
+      providers: (config && [{ provide: noopDriverConfigToken, useValue: config }]) || [],
     };
   }
 

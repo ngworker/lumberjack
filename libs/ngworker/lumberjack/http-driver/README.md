@@ -27,7 +27,7 @@ The rest of the `HttpDriver` is defined as follows
 export class HttpDriver implements LogDriver {
   constructor(
     private http: HttpClient,
-    @Inject(HttpDriverConfigToken) public config: HttpDriverConfig,
+    @Inject(httpDriverConfigToken) public config: HttpDriverConfig,
     private ngZone: NgZone
   ) {}
 
@@ -114,7 +114,7 @@ export class HttpDriverModule {
       ngModule: HttpDriverRootModule,
       providers: [
         {
-          provide: HttpDriverConfigToken,
+          provide: httpDriverConfigToken,
           useValue: config,
         },
       ],
@@ -164,9 +164,9 @@ export function httpDriverFactory(
   imports: [HttpClientModule],
   providers: [
     {
-      deps: [HttpClient, LogDriverConfigToken, HttpDriverConfigToken, NgZone],
+      deps: [HttpClient, logDriverConfigToken, httpDriverConfigToken, NgZone],
       multi: true,
-      provide: LogDriverToken,
+      provide: logDriverToken,
       useFactory: httpDriverFactory,
     },
   ],
@@ -189,7 +189,7 @@ export class HttpDriverRootModule {
 }
 ```
 
-We now have the `deps` property, needed to inject the dependencies. In this case the `HttpClient`, the `ngZone`, the `LogDriverConfigToken` and the `HttpDriverConfigToken`.
+We now have the `deps` property, needed to inject the dependencies. In this case the `HttpClient`, the `ngZone`, the `logDriverConfigToken` and the `httpDriverConfigToken`.
 
 This dependencies are used in the `httpDriverFactory` function.
 There, we merge the `logDriverConfig` and `httpDriverConfig` to ensure we have the default configurations, in they are not override, and we return a new instance of the `HttpDriver`.
