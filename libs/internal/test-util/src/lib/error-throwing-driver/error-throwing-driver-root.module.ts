@@ -1,13 +1,13 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 
-import { LogDriverToken } from '@ngworker/lumberjack';
+import { logDriverToken } from '@ngworker/lumberjack';
 
 import { ErrorThrowingDriver } from './error-throwing.driver';
 
 @NgModule({
   providers: [
     {
-      provide: LogDriverToken,
+      provide: logDriverToken,
       useClass: ErrorThrowingDriver,
       multi: true,
     },

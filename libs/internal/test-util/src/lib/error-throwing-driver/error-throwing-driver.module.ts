@@ -2,7 +2,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { LogDriverConfig } from '@ngworker/lumberjack';
 
-import { ErrorThrowingDriverConfigToken } from './error-throwing-driver-config.token';
+import { errorThrowingDriverConfigToken } from './error-throwing-driver-config.token';
 import { ErrorThrowingDriverRootModule } from './error-throwing-driver-root.module';
 
 /**
@@ -15,7 +15,7 @@ export class ErrorThrowingDriverModule {
   static forRoot(config?: LogDriverConfig): ModuleWithProviders<ErrorThrowingDriverRootModule> {
     return {
       ngModule: ErrorThrowingDriverRootModule,
-      providers: (config && [{ provide: ErrorThrowingDriverConfigToken, useValue: config }]) || [],
+      providers: (config && [{ provide: errorThrowingDriverConfigToken, useValue: config }]) || [],
     };
   }
 

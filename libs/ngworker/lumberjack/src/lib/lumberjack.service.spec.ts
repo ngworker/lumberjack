@@ -124,7 +124,7 @@ describe(LumberjackService.name, () => {
             ErrorThrowingDriverModule.forRoot(),
           ],
         });
-        const logDrivers = (resolveDependency(LogDriverToken) as unknown) as LogDriver[];
+        const logDrivers = (resolveDependency(logDriverToken) as unknown) as LogDriver[];
         const spyDriver = logDrivers[0] as SpyDriver;
         const lumberjack = resolveDependency(LumberjackService);
 
