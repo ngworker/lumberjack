@@ -19,8 +19,8 @@ import {
 } from '@internal/test-util';
 import { ConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
 
-import { LogDriverConfig, LogDriverConfigToken } from './configs';
-import { LogDriver, LogDriverToken } from './log-drivers';
+import { LogDriverConfig, logDriverConfigToken } from './configs';
+import { LogDriver, logDriverToken } from './log-drivers';
 import { LumberjackLogLevel } from './lumberjack-log-levels';
 import { LumberjackModule } from './lumberjack.module';
 import { LumberjackService } from './lumberjack.service';
@@ -29,7 +29,7 @@ const noLogsConfig: LogDriverConfig = {
   levels: [],
 };
 const noLogsProvider: StaticProvider = {
-  provide: LogDriverConfigToken,
+  provide: logDriverConfigToken,
   useValue: noLogsConfig,
 };
 const allLogsConfig: LogDriverConfig = {
@@ -43,14 +43,14 @@ const allLogsConfig: LogDriverConfig = {
   ],
 };
 const allLogsProvider: StaticProvider = {
-  provide: LogDriverConfigToken,
+  provide: logDriverConfigToken,
   useValue: allLogsConfig,
 };
 const verboseLoggingConfig: LogDriverConfig = {
   levels: [LumberjackLogLevel.Verbose],
 };
 const verboseLoggingProvider: StaticProvider = {
-  provide: LogDriverConfigToken,
+  provide: logDriverConfigToken,
   useValue: verboseLoggingConfig,
 };
 
@@ -162,7 +162,7 @@ describe(LumberjackService.name, () => {
 
       lumberjack = resolveDependency(LumberjackService);
 
-      const [logDriver] = (resolveDependency(LogDriverToken) as unknown) as LogDriver[];
+      const [logDriver] = (resolveDependency(logDriverToken) as unknown) as LogDriver[];
       spyDriver = logDriver as SpyDriver;
     });
 
@@ -255,7 +255,7 @@ describe(LumberjackService.name, () => {
 
       lumberjack = resolveDependency(LumberjackService);
 
-      const [logDriver] = (resolveDependency(LogDriverToken) as unknown) as LogDriver[];
+      const [logDriver] = (resolveDependency(logDriverToken) as unknown) as LogDriver[];
       spyDriver = logDriver as SpyDriver;
     });
 
@@ -313,7 +313,7 @@ describe(LumberjackService.name, () => {
 
         lumberjack = resolveDependency(LumberjackService);
 
-        const [_spyDriver, _noopDriver] = (resolveDependency(LogDriverToken) as unknown) as LogDriver[];
+        const [_spyDriver, _noopDriver] = (resolveDependency(logDriverToken) as unknown) as LogDriver[];
         spyDriver = _spyDriver as SpyDriver;
         noopDriver = _noopDriver as jasmine.SpyObj<NoopDriver>;
         spyOn(noopDriver, 'logCritical');

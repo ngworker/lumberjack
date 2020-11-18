@@ -2,7 +2,7 @@ import { InjectionToken } from '@angular/core';
 
 import { LogDriverConfig } from '@ngworker/lumberjack';
 
-export const HttpDriverConfigToken: InjectionToken<HttpDriverConfig> = new InjectionToken('__HTTP_DRIVER_CONFIG__');
+export const httpDriverConfigToken: InjectionToken<HttpDriverConfig> = new InjectionToken('__HTTP_DRIVER_CONFIG__');
 
 export interface HttpDriverConfig extends LogDriverConfig {
   /**

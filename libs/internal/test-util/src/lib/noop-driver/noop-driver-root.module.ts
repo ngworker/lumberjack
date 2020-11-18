@@ -1,13 +1,13 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 
-import { LogDriverToken } from '@ngworker/lumberjack';
+import { logDriverToken } from '@ngworker/lumberjack';
 
 import { NoopDriver } from './noop.driver';
 
 @NgModule({
   providers: [
     {
-      provide: LogDriverToken,
+      provide: logDriverToken,
       useClass: NoopDriver,
       multi: true,
     },

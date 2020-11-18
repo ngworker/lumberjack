@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, NgModule, NgZone, Optional, SkipSelf } from '@angular/core';
 
-import { LogDriverConfig, LogDriverConfigToken, LogDriverToken } from '@ngworker/lumberjack';
+import { LogDriverConfig, logDriverConfigToken, logDriverToken } from '@ngworker/lumberjack';
 
-import { HttpDriverConfig, HttpDriverConfigToken } from './http-driver-config.token';
+import { HttpDriverConfig, httpDriverConfigToken } from './http-driver-config.token';
 import { HttpDriver } from './http.driver';
 
 export function httpDriverFactory(
@@ -23,9 +23,9 @@ export function httpDriverFactory(
 @NgModule({
   providers: [
     {
-      deps: [HttpClient, LogDriverConfigToken, HttpDriverConfigToken, NgZone],
+      deps: [HttpClient, logDriverConfigToken, httpDriverConfigToken, NgZone],
       multi: true,
-      provide: LogDriverToken,
+      provide: logDriverToken,
       useFactory: httpDriverFactory,
     },
   ],

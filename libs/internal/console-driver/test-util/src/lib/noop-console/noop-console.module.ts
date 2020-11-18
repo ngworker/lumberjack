@@ -1,6 +1,6 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 
-import { LumberjackConsoleToken } from '@ngworker/lumberjack/console-driver';
+import { lumberjackConsoleToken } from '@ngworker/lumberjack/console-driver';
 
 import { NoopConsole } from './noop-console.service';
 
@@ -8,7 +8,7 @@ import { NoopConsole } from './noop-console.service';
   providers: [
     {
       deps: [[new Optional(), new SkipSelf(), NoopConsole]],
-      provide: LumberjackConsoleToken,
+      provide: lumberjackConsoleToken,
       useFactory: (maybeExistingInstance: NoopConsole | null): NoopConsole =>
         maybeExistingInstance || new NoopConsole(),
     },

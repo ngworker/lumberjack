@@ -1,7 +1,8 @@
 import { Inject, Injectable, Optional, Type } from '@angular/core';
 
-import { LumberjackLogConfig, LumberjackLogConfigToken } from './configs/lumberjack-log.config';
-import { LogDriver, LogDriverToken } from './log-drivers';
+import { lumberjackLogConfigToken } from './configs/lumberjack-log-config.token';
+import { LumberjackLogConfig } from './configs/lumberjack-log.config';
+import { LogDriver, logDriverToken } from './log-drivers';
 import { LumberjackLog } from './lumberjack-log';
 import { LumberjackLogEntryLevel, LumberjackLogLevel } from './lumberjack-log-levels';
 import { LumberjackRootModule } from './lumberjack-root.module';
@@ -19,10 +20,10 @@ export class LumberjackService {
   private logDrivers: LogDriver[];
 
   constructor(
-    @Inject(LumberjackLogConfigToken) private config: LumberjackLogConfig,
+    @Inject(lumberjackLogConfigToken) private config: LumberjackLogConfig,
     // Each driver must be provided with multi. That way we can capture every provided driver
     // and use it to log to its output.
-    @Optional() @Inject(LogDriverToken) logDrivers: LogDriver[]
+    @Optional() @Inject(logDriverToken) logDrivers: LogDriver[]
   ) {
     logDrivers = logDrivers || [];
     this.logDrivers = Array.isArray(logDrivers) ? logDrivers : [logDrivers];
@@ -93,10 +94,6 @@ export class LumberjackService {
         break;
       case LumberjackLogLevel.Trace:
         driver.logTrace(logText);
-
-        break;
-      default:
-        driver.logInfo(logText);
 
         break;
     }

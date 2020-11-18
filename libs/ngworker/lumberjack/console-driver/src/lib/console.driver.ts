@@ -2,15 +2,15 @@ import { Inject, Injectable } from '@angular/core';
 
 import { LogDriver, LogDriverConfig } from '@ngworker/lumberjack';
 
-import { ConsoleDriverConfigToken } from './console-driver-config.token';
+import { consoleDriverConfigToken } from './console-driver-config.token';
 import { LumberjackConsole } from './lumberjack-console';
-import { LumberjackConsoleToken } from './lumberjack-console.token';
+import { lumberjackConsoleToken } from './lumberjack-console.token';
 
 @Injectable()
 export class ConsoleDriver implements LogDriver {
   constructor(
-    @Inject(ConsoleDriverConfigToken) public config: LogDriverConfig,
-    @Inject(LumberjackConsoleToken) private console: LumberjackConsole
+    @Inject(consoleDriverConfigToken) public config: LogDriverConfig,
+    @Inject(lumberjackConsoleToken) private console: LumberjackConsole
   ) {}
 
   logCritical(logEntry: string): void {

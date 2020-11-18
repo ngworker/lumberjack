@@ -3,7 +3,7 @@ import { Inject, Injectable, NgZone } from '@angular/core';
 
 import { LogDriver, LumberjackLogLevel } from '@ngworker/lumberjack';
 
-import { HttpDriverConfig, HttpDriverConfigToken } from './http-driver-config.token';
+import { HttpDriverConfig, httpDriverConfigToken } from './http-driver-config.token';
 import { HttpLogEntry } from './http-log-entry';
 import { retryWithDelay } from './retry-with-delay.operator';
 
@@ -11,7 +11,7 @@ import { retryWithDelay } from './retry-with-delay.operator';
 export class HttpDriver implements LogDriver {
   constructor(
     private http: HttpClient,
-    @Inject(HttpDriverConfigToken) public config: HttpDriverConfig,
+    @Inject(httpDriverConfigToken) public config: HttpDriverConfig,
     private ngZone: NgZone
   ) {}
 

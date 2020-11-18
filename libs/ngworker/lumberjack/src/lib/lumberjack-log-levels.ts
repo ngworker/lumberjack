@@ -12,4 +12,6 @@ export enum LumberjackLogLevel {
   Warning = 'warn',
 }
 
+export type LumberjackLogConfigLevel = ReadonlyArray<LumberjackLogEntryLevel> | [LumberjackLogLevel.Verbose];
+
 export type LumberjackLogEntryLevel = Exclude<LumberjackLogLevel, LumberjackLogLevel.Verbose>;

@@ -2,7 +2,7 @@ import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@an
 import { TestBed } from '@angular/core/testing';
 
 import { repeatSideEffect, resolveDependency } from '@internal/test-util';
-import { LogDriver, LogDriverToken, LumberjackLogLevel, LumberjackModule } from '@ngworker/lumberjack';
+import { LogDriver, logDriverToken, LumberjackLogLevel, LumberjackModule } from '@ngworker/lumberjack';
 
 import { HttpDriverOptions } from './http-driver-options';
 import { HttpDriverModule } from './http-driver.module';
@@ -74,7 +74,7 @@ describe(HttpDriver.name, () => {
       imports: [HttpClientTestingModule, LumberjackModule.forRoot(), HttpDriverModule.withOptions(options)],
     });
 
-    [httpDriver] = (resolveDependency(LogDriverToken) as unknown) as LogDriver[];
+    [httpDriver] = (resolveDependency(logDriverToken) as unknown) as LogDriver[];
     httpTestingController = resolveDependency(HttpTestingController);
 
     jasmine.clock().uninstall();

@@ -3,9 +3,10 @@ import { TestBed } from '@angular/core/testing';
 
 import { expectNgModuleToBeGuarded, resolveDependency } from '@internal/test-util';
 import {
-  defaultLogDriverConfig,
   LogDriver,
-  LogDriverToken,
+  LogDriverConfig,
+  logDriverToken,
+  lumberjackLogConfigToken,
   LumberjackLogEntryLevel,
   LumberjackLogLevel,
   LumberjackModule,
@@ -55,7 +56,7 @@ const createHttpDriver = (
     ],
   });
 
-  const [httpDriver] = (resolveDependency(LogDriverToken) as unknown) as LogDriver[];
+  const [httpDriver] = (resolveDependency(logDriverToken) as unknown) as LogDriver[];
 
   return httpDriver;
 };
@@ -77,7 +78,7 @@ const createHttpDriverWithOptions = (
     ],
   });
 
-  const [httpDriver] = (resolveDependency(LogDriverToken) as unknown) as LogDriver[];
+  const [httpDriver] = (resolveDependency(logDriverToken) as unknown) as LogDriver[];
 
   return httpDriver;
 };
@@ -105,11 +106,15 @@ describe(HttpDriverModule.name, () => {
 
     it('registers a default level configuration if none is specified', () => {
       const customHttpConfig = createHttpConfig([LumberjackLogLevel.Verbose]);
-      const expectedConfig: HttpDriverConfig = { ...defaultLogDriverConfig, ...customHttpConfig };
 
       const httpDriver = createHttpDriver({ config: customHttpConfig });
 
       const actualConfig = httpDriver.config;
+      const logConfig = resolveDependency(lumberjackLogConfigToken);
+      const defaultLogDriverConfig: LogDriverConfig = {
+        levels: logConfig.levels,
+      };
+      const expectedConfig: HttpDriverConfig = { ...defaultLogDriverConfig, ...customHttpConfig };
       expect(actualConfig).toEqual(expectedConfig);
     });
 
