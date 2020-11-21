@@ -149,6 +149,67 @@ describe(LumberjackService.name, () => {
     });
   });
 
+  describe('Formatter', () => {
+    describe('Error-throwing formatter', () => {
+      beforeEach(() => {
+        TestBed.configureTestingModule({
+          imports: [
+            LumberjackModule.forRoot({
+              format: () => {
+                throw new Error('Test format error');
+              },
+            }),
+            SpyDriverModule.forRoot(),
+          ],
+        });
+
+        lumberjack = resolveDependency(LumberjackService);
+
+        const [logDriver] = (resolveDependency(logDriverToken) as unknown) as LogDriver[];
+        spyDriver = logDriver as SpyDriver;
+      });
+
+      let lumberjack: LumberjackService;
+      let spyDriver: SpyDriver;
+
+      it('logs an error to a log driver', () => {
+        lumberjack.log(createCriticalLog());
+
+        expect(spyDriver.logError).toHaveBeenCalledTimes(1);
+      });
+
+      it('does not log a critical error to a log driver', () => {
+        lumberjack.log(createCriticalLog());
+
+        expect(spyDriver.logCritical).not.toHaveBeenCalled();
+      });
+
+      it('does not log a debug message to a log driver', () => {
+        lumberjack.log(createDebugLog());
+
+        expect(spyDriver.logDebug).not.toHaveBeenCalled();
+      });
+
+      it('does not log an info message to a log driver', () => {
+        lumberjack.log(createInfoLog());
+
+        expect(spyDriver.logInfo).not.toHaveBeenCalled();
+      });
+
+      it('does not log a trace to a log driver', () => {
+        lumberjack.log(createTraceLog());
+
+        expect(spyDriver.logTrace).not.toHaveBeenCalled();
+      });
+
+      it('does not log a warning to a log driver', () => {
+        lumberjack.log(createWarningLog());
+
+        expect(spyDriver.logWarning).not.toHaveBeenCalled();
+      });
+    });
+  });
+
   describe('Log types', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
