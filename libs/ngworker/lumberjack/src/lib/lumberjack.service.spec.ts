@@ -104,14 +104,25 @@ describe(LumberjackService.name, () => {
         expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
       });
 
-      it('outputs an error when multiple log drivers are registered', () => {
+      it('write error log to non throwing error drivers when a some drivers fail', () => {
         TestBed.configureTestingModule({
-          imports: [LumberjackModule.forRoot(), NoopDriverModule.forRoot(), ErrorThrowingDriverModule.forRoot()],
+          imports: [
+            LumberjackModule.forRoot({
+              format: ({ level }) => level,
+            }),
+            SpyDriverModule.forRoot(),
+            ErrorThrowingDriverModule.forRoot(),
+          ],
         });
+        const logDrivers = (resolveDependency(logDriverToken) as unknown) as LogDriver[];
+        const spyDriver = logDrivers[0] as SpyDriver;
 
         expect(logDebugMessage).not.toThrow();
 
-        expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
+        expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
+        expect(spyDriver.logError).toHaveBeenCalledTimes(1);
+        expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLogLevel.Debug);
+        expect(spyDriver.logError).toHaveBeenCalledWith(LumberjackLogLevel.Error);
       });
 
       it('accepts logs when multiple log drivers are registered', () => {
@@ -126,9 +137,8 @@ describe(LumberjackService.name, () => {
         });
         const logDrivers = (resolveDependency(logDriverToken) as unknown) as LogDriver[];
         const spyDriver = logDrivers[0] as SpyDriver;
-        const lumberjack = resolveDependency(LumberjackService);
 
-        lumberjack.log(createDebugLog());
+        expect(logDebugMessage).not.toThrow();
 
         expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
         expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLogLevel.Debug);

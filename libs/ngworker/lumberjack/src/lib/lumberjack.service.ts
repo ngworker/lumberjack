@@ -1,11 +1,19 @@
 import { Inject, Injectable, Optional, Type } from '@angular/core';
 
+import { FormatFunction } from './configs/format-function';
 import { lumberjackLogConfigToken } from './configs/lumberjack-log-config.token';
 import { LumberjackLogConfig } from './configs/lumberjack-log.config';
 import { LogDriver, logDriverToken } from './log-drivers';
 import { LumberjackLog } from './lumberjack-log';
 import { LumberjackLogEntryLevel, LumberjackLogLevel } from './lumberjack-log-levels';
 import { LumberjackRootModule } from './lumberjack-root.module';
+import { LumberjackTimeService } from './time/lumberjack-time.service';
+
+interface DriverError {
+  driver: LogDriver;
+  logEntry: LumberjackLog;
+  error: unknown;
+}
 
 /**
  * Service responsible to add logs to the applications.
@@ -23,7 +31,8 @@ export class LumberjackService {
     @Inject(lumberjackLogConfigToken) private config: LumberjackLogConfig,
     // Each driver must be provided with multi. That way we can capture every provided driver
     // and use it to log to its output.
-    @Optional() @Inject(logDriverToken) logDrivers: LogDriver[]
+    @Optional() @Inject(logDriverToken) logDrivers: LogDriver[],
+    private time: LumberjackTimeService
   ) {
     logDrivers = logDrivers || [];
     this.logDrivers = Array.isArray(logDrivers) ? logDrivers : [logDrivers];
@@ -31,16 +40,50 @@ export class LumberjackService {
 
   log(logItem: LumberjackLog): void {
     const { format } = this.config;
+    this.logWithHandleErrors(logItem, format, this.logDrivers);
+  }
 
-    for (const logDriver of this.logDrivers) {
-      if (this.canDriveLog(logDriver, logItem.level)) {
+  logWithHandleErrors(logEntry: LumberjackLog, format: FormatFunction, drivers: LogDriver[]): void {
+    let errors: DriverError[] = [];
+    const greenDrivers: LogDriver[] = [];
+    drivers.forEach((driver) => {
+      if (this.canDriveLog(driver, logEntry.level)) {
         try {
-          this.logToTheRightLevel(logDriver, logItem, format);
+          this.logToTheRightLevel(driver, logEntry, format);
+          greenDrivers.push(driver);
         } catch (error) {
-          this.logDriverError(logDriver, logItem, format, error);
+          errors = [...errors, { error, driver, logEntry }];
         }
       }
+    });
+    this.processErrors(greenDrivers, format, errors);
+  }
+
+  private processErrors(greenDrivers: LogDriver[], format: FormatFunction, errors: DriverError[]) {
+    if (greenDrivers.length === 0) {
+      errors.forEach((error) => this.logDriverError(error));
+    } else {
+      errors.forEach((error) => {
+        const logEntry: LumberjackLog = {
+          context: 'Lumberjack Error Handling',
+          createdAt: Date.now(),
+          level: LumberjackLogLevel.Error,
+          message: this.createDriverErrorMessage(error),
+        };
+
+        this.logWithHandleErrors(logEntry, format, greenDrivers);
+      });
     }
+  }
+
+  private removeDriverAtIndex(greenDrivers: LogDriver[], index: number) {
+    greenDrivers = [...greenDrivers.slice(0, index), ...greenDrivers.slice(index + 1, greenDrivers.length)];
+    return greenDrivers;
+  }
+
+  private defaultFormatFunction(logEntry: LumberjackLog) {
+    const { context, createdAt: timestamp, level, message } = logEntry;
+    return `${level} ${this.time.utcTimestampFor(timestamp)}${context ? ` [${context}]` : ''} ${message}`;
   }
 
   private canDriveLog(driver: LogDriver, level: LumberjackLogEntryLevel): boolean {
@@ -51,17 +94,16 @@ export class LumberjackService {
     );
   }
 
-  private logDriverError(
-    driver: LogDriver,
-    logEntry: LumberjackLog,
-    format: (logEntry: LumberjackLog) => string,
-    error: unknown
-  ): void {
+  private logDriverError({ driver, logEntry, error }: DriverError): void {
+    const errorMessage = this.createDriverErrorMessage({ driver, logEntry, error });
+    console.error(errorMessage);
+  }
+
+  private createDriverErrorMessage({ driver, logEntry, error }: DriverError): string {
     const thrownErrorMessage = (error as Error).message || String(error);
-    const errorMessage = `Could not log message "${format(logEntry)}" to ${
+    return `Could not log message "${this.defaultFormatFunction(logEntry)}" to ${
       driver.constructor.name
     }. Error: "${thrownErrorMessage}"`;
-    console.error(errorMessage);
   }
 
   private logToTheRightLevel(
