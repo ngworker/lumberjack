@@ -344,6 +344,8 @@ The `LumberjackLogger` service is an abstract class that wraps the `LumberjackSe
 This is the abstract interface of `LumberjackLogger`:
 
 ```ts
+import { LumberjackService, LumberjackTimeService } from '@ngworker/lumberjack';
+
 export abstract class LumberjackLogger {
   constructor(lumberjack: LumberjackService, time: LumberjackTimeService) {}
 
@@ -363,6 +365,9 @@ All logger factory methods are protected as it is recommended to create a custom
 As an example, let's create a custom logger for our example application.
 
 ```ts
+import { Injectable } from '@angular/core';
+import { LumberjackLogger } from '@ngworker/lumberjack';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -380,6 +385,12 @@ export class AppLogger extends LumberjackLogger {
 Now that we have defined our first Lumberjack logger, let's use it to log entries from our application.
 
 ```ts
+import { Component, OnInit } from '@angular/core';
+import { LumberjackLogger } from '@ngworker/lumberjack';
+
+import { AppLogger } from './app.logger';
+import { ForestService } from './forest.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
