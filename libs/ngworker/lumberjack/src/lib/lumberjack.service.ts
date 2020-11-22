@@ -1,7 +1,7 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 
+import { LumberjackFormatter } from './formatting/lumberjack-formatter.service';
 import { LogDriver, logDriverToken } from './log-drivers';
-import { LumberjackFormatter } from './lumberjack-formatter.service';
 import { LumberjackLog } from './lumberjack-log';
 import { LumberjackLogEntryLevel, LumberjackLogLevel } from './lumberjack-log-levels';
 import { LumberjackRootModule } from './lumberjack-root.module';

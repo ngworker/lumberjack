@@ -1,11 +1,12 @@
 import { Inject, Injectable } from '@angular/core';
 
-import { lumberjackLogConfigToken } from './configs/lumberjack-log-config.token';
-import { LumberjackLogConfig } from './configs/lumberjack-log.config';
-import { createDefaultFormatFn } from './formatting/create-default-format-fn';
-import { LumberjackLog } from './lumberjack-log';
-import { LumberjackLogLevel } from './lumberjack-log-levels';
-import { LumberjackTimeService } from './time/lumberjack-time.service';
+import { lumberjackLogConfigToken } from '../configs/lumberjack-log-config.token';
+import { LumberjackLogConfig } from '../configs/lumberjack-log.config';
+import { LumberjackLog } from '../lumberjack-log';
+import { LumberjackLogLevel } from '../lumberjack-log-levels';
+import { LumberjackTimeService } from '../time/lumberjack-time.service';
+
+import { createDefaultFormatFn } from './create-default-format-fn';
 
 @Injectable({
   providedIn: 'root',
