@@ -8,7 +8,7 @@
     "test": "ng test lumberjack-app",
     "test:ci": "yarn test --configuration=ci",
     "lint": "ng lint",
-    "e2e": "ng e2e lumberjack-app-e2e",
+    "e2e": "npx webdriver-manager update && ng e2e lumberjack-app-e2e",
     "contributors:add": "all-contributors add",
     "hooks:pre-commit": "node hooks/pre-commit.js",
     "commit": "git-cz",
