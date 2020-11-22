@@ -7,6 +7,7 @@ import { LumberjackLogLevel } from '../lumberjack-log-levels';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { createDefaultFormatFn } from './create-default-format-fn';
+import { LumberjackFormatterResult } from './lumberjack-formatter-result';
 
 @Injectable({
   providedIn: 'root',
@@ -17,7 +18,7 @@ export class LumberjackFormatter {
     private time: LumberjackTimeService
   ) {}
 
-  formatLogEntry(logEntry: LumberjackLog): { readonly logEntry: LumberjackLog; readonly message: string } {
+  formatLogEntry(logEntry: LumberjackLog): LumberjackFormatterResult {
     const { format } = this.config;
 
     try {
