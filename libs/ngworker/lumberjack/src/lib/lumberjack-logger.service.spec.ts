@@ -2,9 +2,11 @@ import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import {
+  createCriticalLog,
   createDebugLog,
   createErrorLog,
   createInfoLog,
+  createTraceLog,
   createWarningLog,
   resolveDependency,
 } from '@internal/test-util';
@@ -19,9 +21,11 @@ import { LumberjackTimeService } from './time/lumberjack-time.service';
 export class TestLogger extends LumberjackLogger {
   static context = 'Test';
 
+  criticalLogger = this.createCriticalLogger('', TestLogger.context);
   debugLogger = this.createDebugLogger('', TestLogger.context);
   errorLogger = this.createErrorLogger('', TestLogger.context);
   infoLogger = this.createInfoLogger('', TestLogger.context);
+  traceLogger = this.createTraceLogger('', TestLogger.context);
   warningLogger = this.createWarningLogger('', TestLogger.context);
 }
 
@@ -43,6 +47,13 @@ describe(LumberjackLogger.name, () => {
   let logger: TestLogger;
   let lumberjackStub: jasmine.SpyObj<LumberjackService>;
 
+  it('can create a critical logger', () => {
+    logger.criticalLogger();
+
+    expect(lumberjackStub.log).toHaveBeenCalledTimes(1);
+    expect(lumberjackStub.log).toHaveBeenCalledWith(createCriticalLog());
+  });
+
   it('can create a debug logger', () => {
     logger.debugLogger();
 
@@ -62,6 +73,13 @@ describe(LumberjackLogger.name, () => {
 
     expect(lumberjackStub.log).toHaveBeenCalledTimes(1);
     expect(lumberjackStub.log).toHaveBeenCalledWith(createInfoLog());
+  });
+
+  it('can create a trace logger', () => {
+    logger.traceLogger();
+
+    expect(lumberjackStub.log).toHaveBeenCalledTimes(1);
+    expect(lumberjackStub.log).toHaveBeenCalledWith(createTraceLog());
   });
 
   it('can create a warning logger', () => {

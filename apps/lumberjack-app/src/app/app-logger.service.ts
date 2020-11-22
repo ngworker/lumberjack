@@ -12,7 +12,7 @@ export class AppLogger extends LumberjackLogger {
     super(lumberjack, time);
   }
 
-  forestOnFire = this.createErrorLogger('The forest is on fire', AppLogger.logContext);
+  forestOnFire = this.createCriticalLogger('The forest is on fire', AppLogger.logContext);
 
   helloForest = this.createInfoLogger('HelloForest', AppLogger.logContext);
 }
