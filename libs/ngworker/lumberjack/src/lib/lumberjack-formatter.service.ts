@@ -2,6 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 
 import { lumberjackLogConfigToken } from './configs/lumberjack-log-config.token';
 import { LumberjackLogConfig } from './configs/lumberjack-log.config';
+import { createDefaultFormatFn } from './formatting/create-default-format-fn';
 import { LumberjackLog } from './lumberjack-log';
 import { LumberjackLogLevel } from './lumberjack-log-levels';
 import { LumberjackTimeService } from './time/lumberjack-time.service';
@@ -25,17 +26,9 @@ export class LumberjackFormatter {
       };
     } catch (error) {
       const thrownErrorMessage = (error as Error).message || String(error);
-      let createdAt: number;
-
-      try {
-        createdAt = this.time.getUnixEpochTicks();
-      } catch {
-        createdAt = Date.now();
-      }
-
       const errorEntry: LumberjackLog = {
         context: 'LumberjackFormatError',
-        createdAt,
+        createdAt: this.time.getUnixEpochTicks(),
         level: LumberjackLogLevel.Error,
         message: `Could not format message "${logEntry.message}". Error: "${thrownErrorMessage}"`,
       };
@@ -44,17 +37,8 @@ export class LumberjackFormatter {
       try {
         errorMessage = format(errorEntry);
       } catch {
-        let utcTimestamp: string;
-
-        try {
-          utcTimestamp = this.time.utcTimestampFor(errorEntry.createdAt);
-        } catch {
-          utcTimestamp = new Date(errorEntry.createdAt).toISOString();
-        }
-
-        errorMessage = `${errorEntry.level} ${utcTimestamp}${errorEntry.context ? ` [${errorEntry.context}]` : ''} ${
-          errorEntry.message
-        }`;
+        const defaultFormat = createDefaultFormatFn(this.time);
+        errorMessage = defaultFormat(errorEntry);
       }
 
       return {
