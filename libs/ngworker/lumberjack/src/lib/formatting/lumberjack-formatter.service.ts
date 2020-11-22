@@ -20,33 +20,48 @@ export class LumberjackFormatter {
 
   formatLogEntry(logEntry: LumberjackLog): LumberjackFormatterResult {
     const { format } = this.config;
+    let result: LumberjackFormatterResult;
 
     try {
-      return {
+      result = {
         logEntry,
         message: format(logEntry),
       };
     } catch (error) {
-      const thrownErrorMessage = (error as Error).message || String(error);
-      const errorEntry: LumberjackLog = {
-        context: 'LumberjackFormatError',
-        createdAt: this.time.getUnixEpochTicks(),
-        level: LumberjackLogLevel.Error,
-        message: `Could not format message "${logEntry.message}". Error: "${thrownErrorMessage}"`,
-      };
-      let errorMessage = '';
+      const errorLog = this.createErrorLog(error, logEntry);
+      const errorMessage = this.formatErrorMessage(errorLog);
 
-      try {
-        errorMessage = format(errorEntry);
-      } catch {
-        const defaultFormat = createDefaultFormatFn(this.time);
-        errorMessage = defaultFormat(errorEntry);
-      }
-
-      return {
-        logEntry: errorEntry,
+      result = {
+        logEntry: errorLog,
         message: errorMessage,
       };
     }
+
+    return result;
+  }
+
+  private createErrorLog(error: unknown, logEntry: LumberjackLog): LumberjackLog {
+    const thrownErrorMessage = (error as Error).message || String(error);
+
+    return {
+      context: 'LumberjackFormatError',
+      createdAt: this.time.getUnixEpochTicks(),
+      level: LumberjackLogLevel.Error,
+      message: `Could not format message "${logEntry.message}". Error: "${thrownErrorMessage}"`,
+    };
+  }
+
+  private formatErrorMessage(errorEntry: LumberjackLog): string {
+    const { format } = this.config;
+    let errorMessage = '';
+
+    try {
+      errorMessage = format(errorEntry);
+    } catch {
+      const defaultFormat = createDefaultFormatFn(this.time);
+      errorMessage = defaultFormat(errorEntry);
+    }
+
+    return errorMessage;
   }
 }
