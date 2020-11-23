@@ -104,6 +104,73 @@ describe(LumberjackService.name, () => {
         expect(consoleErrorSpy).toHaveBeenCalledTimes(1);
       });
 
+      it('outputs errors when multiple drivers are registered and last green driver fails while logging errors', () => {
+        TestBed.configureTestingModule({
+          imports: [
+            LumberjackModule.forRoot({
+              format: ({ level }) => level,
+            }),
+            SpyDriverModule.forRoot(),
+            ErrorThrowingDriverModule.forRoot({ logsBeforeThrowing: 1 }),
+          ],
+        });
+        const logDrivers = (resolveDependency(logDriverToken) as unknown) as LogDriver[];
+        const spyDriver = logDrivers[0] as SpyDriver;
+        const errorDriver = logDrivers[1] as ErrorThrowingDriver;
+        spyDriver.logDebug.and.throwError('The hidden spy made an error');
+        spyOn(errorDriver, 'logDebug').and.callThrough();
+        spyOn(errorDriver, 'logError').and.callThrough();
+
+        expect(logDebugMessage).not.toThrow();
+
+        expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
+        expect(spyDriver.logError).not.toHaveBeenCalled();
+        expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLogLevel.Debug);
+
+        expect(errorDriver.logDebug).toHaveBeenCalledTimes(1);
+        expect(errorDriver.logError).toHaveBeenCalledTimes(1);
+        expect(errorDriver.logDebug).toHaveBeenCalledWith(LumberjackLogLevel.Debug);
+
+        expect(consoleErrorSpy).toHaveBeenCalledTimes(2);
+      });
+
+      it('outputs only unprocessed driver errors', () => {
+        TestBed.configureTestingModule({
+          imports: [
+            LumberjackModule.forRoot({
+              format: ({ level }) => level,
+            }),
+            SpyDriverModule.forRoot(),
+            ErrorThrowingDriverModule.forRoot({ logsBeforeThrowing: 2 }),
+            NoopDriverModule.forRoot(),
+          ],
+        });
+        const logDrivers = (resolveDependency(logDriverToken) as unknown) as LogDriver[];
+        const spyDriver = logDrivers[0] as SpyDriver;
+        const errorDriver = logDrivers[1] as ErrorThrowingDriver;
+        const noopDriver = logDrivers[2] as NoopDriver;
+        spyDriver.logDebug.and.throwError('The hidden spy made an error');
+        spyOn(errorDriver, 'logDebug').and.callThrough();
+        spyOn(errorDriver, 'logError').and.callThrough();
+        spyOn(noopDriver, 'logError').and.throwError('Noop is really an error');
+        spyOn(noopDriver, 'logDebug').and.callThrough();
+
+        expect(logDebugMessage).not.toThrow();
+
+        expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
+        expect(spyDriver.logError).not.toHaveBeenCalled();
+        expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLogLevel.Debug);
+
+        expect(noopDriver.logDebug).toHaveBeenCalledTimes(1);
+        expect(noopDriver.logError).toHaveBeenCalledTimes(1);
+
+        expect(errorDriver.logDebug).toHaveBeenCalledTimes(1);
+        expect(errorDriver.logError).toHaveBeenCalledTimes(2);
+        expect(errorDriver.logDebug).toHaveBeenCalledWith(LumberjackLogLevel.Debug);
+
+        expect(consoleErrorSpy).toHaveBeenCalledTimes(2);
+      });
+
       it('write error log to non throwing error drivers when a some drivers fail', () => {
         TestBed.configureTestingModule({
           imports: [
@@ -131,12 +198,12 @@ describe(LumberjackService.name, () => {
             LumberjackModule.forRoot({
               format: ({ level }) => level,
             }),
-            SpyDriverModule.forRoot(),
             ErrorThrowingDriverModule.forRoot(),
+            SpyDriverModule.forRoot(),
           ],
         });
         const logDrivers = (resolveDependency(logDriverToken) as unknown) as LogDriver[];
-        const spyDriver = logDrivers[0] as SpyDriver;
+        const spyDriver = logDrivers[1] as SpyDriver;
 
         expect(logDebugMessage).not.toThrow();
 
@@ -144,16 +211,30 @@ describe(LumberjackService.name, () => {
         expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLogLevel.Debug);
       });
 
-      it('outputs an error mentioning the log entry and driver name', () => {
+      it('outputs an error mentioning the log entry and driver name recursively', () => {
         TestBed.configureTestingModule({
-          imports: [LumberjackModule.forRoot(), ErrorThrowingDriverModule.forRoot()],
+          imports: [
+            LumberjackModule.forRoot(),
+            SpyDriverModule.forRoot(),
+            ErrorThrowingDriverModule.forRoot({ logsBeforeThrowing: 1 }),
+          ],
         });
+        const logDrivers = (resolveDependency(logDriverToken) as unknown) as LogDriver[];
+        const spyDriver = logDrivers[0] as SpyDriver;
+        const errorDriver = logDrivers[1] as ErrorThrowingDriver;
+        spyDriver.logDebug.and.throwError('The hidden spy made an error');
+        spyOn(errorDriver, 'logDebug').and.callThrough();
+        spyOn(errorDriver, 'logError').and.callThrough();
 
         logDebugMessage();
 
-        const [actualErrorMessage] = consoleErrorSpy.calls.mostRecent().args as ReadonlyArray<string>;
-        expect(actualErrorMessage).toMatch(
-          new RegExp(`^Could not log message ".*?" to ${ErrorThrowingDriver.name}. Error: ".*?"$`)
+        const [actualLastErrorMessage] = consoleErrorSpy.calls.mostRecent().args as ReadonlyArray<string>;
+        expect(actualLastErrorMessage).toMatch(
+          new RegExp(`^Could not log message .*?\n.*? to ${ErrorThrowingDriver.name}.\n Error: .*?\n Error: .*?$`)
+        );
+        const [actualFirstErrorMessage] = consoleErrorSpy.calls.first().args as ReadonlyArray<string>;
+        expect(actualFirstErrorMessage).toMatch(
+          new RegExp(`^Could not log message ".*?" to ${SpyDriver.name}.\n Error: ".*?"$`)
         );
       });
     });

@@ -40,17 +40,27 @@ export class LumberjackService {
 
   log(logItem: LumberjackLog): void {
     const { format } = this.config;
+
     this.logWithHandleErrors(logItem, format, this.logDrivers);
   }
 
-  logWithHandleErrors(logEntry: LumberjackLog, format: FormatFunction, drivers: LogDriver[]): void {
-    let errors: DriverError[] = [];
+  logWithHandleErrors(
+    logEntry: LumberjackLog,
+    format: FormatFunction,
+    drivers: LogDriver[],
+    errors: DriverError[] = [],
+    errorIndex = -1
+  ): void {
     const greenDrivers: LogDriver[] = [];
     drivers.forEach((driver) => {
       if (this.canDriveLog(driver, logEntry.level)) {
         try {
           this.logToTheRightLevel(driver, logEntry, format);
           greenDrivers.push(driver);
+          if (errorIndex > -1) {
+            errors.splice(errorIndex, 1);
+            errorIndex = -1;
+          }
         } catch (error) {
           errors = [...errors, { error, driver, logEntry }];
         }
@@ -63,7 +73,7 @@ export class LumberjackService {
     if (greenDrivers.length === 0) {
       errors.forEach((error) => this.logDriverError(error));
     } else {
-      errors.forEach((error) => {
+      errors.forEach((error, index) => {
         const logEntry: LumberjackLog = {
           context: 'Lumberjack Error Handling',
           createdAt: Date.now(),
@@ -71,19 +81,14 @@ export class LumberjackService {
           message: this.createDriverErrorMessage(error),
         };
 
-        this.logWithHandleErrors(logEntry, format, greenDrivers);
+        this.logWithHandleErrors(logEntry, format, greenDrivers, errors, index);
       });
     }
   }
 
-  private removeDriverAtIndex(greenDrivers: LogDriver[], index: number) {
-    greenDrivers = [...greenDrivers.slice(0, index), ...greenDrivers.slice(index + 1, greenDrivers.length)];
-    return greenDrivers;
-  }
-
   private defaultFormatFunction(logEntry: LumberjackLog) {
     const { context, createdAt: timestamp, level, message } = logEntry;
-    return `${level} ${this.time.utcTimestampFor(timestamp)}${context ? ` [${context}]` : ''} ${message}`;
+    return `${level} ${this.time.utcTimestampFor(timestamp)}${context ? ` [${context}]` : ''} ${message}`.trim();
   }
 
   private canDriveLog(driver: LogDriver, level: LumberjackLogEntryLevel): boolean {
@@ -103,7 +108,7 @@ export class LumberjackService {
     const thrownErrorMessage = (error as Error).message || String(error);
     return `Could not log message "${this.defaultFormatFunction(logEntry)}" to ${
       driver.constructor.name
-    }. Error: "${thrownErrorMessage}"`;
+    }.\n Error: "${thrownErrorMessage}"`;
   }
 
   private logToTheRightLevel(

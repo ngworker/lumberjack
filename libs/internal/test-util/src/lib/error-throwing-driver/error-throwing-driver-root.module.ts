@@ -1,14 +1,28 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 
-import { logDriverToken } from '@ngworker/lumberjack';
+import { LogDriverConfig, logDriverConfigToken, logDriverToken } from '@ngworker/lumberjack';
 
+import { ErrorThrowingDriverConfig, errorThrowingDriverConfigToken } from './error-throwing-driver-config.token';
 import { ErrorThrowingDriver } from './error-throwing.driver';
+
+export function errorThrowingDriverFactory(
+  logDriverConfig: LogDriverConfig,
+  errorThrowingDriverConfig: ErrorThrowingDriverConfig
+): ErrorThrowingDriver {
+  const config: ErrorThrowingDriverConfig = {
+    ...logDriverConfig,
+    ...errorThrowingDriverConfig,
+  };
+
+  return new ErrorThrowingDriver(config);
+}
 
 @NgModule({
   providers: [
     {
+      deps: [logDriverConfigToken, errorThrowingDriverConfigToken],
       provide: logDriverToken,
-      useClass: ErrorThrowingDriver,
+      useFactory: errorThrowingDriverFactory,
       multi: true,
     },
   ],

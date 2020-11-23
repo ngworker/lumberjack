@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 
 import { LogDriver, LogDriverConfig } from '@ngworker/lumberjack';
 
-import { errorThrowingDriverConfigToken } from './error-throwing-driver-config.token';
+import { ErrorThrowingDriverConfig, errorThrowingDriverConfigToken } from './error-throwing-driver-config.token';
 
 /**
  * Error-throwing log driver.
@@ -11,30 +11,55 @@ import { errorThrowingDriverConfigToken } from './error-throwing-driver-config.t
  */
 @Injectable()
 export class ErrorThrowingDriver implements LogDriver {
-  constructor(@Inject(errorThrowingDriverConfigToken) public config: LogDriverConfig) {}
+  private logCount = 0;
+  constructor(@Inject(errorThrowingDriverConfigToken) public config: ErrorThrowingDriverConfig) {}
 
   logCritical(logEntry: string): void {
-    this.throwError(logEntry);
+    if (this.logCount < this.config.logsBeforeThrowing) {
+      this.logCount += 1;
+    } else {
+      this.throwError(logEntry);
+    }
   }
 
   logDebug(logEntry: string): void {
-    this.throwError(logEntry);
+    if (this.logCount < this.config.logsBeforeThrowing) {
+      this.logCount += 1;
+    } else {
+      this.throwError(logEntry);
+    }
   }
 
   logError(logEntry: string): void {
-    this.throwError(logEntry);
+    if (this.logCount < this.config.logsBeforeThrowing) {
+      this.logCount += 1;
+    } else {
+      this.throwError(logEntry);
+    }
   }
 
   logInfo(logEntry: string): void {
-    this.throwError(logEntry);
+    if (this.logCount < this.config.logsBeforeThrowing) {
+      this.logCount += 1;
+    } else {
+      this.throwError(logEntry);
+    }
   }
 
   logTrace(logEntry: string): void {
-    this.throwError(logEntry);
+    if (this.logCount < this.config.logsBeforeThrowing) {
+      this.logCount += 1;
+    } else {
+      this.throwError(logEntry);
+    }
   }
 
   logWarning(logEntry: string): void {
-    this.throwError(logEntry);
+    if (this.logCount < this.config.logsBeforeThrowing) {
+      this.logCount += 1;
+    } else {
+      this.throwError(logEntry);
+    }
   }
 
   private throwError(logEntry: string): never {
