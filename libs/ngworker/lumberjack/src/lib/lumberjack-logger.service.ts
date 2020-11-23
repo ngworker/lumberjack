@@ -8,6 +8,10 @@ import { LumberjackTimeService } from './time/lumberjack-time.service';
 export abstract class LumberjackLogger {
   constructor(private lumberjack: LumberjackService, private time: LumberjackTimeService) {}
 
+  protected createCriticalLogger(message: string, context?: string): () => void {
+    return this.createLogger(LumberjackLogLevel.Critical, message, context);
+  }
+
   protected createDebugLogger(message: string, context?: string): () => void {
     return this.createLogger(LumberjackLogLevel.Debug, message, context);
   }
@@ -18,6 +22,10 @@ export abstract class LumberjackLogger {
 
   protected createInfoLogger(message: string, context?: string): () => void {
     return this.createLogger(LumberjackLogLevel.Info, message, context);
+  }
+
+  protected createTraceLogger(message: string, context?: string): () => void {
+    return this.createLogger(LumberjackLogLevel.Trace, message, context);
   }
 
   protected createWarningLogger(message: string, context?: string): () => void {
