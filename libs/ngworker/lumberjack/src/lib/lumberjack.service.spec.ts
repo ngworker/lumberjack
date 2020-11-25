@@ -191,8 +191,9 @@ describe(LumberjackService.name, () => {
         expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLogLevel.Debug);
         const [actualLastErrorMessage] = spyDriver.logError.calls.mostRecent().args as ReadonlyArray<string>;
         expect(actualLastErrorMessage).toMatch(
-          new RegExp(`^Could not log message ".*?" to ${ErrorThrowingDriver.name}.`)
+          new RegExp(`^Could not log message ".*?" to ${ErrorThrowingDriver.name}.\n Error: ".*?"`)
         );
+        expect(consoleErrorSpy).not.toHaveBeenCalled();
       });
 
       it('accepts logs when multiple log drivers are registered', () => {
@@ -212,6 +213,7 @@ describe(LumberjackService.name, () => {
 
         expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
         expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLogLevel.Debug);
+        expect(consoleErrorSpy).not.toHaveBeenCalled();
       });
 
       it('outputs an error mentioning the log entry and driver name recursively', () => {
