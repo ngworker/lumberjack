@@ -19,6 +19,12 @@ export class LumberjackFormatter {
     private time: LumberjackTimeService
   ) {}
 
+  formatDriverError({ driver, formattedMessage, error }: DriverError): string {
+    const thrownErrorMessage = (error as Error).message || String(error);
+
+    return `Could not log message "${formattedMessage}" to ${driver.constructor.name}.\n Error: "${thrownErrorMessage}"`;
+  }
+
   formatLogEntry(logEntry: LumberjackLog): LumberjackFormatterResult {
     const { format } = this.config;
     let result: LumberjackFormatterResult;
@@ -39,11 +45,6 @@ export class LumberjackFormatter {
     }
 
     return result;
-  }
-
-  formatDriverError({ driver, formattedMessage, error }: DriverError): string {
-    const thrownErrorMessage = (error as Error).message || String(error);
-    return `Could not log message "${formattedMessage}" to ${driver.constructor.name}.\n Error: "${thrownErrorMessage}"`;
   }
 
   private createErrorLog(error: unknown, logEntry: LumberjackLog): LumberjackLog {
