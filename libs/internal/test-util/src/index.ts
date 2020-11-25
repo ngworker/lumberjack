@@ -2,6 +2,8 @@
  * Public API Surface of @internal/test-util
  */
 
+export * from './lib/error-throwing-driver/error-throwing-driver.module';
+export * from './lib/error-throwing-driver/error-throwing.driver';
 export * from './lib/expect-ng-module-to-be-guarded';
 export * from './lib/logs/log-creators';
 export * from './lib/noop-driver/noop-driver.module';
