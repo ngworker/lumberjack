@@ -171,7 +171,7 @@ describe(LumberjackService.name, () => {
         expect(consoleErrorSpy).toHaveBeenCalledTimes(2);
       });
 
-      it('write error log to non throwing error drivers when a some driver fail', () => {
+      it('logs an error message to stable drivers when a driver fails', () => {
         TestBed.configureTestingModule({
           imports: [
             LumberjackModule.forRoot({
