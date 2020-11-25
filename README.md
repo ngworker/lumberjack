@@ -57,13 +57,13 @@ Lumberjack is published as the `@ngworker/lumberjack` package.
 Lumberjack version 2.x has verified compatibility with the following Angular versions.
 
 | Angular version | Lumberjack 2.x support |
-| --------------- | ------------------ |
-| 11.0.x          | ✅                 |
-| 10.2.x          | ✅                 |
-| 10.1.x          | ✅                 |
-| 10.0.x          | ✅                 |
-| 9.1.x           | ✅                 |
-| 9.0.x           | ✅                 |
+| --------------- | ---------------------- |
+| 11.0.x          | ✅                     |
+| 10.2.x          | ✅                     |
+| 10.1.x          | ✅                     |
+| 10.0.x          | ✅                     |
+| 9.1.x           | ✅                     |
+| 9.0.x           | ✅                     |
 
 If the version you are using is not listed, please [raise an issue in our GitHub repository](https://github.com/ngworker/lumberjack/issues/new).
 
@@ -149,11 +149,11 @@ When the `format` option is not configured, Lumberjack will use the following de
 
 ```ts
 format({ context, createdAt: timestamp, level, message }) {
-  return `${level} ${time.utcTimestampFor(timestamp)}${context ? ` [${context}]` : ''}{message}`;
+  return `${level} ${utcTimestampFor(timestamp)}${context ? ` [${context}]` : ''}{message}`;
 }
 ```
 
-Where `time` is an instance of the `LumberjackTimeService`.
+Where `utcTimestampFor` is a function that converts Unix Epoch ticks to UTC 0 hours offset with milliseconds resolution.
 
 #### Default log levels
 
