@@ -107,7 +107,13 @@ For quick or simple use cases, you can use the `LumberjackService` directly by p
 First, inject the `LumberjackService` where you want to use it.
 
 ```ts
-class MyComponent implements OnInit {
+import { Component } from '@angular/core';
+import { LumberjackService } from '@ngworker/lumberjack';
+
+@Component({
+  // (...)
+})
+export class MyComponent implements OnInit {
   constructor(private lumberjack: LumberjackService) {}
   // (...)
 }
@@ -116,7 +122,8 @@ class MyComponent implements OnInit {
 Then you can start logging.
 
 ```ts
-class MyComponent implements OnInit {
+// (...)
+export class MyComponent implements OnInit {
   // (...)
   ngOnInit(): void {
     this.lumberjack.log({
