@@ -8,16 +8,14 @@ import { lumberjackLogOptionsToken } from './configs/lumberjack-log-options.toke
 import { LumberjackLogConfig } from './configs/lumberjack-log.config';
 import { LumberjackLogOptions } from './configs/lumberjack-log.options';
 import { isProductionEnvironmentToken } from './environment/is-production-environment.token';
-import { createDefaultFormatFn } from './formatting/create-default-format-fn';
-import { LumberjackTimeService } from './time/lumberjack-time.service';
+import { lumberjackFormat } from './formatting/lumberjack-format';
 
 export function logConfigFactory(
   options: LumberjackLogOptions = {},
-  isProductionEnvironment: boolean,
-  time: LumberjackTimeService
+  isProductionEnvironment: boolean
 ): LumberjackLogConfig {
   return {
-    format: createDefaultFormatFn(time),
+    format: lumberjackFormat,
     levels: isProductionEnvironment ? defaultProductionLevels : defaultDevelopmentLevels,
     ...options,
   };
@@ -32,7 +30,7 @@ export function logDriverConfigFactory({ levels }: LumberjackLogConfig): LogDriv
 @NgModule({
   providers: [
     {
-      deps: [lumberjackLogOptionsToken, isProductionEnvironmentToken, LumberjackTimeService],
+      deps: [lumberjackLogOptionsToken, isProductionEnvironmentToken],
       provide: lumberjackLogConfigToken,
       useFactory: logConfigFactory,
     },

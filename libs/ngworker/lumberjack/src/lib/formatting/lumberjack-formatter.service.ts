@@ -7,7 +7,7 @@ import { LumberjackLogLevel } from '../lumberjack-log-levels';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { DriverError } from './../log-drivers/driver-error';
-import { createDefaultFormatFn } from './create-default-format-fn';
+import { lumberjackFormat } from './lumberjack-format';
 import { LumberjackFormatterResult } from './lumberjack-formatter-result';
 
 @Injectable({
@@ -64,8 +64,7 @@ export class LumberjackFormatter {
     try {
       errorMessage = format(errorEntry);
     } catch {
-      const defaultFormat = createDefaultFormatFn(this.time);
-      errorMessage = defaultFormat(errorEntry);
+      errorMessage = lumberjackFormat(errorEntry);
     }
 
     return errorMessage;
