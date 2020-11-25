@@ -2,13 +2,13 @@ import { Inject, Injectable } from '@angular/core';
 
 import { lumberjackLogConfigToken } from '../configs/lumberjack-log-config.token';
 import { LumberjackLogConfig } from '../configs/lumberjack-log.config';
+import { DriverError } from '../log-drivers/driver-error';
 import { LumberjackLog } from '../lumberjack-log';
 import { LumberjackLogLevel } from '../lumberjack-log-levels';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
-import { DriverError } from './../log-drivers/driver-error';
+import { FormatLogEntryResult } from './format-log-entry-result';
 import { lumberjackFormat } from './lumberjack-format';
-import { LumberjackFormatterResult } from './lumberjack-formatter-result';
 
 @Injectable({
   providedIn: 'root',
@@ -25,9 +25,9 @@ export class LumberjackFormatter {
     return `Could not log message "${formattedMessage}" to ${driver.constructor.name}.\n Error: "${thrownErrorMessage}"`;
   }
 
-  formatLogEntry(logEntry: LumberjackLog): LumberjackFormatterResult {
+  formatLogEntry(logEntry: LumberjackLog): FormatLogEntryResult {
     const { format } = this.config;
-    let result: LumberjackFormatterResult;
+    let result: FormatLogEntryResult;
 
     try {
       result = {
