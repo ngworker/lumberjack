@@ -19,7 +19,9 @@ describe('workspace-project App', () => {
     const logs = await browser.manage().logs().get(logging.Type.BROWSER);
     const filteredLogs = logs.filter(
       (log) =>
-        !log.message.includes('[App]') && !log.message.includes('/api/logs') && !log.message.includes('polyfills.js')
+        !log.message.includes('[Forest App]') &&
+        !log.message.includes('/api/logs') &&
+        !log.message.includes('polyfills.js')
     );
 
     await expect(filteredLogs).not.toContain(
