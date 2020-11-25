@@ -8,6 +8,7 @@ import { lumberjackLogOptionsToken } from './configs/lumberjack-log-options.toke
 import { LumberjackLogConfig } from './configs/lumberjack-log.config';
 import { LumberjackLogOptions } from './configs/lumberjack-log.options';
 import { isProductionEnvironmentToken } from './environment/is-production-environment.token';
+import { createDefaultFormatFn } from './formatting/create-default-format-fn';
 import { LumberjackTimeService } from './time/lumberjack-time.service';
 
 export function logConfigFactory(
@@ -16,9 +17,7 @@ export function logConfigFactory(
   time: LumberjackTimeService
 ): LumberjackLogConfig {
   return {
-    format({ context, createdAt: timestamp, level, message }) {
-      return `${level} ${time.utcTimestampFor(timestamp)}${context ? ` [${context}]` : ''} ${message}`;
-    },
+    format: createDefaultFormatFn(time),
     levels: isProductionEnvironment ? defaultProductionLevels : defaultDevelopmentLevels,
     ...options,
   };
