@@ -56,7 +56,7 @@ Lumberjack is published as the `@ngworker/lumberjack` package.
 
 Lumberjack version 2.x has verified compatibility with the following Angular versions.
 
-| Angular version | Lumberjack support |
+| Angular version | Lumberjack 2.x support |
 | --------------- | ------------------ |
 | 11.0.x          | ✅                 |
 | 10.2.x          | ✅                 |
