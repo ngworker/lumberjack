@@ -20,15 +20,4 @@ describe(LumberjackTimeService.name, () => {
       expect(actualTicks).toBe(expectedTicks);
     });
   });
-
-  describe('utcTimeStampFor', () => {
-    it('formats an ISO-8601 date-time string with 0 hours UTC offset and milliseconds resolution', () => {
-      const expectedText = '2020-07-01T00:00:00.000Z';
-      const ticks = new Date(expectedText).valueOf();
-
-      const actualText = service.utcTimestampFor(ticks);
-
-      expect(actualText).toBe(expectedText);
-    });
-  });
 });

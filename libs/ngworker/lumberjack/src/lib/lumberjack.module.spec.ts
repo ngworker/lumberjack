@@ -7,6 +7,7 @@ import { defaultDevelopmentLevels } from './configs/default-development-levels';
 import { defaultProductionLevels } from './configs/default-production-levels';
 import { LumberjackLogOptions } from './configs/lumberjack-log.options';
 import { isProductionEnvironmentToken } from './environment/is-production-environment.token';
+import { utcTimestampFor } from './formatting/utc-timestamp-for';
 import { LumberjackLog } from './lumberjack-log';
 import { LumberjackLogLevel } from './lumberjack-log-levels';
 import { LumberjackModule } from './lumberjack.module';
@@ -115,7 +116,7 @@ describe(LumberjackModule.name, () => {
           imports: [LumberjackModule.forRoot()],
         });
         const time = resolveDependency(LumberjackTimeService);
-        fakeTimestamp = time.utcTimestampFor(fakeTicks);
+        fakeTimestamp = utcTimestampFor(fakeTicks);
       });
 
       it('formats a log entry with a context', () => {

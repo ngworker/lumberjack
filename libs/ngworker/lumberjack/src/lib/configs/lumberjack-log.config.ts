@@ -1,7 +1,8 @@
-import { LumberjackLog } from '../lumberjack-log';
 import { LumberjackLogConfigLevel } from '../lumberjack-log-levels';
 
+import { FormatFunction } from './format-function';
+
 export interface LumberjackLogConfig {
-  format: (logEntry: LumberjackLog) => string;
+  format: FormatFunction;
   levels: LumberjackLogConfigLevel;
 }
