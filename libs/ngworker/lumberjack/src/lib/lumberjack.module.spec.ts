@@ -2,9 +2,12 @@ import { TestBed } from '@angular/core/testing';
 
 import { expectNgModuleToBeGuarded, resolveDependency } from '@internal/test-util';
 
-import { LogDriverConfig, logDriverConfigToken, LumberjackLogConfig, lumberjackLogConfigToken } from './configs';
 import { defaultDevelopmentLevels } from './configs/default-development-levels';
 import { defaultProductionLevels } from './configs/default-production-levels';
+import { logDriverConfigToken } from './configs/log-driver-config.token';
+import { LogDriverConfig } from './configs/log-driver.config';
+import { lumberjackLogConfigToken } from './configs/lumberjack-log-config.token';
+import { LumberjackLogConfig } from './configs/lumberjack-log.config';
 import { LumberjackLogOptions } from './configs/lumberjack-log.options';
 import { isProductionEnvironmentToken } from './environment/is-production-environment.token';
 import { utcTimestampFor } from './formatting/utc-timestamp-for';

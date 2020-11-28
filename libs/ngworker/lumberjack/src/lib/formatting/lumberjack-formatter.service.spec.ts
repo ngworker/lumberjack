@@ -9,7 +9,7 @@ import {
   resolveDependency,
 } from '@internal/test-util';
 
-import { LumberjackLogOptions } from '../configs';
+import { LumberjackLogOptions } from '../configs/lumberjack-log.options';
 import { LumberjackLog } from '../lumberjack-log';
 import { LumberjackLogLevel } from '../lumberjack-log-levels';
 import { LumberjackModule } from '../lumberjack.module';

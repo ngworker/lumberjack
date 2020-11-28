@@ -2,7 +2,8 @@ import { Inject, NgModule, Optional, SkipSelf } from '@angular/core';
 
 import { defaultDevelopmentLevels } from './configs/default-development-levels';
 import { defaultProductionLevels } from './configs/default-production-levels';
-import { LogDriverConfig, logDriverConfigToken } from './configs/log-driver.config';
+import { logDriverConfigToken } from './configs/log-driver-config.token';
+import { LogDriverConfig } from './configs/log-driver.config';
 import { lumberjackLogConfigToken } from './configs/lumberjack-log-config.token';
 import { lumberjackLogOptionsToken } from './configs/lumberjack-log-options.token';
 import { LumberjackLogConfig } from './configs/lumberjack-log.config';
