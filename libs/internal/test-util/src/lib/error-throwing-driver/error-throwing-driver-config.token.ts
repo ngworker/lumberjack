@@ -8,5 +8,5 @@ export interface ErrorThrowingDriverConfig extends LogDriverConfig {
   /**
    * Number of logs that will success before throwing an error.
    */
-  logsBeforeThrowing: number;
+  readonly logsBeforeThrowing: number;
 }

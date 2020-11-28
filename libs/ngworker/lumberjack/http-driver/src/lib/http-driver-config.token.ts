@@ -11,18 +11,23 @@ export interface HttpDriverConfig extends LogDriverConfig {
    * This is used to organize logs on the log store.
    *
    */
-  origin: string;
+  readonly origin: string;
   /**
    *
    * The url of the log store endpoint.
    *
    * The endpoint matching this url MUST support the POST method.
    */
-  storeUrl: string;
+  readonly storeUrl: string;
   /**
    *
    * The desired retry behavior options on failed requests
    *
    */
-  retryOptions: { maxRetries: number; delayMs: number };
+  readonly retryOptions: HttpDriverRetryOptions;
+}
+
+export interface HttpDriverRetryOptions {
+  maxRetries: number;
+  delayMs: number;
 }

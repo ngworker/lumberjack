@@ -186,7 +186,7 @@ Every log driver implements the `LogDriver` interface.
 
 ```ts
 export interface LogDriver {
-  config: LogDriverConfig;
+  readonly config: LogDriverConfig;
   logCritical(logEntry: string): void;
   logInfo(logEntry: string): void;
   logDebug(logEntry: string): void;

@@ -1,7 +1,7 @@
 import { LumberjackLogLevel } from '@ngworker/lumberjack';
 
 export interface HttpLogEntry {
-  logEntry: string;
-  level: LumberjackLogLevel;
-  origin: string;
+  readonly logEntry: string;
+  readonly level: LumberjackLogLevel;
+  readonly origin: string;
 }
