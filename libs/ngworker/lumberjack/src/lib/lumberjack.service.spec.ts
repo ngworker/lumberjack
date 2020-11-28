@@ -21,7 +21,8 @@ import { ConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
 
 import { logDriverConfigToken } from './configs/log-driver-config.token';
 import { LogDriverConfig } from './configs/log-driver.config';
-import { LogDriver, logDriverToken } from './log-drivers';
+import { LogDriver } from './log-drivers/log-driver';
+import { logDriverToken } from './log-drivers/log-driver.token';
 import { LumberjackLogLevel } from './lumberjack-log-levels';
 import { LumberjackModule } from './lumberjack.module';
 import { LumberjackService } from './lumberjack.service';

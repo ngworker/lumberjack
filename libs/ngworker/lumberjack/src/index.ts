@@ -10,7 +10,10 @@ export { lumberjackLogConfigToken } from './lib/configs/lumberjack-log-config.to
 export { LumberjackLogFormatFunction } from './lib/configs/lumberjack-log-format-function';
 export { LumberjackLogOptions } from './lib/configs/lumberjack-log.options';
 
-export * from './lib/log-drivers';
+// Log drivers
+export { LogDriver } from './lib/log-drivers/log-driver';
+export { logDriverToken } from './lib/log-drivers/log-driver.token';
+
 export * from './lib/lumberjack-log';
 export * from './lib/lumberjack-log-levels';
 export * from './lib/lumberjack-logger.service';
