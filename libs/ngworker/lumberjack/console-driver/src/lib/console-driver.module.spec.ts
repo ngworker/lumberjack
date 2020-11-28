@@ -5,8 +5,8 @@ import {
   LogDriver,
   LogDriverConfig,
   logDriverToken,
+  LumberjackLevel,
   lumberjackLogConfigToken,
-  LumberjackLogLevel,
   LumberjackModule,
 } from '@ngworker/lumberjack';
 
@@ -47,7 +47,7 @@ describe(ConsoleDriverModule.name, () => {
 
     it('registers the specified log driver configuration', () => {
       const expectedConfig: LogDriverConfig = {
-        levels: [LumberjackLogLevel.Error],
+        levels: [LumberjackLevel.Error],
       };
 
       const consoleDriver = createConsoleDriver({ config: expectedConfig });
@@ -69,7 +69,7 @@ describe(ConsoleDriverModule.name, () => {
 
     it('does register the specified log driver configuration when the lumberjack module is imported after the console driver module', () => {
       const expectedConfig: LogDriverConfig = {
-        levels: [LumberjackLogLevel.Debug],
+        levels: [LumberjackLevel.Debug],
       };
 
       const consoleDriver = createConsoleDriver({

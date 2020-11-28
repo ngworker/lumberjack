@@ -1,4 +1,4 @@
-import { LumberjackLogEntryLevel, LumberjackLogLevel } from '../lumberjack-log-levels';
+import { LumberjackLevel, LumberjackLogEntryLevel } from '../logs/lumberjack-log-levels';
 
 export interface LogDriverConfig {
   /**
@@ -7,5 +7,5 @@ export interface LogDriverConfig {
    * If undefined or [LumberjackLogLevel.Verbose] all levels are allowed.
    *
    */
-  readonly levels: ReadonlyArray<LumberjackLogEntryLevel> | [LumberjackLogLevel.Verbose];
+  readonly levels: ReadonlyArray<LumberjackLogEntryLevel> | [LumberjackLevel.Verbose];
 }

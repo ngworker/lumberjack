@@ -1,15 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 
 import { resolveDependency } from '@internal/test-util';
-import { LogDriverConfig, logDriverConfigToken, LumberjackLogLevel } from '@ngworker/lumberjack';
+import { LogDriverConfig, logDriverConfigToken, LumberjackLevel } from '@ngworker/lumberjack';
 
 import { consoleDriverConfigToken } from './console-driver-config.token';
 
 const debugDriverConfig: LogDriverConfig = {
-  levels: [LumberjackLogLevel.Debug],
+  levels: [LumberjackLevel.Debug],
 };
 const verboseDriverConfig: LogDriverConfig = {
-  levels: [LumberjackLogLevel.Verbose],
+  levels: [LumberjackLevel.Verbose],
 };
 
 describe('consoleDriverConfigToken', () => {

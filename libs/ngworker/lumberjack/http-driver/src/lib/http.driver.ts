@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, NgZone } from '@angular/core';
 
-import { LogDriver, LumberjackLogLevel } from '@ngworker/lumberjack';
+import { LogDriver, LumberjackLevel } from '@ngworker/lumberjack';
 
 import { HttpDriverConfig, httpDriverConfigToken } from './http-driver-config.token';
 import { HttpLogEntry } from './http-log-entry';
@@ -16,30 +16,30 @@ export class HttpDriver implements LogDriver {
   ) {}
 
   logCritical(logEntry: string): void {
-    this.sendLog(logEntry, LumberjackLogLevel.Critical);
+    this.sendLog(logEntry, LumberjackLevel.Critical);
   }
 
   logDebug(logEntry: string): void {
-    this.sendLog(logEntry, LumberjackLogLevel.Debug);
+    this.sendLog(logEntry, LumberjackLevel.Debug);
   }
 
   logError(logEntry: string): void {
-    this.sendLog(logEntry, LumberjackLogLevel.Error);
+    this.sendLog(logEntry, LumberjackLevel.Error);
   }
 
   logInfo(logEntry: string): void {
-    this.sendLog(logEntry, LumberjackLogLevel.Info);
+    this.sendLog(logEntry, LumberjackLevel.Info);
   }
 
   logTrace(logEntry: string): void {
-    this.sendLog(logEntry, LumberjackLogLevel.Trace);
+    this.sendLog(logEntry, LumberjackLevel.Trace);
   }
 
   logWarning(logEntry: string): void {
-    this.sendLog(logEntry, LumberjackLogLevel.Warning);
+    this.sendLog(logEntry, LumberjackLevel.Warning);
   }
 
-  private sendLog(logEntry: string, level: LumberjackLogLevel): void {
+  private sendLog(logEntry: string, level: LumberjackLevel): void {
     const { origin, storeUrl, retryOptions } = this.config;
     const httpLogEntry: HttpLogEntry = { logEntry, origin, level };
 

@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { SpyConsole, SpyConsoleModule } from '@internal/console-driver/test-util';
 import { resolveDependency } from '@internal/test-util';
-import { LogDriver, logDriverToken, LumberjackLogLevel } from '@ngworker/lumberjack';
+import { LogDriver, logDriverToken, LumberjackLevel } from '@ngworker/lumberjack';
 
 import { ConsoleDriverModule } from './console-driver.module';
 import { ConsoleDriver } from './console.driver';
@@ -11,7 +11,7 @@ import { lumberjackConsoleToken } from './lumberjack-console.token';
 describe(ConsoleDriver.name, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ConsoleDriverModule.forRoot({ levels: [LumberjackLogLevel.Verbose] }), SpyConsoleModule],
+      imports: [ConsoleDriverModule.forRoot({ levels: [LumberjackLevel.Verbose] }), SpyConsoleModule],
     });
 
     const [_driver] = (resolveDependency(logDriverToken) as unknown) as LogDriver[];
@@ -23,7 +23,7 @@ describe(ConsoleDriver.name, () => {
   let spyLogger: SpyConsole;
 
   it("logs the critical level to the console's error channel", () => {
-    const expectedMessage = LumberjackLogLevel.Critical;
+    const expectedMessage = LumberjackLevel.Critical;
 
     driver.logCritical(expectedMessage);
 
@@ -32,7 +32,7 @@ describe(ConsoleDriver.name, () => {
   });
 
   it("logs the debug level to the console's debug channel", () => {
-    const expectedMessage = LumberjackLogLevel.Debug;
+    const expectedMessage = LumberjackLevel.Debug;
 
     driver.logDebug(expectedMessage);
 
@@ -41,7 +41,7 @@ describe(ConsoleDriver.name, () => {
   });
 
   it("logs the error level to the console's error channel", () => {
-    const expectedMessage = LumberjackLogLevel.Error;
+    const expectedMessage = LumberjackLevel.Error;
 
     driver.logError(expectedMessage);
 
@@ -50,7 +50,7 @@ describe(ConsoleDriver.name, () => {
   });
 
   it("logs the info level to the console's info channel", () => {
-    const expectedMessage = LumberjackLogLevel.Info;
+    const expectedMessage = LumberjackLevel.Info;
 
     driver.logInfo(expectedMessage);
 
@@ -59,7 +59,7 @@ describe(ConsoleDriver.name, () => {
   });
 
   it("logs the trace level to the console's trace channel", () => {
-    const expectedMessage = LumberjackLogLevel.Trace;
+    const expectedMessage = LumberjackLevel.Trace;
 
     driver.logTrace(expectedMessage);
 
@@ -68,7 +68,7 @@ describe(ConsoleDriver.name, () => {
   });
 
   it("logs the warning level to the console's warn channel", () => {
-    const expectedMessage = LumberjackLogLevel.Warning;
+    const expectedMessage = LumberjackLevel.Warning;
 
     driver.logWarning(expectedMessage);
 

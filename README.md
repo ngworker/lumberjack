@@ -142,8 +142,8 @@ Optionally, we can pass one or more options to `LumberjackModule.forRoot`.
 
 | Option   | Type                                | Optional? | Description                                                          |
 | -------- | ----------------------------------- | --------- | -------------------------------------------------------------------- |
-| `format` | (logEntry: LumberjackLog) => string | Yes       | Pass a custom formatter to transform a log entry into a log message. |
-| `levels` | `LumberjackLogConfigLevel`          | Yes       | The root log levels defining the default log levels for log drivers. |
+| `format` | (logEntry: LumberjackLog) => string | Yes       | Pass a custom formatter to transform a log into a log message.       |
+| `levels` | `LumberjackLogConfigLevels`         | Yes       | The root log levels defining the default log levels for log drivers. |
 
 ### Default options
 

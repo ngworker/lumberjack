@@ -3,8 +3,8 @@ import { Inject, Injectable } from '@angular/core';
 import { lumberjackLogConfigToken } from '../configs/lumberjack-log-config.token';
 import { LumberjackLogConfig } from '../configs/lumberjack-log.config';
 import { DriverError } from '../log-drivers/driver-error';
-import { LumberjackLog } from '../lumberjack-log';
-import { LumberjackLogLevel } from '../lumberjack-log-levels';
+import { LumberjackLog } from '../logs/lumberjack-log';
+import { LumberjackLevel } from '../logs/lumberjack-log-levels';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { FormatLogEntryResult } from './format-log-entry-result';
@@ -53,7 +53,7 @@ export class LumberjackFormatter {
     return {
       context: 'LumberjackFormatError',
       createdAt: this.time.getUnixEpochTicks(),
-      level: LumberjackLogLevel.Error,
+      level: LumberjackLevel.Error,
       message: `Could not format message "${logEntry.message}". Error: "${thrownErrorMessage}"`,
     };
   }

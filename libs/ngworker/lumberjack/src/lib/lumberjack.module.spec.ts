@@ -11,8 +11,8 @@ import { LumberjackLogConfig } from './configs/lumberjack-log.config';
 import { LumberjackLogOptions } from './configs/lumberjack-log.options';
 import { isProductionEnvironmentToken } from './environment/is-production-environment.token';
 import { utcTimestampFor } from './formatting/utc-timestamp-for';
-import { LumberjackLog } from './lumberjack-log';
-import { LumberjackLogLevel } from './lumberjack-log-levels';
+import { LumberjackLog } from './logs/lumberjack-log';
+import { LumberjackLevel } from './logs/lumberjack-log-levels';
 import { LumberjackModule } from './lumberjack.module';
 import { LumberjackTimeService } from './time/lumberjack-time.service';
 
@@ -25,7 +25,7 @@ describe(LumberjackModule.name, () => {
     it('accepts a log configuration', () => {
       const expectedConfig: LumberjackLogConfig = {
         format: ({ message }) => message,
-        levels: [LumberjackLogLevel.Debug],
+        levels: [LumberjackLevel.Debug],
       };
 
       TestBed.configureTestingModule({
@@ -126,7 +126,7 @@ describe(LumberjackModule.name, () => {
         const entryLogWithContext: LumberjackLog = {
           context: 'TestSuite',
           createdAt: fakeTicks,
-          level: LumberjackLogLevel.Critical,
+          level: LumberjackLevel.Critical,
           message: 'Test Message',
         };
 
@@ -142,7 +142,7 @@ describe(LumberjackModule.name, () => {
       it('formats a log entry with no context', () => {
         const entryLogWithOutContext: LumberjackLog = {
           createdAt: fakeTicks,
-          level: LumberjackLogLevel.Critical,
+          level: LumberjackLevel.Critical,
           message: 'Test Message',
         };
 

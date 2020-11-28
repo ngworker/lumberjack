@@ -14,8 +14,10 @@ export { LumberjackLogOptions } from './lib/configs/lumberjack-log.options';
 export { LogDriver } from './lib/log-drivers/log-driver';
 export { logDriverToken } from './lib/log-drivers/log-driver.token';
 
-export * from './lib/lumberjack-log';
-export * from './lib/lumberjack-log-levels';
+// Logs
+export * from './lib/logs/lumberjack-log';
+export * from './lib/logs/lumberjack-log-levels';
+
 export * from './lib/lumberjack-logger.service';
 export * from './lib/lumberjack.module';
 export * from './lib/lumberjack.service';

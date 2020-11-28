@@ -23,7 +23,7 @@ import { logDriverConfigToken } from './configs/log-driver-config.token';
 import { LogDriverConfig } from './configs/log-driver.config';
 import { LogDriver } from './log-drivers/log-driver';
 import { logDriverToken } from './log-drivers/log-driver.token';
-import { LumberjackLogLevel } from './lumberjack-log-levels';
+import { LumberjackLevel } from './logs/lumberjack-log-levels';
 import { LumberjackModule } from './lumberjack.module';
 import { LumberjackService } from './lumberjack.service';
 
@@ -36,12 +36,12 @@ const noLogsProvider: StaticProvider = {
 };
 const allLogsConfig: LogDriverConfig = {
   levels: [
-    LumberjackLogLevel.Critical,
-    LumberjackLogLevel.Debug,
-    LumberjackLogLevel.Error,
-    LumberjackLogLevel.Info,
-    LumberjackLogLevel.Trace,
-    LumberjackLogLevel.Warning,
+    LumberjackLevel.Critical,
+    LumberjackLevel.Debug,
+    LumberjackLevel.Error,
+    LumberjackLevel.Info,
+    LumberjackLevel.Trace,
+    LumberjackLevel.Warning,
   ],
 };
 const allLogsProvider: StaticProvider = {
@@ -49,7 +49,7 @@ const allLogsProvider: StaticProvider = {
   useValue: allLogsConfig,
 };
 const verboseLoggingConfig: LogDriverConfig = {
-  levels: [LumberjackLogLevel.Verbose],
+  levels: [LumberjackLevel.Verbose],
 };
 const verboseLoggingProvider: StaticProvider = {
   provide: logDriverConfigToken,
@@ -127,11 +127,11 @@ describe(LumberjackService.name, () => {
 
         expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
         expect(spyDriver.logError).not.toHaveBeenCalled();
-        expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLogLevel.Debug);
+        expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLevel.Debug);
 
         expect(errorDriver.logDebug).toHaveBeenCalledTimes(1);
         expect(errorDriver.logError).toHaveBeenCalledTimes(1);
-        expect(errorDriver.logDebug).toHaveBeenCalledWith(LumberjackLogLevel.Debug);
+        expect(errorDriver.logDebug).toHaveBeenCalledWith(LumberjackLevel.Debug);
 
         expect(consoleErrorSpy).toHaveBeenCalledTimes(2);
       });
@@ -161,14 +161,14 @@ describe(LumberjackService.name, () => {
 
         expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
         expect(spyDriver.logError).not.toHaveBeenCalled();
-        expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLogLevel.Debug);
+        expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLevel.Debug);
 
         expect(noopDriver.logDebug).toHaveBeenCalledTimes(1);
         expect(noopDriver.logError).toHaveBeenCalledTimes(1);
 
         expect(errorDriver.logDebug).toHaveBeenCalledTimes(1);
         expect(errorDriver.logError).toHaveBeenCalledTimes(2);
-        expect(errorDriver.logDebug).toHaveBeenCalledWith(LumberjackLogLevel.Debug);
+        expect(errorDriver.logDebug).toHaveBeenCalledWith(LumberjackLevel.Debug);
 
         expect(consoleErrorSpy).toHaveBeenCalledTimes(2);
       });
@@ -190,7 +190,7 @@ describe(LumberjackService.name, () => {
 
         expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
         expect(spyDriver.logError).toHaveBeenCalledTimes(1);
-        expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLogLevel.Debug);
+        expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLevel.Debug);
         const [actualLastErrorMessage] = spyDriver.logError.calls.mostRecent().args as ReadonlyArray<string>;
         expect(actualLastErrorMessage).toMatch(
           new RegExp(`^Could not log message ".*?" to ${ErrorThrowingDriver.name}.\n Error: ".*?"`)
@@ -214,7 +214,7 @@ describe(LumberjackService.name, () => {
         expect(logDebugMessage).not.toThrow();
 
         expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
-        expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLogLevel.Debug);
+        expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLevel.Debug);
         expect(consoleErrorSpy).not.toHaveBeenCalled();
       });
 
@@ -332,42 +332,42 @@ describe(LumberjackService.name, () => {
       lumberjack.log(createCriticalLog());
 
       expect(spyDriver.logCritical).toHaveBeenCalledTimes(1);
-      expect(spyDriver.logCritical).toHaveBeenCalledWith(LumberjackLogLevel.Critical);
+      expect(spyDriver.logCritical).toHaveBeenCalledWith(LumberjackLevel.Critical);
     });
 
     it('logs a debug message to a log driver', () => {
       lumberjack.log(createDebugLog());
 
       expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
-      expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLogLevel.Debug);
+      expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLevel.Debug);
     });
 
     it('logs an error message to a log driver', () => {
       lumberjack.log(createErrorLog());
 
       expect(spyDriver.logError).toHaveBeenCalledTimes(1);
-      expect(spyDriver.logError).toHaveBeenCalledWith(LumberjackLogLevel.Error);
+      expect(spyDriver.logError).toHaveBeenCalledWith(LumberjackLevel.Error);
     });
 
     it('logs an info message to a log driver', () => {
       lumberjack.log(createInfoLog());
 
       expect(spyDriver.logInfo).toHaveBeenCalledTimes(1);
-      expect(spyDriver.logInfo).toHaveBeenCalledWith(LumberjackLogLevel.Info);
+      expect(spyDriver.logInfo).toHaveBeenCalledWith(LumberjackLevel.Info);
     });
 
     it('logs a trace to a log driver', () => {
       lumberjack.log(createTraceLog());
 
       expect(spyDriver.logTrace).toHaveBeenCalledTimes(1);
-      expect(spyDriver.logTrace).toHaveBeenCalledWith(LumberjackLogLevel.Trace);
+      expect(spyDriver.logTrace).toHaveBeenCalledWith(LumberjackLevel.Trace);
     });
 
     it('logs a warning to a log driver', () => {
       lumberjack.log(createWarningLog());
 
       expect(spyDriver.logWarning).toHaveBeenCalledTimes(1);
-      expect(spyDriver.logWarning).toHaveBeenCalledWith(LumberjackLogLevel.Warning);
+      expect(spyDriver.logWarning).toHaveBeenCalledWith(LumberjackLevel.Warning);
     });
   });
 
@@ -426,28 +426,28 @@ describe(LumberjackService.name, () => {
         lumberjack.log(createDebugLog());
 
         expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
-        expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLogLevel.Debug);
+        expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLevel.Debug);
       });
 
       it('errors are logged', () => {
         lumberjack.log(createErrorLog());
 
         expect(spyDriver.logError).toHaveBeenCalledTimes(1);
-        expect(spyDriver.logError).toHaveBeenCalledWith(LumberjackLogLevel.Error);
+        expect(spyDriver.logError).toHaveBeenCalledWith(LumberjackLevel.Error);
       });
 
       it('info is logged', () => {
         lumberjack.log(createInfoLog());
 
         expect(spyDriver.logInfo).toHaveBeenCalledTimes(1);
-        expect(spyDriver.logInfo).toHaveBeenCalledWith(LumberjackLogLevel.Info);
+        expect(spyDriver.logInfo).toHaveBeenCalledWith(LumberjackLevel.Info);
       });
 
       it('warnings are logged', () => {
         lumberjack.log(createWarningLog());
 
         expect(spyDriver.logWarning).toHaveBeenCalledTimes(1);
-        expect(spyDriver.logWarning).toHaveBeenCalledWith(LumberjackLogLevel.Warning);
+        expect(spyDriver.logWarning).toHaveBeenCalledWith(LumberjackLevel.Warning);
       });
     });
   });
@@ -461,10 +461,10 @@ describe(LumberjackService.name, () => {
               format: ({ level }) => level,
             }),
             SpyDriverModule.forRoot({
-              levels: [LumberjackLogLevel.Debug, LumberjackLogLevel.Info, LumberjackLogLevel.Trace],
+              levels: [LumberjackLevel.Debug, LumberjackLevel.Info, LumberjackLevel.Trace],
             }),
             NoopDriverModule.forRoot({
-              levels: [LumberjackLogLevel.Critical, LumberjackLogLevel.Error, LumberjackLogLevel.Warning],
+              levels: [LumberjackLevel.Critical, LumberjackLevel.Error, LumberjackLevel.Warning],
             }),
           ],
           providers: [verboseLoggingProvider],
@@ -498,18 +498,18 @@ describe(LumberjackService.name, () => {
 
       it('then logs of configured levels are passed to each of them', () => {
         expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
-        expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLogLevel.Debug);
+        expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLevel.Debug);
         expect(spyDriver.logInfo).toHaveBeenCalledTimes(1);
-        expect(spyDriver.logInfo).toHaveBeenCalledWith(LumberjackLogLevel.Info);
+        expect(spyDriver.logInfo).toHaveBeenCalledWith(LumberjackLevel.Info);
         expect(spyDriver.logTrace).toHaveBeenCalledTimes(1);
-        expect(spyDriver.logTrace).toHaveBeenCalledWith(LumberjackLogLevel.Trace);
+        expect(spyDriver.logTrace).toHaveBeenCalledWith(LumberjackLevel.Trace);
 
         expect(noopDriver.logCritical).toHaveBeenCalledTimes(1);
-        expect(noopDriver.logCritical).toHaveBeenCalledWith(LumberjackLogLevel.Critical);
+        expect(noopDriver.logCritical).toHaveBeenCalledWith(LumberjackLevel.Critical);
         expect(noopDriver.logError).toHaveBeenCalledTimes(1);
-        expect(noopDriver.logError).toHaveBeenCalledWith(LumberjackLogLevel.Error);
+        expect(noopDriver.logError).toHaveBeenCalledWith(LumberjackLevel.Error);
         expect(noopDriver.logWarning).toHaveBeenCalledTimes(1);
-        expect(noopDriver.logWarning).toHaveBeenCalledWith(LumberjackLogLevel.Warning);
+        expect(noopDriver.logWarning).toHaveBeenCalledWith(LumberjackLevel.Warning);
       });
 
       it('then logs of other levels are not passed to either of them', () => {

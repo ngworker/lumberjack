@@ -10,8 +10,8 @@ import {
 } from '@internal/test-util';
 
 import { LumberjackLogOptions } from '../configs/lumberjack-log.options';
-import { LumberjackLog } from '../lumberjack-log';
-import { LumberjackLogLevel } from '../lumberjack-log-levels';
+import { LumberjackLog } from '../logs/lumberjack-log';
+import { LumberjackLevel } from '../logs/lumberjack-log-levels';
 import { LumberjackModule } from '../lumberjack.module';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
@@ -87,7 +87,7 @@ describe(LumberjackFormatter.name, () => {
 
       const { message: actualMessage } = service.formatLogEntry(warning);
 
-      expect(actualMessage).toBe(LumberjackLogLevel.Warning);
+      expect(actualMessage).toBe(LumberjackLevel.Warning);
     });
 
     it('returns a format error when formatting fails', () => {

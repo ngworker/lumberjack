@@ -4,8 +4,8 @@ import { LumberjackFormatter } from './formatting/lumberjack-formatter.service';
 import { DriverError } from './log-drivers/driver-error';
 import { LogDriver } from './log-drivers/log-driver';
 import { logDriverToken } from './log-drivers/log-driver.token';
-import { LumberjackLog } from './lumberjack-log';
-import { LumberjackLogEntryLevel, LumberjackLogLevel } from './lumberjack-log-levels';
+import { LumberjackLog } from './logs/lumberjack-log';
+import { LumberjackLevel, LumberjackLogEntryLevel } from './logs/lumberjack-log-levels';
 import { LumberjackRootModule } from './lumberjack-root.module';
 import { LumberjackTimeService } from './time/lumberjack-time.service';
 
@@ -63,34 +63,34 @@ export class LumberjackService {
   private canDriveLog(driver: LogDriver, level: LumberjackLogEntryLevel): boolean {
     return (
       driver.config.levels === undefined ||
-      (driver.config.levels.length === 1 && driver.config.levels[0] === LumberjackLogLevel.Verbose) ||
+      (driver.config.levels.length === 1 && driver.config.levels[0] === LumberjackLevel.Verbose) ||
       (driver.config.levels as LumberjackLogEntryLevel[]).includes(level)
     );
   }
 
   private logToTheRightLevel(driver: LogDriver, level: LumberjackLogEntryLevel, formattedMessage: string): void {
     switch (level) {
-      case LumberjackLogLevel.Info:
+      case LumberjackLevel.Info:
         driver.logInfo(formattedMessage);
 
         break;
-      case LumberjackLogLevel.Error:
+      case LumberjackLevel.Error:
         driver.logError(formattedMessage);
 
         break;
-      case LumberjackLogLevel.Warning:
+      case LumberjackLevel.Warning:
         driver.logWarning(formattedMessage);
 
         break;
-      case LumberjackLogLevel.Debug:
+      case LumberjackLevel.Debug:
         driver.logDebug(formattedMessage);
 
         break;
-      case LumberjackLogLevel.Critical:
+      case LumberjackLevel.Critical:
         driver.logCritical(formattedMessage);
 
         break;
-      case LumberjackLogLevel.Trace:
+      case LumberjackLevel.Trace:
         driver.logTrace(formattedMessage);
 
         break;
@@ -129,7 +129,7 @@ export class LumberjackService {
     return {
       context: 'LumberjackDriverError',
       createdAt: this.time.getUnixEpochTicks(),
-      level: LumberjackLogLevel.Error,
+      level: LumberjackLevel.Error,
       message: this.formatter.formatDriverError(error),
     };
   }

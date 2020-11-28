@@ -2,7 +2,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { createComponentFactory, Spectator } from '@ngneat/spectator';
 
 import { NoopConsoleModule } from '@internal/console-driver/test-util';
-import { LumberjackLogLevel, LumberjackModule } from '@ngworker/lumberjack';
+import { LumberjackLevel, LumberjackModule } from '@ngworker/lumberjack';
 import { ConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
 import { HttpDriverModule } from '@ngworker/lumberjack/http-driver';
 
@@ -18,7 +18,7 @@ describe('AppComponent', () => {
       ConsoleDriverModule.forRoot(),
       NoopConsoleModule,
       HttpDriverModule.forRoot({
-        levels: [LumberjackLogLevel.Error],
+        levels: [LumberjackLevel.Error],
         origin: 'ForestAPP',
         storeUrl: '/api/logs',
         retryOptions: { maxRetries: 5, delayMs: 250 },

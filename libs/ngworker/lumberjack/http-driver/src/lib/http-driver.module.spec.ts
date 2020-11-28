@@ -6,9 +6,9 @@ import {
   LogDriver,
   LogDriverConfig,
   logDriverToken,
+  LumberjackLevel,
   lumberjackLogConfigToken,
   LumberjackLogEntryLevel,
-  LumberjackLogLevel,
   LumberjackModule,
 } from '@ngworker/lumberjack';
 
@@ -26,7 +26,7 @@ function createHttpOptions(): HttpDriverOptions {
 }
 
 function createHttpConfig(
-  levels: ReadonlyArray<LumberjackLogEntryLevel> | [LumberjackLogLevel.Verbose]
+  levels: ReadonlyArray<LumberjackLogEntryLevel> | [LumberjackLevel.Verbose]
 ): HttpDriverConfig {
   return {
     levels,
@@ -44,7 +44,7 @@ const createHttpDriver = (
     config: HttpDriverConfig;
     isLumberjackModuleImportedFirst?: boolean;
   } = {
-    config: createHttpConfig([LumberjackLogLevel.Verbose]),
+    config: createHttpConfig([LumberjackLevel.Verbose]),
   }
 ) => {
   TestBed.configureTestingModule({
@@ -96,7 +96,7 @@ describe(HttpDriverModule.name, () => {
     });
 
     it('registers the specified log driver configuration', () => {
-      const expectedConfig = createHttpConfig([LumberjackLogLevel.Error]);
+      const expectedConfig = createHttpConfig([LumberjackLevel.Error]);
 
       const httpDriver = createHttpDriver({ config: expectedConfig });
 
@@ -105,7 +105,7 @@ describe(HttpDriverModule.name, () => {
     });
 
     it('registers a default level configuration if none is specified', () => {
-      const customHttpConfig = createHttpConfig([LumberjackLogLevel.Verbose]);
+      const customHttpConfig = createHttpConfig([LumberjackLevel.Verbose]);
 
       const httpDriver = createHttpDriver({ config: customHttpConfig });
 
@@ -119,7 +119,7 @@ describe(HttpDriverModule.name, () => {
     });
 
     it('does register the specified log driver configuration when the lumberjack module is imported after the http driver module', () => {
-      const expectedConfig = createHttpConfig([LumberjackLogLevel.Debug]);
+      const expectedConfig = createHttpConfig([LumberjackLevel.Debug]);
 
       const httpDriver = createHttpDriver({
         config: expectedConfig,
@@ -158,7 +158,7 @@ describe(HttpDriverModule.name, () => {
       const httpDriver = createHttpDriverWithOptions({ options });
 
       const { levels } = httpDriver.config;
-      expect(levels).toEqual([LumberjackLogLevel.Verbose]);
+      expect(levels).toEqual([LumberjackLevel.Verbose]);
     });
 
     it('does register the specified log driver configuration when the lumberjack module is imported after the http driver module', () => {

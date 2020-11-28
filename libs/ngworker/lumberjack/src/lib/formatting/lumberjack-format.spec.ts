@@ -1,7 +1,7 @@
 import { createDebugLog } from '@internal/test-util';
 
-import { LumberjackLog } from '../lumberjack-log';
-import { LumberjackLogEntryLevel, LumberjackLogLevel } from '../lumberjack-log-levels';
+import { LumberjackLog } from '../logs/lumberjack-log';
+import { LumberjackLevel, LumberjackLogEntryLevel } from '../logs/lumberjack-log-levels';
 
 import { lumberjackFormat } from './lumberjack-format';
 
@@ -23,12 +23,12 @@ function parseFormattedLog(formattedLog: string) {
 describe(lumberjackFormat.name, () => {
   describe('Log entry level', () => {
     const logEntryLevels: ReadonlyArray<LumberjackLogEntryLevel> = [
-      LumberjackLogLevel.Critical,
-      LumberjackLogLevel.Debug,
-      LumberjackLogLevel.Error,
-      LumberjackLogLevel.Info,
-      LumberjackLogLevel.Trace,
-      LumberjackLogLevel.Warning,
+      LumberjackLevel.Critical,
+      LumberjackLevel.Debug,
+      LumberjackLevel.Error,
+      LumberjackLevel.Info,
+      LumberjackLevel.Trace,
+      LumberjackLevel.Warning,
     ];
 
     logEntryLevels.forEach((expectedLevel) => {
@@ -59,7 +59,7 @@ describe(lumberjackFormat.name, () => {
       it('adds the 0 hours UTC offset with milliseconds resolution', () => {
         const logEntry: LumberjackLog = {
           createdAt: unixEpochTicks,
-          level: LumberjackLogLevel.Debug,
+          level: LumberjackLevel.Debug,
           message: 'Test message',
           context: 'Test context',
         };

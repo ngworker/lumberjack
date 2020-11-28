@@ -1,8 +1,8 @@
-import { LumberjackLogConfigLevel, LumberjackLogLevel } from '../lumberjack-log-levels';
+import { LumberjackLevel, LumberjackLogConfigLevels } from '../logs/lumberjack-log-levels';
 
-export const defaultProductionLevels: LumberjackLogConfigLevel = [
-  LumberjackLogLevel.Critical,
-  LumberjackLogLevel.Error,
-  LumberjackLogLevel.Info,
-  LumberjackLogLevel.Warning,
+export const defaultProductionLevels: LumberjackLogConfigLevels = [
+  LumberjackLevel.Critical,
+  LumberjackLevel.Error,
+  LumberjackLevel.Info,
+  LumberjackLevel.Warning,
 ];
