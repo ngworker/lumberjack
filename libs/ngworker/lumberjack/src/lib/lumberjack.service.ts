@@ -6,7 +6,7 @@ import { LogDriver } from './log-drivers/log-driver';
 import { logDriverToken } from './log-drivers/log-driver.token';
 import { LumberjackLevel } from './logs/lumberjack-level';
 import { LumberjackLog } from './logs/lumberjack-log';
-import { LumberjackLogLevel } from './logs/lumberjack-log-levels';
+import { LumberjackLogLevel } from './logs/lumberjack-log-level';
 import { LumberjackRootModule } from './lumberjack-root.module';
 import { LumberjackTimeService } from './time/lumberjack-time.service';
 

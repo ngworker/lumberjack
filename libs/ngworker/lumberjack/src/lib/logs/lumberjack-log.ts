@@ -1,4 +1,4 @@
-import { LumberjackLogLevel } from './lumberjack-log-levels';
+import { LumberjackLogLevel } from './lumberjack-log-level';
 
 /**
  * A Lumberjack log entry
