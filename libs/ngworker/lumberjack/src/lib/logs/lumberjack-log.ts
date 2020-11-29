@@ -1,4 +1,4 @@
-import { LumberjackLogEntryLevel } from './lumberjack-log-levels';
+import { LumberjackLogLevel } from './lumberjack-log-levels';
 
 /**
  * A Lumberjack log entry
@@ -15,7 +15,7 @@ export interface LumberjackLog {
   /**
    * Level of severity.
    */
-  readonly level: LumberjackLogEntryLevel;
+  readonly level: LumberjackLogLevel;
   /**
    * Log messsage, for example describing an event that happened.
    */

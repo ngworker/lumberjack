@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 import { LumberjackLevel } from './logs/lumberjack-level';
-import { LumberjackLogEntryLevel } from './logs/lumberjack-log-levels';
+import { LumberjackLogLevel } from './logs/lumberjack-log-levels';
 import { LumberjackService } from './lumberjack.service';
 import { LumberjackTimeService } from './time/lumberjack-time.service';
 
@@ -33,7 +33,7 @@ export abstract class LumberjackLogger {
     return this.createLogger(LumberjackLevel.Warning, message, context);
   }
 
-  private createLogger(level: LumberjackLogEntryLevel, message: string, context?: string): () => void {
+  private createLogger(level: LumberjackLogLevel, message: string, context?: string): () => void {
     return () => {
       this.lumberjack.log({ context, createdAt: this.time.getUnixEpochTicks(), level, message });
     };

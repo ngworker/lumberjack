@@ -1,8 +1,8 @@
-import { LumberjackLevel, LumberjackLogEntryLevel, LumberjackTimeService } from '@ngworker/lumberjack';
+import { LumberjackLevel, LumberjackLogLevel, LumberjackTimeService } from '@ngworker/lumberjack';
 
 import { resolveDependency } from '../resolve-dependency';
 
-const createLog = (level: LumberjackLogEntryLevel, message = '', context = 'Test') => ({
+const createLog = (level: LumberjackLogLevel, message = '', context = 'Test') => ({
   context,
   createdAt: resolveDependency(LumberjackTimeService).getUnixEpochTicks(),
   level,

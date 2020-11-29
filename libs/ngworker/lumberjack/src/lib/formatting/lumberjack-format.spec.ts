@@ -2,7 +2,7 @@ import { createDebugLog } from '@internal/test-util';
 
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLog } from '../logs/lumberjack-log';
-import { LumberjackLogEntryLevel } from '../logs/lumberjack-log-levels';
+import { LumberjackLogLevel } from '../logs/lumberjack-log-levels';
 
 import { lumberjackFormat } from './lumberjack-format';
 
@@ -22,8 +22,8 @@ function parseFormattedLog(formattedLog: string) {
 }
 
 describe(lumberjackFormat.name, () => {
-  describe('Log entry level', () => {
-    const logEntryLevels: ReadonlyArray<LumberjackLogEntryLevel> = [
+  describe('Log level', () => {
+    const logLevels: ReadonlyArray<LumberjackLogLevel> = [
       LumberjackLevel.Critical,
       LumberjackLevel.Debug,
       LumberjackLevel.Error,
@@ -32,8 +32,8 @@ describe(lumberjackFormat.name, () => {
       LumberjackLevel.Warning,
     ];
 
-    logEntryLevels.forEach((expectedLevel) => {
-      it(`prefixes the message with log entry level "${expectedLevel}"`, () => {
+    logLevels.forEach((expectedLevel) => {
+      it(`prefixes the message with log level "${expectedLevel}"`, () => {
         const logEntry: LumberjackLog = {
           createdAt: new Date().valueOf(),
           level: expectedLevel,

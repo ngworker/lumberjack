@@ -6,7 +6,7 @@ import { LogDriver } from './log-drivers/log-driver';
 import { logDriverToken } from './log-drivers/log-driver.token';
 import { LumberjackLevel } from './logs/lumberjack-level';
 import { LumberjackLog } from './logs/lumberjack-log';
-import { LumberjackLogEntryLevel } from './logs/lumberjack-log-levels';
+import { LumberjackLogLevel } from './logs/lumberjack-log-levels';
 import { LumberjackRootModule } from './lumberjack-root.module';
 import { LumberjackTimeService } from './time/lumberjack-time.service';
 
@@ -61,15 +61,15 @@ export class LumberjackService {
     this.processErrors(greenDrivers, errors);
   }
 
-  private canDriveLog(driver: LogDriver, level: LumberjackLogEntryLevel): boolean {
+  private canDriveLog(driver: LogDriver, level: LumberjackLogLevel): boolean {
     return (
       driver.config.levels === undefined ||
       (driver.config.levels.length === 1 && driver.config.levels[0] === LumberjackLevel.Verbose) ||
-      (driver.config.levels as LumberjackLogEntryLevel[]).includes(level)
+      (driver.config.levels as LumberjackLogLevel[]).includes(level)
     );
   }
 
-  private logToTheRightLevel(driver: LogDriver, level: LumberjackLogEntryLevel, formattedMessage: string): void {
+  private logToTheRightLevel(driver: LogDriver, level: LumberjackLogLevel, formattedMessage: string): void {
     switch (level) {
       case LumberjackLevel.Info:
         driver.logInfo(formattedMessage);
