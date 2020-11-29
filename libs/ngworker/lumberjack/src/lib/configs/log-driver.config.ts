@@ -1,4 +1,4 @@
-import { LumberjackConfigLevels } from '../logs/lumberjack-log-levels';
+import { LumberjackConfigLevels } from '../logs/lumberjack-config-levels';
 
 export interface LogDriverConfig {
   /**
