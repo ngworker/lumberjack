@@ -1,7 +1,8 @@
 import { createDebugLog } from '@internal/test-util';
 
+import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLog } from '../logs/lumberjack-log';
-import { LumberjackLevel, LumberjackLogEntryLevel } from '../logs/lumberjack-log-levels';
+import { LumberjackLogEntryLevel } from '../logs/lumberjack-log-levels';
 
 import { lumberjackFormat } from './lumberjack-format';
 

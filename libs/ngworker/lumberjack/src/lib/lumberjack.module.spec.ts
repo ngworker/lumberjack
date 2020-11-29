@@ -11,8 +11,8 @@ import { LumberjackLogConfig } from './configs/lumberjack-log.config';
 import { LumberjackLogOptions } from './configs/lumberjack-log.options';
 import { isProductionEnvironmentToken } from './environment/is-production-environment.token';
 import { utcTimestampFor } from './formatting/utc-timestamp-for';
+import { LumberjackLevel } from './logs/lumberjack-level';
 import { LumberjackLog } from './logs/lumberjack-log';
-import { LumberjackLevel } from './logs/lumberjack-log-levels';
 import { LumberjackModule } from './lumberjack.module';
 import { LumberjackTimeService } from './time/lumberjack-time.service';
 

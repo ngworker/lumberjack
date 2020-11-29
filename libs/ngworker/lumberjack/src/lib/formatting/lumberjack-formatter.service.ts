@@ -3,8 +3,8 @@ import { Inject, Injectable } from '@angular/core';
 import { lumberjackLogConfigToken } from '../configs/lumberjack-log-config.token';
 import { LumberjackLogConfig } from '../configs/lumberjack-log.config';
 import { DriverError } from '../log-drivers/driver-error';
+import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLog } from '../logs/lumberjack-log';
-import { LumberjackLevel } from '../logs/lumberjack-log-levels';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { FormatLogEntryResult } from './format-log-entry-result';

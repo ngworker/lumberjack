@@ -13,3 +13,4 @@ export * from './lib/spy-driver/spy-driver.module';
 export * from './lib/spy-driver/spy.driver';
 export * from './lib/resolve-dependency';
 export * from './lib/repeat-side-effect';
+export { isObject } from './lib/type-checking/is-object';

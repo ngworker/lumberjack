@@ -10,8 +10,8 @@ import {
 } from '@internal/test-util';
 
 import { LumberjackLogOptions } from '../configs/lumberjack-log.options';
+import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLog } from '../logs/lumberjack-log';
-import { LumberjackLevel } from '../logs/lumberjack-log-levels';
 import { LumberjackModule } from '../lumberjack.module';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 

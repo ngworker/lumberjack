@@ -1,3 +1,5 @@
+import { isObject } from '@internal/test-util';
+
 import { LumberjackLevel, LumberjackLog, LumberjackLogConfigLevels, LumberjackLogEntryLevel } from './index';
 
 describe('Logs API', () => {
@@ -24,6 +26,10 @@ describe('Logs API', () => {
   });
 
   describe('Enums', () => {
-    it(`exposes ${LumberjackLevel}`, () => {});
+    it('exposes LumberjackLevel', () => {
+      const sut = LumberjackLevel;
+
+      expect(isObject(sut)).withContext('LumberjackLevel is not an enum').toBeTrue();
+    });
   });
 });

@@ -4,8 +4,9 @@ import { LumberjackFormatter } from './formatting/lumberjack-formatter.service';
 import { DriverError } from './log-drivers/driver-error';
 import { LogDriver } from './log-drivers/log-driver';
 import { logDriverToken } from './log-drivers/log-driver.token';
+import { LumberjackLevel } from './logs/lumberjack-level';
 import { LumberjackLog } from './logs/lumberjack-log';
-import { LumberjackLevel, LumberjackLogEntryLevel } from './logs/lumberjack-log-levels';
+import { LumberjackLogEntryLevel } from './logs/lumberjack-log-levels';
 import { LumberjackRootModule } from './lumberjack-root.module';
 import { LumberjackTimeService } from './time/lumberjack-time.service';
 
