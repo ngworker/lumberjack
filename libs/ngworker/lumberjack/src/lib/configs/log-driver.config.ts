@@ -1,4 +1,4 @@
-import { LumberjackLogConfigLevels } from '../logs/lumberjack-log-levels';
+import { LumberjackConfigLevels } from '../logs/lumberjack-log-levels';
 
 export interface LogDriverConfig {
   /**
@@ -7,5 +7,5 @@ export interface LogDriverConfig {
    * If undefined or [LumberjackLevel.Verbose], all levels are allowed.
    *
    */
-  readonly levels: LumberjackLogConfigLevels;
+  readonly levels: LumberjackConfigLevels;
 }

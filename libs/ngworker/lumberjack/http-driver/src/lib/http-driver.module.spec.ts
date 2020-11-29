@@ -6,8 +6,8 @@ import {
   LogDriver,
   LogDriverConfig,
   logDriverToken,
+  LumberjackConfigLevels,
   LumberjackLevel,
-  LumberjackLogConfigLevels,
   lumberjackLogConfigToken,
   LumberjackModule,
 } from '@ngworker/lumberjack';
@@ -25,7 +25,7 @@ function createHttpOptions(): HttpDriverOptions {
   };
 }
 
-function createHttpConfig(levels: LumberjackLogConfigLevels): HttpDriverConfig {
+function createHttpConfig(levels: LumberjackConfigLevels): HttpDriverConfig {
   return {
     levels,
     storeUrl: 'api/logstore',
