@@ -13,28 +13,28 @@ export class ConsoleDriver implements LogDriver {
     @Inject(lumberjackConsoleToken) private console: LumberjackConsole
   ) {}
 
-  logCritical(logEntry: string): void {
-    this.console.error(logEntry);
+  logCritical(formattedLog: string): void {
+    this.console.error(formattedLog);
   }
 
-  logDebug(logEntry: string): void {
-    this.console.debug(logEntry);
+  logDebug(formattedLog: string): void {
+    this.console.debug(formattedLog);
   }
 
-  logError(logEntry: string): void {
-    this.console.error(logEntry);
+  logError(formattedLog: string): void {
+    this.console.error(formattedLog);
   }
 
-  logInfo(logEntry: string): void {
-    this.console.info(logEntry);
+  logInfo(formattedLog: string): void {
+    this.console.info(formattedLog);
   }
 
-  logTrace(logEntry: string): void {
+  logTrace(formattedLog: string): void {
     // tslint:disable-next-line: no-console
-    this.console.trace(logEntry);
+    this.console.trace(formattedLog);
   }
 
-  logWarning(logEntry: string): void {
-    this.console.warn(logEntry);
+  logWarning(formattedLog: string): void {
+    this.console.warn(formattedLog);
   }
 }

@@ -48,7 +48,7 @@ export class LumberjackService {
     drivers.forEach((driver) => {
       if (this.canDriveLog(driver, logEntry.level)) {
         try {
-          this.logToTheRightLevel(driver, logEntry.level, message);
+          this.logToTheRightLevel(driver, logEntry, logEntry.level, message);
           greenDrivers.push(driver);
           errorIndex = this.removeHandledError(errorIndex, errors);
         } catch (error) {
@@ -67,30 +67,35 @@ export class LumberjackService {
     );
   }
 
-  private logToTheRightLevel(driver: LogDriver, level: LumberjackLogEntryLevel, formattedMessage: string): void {
+  private logToTheRightLevel(
+    driver: LogDriver,
+    logEntry: LumberjackLog,
+    level: LumberjackLogEntryLevel,
+    formattedMessage: string
+  ): void {
     switch (level) {
       case LumberjackLogLevel.Info:
-        driver.logInfo(formattedMessage);
+        driver.logInfo(formattedMessage, logEntry);
 
         break;
       case LumberjackLogLevel.Error:
-        driver.logError(formattedMessage);
+        driver.logError(formattedMessage, logEntry);
 
         break;
       case LumberjackLogLevel.Warning:
-        driver.logWarning(formattedMessage);
+        driver.logWarning(formattedMessage, logEntry);
 
         break;
       case LumberjackLogLevel.Debug:
-        driver.logDebug(formattedMessage);
+        driver.logDebug(formattedMessage, logEntry);
 
         break;
       case LumberjackLogLevel.Critical:
-        driver.logCritical(formattedMessage);
+        driver.logCritical(formattedMessage, logEntry);
 
         break;
       case LumberjackLogLevel.Trace:
-        driver.logTrace(formattedMessage);
+        driver.logTrace(formattedMessage, logEntry);
 
         break;
     }

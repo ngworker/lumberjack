@@ -1,8 +1,14 @@
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
-import { repeatSideEffect, resolveDependency } from '@internal/test-util';
-import { LogDriver, logDriverToken, LumberjackLogLevel, LumberjackModule } from '@ngworker/lumberjack';
+import { createCriticalLog, createLog, repeatSideEffect, resolveDependency } from '@internal/test-util';
+import {
+  LogDriver,
+  logDriverToken,
+  LumberjackLogEntryLevel,
+  LumberjackLogLevel,
+  LumberjackModule,
+} from '@ngworker/lumberjack';
 
 import { HttpDriverOptions } from './http-driver-options';
 import { HttpDriverModule } from './http-driver.module';
@@ -52,9 +58,9 @@ function respondWith503ServiceUnavailable(request: TestRequest) {
   request.flush('Service Unavailable', { status: 503, statusText: 'Service Unavailable' });
 }
 
-function createHttpLogEntry(logEntry: string, level: LumberjackLogLevel, origin: string): HttpLogEntry {
+function createHttpLogEntry(formattedLog: string, level: LumberjackLogLevel, origin: string): HttpLogEntry {
   return {
-    logEntry,
+    formattedLog,
     level,
     origin,
   };
@@ -92,7 +98,7 @@ describe(HttpDriver.name, () => {
       { level: LumberjackLogLevel.Warning, logMethod: (driver: LogDriver) => driver.logWarning },
     ].forEach(({ level, logMethod }) => {
       it(`sends a ${level} log to the configured URL`, () => {
-        logMethod(httpDriver).call(httpDriver, level);
+        logMethod(httpDriver).call(httpDriver, level, createLog(level as LumberjackLogEntryLevel));
 
         expectRequest(httpTestingController, options, level);
       });
@@ -100,7 +106,7 @@ describe(HttpDriver.name, () => {
   });
 
   it('retries after two failures and then succeeds', () => {
-    httpDriver.logCritical(LumberjackLogLevel.Critical);
+    httpDriver.logCritical(LumberjackLogLevel.Critical, createCriticalLog());
 
     repeatSideEffect(2, () => expectFailingRequest(httpTestingController, options, LumberjackLogLevel.Critical));
 
@@ -108,7 +114,7 @@ describe(HttpDriver.name, () => {
   });
 
   it('retries the specified number of times after failures and then stops retrying', () => {
-    httpDriver.logCritical(LumberjackLogLevel.Critical);
+    httpDriver.logCritical(LumberjackLogLevel.Critical, createCriticalLog());
     const { retryOptions } = options;
 
     repeatSideEffect(retryOptions.maxRetries + 1, () =>

@@ -2,7 +2,7 @@ import { LumberjackLogEntryLevel, LumberjackLogLevel, LumberjackTimeService } fr
 
 import { resolveDependency } from '../resolve-dependency';
 
-const createLog = (level: LumberjackLogEntryLevel, message = '', context = 'Test') => ({
+export const createLog = (level: LumberjackLogEntryLevel, message = '', context = 'Test') => ({
   context,
   createdAt: resolveDependency(LumberjackTimeService).getUnixEpochTicks(),
   level,

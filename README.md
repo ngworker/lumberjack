@@ -142,7 +142,7 @@ Optionally, we can pass one or more options to `LumberjackModule.forRoot`.
 
 | Option   | Type                                | Optional? | Description                                                          |
 | -------- | ----------------------------------- | --------- | -------------------------------------------------------------------- |
-| `format` | (logEntry: LumberjackLog) => string | Yes       | Pass a custom formatter to transform a log entry into a log message. |
+| `format` | (formattedLog: LumberjackLog) => string | Yes       | Pass a custom formatter to transform a log entry into a log message. |
 | `levels` | `LumberjackLogConfigLevel`          | Yes       | The root log levels defining the default log levels for log drivers. |
 
 ### Default options
@@ -185,14 +185,14 @@ Lumberjack offers basic log drivers out-of-the-box, namely the `ConsoleDriver` a
 Every log driver implements the `LogDriver` interface.
 
 ```ts
-export interface LogDriver {
-  config: LogDriverConfig;
-  logCritical(logEntry: string): void;
-  logInfo(logEntry: string): void;
-  logDebug(logEntry: string): void;
-  logError(logEntry: string): void;
-  logTrace(logEntry: string): void;
-  logWarning(logEntry: string): void;
+export interface LogDriver<T extends LumberjackLog = LumberjackLog> {
+  readonly config: LogDriverConfig;
+  logCritical(formattedLog: string, log: T): void;
+  logDebug(formattedLog: string, log: T): void;
+  logError(formattedLog: string, log: T): void;
+  logInfo(formattedLog: string, log: T): void;
+  logTrace(formattedLog: string, log: T): void;
+  logWarning(formattedLog: string, log: T): void;
 }
 ```
 
@@ -241,28 +241,28 @@ import { consoleDriverConfigToken } from './console-driver-config.token';
 export class ConsoleDriver implements LogDriver {
   constructor(@Inject(consoleDriverConfigToken) public config: LogDriverConfig) {}
 
-  logCritical(logEntry: string): void {
-    console.error(logEntry);
+  logCritical(formattedLog: string): void {
+    console.error(formattedLog);
   }
 
-  logDebug(logEntry: string): void {
-    console.debug(logEntry);
+  logDebug(formattedLog: string): void {
+    console.debug(formattedLog);
   }
 
-  logError(logEntry: string): void {
-    console.error(logEntry);
+  logError(formattedLog: string): void {
+    console.error(formattedLog);
   }
 
-  logInfo(logEntry: string): void {
-    console.info(logEntry);
+  logInfo(formattedLog: string): void {
+    console.info(formattedLog);
   }
 
-  logTrace(logEntry: string): void {
-    console.trace(logEntry);
+  logTrace(formattedLog: string): void {
+    console.trace(formattedLog);
   }
 
-  logWarning(logEntry: string): void {
-    console.warn(logEntry);
+  logWarning(formattedLog: string): void {
+    console.warn(formattedLog);
   }
 }
 ```
