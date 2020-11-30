@@ -37,7 +37,6 @@ export class HttpDriverRootModule {
     @SkipSelf()
     @Inject(HttpDriverRootModule)
     maybeNgModuleFromParentInjector: HttpDriverRootModule = null as any
-    // tslint:enable: no-any no-null-keyword
   ) {
     if (maybeNgModuleFromParentInjector) {
       throw new Error(
