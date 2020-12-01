@@ -6,8 +6,8 @@ import { DriverError } from '../log-drivers/driver-error';
 import { LogDriver } from '../log-drivers/log-driver';
 import { logDriverToken } from '../log-drivers/log-driver.token';
 import { LumberjackLevel } from '../logs/lumberjack-level';
-import { LumberjackLog } from '../logs/lumberjack-log';
 import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
+import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 /**

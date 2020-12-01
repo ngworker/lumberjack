@@ -12,7 +12,7 @@ import {
 import { LumberjackLogOptions } from '../configuration/lumberjack-log.options';
 import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackLevel } from '../logs/lumberjack-level';
-import { LumberjackLog } from '../logs/lumberjack-log';
+import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { LumberjackFormatter } from './lumberjack-formatter.service';

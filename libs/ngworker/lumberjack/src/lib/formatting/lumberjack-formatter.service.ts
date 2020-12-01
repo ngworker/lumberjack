@@ -4,7 +4,7 @@ import { lumberjackLogConfigToken } from '../configuration/lumberjack-log-config
 import { LumberjackLogConfig } from '../configuration/lumberjack-log.config';
 import { DriverError } from '../log-drivers/driver-error';
 import { LumberjackLevel } from '../logs/lumberjack-level';
-import { LumberjackLog } from '../logs/lumberjack-log';
+import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { FormatLogEntryResult } from './format-log-entry-result';

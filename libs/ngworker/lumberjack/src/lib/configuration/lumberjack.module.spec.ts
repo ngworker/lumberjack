@@ -5,7 +5,7 @@ import { expectNgModuleToBeGuarded, resolveDependency } from '@internal/test-uti
 import { isProductionEnvironmentToken } from '../environment/is-production-environment.token';
 import { utcTimestampFor } from '../formatting/utc-timestamp-for';
 import { LumberjackLevel } from '../logs/lumberjack-level';
-import { LumberjackLog } from '../logs/lumberjack-log';
+import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { defaultDevelopmentLevels } from './default-development-levels';

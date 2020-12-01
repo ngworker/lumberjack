@@ -1,4 +1,4 @@
-import { LumberjackLog } from '../logs/lumberjack-log';
+import { LumberjackLog } from '../logs/lumberjack.log';
 
 export interface FormatLogEntryResult {
   readonly logEntry: LumberjackLog;

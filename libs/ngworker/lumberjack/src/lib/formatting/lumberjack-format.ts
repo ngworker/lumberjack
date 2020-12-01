@@ -1,4 +1,4 @@
-import { LumberjackLog } from '../logs/lumberjack-log';
+import { LumberjackLog } from '../logs/lumberjack.log';
 
 import { utcTimestampFor } from './utc-timestamp-for';
 
