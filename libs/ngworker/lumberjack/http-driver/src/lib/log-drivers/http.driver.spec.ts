@@ -12,14 +12,14 @@ import { HttpDriver } from './http.driver';
 
 function expectRequest(
   httpTestingController: HttpTestingController,
-  options: HttpDriverOptions,
+  { origin, storeUrl }: HttpDriverOptions,
   level: LumberjackLevel = LumberjackLevel.Critical
 ) {
-  const expectedBody = createHttpLogEntry(level, level, options.origin);
+  const expectedBody: HttpLog = { formattedLog: level, level, origin };
 
   const {
     request: { body, method },
-  } = httpTestingController.expectOne(options.storeUrl);
+  } = httpTestingController.expectOne(storeUrl);
   expect(method).toEqual('POST');
   expect(body).toEqual(expectedBody);
 }
@@ -31,11 +31,10 @@ function expectRequestToBeAborted(httpTestingController: HttpTestingController, 
 
 function expectFailingRequest(
   httpTestingController: HttpTestingController,
-  options: HttpDriverOptions,
+  { origin, retryOptions, storeUrl }: HttpDriverOptions,
   level: LumberjackLevel = LumberjackLevel.Critical
 ) {
-  const expectedBody = createHttpLogEntry(level, LumberjackLevel.Critical, options.origin);
-  const { retryOptions, storeUrl } = options;
+  const expectedBody: HttpLog = { formattedLog: level, level: LumberjackLevel.Critical, origin };
   const req = httpTestingController.expectOne(storeUrl);
   const {
     cancelled,
@@ -51,14 +50,6 @@ function expectFailingRequest(
 
 function respondWith503ServiceUnavailable(request: TestRequest) {
   request.flush('Service Unavailable', { status: 503, statusText: 'Service Unavailable' });
-}
-
-function createHttpLogEntry(logEntry: string, level: LumberjackLevel, origin: string): HttpLog {
-  return {
-    logEntry,
-    level,
-    origin,
-  };
 }
 
 describe(HttpDriver.name, () => {
@@ -83,7 +74,7 @@ describe(HttpDriver.name, () => {
     jasmine.clock().mockDate(new Date(0));
   });
 
-  describe('log to a http server using the right level', () => {
+  describe('logs to a web API using the right log level', () => {
     [
       { level: LumberjackLevel.Critical, logMethod: (driver: LogDriver) => driver.logCritical },
       { level: LumberjackLevel.Debug, logMethod: (driver: LogDriver) => driver.logDebug },
@@ -92,7 +83,7 @@ describe(HttpDriver.name, () => {
       { level: LumberjackLevel.Trace, logMethod: (driver: LogDriver) => driver.logTrace },
       { level: LumberjackLevel.Warning, logMethod: (driver: LogDriver) => driver.logWarning },
     ].forEach(({ level, logMethod }) => {
-      it(`sends a ${level} log to the configured URL`, () => {
+      it(`sends a ${level} level log to the configured URL`, () => {
         logMethod(httpDriver).call(httpDriver, level);
 
         expectRequest(httpTestingController, options, level);

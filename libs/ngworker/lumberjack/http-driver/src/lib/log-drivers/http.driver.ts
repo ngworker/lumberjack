@@ -16,37 +16,37 @@ export class HttpDriver implements LogDriver {
     private ngZone: NgZone
   ) {}
 
-  logCritical(logEntry: string): void {
-    this.sendLog(logEntry, LumberjackLevel.Critical);
+  logCritical(formattedLog: string): void {
+    this.sendLog(formattedLog, LumberjackLevel.Critical);
   }
 
-  logDebug(logEntry: string): void {
-    this.sendLog(logEntry, LumberjackLevel.Debug);
+  logDebug(formattedLog: string): void {
+    this.sendLog(formattedLog, LumberjackLevel.Debug);
   }
 
-  logError(logEntry: string): void {
-    this.sendLog(logEntry, LumberjackLevel.Error);
+  logError(formattedLog: string): void {
+    this.sendLog(formattedLog, LumberjackLevel.Error);
   }
 
-  logInfo(logEntry: string): void {
-    this.sendLog(logEntry, LumberjackLevel.Info);
+  logInfo(formattedLog: string): void {
+    this.sendLog(formattedLog, LumberjackLevel.Info);
   }
 
-  logTrace(logEntry: string): void {
-    this.sendLog(logEntry, LumberjackLevel.Trace);
+  logTrace(formattedLog: string): void {
+    this.sendLog(formattedLog, LumberjackLevel.Trace);
   }
 
-  logWarning(logEntry: string): void {
-    this.sendLog(logEntry, LumberjackLevel.Warning);
+  logWarning(formattedLog: string): void {
+    this.sendLog(formattedLog, LumberjackLevel.Warning);
   }
 
-  private sendLog(logEntry: string, level: LumberjackLevel): void {
+  private sendLog(formattedLog: string, level: LumberjackLevel): void {
     const { origin, storeUrl, retryOptions } = this.config;
-    const httpLogEntry: HttpLog = { logEntry, origin, level };
+    const httpLog: HttpLog = { formattedLog, origin, level };
 
     this.ngZone.runOutsideAngular(() => {
       this.http
-        .post<void>(storeUrl, httpLogEntry)
+        .post<void>(storeUrl, httpLog)
         .pipe(retryWithDelay(retryOptions.maxRetries, retryOptions.delayMs))
         .subscribe();
     });
