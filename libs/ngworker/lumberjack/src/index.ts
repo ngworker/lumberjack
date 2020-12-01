@@ -20,7 +20,8 @@ export { LumberjackLevel } from './lib/logs/lumberjack-level';
 export { LumberjackLog } from './lib/logs/lumberjack-log';
 export { LumberjackLogLevel } from './lib/logs/lumberjack-log-level';
 
-export * from './lib/lumberjack-logger.service';
+// Logging
+export { LumberjackLogger } from './lib/logging/lumberjack-logger.service';
 export * from './lib/lumberjack.module';
-export * from './lib/lumberjack.service';
+export { LumberjackService } from './lib/logging/lumberjack.service';
 export * from './lib/time/lumberjack-time.service';

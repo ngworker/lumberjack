@@ -11,9 +11,10 @@ import {
   resolveDependency,
 } from '@internal/test-util';
 
+import { LumberjackTimeService } from '../time/lumberjack-time.service';
+
 import { LumberjackLogger } from './lumberjack-logger.service';
 import { LumberjackService } from './lumberjack.service';
-import { LumberjackTimeService } from './time/lumberjack-time.service';
 
 @Injectable({
   providedIn: 'root',

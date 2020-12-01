@@ -1,14 +1,14 @@
 import { Inject, Injectable, Optional } from '@angular/core';
 
-import { LumberjackFormatter } from './formatting/lumberjack-formatter.service';
-import { DriverError } from './log-drivers/driver-error';
-import { LogDriver } from './log-drivers/log-driver';
-import { logDriverToken } from './log-drivers/log-driver.token';
-import { LumberjackLevel } from './logs/lumberjack-level';
-import { LumberjackLog } from './logs/lumberjack-log';
-import { LumberjackLogLevel } from './logs/lumberjack-log-level';
-import { LumberjackRootModule } from './lumberjack-root.module';
-import { LumberjackTimeService } from './time/lumberjack-time.service';
+import { LumberjackFormatter } from '../formatting/lumberjack-formatter.service';
+import { DriverError } from '../log-drivers/driver-error';
+import { LogDriver } from '../log-drivers/log-driver';
+import { logDriverToken } from '../log-drivers/log-driver.token';
+import { LumberjackLevel } from '../logs/lumberjack-level';
+import { LumberjackLog } from '../logs/lumberjack-log';
+import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
+import { LumberjackRootModule } from '../lumberjack-root.module';
+import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 /**
  * Service responsible to add logs to the applications.
