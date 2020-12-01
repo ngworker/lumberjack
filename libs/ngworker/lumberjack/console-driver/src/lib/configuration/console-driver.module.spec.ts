@@ -10,8 +10,9 @@ import {
   LumberjackModule,
 } from '@ngworker/lumberjack';
 
+import { ConsoleDriver } from '../log-driver/console.driver';
+
 import { ConsoleDriverModule } from './console-driver.module';
-import { ConsoleDriver } from './console.driver';
 
 const createConsoleDriver = ({
   config,

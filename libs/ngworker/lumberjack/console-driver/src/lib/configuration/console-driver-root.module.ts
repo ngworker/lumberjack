@@ -2,7 +2,7 @@ import { Inject, NgModule, Optional, SkipSelf } from '@angular/core';
 
 import { logDriverToken } from '@ngworker/lumberjack';
 
-import { ConsoleDriver } from './console.driver';
+import { ConsoleDriver } from '../log-driver/console.driver';
 
 @NgModule({
   providers: [

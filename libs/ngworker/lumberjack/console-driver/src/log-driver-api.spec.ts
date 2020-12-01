@@ -1,11 +1,11 @@
 import { isClass } from '@internal/test-util';
 
-import { LumberjackTimeService } from './index';
+import { ConsoleDriver } from './index';
 
-describe('Time API', () => {
+describe('Log driver API', () => {
   describe('Services', () => {
-    it(`exposes ${LumberjackTimeService.name}`, () => {
-      const sut = LumberjackTimeService;
+    it(`exposes ${ConsoleDriver.name}`, () => {
+      const sut = ConsoleDriver;
 
       expect(isClass(sut)).withContext(`${sut.name} is not a class`).toBeTrue();
     });

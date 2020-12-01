@@ -2,9 +2,9 @@ import { Inject, Injectable } from '@angular/core';
 
 import { LogDriver, LogDriverConfig } from '@ngworker/lumberjack';
 
-import { consoleDriverConfigToken } from './console-driver-config.token';
-import { LumberjackConsole } from './lumberjack-console';
-import { lumberjackConsoleToken } from './lumberjack-console.token';
+import { consoleDriverConfigToken } from '../configuration/console-driver-config.token';
+import { LumberjackConsole } from '../console/lumberjack-console';
+import { lumberjackConsoleToken } from '../console/lumberjack-console.token';
 
 @Injectable()
 export class ConsoleDriver implements LogDriver {

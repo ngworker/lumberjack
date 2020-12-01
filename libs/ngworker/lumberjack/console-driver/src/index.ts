@@ -1,9 +1,13 @@
-/*
- * Public API Surface of @ngworker/lumberjack/console-driver
+/**
+ * Public API surface of @ngworker/lumberjack/console-driver
  */
 
-export * from './lib/console-driver-root.module';
-export * from './lib/console-driver.module';
-export * from './lib/console.driver';
-export * from './lib/lumberjack-console';
-export * from './lib/lumberjack-console.token';
+// Configuration
+export { ConsoleDriverModule } from './lib/configuration/console-driver.module';
+
+// Console
+export { LumberjackConsole } from './lib/console/lumberjack-console';
+export { lumberjackConsoleToken } from './lib/console/lumberjack-console.token';
+
+// Log driver
+export { ConsoleDriver } from './lib/log-driver/console.driver';
