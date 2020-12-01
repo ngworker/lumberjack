@@ -12,7 +12,7 @@ import {
   LumberjackModule,
 } from '@ngworker/lumberjack';
 
-import { HttpDriver } from '../http.driver';
+import { HttpDriver } from '../log-drivers/http.driver';
 
 import { HttpDriverConfig } from './http-driver.config';
 import { HttpDriverModule } from './http-driver.module';

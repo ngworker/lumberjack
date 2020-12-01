@@ -4,9 +4,10 @@ import { TestBed } from '@angular/core/testing';
 import { repeatSideEffect, resolveDependency } from '@internal/test-util';
 import { LogDriver, logDriverToken, LumberjackLevel, LumberjackModule } from '@ngworker/lumberjack';
 
-import { HttpDriverModule } from './configuration/http-driver.module';
-import { HttpDriverOptions } from './configuration/http-driver.options';
-import { HttpLogEntry } from './http-log-entry';
+import { HttpDriverModule } from '../configuration/http-driver.module';
+import { HttpDriverOptions } from '../configuration/http-driver.options';
+import { HttpLogEntry } from '../http-log-entry';
+
 import { HttpDriver } from './http.driver';
 
 function expectRequest(

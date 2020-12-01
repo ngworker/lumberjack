@@ -9,5 +9,7 @@ export { HttpDriverRetryOptions } from './lib/configuration/http-driver-retry.op
 export { HttpDriverConfig } from './lib/configuration/http-driver.config';
 export { HttpDriverModule } from './lib/configuration/http-driver.module';
 
-export * from './lib/http.driver';
+// Log drivers
+export { HttpDriver } from './lib/log-drivers/http.driver';
+
 export * from './lib/http-log-entry';
