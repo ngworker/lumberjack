@@ -1,8 +1,6 @@
-import { InjectionToken } from '@angular/core';
-
 import { LogDriverConfig } from '@ngworker/lumberjack';
 
-export const httpDriverConfigToken: InjectionToken<HttpDriverConfig> = new InjectionToken('__HTTP_DRIVER_CONFIG__');
+import { HttpDriverRetryOptions } from './http-driver-retry.options';
 
 export interface HttpDriverConfig extends LogDriverConfig {
   /**
@@ -25,9 +23,4 @@ export interface HttpDriverConfig extends LogDriverConfig {
    *
    */
   readonly retryOptions: HttpDriverRetryOptions;
-}
-
-export interface HttpDriverRetryOptions {
-  maxRetries: number;
-  delayMs: number;
 }

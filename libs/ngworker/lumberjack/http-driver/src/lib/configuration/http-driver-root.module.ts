@@ -3,8 +3,10 @@ import { Inject, NgModule, NgZone, Optional, SkipSelf } from '@angular/core';
 
 import { LogDriverConfig, logDriverConfigToken, logDriverToken } from '@ngworker/lumberjack';
 
-import { HttpDriverConfig, httpDriverConfigToken } from './http-driver-config.token';
-import { HttpDriver } from './http.driver';
+import { HttpDriver } from '../http.driver';
+
+import { httpDriverConfigToken } from './http-driver-config.token';
+import { HttpDriverConfig } from './http-driver.config';
 
 export function httpDriverFactory(
   http: HttpClient,

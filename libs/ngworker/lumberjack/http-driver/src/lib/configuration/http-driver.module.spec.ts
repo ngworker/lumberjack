@@ -12,10 +12,11 @@ import {
   LumberjackModule,
 } from '@ngworker/lumberjack';
 
-import { HttpDriverConfig } from './http-driver-config.token';
-import { HttpDriverOptions } from './http-driver-options';
+import { HttpDriver } from '../http.driver';
+
+import { HttpDriverConfig } from './http-driver.config';
 import { HttpDriverModule } from './http-driver.module';
-import { HttpDriver } from './http.driver';
+import { HttpDriverOptions } from './http-driver.options';
 
 function createHttpOptions(): HttpDriverOptions {
   return {

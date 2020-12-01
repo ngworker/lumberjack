@@ -3,7 +3,8 @@ import { Inject, Injectable, NgZone } from '@angular/core';
 
 import { LogDriver, LumberjackLevel } from '@ngworker/lumberjack';
 
-import { HttpDriverConfig, httpDriverConfigToken } from './http-driver-config.token';
+import { httpDriverConfigToken } from './configuration/http-driver-config.token';
+import { HttpDriverConfig } from './configuration/http-driver.config';
 import { HttpLogEntry } from './http-log-entry';
 import { retryWithDelay } from './retry-with-delay.operator';
 
