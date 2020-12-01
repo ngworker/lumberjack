@@ -6,7 +6,7 @@ import { LogDriver, logDriverToken, LumberjackLevel, LumberjackModule } from '@n
 
 import { HttpDriverModule } from '../configuration/http-driver.module';
 import { HttpDriverOptions } from '../configuration/http-driver.options';
-import { HttpLogEntry } from '../http-log-entry';
+import { HttpLog } from '../logs/http.log';
 
 import { HttpDriver } from './http.driver';
 
@@ -53,7 +53,7 @@ function respondWith503ServiceUnavailable(request: TestRequest) {
   request.flush('Service Unavailable', { status: 503, statusText: 'Service Unavailable' });
 }
 
-function createHttpLogEntry(logEntry: string, level: LumberjackLevel, origin: string): HttpLogEntry {
+function createHttpLogEntry(logEntry: string, level: LumberjackLevel, origin: string): HttpLog {
   return {
     logEntry,
     level,

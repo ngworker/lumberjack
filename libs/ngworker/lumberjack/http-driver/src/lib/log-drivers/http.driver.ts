@@ -5,7 +5,7 @@ import { LogDriver, LumberjackLevel } from '@ngworker/lumberjack';
 
 import { httpDriverConfigToken } from '../configuration/http-driver-config.token';
 import { HttpDriverConfig } from '../configuration/http-driver.config';
-import { HttpLogEntry } from '../http-log-entry';
+import { HttpLog } from '../logs/http.log';
 import { retryWithDelay } from '../retry-with-delay.operator';
 
 @Injectable()
@@ -42,7 +42,7 @@ export class HttpDriver implements LogDriver {
 
   private sendLog(logEntry: string, level: LumberjackLevel): void {
     const { origin, storeUrl, retryOptions } = this.config;
-    const httpLogEntry: HttpLogEntry = { logEntry, origin, level };
+    const httpLogEntry: HttpLog = { logEntry, origin, level };
 
     this.ngZone.runOutsideAngular(() => {
       this.http

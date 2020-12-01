@@ -12,4 +12,5 @@ export { HttpDriverModule } from './lib/configuration/http-driver.module';
 // Log drivers
 export { HttpDriver } from './lib/log-drivers/http.driver';
 
-export * from './lib/http-log-entry';
+// Logs
+export { HttpLog } from './lib/logs/http.log';
