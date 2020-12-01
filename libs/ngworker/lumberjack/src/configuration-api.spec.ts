@@ -43,7 +43,9 @@ describe('Configuration API', () => {
 
   describe('Angular modules', () => {
     it(`exposes ${LumberjackModule.name}`, () => {
-      expect(isClass(LumberjackModule)).withContext(`${LumberjackModule.name} is not a class`).toBeTrue();
+      const sut = LumberjackModule;
+
+      expect(isClass(sut)).withContext(`${sut.name} is not a class`).toBeTrue();
     });
   });
 
