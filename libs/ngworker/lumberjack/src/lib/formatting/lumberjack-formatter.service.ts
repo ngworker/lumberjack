@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 
-import { lumberjackLogConfigToken } from '../configs/lumberjack-log-config.token';
-import { LumberjackLogConfig } from '../configs/lumberjack-log.config';
+import { lumberjackLogConfigToken } from '../configuration/lumberjack-log-config.token';
+import { LumberjackLogConfig } from '../configuration/lumberjack-log.config';
 import { DriverError } from '../log-drivers/driver-error';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLog } from '../logs/lumberjack-log';

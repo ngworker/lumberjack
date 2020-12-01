@@ -1,7 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import { lumberjackLogOptionsToken } from './configs/lumberjack-log-options.token';
-import { LumberjackLogOptions } from './configs/lumberjack-log.options';
+import { lumberjackLogOptionsToken } from './lumberjack-log-options.token';
+import { LumberjackLogOptions } from './lumberjack-log.options';
 import { LumberjackRootModule } from './lumberjack-root.module';
 
 @NgModule()

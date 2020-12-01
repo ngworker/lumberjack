@@ -1,15 +1,16 @@
 import { Inject, NgModule, Optional, SkipSelf } from '@angular/core';
 
-import { defaultDevelopmentLevels } from './configs/default-development-levels';
-import { defaultProductionLevels } from './configs/default-production-levels';
-import { logDriverConfigToken } from './configs/log-driver-config.token';
-import { LogDriverConfig } from './configs/log-driver.config';
-import { lumberjackLogConfigToken } from './configs/lumberjack-log-config.token';
-import { lumberjackLogOptionsToken } from './configs/lumberjack-log-options.token';
-import { LumberjackLogConfig } from './configs/lumberjack-log.config';
-import { LumberjackLogOptions } from './configs/lumberjack-log.options';
-import { isProductionEnvironmentToken } from './environment/is-production-environment.token';
-import { lumberjackFormat } from './formatting/lumberjack-format';
+import { isProductionEnvironmentToken } from '../environment/is-production-environment.token';
+import { lumberjackFormat } from '../formatting/lumberjack-format';
+
+import { defaultDevelopmentLevels } from './default-development-levels';
+import { defaultProductionLevels } from './default-production-levels';
+import { logDriverConfigToken } from './log-driver-config.token';
+import { LogDriverConfig } from './log-driver.config';
+import { lumberjackLogConfigToken } from './lumberjack-log-config.token';
+import { lumberjackLogOptionsToken } from './lumberjack-log-options.token';
+import { LumberjackLogConfig } from './lumberjack-log.config';
+import { LumberjackLogOptions } from './lumberjack-log.options';
 
 export function logConfigFactory(
   options: LumberjackLogOptions = {},

@@ -19,12 +19,12 @@ import {
 } from '@internal/test-util';
 import { ConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
 
-import { logDriverConfigToken } from '../configs/log-driver-config.token';
-import { LogDriverConfig } from '../configs/log-driver.config';
+import { logDriverConfigToken } from '../configuration/log-driver-config.token';
+import { LogDriverConfig } from '../configuration/log-driver.config';
+import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LogDriver } from '../log-drivers/log-driver';
 import { logDriverToken } from '../log-drivers/log-driver.token';
 import { LumberjackLevel } from '../logs/lumberjack-level';
-import { LumberjackModule } from '../lumberjack.module';
 
 import { LumberjackService } from './lumberjack.service';
 

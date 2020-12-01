@@ -1,4 +1,4 @@
-import { LogDriverConfig } from '../configs/log-driver.config';
+import { LogDriverConfig } from '../configuration/log-driver.config';
 
 export interface LogDriver {
   readonly config: LogDriverConfig;

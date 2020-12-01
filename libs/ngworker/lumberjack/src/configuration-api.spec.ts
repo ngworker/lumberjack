@@ -1,5 +1,7 @@
 import { InjectionToken } from '@angular/core';
 
+import { isClass } from '@internal/test-util';
+
 import {
   LogDriverConfig,
   logDriverConfigToken,
@@ -7,9 +9,10 @@ import {
   lumberjackLogConfigToken,
   LumberjackLogFormatFunction,
   LumberjackLogOptions,
+  LumberjackModule,
 } from './index';
 
-describe('Configs API', () => {
+describe('Configuration API', () => {
   describe('Interfaces', () => {
     it('exposes LogDriverConfig', () => {
       const value: LogDriverConfig | undefined = undefined;
@@ -35,6 +38,12 @@ describe('Configs API', () => {
       const value: LumberjackLogOptions | undefined = undefined;
 
       expect(value).toBeUndefined();
+    });
+  });
+
+  describe('Angular modules', () => {
+    it(`exposes ${LumberjackModule.name}`, () => {
+      expect(isClass(LumberjackModule)).withContext(`${LumberjackModule.name} is not a class`).toBeTrue();
     });
   });
 

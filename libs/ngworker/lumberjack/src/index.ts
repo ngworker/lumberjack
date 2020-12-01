@@ -2,13 +2,14 @@
  * Public API Surface of @ngworker/lumberjack
  */
 
-// Configs
-export { LogDriverConfig } from './lib/configs/log-driver.config';
-export { logDriverConfigToken } from './lib/configs/log-driver-config.token';
-export { LumberjackLogConfig } from './lib/configs/lumberjack-log.config';
-export { lumberjackLogConfigToken } from './lib/configs/lumberjack-log-config.token';
-export { LumberjackLogFormatFunction } from './lib/configs/lumberjack-log-format-function';
-export { LumberjackLogOptions } from './lib/configs/lumberjack-log.options';
+// Configuration
+export { LogDriverConfig } from './lib/configuration/log-driver.config';
+export { logDriverConfigToken } from './lib/configuration/log-driver-config.token';
+export { LumberjackLogConfig } from './lib/configuration/lumberjack-log.config';
+export { lumberjackLogConfigToken } from './lib/configuration/lumberjack-log-config.token';
+export { LumberjackLogFormatFunction } from './lib/configuration/lumberjack-log-format-function';
+export { LumberjackLogOptions } from './lib/configuration/lumberjack-log.options';
+export { LumberjackModule } from './lib/configuration/lumberjack.module';
 
 // Log drivers
 export { LogDriver } from './lib/log-drivers/log-driver';
@@ -22,7 +23,6 @@ export { LumberjackLogLevel } from './lib/logs/lumberjack-log-level';
 
 // Logging
 export { LumberjackLogger } from './lib/logging/lumberjack-logger.service';
-export * from './lib/lumberjack.module';
 export { LumberjackService } from './lib/logging/lumberjack.service';
 
 // Time

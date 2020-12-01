@@ -2,19 +2,20 @@ import { TestBed } from '@angular/core/testing';
 
 import { expectNgModuleToBeGuarded, resolveDependency } from '@internal/test-util';
 
-import { defaultDevelopmentLevels } from './configs/default-development-levels';
-import { defaultProductionLevels } from './configs/default-production-levels';
-import { logDriverConfigToken } from './configs/log-driver-config.token';
-import { LogDriverConfig } from './configs/log-driver.config';
-import { lumberjackLogConfigToken } from './configs/lumberjack-log-config.token';
-import { LumberjackLogConfig } from './configs/lumberjack-log.config';
-import { LumberjackLogOptions } from './configs/lumberjack-log.options';
-import { isProductionEnvironmentToken } from './environment/is-production-environment.token';
-import { utcTimestampFor } from './formatting/utc-timestamp-for';
-import { LumberjackLevel } from './logs/lumberjack-level';
-import { LumberjackLog } from './logs/lumberjack-log';
+import { isProductionEnvironmentToken } from '../environment/is-production-environment.token';
+import { utcTimestampFor } from '../formatting/utc-timestamp-for';
+import { LumberjackLevel } from '../logs/lumberjack-level';
+import { LumberjackLog } from '../logs/lumberjack-log';
+import { LumberjackTimeService } from '../time/lumberjack-time.service';
+
+import { defaultDevelopmentLevels } from './default-development-levels';
+import { defaultProductionLevels } from './default-production-levels';
+import { logDriverConfigToken } from './log-driver-config.token';
+import { LogDriverConfig } from './log-driver.config';
+import { lumberjackLogConfigToken } from './lumberjack-log-config.token';
+import { LumberjackLogConfig } from './lumberjack-log.config';
+import { LumberjackLogOptions } from './lumberjack-log.options';
 import { LumberjackModule } from './lumberjack.module';
-import { LumberjackTimeService } from './time/lumberjack-time.service';
 
 describe(LumberjackModule.name, () => {
   it(`cannot be imported without using the ${LumberjackModule.forRoot.name} method`, () => {

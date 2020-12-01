@@ -9,10 +9,10 @@ import {
   resolveDependency,
 } from '@internal/test-util';
 
-import { LumberjackLogOptions } from '../configs/lumberjack-log.options';
+import { LumberjackLogOptions } from '../configuration/lumberjack-log.options';
+import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLog } from '../logs/lumberjack-log';
-import { LumberjackModule } from '../lumberjack.module';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { LumberjackFormatter } from './lumberjack-formatter.service';
