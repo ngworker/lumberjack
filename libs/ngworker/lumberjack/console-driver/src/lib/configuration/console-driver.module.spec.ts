@@ -10,7 +10,7 @@ import {
   LumberjackModule,
 } from '@ngworker/lumberjack';
 
-import { ConsoleDriver } from '../log-driver/console.driver';
+import { ConsoleDriver } from '../log-drivers/console.driver';
 
 import { ConsoleDriverModule } from './console-driver.module';
 

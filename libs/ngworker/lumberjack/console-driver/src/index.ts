@@ -9,5 +9,5 @@ export { ConsoleDriverModule } from './lib/configuration/console-driver.module';
 export { LumberjackConsole } from './lib/console/lumberjack-console';
 export { lumberjackConsoleToken } from './lib/console/lumberjack-console.token';
 
-// Log driver
-export { ConsoleDriver } from './lib/log-driver/console.driver';
+// Log drivers
+export { ConsoleDriver } from './lib/log-drivers/console.driver';
