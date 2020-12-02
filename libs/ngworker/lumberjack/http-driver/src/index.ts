@@ -10,7 +10,7 @@ export { HttpDriverConfig } from './lib/configuration/http-driver.config';
 export { HttpDriverModule } from './lib/configuration/http-driver.module';
 
 // Log drivers
-export { HttpDriver } from './lib/log-drivers/http.driver';
+export { LumberjackHttpDriver } from './lib/log-drivers/lumberjack-http.driver';
 
 // Logs
 export { HttpLog } from './lib/logs/http.log';

@@ -1,11 +1,11 @@
 import { isClass } from '@internal/test-util';
 
-import { HttpDriver } from './index';
+import { LumberjackHttpDriver } from './index';
 
 describe('Log drivers API', () => {
   describe('Services', () => {
-    it(`exposes ${HttpDriver.name}`, () => {
-      const sut = HttpDriver;
+    it(`exposes ${LumberjackHttpDriver.name}`, () => {
+      const sut = LumberjackHttpDriver;
 
       expect(isClass(sut)).withContext(`${sut.name} is not a class`).toBeTrue();
     });

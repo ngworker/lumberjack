@@ -12,7 +12,7 @@ import {
   LumberjackModule,
 } from '@ngworker/lumberjack';
 
-import { HttpDriver } from '../log-drivers/http.driver';
+import { LumberjackHttpDriver } from '../log-drivers/lumberjack-http.driver';
 
 import { HttpDriverConfig } from './http-driver.config';
 import { HttpDriverModule } from './http-driver.module';
@@ -91,7 +91,7 @@ describe(HttpDriverModule.name, () => {
     it('provides the HTTP driver', () => {
       const httpDriver = createHttpDriver();
 
-      expect(httpDriver).toBeInstanceOf(HttpDriver);
+      expect(httpDriver).toBeInstanceOf(LumberjackHttpDriver);
     });
 
     it('registers the specified log driver configuration', () => {
@@ -134,7 +134,7 @@ describe(HttpDriverModule.name, () => {
     it('provides the HTTP driver', () => {
       const httpDriver = createHttpDriverWithOptions();
 
-      expect(httpDriver).toBeInstanceOf(HttpDriver);
+      expect(httpDriver).toBeInstanceOf(LumberjackHttpDriver);
     });
 
     it('registers the specified options', () => {

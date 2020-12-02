@@ -9,7 +9,7 @@ import { HttpLog } from '../logs/http.log';
 import { retryWithDelay } from '../operators/retry-with-delay.operator';
 
 @Injectable()
-export class HttpDriver implements LumberjackLogDriver {
+export class LumberjackHttpDriver implements LumberjackLogDriver {
   constructor(
     private http: HttpClient,
     @Inject(httpDriverConfigToken) public config: HttpDriverConfig,

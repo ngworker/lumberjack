@@ -8,7 +8,7 @@ import { HttpDriverModule } from '../configuration/http-driver.module';
 import { HttpDriverOptions } from '../configuration/http-driver.options';
 import { HttpLog } from '../logs/http.log';
 
-import { HttpDriver } from './http.driver';
+import { LumberjackHttpDriver } from './lumberjack-http.driver';
 
 function expectRequest(
   httpTestingController: HttpTestingController,
@@ -52,7 +52,7 @@ function respondWith503ServiceUnavailable(request: TestRequest) {
   request.flush('Service Unavailable', { status: 503, statusText: 'Service Unavailable' });
 }
 
-describe(HttpDriver.name, () => {
+describe(LumberjackHttpDriver.name, () => {
   let httpDriver: LumberjackLogDriver;
   let httpTestingController: HttpTestingController;
   const options: HttpDriverOptions = {
