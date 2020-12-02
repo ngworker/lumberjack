@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 
 import { lumberjackLogConfigToken } from '../configuration/lumberjack-log-config.token';
 import { LumberjackLogConfig } from '../configuration/lumberjack-log.config';
-import { DriverError } from '../log-drivers/driver-error';
+import { LumberjackLogDriverError } from '../log-drivers/lumberjack-log-driver-error';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
@@ -19,7 +19,7 @@ export class LumberjackFormatter {
     private time: LumberjackTimeService
   ) {}
 
-  formatDriverError({ driver, formattedMessage, error }: DriverError): string {
+  formatDriverError({ driver, formattedMessage, error }: LumberjackLogDriverError): string {
     const thrownErrorMessage = (error as Error).message || String(error);
 
     return `Could not log message "${formattedMessage}" to ${driver.constructor.name}.\n Error: "${thrownErrorMessage}"`;

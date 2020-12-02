@@ -2,8 +2,8 @@ import { Inject, Injectable, Optional } from '@angular/core';
 
 import { LumberjackRootModule } from '../configuration/lumberjack-root.module';
 import { LumberjackFormatter } from '../formatting/lumberjack-formatter.service';
-import { DriverError } from '../log-drivers/driver-error';
 import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
+import { LumberjackLogDriverError } from '../log-drivers/lumberjack-log-driver-error';
 import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
@@ -43,7 +43,7 @@ export class LumberjackService {
     logEntry: LumberjackLog,
     message: string,
     drivers: LumberjackLogDriver[],
-    errors: DriverError[] = [],
+    errors: LumberjackLogDriverError[] = [],
     errorIndex = -1
   ): void {
     const greenDrivers: LumberjackLogDriver[] = [];
@@ -98,7 +98,7 @@ export class LumberjackService {
     }
   }
 
-  private removeHandledError(errorIndex: number, errors: DriverError[]) {
+  private removeHandledError(errorIndex: number, errors: LumberjackLogDriverError[]) {
     if (errorIndex > -1) {
       errors.splice(errorIndex, 1);
       errorIndex = -1;
@@ -106,7 +106,7 @@ export class LumberjackService {
     return errorIndex;
   }
 
-  private processErrors(greenDrivers: LumberjackLogDriver[], errors: DriverError[]) {
+  private processErrors(greenDrivers: LumberjackLogDriver[], errors: LumberjackLogDriverError[]) {
     if (greenDrivers.length === 0) {
       this.outputUnhandledDriverErrors(errors);
     } else {
@@ -114,7 +114,7 @@ export class LumberjackService {
     }
   }
 
-  private logDriverErrorsToGreenDrivers(errors: DriverError[], greenDrivers: LumberjackLogDriver[]) {
+  private logDriverErrorsToGreenDrivers(errors: LumberjackLogDriverError[], greenDrivers: LumberjackLogDriver[]) {
     errors.forEach((error, index) => {
       const logEntry: LumberjackLog = this.createDriverErrorEntry(error);
 
@@ -122,11 +122,11 @@ export class LumberjackService {
     });
   }
 
-  private outputUnhandledDriverErrors(errors: DriverError[]) {
+  private outputUnhandledDriverErrors(errors: LumberjackLogDriverError[]) {
     errors.forEach((error) => this.logDriverError(error));
   }
 
-  private createDriverErrorEntry(error: DriverError): LumberjackLog {
+  private createDriverErrorEntry(error: LumberjackLogDriverError): LumberjackLog {
     return {
       context: 'LumberjackDriverError',
       createdAt: this.time.getUnixEpochTicks(),
@@ -135,7 +135,7 @@ export class LumberjackService {
     };
   }
 
-  private logDriverError(driverError: DriverError): void {
+  private logDriverError(driverError: LumberjackLogDriverError): void {
     const errorMessage = this.formatter.formatDriverError(driverError);
     console.error(errorMessage);
   }
