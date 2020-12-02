@@ -5,9 +5,9 @@ import { isClass } from '@internal/test-util';
 import {
   HttpDriverConfig,
   httpDriverConfigToken,
-  HttpDriverModule,
   HttpDriverOptions,
   HttpDriverRetryOptions,
+  LumberjackHttpDriverModule,
 } from './index';
 
 describe('Configuration API', () => {
@@ -42,8 +42,8 @@ describe('Configuration API', () => {
   });
 
   describe('Angular modules', () => {
-    it(`exposes ${HttpDriverModule.name}`, () => {
-      const sut = HttpDriverModule;
+    it(`exposes ${LumberjackHttpDriverModule.name}`, () => {
+      const sut = LumberjackHttpDriverModule;
 
       expect(isClass(sut)).withContext(`${sut.name} is not a class`).toBeTrue();
     });

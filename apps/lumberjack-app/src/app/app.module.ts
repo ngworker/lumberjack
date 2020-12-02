@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { LumberjackLevel, LumberjackModule } from '@ngworker/lumberjack';
 import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
-import { HttpDriverModule } from '@ngworker/lumberjack/http-driver';
+import { LumberjackHttpDriverModule } from '@ngworker/lumberjack/http-driver';
 
 import { AppComponent } from './app.component';
 
@@ -15,7 +15,7 @@ import { AppComponent } from './app.component';
     HttpClientModule,
     LumberjackModule.forRoot(),
     LumberjackConsoleDriverModule.forRoot(),
-    HttpDriverModule.forRoot({
+    LumberjackHttpDriverModule.forRoot({
       levels: [LumberjackLevel.Error],
       origin: 'ForestApp',
       storeUrl: '/api/logs',

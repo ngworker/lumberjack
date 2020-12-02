@@ -2,10 +2,16 @@ import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@an
 import { TestBed } from '@angular/core/testing';
 
 import { repeatSideEffect, resolveDependency } from '@internal/test-util';
-import { LumberjackLevel, LumberjackLogDriver, lumberjackLogDriverToken, LumberjackModule } from '@ngworker/lumberjack';
+import {
+  LumberjackLevel,
+  LumberjackLogDriver,
+  lumberjackLogDriverToken,
+  LumberjackLogLevel,
+  LumberjackModule,
+} from '@ngworker/lumberjack';
 
-import { HttpDriverModule } from '../configuration/http-driver.module';
 import { HttpDriverOptions } from '../configuration/http-driver.options';
+import { LumberjackHttpDriverModule } from '../configuration/lumberjack-http-driver.module';
 import { LumberjackHttpLog } from '../logs/lumberjack-http.log';
 
 import { LumberjackHttpDriver } from './lumberjack-http.driver';
@@ -13,7 +19,7 @@ import { LumberjackHttpDriver } from './lumberjack-http.driver';
 function expectRequest(
   httpTestingController: HttpTestingController,
   { origin, storeUrl }: HttpDriverOptions,
-  level: LumberjackLevel = LumberjackLevel.Critical
+  level: LumberjackLogLevel = LumberjackLevel.Critical
 ) {
   const expectedBody: LumberjackHttpLog = { formattedLog: level, level, origin };
 
@@ -63,7 +69,7 @@ describe(LumberjackHttpDriver.name, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, LumberjackModule.forRoot(), HttpDriverModule.withOptions(options)],
+      imports: [HttpClientTestingModule, LumberjackModule.forRoot(), LumberjackHttpDriverModule.withOptions(options)],
     });
 
     [httpDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
@@ -75,20 +81,22 @@ describe(LumberjackHttpDriver.name, () => {
   });
 
   describe('logs to a web API using the right log level', () => {
-    [
-      { level: LumberjackLevel.Critical, logMethod: (driver: LumberjackLogDriver) => driver.logCritical },
-      { level: LumberjackLevel.Debug, logMethod: (driver: LumberjackLogDriver) => driver.logDebug },
-      { level: LumberjackLevel.Error, logMethod: (driver: LumberjackLogDriver) => driver.logError },
-      { level: LumberjackLevel.Info, logMethod: (driver: LumberjackLogDriver) => driver.logInfo },
-      { level: LumberjackLevel.Trace, logMethod: (driver: LumberjackLogDriver) => driver.logTrace },
-      { level: LumberjackLevel.Warning, logMethod: (driver: LumberjackLogDriver) => driver.logWarning },
-    ].forEach(({ level, logMethod }) => {
-      it(`sends a ${level} level log to the configured URL`, () => {
-        logMethod(httpDriver).call(httpDriver, level);
+    ([
+      [LumberjackLevel.Critical, (driver: LumberjackLogDriver) => driver.logCritical],
+      [LumberjackLevel.Debug, (driver: LumberjackLogDriver) => driver.logDebug],
+      [LumberjackLevel.Error, (driver: LumberjackLogDriver) => driver.logError],
+      [LumberjackLevel.Info, (driver: LumberjackLogDriver) => driver.logInfo],
+      [LumberjackLevel.Trace, (driver: LumberjackLogDriver) => driver.logTrace],
+      [LumberjackLevel.Warning, (driver: LumberjackLogDriver) => driver.logWarning],
+    ] as ReadonlyArray<[LumberjackLogLevel, (driver: LumberjackLogDriver) => (formattedLog: string) => void]>).forEach(
+      ([logLevel, logMethod]) => {
+        it(`sends a ${logLevel} level log to the configured URL`, () => {
+          logMethod(httpDriver).call(httpDriver, logLevel);
 
-        expectRequest(httpTestingController, options, level);
-      });
-    });
+          expectRequest(httpTestingController, options, logLevel);
+        });
+      }
+    );
   });
 
   it('retries after two failures and then succeeds', () => {

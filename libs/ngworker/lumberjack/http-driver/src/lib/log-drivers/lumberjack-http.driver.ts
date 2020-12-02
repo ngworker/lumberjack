@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, NgZone } from '@angular/core';
 
-import { LumberjackLevel, LumberjackLogDriver } from '@ngworker/lumberjack';
+import { LumberjackLevel, LumberjackLogDriver, LumberjackLogLevel } from '@ngworker/lumberjack';
 
 import { httpDriverConfigToken } from '../configuration/http-driver-config.token';
 import { HttpDriverConfig } from '../configuration/http-driver.config';
@@ -40,9 +40,9 @@ export class LumberjackHttpDriver implements LumberjackLogDriver {
     this.sendLog(formattedLog, LumberjackLevel.Warning);
   }
 
-  private sendLog(formattedLog: string, level: LumberjackLevel): void {
+  private sendLog(formattedLog: string, logLevel: LumberjackLogLevel): void {
     const { origin, storeUrl, retryOptions } = this.config;
-    const httpLog: LumberjackHttpLog = { formattedLog, origin, level };
+    const httpLog: LumberjackHttpLog = { formattedLog, origin, level: logLevel };
 
     this.ngZone.runOutsideAngular(() => {
       this.http

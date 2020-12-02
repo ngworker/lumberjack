@@ -87,8 +87,8 @@ You must also import log driver modules for the log drivers that you want to ena
 @NgModule({
   imports: [
     LumberjackModule.forRoot(),
-    ConsoleDriverModule.forRoot(),
-    HttpDriverModule.withOptions({
+    LumberjackConsoleDriverModule.forRoot(),
+    LumberjackHttpDriverModule.withOptions({
       origin: 'ForestApp',
       storeUrl: '/api/logs',
       retryOptions: { maxRetries: 5, delayMs: 250 },
@@ -204,18 +204,18 @@ For example, we could use the default logging levels for the console driver, but
 
 ```ts
 import { NgModule } from '@angular/core';
-import { LumberjackLogLevel, LumberjackModule } from '@ngworker/lumberjack';
-import { ConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
-import { HttpDriverModule } from '@ngworker/lumberjack/http-driver';
+import { LumberjackLevel, LumberjackModule } from '@ngworker/lumberjack';
+import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
+import { LumberjackHttpDriverModule } from '@ngworker/lumberjack/http-driver';
 
 @NgModule({
   imports: [
     LumberjackModule.forRoot({
-      levels: [LumberjackLogLevel.Verbose],
+      levels: [LumberjackLevel.Verbose],
     }),
-    ConsoleDriverModule.forRoot(),
-    HttpDriverModule.forRoot({
-      levels: [LumberjackLogLevel.Critical, LumberjackLogLevel.Error],
+    LumberjackConsoleDriverModule.forRoot(),
+    LumberjackHttpDriverModule.forRoot({
+      levels: [LumberjackLevel.Critical, LumberjackLevel.Error],
       origin: 'ForestApp',
       storeUrl: '/api/logs',
       retryOptions: { maxRetries: 5, delayMs: 250 },

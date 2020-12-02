@@ -6,7 +6,7 @@ import { HttpDriverConfig } from './http-driver.config';
 import { HttpDriverOptions } from './http-driver.options';
 
 @NgModule()
-export class HttpDriverModule {
+export class LumberjackHttpDriverModule {
   /**
    * Pass a full HTTP driver configuration.
    */
@@ -39,6 +39,6 @@ export class HttpDriverModule {
   }
 
   constructor() {
-    throw new Error('Do not import HttpDriverModule directly. Use HttpDriverModule.forRoot.');
+    throw new Error('Do not import LumberjackHttpDriverModule directly. Use LumberjackHttpDriverModule.forRoot.');
   }
 }

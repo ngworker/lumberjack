@@ -110,11 +110,11 @@ The `HttpDriverModule` is very similar to the `ConsoleDriverModule`, however now
 
 ```typescript
 @NgModule()
-export class HttpDriverModule {
+export class LumberjackHttpDriverModule {
   /**
    * Pass a full HTTP driver configuration.
    */
-  static forRoot(config: HttpDriverConfig): ModuleWithProviders<HttpDriverRootModule> {
+  static forRoot(config: LumberjackHttpDriverConfig): ModuleWithProviders<HttpDriverRootModule> {
     return {
       ngModule: HttpDriverRootModule,
       providers: [
@@ -143,7 +143,7 @@ export class HttpDriverModule {
   }
 
   constructor() {
-    throw new Error('Do not import HttpDriverModule directly. Use HttpDriverModule.forRoot.');
+    throw new Error('Do not import LumberjackHttpDriverModule directly. Use LumberjackHttpDriverModule.forRoot.');
   }
 }
 ```
@@ -207,9 +207,9 @@ The usage is also very similar.
   imports: [
     ...,
     LumberjackModule.forRoot(),
-    ConsoleDriverModule.forRoot(),
-    HttpDriverModule.forRoot({
-      levels: [LumberjackLogLevel.Error],
+    LumberjackConsoleDriverModule.forRoot(),
+    LumberjackHttpDriverModule.forRoot({
+      levels: [LumberjackLevel.Error],
       origin: 'ForestApp',
       storeUrl: '/api/logs',
       retryOptions: { maxRetries: 5, delayMs: 250 },

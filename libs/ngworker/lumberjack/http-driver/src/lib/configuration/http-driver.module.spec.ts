@@ -15,8 +15,8 @@ import {
 import { LumberjackHttpDriver } from '../log-drivers/lumberjack-http.driver';
 
 import { HttpDriverConfig } from './http-driver.config';
-import { HttpDriverModule } from './http-driver.module';
 import { HttpDriverOptions } from './http-driver.options';
+import { LumberjackHttpDriverModule } from './lumberjack-http-driver.module';
 
 function createHttpOptions(): HttpDriverOptions {
   return {
@@ -50,7 +50,7 @@ const createHttpDriver = (
     imports: [
       HttpClientTestingModule,
       isLumberjackModuleImportedFirst ? LumberjackModule.forRoot() : [],
-      HttpDriverModule.forRoot(config),
+      LumberjackHttpDriverModule.forRoot(config),
       isLumberjackModuleImportedFirst ? [] : LumberjackModule.forRoot(),
     ],
   });
@@ -72,7 +72,7 @@ const createHttpDriverWithOptions = (
     imports: [
       HttpClientTestingModule,
       isLumberjackModuleImportedFirst ? LumberjackModule.forRoot() : [],
-      HttpDriverModule.withOptions(options),
+      LumberjackHttpDriverModule.withOptions(options),
       isLumberjackModuleImportedFirst ? [] : LumberjackModule.forRoot(),
     ],
   });
@@ -82,12 +82,12 @@ const createHttpDriverWithOptions = (
   return httpDriver;
 };
 
-describe(HttpDriverModule.name, () => {
-  it(`cannot be imported without using the ${HttpDriverModule.forRoot.name} method`, () => {
-    expectNgModuleToBeGuarded(HttpDriverModule);
+describe(LumberjackHttpDriverModule.name, () => {
+  it(`cannot be imported without using the ${LumberjackHttpDriverModule.forRoot.name} method`, () => {
+    expectNgModuleToBeGuarded(LumberjackHttpDriverModule);
   });
 
-  describe(HttpDriverModule.forRoot.name, () => {
+  describe(LumberjackHttpDriverModule.forRoot.name, () => {
     it('provides the HTTP driver', () => {
       const httpDriver = createHttpDriver();
 
@@ -130,7 +130,7 @@ describe(HttpDriverModule.name, () => {
     });
   });
 
-  describe(HttpDriverModule.withOptions.name, () => {
+  describe(LumberjackHttpDriverModule.withOptions.name, () => {
     it('provides the HTTP driver', () => {
       const httpDriver = createHttpDriverWithOptions();
 
