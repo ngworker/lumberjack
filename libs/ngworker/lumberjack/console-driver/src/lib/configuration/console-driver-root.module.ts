@@ -2,13 +2,13 @@ import { Inject, NgModule, Optional, SkipSelf } from '@angular/core';
 
 import { lumberjackLogDriverToken } from '@ngworker/lumberjack';
 
-import { ConsoleDriver } from '../log-drivers/console.driver';
+import { LumberjackConsoleDriver } from '../log-drivers/lumberjack-console.driver';
 
 @NgModule({
   providers: [
     {
       provide: lumberjackLogDriverToken,
-      useClass: ConsoleDriver,
+      useClass: LumberjackConsoleDriver,
       multi: true,
     },
   ],

@@ -7,20 +7,20 @@ import { LumberjackLevel, LumberjackLogDriver, lumberjackLogDriverToken } from '
 import { ConsoleDriverModule } from '../configuration/console-driver.module';
 import { lumberjackConsoleToken } from '../console/lumberjack-console.token';
 
-import { ConsoleDriver } from './console.driver';
+import { LumberjackConsoleDriver } from './lumberjack-console.driver';
 
-describe(ConsoleDriver.name, () => {
+describe(LumberjackConsoleDriver.name, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [ConsoleDriverModule.forRoot({ levels: [LumberjackLevel.Verbose] }), SpyConsoleModule],
     });
 
     const [_driver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
-    driver = _driver as ConsoleDriver;
+    driver = _driver as LumberjackConsoleDriver;
     spyLogger = resolveDependency(lumberjackConsoleToken) as SpyConsole;
   });
 
-  let driver: ConsoleDriver;
+  let driver: LumberjackConsoleDriver;
   let spyLogger: SpyConsole;
 
   it("logs the critical level to the console's error channel", () => {

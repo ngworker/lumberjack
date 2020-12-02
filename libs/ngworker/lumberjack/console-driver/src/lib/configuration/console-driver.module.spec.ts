@@ -10,7 +10,7 @@ import {
   LumberjackModule,
 } from '@ngworker/lumberjack';
 
-import { ConsoleDriver } from '../log-drivers/console.driver';
+import { LumberjackConsoleDriver } from '../log-drivers/lumberjack-console.driver';
 
 import { ConsoleDriverModule } from './console-driver.module';
 
@@ -43,7 +43,7 @@ describe(ConsoleDriverModule.name, () => {
     it('provides the console driver', () => {
       const consoleDriver = createConsoleDriver();
 
-      expect(consoleDriver).toBeInstanceOf(ConsoleDriver);
+      expect(consoleDriver).toBeInstanceOf(LumberjackConsoleDriver);
     });
 
     it('registers the specified log driver configuration', () => {
