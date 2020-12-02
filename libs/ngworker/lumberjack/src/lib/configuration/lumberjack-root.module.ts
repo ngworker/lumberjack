@@ -1,7 +1,7 @@
 import { Inject, NgModule, Optional, SkipSelf } from '@angular/core';
 
 import { isProductionEnvironmentToken } from '../environment/is-production-environment.token';
-import { lumberjackFormat } from '../formatting/lumberjack-format';
+import { lumberjackFormatLog } from '../formatting/lumberjack-format-log';
 
 import { defaultDevelopmentLevels } from './default-development-levels';
 import { defaultProductionLevels } from './default-production-levels';
@@ -14,7 +14,7 @@ import { LumberjackOptions } from './lumberjack.options';
 
 export function configFactory(options: LumberjackOptions = {}, isProductionEnvironment: boolean): LumberjackConfig {
   return {
-    format: lumberjackFormat,
+    format: lumberjackFormatLog,
     levels: isProductionEnvironment ? defaultProductionLevels : defaultDevelopmentLevels,
     ...options,
   };

@@ -15,7 +15,7 @@ import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
-import { LumberjackFormatter } from './lumberjack-formatter.service';
+import { LumberjackLogFormatter } from './lumberjack-log-formatter.service';
 
 function createFormatErrorLog(formatterErrorMessage: string, logEntry: LumberjackLog): LumberjackLog {
   return createErrorLog(
@@ -36,14 +36,14 @@ class FakeTimeService extends LumberjackTimeService {
   }
 }
 
-describe(LumberjackFormatter.name, () => {
+describe(LumberjackLogFormatter.name, () => {
   function setup(options?: LumberjackOptions) {
     TestBed.configureTestingModule({
       imports: [LumberjackModule.forRoot(options)],
       providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
     });
 
-    const service = resolveDependency(LumberjackFormatter);
+    const service = resolveDependency(LumberjackLogFormatter);
     const fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
 
     return {
@@ -52,12 +52,12 @@ describe(LumberjackFormatter.name, () => {
     };
   }
 
-  describe('Log entry', () => {
-    it('returns the same log entry when formatting succeeds', () => {
+  describe('Log', () => {
+    it('returns the same log when formatting succeeds', () => {
       const { service } = setup();
       const expectedLog = createErrorLog();
 
-      const { logEntry: actualLog } = service.formatLogEntry(expectedLog);
+      const { log: actualLog } = service.formatLog(expectedLog);
 
       expect(actualLog).toBe(expectedLog);
     });
@@ -72,7 +72,7 @@ describe(LumberjackFormatter.name, () => {
       const debugLog = createDebugLog('Test debug message');
       const expectedLog = createFormatErrorLog(formatterErrorMessage, debugLog);
 
-      const { logEntry: actualLog } = service.formatLogEntry(debugLog);
+      const { log: actualLog } = service.formatLog(debugLog);
 
       expect(actualLog).toEqual(expectedLog);
     });
@@ -85,7 +85,7 @@ describe(LumberjackFormatter.name, () => {
       });
       const warning = createWarningLog();
 
-      const { message: actualMessage } = service.formatLogEntry(warning);
+      const { formattedLog: actualMessage } = service.formatLog(warning);
 
       expect(actualMessage).toBe(LumberjackLevel.Warning);
     });
@@ -102,7 +102,7 @@ describe(LumberjackFormatter.name, () => {
       const criticalLog = createCriticalLog('Critical test');
       const formatErrorLog = createFormatErrorLog(formatterErrorMessage, criticalLog);
 
-      const { message: actualMessage } = service.formatLogEntry(criticalLog);
+      const { formattedLog: actualMessage } = service.formatLog(criticalLog);
 
       expect(actualMessage).toBe(
         `${formatErrorLog.level} ${nowTimestamp} [LumberjackFormatError] ${formatErrorLog.message}`
