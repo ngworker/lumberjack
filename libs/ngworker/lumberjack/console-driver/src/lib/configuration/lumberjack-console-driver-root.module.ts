@@ -13,13 +13,13 @@ import { LumberjackConsoleDriver } from '../log-drivers/lumberjack-console.drive
     },
   ],
 })
-export class ConsoleDriverRootModule {
+export class LumberjackConsoleDriverRootModule {
   constructor(
     // tslint:disable: no-any no-null-keyword
     @Optional()
     @SkipSelf()
-    @Inject(ConsoleDriverRootModule)
-    maybeNgModuleFromParentInjector: ConsoleDriverRootModule = null as any
+    @Inject(LumberjackConsoleDriverRootModule)
+    maybeNgModuleFromParentInjector: LumberjackConsoleDriverRootModule = null as any
     // tslint:enable: no-any no-null-keyword
   ) {
     if (maybeNgModuleFromParentInjector) {

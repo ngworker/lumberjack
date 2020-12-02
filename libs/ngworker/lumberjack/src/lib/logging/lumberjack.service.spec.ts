@@ -17,7 +17,7 @@ import {
   SpyDriver,
   SpyDriverModule,
 } from '@internal/test-util';
-import { ConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
+import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
 
 import { lumberjackLogDriverConfigToken } from '../configuration/lumberjack-log-driver-config.token';
 import { LumberjackLogDriverConfig } from '../configuration/lumberjack-log-driver.config';
@@ -82,7 +82,7 @@ describe(LumberjackService.name, () => {
         imports: [
           LumberjackModule.forRoot(),
           NoopDriverModule.forRoot(),
-          ConsoleDriverModule.forRoot(),
+          LumberjackConsoleDriverModule.forRoot(),
           NoopConsoleModule,
         ],
       });

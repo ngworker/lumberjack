@@ -12,7 +12,7 @@ import {
 
 import { LumberjackConsoleDriver } from '../log-drivers/lumberjack-console.driver';
 
-import { ConsoleDriverModule } from './console-driver.module';
+import { LumberjackConsoleDriverModule } from './lumberjack-console-driver.module';
 
 const createConsoleDriver = ({
   config,
@@ -24,7 +24,7 @@ const createConsoleDriver = ({
   TestBed.configureTestingModule({
     imports: [
       isLumberjackModuleImportedFirst ? LumberjackModule.forRoot() : [],
-      ConsoleDriverModule.forRoot(config),
+      LumberjackConsoleDriverModule.forRoot(config),
       isLumberjackModuleImportedFirst ? [] : LumberjackModule.forRoot(),
     ],
   });
@@ -34,12 +34,12 @@ const createConsoleDriver = ({
   return consoleDriver;
 };
 
-describe(ConsoleDriverModule.name, () => {
-  it(`cannot be imported without using the ${ConsoleDriverModule.forRoot.name} method`, () => {
-    expectNgModuleToBeGuarded(ConsoleDriverModule);
+describe(LumberjackConsoleDriverModule.name, () => {
+  it(`cannot be imported without using the ${LumberjackConsoleDriverModule.forRoot.name} method`, () => {
+    expectNgModuleToBeGuarded(LumberjackConsoleDriverModule);
   });
 
-  describe(ConsoleDriverModule.forRoot.name, () => {
+  describe(LumberjackConsoleDriverModule.forRoot.name, () => {
     it('provides the console driver', () => {
       const consoleDriver = createConsoleDriver();
 
