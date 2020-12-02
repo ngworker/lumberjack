@@ -2,7 +2,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { LumberjackLogDriverConfig } from '@ngworker/lumberjack';
 
-import { consoleDriverConfigToken } from './console-driver-config.token';
+import { lumberjackConsoleDriverConfigToken } from './lumberjack-console-driver-config.token';
 import { LumberjackConsoleDriverRootModule } from './lumberjack-console-driver-root.module';
 
 @NgModule()
@@ -10,7 +10,7 @@ export class LumberjackConsoleDriverModule {
   static forRoot(config?: LumberjackLogDriverConfig): ModuleWithProviders<LumberjackConsoleDriverRootModule> {
     return {
       ngModule: LumberjackConsoleDriverRootModule,
-      providers: (config && [{ provide: consoleDriverConfigToken, useValue: config }]) || [],
+      providers: (config && [{ provide: lumberjackConsoleDriverConfigToken, useValue: config }]) || [],
     };
   }
 
