@@ -60,7 +60,6 @@ const createHttpDriver = (
 
   return httpDriver;
 };
-
 const createHttpDriverWithOptions = (
   {
     isLumberjackModuleImportedFirst = true,
