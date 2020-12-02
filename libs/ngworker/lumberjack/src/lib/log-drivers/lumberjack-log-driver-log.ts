@@ -1,6 +1,6 @@
 import { LumberjackLog } from './../lumberjack-log';
 
-export interface LumberjackLogDriverLog<T extends LumberjackLog = LumberjackLog> {
-  formattedLog: string;
-  log: T;
+export interface LumberjackLogDriverLog<TLog extends LumberjackLog = LumberjackLog> {
+  readonly formattedLog: string;
+  readonly log: TLog;
 }

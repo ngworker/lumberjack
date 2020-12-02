@@ -7,12 +7,12 @@ import { LumberjackLogDriverLog } from './lumberjack-log-driver-log';
 
 export const logDriverToken: InjectionToken<LogDriver> = new InjectionToken('__LUMBERJACK_LOG_DRIVER_TOKEN__');
 
-export interface LogDriver<T extends LumberjackLog = LumberjackLog> {
+export interface LogDriver<TLog extends LumberjackLog = LumberjackLog> {
   readonly config: LogDriverConfig;
-  logCritical(logEntry: LumberjackLogDriverLog<T>): void;
-  logDebug(logEntry: LumberjackLogDriverLog<T>): void;
-  logError(logEntry: LumberjackLogDriverLog<T>): void;
-  logInfo(logEntry: LumberjackLogDriverLog<T>): void;
-  logTrace(logEntry: LumberjackLogDriverLog<T>): void;
-  logWarning(logEntry: LumberjackLogDriverLog<T>): void;
+  logCritical(logEntry: LumberjackLogDriverLog<TLog>): void;
+  logDebug(logEntry: LumberjackLogDriverLog<TLog>): void;
+  logError(logEntry: LumberjackLogDriverLog<TLog>): void;
+  logInfo(logEntry: LumberjackLogDriverLog<TLog>): void;
+  logTrace(logEntry: LumberjackLogDriverLog<TLog>): void;
+  logWarning(logEntry: LumberjackLogDriverLog<TLog>): void;
 }
