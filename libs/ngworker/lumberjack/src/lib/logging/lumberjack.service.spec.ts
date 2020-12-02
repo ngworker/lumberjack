@@ -219,7 +219,7 @@ describe(LumberjackService.name, () => {
         expect(consoleErrorSpy).not.toHaveBeenCalled();
       });
 
-      it('outputs an error mentioning the log entry and driver name recursively', () => {
+      it('outputs an error mentioning the log and log driver name recursively', () => {
         TestBed.configureTestingModule({
           imports: [
             LumberjackModule.forRoot(),
@@ -423,7 +423,7 @@ describe(LumberjackService.name, () => {
     let spyDriver: SpyDriver;
 
     describe('when a log driver is registered', () => {
-      it('debug entries are logged', () => {
+      it('debug logs are logged', () => {
         lumberjack.log(createDebugLog());
 
         expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);

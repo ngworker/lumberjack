@@ -21,30 +21,28 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
  */
 @Injectable({ providedIn: LumberjackRootModule })
 export class LumberjackService {
-  private logDrivers: LumberjackLogDriver[];
+  private drivers: LumberjackLogDriver[];
 
   constructor(
-    // Each driver must be provided with multi. That way we can capture every provided driver
-    // and use it to log to its output.
-    @Optional() @Inject(lumberjackLogDriverToken) logDrivers: LumberjackLogDriver[],
+    @Optional() @Inject(lumberjackLogDriverToken) drivers: LumberjackLogDriver[],
     private logFormatter: LumberjackLogFormatter,
     private time: LumberjackTimeService
   ) {
-    logDrivers = logDrivers || [];
-    this.logDrivers = Array.isArray(logDrivers) ? logDrivers : [logDrivers];
+    drivers = drivers || [];
+    this.drivers = Array.isArray(drivers) ? drivers : [drivers];
   }
 
-  log(logEntryParameter: LumberjackLog): void {
-    const { log: logEntry, formattedLog: message } = this.logFormatter.formatLog(logEntryParameter);
+  log(logParameter: LumberjackLog): void {
+    const { log, formattedLog } = this.logFormatter.formatLog(logParameter);
 
-    this.logWithHandleErrors(logEntry, message, this.logDrivers);
+    this.logWithHandleErrors(log, formattedLog, this.drivers);
   }
 
-  private canDriveLog(driver: LumberjackLogDriver, level: LumberjackLogLevel): boolean {
+  private canDriveLog(driver: LumberjackLogDriver, logLevel: LumberjackLogLevel): boolean {
     return (
       driver.config.levels === undefined ||
       (driver.config.levels.length === 1 && driver.config.levels[0] === LumberjackLevel.Verbose) ||
-      (driver.config.levels as LumberjackLogLevel[]).includes(level)
+      (driver.config.levels as LumberjackLogLevel[]).includes(logLevel)
     );
   }
 
@@ -63,30 +61,30 @@ export class LumberjackService {
     console.error(errorMessage);
   }
 
-  private logToTheRightLevel(driver: LumberjackLogDriver, level: LumberjackLogLevel, formattedMessage: string): void {
-    switch (level) {
-      case LumberjackLevel.Info:
-        driver.logInfo(formattedMessage);
-
-        break;
-      case LumberjackLevel.Error:
-        driver.logError(formattedMessage);
-
-        break;
-      case LumberjackLevel.Warning:
-        driver.logWarning(formattedMessage);
+  private driveLog(driver: LumberjackLogDriver, logLevel: LumberjackLogLevel, formattedLog: string): void {
+    switch (logLevel) {
+      case LumberjackLevel.Critical:
+        driver.logCritical(formattedLog);
 
         break;
       case LumberjackLevel.Debug:
-        driver.logDebug(formattedMessage);
+        driver.logDebug(formattedLog);
 
         break;
-      case LumberjackLevel.Critical:
-        driver.logCritical(formattedMessage);
+      case LumberjackLevel.Error:
+        driver.logError(formattedLog);
+
+        break;
+      case LumberjackLevel.Info:
+        driver.logInfo(formattedLog);
 
         break;
       case LumberjackLevel.Trace:
-        driver.logTrace(formattedMessage);
+        driver.logTrace(formattedLog);
+
+        break;
+      case LumberjackLevel.Warning:
+        driver.logWarning(formattedLog);
 
         break;
     }
@@ -94,27 +92,30 @@ export class LumberjackService {
 
   private logWithHandleErrors(
     log: LumberjackLog,
-    message: string,
+    formattedLog: string,
     drivers: LumberjackLogDriver[],
-    errors: LumberjackLogDriverError[] = [],
+    driverErors: LumberjackLogDriverError[] = [],
     errorIndex = -1
   ): void {
-    const greenDrivers: LumberjackLogDriver[] = [];
+    const stableDrivers: LumberjackLogDriver[] = [];
     drivers.forEach((driver) => {
       if (this.canDriveLog(driver, log.level)) {
         try {
-          this.logToTheRightLevel(driver, log.level, message);
-          greenDrivers.push(driver);
-          errorIndex = this.removeHandledError(errorIndex, errors);
+          this.driveLog(driver, log.level, formattedLog);
+          stableDrivers.push(driver);
+          errorIndex = this.removeHandledError(errorIndex, driverErors);
         } catch (error) {
-          errors = [...errors, { error, logDriver: driver, formattedLog: message }];
+          driverErors = [...driverErors, { error, logDriver: driver, formattedLog }];
         }
       }
     });
-    this.processErrors(greenDrivers, errors);
+    this.processErrors(stableDrivers, driverErors);
   }
 
-  private logDriverErrorsToGreenDrivers(driverErrors: LumberjackLogDriverError[], greenDrivers: LumberjackLogDriver[]) {
+  private logDriverErrorsToStableDrivers(
+    driverErrors: LumberjackLogDriverError[],
+    greenDrivers: LumberjackLogDriver[]
+  ) {
     driverErrors.forEach((error, index) => {
       const driverErrorLog = this.createDriverErrorLog(error);
 
@@ -126,11 +127,11 @@ export class LumberjackService {
     driverErrors.forEach((error) => this.logDriverError(error));
   }
 
-  private processErrors(greenDrivers: LumberjackLogDriver[], errors: LumberjackLogDriverError[]) {
-    if (greenDrivers.length === 0) {
-      this.outputUnhandledDriverErrors(errors);
+  private processErrors(stableDrivers: LumberjackLogDriver[], driverErrors: LumberjackLogDriverError[]) {
+    if (stableDrivers.length === 0) {
+      this.outputUnhandledDriverErrors(driverErrors);
     } else {
-      this.logDriverErrorsToGreenDrivers(errors, greenDrivers);
+      this.logDriverErrorsToStableDrivers(driverErrors, stableDrivers);
     }
   }
 
