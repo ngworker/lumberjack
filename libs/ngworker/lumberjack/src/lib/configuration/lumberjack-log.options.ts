@@ -1,3 +1,3 @@
-import { LumberjackLogConfig } from './lumberjack-log.config';
+import { LumberjackConfig } from './lumberjack.config';
 
-export type LumberjackLogOptions = Partial<LumberjackLogConfig>;
+export type LumberjackLogOptions = Partial<LumberjackConfig>;

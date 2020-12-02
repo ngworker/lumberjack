@@ -1,7 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 
 import { lumberjackLogConfigToken } from '../configuration/lumberjack-log-config.token';
-import { LumberjackLogConfig } from '../configuration/lumberjack-log.config';
+import { LumberjackConfig } from '../configuration/lumberjack.config';
 import { LumberjackLogDriverError } from '../log-drivers/lumberjack-log-driver-error';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLog } from '../logs/lumberjack.log';
@@ -15,7 +15,7 @@ import { lumberjackFormat } from './lumberjack-format';
 })
 export class LumberjackFormatter {
   constructor(
-    @Inject(lumberjackLogConfigToken) private config: LumberjackLogConfig,
+    @Inject(lumberjackLogConfigToken) private config: LumberjackConfig,
     private time: LumberjackTimeService
   ) {}
 

@@ -3,7 +3,7 @@ import { InjectionToken } from '@angular/core';
 import { isClass } from '@internal/test-util';
 
 import {
-  LumberjackLogConfig,
+  LumberjackConfig,
   lumberjackLogConfigToken,
   LumberjackLogDriverConfig,
   lumberjackLogDriverConfigToken,
@@ -20,8 +20,8 @@ describe('Configuration API', () => {
       expect(value).toBeUndefined();
     });
 
-    it('exposes LumberjackLogConfig', () => {
-      const value: LumberjackLogConfig | undefined = undefined;
+    it('exposes LumberjackConfig', () => {
+      const value: LumberjackConfig | undefined = undefined;
 
       expect(value).toBeUndefined();
     });

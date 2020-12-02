@@ -13,7 +13,7 @@ import { defaultProductionLevels } from './default-production-levels';
 import { lumberjackLogConfigToken } from './lumberjack-log-config.token';
 import { lumberjackLogDriverConfigToken } from './lumberjack-log-driver-config.token';
 import { LumberjackLogDriverConfig } from './lumberjack-log-driver.config';
-import { LumberjackLogConfig } from './lumberjack-log.config';
+import { LumberjackConfig } from './lumberjack.config';
 import { LumberjackLogOptions } from './lumberjack-log.options';
 import { LumberjackModule } from './lumberjack.module';
 
@@ -24,7 +24,7 @@ describe(LumberjackModule.name, () => {
 
   describe(LumberjackModule.forRoot.name, () => {
     it('accepts a log configuration', () => {
-      const expectedConfig: LumberjackLogConfig = {
+      const expectedConfig: LumberjackConfig = {
         format: ({ message }) => message,
         levels: [LumberjackLevel.Debug],
       };
@@ -52,7 +52,7 @@ describe(LumberjackModule.name, () => {
       });
 
       const actualConfig = resolveDependency(lumberjackLogConfigToken);
-      expect(actualConfig).toEqual(expectedConfig as LumberjackLogConfig);
+      expect(actualConfig).toEqual(expectedConfig as LumberjackConfig);
     });
 
     it('accepts a partial log configuration in production mode', () => {
@@ -70,7 +70,7 @@ describe(LumberjackModule.name, () => {
       });
 
       const actualConfig = resolveDependency(lumberjackLogConfigToken);
-      expect(actualConfig).toEqual(expectedConfig as LumberjackLogConfig);
+      expect(actualConfig).toEqual(expectedConfig as LumberjackConfig);
     });
 
     it('provides a default log configuration in development mode', () => {
