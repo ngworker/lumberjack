@@ -1,8 +1,8 @@
 import { LumberjackConfigLevels } from '../logs/lumberjack-config-levels';
 
-import { LumberjackLogFormatFunction } from './lumberjack-log-format-function';
+import { LumberjackFormatFunction } from './lumberjack-format-function';
 
 export interface LumberjackConfig {
-  readonly format: LumberjackLogFormatFunction;
+  readonly format: LumberjackFormatFunction;
   readonly levels: LumberjackConfigLevels;
 }

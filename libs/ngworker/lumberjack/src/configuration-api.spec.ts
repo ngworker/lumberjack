@@ -5,9 +5,9 @@ import { isClass } from '@internal/test-util';
 import {
   LumberjackConfig,
   lumberjackConfigToken,
+  LumberjackFormatFunction,
   LumberjackLogDriverConfig,
   lumberjackLogDriverConfigToken,
-  LumberjackLogFormatFunction,
   LumberjackLogOptions,
   LumberjackModule,
 } from './index';
@@ -28,8 +28,8 @@ describe('Configuration API', () => {
   });
 
   describe('Types', () => {
-    it('exposes LumberjackLogFormatFunction', () => {
-      const value: LumberjackLogFormatFunction | undefined = undefined;
+    it('exposes LumberjackFormatFunction', () => {
+      const value: LumberjackFormatFunction | undefined = undefined;
 
       expect(value).toBeUndefined();
     });
