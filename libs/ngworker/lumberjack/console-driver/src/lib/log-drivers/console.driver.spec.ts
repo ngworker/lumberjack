@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { SpyConsole, SpyConsoleModule } from '@internal/console-driver/test-util';
 import { resolveDependency } from '@internal/test-util';
-import { LogDriver, logDriverToken, LumberjackLevel } from '@ngworker/lumberjack';
+import { LogDriver, LumberjackLevel, lumberjackLogDriverToken } from '@ngworker/lumberjack';
 
 import { ConsoleDriverModule } from '../configuration/console-driver.module';
 import { lumberjackConsoleToken } from '../console/lumberjack-console.token';
@@ -15,7 +15,7 @@ describe(ConsoleDriver.name, () => {
       imports: [ConsoleDriverModule.forRoot({ levels: [LumberjackLevel.Verbose] }), SpyConsoleModule],
     });
 
-    const [_driver] = (resolveDependency(logDriverToken) as unknown) as LogDriver[];
+    const [_driver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LogDriver[];
     driver = _driver as ConsoleDriver;
     spyLogger = resolveDependency(lumberjackConsoleToken) as SpyConsole;
   });

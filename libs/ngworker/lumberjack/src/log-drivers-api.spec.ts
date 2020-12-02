@@ -1,6 +1,6 @@
 import { InjectionToken } from '@angular/core';
 
-import { LogDriver, logDriverToken } from './index';
+import { LogDriver, lumberjackLogDriverToken } from './index';
 
 describe('Log drivers API', () => {
   describe('Interfaces', () => {
@@ -12,8 +12,8 @@ describe('Log drivers API', () => {
   });
 
   describe('Dependency injection tokens', () => {
-    it('exposes logDriverToken', () => {
-      const sut = logDriverToken;
+    it('exposes lumberjackLogDriverToken', () => {
+      const sut = lumberjackLogDriverToken;
 
       expect(sut).toBeInstanceOf(InjectionToken);
     });

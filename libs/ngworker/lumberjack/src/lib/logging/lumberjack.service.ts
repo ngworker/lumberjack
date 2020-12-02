@@ -4,7 +4,7 @@ import { LumberjackRootModule } from '../configuration/lumberjack-root.module';
 import { LumberjackFormatter } from '../formatting/lumberjack-formatter.service';
 import { DriverError } from '../log-drivers/driver-error';
 import { LogDriver } from '../log-drivers/log-driver';
-import { logDriverToken } from '../log-drivers/log-driver.token';
+import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
 import { LumberjackLog } from '../logs/lumberjack.log';
@@ -25,7 +25,7 @@ export class LumberjackService {
   constructor(
     // Each driver must be provided with multi. That way we can capture every provided driver
     // and use it to log to its output.
-    @Optional() @Inject(logDriverToken) logDrivers: LogDriver[],
+    @Optional() @Inject(lumberjackLogDriverToken) logDrivers: LogDriver[],
     private formatter: LumberjackFormatter,
     private time: LumberjackTimeService
   ) {

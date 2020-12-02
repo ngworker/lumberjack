@@ -4,9 +4,9 @@ import { expectNgModuleToBeGuarded, resolveDependency } from '@internal/test-uti
 import {
   LogDriver,
   LogDriverConfig,
-  logDriverToken,
   LumberjackLevel,
   lumberjackLogConfigToken,
+  lumberjackLogDriverToken,
   LumberjackModule,
 } from '@ngworker/lumberjack';
 
@@ -29,7 +29,7 @@ const createConsoleDriver = ({
     ],
   });
 
-  const [consoleDriver] = (resolveDependency(logDriverToken) as unknown) as LogDriver[];
+  const [consoleDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LogDriver[];
 
   return consoleDriver;
 };
