@@ -22,7 +22,7 @@ import { ConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
 import { logDriverConfigToken } from '../configuration/log-driver-config.token';
 import { LogDriverConfig } from '../configuration/log-driver.config';
 import { LumberjackModule } from '../configuration/lumberjack.module';
-import { LogDriver } from '../log-drivers/log-driver';
+import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
 import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 
@@ -117,7 +117,7 @@ describe(LumberjackService.name, () => {
             ErrorThrowingDriverModule.forRoot({ logsBeforeThrowing: 1 }),
           ],
         });
-        const logDrivers = (resolveDependency(lumberjackLogDriverToken) as unknown) as LogDriver[];
+        const logDrivers = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
         const spyDriver = logDrivers[0] as SpyDriver;
         const errorDriver = logDrivers[1] as ErrorThrowingDriver;
         spyDriver.logDebug.and.throwError('The hidden spy made an error');
@@ -148,7 +148,7 @@ describe(LumberjackService.name, () => {
             NoopDriverModule.forRoot(),
           ],
         });
-        const logDrivers = (resolveDependency(lumberjackLogDriverToken) as unknown) as LogDriver[];
+        const logDrivers = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
         const spyDriver = logDrivers[0] as SpyDriver;
         const errorDriver = logDrivers[1] as ErrorThrowingDriver;
         const noopDriver = logDrivers[2] as NoopDriver;
@@ -184,7 +184,7 @@ describe(LumberjackService.name, () => {
             ErrorThrowingDriverModule.forRoot(),
           ],
         });
-        const logDrivers = (resolveDependency(lumberjackLogDriverToken) as unknown) as LogDriver[];
+        const logDrivers = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
         const spyDriver = logDrivers[0] as SpyDriver;
 
         expect(logDebugMessage).not.toThrow();
@@ -209,7 +209,7 @@ describe(LumberjackService.name, () => {
             SpyDriverModule.forRoot(),
           ],
         });
-        const logDrivers = (resolveDependency(lumberjackLogDriverToken) as unknown) as LogDriver[];
+        const logDrivers = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
         const spyDriver = logDrivers[1] as SpyDriver;
 
         expect(logDebugMessage).not.toThrow();
@@ -227,7 +227,7 @@ describe(LumberjackService.name, () => {
             ErrorThrowingDriverModule.forRoot({ logsBeforeThrowing: 1 }),
           ],
         });
-        const logDrivers = (resolveDependency(lumberjackLogDriverToken) as unknown) as LogDriver[];
+        const logDrivers = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
         const spyDriver = logDrivers[0] as SpyDriver;
         const errorDriver = logDrivers[1] as ErrorThrowingDriver;
         spyDriver.logDebug.and.throwError('The hidden spy made an error');
@@ -264,7 +264,7 @@ describe(LumberjackService.name, () => {
 
         lumberjack = resolveDependency(LumberjackService);
 
-        const [logDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LogDriver[];
+        const [logDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
         spyDriver = logDriver as SpyDriver;
       });
 
@@ -322,7 +322,7 @@ describe(LumberjackService.name, () => {
 
       lumberjack = resolveDependency(LumberjackService);
 
-      const [logDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LogDriver[];
+      const [logDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
       spyDriver = logDriver as SpyDriver;
     });
 
@@ -415,7 +415,7 @@ describe(LumberjackService.name, () => {
 
       lumberjack = resolveDependency(LumberjackService);
 
-      const [logDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LogDriver[];
+      const [logDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
       spyDriver = logDriver as SpyDriver;
     });
 
@@ -473,7 +473,9 @@ describe(LumberjackService.name, () => {
 
         lumberjack = resolveDependency(LumberjackService);
 
-        const [_spyDriver, _noopDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LogDriver[];
+        const [_spyDriver, _noopDriver] = (resolveDependency(
+          lumberjackLogDriverToken
+        ) as unknown) as LumberjackLogDriver[];
         spyDriver = _spyDriver as SpyDriver;
         noopDriver = _noopDriver as jasmine.SpyObj<NoopDriver>;
         spyOn(noopDriver, 'logCritical');

@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 
-import { LogDriver, LogDriverConfig } from '@ngworker/lumberjack';
+import { LumberjackLogDriver } from '@ngworker/lumberjack';
 
 import { ErrorThrowingDriverConfig, errorThrowingDriverConfigToken } from './error-throwing-driver-config.token';
 
@@ -10,7 +10,7 @@ import { ErrorThrowingDriverConfig, errorThrowingDriverConfigToken } from './err
  * Every logging method throws an error.
  */
 @Injectable()
-export class ErrorThrowingDriver implements LogDriver {
+export class ErrorThrowingDriver implements LumberjackLogDriver {
   private logCount = 0;
   constructor(@Inject(errorThrowingDriverConfigToken) public config: ErrorThrowingDriverConfig) {}
 

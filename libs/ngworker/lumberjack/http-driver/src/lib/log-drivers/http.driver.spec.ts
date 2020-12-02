@@ -2,7 +2,7 @@ import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@an
 import { TestBed } from '@angular/core/testing';
 
 import { repeatSideEffect, resolveDependency } from '@internal/test-util';
-import { LogDriver, LumberjackLevel, lumberjackLogDriverToken, LumberjackModule } from '@ngworker/lumberjack';
+import { LumberjackLevel, LumberjackLogDriver, lumberjackLogDriverToken, LumberjackModule } from '@ngworker/lumberjack';
 
 import { HttpDriverModule } from '../configuration/http-driver.module';
 import { HttpDriverOptions } from '../configuration/http-driver.options';
@@ -53,7 +53,7 @@ function respondWith503ServiceUnavailable(request: TestRequest) {
 }
 
 describe(HttpDriver.name, () => {
-  let httpDriver: LogDriver;
+  let httpDriver: LumberjackLogDriver;
   let httpTestingController: HttpTestingController;
   const options: HttpDriverOptions = {
     storeUrl: 'api/json',
@@ -66,7 +66,7 @@ describe(HttpDriver.name, () => {
       imports: [HttpClientTestingModule, LumberjackModule.forRoot(), HttpDriverModule.withOptions(options)],
     });
 
-    [httpDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LogDriver[];
+    [httpDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
     httpTestingController = resolveDependency(HttpTestingController);
 
     jasmine.clock().uninstall();
@@ -76,12 +76,12 @@ describe(HttpDriver.name, () => {
 
   describe('logs to a web API using the right log level', () => {
     [
-      { level: LumberjackLevel.Critical, logMethod: (driver: LogDriver) => driver.logCritical },
-      { level: LumberjackLevel.Debug, logMethod: (driver: LogDriver) => driver.logDebug },
-      { level: LumberjackLevel.Error, logMethod: (driver: LogDriver) => driver.logError },
-      { level: LumberjackLevel.Info, logMethod: (driver: LogDriver) => driver.logInfo },
-      { level: LumberjackLevel.Trace, logMethod: (driver: LogDriver) => driver.logTrace },
-      { level: LumberjackLevel.Warning, logMethod: (driver: LogDriver) => driver.logWarning },
+      { level: LumberjackLevel.Critical, logMethod: (driver: LumberjackLogDriver) => driver.logCritical },
+      { level: LumberjackLevel.Debug, logMethod: (driver: LumberjackLogDriver) => driver.logDebug },
+      { level: LumberjackLevel.Error, logMethod: (driver: LumberjackLogDriver) => driver.logError },
+      { level: LumberjackLevel.Info, logMethod: (driver: LumberjackLogDriver) => driver.logInfo },
+      { level: LumberjackLevel.Trace, logMethod: (driver: LumberjackLogDriver) => driver.logTrace },
+      { level: LumberjackLevel.Warning, logMethod: (driver: LumberjackLogDriver) => driver.logWarning },
     ].forEach(({ level, logMethod }) => {
       it(`sends a ${level} level log to the configured URL`, () => {
         logMethod(httpDriver).call(httpDriver, level);

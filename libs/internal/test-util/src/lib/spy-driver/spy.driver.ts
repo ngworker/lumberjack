@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 
-import { LogDriver, LogDriverConfig } from '@ngworker/lumberjack';
+import { LogDriverConfig, LumberjackLogDriver } from '@ngworker/lumberjack';
 
 import { spyDriverConfigToken } from './spy-driver-config.token';
 
@@ -10,7 +10,7 @@ import { spyDriverConfigToken } from './spy-driver-config.token';
  * Every logging method is a spy.
  */
 @Injectable()
-export class SpyDriver implements LogDriver, jasmine.SpyObj<LogDriver> {
+export class SpyDriver implements LumberjackLogDriver, jasmine.SpyObj<LumberjackLogDriver> {
   constructor(@Inject(spyDriverConfigToken) public config: LogDriverConfig) {}
 
   logCritical = jasmine.createSpy('logCritical');
