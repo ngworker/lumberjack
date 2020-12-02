@@ -9,8 +9,8 @@ import {
   resolveDependency,
 } from '@internal/test-util';
 
-import { LumberjackLogOptions } from '../configuration/lumberjack-log.options';
 import { LumberjackModule } from '../configuration/lumberjack.module';
+import { LumberjackOptions } from '../configuration/lumberjack.options';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
@@ -37,7 +37,7 @@ class FakeTimeService extends LumberjackTimeService {
 }
 
 describe(LumberjackFormatter.name, () => {
-  function setup(options?: LumberjackLogOptions) {
+  function setup(options?: LumberjackOptions) {
     TestBed.configureTestingModule({
       imports: [LumberjackModule.forRoot(options)],
       providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],

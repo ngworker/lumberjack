@@ -8,8 +8,8 @@ import {
   LumberjackFormatFunction,
   LumberjackLogDriverConfig,
   lumberjackLogDriverConfigToken,
-  LumberjackLogOptions,
   LumberjackModule,
+  LumberjackOptions,
 } from './index';
 
 describe('Configuration API', () => {
@@ -34,8 +34,8 @@ describe('Configuration API', () => {
       expect(value).toBeUndefined();
     });
 
-    it('exposes LumberjackLogOptions', () => {
-      const value: LumberjackLogOptions | undefined = undefined;
+    it('exposes LumberjackOptions', () => {
+      const value: LumberjackOptions | undefined = undefined;
 
       expect(value).toBeUndefined();
     });

@@ -13,9 +13,9 @@ import { defaultProductionLevels } from './default-production-levels';
 import { lumberjackConfigToken } from './lumberjack-config.token';
 import { lumberjackLogDriverConfigToken } from './lumberjack-log-driver-config.token';
 import { LumberjackLogDriverConfig } from './lumberjack-log-driver.config';
-import { LumberjackLogOptions } from './lumberjack-log.options';
 import { LumberjackConfig } from './lumberjack.config';
 import { LumberjackModule } from './lumberjack.module';
+import { LumberjackOptions } from './lumberjack.options';
 
 describe(LumberjackModule.name, () => {
   it(`cannot be imported without using the ${LumberjackModule.forRoot.name} method`, () => {
@@ -38,10 +38,10 @@ describe(LumberjackModule.name, () => {
     });
 
     it('accepts a partial log configuration in development mode', () => {
-      const config: LumberjackLogOptions = {
+      const config: LumberjackOptions = {
         format: ({ message }) => message,
       };
-      const expectedConfig: LumberjackLogOptions = {
+      const expectedConfig: LumberjackOptions = {
         ...config,
         levels: defaultDevelopmentLevels,
       };
@@ -56,10 +56,10 @@ describe(LumberjackModule.name, () => {
     });
 
     it('accepts a partial log configuration in production mode', () => {
-      const config: LumberjackLogOptions = {
+      const config: LumberjackOptions = {
         format: ({ message }) => message,
       };
-      const expectedConfig: LumberjackLogOptions = {
+      const expectedConfig: LumberjackOptions = {
         ...config,
         levels: defaultProductionLevels,
       };
