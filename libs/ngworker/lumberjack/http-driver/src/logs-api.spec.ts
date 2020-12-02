@@ -1,9 +1,9 @@
-import { HttpLog } from './index';
+import { LumberjackHttpLog } from './index';
 
 describe('Logs API', () => {
   describe('Interfaces', () => {
-    it('exposes HttpLog', () => {
-      const value: HttpLog | undefined = undefined;
+    it('exposes LumberjackHttpLog', () => {
+      const value: LumberjackHttpLog | undefined = undefined;
 
       expect(value).toBeUndefined();
     });

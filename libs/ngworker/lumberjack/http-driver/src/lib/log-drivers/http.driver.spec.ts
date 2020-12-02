@@ -6,7 +6,7 @@ import { LumberjackLevel, LumberjackLogDriver, lumberjackLogDriverToken, Lumberj
 
 import { HttpDriverModule } from '../configuration/http-driver.module';
 import { HttpDriverOptions } from '../configuration/http-driver.options';
-import { HttpLog } from '../logs/http.log';
+import { LumberjackHttpLog } from '../logs/lumberjack-http.log';
 
 import { LumberjackHttpDriver } from './lumberjack-http.driver';
 
@@ -15,7 +15,7 @@ function expectRequest(
   { origin, storeUrl }: HttpDriverOptions,
   level: LumberjackLevel = LumberjackLevel.Critical
 ) {
-  const expectedBody: HttpLog = { formattedLog: level, level, origin };
+  const expectedBody: LumberjackHttpLog = { formattedLog: level, level, origin };
 
   const {
     request: { body, method },
@@ -34,7 +34,7 @@ function expectFailingRequest(
   { origin, retryOptions, storeUrl }: HttpDriverOptions,
   level: LumberjackLevel = LumberjackLevel.Critical
 ) {
-  const expectedBody: HttpLog = { formattedLog: level, level: LumberjackLevel.Critical, origin };
+  const expectedBody: LumberjackHttpLog = { formattedLog: level, level: LumberjackLevel.Critical, origin };
   const req = httpTestingController.expectOne(storeUrl);
   const {
     cancelled,

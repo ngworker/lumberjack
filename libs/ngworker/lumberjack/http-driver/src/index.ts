@@ -13,4 +13,4 @@ export { HttpDriverModule } from './lib/configuration/http-driver.module';
 export { LumberjackHttpDriver } from './lib/log-drivers/lumberjack-http.driver';
 
 // Logs
-export { HttpLog } from './lib/logs/http.log';
+export { LumberjackHttpLog } from './lib/logs/lumberjack-http.log';
