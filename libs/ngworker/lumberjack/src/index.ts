@@ -3,7 +3,7 @@
  */
 
 // Configuration
-export { lumberjackLogConfigToken } from './lib/configuration/lumberjack-log-config.token';
+export { lumberjackConfigToken } from './lib/configuration/lumberjack-config.token';
 export { LumberjackLogDriverConfig } from './lib/configuration/lumberjack-log-driver.config';
 export { lumberjackLogDriverConfigToken } from './lib/configuration/lumberjack-log-driver-config.token';
 export { LumberjackLogFormatFunction } from './lib/configuration/lumberjack-log-format-function';

@@ -10,11 +10,11 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { defaultDevelopmentLevels } from './default-development-levels';
 import { defaultProductionLevels } from './default-production-levels';
-import { lumberjackLogConfigToken } from './lumberjack-log-config.token';
+import { lumberjackConfigToken } from './lumberjack-config.token';
 import { lumberjackLogDriverConfigToken } from './lumberjack-log-driver-config.token';
 import { LumberjackLogDriverConfig } from './lumberjack-log-driver.config';
-import { LumberjackConfig } from './lumberjack.config';
 import { LumberjackLogOptions } from './lumberjack-log.options';
+import { LumberjackConfig } from './lumberjack.config';
 import { LumberjackModule } from './lumberjack.module';
 
 describe(LumberjackModule.name, () => {
@@ -33,7 +33,7 @@ describe(LumberjackModule.name, () => {
         imports: [LumberjackModule.forRoot(expectedConfig)],
       });
 
-      const actualConfig = resolveDependency(lumberjackLogConfigToken);
+      const actualConfig = resolveDependency(lumberjackConfigToken);
       expect(actualConfig).toEqual(expectedConfig);
     });
 
@@ -51,7 +51,7 @@ describe(LumberjackModule.name, () => {
         providers: [{ provide: isProductionEnvironmentToken, useValue: false }],
       });
 
-      const actualConfig = resolveDependency(lumberjackLogConfigToken);
+      const actualConfig = resolveDependency(lumberjackConfigToken);
       expect(actualConfig).toEqual(expectedConfig as LumberjackConfig);
     });
 
@@ -69,7 +69,7 @@ describe(LumberjackModule.name, () => {
         providers: [{ provide: isProductionEnvironmentToken, useValue: true }],
       });
 
-      const actualConfig = resolveDependency(lumberjackLogConfigToken);
+      const actualConfig = resolveDependency(lumberjackConfigToken);
       expect(actualConfig).toEqual(expectedConfig as LumberjackConfig);
     });
 
@@ -79,7 +79,7 @@ describe(LumberjackModule.name, () => {
         providers: [{ provide: isProductionEnvironmentToken, useValue: false }],
       });
 
-      const actualConfig = resolveDependency(lumberjackLogConfigToken);
+      const actualConfig = resolveDependency(lumberjackConfigToken);
       expect(actualConfig).toEqual({
         format: jasmine.any(Function),
         levels: defaultDevelopmentLevels,
@@ -92,7 +92,7 @@ describe(LumberjackModule.name, () => {
         providers: [{ provide: isProductionEnvironmentToken, useValue: true }],
       });
 
-      const actualConfig = resolveDependency(lumberjackLogConfigToken);
+      const actualConfig = resolveDependency(lumberjackConfigToken);
       expect(actualConfig).toEqual({
         format: jasmine.any(Function),
         levels: defaultProductionLevels,
@@ -103,7 +103,7 @@ describe(LumberjackModule.name, () => {
       TestBed.configureTestingModule({
         imports: [LumberjackModule.forRoot()],
       });
-      const logConfig = resolveDependency(lumberjackLogConfigToken);
+      const logConfig = resolveDependency(lumberjackConfigToken);
       const defaultLogDriverConfig: LumberjackLogDriverConfig = {
         levels: logConfig.levels,
       };
@@ -135,7 +135,7 @@ describe(LumberjackModule.name, () => {
 
         const expectedMessageWithContext = `${level} ${fakeTimestamp} [${context}] ${message}`;
 
-        const { format } = resolveDependency(lumberjackLogConfigToken);
+        const { format } = resolveDependency(lumberjackConfigToken);
 
         expect(format(entryLogWithContext)).toEqual(expectedMessageWithContext);
       });
@@ -151,7 +151,7 @@ describe(LumberjackModule.name, () => {
 
         const expectedMessageWithContext = `${level} ${fakeTimestamp} ${message}`;
 
-        const { format } = resolveDependency(lumberjackLogConfigToken);
+        const { format } = resolveDependency(lumberjackConfigToken);
 
         expect(format(entryLogWithOutContext)).toEqual(expectedMessageWithContext);
       });

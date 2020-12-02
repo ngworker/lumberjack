@@ -4,7 +4,7 @@ import { isClass } from '@internal/test-util';
 
 import {
   LumberjackConfig,
-  lumberjackLogConfigToken,
+  lumberjackConfigToken,
   LumberjackLogDriverConfig,
   lumberjackLogDriverConfigToken,
   LumberjackLogFormatFunction,
@@ -56,8 +56,8 @@ describe('Configuration API', () => {
       expect(sut).toBeInstanceOf(InjectionToken);
     });
 
-    it('exposes lumberjackLogConfigToken', () => {
-      const sut = lumberjackLogConfigToken;
+    it('exposes lumberjackConfigToken', () => {
+      const sut = lumberjackConfigToken;
 
       expect(sut).toBeInstanceOf(InjectionToken);
     });

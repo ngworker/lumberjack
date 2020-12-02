@@ -5,12 +5,12 @@ import { lumberjackFormat } from '../formatting/lumberjack-format';
 
 import { defaultDevelopmentLevels } from './default-development-levels';
 import { defaultProductionLevels } from './default-production-levels';
-import { lumberjackLogConfigToken } from './lumberjack-log-config.token';
+import { lumberjackConfigToken } from './lumberjack-config.token';
 import { lumberjackLogDriverConfigToken } from './lumberjack-log-driver-config.token';
 import { LumberjackLogDriverConfig } from './lumberjack-log-driver.config';
 import { lumberjackLogOptionsToken } from './lumberjack-log-options.token';
-import { LumberjackConfig } from './lumberjack.config';
 import { LumberjackLogOptions } from './lumberjack-log.options';
+import { LumberjackConfig } from './lumberjack.config';
 
 export function logConfigFactory(
   options: LumberjackLogOptions = {},
@@ -33,11 +33,11 @@ export function logDriverConfigFactory({ levels }: LumberjackConfig): Lumberjack
   providers: [
     {
       deps: [lumberjackLogOptionsToken, isProductionEnvironmentToken],
-      provide: lumberjackLogConfigToken,
+      provide: lumberjackConfigToken,
       useFactory: logConfigFactory,
     },
     {
-      deps: [lumberjackLogConfigToken],
+      deps: [lumberjackConfigToken],
       provide: lumberjackLogDriverConfigToken,
       useFactory: logDriverConfigFactory,
     },

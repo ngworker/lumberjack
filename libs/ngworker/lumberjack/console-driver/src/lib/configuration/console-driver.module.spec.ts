@@ -2,8 +2,8 @@ import { TestBed } from '@angular/core/testing';
 
 import { expectNgModuleToBeGuarded, resolveDependency } from '@internal/test-util';
 import {
+  lumberjackConfigToken,
   LumberjackLevel,
-  lumberjackLogConfigToken,
   LumberjackLogDriver,
   LumberjackLogDriverConfig,
   lumberjackLogDriverToken,
@@ -61,7 +61,7 @@ describe(ConsoleDriverModule.name, () => {
       const consoleDriver = createConsoleDriver();
 
       const actualConfig = consoleDriver.config;
-      const logConfig = resolveDependency(lumberjackLogConfigToken);
+      const logConfig = resolveDependency(lumberjackConfigToken);
       const defaultLogDriverConfig: LumberjackLogDriverConfig = {
         levels: logConfig.levels,
       };

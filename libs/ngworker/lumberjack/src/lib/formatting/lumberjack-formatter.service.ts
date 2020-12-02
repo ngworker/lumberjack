@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 
-import { lumberjackLogConfigToken } from '../configuration/lumberjack-log-config.token';
+import { lumberjackConfigToken } from '../configuration/lumberjack-config.token';
 import { LumberjackConfig } from '../configuration/lumberjack.config';
 import { LumberjackLogDriverError } from '../log-drivers/lumberjack-log-driver-error';
 import { LumberjackLevel } from '../logs/lumberjack-level';
@@ -14,10 +14,7 @@ import { lumberjackFormat } from './lumberjack-format';
   providedIn: 'root',
 })
 export class LumberjackFormatter {
-  constructor(
-    @Inject(lumberjackLogConfigToken) private config: LumberjackConfig,
-    private time: LumberjackTimeService
-  ) {}
+  constructor(@Inject(lumberjackConfigToken) private config: LumberjackConfig, private time: LumberjackTimeService) {}
 
   formatDriverError({ driver, formattedMessage, error }: LumberjackLogDriverError): string {
     const thrownErrorMessage = (error as Error).message || String(error);
