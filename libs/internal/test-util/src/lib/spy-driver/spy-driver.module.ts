@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import { LogDriverConfig } from '@ngworker/lumberjack';
+import { LumberjackLogDriverConfig } from '@ngworker/lumberjack';
 
 import { spyDriverConfigToken } from './spy-driver-config.token';
 import { SpyDriverRootModule } from './spy-driver-root.module';
@@ -12,7 +12,7 @@ import { SpyDriverRootModule } from './spy-driver-root.module';
  */
 @NgModule()
 export class SpyDriverModule {
-  static forRoot(config?: LogDriverConfig): ModuleWithProviders<SpyDriverRootModule> {
+  static forRoot(config?: LumberjackLogDriverConfig): ModuleWithProviders<SpyDriverRootModule> {
     return {
       ngModule: SpyDriverRootModule,
       providers: (config && [{ provide: spyDriverConfigToken, useValue: config }]) || [],

@@ -1,5 +1,7 @@
 import { InjectionToken } from '@angular/core';
 
-import { LogDriverConfig } from './log-driver.config';
+import { LumberjackLogDriverConfig } from './lumberjack-log-driver.config';
 
-export const logDriverConfigToken: InjectionToken<LogDriverConfig> = new InjectionToken('__LOG_DRIVER_CONFIG__');
+export const logDriverConfigToken: InjectionToken<LumberjackLogDriverConfig> = new InjectionToken(
+  '__LOG_DRIVER_CONFIG__'
+);

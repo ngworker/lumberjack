@@ -10,9 +10,9 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { defaultDevelopmentLevels } from './default-development-levels';
 import { defaultProductionLevels } from './default-production-levels';
-import { logDriverConfigToken } from './log-driver-config.token';
-import { LogDriverConfig } from './log-driver.config';
 import { lumberjackLogConfigToken } from './lumberjack-log-config.token';
+import { lumberjackLogDriverConfigToken } from './lumberjack-log-driver-config.token';
+import { LumberjackLogDriverConfig } from './lumberjack-log-driver.config';
 import { LumberjackLogConfig } from './lumberjack-log.config';
 import { LumberjackLogOptions } from './lumberjack-log.options';
 import { LumberjackModule } from './lumberjack.module';
@@ -104,11 +104,11 @@ describe(LumberjackModule.name, () => {
         imports: [LumberjackModule.forRoot()],
       });
       const logConfig = resolveDependency(lumberjackLogConfigToken);
-      const defaultLogDriverConfig: LogDriverConfig = {
+      const defaultLogDriverConfig: LumberjackLogDriverConfig = {
         levels: logConfig.levels,
       };
 
-      const actualConfig = resolveDependency(logDriverConfigToken);
+      const actualConfig = resolveDependency(lumberjackLogDriverConfigToken);
       expect(actualConfig).toEqual(defaultLogDriverConfig);
     });
 

@@ -19,8 +19,8 @@ import {
 } from '@internal/test-util';
 import { ConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
 
-import { logDriverConfigToken } from '../configuration/log-driver-config.token';
-import { LogDriverConfig } from '../configuration/log-driver.config';
+import { lumberjackLogDriverConfigToken } from '../configuration/lumberjack-log-driver-config.token';
+import { LumberjackLogDriverConfig } from '../configuration/lumberjack-log-driver.config';
 import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
 import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
@@ -28,14 +28,14 @@ import { LumberjackLevel } from '../logs/lumberjack-level';
 
 import { LumberjackService } from './lumberjack.service';
 
-const noLogsConfig: LogDriverConfig = {
+const noLogsConfig: LumberjackLogDriverConfig = {
   levels: [],
 };
 const noLogsProvider: StaticProvider = {
-  provide: logDriverConfigToken,
+  provide: lumberjackLogDriverConfigToken,
   useValue: noLogsConfig,
 };
-const allLogsConfig: LogDriverConfig = {
+const allLogsConfig: LumberjackLogDriverConfig = {
   levels: [
     LumberjackLevel.Critical,
     LumberjackLevel.Debug,
@@ -46,14 +46,14 @@ const allLogsConfig: LogDriverConfig = {
   ],
 };
 const allLogsProvider: StaticProvider = {
-  provide: logDriverConfigToken,
+  provide: lumberjackLogDriverConfigToken,
   useValue: allLogsConfig,
 };
-const verboseLoggingConfig: LogDriverConfig = {
+const verboseLoggingConfig: LumberjackLogDriverConfig = {
   levels: [LumberjackLevel.Verbose],
 };
 const verboseLoggingProvider: StaticProvider = {
-  provide: logDriverConfigToken,
+  provide: lumberjackLogDriverConfigToken,
   useValue: verboseLoggingConfig,
 };
 

@@ -3,10 +3,10 @@ import { InjectionToken } from '@angular/core';
 import { isClass } from '@internal/test-util';
 
 import {
-  LogDriverConfig,
-  logDriverConfigToken,
   LumberjackLogConfig,
   lumberjackLogConfigToken,
+  LumberjackLogDriverConfig,
+  lumberjackLogDriverConfigToken,
   LumberjackLogFormatFunction,
   LumberjackLogOptions,
   LumberjackModule,
@@ -14,8 +14,8 @@ import {
 
 describe('Configuration API', () => {
   describe('Interfaces', () => {
-    it('exposes LogDriverConfig', () => {
-      const value: LogDriverConfig | undefined = undefined;
+    it('exposes LumberjackLogDriverConfig', () => {
+      const value: LumberjackLogDriverConfig | undefined = undefined;
 
       expect(value).toBeUndefined();
     });
@@ -50,8 +50,8 @@ describe('Configuration API', () => {
   });
 
   describe('Dependency injection tokens', () => {
-    it('exposes logDriverConfigToken', () => {
-      const sut = logDriverConfigToken;
+    it('exposes lumberjackLogDriverConfigToken', () => {
+      const sut = lumberjackLogDriverConfigToken;
 
       expect(sut).toBeInstanceOf(InjectionToken);
     });

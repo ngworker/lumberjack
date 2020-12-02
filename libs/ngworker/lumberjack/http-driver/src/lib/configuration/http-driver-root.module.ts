@@ -1,7 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, NgModule, NgZone, Optional, SkipSelf } from '@angular/core';
 
-import { LogDriverConfig, logDriverConfigToken, lumberjackLogDriverToken } from '@ngworker/lumberjack';
+import {
+  LumberjackLogDriverConfig,
+  lumberjackLogDriverConfigToken,
+  lumberjackLogDriverToken,
+} from '@ngworker/lumberjack';
 
 import { HttpDriver } from '../log-drivers/http.driver';
 
@@ -10,7 +14,7 @@ import { HttpDriverConfig } from './http-driver.config';
 
 export function httpDriverFactory(
   http: HttpClient,
-  logDriverConfig: LogDriverConfig,
+  logDriverConfig: LumberjackLogDriverConfig,
   httpDriverConfig: HttpDriverConfig,
   ngZone: NgZone
 ): HttpDriver {
@@ -25,7 +29,7 @@ export function httpDriverFactory(
 @NgModule({
   providers: [
     {
-      deps: [HttpClient, logDriverConfigToken, httpDriverConfigToken, NgZone],
+      deps: [HttpClient, lumberjackLogDriverConfigToken, httpDriverConfigToken, NgZone],
       multi: true,
       provide: lumberjackLogDriverToken,
       useFactory: httpDriverFactory,

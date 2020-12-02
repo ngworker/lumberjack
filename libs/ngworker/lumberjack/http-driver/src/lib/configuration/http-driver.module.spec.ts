@@ -3,11 +3,11 @@ import { TestBed } from '@angular/core/testing';
 
 import { expectNgModuleToBeGuarded, resolveDependency } from '@internal/test-util';
 import {
-  LogDriverConfig,
   LumberjackConfigLevels,
   LumberjackLevel,
   lumberjackLogConfigToken,
   LumberjackLogDriver,
+  LumberjackLogDriverConfig,
   lumberjackLogDriverToken,
   LumberjackModule,
 } from '@ngworker/lumberjack';
@@ -110,7 +110,7 @@ describe(HttpDriverModule.name, () => {
 
       const actualConfig = httpDriver.config;
       const logConfig = resolveDependency(lumberjackLogConfigToken);
-      const defaultLogDriverConfig: LogDriverConfig = {
+      const defaultLogDriverConfig: LumberjackLogDriverConfig = {
         levels: logConfig.levels,
       };
       const expectedConfig: HttpDriverConfig = { ...defaultLogDriverConfig, ...customHttpConfig };

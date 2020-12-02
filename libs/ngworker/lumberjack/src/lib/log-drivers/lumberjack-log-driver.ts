@@ -1,7 +1,7 @@
-import { LogDriverConfig } from '../configuration/log-driver.config';
+import { LumberjackLogDriverConfig } from '../configuration/lumberjack-log-driver.config';
 
 export interface LumberjackLogDriver {
-  readonly config: LogDriverConfig;
+  readonly config: LumberjackLogDriverConfig;
   logCritical(logEntry: string): void;
   logInfo(logEntry: string): void;
   logDebug(logEntry: string): void;

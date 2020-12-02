@@ -1,8 +1,8 @@
-import { LogDriverConfig } from '@ngworker/lumberjack';
+import { LumberjackLogDriverConfig } from '@ngworker/lumberjack';
 
 import { HttpDriverRetryOptions } from './http-driver-retry.options';
 
-export interface HttpDriverConfig extends LogDriverConfig {
+export interface HttpDriverConfig extends LumberjackLogDriverConfig {
   /**
    *
    * The identifier of the app who emitted the log.

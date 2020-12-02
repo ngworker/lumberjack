@@ -2,10 +2,10 @@ import { TestBed } from '@angular/core/testing';
 
 import { expectNgModuleToBeGuarded, resolveDependency } from '@internal/test-util';
 import {
-  LogDriverConfig,
   LumberjackLevel,
   lumberjackLogConfigToken,
   LumberjackLogDriver,
+  LumberjackLogDriverConfig,
   lumberjackLogDriverToken,
   LumberjackModule,
 } from '@ngworker/lumberjack';
@@ -18,7 +18,7 @@ const createConsoleDriver = ({
   config,
   isLumberjackModuleImportedFirst = true,
 }: {
-  config?: LogDriverConfig;
+  config?: LumberjackLogDriverConfig;
   isLumberjackModuleImportedFirst?: boolean;
 } = {}) => {
   TestBed.configureTestingModule({
@@ -47,7 +47,7 @@ describe(ConsoleDriverModule.name, () => {
     });
 
     it('registers the specified log driver configuration', () => {
-      const expectedConfig: LogDriverConfig = {
+      const expectedConfig: LumberjackLogDriverConfig = {
         levels: [LumberjackLevel.Error],
       };
 
@@ -62,14 +62,14 @@ describe(ConsoleDriverModule.name, () => {
 
       const actualConfig = consoleDriver.config;
       const logConfig = resolveDependency(lumberjackLogConfigToken);
-      const defaultLogDriverConfig: LogDriverConfig = {
+      const defaultLogDriverConfig: LumberjackLogDriverConfig = {
         levels: logConfig.levels,
       };
       expect(actualConfig).toEqual(defaultLogDriverConfig);
     });
 
     it('does register the specified log driver configuration when the lumberjack module is imported after the console driver module', () => {
-      const expectedConfig: LogDriverConfig = {
+      const expectedConfig: LumberjackLogDriverConfig = {
         levels: [LumberjackLevel.Debug],
       };
 
