@@ -12,7 +12,7 @@ import { lumberjackOptionsToken } from './lumberjack-options.token';
 import { LumberjackConfig } from './lumberjack.config';
 import { LumberjackOptions } from './lumberjack.options';
 
-export function logConfigFactory(options: LumberjackOptions = {}, isProductionEnvironment: boolean): LumberjackConfig {
+export function configFactory(options: LumberjackOptions = {}, isProductionEnvironment: boolean): LumberjackConfig {
   return {
     format: lumberjackFormat,
     levels: isProductionEnvironment ? defaultProductionLevels : defaultDevelopmentLevels,
@@ -31,7 +31,7 @@ export function logDriverConfigFactory({ levels }: LumberjackConfig): Lumberjack
     {
       deps: [lumberjackOptionsToken, isProductionEnvironmentToken],
       provide: lumberjackConfigToken,
-      useFactory: logConfigFactory,
+      useFactory: configFactory,
     },
     {
       deps: [lumberjackConfigToken],

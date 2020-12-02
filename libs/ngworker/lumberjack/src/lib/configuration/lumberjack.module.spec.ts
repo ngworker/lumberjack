@@ -23,7 +23,7 @@ describe(LumberjackModule.name, () => {
   });
 
   describe(LumberjackModule.forRoot.name, () => {
-    it('accepts a log configuration', () => {
+    it('accepts a Lumberjack configuration', () => {
       const expectedConfig: LumberjackConfig = {
         format: ({ message }) => message,
         levels: [LumberjackLevel.Debug],
@@ -37,7 +37,7 @@ describe(LumberjackModule.name, () => {
       expect(actualConfig).toEqual(expectedConfig);
     });
 
-    it('accepts a partial log configuration in development mode', () => {
+    it('accepts Lumberjack options in development mode', () => {
       const config: LumberjackOptions = {
         format: ({ message }) => message,
       };
@@ -55,7 +55,7 @@ describe(LumberjackModule.name, () => {
       expect(actualConfig).toEqual(expectedConfig as LumberjackConfig);
     });
 
-    it('accepts a partial log configuration in production mode', () => {
+    it('accepts Lumberjack options in production mode', () => {
       const config: LumberjackOptions = {
         format: ({ message }) => message,
       };
@@ -73,7 +73,7 @@ describe(LumberjackModule.name, () => {
       expect(actualConfig).toEqual(expectedConfig as LumberjackConfig);
     });
 
-    it('provides a default log configuration in development mode', () => {
+    it('provides a default Lumbrejack configuration in development mode', () => {
       TestBed.configureTestingModule({
         imports: [LumberjackModule.forRoot()],
         providers: [{ provide: isProductionEnvironmentToken, useValue: false }],
@@ -86,7 +86,7 @@ describe(LumberjackModule.name, () => {
       });
     });
 
-    it('provides a default log configuration in production mode', () => {
+    it('provides a default Lumberjack configuration in production mode', () => {
       TestBed.configureTestingModule({
         imports: [LumberjackModule.forRoot()],
         providers: [{ provide: isProductionEnvironmentToken, useValue: true }],
@@ -112,48 +112,47 @@ describe(LumberjackModule.name, () => {
       expect(actualConfig).toEqual(defaultLogDriverConfig);
     });
 
-    describe('default format function', () => {
+    describe('Default format function', () => {
       const fakeTicks = Date.now();
       let fakeTimestamp: string;
       beforeEach(() => {
         TestBed.configureTestingModule({
           imports: [LumberjackModule.forRoot()],
         });
-        const time = resolveDependency(LumberjackTimeService);
         fakeTimestamp = utcTimestampFor(fakeTicks);
       });
 
-      it('formats a log entry with a context', () => {
-        const entryLogWithContext: LumberjackLog = {
+      it('formats a log with a context', () => {
+        const logWithContext: LumberjackLog = {
           context: 'TestSuite',
           createdAt: fakeTicks,
           level: LumberjackLevel.Critical,
           message: 'Test Message',
         };
 
-        const { context, level, message } = entryLogWithContext;
+        const { context, level, message } = logWithContext;
 
-        const expectedMessageWithContext = `${level} ${fakeTimestamp} [${context}] ${message}`;
+        const expectedFormattedLog = `${level} ${fakeTimestamp} [${context}] ${message}`;
 
         const { format } = resolveDependency(lumberjackConfigToken);
 
-        expect(format(entryLogWithContext)).toEqual(expectedMessageWithContext);
+        expect(format(logWithContext)).toBe(expectedFormattedLog);
       });
 
-      it('formats a log entry with no context', () => {
-        const entryLogWithOutContext: LumberjackLog = {
+      it('formats a log with no context', () => {
+        const logWithoutContext: LumberjackLog = {
           createdAt: fakeTicks,
           level: LumberjackLevel.Critical,
           message: 'Test Message',
         };
 
-        const { level, message } = entryLogWithOutContext;
+        const { level, message } = logWithoutContext;
 
-        const expectedMessageWithContext = `${level} ${fakeTimestamp} ${message}`;
+        const expectedFormattedLog = `${level} ${fakeTimestamp} ${message}`;
 
         const { format } = resolveDependency(lumberjackConfigToken);
 
-        expect(format(entryLogWithOutContext)).toEqual(expectedMessageWithContext);
+        expect(format(logWithoutContext)).toEqual(expectedFormattedLog);
       });
     });
   });
