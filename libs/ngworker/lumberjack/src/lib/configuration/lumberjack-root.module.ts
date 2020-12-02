@@ -8,7 +8,7 @@ import { defaultProductionLevels } from './default-production-levels';
 import { lumberjackConfigToken } from './lumberjack-config.token';
 import { lumberjackLogDriverConfigToken } from './lumberjack-log-driver-config.token';
 import { LumberjackLogDriverConfig } from './lumberjack-log-driver.config';
-import { lumberjackLogOptionsToken } from './lumberjack-log-options.token';
+import { lumberjackOptionsToken } from './lumberjack-options.token';
 import { LumberjackConfig } from './lumberjack.config';
 import { LumberjackOptions } from './lumberjack.options';
 
@@ -29,7 +29,7 @@ export function logDriverConfigFactory({ levels }: LumberjackConfig): Lumberjack
 @NgModule({
   providers: [
     {
-      deps: [lumberjackLogOptionsToken, isProductionEnvironmentToken],
+      deps: [lumberjackOptionsToken, isProductionEnvironmentToken],
       provide: lumberjackConfigToken,
       useFactory: logConfigFactory,
     },
