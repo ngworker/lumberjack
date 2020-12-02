@@ -34,14 +34,14 @@ describe(lumberjackFormatLog.name, () => {
 
     logLevels.forEach((expectedLevel) => {
       it(`prefixes the message with log level "${expectedLevel}"`, () => {
-        const logEntry: LumberjackLog = {
+        const log: LumberjackLog = {
           createdAt: new Date().valueOf(),
           level: expectedLevel,
           message: 'Test message',
           context: 'Test context',
         };
 
-        const formattedLog = lumberjackFormatLog(logEntry);
+        const formattedLog = lumberjackFormatLog(log);
 
         const { level: actualLevel } = parseFormattedLog(formattedLog);
         expect(actualLevel).toBe(expectedLevel);
@@ -58,14 +58,14 @@ describe(lumberjackFormatLog.name, () => {
 
     dateTimeToUtcTimestampRecord.forEach(([unixEpochTicks, expectedTimestamp]) => {
       it('adds the 0 hours UTC offset with milliseconds resolution', () => {
-        const logEntry: LumberjackLog = {
+        const log: LumberjackLog = {
           createdAt: unixEpochTicks,
           level: LumberjackLevel.Debug,
           message: 'Test message',
           context: 'Test context',
         };
 
-        const formattedLog = lumberjackFormatLog(logEntry);
+        const formattedLog = lumberjackFormatLog(log);
 
         const { timestamp: actualTimestamp } = parseFormattedLog(formattedLog);
         expect(actualTimestamp).toBe(expectedTimestamp);
@@ -78,9 +78,9 @@ describe(lumberjackFormatLog.name, () => {
 
     contexts.forEach((expectedContext) => {
       it('tags the specified context', () => {
-        const logEntry = createDebugLog(undefined, expectedContext);
+        const log = createDebugLog(undefined, expectedContext);
 
-        const formattedLog = lumberjackFormatLog(logEntry);
+        const formattedLog = lumberjackFormatLog(log);
 
         const { context: actualContext, taggedContext } = parseFormattedLog(formattedLog);
         expect(actualContext).toBe(expectedContext);
@@ -89,9 +89,9 @@ describe(lumberjackFormatLog.name, () => {
     });
 
     it('does not add a tag without a context', () => {
-      const logEntry = createDebugLog('Test message', '');
+      const log = createDebugLog('Test message', '');
 
-      const formattedLog = lumberjackFormatLog(logEntry);
+      const formattedLog = lumberjackFormatLog(log);
 
       const { context: actualContext, taggedContext } = parseFormattedLog(formattedLog);
       expect(actualContext).toBe('');
@@ -104,18 +104,18 @@ describe(lumberjackFormatLog.name, () => {
 
     messages.forEach((expectedMessage) => {
       it(`places the message at the end with a context`, () => {
-        const logEntry = createDebugLog(expectedMessage, 'Test context');
+        const log = createDebugLog(expectedMessage, 'Test context');
 
-        const formattedLog = lumberjackFormatLog(logEntry);
+        const formattedLog = lumberjackFormatLog(log);
 
         const { message: actualMessage } = parseFormattedLog(formattedLog);
         expect(actualMessage).toBe(expectedMessage);
       });
 
       it(`places the message at the end without a context`, () => {
-        const logEntry = createDebugLog(expectedMessage, '');
+        const log = createDebugLog(expectedMessage, '');
 
-        const formattedLog = lumberjackFormatLog(logEntry);
+        const formattedLog = lumberjackFormatLog(log);
 
         const { message: actualMessage } = parseFormattedLog(formattedLog);
         expect(actualMessage).toBe(expectedMessage);
