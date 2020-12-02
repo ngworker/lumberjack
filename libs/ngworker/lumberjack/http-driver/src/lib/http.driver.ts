@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, NgZone } from '@angular/core';
 
-import { LogDriver, LumberjackLogLevel } from '@ngworker/lumberjack';
+import { LogDriver, LumberjackLogDriverLog, LumberjackLogLevel } from '@ngworker/lumberjack';
 
 import { HttpDriverConfig, httpDriverConfigToken } from './http-driver-config.token';
 import { HttpLogEntry } from './http-log-entry';
@@ -15,27 +15,27 @@ export class HttpDriver implements LogDriver {
     private ngZone: NgZone
   ) {}
 
-  logCritical(formattedLog: string): void {
+  logCritical({ formattedLog }: LumberjackLogDriverLog): void {
     this.sendLog(formattedLog, LumberjackLogLevel.Critical);
   }
 
-  logDebug(formattedLog: string): void {
+  logDebug({ formattedLog }: LumberjackLogDriverLog): void {
     this.sendLog(formattedLog, LumberjackLogLevel.Debug);
   }
 
-  logError(formattedLog: string): void {
+  logError({ formattedLog }: LumberjackLogDriverLog): void {
     this.sendLog(formattedLog, LumberjackLogLevel.Error);
   }
 
-  logInfo(formattedLog: string): void {
+  logInfo({ formattedLog }: LumberjackLogDriverLog): void {
     this.sendLog(formattedLog, LumberjackLogLevel.Info);
   }
 
-  logTrace(formattedLog: string): void {
+  logTrace({ formattedLog }: LumberjackLogDriverLog): void {
     this.sendLog(formattedLog, LumberjackLogLevel.Trace);
   }
 
-  logWarning(formattedLog: string): void {
+  logWarning({ formattedLog }: LumberjackLogDriverLog): void {
     this.sendLog(formattedLog, LumberjackLogLevel.Warning);
   }
 

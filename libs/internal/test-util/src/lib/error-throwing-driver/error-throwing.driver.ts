@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 
-import { LogDriver, LogDriverConfig } from '@ngworker/lumberjack';
+import { LogDriver, LogDriverConfig, LumberjackLogDriverLog } from '@ngworker/lumberjack';
 
 import { ErrorThrowingDriverConfig, errorThrowingDriverConfigToken } from './error-throwing-driver-config.token';
 
@@ -14,7 +14,7 @@ export class ErrorThrowingDriver implements LogDriver {
   private logCount = 0;
   constructor(@Inject(errorThrowingDriverConfigToken) public config: ErrorThrowingDriverConfig) {}
 
-  logCritical(formattedLog: string): void {
+  logCritical({ formattedLog }: LumberjackLogDriverLog): void {
     if (this.logCount < this.config.logsBeforeThrowing) {
       this.logCount += 1;
     } else {
@@ -22,7 +22,7 @@ export class ErrorThrowingDriver implements LogDriver {
     }
   }
 
-  logDebug(formattedLog: string): void {
+  logDebug({ formattedLog }: LumberjackLogDriverLog): void {
     if (this.logCount < this.config.logsBeforeThrowing) {
       this.logCount += 1;
     } else {
@@ -30,7 +30,7 @@ export class ErrorThrowingDriver implements LogDriver {
     }
   }
 
-  logError(formattedLog: string): void {
+  logError({ formattedLog }: LumberjackLogDriverLog): void {
     if (this.logCount < this.config.logsBeforeThrowing) {
       this.logCount += 1;
     } else {
@@ -38,7 +38,7 @@ export class ErrorThrowingDriver implements LogDriver {
     }
   }
 
-  logInfo(formattedLog: string): void {
+  logInfo({ formattedLog }: LumberjackLogDriverLog): void {
     if (this.logCount < this.config.logsBeforeThrowing) {
       this.logCount += 1;
     } else {
@@ -46,7 +46,7 @@ export class ErrorThrowingDriver implements LogDriver {
     }
   }
 
-  logTrace(formattedLog: string): void {
+  logTrace({ formattedLog }: LumberjackLogDriverLog): void {
     if (this.logCount < this.config.logsBeforeThrowing) {
       this.logCount += 1;
     } else {
@@ -54,7 +54,7 @@ export class ErrorThrowingDriver implements LogDriver {
     }
   }
 
-  logWarning(formattedLog: string): void {
+  logWarning({ formattedLog }: LumberjackLogDriverLog): void {
     if (this.logCount < this.config.logsBeforeThrowing) {
       this.logCount += 1;
     } else {

@@ -2,6 +2,6 @@ import { LogDriver } from './log-driver';
 
 export interface DriverError {
   driver: LogDriver;
-  formattedMessage: string;
+  formattedLog: string;
   error: unknown;
 }

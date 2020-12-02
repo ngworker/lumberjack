@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 
-import { LogDriver, LogDriverConfig } from '@ngworker/lumberjack';
+import { LogDriver, LogDriverConfig, LumberjackLogDriverLog } from '@ngworker/lumberjack';
 
 import { consoleDriverConfigToken } from './console-driver-config.token';
 import { LumberjackConsole } from './lumberjack-console';
@@ -13,28 +13,28 @@ export class ConsoleDriver implements LogDriver {
     @Inject(lumberjackConsoleToken) private console: LumberjackConsole
   ) {}
 
-  logCritical(formattedLog: string): void {
+  logCritical({ formattedLog }: LumberjackLogDriverLog): void {
     this.console.error(formattedLog);
   }
 
-  logDebug(formattedLog: string): void {
+  logDebug({ formattedLog }: LumberjackLogDriverLog): void {
     this.console.debug(formattedLog);
   }
 
-  logError(formattedLog: string): void {
+  logError({ formattedLog }: LumberjackLogDriverLog): void {
     this.console.error(formattedLog);
   }
 
-  logInfo(formattedLog: string): void {
+  logInfo({ formattedLog }: LumberjackLogDriverLog): void {
     this.console.info(formattedLog);
   }
 
-  logTrace(formattedLog: string): void {
+  logTrace({ formattedLog }: LumberjackLogDriverLog): void {
     // tslint:disable-next-line: no-console
     this.console.trace(formattedLog);
   }
 
-  logWarning(formattedLog: string): void {
+  logWarning({ formattedLog }: LumberjackLogDriverLog): void {
     this.console.warn(formattedLog);
   }
 }

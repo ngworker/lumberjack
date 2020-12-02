@@ -55,7 +55,7 @@ describe(LumberjackFormatter.name, () => {
       const { service } = setup();
       const expectedLog = createErrorLog();
 
-      const { logEntry: actualLog } = service.formatLogEntry(expectedLog);
+      const { log: actualLog } = service.formatLogEntry(expectedLog);
 
       expect(actualLog).toBe(expectedLog);
     });
@@ -70,7 +70,7 @@ describe(LumberjackFormatter.name, () => {
       const debugLog = createDebugLog('Test debug message');
       const expectedLog = createFormatErrorLog(formatterErrorMessage, debugLog);
 
-      const { logEntry: actualLog } = service.formatLogEntry(debugLog);
+      const { log: actualLog } = service.formatLogEntry(debugLog);
 
       expect(actualLog).toEqual(expectedLog);
     });
@@ -83,7 +83,7 @@ describe(LumberjackFormatter.name, () => {
       });
       const warning = createWarningLog();
 
-      const { message: actualMessage } = service.formatLogEntry(warning);
+      const { formattedLog: actualMessage } = service.formatLogEntry(warning);
 
       expect(actualMessage).toBe(LumberjackLogLevel.Warning);
     });
@@ -100,7 +100,7 @@ describe(LumberjackFormatter.name, () => {
       const criticalLog = createCriticalLog('Critical test');
       const formatErrorLog = createFormatErrorLog(formatterErrorMessage, criticalLog);
 
-      const { message: actualMessage } = service.formatLogEntry(criticalLog);
+      const { formattedLog: actualMessage } = service.formatLogEntry(criticalLog);
 
       expect(actualMessage).toBe(
         `${formatErrorLog.level} ${nowTimestamp} [LumberjackFormatError] ${formatErrorLog.message}`

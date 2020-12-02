@@ -19,42 +19,42 @@ export class LumberjackFormatter {
     private time: LumberjackTimeService
   ) {}
 
-  formatDriverError({ driver, formattedMessage, error }: DriverError): string {
+  formatDriverError({ driver, formattedLog, error }: DriverError): string {
     const thrownErrorMessage = (error as Error).message || String(error);
 
-    return `Could not log message "${formattedMessage}" to ${driver.constructor.name}.\n Error: "${thrownErrorMessage}"`;
+    return `Could not log message "${formattedLog}" to ${driver.constructor.name}.\n Error: "${thrownErrorMessage}"`;
   }
 
-  formatLogEntry(logEntry: LumberjackLog): FormatLogEntryResult {
+  formatLogEntry(log: LumberjackLog): FormatLogEntryResult {
     const { format } = this.config;
     let result: FormatLogEntryResult;
 
     try {
       result = {
-        logEntry,
-        message: format(logEntry),
+        log,
+        formattedLog: format(log),
       };
     } catch (error) {
-      const errorLog = this.createErrorLog(error, logEntry);
+      const errorLog = this.createErrorLog(error, log);
       const errorMessage = this.formatErrorMessage(errorLog);
 
       result = {
-        logEntry: errorLog,
-        message: errorMessage,
+        log: errorLog,
+        formattedLog: errorMessage,
       };
     }
 
     return result;
   }
 
-  private createErrorLog(error: unknown, logEntry: LumberjackLog): LumberjackLog {
+  private createErrorLog(error: unknown, log: LumberjackLog): LumberjackLog {
     const thrownErrorMessage = (error as Error).message || String(error);
 
     return {
       context: 'LumberjackFormatError',
       createdAt: this.time.getUnixEpochTicks(),
       level: LumberjackLogLevel.Error,
-      message: `Could not format message "${logEntry.message}". Error: "${thrownErrorMessage}"`,
+      message: `Could not format message "${log.message}". Error: "${thrownErrorMessage}"`,
     };
   }
 
