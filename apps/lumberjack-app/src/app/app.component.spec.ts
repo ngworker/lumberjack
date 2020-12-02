@@ -3,7 +3,7 @@ import { createComponentFactory, Spectator } from '@ngneat/spectator';
 
 import { NoopConsoleModule } from '@internal/console-driver/test-util';
 import { LumberjackLevel, LumberjackModule } from '@ngworker/lumberjack';
-import { ConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
+import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
 import { HttpDriverModule } from '@ngworker/lumberjack/http-driver';
 
 import { AppComponent } from './app.component';
@@ -15,7 +15,7 @@ describe('AppComponent', () => {
     imports: [
       HttpClientTestingModule,
       LumberjackModule.forRoot(),
-      ConsoleDriverModule.forRoot(),
+      LumberjackConsoleDriverModule.forRoot(),
       NoopConsoleModule,
       HttpDriverModule.forRoot({
         levels: [LumberjackLevel.Error],
