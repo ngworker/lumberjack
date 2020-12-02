@@ -14,14 +14,14 @@ import {
 
 describe('Configuration API', () => {
   describe('Interfaces', () => {
-    it('exposes LumberjackLogDriverConfig', () => {
-      const value: LumberjackLogDriverConfig | undefined = undefined;
+    it('exposes LumberjackConfig', () => {
+      const value: LumberjackConfig | undefined = undefined;
 
       expect(value).toBeUndefined();
     });
 
-    it('exposes LumberjackConfig', () => {
-      const value: LumberjackConfig | undefined = undefined;
+    it('exposes LumberjackLogDriverConfig', () => {
+      const value: LumberjackLogDriverConfig | undefined = undefined;
 
       expect(value).toBeUndefined();
     });
@@ -50,14 +50,14 @@ describe('Configuration API', () => {
   });
 
   describe('Dependency injection tokens', () => {
-    it('exposes lumberjackLogDriverConfigToken', () => {
-      const sut = lumberjackLogDriverConfigToken;
+    it('exposes lumberjackConfigToken', () => {
+      const sut = lumberjackConfigToken;
 
       expect(sut).toBeInstanceOf(InjectionToken);
     });
 
-    it('exposes lumberjackConfigToken', () => {
-      const sut = lumberjackConfigToken;
+    it('exposes lumberjackLogDriverConfigToken', () => {
+      const sut = lumberjackLogDriverConfigToken;
 
       expect(sut).toBeInstanceOf(InjectionToken);
     });
