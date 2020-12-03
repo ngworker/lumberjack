@@ -1,14 +1,14 @@
-# HttpDriver
+# LumberjackHttpDriver
 
-This `driver` is used to send an **HTTP** request to a configured **Log Store** server.
+This log driver is used to send an HTTP request to a configured log store server.
 
-Take this implementation as an advanced example of a `driver` implementation. Some of the decisions made are not compatible with every existing **Log Store**.
+Take this implementation as an advanced example of a log driver implementation. Some of the decisions made are not compatible with every existing log store.
 
-If more than one **Log Store** is supported, or multiple endpoints for the same **Log Store** are used; one `HttpDriverModule` **SHOULD** be configured per **Log Store**/**Log Endpoint**.
+If more than one log store is supported or multiple endpoints for the same log store are used, one `LumberjackHttpDriverModule` must be configured per log store or endpoint.
 
 ## Implementation
 
-The following are complementary interfaces for the `driver` implementation.
+The following are complementary interfaces for the log driver implementation.
 
 ```typescript
 interface LumberjackHttpLog {
@@ -18,16 +18,16 @@ interface LumberjackHttpLog {
 }
 ```
 
-The `HttpLogEntry` is the object sent to the **Log Store**.
+The `LumberjackHttpLog` is the object sent to the log store.
 
-The rest of the `HttpDriver` is defined as follows
+The rest of the `LumberjackHttpDriver` is defined as follows
 
 ```typescript
 @Injectable()
 export class HttpDriver implements LogDriver {
   constructor(
     private http: HttpClient,
-    @Inject(httpDriverConfigToken) public config: HttpDriverConfig,
+    @Inject(lumberjackHttpDriverConfigToken) public config: LumberjackHttpDriverConfig,
     private ngZone: NgZone
   ) {}
 
@@ -57,10 +57,9 @@ export class HttpDriver implements LogDriver {
 
   private sendLog(formattedLog: string, logLevel: LumberjackLogLevel): void {
     const { origin, retryOptions, storeUrl } = this.config;
-    const httpLog: HttpLogEntry = { log, level: logLevel, origin };
+    const httpLog: LumberjackHttpLog = { log, level: logLevel, origin };
 
     this.ngZone.runOutsideAngular(() => {
-      // tslint:disable-next-line: no-non-null-assertion
       this.http
         .post<void>(storeUrl, httpLog)
         .pipe(retryWithDelay(retryOptions.maxRetries, retryOptions.delayMs))
@@ -70,25 +69,20 @@ export class HttpDriver implements LogDriver {
 }
 ```
 
-This `driver` receives a `HttpClient`, a `NgZone` for optimizations purpose and a custom configuration object that extends the `LogDriverConfig`.
+The HTTP log driver receives an `HttpClient`, an `NgZone` for optimizations purpose, and a custom configuration object that extends the `LumberjackLogDriverConfig`.
 
 ```typescript
 export interface LumberjackHttpDriverConfig extends LumberjackLogDriverConfig {
   /**
-   *
-   * The identifier of the app who emitted the log.
+   * The identifier of the app which emitted the log.
    * This is used to organize logs on the log store.
-   *
    */
   readonly origin: string;
   /**
-   *
-   * The desired retry behavior options on failed requests
-   *
+   * The desired retry behavior options on failed requests.
    */
   readonly retryOptions: LumberjackHttpDriverRetryOptions;
   /**
-   *
    * The url of the log store endpoint.
    *
    * The endpoint matching this url MUST support the POST method.
@@ -97,16 +91,16 @@ export interface LumberjackHttpDriverConfig extends LumberjackLogDriverConfig {
 }
 
 export interface LumberjackHttpDriverRetryOptions {
-  readonly maxRetries: number;
   readonly delayMs: number;
+  readonly maxRetries: number;
 }
 ```
 
-The `sendLog` method has been optimized to run outside **Angular**'s `NgZone`, avoiding unnecessary change detection cycles.
+The `sendLog` method has been optimized to run outside Angular's `NgZone`, avoiding unnecessary change detection cycles.
 
-### `LumberjackHttpDriverModule`
+### LumberjackHttpDriverModule
 
-The `LumberjackHttpDriverModule` is very similar to the `LumberjackConsoleDriverModule`, however now we have a `withOptions()` factory function that allows us to provide the `LumberjackHttpDriverConfig` partially and to fall down to the defined defaults.
+The `LumberjackHttpDriverModule` is very similar to the `LumberjackConsoleDriverModule`, however now we have a static `withOptions` function that allows us to pass `LumberjackHttpDriverOptions` to fall back to the settings in `LumberjackLogDriverConfig`.
 
 ```typescript
 @NgModule()
@@ -153,7 +147,7 @@ The `LumberjackHttpDriverRootModule` has more interesting behavior.
 ```typescript
 export function httpDriverFactory(
   http: HttpClient,
-  logDriverConfig: LogDriverConfig,
+  logDriverConfig: LumberjackLogDriverConfig,
   httpDriverConfig: LumberjackHttpDriverConfig,
   ngZone: NgZone
 ): LumberjackHttpDriver {
@@ -169,21 +163,19 @@ export function httpDriverFactory(
   imports: [HttpClientModule],
   providers: [
     {
-      deps: [HttpClient, logDriverConfigToken, httpDriverConfigToken, NgZone],
+      deps: [HttpClient, lumberjackLogDriverConfigToken, lumberjackHttpDriverConfigToken, NgZone],
       multi: true,
-      provide: logDriverToken,
+      provide: lumberjackLogDriverToken,
       useFactory: httpDriverFactory,
     },
   ],
 })
 export class LumberjackHttpDriverRootModule {
   constructor(
-    // tslint:disable: no-any no-null-keyword
     @Optional()
     @SkipSelf()
     @Inject(LumberjackHttpDriverRootModule)
     maybeNgModuleFromParentInjector: LumberjackHttpDriverRootModule = null as any
-    // tslint:enable: no-any no-null-keyword
   ) {
     if (maybeNgModuleFromParentInjector) {
       throw new Error(
@@ -194,10 +186,7 @@ export class LumberjackHttpDriverRootModule {
 }
 ```
 
-We now have the `deps` property, needed to inject the dependencies. In this case the `HttpClient`, the `ngZone`, the `logDriverConfigToken` and the `httpDriverConfigToken`.
-
-This dependencies are used in the `httpDriverFactory` function.
-There, we merge the `logDriverConfig` and `httpDriverConfig` to ensure we have the default configurations, in they are not override, and we return a new instance of the `HttpDriver`.
+We now have the `deps` property, needed to inject the dependencies. In this case the `HttpClient`, the `NgZone`, the `lumberjackLogDriverConfigToken` and the `lumberjackHttpDriverConfigToken`. These dependencies are used in the `httpDriverFactory` function. There, we merge `logDriverConfig` and `httpDriverConfig`and pass them to a new instance of `LumberjackHttpDriver`.
 
 The usage is also very similar.
 
@@ -211,8 +200,8 @@ The usage is also very similar.
     LumberjackHttpDriverModule.forRoot({
       levels: [LumberjackLevel.Error],
       origin: 'ForestApp',
-      storeUrl: '/api/logs',
       retryOptions: { maxRetries: 5, delayMs: 250 },
+      storeUrl: '/api/logs',
     }),
     ...
   ],
