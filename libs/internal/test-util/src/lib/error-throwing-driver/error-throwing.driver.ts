@@ -2,67 +2,69 @@ import { Inject, Injectable } from '@angular/core';
 
 import { LumberjackLogDriver } from '@ngworker/lumberjack';
 
-import { ErrorThrowingDriverConfig, errorThrowingDriverConfigToken } from './error-throwing-driver-config.token';
+import { errorThrowingDriverConfigToken } from './error-throwing-driver-config.token';
+import { ErrorThrowingDriverConfig } from './error-throwing-driver.config';
 
 /**
  * Error-throwing log driver.
  *
- * Every logging method throws an error.
+ * Every logging method throws an error after the configured number of logs.
  */
 @Injectable()
 export class ErrorThrowingDriver implements LumberjackLogDriver {
   private logCount = 0;
+
   constructor(@Inject(errorThrowingDriverConfigToken) public config: ErrorThrowingDriverConfig) {}
 
-  logCritical(logEntry: string): void {
+  logCritical(formattedlog: string): void {
     if (this.logCount < this.config.logsBeforeThrowing) {
       this.logCount += 1;
     } else {
-      this.throwError(logEntry);
+      this.throwError(formattedlog);
     }
   }
 
-  logDebug(logEntry: string): void {
+  logDebug(formattedLog: string): void {
     if (this.logCount < this.config.logsBeforeThrowing) {
       this.logCount += 1;
     } else {
-      this.throwError(logEntry);
+      this.throwError(formattedLog);
     }
   }
 
-  logError(logEntry: string): void {
+  logError(formattedLog: string): void {
     if (this.logCount < this.config.logsBeforeThrowing) {
       this.logCount += 1;
     } else {
-      this.throwError(logEntry);
+      this.throwError(formattedLog);
     }
   }
 
-  logInfo(logEntry: string): void {
+  logInfo(formattedLog: string): void {
     if (this.logCount < this.config.logsBeforeThrowing) {
       this.logCount += 1;
     } else {
-      this.throwError(logEntry);
+      this.throwError(formattedLog);
     }
   }
 
-  logTrace(logEntry: string): void {
+  logTrace(formattedLog: string): void {
     if (this.logCount < this.config.logsBeforeThrowing) {
       this.logCount += 1;
     } else {
-      this.throwError(logEntry);
+      this.throwError(formattedLog);
     }
   }
 
-  logWarning(logEntry: string): void {
+  logWarning(formattedLog: string): void {
     if (this.logCount < this.config.logsBeforeThrowing) {
       this.logCount += 1;
     } else {
-      this.throwError(logEntry);
+      this.throwError(formattedLog);
     }
   }
 
-  private throwError(logEntry: string): never {
-    throw new Error(`${ErrorThrowingDriver.name}: Failed to log "${logEntry}"`);
+  private throwError(formattedLog: string): never {
+    throw new Error(`${ErrorThrowingDriver.name}: Failed to log "${formattedLog}"`);
   }
 }
