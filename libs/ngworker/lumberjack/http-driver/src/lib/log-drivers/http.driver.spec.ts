@@ -10,15 +10,15 @@ import {
   LumberjackModule,
 } from '@ngworker/lumberjack';
 
-import { HttpDriverOptions } from '../configuration/http-driver.options';
 import { LumberjackHttpDriverModule } from '../configuration/lumberjack-http-driver.module';
+import { LumberjackHttpDriverOptions } from '../configuration/lumberjack-http-driver.options';
 import { LumberjackHttpLog } from '../logs/lumberjack-http.log';
 
 import { LumberjackHttpDriver } from './lumberjack-http.driver';
 
 function expectRequest(
   httpTestingController: HttpTestingController,
-  { origin, storeUrl }: HttpDriverOptions,
+  { origin, storeUrl }: LumberjackHttpDriverOptions,
   level: LumberjackLogLevel = LumberjackLevel.Critical
 ) {
   const expectedBody: LumberjackHttpLog = { formattedLog: level, level, origin };
@@ -30,14 +30,14 @@ function expectRequest(
   expect(body).toEqual(expectedBody);
 }
 
-function expectRequestToBeAborted(httpTestingController: HttpTestingController, options: HttpDriverOptions) {
+function expectRequestToBeAborted(httpTestingController: HttpTestingController, options: LumberjackHttpDriverOptions) {
   const { cancelled } = httpTestingController.expectOne(options.storeUrl);
   expect(cancelled).toBeTrue();
 }
 
 function expectFailingRequest(
   httpTestingController: HttpTestingController,
-  { origin, retryOptions, storeUrl }: HttpDriverOptions,
+  { origin, retryOptions, storeUrl }: LumberjackHttpDriverOptions,
   level: LumberjackLevel = LumberjackLevel.Critical
 ) {
   const expectedBody: LumberjackHttpLog = { formattedLog: level, level: LumberjackLevel.Critical, origin };
@@ -61,7 +61,7 @@ function respondWith503ServiceUnavailable(request: TestRequest) {
 describe(LumberjackHttpDriver.name, () => {
   let httpDriver: LumberjackLogDriver;
   let httpTestingController: HttpTestingController;
-  const options: HttpDriverOptions = {
+  const options: LumberjackHttpDriverOptions = {
     storeUrl: 'api/json',
     origin: 'TEST_MODULE',
     retryOptions: { maxRetries: 5, delayMs: 250 },

@@ -14,11 +14,11 @@ import {
 
 import { LumberjackHttpDriver } from '../log-drivers/lumberjack-http.driver';
 
-import { HttpDriverOptions } from './http-driver.options';
 import { LumberjackHttpDriverConfig } from './lumberjack-http-driver.config';
 import { LumberjackHttpDriverModule } from './lumberjack-http-driver.module';
+import { LumberjackHttpDriverOptions } from './lumberjack-http-driver.options';
 
-function createHttpOptions(): HttpDriverOptions {
+function createHttpOptions(): LumberjackHttpDriverOptions {
   return {
     storeUrl: 'api/logstore',
     origin: 'TEST_MODULE',
@@ -65,7 +65,7 @@ const createHttpDriverWithOptions = (
     options,
   }: {
     isLumberjackModuleImportedFirst?: boolean;
-    options: HttpDriverOptions;
+    options: LumberjackHttpDriverOptions;
   } = { options: createHttpOptions() }
 ) => {
   TestBed.configureTestingModule({

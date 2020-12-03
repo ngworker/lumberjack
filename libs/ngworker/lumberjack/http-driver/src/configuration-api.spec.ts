@@ -4,10 +4,10 @@ import { isClass } from '@internal/test-util';
 
 import {
   httpDriverConfigToken,
-  HttpDriverOptions,
   HttpDriverRetryOptions,
   LumberjackHttpDriverConfig,
   LumberjackHttpDriverModule,
+  LumberjackHttpDriverOptions,
 } from './index';
 
 describe('Configuration API', () => {
@@ -26,8 +26,8 @@ describe('Configuration API', () => {
   });
 
   describe('Types', () => {
-    it('exposes HttpDriverOptions', () => {
-      const value: HttpDriverOptions | undefined = undefined;
+    it('exposes LumberjackHttpDriverOptions', () => {
+      const value: LumberjackHttpDriverOptions | undefined = undefined;
 
       expect(value).toBeUndefined();
     });
