@@ -1,5 +1,7 @@
 import { InjectionToken } from '@angular/core';
 
-import { HttpDriverConfig } from './http-driver.config';
+import { LumberjackHttpDriverConfig } from './lumberjack-http-driver.config';
 
-export const httpDriverConfigToken: InjectionToken<HttpDriverConfig> = new InjectionToken('__HTTP_DRIVER_CONFIG__');
+export const httpDriverConfigToken: InjectionToken<LumberjackHttpDriverConfig> = new InjectionToken(
+  '__HTTP_DRIVER_CONFIG__'
+);

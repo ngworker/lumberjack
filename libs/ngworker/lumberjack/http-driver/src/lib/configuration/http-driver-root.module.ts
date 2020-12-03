@@ -10,15 +10,15 @@ import {
 import { LumberjackHttpDriver } from '../log-drivers/lumberjack-http.driver';
 
 import { httpDriverConfigToken } from './http-driver-config.token';
-import { HttpDriverConfig } from './http-driver.config';
+import { LumberjackHttpDriverConfig } from './lumberjack-http-driver.config';
 
 export function httpDriverFactory(
   http: HttpClient,
   logDriverConfig: LumberjackLogDriverConfig,
-  httpDriverConfig: HttpDriverConfig,
+  httpDriverConfig: LumberjackHttpDriverConfig,
   ngZone: NgZone
 ): LumberjackHttpDriver {
-  const config: HttpDriverConfig = {
+  const config: LumberjackHttpDriverConfig = {
     ...logDriverConfig,
     ...httpDriverConfig,
   };

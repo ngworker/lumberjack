@@ -3,17 +3,17 @@ import { InjectionToken } from '@angular/core';
 import { isClass } from '@internal/test-util';
 
 import {
-  HttpDriverConfig,
   httpDriverConfigToken,
   HttpDriverOptions,
   HttpDriverRetryOptions,
+  LumberjackHttpDriverConfig,
   LumberjackHttpDriverModule,
 } from './index';
 
 describe('Configuration API', () => {
   describe('Interfaces', () => {
-    it('exposes HttpDriverConfig', () => {
-      const value: HttpDriverConfig | undefined = undefined;
+    it('exposes LumberjackHttpDriverConfig', () => {
+      const value: LumberjackHttpDriverConfig | undefined = undefined;
 
       expect(value).toBeUndefined();
     });
