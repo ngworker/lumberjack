@@ -1,6 +1,6 @@
 import { LumberjackLevel, LumberjackLogLevel, LumberjackTimeService } from '@ngworker/lumberjack';
 
-import { resolveDependency } from '../resolve-dependency';
+import { resolveDependency } from '../angular/resolve-dependency';
 
 const createLog = (level: LumberjackLogLevel, message = '', context = 'Test') => ({
   context,

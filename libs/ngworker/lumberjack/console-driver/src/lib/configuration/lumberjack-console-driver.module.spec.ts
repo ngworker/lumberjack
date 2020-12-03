@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { expectNgModuleToBeGuarded, resolveDependency } from '@internal/test-util';
+import { expectNgModuleToBeGuardedAgainstDirectImport, resolveDependency } from '@internal/test-util';
 import {
   lumberjackConfigToken,
   LumberjackLevel,
@@ -36,7 +36,7 @@ const createConsoleDriver = ({
 
 describe(LumberjackConsoleDriverModule.name, () => {
   it(`cannot be imported without using the ${LumberjackConsoleDriverModule.forRoot.name} method`, () => {
-    expectNgModuleToBeGuarded(LumberjackConsoleDriverModule);
+    expectNgModuleToBeGuardedAgainstDirectImport(LumberjackConsoleDriverModule);
   });
 
   describe(LumberjackConsoleDriverModule.forRoot.name, () => {

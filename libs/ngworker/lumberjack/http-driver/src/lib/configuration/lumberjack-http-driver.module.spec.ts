@@ -1,7 +1,7 @@
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
-import { expectNgModuleToBeGuarded, resolveDependency } from '@internal/test-util';
+import { expectNgModuleToBeGuardedAgainstDirectImport, resolveDependency } from '@internal/test-util';
 import {
   LumberjackConfigLevels,
   lumberjackConfigToken,
@@ -84,7 +84,7 @@ const createHttpDriverWithOptions = (
 
 describe(LumberjackHttpDriverModule.name, () => {
   it(`cannot be imported without using the ${LumberjackHttpDriverModule.forRoot.name} method`, () => {
-    expectNgModuleToBeGuarded(LumberjackHttpDriverModule);
+    expectNgModuleToBeGuardedAgainstDirectImport(LumberjackHttpDriverModule);
   });
 
   describe(LumberjackHttpDriverModule.forRoot.name, () => {

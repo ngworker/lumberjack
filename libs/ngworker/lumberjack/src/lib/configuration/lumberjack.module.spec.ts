@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { expectNgModuleToBeGuarded, resolveDependency } from '@internal/test-util';
+import { expectNgModuleToBeGuardedAgainstDirectImport, resolveDependency } from '@internal/test-util';
 
 import { isProductionEnvironmentToken } from '../environment/is-production-environment.token';
 import { utcTimestampFor } from '../formatting/utc-timestamp-for';
@@ -19,7 +19,7 @@ import { LumberjackOptions } from './lumberjack.options';
 
 describe(LumberjackModule.name, () => {
   it(`cannot be imported without using the ${LumberjackModule.forRoot.name} method`, () => {
-    expectNgModuleToBeGuarded(LumberjackModule);
+    expectNgModuleToBeGuardedAgainstDirectImport(LumberjackModule);
   });
 
   describe(LumberjackModule.forRoot.name, () => {
