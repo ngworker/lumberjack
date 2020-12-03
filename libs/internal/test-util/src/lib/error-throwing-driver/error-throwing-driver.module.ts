@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import { defaultErrorDriverThrowingConfig } from './default-error-throwing-driver-config';
+import { defaultErrorThrowingDriverConfig } from './default-error-throwing-driver-config';
 import { ErrorThrowingDriverConfig, errorThrowingDriverConfigToken } from './error-throwing-driver-config.token';
 import { ErrorThrowingDriverRootModule } from './error-throwing-driver-root.module';
 
@@ -14,7 +14,7 @@ export class ErrorThrowingDriverModule {
   static forRoot(config?: Partial<ErrorThrowingDriverConfig>): ModuleWithProviders<ErrorThrowingDriverRootModule> {
     return {
       ngModule: ErrorThrowingDriverRootModule,
-      providers: [{ provide: errorThrowingDriverConfigToken, useValue: config || defaultErrorDriverThrowingConfig }],
+      providers: [{ provide: errorThrowingDriverConfigToken, useValue: config || defaultErrorThrowingDriverConfig }],
     };
   }
 
