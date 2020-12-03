@@ -6,7 +6,8 @@ import {
   lumberjackLogDriverToken,
 } from '@ngworker/lumberjack';
 
-import { ErrorThrowingDriverConfig, errorThrowingDriverConfigToken } from './error-throwing-driver-config.token';
+import { errorThrowingDriverConfigToken } from './error-throwing-driver-config.token';
+import { ErrorThrowingDriverConfig } from './error-throwing-driver.config';
 import { ErrorThrowingDriver } from './error-throwing.driver';
 
 export function errorThrowingDriverFactory(
