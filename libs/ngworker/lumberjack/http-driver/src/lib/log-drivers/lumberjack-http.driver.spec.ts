@@ -62,9 +62,9 @@ describe(LumberjackHttpDriver.name, () => {
   let httpDriver: LumberjackLogDriver;
   let httpTestingController: HttpTestingController;
   const options: LumberjackHttpDriverOptions = {
-    storeUrl: 'api/json',
     origin: 'TEST_MODULE',
     retryOptions: { maxRetries: 5, delayMs: 250 },
+    storeUrl: 'api/json',
   };
 
   beforeEach(() => {
@@ -82,12 +82,12 @@ describe(LumberjackHttpDriver.name, () => {
 
   describe('logs to a web API using the right log level', () => {
     ([
-      [LumberjackLevel.Critical, (driver: LumberjackLogDriver) => driver.logCritical],
-      [LumberjackLevel.Debug, (driver: LumberjackLogDriver) => driver.logDebug],
-      [LumberjackLevel.Error, (driver: LumberjackLogDriver) => driver.logError],
-      [LumberjackLevel.Info, (driver: LumberjackLogDriver) => driver.logInfo],
-      [LumberjackLevel.Trace, (driver: LumberjackLogDriver) => driver.logTrace],
-      [LumberjackLevel.Warning, (driver: LumberjackLogDriver) => driver.logWarning],
+      [LumberjackLevel.Critical, (driver) => driver.logCritical],
+      [LumberjackLevel.Debug, (driver) => driver.logDebug],
+      [LumberjackLevel.Error, (driver) => driver.logError],
+      [LumberjackLevel.Info, (driver) => driver.logInfo],
+      [LumberjackLevel.Trace, (driver) => driver.logTrace],
+      [LumberjackLevel.Warning, (driver) => driver.logWarning],
     ] as ReadonlyArray<[LumberjackLogLevel, (driver: LumberjackLogDriver) => (formattedLog: string) => void]>).forEach(
       ([logLevel, logMethod]) => {
         it(`sends a ${logLevel} level log to the configured URL`, () => {
