@@ -1,7 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { httpDriverConfigToken } from './http-driver-config.token';
-import { HttpDriverRootModule } from './http-driver-root.module';
+import { LumberjackHttpDriverRootModule } from './lumberjack-http-driver-root.module';
 import { LumberjackHttpDriverConfig } from './lumberjack-http-driver.config';
 import { LumberjackHttpDriverOptions } from './lumberjack-http-driver.options';
 
@@ -10,9 +10,9 @@ export class LumberjackHttpDriverModule {
   /**
    * Pass a full HTTP driver configuration.
    */
-  static forRoot(config: LumberjackHttpDriverConfig): ModuleWithProviders<HttpDriverRootModule> {
+  static forRoot(config: LumberjackHttpDriverConfig): ModuleWithProviders<LumberjackHttpDriverRootModule> {
     return {
-      ngModule: HttpDriverRootModule,
+      ngModule: LumberjackHttpDriverRootModule,
       providers: [
         {
           provide: httpDriverConfigToken,
@@ -26,9 +26,9 @@ export class LumberjackHttpDriverModule {
    * Pass options exclusive to the HTTP driver configuration, but fall back on
    * the log driver config for common options.
    */
-  static withOptions(options: LumberjackHttpDriverOptions): ModuleWithProviders<HttpDriverRootModule> {
+  static withOptions(options: LumberjackHttpDriverOptions): ModuleWithProviders<LumberjackHttpDriverRootModule> {
     return {
-      ngModule: HttpDriverRootModule,
+      ngModule: LumberjackHttpDriverRootModule,
       providers: [
         {
           provide: httpDriverConfigToken,

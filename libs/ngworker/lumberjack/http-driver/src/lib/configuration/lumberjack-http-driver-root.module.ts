@@ -36,18 +36,18 @@ export function httpDriverFactory(
     },
   ],
 })
-export class HttpDriverRootModule {
+export class LumberjackHttpDriverRootModule {
   constructor(
     // tslint:disable: no-any no-null-keyword
     @Optional()
     @SkipSelf()
-    @Inject(HttpDriverRootModule)
-    maybeNgModuleFromParentInjector: HttpDriverRootModule = null as any
-    // tslint:disable: no-any no-null-keyword
+    @Inject(LumberjackHttpDriverRootModule)
+    maybeNgModuleFromParentInjector: LumberjackHttpDriverRootModule = null as any
+    // tslint:enable: no-any no-null-keyword
   ) {
     if (maybeNgModuleFromParentInjector) {
       throw new Error(
-        'HttpDriverModule.forRoot registered in multiple injectors. Only call it from your root injector such as in AppModule.'
+        'LumberjackHttpDriverModule.forRoot registered in multiple injectors. Only call it from your root injector such as in AppModule.'
       );
     }
   }
