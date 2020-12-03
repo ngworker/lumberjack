@@ -41,8 +41,8 @@ export class LumberjackHttpDriver implements LumberjackLogDriver {
   }
 
   private sendLog(formattedLog: string, logLevel: LumberjackLogLevel): void {
-    const { origin, storeUrl, retryOptions } = this.config;
-    const httpLog: LumberjackHttpLog = { formattedLog, origin, level: logLevel };
+    const { origin, retryOptions, storeUrl } = this.config;
+    const httpLog: LumberjackHttpLog = { formattedLog, level: logLevel, origin };
 
     this.ngZone.runOutsideAngular(() => {
       this.http
