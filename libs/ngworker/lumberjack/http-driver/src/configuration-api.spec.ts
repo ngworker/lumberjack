@@ -3,8 +3,8 @@ import { InjectionToken } from '@angular/core';
 import { isClass } from '@internal/test-util';
 
 import {
-  httpDriverConfigToken,
   LumberjackHttpDriverConfig,
+  lumberjackHttpDriverConfigToken,
   LumberjackHttpDriverModule,
   LumberjackHttpDriverOptions,
   LumberjackHttpDriverRetryOptions,
@@ -34,8 +34,8 @@ describe('Configuration API', () => {
   });
 
   describe('Dependency injection tokens', () => {
-    it('exposes httpDriverConfigToken', () => {
-      const sut = httpDriverConfigToken;
+    it('exposes lumberjackHttpDriverConfigToken', () => {
+      const sut = lumberjackHttpDriverConfigToken;
 
       expect(sut).toBeInstanceOf(InjectionToken);
     });

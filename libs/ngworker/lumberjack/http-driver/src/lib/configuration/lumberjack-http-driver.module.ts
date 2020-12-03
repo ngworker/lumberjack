@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import { httpDriverConfigToken } from './http-driver-config.token';
+import { lumberjackHttpDriverConfigToken } from './lumberjack-http-driver-config.token';
 import { LumberjackHttpDriverRootModule } from './lumberjack-http-driver-root.module';
 import { LumberjackHttpDriverConfig } from './lumberjack-http-driver.config';
 import { LumberjackHttpDriverOptions } from './lumberjack-http-driver.options';
@@ -15,7 +15,7 @@ export class LumberjackHttpDriverModule {
       ngModule: LumberjackHttpDriverRootModule,
       providers: [
         {
-          provide: httpDriverConfigToken,
+          provide: lumberjackHttpDriverConfigToken,
           useValue: config,
         },
       ],
@@ -31,7 +31,7 @@ export class LumberjackHttpDriverModule {
       ngModule: LumberjackHttpDriverRootModule,
       providers: [
         {
-          provide: httpDriverConfigToken,
+          provide: lumberjackHttpDriverConfigToken,
           useValue: options,
         },
       ],
