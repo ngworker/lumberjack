@@ -1,4 +1,4 @@
-/**
+/*
  * Public API surface of @ngworker/lumberjack/http-driver
  */
 
