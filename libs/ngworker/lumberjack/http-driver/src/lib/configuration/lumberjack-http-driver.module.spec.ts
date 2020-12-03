@@ -20,18 +20,18 @@ import { LumberjackHttpDriverOptions } from './lumberjack-http-driver.options';
 
 function createHttpOptions(): LumberjackHttpDriverOptions {
   return {
-    storeUrl: 'api/logstore',
     origin: 'TEST_MODULE',
     retryOptions: { maxRetries: 5, delayMs: 250 },
+    storeUrl: 'api/logstore',
   };
 }
 
 function createHttpConfig(levels: LumberjackConfigLevels): LumberjackHttpDriverConfig {
   return {
     levels,
-    storeUrl: 'api/logstore',
     origin: 'TEST_MODULE',
     retryOptions: { maxRetries: 5, delayMs: 250 },
+    storeUrl: 'api/logstore',
   };
 }
 
