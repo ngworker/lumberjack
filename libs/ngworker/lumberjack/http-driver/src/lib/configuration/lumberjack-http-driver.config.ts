@@ -1,6 +1,6 @@
 import { LumberjackLogDriverConfig } from '@ngworker/lumberjack';
 
-import { HttpDriverRetryOptions } from './http-driver-retry.options';
+import { LumberjackHttpDriverRetryOptions } from './lumberjack-http-driver-retry.options';
 
 export interface LumberjackHttpDriverConfig extends LumberjackLogDriverConfig {
   /**
@@ -15,7 +15,7 @@ export interface LumberjackHttpDriverConfig extends LumberjackLogDriverConfig {
    * The desired retry behavior options on failed requests
    *
    */
-  readonly retryOptions: HttpDriverRetryOptions;
+  readonly retryOptions: LumberjackHttpDriverRetryOptions;
   /**
    *
    * The url of the log store endpoint.

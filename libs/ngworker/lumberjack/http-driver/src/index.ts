@@ -4,7 +4,7 @@
 
 // Configuration
 export { httpDriverConfigToken } from './lib/configuration/http-driver-config.token';
-export { HttpDriverRetryOptions } from './lib/configuration/http-driver-retry.options';
+export { LumberjackHttpDriverRetryOptions } from './lib/configuration/lumberjack-http-driver-retry.options';
 export { LumberjackHttpDriverConfig } from './lib/configuration/lumberjack-http-driver.config';
 export { LumberjackHttpDriverModule } from './lib/configuration/lumberjack-http-driver.module';
 export { LumberjackHttpDriverOptions } from './lib/configuration/lumberjack-http-driver.options';
