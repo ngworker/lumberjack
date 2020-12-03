@@ -1,3 +1,4 @@
+import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import {
@@ -23,6 +24,7 @@ function createFormatErrorLog(formatterErrorMessage: string, logEntry: Lumberjac
   );
 }
 
+@Injectable()
 class FakeTimeService extends LumberjackTimeService {
   private now = new Date();
 
