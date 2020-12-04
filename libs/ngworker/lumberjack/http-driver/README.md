@@ -12,9 +12,9 @@ The following are complementary interfaces for the log driver implementation.
 
 ```typescript
 interface LumberjackHttpLog {
-  formattedLog: string;
-  level: LumberjackLogLevel;
-  origin: string;
+  readonly formattedLog: string;
+  readonly level: LumberjackLogLevel;
+  readonly origin: string;
 }
 ```
 
