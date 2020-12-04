@@ -4,8 +4,6 @@ This log driver is used to send an HTTP request to a configured log store server
 
 Take this implementation as an advanced example of a log driver implementation. Some of the decisions made are not compatible with every existing log store.
 
-If more than one log store is supported or multiple endpoints for the same log store are used, one `LumberjackHttpDriverModule` must be configured per log store or endpoint.
-
 ## Implementation
 
 The following are complementary interfaces for the log driver implementation.
