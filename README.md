@@ -306,7 +306,7 @@ If no configuration is passed, then the root `LogDriverConfig` is used.
 import { InjectionToken } from '@angular/core';
 import { LumberjackLogDriverConfig, lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
 
-export const consoleDriverConfigToken = new InjectionToken<LumberjackLogDriverConfig>('__CONSOLE_DRIVER__CONFIG__', {
+export const consoleDriverConfigToken = new InjectionToken<LumberjackLogDriverConfig>('__CONSOLE_DRIVER_CONFIG__', {
   factory: () => inject(lumberjackLogDriverConfigToken),
 });
 ```
