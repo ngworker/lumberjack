@@ -108,10 +108,10 @@ export class LumberjackHttpDriverModule {
    */
   static forRoot(config: LumberjackHttpDriverConfig): ModuleWithProviders<LumberjackHttpDriverRootModule> {
     return {
-      ngModule: HttpDriverRootModule,
+      ngModule: LumberjackHttpDriverRootModule,
       providers: [
         {
-          provide: httpDriverConfigToken,
+          provide: lumberjackHttpDriverConfigToken,
           useValue: config,
         },
       ],
@@ -127,7 +127,7 @@ export class LumberjackHttpDriverModule {
       ngModule: LumberjackHttpDriverRootModule,
       providers: [
         {
-          provide: LumberjackHttpDriverConfigToken,
+          provide: lumberjackHttpDriverConfigToken,
           useValue: options,
         },
       ],
