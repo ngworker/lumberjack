@@ -313,7 +313,7 @@ export const consoleDriverConfigToken = new InjectionToken<LumberjackLogDriverCo
 
 This is possible because the `ConsoleDriver` has the same configuration options as the `LumberjackLogDriverConfig`. For adding custom settings, see [LumberjackHttpDriver](https://github.com/ngworker/lumberjack/blob/main/libs/ngworker/lumberjack/http-driver/src/lib/lumberjack-http-driver-root.module.ts).
 
-The most important thing about the `ConsoleDriverModule` is that it provides the `ConsoleDriver` using the `lumberjackLogDriverToken` with the `multi` flag on. This allows us to provide multiple log drivers for Lumberjack at the same time.
+The most important thing about the `LumberjackConsoleDriverModule` is that it provides the `LumberjackConsoleDriver` using the `lumberjackLogDriverToken` with the `multi` flag on. This allows us to provide multiple log drivers for Lumberjack at the same time.
 
 #### Using a custom log driver
 
