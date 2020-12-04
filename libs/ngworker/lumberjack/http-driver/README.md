@@ -22,7 +22,7 @@ The rest of the `LumberjackHttpDriver` is defined as follows
 
 ```typescript
 @Injectable()
-export class HttpDriver implements LogDriver {
+export class LumberjackHttpDriver implements LumberjackLogDriver {
   constructor(
     private http: HttpClient,
     @Inject(lumberjackHttpDriverConfigToken) public config: LumberjackHttpDriverConfig,
