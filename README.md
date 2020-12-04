@@ -163,7 +163,7 @@ Where `utcTimestampFor` is a function that converts Unix Epoch ticks to UTC 0 ho
 
 #### Default log levels
 
-When the `levels` settomg is not configured, log levels are configured depending on whether your application is running in development mode or production mode.
+When the `levels` setting is not configured, log levels are configured depending on whether your application is running in development mode or production mode.
 
 By default, **all** log levels are enabled in development mode.
 
