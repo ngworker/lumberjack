@@ -5,7 +5,7 @@ import { defaultErrorThrowingDriverOptions } from './default-error-throwing-driv
 import { errorThrowingDriverConfigToken } from './error-throwing-driver-config.token';
 import { ErrorThrowingDriverRootModule } from './error-throwing-driver-root.module';
 import { ErrorThrowingDriverConfig } from './error-throwing-driver.config';
-import { ErrorThrowingDriverOptions } from './error-throwring-driver.options';
+import { ErrorThrowingDriverOptions } from './error-throwing-driver.options';
 
 /**
  * Service module for `ErrorThrowingDriver`.

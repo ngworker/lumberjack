@@ -17,7 +17,7 @@ export interface LumberjackLog {
    */
   readonly level: LumberjackLogLevel;
   /**
-   * Log messsage, for example describing an event that happened.
+   * Log message, for example describing an event that happened.
    */
   readonly message: string;
 }

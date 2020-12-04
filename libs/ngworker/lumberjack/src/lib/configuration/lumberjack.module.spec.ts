@@ -73,7 +73,7 @@ describe(LumberjackModule.name, () => {
       expect(actualConfig).toEqual(expectedConfig as LumberjackConfig);
     });
 
-    it('provides a default Lumbrejack configuration in development mode', () => {
+    it('provides a default Lumberjack configuration in development mode', () => {
       TestBed.configureTestingModule({
         imports: [LumberjackModule.forRoot()],
         providers: [{ provide: isProductionEnvironmentToken, useValue: false }],

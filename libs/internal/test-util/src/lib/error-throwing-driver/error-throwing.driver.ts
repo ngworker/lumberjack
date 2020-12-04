@@ -16,11 +16,11 @@ export class ErrorThrowingDriver implements LumberjackLogDriver {
 
   constructor(@Inject(errorThrowingDriverConfigToken) public config: ErrorThrowingDriverConfig) {}
 
-  logCritical(formattedlog: string): void {
+  logCritical(formattedLog: string): void {
     if (this.logCount < this.config.logsBeforeThrowing) {
       this.logCount += 1;
     } else {
-      this.throwError(formattedlog);
+      this.throwError(formattedLog);
     }
   }
 

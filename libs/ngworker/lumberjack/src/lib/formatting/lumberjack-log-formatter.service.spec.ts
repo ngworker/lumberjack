@@ -102,12 +102,12 @@ describe(LumberjackLogFormatter.name, () => {
       const nowTimestamp = '2020-07-07T00:00:00.000Z';
       fakeTime.setTime(new Date(nowTimestamp));
       const criticalLog = createCriticalLog('Critical test');
-      const formattingErorrLog = createFormattingErrorLog(formatterErrorMessage, criticalLog);
+      const formattingErrorLog = createFormattingErrorLog(formatterErrorMessage, criticalLog);
 
       const { formattedLog: actualFormattedLog } = service.formatLog(criticalLog);
 
       expect(actualFormattedLog).toBe(
-        `${formattingErorrLog.level} ${nowTimestamp} [${logFormattingErrorContext}] ${formattingErorrLog.message}`
+        `${formattingErrorLog.level} ${nowTimestamp} [${logFormattingErrorContext}] ${formattingErrorLog.message}`
       );
     });
   });

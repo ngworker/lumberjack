@@ -9,7 +9,7 @@ export * from './lib/angular/resolve-dependency';
 // Error-throwing driver
 export * from './lib/error-throwing-driver/error-throwing-driver.config';
 export * from './lib/error-throwing-driver/error-throwing-driver.module';
-export * from './lib/error-throwing-driver/error-throwring-driver.options';
+export * from './lib/error-throwing-driver/error-throwing-driver.options';
 export * from './lib/error-throwing-driver/error-throwing.driver';
 
 // Functions

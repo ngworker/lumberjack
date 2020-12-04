@@ -94,7 +94,7 @@ export class LumberjackService {
     log: LumberjackLog,
     formattedLog: string,
     drivers: LumberjackLogDriver[],
-    driverErors: LumberjackLogDriverError[] = [],
+    driverErrors: LumberjackLogDriverError[] = [],
     errorIndex = -1
   ): void {
     const stableDrivers: LumberjackLogDriver[] = [];
@@ -103,13 +103,13 @@ export class LumberjackService {
         try {
           this.driveLog(driver, log.level, formattedLog);
           stableDrivers.push(driver);
-          errorIndex = this.removeHandledError(errorIndex, driverErors);
+          errorIndex = this.removeHandledError(errorIndex, driverErrors);
         } catch (error) {
-          driverErors = [...driverErors, { error, logDriver: driver, formattedLog }];
+          driverErrors = [...driverErrors, { error, logDriver: driver, formattedLog }];
         }
       }
     });
-    this.processErrors(stableDrivers, driverErors);
+    this.processErrors(stableDrivers, driverErrors);
   }
 
   private logDriverErrorsToStableDrivers(
