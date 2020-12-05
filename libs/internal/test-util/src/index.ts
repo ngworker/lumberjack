@@ -1,15 +1,31 @@
 /*
- * Public API Surface of @internal/test-util
+ * Public API surface of @internal/test-util
  */
 
+// Angular
+export * from './lib/angular/expect-ng-module-to-be-guarded-against-direct-import';
+export * from './lib/angular/resolve-dependency';
+
+// Error-throwing driver
+export * from './lib/error-throwing-driver/error-throwing-driver.config';
 export * from './lib/error-throwing-driver/error-throwing-driver.module';
+export * from './lib/error-throwing-driver/error-throwing-driver.options';
 export * from './lib/error-throwing-driver/error-throwing.driver';
-export * from './lib/expect-ng-module-to-be-guarded';
+
+// Functions
+export * from './lib/functions/repeat-side-effect';
+
+// Logs
 export * from './lib/logs';
+
+// No-op driver
 export * from './lib/noop-driver/noop-driver.module';
 export * from './lib/noop-driver/noop.driver';
-export * from './lib/resolve-dependency';
+
+// Spy driver
 export * from './lib/spy-driver/spy-driver.module';
 export * from './lib/spy-driver/spy.driver';
-export * from './lib/resolve-dependency';
-export * from './lib/repeat-side-effect';
+
+// Type checking
+export * from './lib/type-checking/is-class';
+export * from './lib/type-checking/is-object';

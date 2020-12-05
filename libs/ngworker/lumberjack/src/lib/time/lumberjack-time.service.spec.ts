@@ -9,7 +9,7 @@ describe(LumberjackTimeService.name, () => {
 
   let service: LumberjackTimeService;
 
-  describe('getUnixEpocTicks', () => {
+  describe('getUnixEpochTicks', () => {
     it('returns the current number of milliseconds since the Unix epoch', () => {
       const fakeDate = new Date('2020-10-10T20:20:20Z');
       const expectedTicks = fakeDate.valueOf();

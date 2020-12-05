@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 
-import { LogDriver, LogDriverConfig, LumberjackLogDriverLog } from '@ngworker/lumberjack';
+import { LumberjackLogDriver, LumberjackLogDriverConfig, LumberjackLogDriverLog } from '@ngworker/lumberjack';
 
 import { noopDriverConfigToken } from './noop-driver-config.token';
 
@@ -10,8 +10,8 @@ import { noopDriverConfigToken } from './noop-driver-config.token';
  * Every logging method is a no-op.
  */
 @Injectable()
-export class NoopDriver implements LogDriver {
-  constructor(@Inject(noopDriverConfigToken) public config: LogDriverConfig) {}
+export class NoopDriver implements LumberjackLogDriver {
+  constructor(@Inject(noopDriverConfigToken) public config: LumberjackLogDriverConfig) {}
 
   logCritical({ formattedLog }: LumberjackLogDriverLog): void {}
 

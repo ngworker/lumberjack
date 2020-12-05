@@ -1,9 +1,9 @@
-import { expectNgModuleToBeGuarded } from '../expect-ng-module-to-be-guarded';
+import { expectNgModuleToBeGuardedAgainstDirectImport } from '../angular/expect-ng-module-to-be-guarded-against-direct-import';
 
 import { SpyDriverModule } from './spy-driver.module';
 
 describe(SpyDriverModule.name, () => {
   it('is guarded against direct import', () => {
-    expectNgModuleToBeGuarded(SpyDriverModule);
+    expectNgModuleToBeGuardedAgainstDirectImport(SpyDriverModule);
   });
 });

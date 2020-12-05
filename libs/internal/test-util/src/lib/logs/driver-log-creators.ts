@@ -1,15 +1,15 @@
 import {
+  LumberjackLevel,
   LumberjackLogDriverLog,
-  LumberjackLogEntryLevel,
   LumberjackLogLevel,
   LumberjackTimeService,
 } from '@ngworker/lumberjack';
 
-import { resolveDependency } from '../resolve-dependency';
+import { resolveDependency } from '../angular/resolve-dependency';
 
 export const createDriverLog = (
   formattedLog: string,
-  level: LumberjackLogEntryLevel,
+  level: LumberjackLogLevel,
   message = '',
   context = 'Test'
 ): LumberjackLogDriverLog => ({
@@ -22,14 +22,14 @@ export const createDriverLog = (
   },
 });
 export const createCriticalDriverLog = (formattedLog: string, message?: string, context?: string) =>
-  createDriverLog(formattedLog, LumberjackLogLevel.Critical, message, context);
+  createDriverLog(formattedLog, LumberjackLevel.Critical, message, context);
 export const createDebugDriverLog = (formattedLog: string, message?: string, context?: string) =>
-  createDriverLog(formattedLog, LumberjackLogLevel.Debug, message, context);
+  createDriverLog(formattedLog, LumberjackLevel.Debug, message, context);
 export const createErrorDriverLog = (formattedLog: string, message?: string, context?: string) =>
-  createDriverLog(formattedLog, LumberjackLogLevel.Error, message, context);
+  createDriverLog(formattedLog, LumberjackLevel.Error, message, context);
 export const createInfoDriverLog = (formattedLog: string, message?: string, context?: string) =>
-  createDriverLog(formattedLog, LumberjackLogLevel.Info, message, context);
+  createDriverLog(formattedLog, LumberjackLevel.Info, message, context);
 export const createTraceDriverLog = (formattedLog: string, message?: string, context?: string) =>
-  createDriverLog(formattedLog, LumberjackLogLevel.Trace, message, context);
+  createDriverLog(formattedLog, LumberjackLevel.Trace, message, context);
 export const createWarningDriverLog = (formattedLog: string, message?: string, context?: string) =>
-  createDriverLog(formattedLog, LumberjackLogLevel.Warning, message, context);
+  createDriverLog(formattedLog, LumberjackLevel.Warning, message, context);

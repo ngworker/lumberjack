@@ -1,17 +1,19 @@
 import { Inject, Injectable } from '@angular/core';
 
-import { LogDriver, LogDriverConfig, LumberjackLogDriverLog } from '@ngworker/lumberjack';
+import { LumberjackLogDriver, LumberjackLogDriverConfig, LumberjackLogDriverLog } from '@ngworker/lumberjack';
 
-import { ErrorThrowingDriverConfig, errorThrowingDriverConfigToken } from './error-throwing-driver-config.token';
+import { errorThrowingDriverConfigToken } from './error-throwing-driver-config.token';
+import { ErrorThrowingDriverConfig } from './error-throwing-driver.config';
 
 /**
  * Error-throwing log driver.
  *
- * Every logging method throws an error.
+ * Every logging method throws an error after the configured number of logs.
  */
 @Injectable()
-export class ErrorThrowingDriver implements LogDriver {
+export class ErrorThrowingDriver implements LumberjackLogDriver {
   private logCount = 0;
+
   constructor(@Inject(errorThrowingDriverConfigToken) public config: ErrorThrowingDriverConfig) {}
 
   logCritical({ formattedLog }: LumberjackLogDriverLog): void {

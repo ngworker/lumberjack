@@ -1,22 +1,21 @@
-import { LumberjackLogEntryLevel, LumberjackLogLevel, LumberjackTimeService } from '@ngworker/lumberjack';
+import { LumberjackLevel, LumberjackLogLevel, LumberjackTimeService } from '@ngworker/lumberjack';
 
-import { resolveDependency } from '../resolve-dependency';
+import { resolveDependency } from '../angular/resolve-dependency';
 
-export const createLog = (level: LumberjackLogEntryLevel, message = '', context = 'Test') => ({
+export const createLog = (level: LumberjackLogLevel, message = '', context = 'Test') => ({
   context,
   createdAt: resolveDependency(LumberjackTimeService).getUnixEpochTicks(),
   level,
   message,
 });
 export const createCriticalLog = (message?: string, context?: string) =>
-  createLog(LumberjackLogLevel.Critical, message, context);
+  createLog(LumberjackLevel.Critical, message, context);
 export const createDebugLog = (message?: string, context?: string) =>
-  createLog(LumberjackLogLevel.Debug, message, context);
+  createLog(LumberjackLevel.Debug, message, context);
 export const createErrorLog = (message?: string, context?: string) =>
-  createLog(LumberjackLogLevel.Error, message, context);
-export const createInfoLog = (message?: string, context?: string) =>
-  createLog(LumberjackLogLevel.Info, message, context);
+  createLog(LumberjackLevel.Error, message, context);
+export const createInfoLog = (message?: string, context?: string) => createLog(LumberjackLevel.Info, message, context);
 export const createTraceLog = (message?: string, context?: string) =>
-  createLog(LumberjackLogLevel.Trace, message, context);
+  createLog(LumberjackLevel.Trace, message, context);
 export const createWarningLog = (message?: string, context?: string) =>
-  createLog(LumberjackLogLevel.Warning, message, context);
+  createLog(LumberjackLevel.Warning, message, context);

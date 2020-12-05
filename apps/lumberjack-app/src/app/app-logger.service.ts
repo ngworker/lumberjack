@@ -6,7 +6,7 @@ import { LumberjackLogger, LumberjackService, LumberjackTimeService } from '@ngw
   providedIn: 'root',
 })
 export class AppLogger extends LumberjackLogger {
-  private static logContext = 'Forest App';
+  public static logContext = 'Forest App';
 
   constructor(lumberjack: LumberjackService, time: LumberjackTimeService) {
     super(lumberjack, time);
