@@ -185,14 +185,23 @@ Lumberjack offers basic log drivers out-of-the-box, namely the `LumberjackConsol
 Every log driver implements the `LumberjackLogDriver` interface.
 
 ```ts
-export interface LumberjackLogDriver<T extends LumberjackLog = LumberjackLog> {
+export interface LumberjackLogDriver<TLog extends LumberjackLog = LumberjackLog> {
   readonly config: LumberjackLogDriverConfig;
-  logCritical(formattedLog: string, log: T): void;
-  logDebug(formattedLog: string, log: T): void;
-  logError(formattedLog: string, log: T): void;
-  logInfo(formattedLog: string, log: T): void;
-  logTrace(formattedLog: string, log: T): void;
-  logWarning(formattedLog: string, log: T): void;
+  logCritical(logEntry: LumberjackLogDriverLog<TLog>): void;
+  logDebug(logEntry: LumberjackLogDriverLog<TLog>): void;
+  logError(logEntry: LumberjackLogDriverLog<TLog>): void;
+  logInfo(logEntry: LumberjackLogDriverLog<TLog>): void;
+  logTrace(logEntry: LumberjackLogDriverLog<TLog>): void;
+  logWarning(logEntry: LumberjackLogDriverLog<TLog>): void;
+}
+```
+
+The `LumberjackLogDriverLog` holds a formatted string representation of the `LumberjackLog` and the `LumberjackLog` itself.
+
+```ts
+export interface LumberjackLogDriverLog<TLog extends LumberjackLog = LumberjackLog> {
+  readonly formattedLog: string;
+  readonly log: TLog;
 }
 ```
 
@@ -232,39 +241,47 @@ export class AppModule {}
 Let's create a simple log driver for the browser console.
 
 ```ts
-import { Injectable } from '@angular/core';
-import { LumberjackLogDriver, LumberjackLogDriverConfig } from '@ngworker/lumberjack';
+import { Inject, Injectable } from '@angular/core';
 
-import { consoleDriverConfigToken } from './console-driver-config.token';
+import { LumberjackLogDriver, LumberjackLogDriverConfig, LumberjackLogDriverLog } from '@ngworker/lumberjack';
+
+import { lumberjackConsoleDriverConfigToken } from '../configuration/lumberjack-console-driver-config.token';
+import { LumberjackConsole } from '../console/lumberjack-console';
+import { lumberjackConsoleToken } from '../console/lumberjack-console.token';
 
 @Injectable()
 export class ConsoleDriver implements LumberjackLogDriver {
-  constructor(@Inject(consoleDriverConfigToken) public config: LumberjackLogDriverConfig) {}
+  constructor(
+    @Inject(lumberjackConsoleDriverConfigToken) public config: LumberjackLogDriverConfig,
+    @Inject(lumberjackConsoleToken) private console: LumberjackConsole
+  ) {}
 
-  logCritical(formattedLog: string): void {
-    console.error(formattedLog);
+  logCritical({ formattedLog }: LumberjackLogDriverLog): void {
+    this.console.error(formattedLog);
   }
 
-  logDebug(formattedLog: string): void {
-    console.debug(formattedLog);
+  logDebug({ formattedLog }: LumberjackLogDriverLog): void {
+    this.console.debug(formattedLog);
   }
 
-  logError(formattedLog: string): void {
-    console.error(formattedLog);
+  logError({ formattedLog }: LumberjackLogDriverLog): void {
+    this.console.error(formattedLog);
   }
 
-  logInfo(formattedLog: string): void {
-    console.info(formattedLog);
+  logInfo({ formattedLog }: LumberjackLogDriverLog): void {
+    this.console.info(formattedLog);
   }
 
-  logTrace(formattedLog: string): void {
-    console.trace(formattedLog);
+  logTrace({ formattedLog }: LumberjackLogDriverLog): void {
+    // tslint:disable-next-line: no-console
+    this.console.trace(formattedLog);
   }
 
-  logWarning(formattedLog: string): void {
-    console.warn(formattedLog);
+  logWarning({ formattedLog }: LumberjackLogDriverLog): void {
+    this.console.warn(formattedLog);
   }
 }
+
 ```
 
 There is nothing special about it. The only remarkable thing is that the config is passed down its constructor and that it is assigned to the public `config` property. Lumberjack uses this configuration to determine which logs to pass to the driver.
