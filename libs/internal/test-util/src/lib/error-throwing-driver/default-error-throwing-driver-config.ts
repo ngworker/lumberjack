@@ -1,8 +1,9 @@
-import { LumberjackLogLevel } from '@ngworker/lumberjack';
+import { LumberjackLevel } from '@ngworker/lumberjack';
 
-import { ErrorThrowingDriverConfig } from './error-throwing-driver-config.token';
+import { defaultErrorThrowingDriverOptions } from './default-error-throwing-driver-options';
+import { ErrorThrowingDriverConfig } from './error-throwing-driver.config';
 
-export const defaultErrorDriverThrowingConfig: ErrorThrowingDriverConfig = {
-  logsBeforeThrowing: 0,
-  levels: [LumberjackLogLevel.Verbose],
+export const defaultErrorThrowingDriverConfig: ErrorThrowingDriverConfig = {
+  ...defaultErrorThrowingDriverOptions,
+  levels: [LumberjackLevel.Verbose],
 };
