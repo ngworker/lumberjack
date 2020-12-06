@@ -62,42 +62,27 @@ export class LumberjackService {
     console.error(errorMessage);
   }
 
-  private driveLog(
-    driver: LumberjackLogDriver,
-    log: LumberjackLog,
-    logLevel: LumberjackLogLevel,
-    formattedLog: string
-  ): void {
-    switch (logLevel) {
+  private driveLog(driver: LumberjackLogDriver, driverLog: LumberjackLogDriverLog): void {
+    switch (driverLog.log.level) {
       case LumberjackLevel.Critical:
-        driver.logCritical(this.createDriverLog(formattedLog, log));
-
+        driver.logCritical(driverLog);
         break;
       case LumberjackLevel.Debug:
-        driver.logDebug(this.createDriverLog(formattedLog, log));
-
+        driver.logDebug(driverLog);
         break;
       case LumberjackLevel.Error:
-        driver.logError(this.createDriverLog(formattedLog, log));
-
+        driver.logError(driverLog);
         break;
       case LumberjackLevel.Info:
-        driver.logInfo(this.createDriverLog(formattedLog, log));
-
+        driver.logInfo(driverLog);
         break;
       case LumberjackLevel.Trace:
-        driver.logTrace(this.createDriverLog(formattedLog, log));
-
+        driver.logTrace(driverLog);
         break;
       case LumberjackLevel.Warning:
-        driver.logWarning(this.createDriverLog(formattedLog, log));
-
+        driver.logWarning(driverLog);
         break;
     }
-  }
-
-  private createDriverLog(formattedLog: string, log: LumberjackLog): LumberjackLogDriverLog {
-    return { formattedLog, log };
   }
 
   private logWithHandleErrors(
