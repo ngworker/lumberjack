@@ -245,43 +245,36 @@ import { Inject, Injectable } from '@angular/core';
 
 import { LumberjackLogDriver, LumberjackLogDriverConfig, LumberjackLogDriverLog } from '@ngworker/lumberjack';
 
-import { lumberjackConsoleDriverConfigToken } from '../configuration/lumberjack-console-driver-config.token';
-import { LumberjackConsole } from '../console/lumberjack-console';
-import { lumberjackConsoleToken } from '../console/lumberjack-console.token';
+import { consoleDriverConfigToken } from './console-driver-config.token';
 
 @Injectable()
 export class ConsoleDriver implements LumberjackLogDriver {
-  constructor(
-    @Inject(lumberjackConsoleDriverConfigToken) public config: LumberjackLogDriverConfig,
-    @Inject(lumberjackConsoleToken) private console: LumberjackConsole
-  ) {}
+  constructor(@Inject(consoleDriverConfigToken) public config: LumberjackLogDriverConfig) {}
 
   logCritical({ formattedLog }: LumberjackLogDriverLog): void {
-    this.console.error(formattedLog);
+    console.error(formattedLog);
   }
 
   logDebug({ formattedLog }: LumberjackLogDriverLog): void {
-    this.console.debug(formattedLog);
+    console.debug(formattedLog);
   }
 
   logError({ formattedLog }: LumberjackLogDriverLog): void {
-    this.console.error(formattedLog);
+    console.error(formattedLog);
   }
 
   logInfo({ formattedLog }: LumberjackLogDriverLog): void {
-    this.console.info(formattedLog);
+    console.info(formattedLog);
   }
 
   logTrace({ formattedLog }: LumberjackLogDriverLog): void {
-    // tslint:disable-next-line: no-console
-    this.console.trace(formattedLog);
+    console.trace(formattedLog);
   }
 
   logWarning({ formattedLog }: LumberjackLogDriverLog): void {
-    this.console.warn(formattedLog);
+    console.warn(formattedLog);
   }
 }
-
 ```
 
 There is nothing special about it. The only remarkable thing is that the config is passed down its constructor and that it is assigned to the public `config` property. Lumberjack uses this configuration to determine which logs to pass to the driver.
