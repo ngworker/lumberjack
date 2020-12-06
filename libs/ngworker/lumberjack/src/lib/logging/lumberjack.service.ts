@@ -111,7 +111,7 @@ export class LumberjackService {
     drivers.forEach((driver) => {
       if (this.canDriveLog(driver, log.level)) {
         try {
-          this.driveLog(driver, log, log.level, formattedLog);
+          this.driveLog(driver, { formattedLog, log });
           stableDrivers.push(driver);
           errorIndex = this.removeHandledError(errorIndex, driverErrors);
         } catch (error) {
