@@ -1,7 +1,7 @@
 import { LumberjackLogDriverConfig } from '../configuration/lumberjack-log-driver.config';
 import { LumberjackLog } from '../logs/lumberjack.log';
 
-import { LumberjackLogDriverLog } from './lumberjack-log-driver-log';
+import { LumberjackLogDriverLog } from './lumberjack-log-driver.log';
 
 export interface LumberjackLogDriver<TPayload extends Readonly<{ [key: string]: unknown }> | void = void> {
   readonly config: LumberjackLogDriverConfig;

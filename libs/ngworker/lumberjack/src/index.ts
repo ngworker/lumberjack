@@ -13,8 +13,8 @@ export { LumberjackOptions } from './lib/configuration/lumberjack.options';
 
 // Log drivers
 export { LumberjackLogDriver } from './lib/log-drivers/lumberjack-log-driver';
+export { LumberjackLogDriverLog } from './lib/log-drivers/lumberjack-log-driver.log';
 export { lumberjackLogDriverToken } from './lib/log-drivers/lumberjack-log-driver.token';
-export { LumberjackLogDriverLog } from './lib/log-drivers/lumberjack-log-driver-log';
 
 // Logging
 export { LumberjackLogger } from './lib/logging/lumberjack-logger.service';

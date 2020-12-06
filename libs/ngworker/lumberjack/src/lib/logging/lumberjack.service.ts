@@ -5,7 +5,7 @@ import { formatLogDriverError } from '../formatting/format-log-driver-error';
 import { LumberjackLogFormatter } from '../formatting/lumberjack-log-formatter.service';
 import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
 import { LumberjackLogDriverError } from '../log-drivers/lumberjack-log-driver-error';
-import { LumberjackLogDriverLog } from '../log-drivers/lumberjack-log-driver-log';
+import { LumberjackLogDriverLog } from '../log-drivers/lumberjack-log-driver.log';
 import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
