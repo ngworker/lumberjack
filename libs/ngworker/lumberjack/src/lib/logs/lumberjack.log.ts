@@ -3,7 +3,8 @@ import { LumberjackLogLevel } from './lumberjack-log-level';
 /**
  * A Lumberjack log entry
  */
-export interface LumberjackLog {
+// tslint:disable-next-line: no-any
+export interface LumberjackLog<F extends Record<string, any> = any> {
   /**
    * Context, for example domain, application, component, or service.
    */
@@ -20,4 +21,9 @@ export interface LumberjackLog {
    * Log message, for example describing an event that happened.
    */
   readonly message: string;
+
+  /**
+   * Holds any extra info
+   */
+  readonly extra?: F;
 }
