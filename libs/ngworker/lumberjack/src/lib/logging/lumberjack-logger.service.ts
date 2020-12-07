@@ -8,8 +8,8 @@ import { LumberjackService } from './lumberjack.service';
 
 @Injectable()
 // tslint:disable-next-line: no-any
-export abstract class LumberjackLogger<F extends Record<string, any> = any> {
-  constructor(private lumberjack: LumberjackService, private time: LumberjackTimeService) {}
+export abstract class LumberjackLogger<F extends Record<string, any> | undefined = undefined> {
+  constructor(private lumberjack: LumberjackService<F>, private time: LumberjackTimeService) {}
 
   protected createCriticalLogger(message: string, context?: string, extra?: F): () => void {
     return this.createLogger(LumberjackLevel.Critical, message, context, extra);

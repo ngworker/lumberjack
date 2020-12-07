@@ -12,12 +12,16 @@ import { LumberjackLogFormatterResult } from './lumberjack-log-formatter-result'
 @Injectable({
   providedIn: 'root',
 })
-export class LumberjackLogFormatter {
-  constructor(@Inject(lumberjackConfigToken) private config: LumberjackConfig, private time: LumberjackTimeService) {}
+// tslint:disable-next-line: no-any
+export class LumberjackLogFormatter<F extends Record<string, any> | undefined = undefined> {
+  constructor(
+    @Inject(lumberjackConfigToken) private config: LumberjackConfig<F>,
+    private time: LumberjackTimeService
+  ) {}
 
-  formatLog(log: LumberjackLog): LumberjackLogFormatterResult {
+  formatLog(log: LumberjackLog<F>): LumberjackLogFormatterResult<F> {
     const { format } = this.config;
-    let result: LumberjackLogFormatterResult;
+    let result: LumberjackLogFormatterResult<F>;
 
     try {
       result = {
@@ -37,7 +41,7 @@ export class LumberjackLogFormatter {
     return result;
   }
 
-  private createFormattingErrorLog(formatError: unknown, log: LumberjackLog): LumberjackLog {
+  private createFormattingErrorLog(formatError: unknown, log: LumberjackLog<F>): LumberjackLog<F> {
     const formattingErrorMessage = (formatError as Error).message || String(formatError);
 
     return {
@@ -45,15 +49,16 @@ export class LumberjackLogFormatter {
       createdAt: this.time.getUnixEpochTicks(),
       level: LumberjackLevel.Error,
       message: `Could not format message "${log.message}". Error: "${formattingErrorMessage}"`,
+      extra: undefined,
     };
   }
 
-  private formatFormattingError(errorEntry: LumberjackLog): string {
+  private formatFormattingError(errorEntry: LumberjackLog<F>): string {
     const { format } = this.config;
     let errorMessage = '';
 
     try {
-      errorMessage = format(errorEntry);
+      errorMessage = format(errorEntry as LumberjackLog<F>);
     } catch {
       errorMessage = lumberjackFormatLog(errorEntry);
     }

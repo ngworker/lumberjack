@@ -1,10 +1,11 @@
+import { LumberjackLevel } from './lumberjack-level';
 import { LumberjackLogLevel } from './lumberjack-log-level';
 
 /**
  * A Lumberjack log entry
  */
 // tslint:disable-next-line: no-any
-export interface LumberjackLog<F extends Record<string, any> = any> {
+export interface LumberjackLog<F extends Record<string, any> | undefined = undefined> {
   /**
    * Context, for example domain, application, component, or service.
    */

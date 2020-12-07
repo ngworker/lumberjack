@@ -1,6 +1,7 @@
 import { LumberjackLog } from '../logs/lumberjack.log';
 
-export interface LumberjackLogDriverLog<TLog extends LumberjackLog = LumberjackLog> {
+// tslint:disable-next-line: no-any
+export interface LumberjackLogDriverLog<F extends Record<string, any> | undefined = undefined> {
   readonly formattedLog: string;
-  readonly log: TLog;
+  readonly log: LumberjackLog<F>;
 }

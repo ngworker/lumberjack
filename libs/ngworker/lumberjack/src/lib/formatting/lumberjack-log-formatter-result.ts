@@ -1,6 +1,7 @@
 import { LumberjackLog } from '../logs/lumberjack.log';
 
-export interface LumberjackLogFormatterResult {
+// tslint:disable-next-line: no-any
+export interface LumberjackLogFormatterResult<F extends Record<string, any> | undefined = undefined> {
   readonly formattedLog: string;
-  readonly log: LumberjackLog;
+  readonly log: LumberjackLog<F>;
 }

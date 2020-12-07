@@ -2,20 +2,52 @@ import { LumberjackLevel, LumberjackLogLevel, LumberjackTimeService } from '@ngw
 
 import { resolveDependency } from '../angular/resolve-dependency';
 
-export const createLog = (level: LumberjackLogLevel, message = '', context = 'Test') => ({
+// tslint:disable-next-line: no-any
+export const createLog = <F extends Record<string, any> | undefined = undefined>(
+  level: LumberjackLogLevel,
+  message = '',
+  context = 'Test',
+  extra?: F
+) => ({
   context,
   createdAt: resolveDependency(LumberjackTimeService).getUnixEpochTicks(),
   level,
   message,
+  extra,
 });
-export const createCriticalLog = (message?: string, context?: string) =>
-  createLog(LumberjackLevel.Critical, message, context);
-export const createDebugLog = (message?: string, context?: string) =>
-  createLog(LumberjackLevel.Debug, message, context);
-export const createErrorLog = (message?: string, context?: string) =>
-  createLog(LumberjackLevel.Error, message, context);
-export const createInfoLog = (message?: string, context?: string) => createLog(LumberjackLevel.Info, message, context);
-export const createTraceLog = (message?: string, context?: string) =>
-  createLog(LumberjackLevel.Trace, message, context);
-export const createWarningLog = (message?: string, context?: string) =>
-  createLog(LumberjackLevel.Warning, message, context);
+// tslint:disable-next-line: no-any
+export const createCriticalLog = <F extends Record<string, any> | undefined = undefined>(
+  message?: string,
+  context?: string,
+  extra?: F
+) => createLog(LumberjackLevel.Critical, message, context, extra);
+// tslint:disable-next-line: no-any
+export const createDebugLog = <F extends Record<string, any> | undefined = undefined>(
+  message?: string,
+  context?: string,
+  extra?: F
+) => createLog(LumberjackLevel.Debug, message, context, extra);
+// tslint:disable-next-line: no-any
+export const createErrorLog = <F extends Record<string, any> | undefined = undefined>(
+  message?: string,
+  context?: string,
+  extra?: F
+) => createLog(LumberjackLevel.Error, message, context, extra);
+// tslint:disable-next-line: no-any
+export const createInfoLog = <F extends Record<string, any> | undefined = undefined>(
+  message?: string,
+  context?: string,
+  extra?: F
+) => createLog(LumberjackLevel.Info, message, context, extra);
+// tslint:disable-next-line: no-any
+export const createTraceLog = <F extends Record<string, any> | undefined = undefined>(
+  message?: string,
+  context?: string,
+  extra?: F
+) => createLog(LumberjackLevel.Trace, message, context, extra);
+// tslint:disable-next-line: no-any
+export const createWarningLog = <F extends Record<string, any> | undefined = undefined>(
+  message?: string,
+  context?: string,
+  extra?: F
+) => createLog(LumberjackLevel.Warning, message, context, extra);

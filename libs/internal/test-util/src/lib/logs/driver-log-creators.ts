@@ -7,29 +7,62 @@ import {
 
 import { resolveDependency } from '../angular/resolve-dependency';
 
-export const createDriverLog = (
+// tslint:disable-next-line: no-any
+export const createDriverLog = <F extends Record<string, any> | undefined = undefined>(
   formattedLog: string,
   level: LumberjackLogLevel,
   message = '',
-  context = 'Test'
-): LumberjackLogDriverLog => ({
+  context = 'Test',
+  extra?: F
+): LumberjackLogDriverLog<F> => ({
   formattedLog,
   log: {
     context,
     createdAt: resolveDependency(LumberjackTimeService).getUnixEpochTicks(),
     level,
     message,
+    extra,
   },
 });
-export const createCriticalDriverLog = (formattedLog: string, message?: string, context?: string) =>
-  createDriverLog(formattedLog, LumberjackLevel.Critical, message, context);
-export const createDebugDriverLog = (formattedLog: string, message?: string, context?: string) =>
-  createDriverLog(formattedLog, LumberjackLevel.Debug, message, context);
-export const createErrorDriverLog = (formattedLog: string, message?: string, context?: string) =>
-  createDriverLog(formattedLog, LumberjackLevel.Error, message, context);
-export const createInfoDriverLog = (formattedLog: string, message?: string, context?: string) =>
-  createDriverLog(formattedLog, LumberjackLevel.Info, message, context);
-export const createTraceDriverLog = (formattedLog: string, message?: string, context?: string) =>
-  createDriverLog(formattedLog, LumberjackLevel.Trace, message, context);
-export const createWarningDriverLog = (formattedLog: string, message?: string, context?: string) =>
-  createDriverLog(formattedLog, LumberjackLevel.Warning, message, context);
+// tslint:disable-next-line: no-any
+export const createCriticalDriverLog = <F extends Record<string, any> | undefined = undefined>(
+  formattedLog: string,
+  message?: string,
+  context?: string,
+  extra?: F
+) => createDriverLog(formattedLog, LumberjackLevel.Critical, message, context, extra);
+// tslint:disable-next-line: no-any
+export const createDebugDriverLog = <F extends Record<string, any> | undefined = undefined>(
+  formattedLog: string,
+  message?: string,
+  context?: string,
+  extra?: F
+) => createDriverLog(formattedLog, LumberjackLevel.Debug, message, context, extra);
+// tslint:disable-next-line: no-any
+export const createErrorDriverLog = <F extends Record<string, any> | undefined = undefined>(
+  formattedLog: string,
+  message?: string,
+  context?: string,
+  extra?: F
+) => createDriverLog(formattedLog, LumberjackLevel.Error, message, context, extra);
+// tslint:disable-next-line: no-any
+export const createInfoDriverLog = <F extends Record<string, any> | undefined = undefined>(
+  formattedLog: string,
+  message?: string,
+  context?: string,
+  extra?: F
+) => createDriverLog(formattedLog, LumberjackLevel.Info, message, context, extra);
+// tslint:disable-next-line: no-any
+export const createTraceDriverLog = <F extends Record<string, any> | undefined = undefined>(
+  formattedLog: string,
+  message?: string,
+  context?: string,
+  extra?: F
+) => createDriverLog(formattedLog, LumberjackLevel.Trace, message, context, extra);
+// tslint:disable-next-line: no-any
+export const createWarningDriverLog = <F extends Record<string, any> | undefined = undefined>(
+  formattedLog: string,
+  message?: string,
+  context?: string,
+  extra?: F
+) => createDriverLog(formattedLog, LumberjackLevel.Warning, message, context, extra);

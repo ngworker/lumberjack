@@ -283,13 +283,13 @@ describe(LumberjackService.name, () => {
           ],
         });
 
-        lumberjack = resolveDependency(LumberjackService);
+        lumberjack = resolveDependency(LumberjackService) as LumberjackService;
 
         const [logDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
         spyDriver = logDriver as SpyDriver;
       });
 
-      let lumberjack: LumberjackService;
+      let lumberjack: LumberjackService<undefined>;
       let spyDriver: SpyDriver;
 
       it('logs an error to a log driver', () => {
@@ -341,7 +341,7 @@ describe(LumberjackService.name, () => {
         ],
       });
 
-      lumberjack = resolveDependency(LumberjackService);
+      lumberjack = resolveDependency(LumberjackService) as LumberjackService;
 
       const [logDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
       spyDriver = logDriver as SpyDriver;
@@ -437,7 +437,7 @@ describe(LumberjackService.name, () => {
         providers: [verboseLoggingProvider],
       });
 
-      lumberjack = resolveDependency(LumberjackService);
+      lumberjack = resolveDependency(LumberjackService) as LumberjackService;
 
       const [logDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
       spyDriver = logDriver as SpyDriver;
@@ -498,7 +498,7 @@ describe(LumberjackService.name, () => {
           providers: [verboseLoggingProvider],
         });
 
-        lumberjack = resolveDependency(LumberjackService);
+        lumberjack = resolveDependency(LumberjackService) as LumberjackService;
 
         const fakeTime = resolveDependency(LumberjackTimeService);
         spyOn(fakeTime, 'getUnixEpochTicks').and.returnValue(fakeDate.valueOf());

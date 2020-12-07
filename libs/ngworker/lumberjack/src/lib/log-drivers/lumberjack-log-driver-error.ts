@@ -1,7 +1,8 @@
 import { LumberjackLogDriver } from './lumberjack-log-driver';
 
-export interface LumberjackLogDriverError {
+// tslint:disable-next-line: no-any
+export interface LumberjackLogDriverError<F extends Record<string, any> | undefined = undefined> {
   readonly formattedLog: string;
   readonly error: unknown;
-  readonly logDriver: LumberjackLogDriver;
+  readonly logDriver: LumberjackLogDriver<F>;
 }
