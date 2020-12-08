@@ -8,12 +8,12 @@ import { lumberjackFormatLog } from './lumberjack-format-log';
 
 function parseFormattedLog(formattedLog: string) {
   const formattedLogPattern = /^([a-z]+) ([0-9\.:\-TZ]+) (\[(.+)\] )?(.*)$/;
-  const [_, level, timestamp, taggedContextWithEndingSpace = '', context = '', message] =
+  const [_, level, timestamp, taggedContextWithEndingSpace = '', scope = '', message] =
     formattedLogPattern.exec(formattedLog) || [];
   const taggedContext = taggedContextWithEndingSpace ? taggedContextWithEndingSpace.slice(0, -1) : '';
 
   return {
-    context,
+    scope,
     level,
     message,
     taggedContext,
@@ -38,7 +38,7 @@ describe(lumberjackFormatLog.name, () => {
           createdAt: new Date().valueOf(),
           level: expectedLevel,
           message: 'Test message',
-          context: 'Test context',
+          scope: 'Test scope',
         };
 
         const formattedLog = lumberjackFormatLog(log);
@@ -62,7 +62,7 @@ describe(lumberjackFormatLog.name, () => {
           createdAt: unixEpochTicks,
           level: LumberjackLevel.Debug,
           message: 'Test message',
-          context: 'Test context',
+          scope: 'Test scope',
         };
 
         const formattedLog = lumberjackFormatLog(log);
@@ -73,27 +73,27 @@ describe(lumberjackFormatLog.name, () => {
     });
   });
 
-  describe('Context', () => {
-    const contexts = ['Test context', 'TestContext', 'test.context'];
+  describe('Scope', () => {
+    const scopes = ['Test scope', 'TestContext', 'test.scope'];
 
-    contexts.forEach((expectedContext) => {
-      it('tags the specified context', () => {
+    scopes.forEach((expectedContext) => {
+      it('tags the specified scope', () => {
         const log = createDebugLog(undefined, expectedContext);
 
         const formattedLog = lumberjackFormatLog(log);
 
-        const { context: actualContext, taggedContext } = parseFormattedLog(formattedLog);
+        const { scope: actualContext, taggedContext } = parseFormattedLog(formattedLog);
         expect(actualContext).toBe(expectedContext);
         expect(taggedContext).toBe(`[${expectedContext}]`);
       });
     });
 
-    it('does not add a tag without a context', () => {
+    it('does not add a tag without a scope', () => {
       const log = createDebugLog('Test message', '');
 
       const formattedLog = lumberjackFormatLog(log);
 
-      const { context: actualContext, taggedContext } = parseFormattedLog(formattedLog);
+      const { scope: actualContext, taggedContext } = parseFormattedLog(formattedLog);
       expect(actualContext).toBe('');
       expect(taggedContext).toBe('');
     });
@@ -103,8 +103,8 @@ describe(lumberjackFormatLog.name, () => {
     const messages = ['The forest is on fire!', 'Lumber is gold', 'Saving the Amazon Jungle'];
 
     messages.forEach((expectedMessage) => {
-      it(`places the message at the end with a context`, () => {
-        const log = createDebugLog(expectedMessage, 'Test context');
+      it(`places the message at the end with a scope`, () => {
+        const log = createDebugLog(expectedMessage, 'Test scope');
 
         const formattedLog = lumberjackFormatLog(log);
 
@@ -112,7 +112,7 @@ describe(lumberjackFormatLog.name, () => {
         expect(actualMessage).toBe(expectedMessage);
       });
 
-      it(`places the message at the end without a context`, () => {
+      it(`places the message at the end without a scope`, () => {
         const log = createDebugLog(expectedMessage, '');
 
         const formattedLog = lumberjackFormatLog(log);

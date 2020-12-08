@@ -129,7 +129,7 @@ export class MyComponent implements OnInit {
     this.lumberjack.log({
       level: LumberjackLogLevel.Info,
       message: 'Hello, World!',
-      context: 'MyComponent',
+      scope: 'MyComponent',
       createdAt: Date.now(),
     });
   }
@@ -154,8 +154,8 @@ Lumberjack replaces omitted options with defaults.
 When the `format` option is not configured, Lumberjack will use the following default formatter.
 
 ```ts
-function lumberjackFormatLog({ context, createdAt: timestamp, level, message }: LumberjackLog) {
-  return `${level} ${utcTimestampFor(timestamp)}${context ? ` [${context}]` : ''} ${message}`;
+function lumberjackFormatLog({ scope, createdAt: timestamp, level, message }: LumberjackLog) {
+  return `${level} ${utcTimestampFor(timestamp)}${scope ? ` [${scope}]` : ''} ${message}`;
 }
 ```
 
@@ -337,7 +337,7 @@ For a more advanced log driver implementation, see [LumberjackHttpDriver](https:
 
 ## Best practices
 
-Every log can be represented as a combination of its level, creation time, message, and context. Using inline logs with the `LumberjackService` can cause structure duplication and/or de-standardization.
+Every log can be represented as a combination of its level, creation time, message, and scope. Using inline logs with the `LumberjackService` can cause structure duplication and/or de-standardization.
 
 The following practices are recommended to mitigate these problems.
 
@@ -355,16 +355,16 @@ import { LumberjackService, LumberjackTimeService } from '@ngworker/lumberjack';
 export abstract class LumberjackLogger {
   constructor(lumberjack: LumberjackService, time: LumberjackTimeService) {}
 
-  protected createCriticalLogger(message: string, context?: string): () => void {}
-  protected createDebugLogger(message: string, context?: string): () => void {}
-  protected createErrorLogger(message: string, context?: string): () => void {}
-  protected createInfoLogger(message: string, context?: string): () => void {}
-  protected createTraceLogger(message: string, context?: string): () => void {}
-  protected createWarningLogger(message: string, context?: string): () => void {}
+  protected createCriticalLogger(message: string, scope?: string): () => void {}
+  protected createDebugLogger(message: string, scope?: string): () => void {}
+  protected createErrorLogger(message: string, scope?: string): () => void {}
+  protected createInfoLogger(message: string, scope?: string): () => void {}
+  protected createTraceLogger(message: string, scope?: string): () => void {}
+  protected createWarningLogger(message: string, scope?: string): () => void {}
 }
 ```
 
-By extending `LumberjackLogger`, we only have to be worry about the message and context of our pre-defined logs.
+By extending `LumberjackLogger`, we only have to be worry about the message and scope of our pre-defined logs.
 
 All logger factory methods are protected as it is recommended to create a custom logger per _context_ rather than using logger factories directly in a consumer.
 

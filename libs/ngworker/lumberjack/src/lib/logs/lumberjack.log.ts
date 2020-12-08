@@ -5,9 +5,9 @@ import { LumberjackLogLevel } from './lumberjack-log-level';
  */
 export interface LumberjackLog {
   /**
-   * Context, for example domain, application, component, or service.
+   * Scope, for example domain, application, component, or service.
    */
-  readonly context?: string;
+  readonly scope?: string;
   /**
    * Unix epoch ticks (milliseconds) timestamp when log entry was created.
    */

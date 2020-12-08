@@ -122,24 +122,24 @@ describe(LumberjackModule.name, () => {
         fakeTimestamp = utcTimestampFor(fakeTicks);
       });
 
-      it('formats a log with a context', () => {
+      it('formats a log with a scope', () => {
         const logWithContext: LumberjackLog = {
-          context: 'TestSuite',
+          scope: 'TestSuite',
           createdAt: fakeTicks,
           level: LumberjackLevel.Critical,
           message: 'Test Message',
         };
 
-        const { context, level, message } = logWithContext;
+        const { scope, level, message } = logWithContext;
 
-        const expectedFormattedLog = `${level} ${fakeTimestamp} [${context}] ${message}`;
+        const expectedFormattedLog = `${level} ${fakeTimestamp} [${scope}] ${message}`;
 
         const { format } = resolveDependency(lumberjackConfigToken);
 
         expect(format(logWithContext)).toBe(expectedFormattedLog);
       });
 
-      it('formats a log with no context', () => {
+      it('formats a log with no scope', () => {
         const logWithoutContext: LumberjackLog = {
           createdAt: fakeTicks,
           level: LumberjackLevel.Critical,
