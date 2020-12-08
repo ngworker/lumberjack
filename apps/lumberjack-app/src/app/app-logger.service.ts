@@ -6,13 +6,13 @@ import { LumberjackLogger, LumberjackService, LumberjackTimeService } from '@ngw
   providedIn: 'root',
 })
 export class AppLogger extends LumberjackLogger {
-  public static logScope = 'Forest App';
+  public static scope = 'Forest App';
 
   constructor(lumberjack: LumberjackService, time: LumberjackTimeService) {
     super(lumberjack, time);
   }
 
-  forestOnFire = this.createCriticalLogger('The forest is on fire', AppLogger.logScope);
+  forestOnFire = this.createCriticalLogger('The forest is on fire', AppLogger.scope);
 
-  helloForest = this.createInfoLogger('HelloForest', AppLogger.logScope);
+  helloForest = this.createInfoLogger('HelloForest', AppLogger.scope);
 }

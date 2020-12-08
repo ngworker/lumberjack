@@ -378,11 +378,11 @@ import { LumberjackLogger } from '@ngworker/lumberjack';
   providedIn: 'root',
 })
 export class AppLogger extends LumberjackLogger {
-  public static logScope = 'Forest App';
+  public static scope = 'Forest App';
 
-  forestOnFire = this.createCriticalLogger('The forest is on fire!', AppLogger.logScope);
+  forestOnFire = this.createCriticalLogger('The forest is on fire!', AppLogger.scope);
 
-  helloForest = this.createInfoLogger('Hello, forest!', AppLogger.logScope);
+  helloForest = this.createInfoLogger('Hello, forest!', AppLogger.scope);
 }
 ```
 
