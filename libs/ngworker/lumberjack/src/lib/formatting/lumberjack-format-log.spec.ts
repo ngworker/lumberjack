@@ -8,15 +8,15 @@ import { lumberjackFormatLog } from './lumberjack-format-log';
 
 function parseFormattedLog(formattedLog: string) {
   const formattedLogPattern = /^([a-z]+) ([0-9\.:\-TZ]+) (\[(.+)\] )?(.*)$/;
-  const [_, level, timestamp, taggedContextWithEndingSpace = '', scope = '', message] =
+  const [_, level, timestamp, taggedScopeWithEndingSpace = '', scope = '', message] =
     formattedLogPattern.exec(formattedLog) || [];
-  const taggedContext = taggedContextWithEndingSpace ? taggedContextWithEndingSpace.slice(0, -1) : '';
+  const taggedScope = taggedScopeWithEndingSpace ? taggedScopeWithEndingSpace.slice(0, -1) : '';
 
   return {
     scope,
     level,
     message,
-    taggedContext,
+    taggedScope,
     timestamp,
   };
 }
@@ -74,17 +74,17 @@ describe(lumberjackFormatLog.name, () => {
   });
 
   describe('Scope', () => {
-    const scopes = ['Test scope', 'TestContext', 'test.scope'];
+    const scopes = ['Test scope', 'TestScope', 'test.scope'];
 
-    scopes.forEach((expectedContext) => {
+    scopes.forEach((expectedScope) => {
       it('tags the specified scope', () => {
-        const log = createDebugLog(undefined, expectedContext);
+        const log = createDebugLog(undefined, expectedScope);
 
         const formattedLog = lumberjackFormatLog(log);
 
-        const { scope: actualContext, taggedContext } = parseFormattedLog(formattedLog);
-        expect(actualContext).toBe(expectedContext);
-        expect(taggedContext).toBe(`[${expectedContext}]`);
+        const { scope: actualScope, taggedScope } = parseFormattedLog(formattedLog);
+        expect(actualScope).toBe(expectedScope);
+        expect(taggedScope).toBe(`[${expectedScope}]`);
       });
     });
 
@@ -93,9 +93,9 @@ describe(lumberjackFormatLog.name, () => {
 
       const formattedLog = lumberjackFormatLog(log);
 
-      const { scope: actualContext, taggedContext } = parseFormattedLog(formattedLog);
-      expect(actualContext).toBe('');
-      expect(taggedContext).toBe('');
+      const { scope: actualScope, taggedScope } = parseFormattedLog(formattedLog);
+      expect(actualScope).toBe('');
+      expect(taggedScope).toBe('');
     });
   });
 

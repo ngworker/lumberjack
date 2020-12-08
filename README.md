@@ -366,7 +366,7 @@ export abstract class LumberjackLogger {
 
 By extending `LumberjackLogger`, we only have to be worry about the message and scope of our pre-defined logs.
 
-All logger factory methods are protected as it is recommended to create a custom logger per _context_ rather than using logger factories directly in a consumer.
+All logger factory methods are protected as it is recommended to create a custom logger per _scope_ rather than using logger factories directly in a consumer.
 
 As an example, let's create a custom logger for our example application.
 
@@ -378,11 +378,11 @@ import { LumberjackLogger } from '@ngworker/lumberjack';
   providedIn: 'root',
 })
 export class AppLogger extends LumberjackLogger {
-  public static logContext = 'Forest App';
+  public static logScope = 'Forest App';
 
-  forestOnFire = this.createCriticalLogger('The forest is on fire!', AppLogger.logContext);
+  forestOnFire = this.createCriticalLogger('The forest is on fire!', AppLogger.logScope);
 
-  helloForest = this.createInfoLogger('Hello, forest!', AppLogger.logContext);
+  helloForest = this.createInfoLogger('Hello, forest!', AppLogger.logScope);
 }
 ```
 

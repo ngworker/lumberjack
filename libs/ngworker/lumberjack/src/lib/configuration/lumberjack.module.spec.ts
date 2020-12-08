@@ -123,36 +123,36 @@ describe(LumberjackModule.name, () => {
       });
 
       it('formats a log with a scope', () => {
-        const logWithContext: LumberjackLog = {
+        const logWithScope: LumberjackLog = {
           scope: 'TestSuite',
           createdAt: fakeTicks,
           level: LumberjackLevel.Critical,
           message: 'Test Message',
         };
 
-        const { scope, level, message } = logWithContext;
+        const { scope, level, message } = logWithScope;
 
         const expectedFormattedLog = `${level} ${fakeTimestamp} [${scope}] ${message}`;
 
         const { format } = resolveDependency(lumberjackConfigToken);
 
-        expect(format(logWithContext)).toBe(expectedFormattedLog);
+        expect(format(logWithScope)).toBe(expectedFormattedLog);
       });
 
       it('formats a log with no scope', () => {
-        const logWithoutContext: LumberjackLog = {
+        const logWithoutScope: LumberjackLog = {
           createdAt: fakeTicks,
           level: LumberjackLevel.Critical,
           message: 'Test Message',
         };
 
-        const { level, message } = logWithoutContext;
+        const { level, message } = logWithoutScope;
 
         const expectedFormattedLog = `${level} ${fakeTimestamp} ${message}`;
 
         const { format } = resolveDependency(lumberjackConfigToken);
 
-        expect(format(logWithoutContext)).toEqual(expectedFormattedLog);
+        expect(format(logWithoutScope)).toEqual(expectedFormattedLog);
       });
     });
   });
