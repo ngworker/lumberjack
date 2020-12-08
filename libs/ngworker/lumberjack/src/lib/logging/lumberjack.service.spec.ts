@@ -64,7 +64,17 @@ const verboseLoggingProvider: StaticProvider = {
 };
 const fakeDate = new Date('2020-02-02T02:02:02.000Z');
 
+interface ExtraFieldInfo {
+  extraInfo: string;
+}
+
+const extraInfo: ExtraFieldInfo = { extraInfo: 'ExtraINFO' };
+
 const logDebugMessage = () => resolveDependency(LumberjackService).log(createDebugLog());
+const logDebugMessageWithExtraField = () =>
+  resolveDependency<LumberjackService<ExtraFieldInfo>>(LumberjackService).log(
+    createDebugLog(undefined, undefined, extraInfo)
+  );
 
 describe(LumberjackService.name, () => {
   describe('Log drivers', () => {
@@ -95,6 +105,33 @@ describe(LumberjackService.name, () => {
       });
 
       expect(logDebugMessage).not.toThrow();
+    });
+
+    describe('Drivers with custom lumberjack logs', () => {
+      it('should receive the extra parameter', () => {
+        TestBed.configureTestingModule({
+          imports: [LumberjackModule.forRoot(), SpyDriverModule.forRoot()],
+        });
+        const fakeTime = resolveDependency(LumberjackTimeService);
+        spyOn(fakeTime, 'getUnixEpochTicks').and.returnValue(fakeDate.valueOf());
+
+        const logDrivers = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver<
+          ExtraFieldInfo
+        >[];
+        const spyDriver = logDrivers[0] as SpyDriver;
+
+        expect(logDebugMessageWithExtraField).not.toThrow();
+
+        expect(spyDriver.logDebug).toHaveBeenCalledWith(
+          createDebugDriverLog(
+            // tslint:disable-next-line: no-any
+            jasmine.any(String) as any,
+            undefined,
+            undefined,
+            extraInfo
+          )
+        );
+      });
     });
 
     describe('Error-throwing log drivers', () => {
