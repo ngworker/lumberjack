@@ -27,7 +27,7 @@ class LumberjackLoggerBuilder<F extends Record<string, unknown> | void = void> {
     return (this as unknown) as LumberjackLoggerBuilder<void>;
   }
 
-  log(): (...payloadArg: F extends void ? [never?] : [F]) => void {
+  build(): (...payloadArg: F extends void ? [never?] : [F]) => void {
     return (...payloadArg: F extends void ? [never?] : [F]) => {
       this.lumberjack.log({
         level: this.level,

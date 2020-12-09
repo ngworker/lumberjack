@@ -18,10 +18,10 @@ export class AppLogger extends LumberjackLogger<LogPayload> {
     angularVersion: VERSION.full,
   };
 
-  forestOnFire = this.createCriticalLogger('The forest is on fire').withScope(AppLogger.logContext).log();
+  forestOnFire = this.createCriticalLogger('The forest is on fire').withScope(AppLogger.logContext).build();
 
   helloForest = this.createInfoLogger('HelloForest')
     .withScope(AppLogger.logContext)
     .withPayload(this.payloadLogInfo)
-    .log();
+    .build();
 }
