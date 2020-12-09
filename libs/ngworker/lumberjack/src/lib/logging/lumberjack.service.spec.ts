@@ -66,6 +66,7 @@ const fakeDate = new Date('2020-02-02T02:02:02.000Z');
 
 interface ExtraFieldInfo {
   extraInfo: string;
+  [key: string]: unknown;
 }
 
 const extraInfo: ExtraFieldInfo = { extraInfo: 'ExtraINFO' };
@@ -326,7 +327,7 @@ describe(LumberjackService.name, () => {
         spyDriver = logDriver as SpyDriver;
       });
 
-      let lumberjack: LumberjackService<undefined>;
+      let lumberjack: LumberjackService;
       let spyDriver: SpyDriver;
 
       it('logs an error to a log driver', () => {

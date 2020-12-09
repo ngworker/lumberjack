@@ -13,7 +13,7 @@ import { LumberjackLogFormatterResult } from './lumberjack-log-formatter-result'
   providedIn: 'root',
 })
 // tslint:disable-next-line: no-any
-export class LumberjackLogFormatter<F extends Record<string, any> | undefined = undefined> {
+export class LumberjackLogFormatter<F extends Record<string, unknown> | void = void> {
   constructor(
     @Inject(lumberjackConfigToken) private config: LumberjackConfig<F>,
     private time: LumberjackTimeService

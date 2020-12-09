@@ -3,7 +3,7 @@ import { LumberjackLevel, LumberjackLogLevel, LumberjackTimeService } from '@ngw
 import { resolveDependency } from '../angular/resolve-dependency';
 
 // tslint:disable-next-line: no-any
-export const createLog = <F extends Record<string, any> | undefined = undefined>(
+export const createLog = <F extends Record<string, unknown> | void = void>(
   level: LumberjackLogLevel,
   message = '',
   context = 'Test',
@@ -16,37 +16,37 @@ export const createLog = <F extends Record<string, any> | undefined = undefined>
   extra,
 });
 // tslint:disable-next-line: no-any
-export const createCriticalLog = <F extends Record<string, any> | undefined = undefined>(
+export const createCriticalLog = <F extends Record<string, unknown> | void = void>(
   message?: string,
   context?: string,
   extra?: F
 ) => createLog(LumberjackLevel.Critical, message, context, extra);
 // tslint:disable-next-line: no-any
-export const createDebugLog = <F extends Record<string, any> | undefined = undefined>(
+export const createDebugLog = <F extends Record<string, unknown> | void = void>(
   message?: string,
   context?: string,
   extra?: F
 ) => createLog(LumberjackLevel.Debug, message, context, extra);
 // tslint:disable-next-line: no-any
-export const createErrorLog = <F extends Record<string, any> | undefined = undefined>(
+export const createErrorLog = <F extends Record<string, unknown> | void = void>(
   message?: string,
   context?: string,
   extra?: F
 ) => createLog(LumberjackLevel.Error, message, context, extra);
 // tslint:disable-next-line: no-any
-export const createInfoLog = <F extends Record<string, any> | undefined = undefined>(
+export const createInfoLog = <F extends Record<string, unknown> | void = void>(
   message?: string,
   context?: string,
   extra?: F
 ) => createLog(LumberjackLevel.Info, message, context, extra);
 // tslint:disable-next-line: no-any
-export const createTraceLog = <F extends Record<string, any> | undefined = undefined>(
+export const createTraceLog = <F extends Record<string, unknown> | void = void>(
   message?: string,
   context?: string,
   extra?: F
 ) => createLog(LumberjackLevel.Trace, message, context, extra);
 // tslint:disable-next-line: no-any
-export const createWarningLog = <F extends Record<string, any> | undefined = undefined>(
+export const createWarningLog = <F extends Record<string, unknown> | void = void>(
   message?: string,
   context?: string,
   extra?: F

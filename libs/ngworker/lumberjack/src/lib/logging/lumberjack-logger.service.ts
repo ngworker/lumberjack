@@ -6,38 +6,70 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { LumberjackService } from './lumberjack.service';
 
+class LumberjackLoggerBuilder<F extends Record<string, unknown> | void = void> {
+  private context = '';
+  private extra: F | undefined;
+
+  constructor(
+    private lumberjack: LumberjackService<F>,
+    private time: LumberjackTimeService,
+    private level: LumberjackLogLevel,
+    private message: string
+  ) {}
+
+  withScope(context: string): LumberjackLoggerBuilder<F> {
+    this.context = context;
+    return this;
+  }
+
+  withExtra(...extraArg: F extends void ? [never?] : [F]): LumberjackLoggerBuilder<void> {
+    this.extra = extraArg[0] as F;
+    return (this as unknown) as LumberjackLoggerBuilder<void>;
+  }
+
+  log(): (...extraArg: F extends void ? [never?] : [F]) => void {
+    return (...extraArg: F extends void ? [never?] : [F]) => {
+      this.lumberjack.log({
+        level: this.level,
+        message: this.message,
+        context: this.context,
+        createdAt: this.time.getUnixEpochTicks(),
+        extra: (extraArg[0] as F) || this.extra,
+      });
+    };
+  }
+}
+
 @Injectable()
 // tslint:disable-next-line: no-any
-export abstract class LumberjackLogger<F extends Record<string, any> | undefined = undefined> {
+export abstract class LumberjackLogger<F extends Record<string, unknown> | void = void> {
   constructor(private lumberjack: LumberjackService<F>, private time: LumberjackTimeService) {}
 
-  protected createCriticalLogger(message: string, context?: string, extra?: F): () => void {
-    return this.createLogger(LumberjackLevel.Critical, message, context, extra);
+  protected createCriticalLogger(message: string): LumberjackLoggerBuilder<F> {
+    return this.createLoggerBuilder(LumberjackLevel.Critical, message);
   }
 
-  protected createDebugLogger(message: string, context?: string, extra?: F): () => void {
-    return this.createLogger(LumberjackLevel.Debug, message, context, extra);
+  protected createDebugLogger(message: string): LumberjackLoggerBuilder<F> {
+    return this.createLoggerBuilder(LumberjackLevel.Debug, message);
   }
 
-  protected createErrorLogger(message: string, context?: string, extra?: F): () => void {
-    return this.createLogger(LumberjackLevel.Error, message, context, extra);
+  protected createErrorLogger(message: string): LumberjackLoggerBuilder<F> {
+    return this.createLoggerBuilder(LumberjackLevel.Error, message);
   }
 
-  protected createInfoLogger(message: string, context?: string, extra?: F): () => void {
-    return this.createLogger(LumberjackLevel.Info, message, context, extra);
+  protected createInfoLogger(message: string): LumberjackLoggerBuilder<F> {
+    return this.createLoggerBuilder(LumberjackLevel.Info, message);
   }
 
-  protected createTraceLogger(message: string, context?: string, extra?: F): () => void {
-    return this.createLogger(LumberjackLevel.Trace, message, context, extra);
+  protected createTraceLogger(message: string): LumberjackLoggerBuilder<F> {
+    return this.createLoggerBuilder(LumberjackLevel.Trace, message);
   }
 
-  protected createWarningLogger(message: string, context?: string, extra?: F): () => void {
-    return this.createLogger(LumberjackLevel.Warning, message, context, extra);
+  protected createWarningLogger(message: string): LumberjackLoggerBuilder<F> {
+    return this.createLoggerBuilder(LumberjackLevel.Warning, message);
   }
 
-  private createLogger(level: LumberjackLogLevel, message: string, context?: string, extra?: F): () => void {
-    return () => {
-      this.lumberjack.log({ context, createdAt: this.time.getUnixEpochTicks(), level, message, extra });
-    };
+  private createLoggerBuilder(level: LumberjackLogLevel, message: string): LumberjackLoggerBuilder<F> {
+    return new LumberjackLoggerBuilder<F>(this.lumberjack, this.time, level, message);
   }
 }

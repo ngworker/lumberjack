@@ -14,6 +14,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.logger.helloForest();
-    this.logger.forestOnFire();
+    this.logger.forestOnFire({ angularVersion: '11.0.0' });
   }
 }

@@ -4,7 +4,7 @@ import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackLogDriverLog } from './lumberjack-log-driver-log';
 
 // tslint:disable-next-line: no-any
-export interface LumberjackLogDriver<F extends Record<string, any> | undefined = undefined> {
+export interface LumberjackLogDriver<F extends Record<string, unknown> | void = void> {
   readonly config: LumberjackLogDriverConfig;
   logCritical(driverLog: LumberjackLogDriverLog<F>): void;
   logDebug(driverLog: LumberjackLogDriverLog<F>): void;

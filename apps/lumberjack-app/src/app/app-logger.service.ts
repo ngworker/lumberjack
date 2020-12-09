@@ -18,7 +18,7 @@ export class AppLogger extends LumberjackLogger<ExtraLogInfo> {
     angularVersion: '11.0.0',
   };
 
-  forestOnFire = this.createCriticalLogger('The forest is on fire', AppLogger.logContext, this.extraLogInfo);
+  forestOnFire = this.createCriticalLogger('The forest is on fire').withScope(AppLogger.logContext).log();
 
-  helloForest = this.createInfoLogger('HelloForest', AppLogger.logContext, this.extraLogInfo);
+  helloForest = this.createInfoLogger('HelloForest').withScope(AppLogger.logContext).withExtra(this.extraLogInfo).log();
 }
