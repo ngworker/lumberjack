@@ -5,7 +5,7 @@ import { LumberjackLogLevel } from './lumberjack-log-level';
  * A Lumberjack log entry
  */
 // tslint:disable-next-line: no-any
-export interface LumberjackLog<F extends Readonly<{ [key: string]: unknown }> | void = void> {
+export interface LumberjackLog<TPayload extends Readonly<{ [key: string]: unknown }> | void = void> {
   /**
    * Context, for example domain, application, component, or service.
    */
@@ -26,5 +26,5 @@ export interface LumberjackLog<F extends Readonly<{ [key: string]: unknown }> | 
   /**
    * Holds any payload info
    */
-  readonly payload?: F;
+  readonly payload?: TPayload;
 }

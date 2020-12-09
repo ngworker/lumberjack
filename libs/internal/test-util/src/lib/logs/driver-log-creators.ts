@@ -8,13 +8,13 @@ import {
 import { resolveDependency } from '../angular/resolve-dependency';
 
 // tslint:disable-next-line: no-any
-export const createDriverLog = <F extends Readonly<{ [key: string]: unknown }> | void = void>(
+export const createDriverLog = <TPayload extends Readonly<{ [key: string]: unknown }> | void = void>(
   formattedLog: string,
   level: LumberjackLogLevel,
   message = '',
   context = 'Test',
-  payload?: F
-): LumberjackLogDriverLog<F> => ({
+  payload?: TPayload
+): LumberjackLogDriverLog<TPayload> => ({
   formattedLog,
   log: {
     context,
@@ -25,44 +25,44 @@ export const createDriverLog = <F extends Readonly<{ [key: string]: unknown }> |
   },
 });
 // tslint:disable-next-line: no-any
-export const createCriticalDriverLog = <F extends Readonly<{ [key: string]: unknown }> | void = void>(
+export const createCriticalDriverLog = <TPayload extends Readonly<{ [key: string]: unknown }> | void = void>(
   formattedLog: string,
   message?: string,
   context?: string,
-  payload?: F
+  payload?: TPayload
 ) => createDriverLog(formattedLog, LumberjackLevel.Critical, message, context, payload);
 // tslint:disable-next-line: no-any
-export const createDebugDriverLog = <F extends Readonly<{ [key: string]: unknown }> | void = void>(
+export const createDebugDriverLog = <TPayload extends Readonly<{ [key: string]: unknown }> | void = void>(
   formattedLog: string,
   message?: string,
   context?: string,
-  payload?: F
+  payload?: TPayload
 ) => createDriverLog(formattedLog, LumberjackLevel.Debug, message, context, payload);
 // tslint:disable-next-line: no-any
-export const createErrorDriverLog = <F extends Readonly<{ [key: string]: unknown }> | void = void>(
+export const createErrorDriverLog = <TPayload extends Readonly<{ [key: string]: unknown }> | void = void>(
   formattedLog: string,
   message?: string,
   context?: string,
-  payload?: F
+  payload?: TPayload
 ) => createDriverLog(formattedLog, LumberjackLevel.Error, message, context, payload);
 // tslint:disable-next-line: no-any
-export const createInfoDriverLog = <F extends Readonly<{ [key: string]: unknown }> | void = void>(
+export const createInfoDriverLog = <TPayload extends Readonly<{ [key: string]: unknown }> | void = void>(
   formattedLog: string,
   message?: string,
   context?: string,
-  payload?: F
+  payload?: TPayload
 ) => createDriverLog(formattedLog, LumberjackLevel.Info, message, context, payload);
 // tslint:disable-next-line: no-any
-export const createTraceDriverLog = <F extends Readonly<{ [key: string]: unknown }> | void = void>(
+export const createTraceDriverLog = <TPayload extends Readonly<{ [key: string]: unknown }> | void = void>(
   formattedLog: string,
   message?: string,
   context?: string,
-  payload?: F
+  payload?: TPayload
 ) => createDriverLog(formattedLog, LumberjackLevel.Trace, message, context, payload);
 // tslint:disable-next-line: no-any
-export const createWarningDriverLog = <F extends Readonly<{ [key: string]: unknown }> | void = void>(
+export const createWarningDriverLog = <TPayload extends Readonly<{ [key: string]: unknown }> | void = void>(
   formattedLog: string,
   message?: string,
   context?: string,
-  payload?: F
+  payload?: TPayload
 ) => createDriverLog(formattedLog, LumberjackLevel.Warning, message, context, payload);

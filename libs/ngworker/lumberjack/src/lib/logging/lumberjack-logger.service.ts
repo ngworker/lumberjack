@@ -6,35 +6,35 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { LumberjackService } from './lumberjack.service';
 
-class LumberjackLoggerBuilder<F extends Readonly<{ [key: string]: unknown }> | void = void> {
+class LumberjackLoggerBuilder<TPayload extends Readonly<{ [key: string]: unknown }> | void = void> {
   private context = '';
-  private payload: F | undefined;
+  private payload: TPayload | undefined;
 
   constructor(
-    private lumberjack: LumberjackService<F>,
+    private lumberjack: LumberjackService<TPayload>,
     private time: LumberjackTimeService,
     private level: LumberjackLogLevel,
     private message: string
   ) {}
 
-  withScope(context: string): LumberjackLoggerBuilder<F> {
+  withScope(context: string): LumberjackLoggerBuilder<TPayload> {
     this.context = context;
     return this;
   }
 
-  withPayload(...payloadArg: F extends void ? [never?] : [F]): LumberjackLoggerBuilder<void> {
-    this.payload = payloadArg[0] as F;
+  withPayload(...payloadArg: TPayload extends void ? [never?] : [TPayload]): LumberjackLoggerBuilder<void> {
+    this.payload = payloadArg[0] as TPayload;
     return (this as unknown) as LumberjackLoggerBuilder<void>;
   }
 
-  build(): (...payloadArg: F extends void ? [never?] : [F]) => void {
-    return (...payloadArg: F extends void ? [never?] : [F]) => {
+  build(): (...payloadArg: TPayload extends void ? [never?] : [TPayload]) => void {
+    return (...payloadArg: TPayload extends void ? [never?] : [TPayload]) => {
       this.lumberjack.log({
         level: this.level,
         message: this.message,
         context: this.context,
         createdAt: this.time.getUnixEpochTicks(),
-        payload: (payloadArg[0] as F) || this.payload,
+        payload: (payloadArg[0] as TPayload) || this.payload,
       });
     };
   }
@@ -42,34 +42,34 @@ class LumberjackLoggerBuilder<F extends Readonly<{ [key: string]: unknown }> | v
 
 @Injectable()
 // tslint:disable-next-line: no-any
-export abstract class LumberjackLogger<F extends Readonly<{ [key: string]: unknown }> | void = void> {
-  constructor(private lumberjack: LumberjackService<F>, private time: LumberjackTimeService) {}
+export abstract class LumberjackLogger<TPayload extends Readonly<{ [key: string]: unknown }> | void = void> {
+  constructor(private lumberjack: LumberjackService<TPayload>, private time: LumberjackTimeService) {}
 
-  protected createCriticalLogger(message: string): LumberjackLoggerBuilder<F> {
+  protected createCriticalLogger(message: string): LumberjackLoggerBuilder<TPayload> {
     return this.createLoggerBuilder(LumberjackLevel.Critical, message);
   }
 
-  protected createDebugLogger(message: string): LumberjackLoggerBuilder<F> {
+  protected createDebugLogger(message: string): LumberjackLoggerBuilder<TPayload> {
     return this.createLoggerBuilder(LumberjackLevel.Debug, message);
   }
 
-  protected createErrorLogger(message: string): LumberjackLoggerBuilder<F> {
+  protected createErrorLogger(message: string): LumberjackLoggerBuilder<TPayload> {
     return this.createLoggerBuilder(LumberjackLevel.Error, message);
   }
 
-  protected createInfoLogger(message: string): LumberjackLoggerBuilder<F> {
+  protected createInfoLogger(message: string): LumberjackLoggerBuilder<TPayload> {
     return this.createLoggerBuilder(LumberjackLevel.Info, message);
   }
 
-  protected createTraceLogger(message: string): LumberjackLoggerBuilder<F> {
+  protected createTraceLogger(message: string): LumberjackLoggerBuilder<TPayload> {
     return this.createLoggerBuilder(LumberjackLevel.Trace, message);
   }
 
-  protected createWarningLogger(message: string): LumberjackLoggerBuilder<F> {
+  protected createWarningLogger(message: string): LumberjackLoggerBuilder<TPayload> {
     return this.createLoggerBuilder(LumberjackLevel.Warning, message);
   }
 
-  private createLoggerBuilder(level: LumberjackLogLevel, message: string): LumberjackLoggerBuilder<F> {
-    return new LumberjackLoggerBuilder<F>(this.lumberjack, this.time, level, message);
+  private createLoggerBuilder(level: LumberjackLogLevel, message: string): LumberjackLoggerBuilder<TPayload> {
+    return new LumberjackLoggerBuilder<TPayload>(this.lumberjack, this.time, level, message);
   }
 }

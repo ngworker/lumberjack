@@ -22,25 +22,25 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
  */
 @Injectable({ providedIn: LumberjackRootModule })
 // tslint:disable-next-line: no-any
-export class LumberjackService<F extends Readonly<{ [key: string]: unknown }> | void = void> {
-  private drivers: LumberjackLogDriver<F>[];
+export class LumberjackService<TPayload extends Readonly<{ [key: string]: unknown }> | void = void> {
+  private drivers: LumberjackLogDriver<TPayload>[];
 
   constructor(
-    @Optional() @Inject(lumberjackLogDriverToken) drivers: LumberjackLogDriver<F>[],
-    private logFormatter: LumberjackLogFormatter<F>,
+    @Optional() @Inject(lumberjackLogDriverToken) drivers: LumberjackLogDriver<TPayload>[],
+    private logFormatter: LumberjackLogFormatter<TPayload>,
     private time: LumberjackTimeService
   ) {
     drivers = drivers || [];
     this.drivers = Array.isArray(drivers) ? drivers : [drivers];
   }
 
-  log(logParameter: LumberjackLog<F>): void {
+  log(logParameter: LumberjackLog<TPayload>): void {
     const { log, formattedLog } = this.logFormatter.formatLog(logParameter);
 
     this.logWithHandleErrors(log, formattedLog, this.drivers);
   }
 
-  private canDriveLog(driver: LumberjackLogDriver<F>, logLevel: LumberjackLogLevel): boolean {
+  private canDriveLog(driver: LumberjackLogDriver<TPayload>, logLevel: LumberjackLogLevel): boolean {
     return (
       driver.config.levels === undefined ||
       (driver.config.levels.length === 1 && driver.config.levels[0] === LumberjackLevel.Verbose) ||
@@ -48,7 +48,7 @@ export class LumberjackService<F extends Readonly<{ [key: string]: unknown }> | 
     );
   }
 
-  private createDriverErrorLog(driverError: LumberjackLogDriverError<F>): LumberjackLog<F> {
+  private createDriverErrorLog(driverError: LumberjackLogDriverError<TPayload>): LumberjackLog<TPayload> {
     return {
       context: 'LumberjackLogDriverError',
       createdAt: this.time.getUnixEpochTicks(),
@@ -57,13 +57,13 @@ export class LumberjackService<F extends Readonly<{ [key: string]: unknown }> | 
     };
   }
 
-  private logDriverError(driverError: LumberjackLogDriverError<F>): void {
+  private logDriverError(driverError: LumberjackLogDriverError<TPayload>): void {
     const errorMessage = formatLogDriverError(driverError);
 
     console.error(errorMessage);
   }
 
-  private driveLog(driver: LumberjackLogDriver<F>, driverLog: LumberjackLogDriverLog<F>): void {
+  private driveLog(driver: LumberjackLogDriver<TPayload>, driverLog: LumberjackLogDriverLog<TPayload>): void {
     switch (driverLog.log.level) {
       case LumberjackLevel.Critical:
         driver.logCritical(driverLog);
@@ -87,13 +87,13 @@ export class LumberjackService<F extends Readonly<{ [key: string]: unknown }> | 
   }
 
   private logWithHandleErrors(
-    log: LumberjackLog<F>,
+    log: LumberjackLog<TPayload>,
     formattedLog: string,
-    drivers: LumberjackLogDriver<F>[],
-    driverErrors: LumberjackLogDriverError<F>[] = [],
+    drivers: LumberjackLogDriver<TPayload>[],
+    driverErrors: LumberjackLogDriverError<TPayload>[] = [],
     errorIndex = -1
   ): void {
-    const stableDrivers: LumberjackLogDriver<F>[] = [];
+    const stableDrivers: LumberjackLogDriver<TPayload>[] = [];
     drivers.forEach((driver) => {
       if (this.canDriveLog(driver, log.level)) {
         try {
@@ -109,8 +109,8 @@ export class LumberjackService<F extends Readonly<{ [key: string]: unknown }> | 
   }
 
   private logDriverErrorsToStableDrivers(
-    driverErrors: LumberjackLogDriverError<F>[],
-    stableDrivers: LumberjackLogDriver<F>[]
+    driverErrors: LumberjackLogDriverError<TPayload>[],
+    stableDrivers: LumberjackLogDriver<TPayload>[]
   ) {
     driverErrors.forEach((error, index) => {
       const driverErrorLog = this.createDriverErrorLog(error);
@@ -119,11 +119,14 @@ export class LumberjackService<F extends Readonly<{ [key: string]: unknown }> | 
     });
   }
 
-  private outputUnhandledDriverErrors(driverErrors: ReadonlyArray<LumberjackLogDriverError<F>>) {
+  private outputUnhandledDriverErrors(driverErrors: ReadonlyArray<LumberjackLogDriverError<TPayload>>) {
     driverErrors.forEach((error) => this.logDriverError(error));
   }
 
-  private processErrors(stableDrivers: LumberjackLogDriver<F>[], driverErrors: LumberjackLogDriverError<F>[]) {
+  private processErrors(
+    stableDrivers: LumberjackLogDriver<TPayload>[],
+    driverErrors: LumberjackLogDriverError<TPayload>[]
+  ) {
     if (stableDrivers.length === 0) {
       this.outputUnhandledDriverErrors(driverErrors);
     } else {
@@ -131,7 +134,7 @@ export class LumberjackService<F extends Readonly<{ [key: string]: unknown }> | 
     }
   }
 
-  private removeHandledError(errorIndex: number, errors: LumberjackLogDriverError<F>[]) {
+  private removeHandledError(errorIndex: number, errors: LumberjackLogDriverError<TPayload>[]) {
     if (errorIndex > -1) {
       errors.splice(errorIndex, 1);
       errorIndex = -1;

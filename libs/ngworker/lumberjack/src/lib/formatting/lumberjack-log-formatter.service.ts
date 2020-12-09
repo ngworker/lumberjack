@@ -13,15 +13,15 @@ import { LumberjackLogFormatterResult } from './lumberjack-log-formatter-result'
   providedIn: 'root',
 })
 // tslint:disable-next-line: no-any
-export class LumberjackLogFormatter<F extends Readonly<{ [key: string]: unknown }> | void = void> {
+export class LumberjackLogFormatter<TPayload extends Readonly<{ [key: string]: unknown }> | void = void> {
   constructor(
-    @Inject(lumberjackConfigToken) private config: LumberjackConfig<F>,
+    @Inject(lumberjackConfigToken) private config: LumberjackConfig<TPayload>,
     private time: LumberjackTimeService
   ) {}
 
-  formatLog(log: LumberjackLog<F>): LumberjackLogFormatterResult<F> {
+  formatLog(log: LumberjackLog<TPayload>): LumberjackLogFormatterResult<TPayload> {
     const { format } = this.config;
-    let result: LumberjackLogFormatterResult<F>;
+    let result: LumberjackLogFormatterResult<TPayload>;
 
     try {
       result = {
@@ -41,7 +41,7 @@ export class LumberjackLogFormatter<F extends Readonly<{ [key: string]: unknown 
     return result;
   }
 
-  private createFormattingErrorLog(formatError: unknown, log: LumberjackLog<F>): LumberjackLog<F> {
+  private createFormattingErrorLog(formatError: unknown, log: LumberjackLog<TPayload>): LumberjackLog<TPayload> {
     const formattingErrorMessage = (formatError as Error).message || String(formatError);
 
     return {
@@ -53,12 +53,12 @@ export class LumberjackLogFormatter<F extends Readonly<{ [key: string]: unknown 
     };
   }
 
-  private formatFormattingError(errorEntry: LumberjackLog<F>): string {
+  private formatFormattingError(errorEntry: LumberjackLog<TPayload>): string {
     const { format } = this.config;
     let errorMessage = '';
 
     try {
-      errorMessage = format(errorEntry as LumberjackLog<F>);
+      errorMessage = format(errorEntry as LumberjackLog<TPayload>);
     } catch {
       errorMessage = lumberjackFormatLog(errorEntry);
     }

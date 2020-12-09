@@ -3,11 +3,11 @@ import { LumberjackLevel, LumberjackLogLevel, LumberjackTimeService } from '@ngw
 import { resolveDependency } from '../angular/resolve-dependency';
 
 // tslint:disable-next-line: no-any
-export const createLog = <F extends Readonly<{ [key: string]: unknown }> | void = void>(
+export const createLog = <TPayload extends Readonly<{ [key: string]: unknown }> | void = void>(
   level: LumberjackLogLevel,
   message = '',
   context = 'Test',
-  payload?: F
+  payload?: TPayload
 ) => ({
   context,
   createdAt: resolveDependency(LumberjackTimeService).getUnixEpochTicks(),
@@ -16,38 +16,38 @@ export const createLog = <F extends Readonly<{ [key: string]: unknown }> | void 
   payload,
 });
 // tslint:disable-next-line: no-any
-export const createCriticalLog = <F extends Readonly<{ [key: string]: unknown }> | void = void>(
+export const createCriticalLog = <TPayload extends Readonly<{ [key: string]: unknown }> | void = void>(
   message?: string,
   context?: string,
-  payload?: F
+  payload?: TPayload
 ) => createLog(LumberjackLevel.Critical, message, context, payload);
 // tslint:disable-next-line: no-any
-export const createDebugLog = <F extends Readonly<{ [key: string]: unknown }> | void = void>(
+export const createDebugLog = <TPayload extends Readonly<{ [key: string]: unknown }> | void = void>(
   message?: string,
   context?: string,
-  payload?: F
+  payload?: TPayload
 ) => createLog(LumberjackLevel.Debug, message, context, payload);
 // tslint:disable-next-line: no-any
-export const createErrorLog = <F extends Readonly<{ [key: string]: unknown }> | void = void>(
+export const createErrorLog = <TPayload extends Readonly<{ [key: string]: unknown }> | void = void>(
   message?: string,
   context?: string,
-  payload?: F
+  payload?: TPayload
 ) => createLog(LumberjackLevel.Error, message, context, payload);
 // tslint:disable-next-line: no-any
-export const createInfoLog = <F extends Readonly<{ [key: string]: unknown }> | void = void>(
+export const createInfoLog = <TPayload extends Readonly<{ [key: string]: unknown }> | void = void>(
   message?: string,
   context?: string,
-  payload?: F
+  payload?: TPayload
 ) => createLog(LumberjackLevel.Info, message, context, payload);
 // tslint:disable-next-line: no-any
-export const createTraceLog = <F extends Readonly<{ [key: string]: unknown }> | void = void>(
+export const createTraceLog = <TPayload extends Readonly<{ [key: string]: unknown }> | void = void>(
   message?: string,
   context?: string,
-  payload?: F
+  payload?: TPayload
 ) => createLog(LumberjackLevel.Trace, message, context, payload);
 // tslint:disable-next-line: no-any
-export const createWarningLog = <F extends Readonly<{ [key: string]: unknown }> | void = void>(
+export const createWarningLog = <TPayload extends Readonly<{ [key: string]: unknown }> | void = void>(
   message?: string,
   context?: string,
-  payload?: F
+  payload?: TPayload
 ) => createLog(LumberjackLevel.Warning, message, context, payload);
