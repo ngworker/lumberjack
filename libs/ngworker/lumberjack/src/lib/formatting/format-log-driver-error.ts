@@ -1,7 +1,7 @@
 import { LumberjackLogDriverError } from '../log-drivers/lumberjack-log-driver-error';
 
 // tslint:disable-next-line: no-any
-export function formatLogDriverError<F extends Record<string, unknown> | void = void>({
+export function formatLogDriverError<F extends Readonly<{ [key: string]: unknown }> | void = void>({
   logDriver,
   formattedLog,
   error,

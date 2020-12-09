@@ -22,7 +22,7 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
  */
 @Injectable({ providedIn: LumberjackRootModule })
 // tslint:disable-next-line: no-any
-export class LumberjackService<F extends Record<string, unknown> | void = void> {
+export class LumberjackService<F extends Readonly<{ [key: string]: unknown }> | void = void> {
   private drivers: LumberjackLogDriver<F>[];
 
   constructor(

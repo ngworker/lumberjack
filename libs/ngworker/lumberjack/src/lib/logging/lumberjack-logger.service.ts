@@ -6,7 +6,7 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { LumberjackService } from './lumberjack.service';
 
-class LumberjackLoggerBuilder<F extends Record<string, unknown> | void = void> {
+class LumberjackLoggerBuilder<F extends Readonly<{ [key: string]: unknown }> | void = void> {
   private context = '';
   private payload: F | undefined;
 
@@ -42,7 +42,7 @@ class LumberjackLoggerBuilder<F extends Record<string, unknown> | void = void> {
 
 @Injectable()
 // tslint:disable-next-line: no-any
-export abstract class LumberjackLogger<F extends Record<string, unknown> | void = void> {
+export abstract class LumberjackLogger<F extends Readonly<{ [key: string]: unknown }> | void = void> {
   constructor(private lumberjack: LumberjackService<F>, private time: LumberjackTimeService) {}
 
   protected createCriticalLogger(message: string): LumberjackLoggerBuilder<F> {
