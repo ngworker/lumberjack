@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, VERSION } from '@angular/core';
 
 import { LumberjackLogger, LumberjackService, LumberjackTimeService } from '@ngworker/lumberjack';
 
@@ -15,7 +15,7 @@ export class AppLogger extends LumberjackLogger<LogPayload> {
   }
 
   private payloadLogInfo: LogPayload = {
-    angularVersion: '11.0.0',
+    angularVersion: VERSION.full,
   };
 
   forestOnFire = this.createCriticalLogger('The forest is on fire').withScope(AppLogger.logContext).log();
