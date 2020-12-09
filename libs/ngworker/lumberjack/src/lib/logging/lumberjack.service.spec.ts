@@ -64,17 +64,17 @@ const verboseLoggingProvider: StaticProvider = {
 };
 const fakeDate = new Date('2020-02-02T02:02:02.000Z');
 
-interface ExtraFieldInfo {
-  extraInfo: string;
+interface PayloadFieldInfo {
+  payloadInfo: string;
   [key: string]: unknown;
 }
 
-const extraInfo: ExtraFieldInfo = { extraInfo: 'ExtraINFO' };
+const payloadInfo: PayloadFieldInfo = { payloadInfo: 'PayloadINFO' };
 
 const logDebugMessage = () => resolveDependency(LumberjackService).log(createDebugLog());
-const logDebugMessageWithExtraField = () =>
-  resolveDependency<LumberjackService<ExtraFieldInfo>>(LumberjackService).log(
-    createDebugLog(undefined, undefined, extraInfo)
+const logDebugMessageWithPayloadField = () =>
+  resolveDependency<LumberjackService<PayloadFieldInfo>>(LumberjackService).log(
+    createDebugLog(undefined, undefined, payloadInfo)
   );
 
 describe(LumberjackService.name, () => {
@@ -109,7 +109,7 @@ describe(LumberjackService.name, () => {
     });
 
     describe('Drivers with custom lumberjack logs', () => {
-      it('should receive the extra parameter', () => {
+      it('should receive the payload parameter', () => {
         TestBed.configureTestingModule({
           imports: [LumberjackModule.forRoot(), SpyDriverModule.forRoot()],
         });
@@ -117,11 +117,11 @@ describe(LumberjackService.name, () => {
         spyOn(fakeTime, 'getUnixEpochTicks').and.returnValue(fakeDate.valueOf());
 
         const logDrivers = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver<
-          ExtraFieldInfo
+          PayloadFieldInfo
         >[];
         const spyDriver = logDrivers[0] as SpyDriver;
 
-        expect(logDebugMessageWithExtraField).not.toThrow();
+        expect(logDebugMessageWithPayloadField).not.toThrow();
 
         expect(spyDriver.logDebug).toHaveBeenCalledWith(
           createDebugDriverLog(
@@ -129,7 +129,7 @@ describe(LumberjackService.name, () => {
             jasmine.any(String) as any,
             undefined,
             undefined,
-            extraInfo
+            payloadInfo
           )
         );
       });

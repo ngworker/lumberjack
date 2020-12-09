@@ -24,7 +24,7 @@ export interface LumberjackLog<F extends Record<string, unknown> | void = void> 
   readonly message: string;
 
   /**
-   * Holds any extra info
+   * Holds any payload info
    */
-  readonly extra?: F;
+  readonly payload?: F;
 }

@@ -8,7 +8,7 @@ import { LumberjackService } from './lumberjack.service';
 
 class LumberjackLoggerBuilder<F extends Record<string, unknown> | void = void> {
   private context = '';
-  private extra: F | undefined;
+  private payload: F | undefined;
 
   constructor(
     private lumberjack: LumberjackService<F>,
@@ -22,19 +22,19 @@ class LumberjackLoggerBuilder<F extends Record<string, unknown> | void = void> {
     return this;
   }
 
-  withExtra(...extraArg: F extends void ? [never?] : [F]): LumberjackLoggerBuilder<void> {
-    this.extra = extraArg[0] as F;
+  withPayload(...payloadArg: F extends void ? [never?] : [F]): LumberjackLoggerBuilder<void> {
+    this.payload = payloadArg[0] as F;
     return (this as unknown) as LumberjackLoggerBuilder<void>;
   }
 
-  log(): (...extraArg: F extends void ? [never?] : [F]) => void {
-    return (...extraArg: F extends void ? [never?] : [F]) => {
+  log(): (...payloadArg: F extends void ? [never?] : [F]) => void {
+    return (...payloadArg: F extends void ? [never?] : [F]) => {
       this.lumberjack.log({
         level: this.level,
         message: this.message,
         context: this.context,
         createdAt: this.time.getUnixEpochTicks(),
-        extra: (extraArg[0] as F) || this.extra,
+        payload: (payloadArg[0] as F) || this.payload,
       });
     };
   }

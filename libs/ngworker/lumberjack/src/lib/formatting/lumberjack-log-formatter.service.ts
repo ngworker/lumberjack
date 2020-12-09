@@ -49,7 +49,7 @@ export class LumberjackLogFormatter<F extends Record<string, unknown> | void = v
       createdAt: this.time.getUnixEpochTicks(),
       level: LumberjackLevel.Error,
       message: `Could not format message "${log.message}". Error: "${formattingErrorMessage}"`,
-      extra: undefined,
+      payload: undefined,
     };
   }
 

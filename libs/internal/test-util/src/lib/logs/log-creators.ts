@@ -7,47 +7,47 @@ export const createLog = <F extends Record<string, unknown> | void = void>(
   level: LumberjackLogLevel,
   message = '',
   context = 'Test',
-  extra?: F
+  payload?: F
 ) => ({
   context,
   createdAt: resolveDependency(LumberjackTimeService).getUnixEpochTicks(),
   level,
   message,
-  extra,
+  payload,
 });
 // tslint:disable-next-line: no-any
 export const createCriticalLog = <F extends Record<string, unknown> | void = void>(
   message?: string,
   context?: string,
-  extra?: F
-) => createLog(LumberjackLevel.Critical, message, context, extra);
+  payload?: F
+) => createLog(LumberjackLevel.Critical, message, context, payload);
 // tslint:disable-next-line: no-any
 export const createDebugLog = <F extends Record<string, unknown> | void = void>(
   message?: string,
   context?: string,
-  extra?: F
-) => createLog(LumberjackLevel.Debug, message, context, extra);
+  payload?: F
+) => createLog(LumberjackLevel.Debug, message, context, payload);
 // tslint:disable-next-line: no-any
 export const createErrorLog = <F extends Record<string, unknown> | void = void>(
   message?: string,
   context?: string,
-  extra?: F
-) => createLog(LumberjackLevel.Error, message, context, extra);
+  payload?: F
+) => createLog(LumberjackLevel.Error, message, context, payload);
 // tslint:disable-next-line: no-any
 export const createInfoLog = <F extends Record<string, unknown> | void = void>(
   message?: string,
   context?: string,
-  extra?: F
-) => createLog(LumberjackLevel.Info, message, context, extra);
+  payload?: F
+) => createLog(LumberjackLevel.Info, message, context, payload);
 // tslint:disable-next-line: no-any
 export const createTraceLog = <F extends Record<string, unknown> | void = void>(
   message?: string,
   context?: string,
-  extra?: F
-) => createLog(LumberjackLevel.Trace, message, context, extra);
+  payload?: F
+) => createLog(LumberjackLevel.Trace, message, context, payload);
 // tslint:disable-next-line: no-any
 export const createWarningLog = <F extends Record<string, unknown> | void = void>(
   message?: string,
   context?: string,
-  extra?: F
-) => createLog(LumberjackLevel.Warning, message, context, extra);
+  payload?: F
+) => createLog(LumberjackLevel.Warning, message, context, payload);
