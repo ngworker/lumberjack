@@ -48,7 +48,7 @@ export class LumberjackService {
 
   private createDriverErrorLog(driverError: LumberjackLogDriverError): LumberjackLog {
     return {
-      context: 'LumberjackLogDriverError',
+      scope: 'LumberjackLogDriverError',
       createdAt: this.time.getUnixEpochTicks(),
       level: LumberjackLevel.Error,
       message: formatLogDriverError(driverError),
