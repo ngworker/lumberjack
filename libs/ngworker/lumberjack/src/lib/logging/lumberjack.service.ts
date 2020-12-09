@@ -21,7 +21,6 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
  *
  */
 @Injectable({ providedIn: LumberjackRootModule })
-// tslint:disable-next-line: no-any
 export class LumberjackService<TPayload extends Readonly<{ [key: string]: unknown }> | void = void> {
   private drivers: LumberjackLogDriver<TPayload>[];
 

@@ -12,7 +12,6 @@ import { LumberjackLogFormatterResult } from './lumberjack-log-formatter-result'
 @Injectable({
   providedIn: 'root',
 })
-// tslint:disable-next-line: no-any
 export class LumberjackLogFormatter<TPayload extends Readonly<{ [key: string]: unknown }> | void = void> {
   constructor(
     @Inject(lumberjackConfigToken) private config: LumberjackConfig<TPayload>,

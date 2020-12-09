@@ -1,6 +1,5 @@
 import { LumberjackLogDriver } from './lumberjack-log-driver';
 
-// tslint:disable-next-line: no-any
 export interface LumberjackLogDriverError<TPayload extends Readonly<{ [key: string]: unknown }> | void = void> {
   readonly formattedLog: string;
   readonly error: unknown;

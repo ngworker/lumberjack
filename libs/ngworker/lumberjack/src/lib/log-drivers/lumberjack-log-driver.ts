@@ -3,7 +3,6 @@ import { LumberjackLog } from '../logs/lumberjack.log';
 
 import { LumberjackLogDriverLog } from './lumberjack-log-driver-log';
 
-// tslint:disable-next-line: no-any
 export interface LumberjackLogDriver<TPayload extends Readonly<{ [key: string]: unknown }> | void = void> {
   readonly config: LumberjackLogDriverConfig;
   logCritical(driverLog: LumberjackLogDriverLog<TPayload>): void;

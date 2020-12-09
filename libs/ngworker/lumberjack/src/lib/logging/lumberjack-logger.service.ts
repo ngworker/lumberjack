@@ -8,7 +8,6 @@ import { LumberjackLoggerBuilder } from './lumberjack-logger.builder';
 import { LumberjackService } from './lumberjack.service';
 
 @Injectable()
-// tslint:disable-next-line: no-any
 export abstract class LumberjackLogger<TPayload extends Readonly<{ [key: string]: unknown }> | void = void> {
   constructor(private lumberjack: LumberjackService<TPayload>, private time: LumberjackTimeService) {}
 
