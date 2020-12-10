@@ -11,12 +11,12 @@ export const createDriverLog = <TPayload extends Readonly<{ [key: string]: unkno
   formattedLog: string,
   level: LumberjackLogLevel,
   message = '',
-  context = 'Test',
+  scope = 'Test',
   payload?: TPayload
 ): LumberjackLogDriverLog<TPayload> => ({
   formattedLog,
   log: {
-    context,
+    scope,
     createdAt: resolveDependency(LumberjackTimeService).getUnixEpochTicks(),
     level,
     message,
@@ -27,41 +27,41 @@ export const createDriverLog = <TPayload extends Readonly<{ [key: string]: unkno
 export const createCriticalDriverLog = <TPayload extends Readonly<{ [key: string]: unknown }> | void = void>(
   formattedLog: string,
   message?: string,
-  context?: string,
+  scope?: string,
   payload?: TPayload
-) => createDriverLog(formattedLog, LumberjackLevel.Critical, message, context, payload);
+) => createDriverLog(formattedLog, LumberjackLevel.Critical, message, scope, payload);
 
 export const createDebugDriverLog = <TPayload extends Readonly<{ [key: string]: unknown }> | void = void>(
   formattedLog: string,
   message?: string,
-  context?: string,
+  scope?: string,
   payload?: TPayload
-) => createDriverLog(formattedLog, LumberjackLevel.Debug, message, context, payload);
+) => createDriverLog(formattedLog, LumberjackLevel.Debug, message, scope, payload);
 
 export const createErrorDriverLog = <TPayload extends Readonly<{ [key: string]: unknown }> | void = void>(
   formattedLog: string,
   message?: string,
-  context?: string,
+  scope?: string,
   payload?: TPayload
-) => createDriverLog(formattedLog, LumberjackLevel.Error, message, context, payload);
+) => createDriverLog(formattedLog, LumberjackLevel.Error, message, scope, payload);
 
 export const createInfoDriverLog = <TPayload extends Readonly<{ [key: string]: unknown }> | void = void>(
   formattedLog: string,
   message?: string,
-  context?: string,
+  scope?: string,
   payload?: TPayload
-) => createDriverLog(formattedLog, LumberjackLevel.Info, message, context, payload);
+) => createDriverLog(formattedLog, LumberjackLevel.Info, message, scope, payload);
 
 export const createTraceDriverLog = <TPayload extends Readonly<{ [key: string]: unknown }> | void = void>(
   formattedLog: string,
   message?: string,
-  context?: string,
+  scope?: string,
   payload?: TPayload
-) => createDriverLog(formattedLog, LumberjackLevel.Trace, message, context, payload);
+) => createDriverLog(formattedLog, LumberjackLevel.Trace, message, scope, payload);
 
 export const createWarningDriverLog = <TPayload extends Readonly<{ [key: string]: unknown }> | void = void>(
   formattedLog: string,
   message?: string,
-  context?: string,
+  scope?: string,
   payload?: TPayload
-) => createDriverLog(formattedLog, LumberjackLevel.Warning, message, context, payload);
+) => createDriverLog(formattedLog, LumberjackLevel.Warning, message, scope, payload);

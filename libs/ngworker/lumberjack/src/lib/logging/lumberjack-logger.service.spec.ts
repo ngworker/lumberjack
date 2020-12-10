@@ -20,14 +20,14 @@ import { LumberjackService } from './lumberjack.service';
   providedIn: 'root',
 })
 export class TestLogger extends LumberjackLogger {
-  static context = 'Test';
+  static scope = 'Test';
 
-  criticalLogger = this.createCriticalLogger('').withScope(TestLogger.context).build();
-  debugLogger = this.createDebugLogger('').withScope(TestLogger.context).build();
-  errorLogger = this.createErrorLogger('').withScope(TestLogger.context).build();
-  infoLogger = this.createInfoLogger('').withScope(TestLogger.context).build();
-  traceLogger = this.createTraceLogger('').withScope(TestLogger.context).build();
-  warningLogger = this.createWarningLogger('').withScope(TestLogger.context).build();
+  criticalLogger = this.createCriticalLogger('').withScope(TestLogger.scope).build();
+  debugLogger = this.createDebugLogger('').withScope(TestLogger.scope).build();
+  errorLogger = this.createErrorLogger('').withScope(TestLogger.scope).build();
+  infoLogger = this.createInfoLogger('').withScope(TestLogger.scope).build();
+  traceLogger = this.createTraceLogger('').withScope(TestLogger.scope).build();
+  warningLogger = this.createWarningLogger('').withScope(TestLogger.scope).build();
 }
 
 const fakeDate = new Date('2020-02-02T02:02:02.000Z');

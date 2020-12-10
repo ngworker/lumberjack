@@ -20,7 +20,7 @@ import { LumberjackLogFormatter } from './lumberjack-log-formatter.service';
 function createFormattingErrorLog(formattingErrorMessage: string, log: LumberjackLog): LumberjackLog {
   return createErrorLog(
     `Could not format message "${log.message}". Error: "${formattingErrorMessage}"`,
-    logFormattingErrorContext
+    logFormattingErrorScope
   );
 }
 
@@ -36,7 +36,7 @@ class FakeTimeService extends LumberjackTimeService {
   }
 }
 
-const logFormattingErrorContext = 'LumberjackLogFormattingError';
+const logFormattingErrorScope = 'LumberjackLogFormattingError';
 
 describe(LumberjackLogFormatter.name, () => {
   function setup(options?: LumberjackOptions) {
@@ -107,7 +107,7 @@ describe(LumberjackLogFormatter.name, () => {
       const { formattedLog: actualFormattedLog } = service.formatLog(criticalLog);
 
       expect(actualFormattedLog).toBe(
-        `${formattingErrorLog.level} ${nowTimestamp} [${logFormattingErrorContext}] ${formattingErrorLog.message}`
+        `${formattingErrorLog.level} ${nowTimestamp} [${logFormattingErrorScope}] ${formattingErrorLog.message}`
       );
     });
   });

@@ -44,7 +44,7 @@ export class LumberjackLogFormatter<TPayload extends Readonly<{ [key: string]: u
     const formattingErrorMessage = (formatError as Error).message || String(formatError);
 
     return {
-      context: 'LumberjackLogFormattingError',
+      scope: 'LumberjackLogFormattingError',
       createdAt: this.time.getUnixEpochTicks(),
       level: LumberjackLevel.Error,
       message: `Could not format message "${log.message}". Error: "${formattingErrorMessage}"`,

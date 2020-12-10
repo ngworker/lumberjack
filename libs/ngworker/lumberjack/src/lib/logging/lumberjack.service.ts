@@ -49,7 +49,7 @@ export class LumberjackService<TPayload extends Readonly<{ [key: string]: unknow
 
   private createDriverErrorLog(driverError: LumberjackLogDriverError<TPayload>): LumberjackLog<TPayload> {
     return {
-      context: 'LumberjackLogDriverError',
+      scope: 'LumberjackLogDriverError',
       createdAt: this.time.getUnixEpochTicks(),
       level: LumberjackLevel.Error,
       message: formatLogDriverError(driverError),

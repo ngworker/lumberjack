@@ -6,7 +6,7 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
 import { LumberjackService } from './lumberjack.service';
 
 export class LumberjackLoggerBuilder<TPayload extends Readonly<{ [key: string]: unknown }> | void = void> {
-  private context = '';
+  private scope = '';
   private payload: TPayload | undefined;
 
   constructor(
@@ -16,8 +16,8 @@ export class LumberjackLoggerBuilder<TPayload extends Readonly<{ [key: string]: 
     private message: string
   ) {}
 
-  withScope(context: string): LumberjackLoggerBuilder<TPayload> {
-    this.context = context;
+  withScope(scope: string): LumberjackLoggerBuilder<TPayload> {
+    this.scope = scope;
     return this;
   }
 
@@ -31,7 +31,7 @@ export class LumberjackLoggerBuilder<TPayload extends Readonly<{ [key: string]: 
       this.lumberjack.log({
         level: this.level,
         message: this.message,
-        context: this.context,
+        scope: this.scope,
         createdAt: this.time.getUnixEpochTicks(),
         payload: (payloadArg[0] as TPayload) || this.payload,
       });
