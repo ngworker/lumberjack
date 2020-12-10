@@ -10,6 +10,7 @@ import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.t
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
 import { LumberjackLog } from '../logs/lumberjack.log';
+import { Payload } from '../logs/payload';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 /**
@@ -21,7 +22,7 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
  *
  */
 @Injectable({ providedIn: LumberjackRootModule })
-export class LumberjackService<TPayload extends Readonly<{ [key: string]: unknown }> | void = void> {
+export class LumberjackService<TPayload extends Readonly<Payload> | void = void> {
   private drivers: LumberjackLogDriver<TPayload>[];
 
   constructor(

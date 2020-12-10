@@ -23,14 +23,17 @@ import {
   SpyDriver,
   SpyDriverModule,
 } from '@internal/test-util';
-import { LumberjackLogDriver, LumberjackLogDriverLog, LumberjackTimeService } from '@ngworker/lumberjack';
 import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
 
 import { lumberjackLogDriverConfigToken } from '../configuration/lumberjack-log-driver-config.token';
 import { LumberjackLogDriverConfig } from '../configuration/lumberjack-log-driver.config';
 import { LumberjackModule } from '../configuration/lumberjack.module';
+import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
+import { LumberjackLogDriverLog } from '../log-drivers/lumberjack-log-driver.log';
 import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
 import { LumberjackLevel } from '../logs/lumberjack-level';
+import { Payload } from '../logs/payload';
+import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { LumberjackService } from './lumberjack.service';
 
@@ -64,9 +67,8 @@ const verboseLoggingProvider: StaticProvider = {
 };
 const fakeDate = new Date('2020-02-02T02:02:02.000Z');
 
-interface PayloadFieldInfo {
+interface PayloadFieldInfo extends Payload {
   payloadInfo: string;
-  [key: string]: unknown;
 }
 
 const payloadInfo: PayloadFieldInfo = { payloadInfo: 'PayloadINFO' };

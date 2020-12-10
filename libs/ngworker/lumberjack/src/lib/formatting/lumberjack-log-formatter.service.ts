@@ -4,6 +4,7 @@ import { lumberjackConfigToken } from '../configuration/lumberjack-config.token'
 import { LumberjackConfig } from '../configuration/lumberjack.config';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLog } from '../logs/lumberjack.log';
+import { Payload } from '../logs/payload';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { lumberjackFormatLog } from './lumberjack-format-log';
@@ -12,7 +13,7 @@ import { LumberjackLogFormatterResult } from './lumberjack-log-formatter-result'
 @Injectable({
   providedIn: 'root',
 })
-export class LumberjackLogFormatter<TPayload extends Readonly<{ [key: string]: unknown }> | void = void> {
+export class LumberjackLogFormatter<TPayload extends Readonly<Payload> | void = void> {
   constructor(
     @Inject(lumberjackConfigToken) private config: LumberjackConfig<TPayload>,
     private time: LumberjackTimeService

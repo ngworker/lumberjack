@@ -1,4 +1,5 @@
-export interface LogPayload {
+import { Payload } from '@ngworker/lumberjack';
+
+export interface LogPayload extends Payload {
   angularVersion: string;
-  [key: string]: unknown;
 }
