@@ -1,5 +1,3 @@
-import { Injectable } from '@angular/core';
-
 import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
 import { Payload } from '../logs/payload';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
@@ -17,11 +15,17 @@ export class LumberjackLoggerBuilder<TPayload extends Readonly<Payload> | void =
     private message: string
   ) {}
 
+  /**
+   * Add a scope to the `LumberjackLog`
+   */
   withScope(scope: string): LumberjackLoggerBuilder<TPayload> {
     this.scope = scope;
     return this;
   }
 
+  /**
+   * Add payload with custom data to the `LumberjackLog`
+   */
   withPayload(...payloadArg: TPayload extends void ? [never?] : [TPayload]): LumberjackLoggerBuilder<void> {
     this.payload = payloadArg[0] as TPayload;
     return (this as unknown) as LumberjackLoggerBuilder<void>;
