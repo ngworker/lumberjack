@@ -2,11 +2,11 @@ import { TestBed } from '@angular/core/testing';
 
 import { resolveDependency } from '@internal/test-util';
 
-import { Payload } from '../../../../../../dist/ngworker/lumberjack/lib/logs/payload.d';
 import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
 import { LumberjackLog } from '../logs/lumberjack.log';
+import { Payload } from '../logs/payload';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { LumberjackLoggerBuilder } from './lumberjack-logger.builder';
