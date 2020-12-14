@@ -19,6 +19,9 @@ import {
   ErrorThrowingDriverModule,
   NoopDriver,
   NoopDriverModule,
+  ObjectDriverModule,
+  ObjectPayload,
+  ObjectService,
   resolveDependency,
   SpyDriver,
   SpyDriverModule,
@@ -72,11 +75,16 @@ interface PayloadFieldInfo extends Payload {
 }
 
 const payloadInfo: PayloadFieldInfo = { payloadInfo: 'PayloadINFO' };
+const objectPayloadInfo: ObjectPayload = { isWorking: true };
 
 const logDebugMessage = () => resolveDependency(LumberjackService).log(createDebugLog());
 const logDebugMessageWithPayloadField = () =>
   resolveDependency<LumberjackService<PayloadFieldInfo>>(LumberjackService).log(
     createDebugLog(undefined, undefined, payloadInfo)
+  );
+const logDebugMessageWithObjectPayloadField = () =>
+  resolveDependency<LumberjackService<ObjectPayload>>(LumberjackService).log(
+    createDebugLog(undefined, undefined, objectPayloadInfo)
   );
 
 describe(LumberjackService.name, () => {
@@ -111,7 +119,7 @@ describe(LumberjackService.name, () => {
     });
 
     describe('Drivers with custom lumberjack logs', () => {
-      it('should receive the payload parameter', () => {
+      it('receives the payload parameter in the provided driver', () => {
         TestBed.configureTestingModule({
           imports: [LumberjackModule.forRoot(), SpyDriverModule.forRoot()],
         });
@@ -134,6 +142,19 @@ describe(LumberjackService.name, () => {
             payloadInfo
           )
         );
+      });
+
+      it('uses the payload as part of driver logic', () => {
+        TestBed.configureTestingModule({
+          imports: [LumberjackModule.forRoot(), ObjectDriverModule.forRoot()],
+        });
+
+        const objectService = resolveDependency(ObjectService);
+        spyOn(objectService, 'log').and.callThrough();
+
+        expect(logDebugMessageWithObjectPayloadField).not.toThrow();
+
+        expect(objectService.log).toHaveBeenCalledWith(objectPayloadInfo);
       });
     });
 

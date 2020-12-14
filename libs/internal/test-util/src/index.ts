@@ -26,6 +26,12 @@ export * from './lib/noop-driver/noop.driver';
 export * from './lib/spy-driver/spy-driver.module';
 export * from './lib/spy-driver/spy.driver';
 
+// Object driver
+export * from './lib/object-driver/object-driver.module';
+export * from './lib/object-driver/object.driver';
+export * from './lib/object-driver/object.service';
+export * from './lib/object-driver/object.payload';
+
 // Type checking
 export * from './lib/type-checking/is-class';
 export * from './lib/type-checking/is-object';

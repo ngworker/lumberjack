@@ -87,6 +87,7 @@ describe(LumberjackLoggerBuilder.name, () => {
         testMessage
       );
     });
+
     it('should send the payload when specified in the log function', () => {
       const logFunction = builder.withScope(scope).build();
       logFunction(payload);
@@ -100,7 +101,22 @@ describe(LumberjackLoggerBuilder.name, () => {
 
       expect(((lumberjackService as unknown) as LumberjackService<TestPayload>).log).toHaveBeenCalledWith(expectedLog);
     });
+
     it('should send the payload when specified in withPayload builder function', () => {
+      const logFunction = builder.withPayload(payload).build();
+      logFunction();
+      const expectedLog: LumberjackLog<TestPayload> = {
+        message: testMessage,
+        level,
+        createdAt: fakeDate.valueOf(),
+        payload,
+        scope: '',
+      };
+
+      expect(((lumberjackService as unknown) as LumberjackService<TestPayload>).log).toHaveBeenCalledWith(expectedLog);
+    });
+
+    it('should send the scope and payload when both are specified', () => {
       const logFunction = builder.withScope(scope).withPayload(payload).build();
       logFunction();
       const expectedLog: LumberjackLog<TestPayload> = {
