@@ -8,20 +8,17 @@ import { LogPayload } from './log-payload';
   providedIn: 'root',
 })
 export class AppLogger extends LumberjackLogger<LogPayload> {
+  private static payload: LogPayload = {
+    angularVersion: VERSION.full,
+  };
+
   public static scope = 'Forest App';
 
   constructor(lumberjack: LumberjackService<LogPayload>, time: LumberjackTimeService) {
     super(lumberjack, time);
   }
 
-  private payloadLogInfo: LogPayload = {
-    angularVersion: VERSION.full,
-  };
-
   forestOnFire = this.createCriticalLogger('The forest is on fire').withScope(AppLogger.scope).build();
 
-  helloForest = this.createInfoLogger('HelloForest')
-    .withScope(AppLogger.scope)
-    .withPayload(this.payloadLogInfo)
-    .build();
+  helloForest = this.createInfoLogger('HelloForest').withScope(AppLogger.scope).withPayload(AppLogger.payload).build();
 }
