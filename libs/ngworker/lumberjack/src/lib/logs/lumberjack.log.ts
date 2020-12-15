@@ -4,7 +4,7 @@ import { Payload } from './payload';
 /**
  * A Lumberjack log entry
  */
-export interface LumberjackLog<TPayload extends Readonly<Payload> | void = void> {
+export interface LumberjackLog<TPayload extends Payload | void = void> {
   /**
    * Scope, for example domain, application, component, or service.
    */

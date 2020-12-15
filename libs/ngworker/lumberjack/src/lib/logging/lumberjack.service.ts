@@ -22,7 +22,7 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
  *
  */
 @Injectable({ providedIn: LumberjackRootModule })
-export class LumberjackService<TPayload extends Readonly<Payload> | void = void> {
+export class LumberjackService<TPayload extends Payload | void = void> {
   private drivers: LumberjackLogDriver<TPayload>[];
 
   constructor(

@@ -13,7 +13,7 @@ import { LumberjackLogFormatterResult } from './lumberjack-log-formatter-result'
 @Injectable({
   providedIn: 'root',
 })
-export class LumberjackLogFormatter<TPayload extends Readonly<Payload> | void = void> {
+export class LumberjackLogFormatter<TPayload extends Payload | void = void> {
   constructor(
     @Inject(lumberjackConfigToken) private config: LumberjackConfig<TPayload>,
     private time: LumberjackTimeService

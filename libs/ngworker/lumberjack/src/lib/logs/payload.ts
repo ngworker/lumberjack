@@ -1,3 +1,3 @@
 export interface Payload {
-  [property: string]: unknown;
+  readonly [property: string]: unknown;
 }

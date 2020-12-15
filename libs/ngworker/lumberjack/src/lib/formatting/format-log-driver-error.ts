@@ -1,7 +1,7 @@
 import { LumberjackLogDriverError } from '../log-drivers/lumberjack-log-driver-error';
 import { Payload } from '../logs/payload';
 
-export function formatLogDriverError<TPayload extends Readonly<Payload> | void = void>({
+export function formatLogDriverError<TPayload extends Payload | void = void>({
   logDriver,
   formattedLog,
   error,

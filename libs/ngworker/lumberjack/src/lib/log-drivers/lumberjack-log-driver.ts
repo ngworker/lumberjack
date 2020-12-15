@@ -3,7 +3,7 @@ import { Payload } from '../logs/payload';
 
 import { LumberjackLogDriverLog } from './lumberjack-log-driver.log';
 
-export interface LumberjackLogDriver<TPayload extends Readonly<Payload> | void = void> {
+export interface LumberjackLogDriver<TPayload extends Payload | void = void> {
   readonly config: LumberjackLogDriverConfig;
   logCritical(driverLog: LumberjackLogDriverLog<TPayload>): void;
   logDebug(driverLog: LumberjackLogDriverLog<TPayload>): void;

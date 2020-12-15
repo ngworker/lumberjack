@@ -9,7 +9,7 @@ import { LumberjackLoggerBuilder } from './lumberjack-logger.builder';
 import { LumberjackService } from './lumberjack.service';
 
 @Injectable()
-export abstract class LumberjackLogger<TPayload extends Readonly<Payload> | void = void> {
+export abstract class LumberjackLogger<TPayload extends Payload | void = void> {
   constructor(private lumberjack: LumberjackService<TPayload>, private time: LumberjackTimeService) {}
 
   protected createCriticalLogger(message: string): LumberjackLoggerBuilder<TPayload> {
