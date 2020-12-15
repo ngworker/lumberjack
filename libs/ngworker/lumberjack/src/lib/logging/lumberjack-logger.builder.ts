@@ -6,7 +6,7 @@ import { LumberjackService } from './lumberjack.service';
 
 export class LumberjackLoggerBuilder<TPayload extends Payload | void = void> {
   private scope = '';
-  private payload: TPayload | undefined;
+  private payload?: TPayload;
 
   constructor(
     private lumberjack: LumberjackService<TPayload>,
