@@ -1,6 +1,12 @@
 import { isObject } from '@internal/test-util';
 
-import { LumberjackConfigLevels, LumberjackLevel, LumberjackLog, LumberjackLogLevel } from './index';
+import {
+  LumberjackConfigLevels,
+  LumberjackLevel,
+  LumberjackLog,
+  LumberjackLogLevel,
+  LumberjackLogPayload,
+} from './index';
 
 describe('Logs API', () => {
   describe('Interfaces', () => {
@@ -20,6 +26,12 @@ describe('Logs API', () => {
 
     it('exposes LumberjackLogLevel', () => {
       const value: LumberjackLogLevel | undefined = undefined;
+
+      expect(value).toBeUndefined();
+    });
+
+    it('exposes LumberjackLogPayload', () => {
+      const value: LumberjackLogPayload | undefined = undefined;
 
       expect(value).toBeUndefined();
     });
