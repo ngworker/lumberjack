@@ -10,7 +10,7 @@ import { LumberjackService } from './lumberjack.service';
 
 @Injectable()
 export abstract class LumberjackLogger<TPayload extends Payload | void = void> {
-  constructor(private lumberjack: LumberjackService<TPayload>, private time: LumberjackTimeService) {}
+  constructor(protected lumberjack: LumberjackService<TPayload>, protected time: LumberjackTimeService) {}
 
   protected createCriticalLogger(message: string): LumberjackLoggerBuilder<TPayload> {
     return this.createLoggerBuilder(LumberjackLevel.Critical, message);
@@ -36,7 +36,7 @@ export abstract class LumberjackLogger<TPayload extends Payload | void = void> {
     return this.createLoggerBuilder(LumberjackLevel.Warning, message);
   }
 
-  private createLoggerBuilder(level: LumberjackLogLevel, message: string): LumberjackLoggerBuilder<TPayload> {
+  protected createLoggerBuilder(level: LumberjackLogLevel, message: string): LumberjackLoggerBuilder<TPayload> {
     return new LumberjackLoggerBuilder<TPayload>(this.lumberjack, this.time, level, message);
   }
 }

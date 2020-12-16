@@ -1,24 +1,24 @@
 import { Injectable, VERSION } from '@angular/core';
 
-import { LumberjackLogger, LumberjackService, LumberjackTimeService } from '@ngworker/lumberjack';
+import { LumberjackService, LumberjackTimeService, ScopedLumberjackLogger } from '@ngworker/lumberjack';
 
 import { LogPayload } from './log-payload';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AppLogger extends LumberjackLogger<LogPayload> {
+export class AppLogger extends ScopedLumberjackLogger<LogPayload> {
   private static payload: LogPayload = {
     angularVersion: VERSION.full,
   };
 
-  public static scope = 'Forest App';
+  public scope = 'Forest App';
 
   constructor(lumberjack: LumberjackService<LogPayload>, time: LumberjackTimeService) {
     super(lumberjack, time);
   }
 
-  forestOnFire = this.createCriticalLogger('The forest is on fire').withScope(AppLogger.scope).build();
+  forestOnFire = this.createCriticalLogger('The forest is on fire').build();
 
-  helloForest = this.createInfoLogger('HelloForest').withScope(AppLogger.scope).withPayload(AppLogger.payload).build();
+  helloForest = this.createInfoLogger('HelloForest').withPayload(AppLogger.payload).build();
 }
