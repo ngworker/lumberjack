@@ -1,5 +1,6 @@
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
+import { VERSION } from '@angular/platform-browser';
 
 import { createCriticalDriverLog, createDriverLog, repeatSideEffect, resolveDependency } from '@internal/test-util';
 import {
@@ -9,6 +10,7 @@ import {
   lumberjackLogDriverToken,
   LumberjackLogLevel,
   LumberjackModule,
+  Payload,
 } from '@ngworker/lumberjack';
 
 import { LumberjackHttpDriverModule } from '../configuration/lumberjack-http-driver.module';
@@ -17,12 +19,27 @@ import { LumberjackHttpLog } from '../logs/lumberjack-http.log';
 
 import { LumberjackHttpDriver } from './lumberjack-http.driver';
 
+interface HttpDriverPayload extends Payload {
+  analytics: { [key: string]: unknown };
+}
+
+const analyticsPayload: HttpDriverPayload = {
+  analytics: {
+    angularVersion: VERSION.full,
+  },
+};
+
 function expectRequest(
   httpTestingController: HttpTestingController,
   { origin, storeUrl }: LumberjackHttpDriverOptions,
   level: LumberjackLogLevel = LumberjackLevel.Critical
 ) {
-  const expectedBody: LumberjackHttpLog = { formattedLog: level, level, origin };
+  const expectedBody: LumberjackHttpLog<HttpDriverPayload> = {
+    formattedLog: level,
+    level,
+    origin,
+    payload: analyticsPayload,
+  };
 
   const {
     request: { body, method },
@@ -41,7 +58,12 @@ function expectFailingRequest(
   { origin, retryOptions, storeUrl }: LumberjackHttpDriverOptions,
   level: LumberjackLevel = LumberjackLevel.Critical
 ) {
-  const expectedBody: LumberjackHttpLog = { formattedLog: level, level: LumberjackLevel.Critical, origin };
+  const expectedBody: LumberjackHttpLog<HttpDriverPayload> = {
+    formattedLog: level,
+    level: LumberjackLevel.Critical,
+    origin,
+    payload: analyticsPayload,
+  };
   const req = httpTestingController.expectOne(storeUrl);
   const {
     cancelled,
@@ -60,7 +82,7 @@ function respondWith503ServiceUnavailable(request: TestRequest) {
 }
 
 describe(LumberjackHttpDriver.name, () => {
-  let httpDriver: LumberjackLogDriver;
+  let httpDriver: LumberjackLogDriver<HttpDriverPayload>;
   let httpTestingController: HttpTestingController;
   const options: LumberjackHttpDriverOptions = {
     origin: 'TEST_MODULE',
@@ -73,7 +95,7 @@ describe(LumberjackHttpDriver.name, () => {
       imports: [HttpClientTestingModule, LumberjackModule.forRoot(), LumberjackHttpDriverModule.withOptions(options)],
     });
 
-    [httpDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
+    [httpDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver<HttpDriverPayload>[];
     httpTestingController = resolveDependency(HttpTestingController);
 
     jasmine.clock().uninstall();
@@ -90,10 +112,15 @@ describe(LumberjackHttpDriver.name, () => {
       [LumberjackLevel.Trace, (driver) => driver.logTrace],
       [LumberjackLevel.Warning, (driver) => driver.logWarning],
     ] as ReadonlyArray<
-      [LumberjackLogLevel, (driver: LumberjackLogDriver) => (driverLog: LumberjackLogDriverLog) => void]
+      [
+        LumberjackLogLevel,
+        (
+          driver: LumberjackLogDriver<HttpDriverPayload>
+        ) => (driverLog: LumberjackLogDriverLog<HttpDriverPayload>) => void
+      ]
     >).forEach(([logLevel, logMethod]) => {
       it(`sends a ${logLevel} level log to the configured URL`, () => {
-        const expectedDriverLog = createDriverLog(logLevel, logLevel);
+        const expectedDriverLog = createDriverLog<HttpDriverPayload>(logLevel, logLevel, '', 'Test', analyticsPayload);
         logMethod(httpDriver).call(httpDriver, expectedDriverLog);
 
         expectRequest(httpTestingController, options, expectedDriverLog.log.level);
@@ -102,7 +129,12 @@ describe(LumberjackHttpDriver.name, () => {
   });
 
   it('retries after two failures and then succeeds', () => {
-    const expectedDriverLog = createCriticalDriverLog(LumberjackLevel.Critical);
+    const expectedDriverLog = createCriticalDriverLog<HttpDriverPayload>(
+      LumberjackLevel.Critical,
+      '',
+      'Test',
+      analyticsPayload
+    );
 
     httpDriver.logCritical(expectedDriverLog);
 
@@ -112,7 +144,12 @@ describe(LumberjackHttpDriver.name, () => {
   });
 
   it('retries the specified number of times after failures and then stops retrying', () => {
-    const expectedDriverLog = createCriticalDriverLog(LumberjackLevel.Critical);
+    const expectedDriverLog = createCriticalDriverLog<HttpDriverPayload>(
+      LumberjackLevel.Critical,
+      '',
+      'Test',
+      analyticsPayload
+    );
 
     httpDriver.logCritical(expectedDriverLog);
     const { retryOptions } = options;
