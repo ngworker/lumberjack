@@ -2,13 +2,13 @@ import {
   LumberjackLevel,
   LumberjackLogDriverLog,
   LumberjackLogLevel,
+  LumberjackLogPayload,
   LumberjackTimeService,
-  Payload,
 } from '@ngworker/lumberjack';
 
 import { resolveDependency } from '../angular/resolve-dependency';
 
-export const createDriverLog = <TPayload extends Payload | void = void>(
+export const createDriverLog = <TPayload extends LumberjackLogPayload | void = void>(
   formattedLog: string,
   level: LumberjackLogLevel,
   message = '',
@@ -25,42 +25,42 @@ export const createDriverLog = <TPayload extends Payload | void = void>(
   },
 });
 
-export const createCriticalDriverLog = <TPayload extends Payload | void = void>(
+export const createCriticalDriverLog = <TPayload extends LumberjackLogPayload | void = void>(
   formattedLog: string,
   message?: string,
   scope?: string,
   payload?: TPayload
 ) => createDriverLog(formattedLog, LumberjackLevel.Critical, message, scope, payload);
 
-export const createDebugDriverLog = <TPayload extends Payload | void = void>(
+export const createDebugDriverLog = <TPayload extends LumberjackLogPayload | void = void>(
   formattedLog: string,
   message?: string,
   scope?: string,
   payload?: TPayload
 ) => createDriverLog(formattedLog, LumberjackLevel.Debug, message, scope, payload);
 
-export const createErrorDriverLog = <TPayload extends Payload | void = void>(
+export const createErrorDriverLog = <TPayload extends LumberjackLogPayload | void = void>(
   formattedLog: string,
   message?: string,
   scope?: string,
   payload?: TPayload
 ) => createDriverLog(formattedLog, LumberjackLevel.Error, message, scope, payload);
 
-export const createInfoDriverLog = <TPayload extends Payload | void = void>(
+export const createInfoDriverLog = <TPayload extends LumberjackLogPayload | void = void>(
   formattedLog: string,
   message?: string,
   scope?: string,
   payload?: TPayload
 ) => createDriverLog(formattedLog, LumberjackLevel.Info, message, scope, payload);
 
-export const createTraceDriverLog = <TPayload extends Payload | void = void>(
+export const createTraceDriverLog = <TPayload extends LumberjackLogPayload | void = void>(
   formattedLog: string,
   message?: string,
   scope?: string,
   payload?: TPayload
 ) => createDriverLog(formattedLog, LumberjackLevel.Trace, message, scope, payload);
 
-export const createWarningDriverLog = <TPayload extends Payload | void = void>(
+export const createWarningDriverLog = <TPayload extends LumberjackLogPayload | void = void>(
   formattedLog: string,
   message?: string,
   scope?: string,

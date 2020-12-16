@@ -1,9 +1,9 @@
 import { LumberjackLogDriverConfig } from '../configuration/lumberjack-log-driver.config';
-import { Payload } from '../logs/payload';
+import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 
 import { LumberjackLogDriverLog } from './lumberjack-log-driver.log';
 
-export interface LumberjackLogDriver<TPayload extends Payload | void = void> {
+export interface LumberjackLogDriver<TPayload extends LumberjackLogPayload | void = void> {
   readonly config: LumberjackLogDriverConfig;
   logCritical(driverLog: LumberjackLogDriverLog<TPayload>): void;
   logDebug(driverLog: LumberjackLogDriverLog<TPayload>): void;

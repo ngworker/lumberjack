@@ -1,6 +1,6 @@
-import { LumberjackLogLevel, Payload } from '@ngworker/lumberjack';
+import { LumberjackLogLevel, LumberjackLogPayload } from '@ngworker/lumberjack';
 
-export interface LumberjackHttpLog<TPayload extends Payload | void = void> {
+export interface LumberjackHttpLog<TPayload extends LumberjackLogPayload | void = void> {
   readonly formattedLog: string;
   readonly level: LumberjackLogLevel;
   readonly origin: string;

@@ -1,7 +1,7 @@
+import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackLog } from '../logs/lumberjack.log';
-import { Payload } from '../logs/payload';
 
-export interface LumberjackLogFormatterResult<TPayload extends Payload | void = void> {
+export interface LumberjackLogFormatterResult<TPayload extends LumberjackLogPayload | void = void> {
   readonly formattedLog: string;
   readonly log: LumberjackLog<TPayload>;
 }

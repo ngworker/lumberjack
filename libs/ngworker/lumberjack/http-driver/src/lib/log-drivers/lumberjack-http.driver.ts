@@ -6,7 +6,7 @@ import {
   LumberjackLogDriver,
   LumberjackLogDriverLog,
   LumberjackLogLevel,
-  Payload,
+  LumberjackLogPayload,
 } from '@ngworker/lumberjack';
 
 import { lumberjackHttpDriverConfigToken } from '../configuration/lumberjack-http-driver-config.token';
@@ -15,7 +15,8 @@ import { LumberjackHttpLog } from '../logs/lumberjack-http.log';
 import { retryWithDelay } from '../operators/retry-with-delay.operator';
 
 @Injectable()
-export class LumberjackHttpDriver<TPayload extends Payload | void = void> implements LumberjackLogDriver<TPayload> {
+export class LumberjackHttpDriver<TPayload extends LumberjackLogPayload | void = void>
+  implements LumberjackLogDriver<TPayload> {
   constructor(
     private http: HttpClient,
     @Inject(lumberjackHttpDriverConfigToken) public config: LumberjackHttpDriverConfig,

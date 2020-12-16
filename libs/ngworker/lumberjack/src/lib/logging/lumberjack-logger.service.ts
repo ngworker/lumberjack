@@ -2,14 +2,14 @@ import { Injectable } from '@angular/core';
 
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
-import { Payload } from '../logs/payload';
+import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { LumberjackLoggerBuilder } from './lumberjack-logger.builder';
 import { LumberjackService } from './lumberjack.service';
 
 @Injectable()
-export abstract class LumberjackLogger<TPayload extends Payload | void = void> {
+export abstract class LumberjackLogger<TPayload extends LumberjackLogPayload | void = void> {
   constructor(protected lumberjack: LumberjackService<TPayload>, protected time: LumberjackTimeService) {}
 
   protected createCriticalLogger(message: string): LumberjackLoggerBuilder<TPayload> {

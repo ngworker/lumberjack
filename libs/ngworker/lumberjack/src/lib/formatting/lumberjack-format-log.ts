@@ -1,9 +1,9 @@
+import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackLog } from '../logs/lumberjack.log';
-import { Payload } from '../logs/payload';
 
 import { utcTimestampFor } from './utc-timestamp-for';
 
-export function lumberjackFormatLog<TPayload extends Payload | void = void>({
+export function lumberjackFormatLog<TPayload extends LumberjackLogPayload | void = void>({
   scope,
   createdAt: timestamp,
   level,

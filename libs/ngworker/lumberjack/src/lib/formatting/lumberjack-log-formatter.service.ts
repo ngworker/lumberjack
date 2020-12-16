@@ -3,8 +3,8 @@ import { Inject, Injectable } from '@angular/core';
 import { lumberjackConfigToken } from '../configuration/lumberjack-config.token';
 import { LumberjackConfig } from '../configuration/lumberjack.config';
 import { LumberjackLevel } from '../logs/lumberjack-level';
+import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackLog } from '../logs/lumberjack.log';
-import { Payload } from '../logs/payload';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { lumberjackFormatLog } from './lumberjack-format-log';
@@ -13,7 +13,7 @@ import { LumberjackLogFormatterResult } from './lumberjack-log-formatter-result'
 @Injectable({
   providedIn: 'root',
 })
-export class LumberjackLogFormatter<TPayload extends Payload | void = void> {
+export class LumberjackLogFormatter<TPayload extends LumberjackLogPayload | void = void> {
   constructor(
     @Inject(lumberjackConfigToken) private config: LumberjackConfig<TPayload>,
     private time: LumberjackTimeService

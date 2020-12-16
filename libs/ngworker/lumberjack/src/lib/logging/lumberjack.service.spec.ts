@@ -35,7 +35,7 @@ import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
 import { LumberjackLogDriverLog } from '../log-drivers/lumberjack-log-driver.log';
 import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
 import { LumberjackLevel } from '../logs/lumberjack-level';
-import { Payload } from '../logs/payload';
+import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { LumberjackService } from './lumberjack.service';
@@ -70,7 +70,7 @@ const verboseLoggingProvider: StaticProvider = {
 };
 const fakeDate = new Date('2020-02-02T02:02:02.000Z');
 
-interface PayloadFieldInfo extends Payload {
+interface PayloadFieldInfo extends LumberjackLogPayload {
   payloadInfo: string;
 }
 

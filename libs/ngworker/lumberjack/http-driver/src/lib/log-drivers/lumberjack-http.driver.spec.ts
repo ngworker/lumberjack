@@ -9,8 +9,8 @@ import {
   LumberjackLogDriverLog,
   lumberjackLogDriverToken,
   LumberjackLogLevel,
+  LumberjackLogPayload,
   LumberjackModule,
-  Payload,
 } from '@ngworker/lumberjack';
 
 import { LumberjackHttpDriverModule } from '../configuration/lumberjack-http-driver.module';
@@ -19,7 +19,7 @@ import { LumberjackHttpLog } from '../logs/lumberjack-http.log';
 
 import { LumberjackHttpDriver } from './lumberjack-http.driver';
 
-interface HttpDriverPayload extends Payload {
+interface HttpDriverPayload extends LumberjackLogPayload {
   analytics: { [key: string]: unknown };
 }
 

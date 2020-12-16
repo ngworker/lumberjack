@@ -1,4 +1,6 @@
+import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackLog } from '../logs/lumberjack.log';
-import { Payload } from '../logs/payload';
 
-export type LumberjackFormatFunction<TPayload extends Payload | void = void> = (log: LumberjackLog<TPayload>) => string;
+export type LumberjackFormatFunction<TPayload extends LumberjackLogPayload | void = void> = (
+  log: LumberjackLog<TPayload>
+) => string;

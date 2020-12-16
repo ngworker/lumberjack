@@ -1,10 +1,10 @@
 import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
-import { Payload } from '../logs/payload';
+import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { LumberjackService } from './lumberjack.service';
 
-export class LumberjackLoggerBuilder<TPayload extends Payload | void = void> {
+export class LumberjackLoggerBuilder<TPayload extends LumberjackLogPayload | void = void> {
   private scope? = '';
   private payload?: TPayload;
 
