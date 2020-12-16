@@ -35,3 +35,6 @@ export * from './lib/object-driver/object.payload';
 // Type checking
 export * from './lib/type-checking/is-class';
 export * from './lib/type-checking/is-object';
+
+// Time
+export * from './lib/time/fake-time.service';

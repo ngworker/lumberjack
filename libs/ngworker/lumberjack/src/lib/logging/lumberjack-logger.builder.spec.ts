@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { resolveDependency } from '@internal/test-util';
+import { FakeTimeService, resolveDependency } from '@internal/test-util';
 
 import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackLevel } from '../logs/lumberjack-level';
@@ -20,20 +20,19 @@ const lumberjackLogLevels: LumberjackLogLevel[] = [LumberjackLevel.Critical, Lum
 
 describe(LumberjackLoggerBuilder.name, () => {
   const testMessage = 'Test Message';
-  const fakeDate = new Date('2020-02-02T02:02:02.000Z');
 
-  let fakeTime: LumberjackTimeService;
+  let fakeTime: FakeTimeService;
   let lumberjackService: LumberjackService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [LumberjackModule.forRoot()],
+      providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
     });
 
-    fakeTime = resolveDependency(LumberjackTimeService);
+    fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
     lumberjackService = (resolveDependency(LumberjackService) as unknown) as LumberjackService;
     spyOn(lumberjackService, 'log').and.stub();
-    spyOn(fakeTime, 'getUnixEpochTicks').and.returnValue(fakeDate.valueOf());
   });
 
   describe('Base builder usage', () => {
@@ -45,7 +44,7 @@ describe(LumberjackLoggerBuilder.name, () => {
         const expectedLog: LumberjackLog = {
           message: testMessage,
           level,
-          createdAt: fakeDate.valueOf(),
+          createdAt: fakeTime.getUnixEpochTicks(),
           payload: undefined,
           scope: '',
         };
@@ -64,7 +63,7 @@ describe(LumberjackLoggerBuilder.name, () => {
     const expectedLog: LumberjackLog = {
       message: testMessage,
       level,
-      createdAt: fakeDate.valueOf(),
+      createdAt: fakeTime.getUnixEpochTicks(),
       payload: undefined,
       scope,
     };
@@ -94,7 +93,7 @@ describe(LumberjackLoggerBuilder.name, () => {
       const expectedLog: LumberjackLog<TestPayload> = {
         message: testMessage,
         level,
-        createdAt: fakeDate.valueOf(),
+        createdAt: fakeTime.getUnixEpochTicks(),
         payload,
         scope,
       };
@@ -108,7 +107,7 @@ describe(LumberjackLoggerBuilder.name, () => {
       const expectedLog: LumberjackLog<TestPayload> = {
         message: testMessage,
         level,
-        createdAt: fakeDate.valueOf(),
+        createdAt: fakeTime.getUnixEpochTicks(),
         payload,
         scope: '',
       };
@@ -122,7 +121,7 @@ describe(LumberjackLoggerBuilder.name, () => {
       const expectedLog: LumberjackLog<TestPayload> = {
         message: testMessage,
         level,
-        createdAt: fakeDate.valueOf(),
+        createdAt: fakeTime.getUnixEpochTicks(),
         payload,
         scope,
       };
