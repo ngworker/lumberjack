@@ -32,7 +32,7 @@ describe(LumberjackLoggerBuilder.name, () => {
 
     fakeTime = resolveDependency(LumberjackTimeService);
     lumberjackService = (resolveDependency(LumberjackService) as unknown) as LumberjackService;
-    spyOn(lumberjackService, 'log').and.callFake(() => {});
+    spyOn(lumberjackService, 'log').and.stub();
     spyOn(fakeTime, 'getUnixEpochTicks').and.returnValue(fakeDate.valueOf());
   });
 
