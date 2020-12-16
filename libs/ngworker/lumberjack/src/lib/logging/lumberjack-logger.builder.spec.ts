@@ -37,7 +37,7 @@ describe(LumberjackLoggerBuilder.name, () => {
 
   describe('Base builder usage', () => {
     lumberjackLogLevels.forEach((level) =>
-      it(`should send a LumberjackLog with message "${testMessage}" and level ${level}`, () => {
+      it(`sends a ${level} level log`, () => {
         const builder = new LumberjackLoggerBuilder(lumberjackService, fakeTime, level, testMessage);
         const logFunction = builder.build();
         logFunction();
@@ -54,7 +54,7 @@ describe(LumberjackLoggerBuilder.name, () => {
     );
   });
 
-  it('should send the scope when specified', () => {
+  it('logs the specified scope', () => {
     const level = LumberjackLevel.Critical;
     const scope = 'Test Scope';
     const builder = new LumberjackLoggerBuilder(lumberjackService, fakeTime, level, testMessage);
@@ -87,7 +87,7 @@ describe(LumberjackLoggerBuilder.name, () => {
       );
     });
 
-    it('should send the payload when specified in the log function', () => {
+    it('logs the specified payload', () => {
       const logFunction = builder.withScope(scope).build();
       logFunction(payload);
       const expectedLog: LumberjackLog<TestPayload> = {
@@ -101,7 +101,7 @@ describe(LumberjackLoggerBuilder.name, () => {
       expect(((lumberjackService as unknown) as LumberjackService<TestPayload>).log).toHaveBeenCalledWith(expectedLog);
     });
 
-    it('should send the payload when specified in withPayload builder function', () => {
+    it('logs the specified static payload', () => {
       const logFunction = builder.withPayload(payload).build();
       logFunction();
       const expectedLog: LumberjackLog<TestPayload> = {
@@ -115,7 +115,7 @@ describe(LumberjackLoggerBuilder.name, () => {
       expect(((lumberjackService as unknown) as LumberjackService<TestPayload>).log).toHaveBeenCalledWith(expectedLog);
     });
 
-    it('should send the scope and payload when both are specified', () => {
+    it('logs the specified scope and payload', () => {
       const logFunction = builder.withScope(scope).withPayload(payload).build();
       logFunction();
       const expectedLog: LumberjackLog<TestPayload> = {
