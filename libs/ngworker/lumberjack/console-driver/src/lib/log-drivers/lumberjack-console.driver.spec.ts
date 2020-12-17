@@ -33,55 +33,61 @@ describe(LumberjackConsoleDriver.name, () => {
 
   it("logs the critical level to the console's error channel", () => {
     const expectedMessage = LumberjackLevel.Critical;
+    const expectedLog = createCriticalLog(expectedMessage);
 
-    driver.logCritical({ formattedLog: expectedMessage, log: createCriticalLog(expectedMessage) });
+    driver.logCritical({ formattedLog: expectedMessage, log: expectedLog });
 
     expect(spyLogger.error).toHaveBeenCalledTimes(1);
-    expect(spyLogger.error).toHaveBeenCalledWith(expectedMessage);
+    expect(spyLogger.error).toHaveBeenCalledWith(expectedMessage, expectedLog);
   });
 
   it("logs the debug level to the console's debug channel", () => {
     const expectedMessage = LumberjackLevel.Debug;
+    const expectedLog = createDebugLog(expectedMessage);
 
-    driver.logDebug({ formattedLog: expectedMessage, log: createDebugLog(expectedMessage) });
+    driver.logDebug({ formattedLog: expectedMessage, log: expectedLog });
 
     expect(spyLogger.debug).toHaveBeenCalledTimes(1);
-    expect(spyLogger.debug).toHaveBeenCalledWith(expectedMessage);
+    expect(spyLogger.debug).toHaveBeenCalledWith(expectedMessage, expectedLog);
   });
 
   it("logs the error level to the console's error channel", () => {
     const expectedMessage = LumberjackLevel.Error;
+    const expectedLog = createErrorLog(expectedMessage);
 
-    driver.logError({ formattedLog: expectedMessage, log: createErrorLog(expectedMessage) });
+    driver.logError({ formattedLog: expectedMessage, log: expectedLog });
 
     expect(spyLogger.error).toHaveBeenCalledTimes(1);
-    expect(spyLogger.error).toHaveBeenCalledWith(expectedMessage);
+    expect(spyLogger.error).toHaveBeenCalledWith(expectedMessage, expectedLog);
   });
 
   it("logs the info level to the console's info channel", () => {
     const expectedMessage = LumberjackLevel.Info;
+    const expectedLog = createCriticalLog(expectedMessage);
 
-    driver.logInfo({ formattedLog: expectedMessage, log: createInfoLog(expectedMessage) });
+    driver.logInfo({ formattedLog: expectedMessage, log: expectedLog });
 
     expect(spyLogger.info).toHaveBeenCalledTimes(1);
-    expect(spyLogger.info).toHaveBeenCalledWith(expectedMessage);
+    expect(spyLogger.info).toHaveBeenCalledWith(expectedMessage, expectedLog);
   });
 
   it("logs the trace level to the console's trace channel", () => {
     const expectedMessage = LumberjackLevel.Trace;
+    const expectedLog = createTraceLog(expectedMessage);
 
-    driver.logTrace({ formattedLog: expectedMessage, log: createTraceLog(expectedMessage) });
+    driver.logTrace({ formattedLog: expectedMessage, log: expectedLog });
 
     expect(spyLogger.trace).toHaveBeenCalledTimes(1);
-    expect(spyLogger.trace).toHaveBeenCalledWith(expectedMessage);
+    expect(spyLogger.trace).toHaveBeenCalledWith(expectedMessage, expectedLog);
   });
 
   it("logs the warning level to the console's warn channel", () => {
     const expectedMessage = LumberjackLevel.Warning;
+    const expectedLog = createWarningLog(expectedMessage);
 
-    driver.logWarning({ formattedLog: expectedMessage, log: createWarningLog(expectedMessage) });
+    driver.logWarning({ formattedLog: expectedMessage, log: expectedLog });
 
     expect(spyLogger.warn).toHaveBeenCalledTimes(1);
-    expect(spyLogger.warn).toHaveBeenCalledWith(expectedMessage);
+    expect(spyLogger.warn).toHaveBeenCalledWith(expectedMessage, expectedLog);
   });
 });
