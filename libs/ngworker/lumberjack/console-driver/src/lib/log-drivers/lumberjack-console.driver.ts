@@ -20,27 +20,27 @@ export class LumberjackConsoleDriver<TPayload extends LumberjackLogPayload | voi
   ) {}
 
   logCritical({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
-    this.console.error(formattedLog, log);
+    this.console.error(formattedLog, log.payload || '');
   }
 
   logDebug({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
-    this.console.debug(formattedLog, log);
+    this.console.debug(formattedLog, log.payload || '');
   }
 
   logError({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
-    this.console.error(formattedLog, log);
+    this.console.error(formattedLog, log.payload || '');
   }
 
   logInfo({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
-    this.console.info(formattedLog, log);
+    this.console.info(formattedLog, log.payload || '');
   }
 
   logTrace({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
     // tslint:disable-next-line: no-console
-    this.console.trace(formattedLog, log);
+    this.console.trace(formattedLog, log.payload || '');
   }
 
   logWarning({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
-    this.console.warn(formattedLog, log);
+    this.console.warn(formattedLog, log.payload || '');
   }
 }
