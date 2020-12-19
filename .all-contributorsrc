@@ -51,6 +51,20 @@
         "tool",
         "userTesting"
       ]
+    },
+    {
+      "login": "santoshyadavdev",
+      "name": "Santosh Yadav",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/11923975?v=4",
+      "profile": "https://www.santoshyadav.dev/",
+      "contributions": [
+        "code",
+        "doc",
+        "example",
+        "infra",
+        "plugin",
+        "test"
+      ]
     }
   ],
   "contributorsPerLine": 7
