@@ -71,6 +71,9 @@ If the version you are using is not listed, please [raise an issue in our GitHub
 To start using Lumberjack, import it in your root or core Angular module.
 
 ```ts
+// ...
+import { LumberjackModule } from '@ngworker/lumberjack';
+
 @NgModule({
   imports: [
     LumberjackModule.forRoot(),
@@ -84,6 +87,11 @@ export class AppModule {}
 You must also import log driver modules for the log drivers that you want to enable.
 
 ```ts
+// ...
+import { LumberjackModule } from '@ngworker/lumberjack';
+import { LumberjackHttpDriverModule } from "@ngworker/lumberjack/http-driver";
+import { LumberjackConsoleDriverModule } from "@ngworker/lumberjack/console-driver";
+
 @NgModule({
   imports: [
     LumberjackModule.forRoot(),
