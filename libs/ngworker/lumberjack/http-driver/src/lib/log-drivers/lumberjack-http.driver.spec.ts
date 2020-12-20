@@ -31,16 +31,9 @@ const analyticsPayload: HttpDriverPayload = {
 
 function expectRequest(
   httpTestingController: HttpTestingController,
-  { origin, storeUrl }: LumberjackHttpDriverOptions,
-  level: LumberjackLogLevel = LumberjackLevel.Critical
+  { storeUrl }: LumberjackHttpDriverOptions,
+  expectedBody: LumberjackHttpLog<HttpDriverPayload>
 ) {
-  const expectedBody: LumberjackHttpLog<HttpDriverPayload> = {
-    formattedLog: level,
-    level,
-    origin,
-    payload: analyticsPayload,
-  };
-
   const {
     request: { body, method },
   } = httpTestingController.expectOne(storeUrl);
@@ -55,15 +48,9 @@ function expectRequestToBeAborted(httpTestingController: HttpTestingController, 
 
 function expectFailingRequest(
   httpTestingController: HttpTestingController,
-  { origin, retryOptions, storeUrl }: LumberjackHttpDriverOptions,
-  level: LumberjackLevel = LumberjackLevel.Critical
+  { retryOptions, storeUrl }: LumberjackHttpDriverOptions,
+  expectedBody: LumberjackHttpLog<HttpDriverPayload>
 ) {
-  const expectedBody: LumberjackHttpLog<HttpDriverPayload> = {
-    formattedLog: level,
-    level: LumberjackLevel.Critical,
-    origin,
-    payload: analyticsPayload,
-  };
   const req = httpTestingController.expectOne(storeUrl);
   const {
     cancelled,
@@ -79,6 +66,13 @@ function expectFailingRequest(
 
 function respondWith503ServiceUnavailable(request: TestRequest) {
   request.flush('Service Unavailable', { status: 503, statusText: 'Service Unavailable' });
+}
+
+function createHttpDriverLog(
+  { log, formattedLog }: LumberjackLogDriverLog<HttpDriverPayload>,
+  origin: string = 'TEST_MODULE'
+): LumberjackHttpLog<HttpDriverPayload> {
+  return { formattedLog, log, origin };
 }
 
 describe(LumberjackHttpDriver.name, () => {
@@ -123,7 +117,7 @@ describe(LumberjackHttpDriver.name, () => {
         const expectedDriverLog = createDriverLog<HttpDriverPayload>(logLevel, logLevel, '', 'Test', analyticsPayload);
         logMethod(httpDriver).call(httpDriver, expectedDriverLog);
 
-        expectRequest(httpTestingController, options, expectedDriverLog.log.level);
+        expectRequest(httpTestingController, options, createHttpDriverLog(expectedDriverLog));
       });
     });
   });
@@ -138,9 +132,11 @@ describe(LumberjackHttpDriver.name, () => {
 
     httpDriver.logCritical(expectedDriverLog);
 
-    repeatSideEffect(2, () => expectFailingRequest(httpTestingController, options, LumberjackLevel.Critical));
+    repeatSideEffect(2, () =>
+      expectFailingRequest(httpTestingController, options, createHttpDriverLog(expectedDriverLog))
+    );
 
-    expectRequest(httpTestingController, options);
+    expectRequest(httpTestingController, options, createHttpDriverLog(expectedDriverLog));
   });
 
   it('retries the specified number of times after failures and then stops retrying', () => {
@@ -155,7 +151,7 @@ describe(LumberjackHttpDriver.name, () => {
     const { retryOptions } = options;
 
     repeatSideEffect(retryOptions.maxRetries + 1, () =>
-      expectFailingRequest(httpTestingController, options, LumberjackLevel.Critical)
+      expectFailingRequest(httpTestingController, options, createHttpDriverLog(expectedDriverLog))
     );
 
     expectRequestToBeAborted(httpTestingController, options);

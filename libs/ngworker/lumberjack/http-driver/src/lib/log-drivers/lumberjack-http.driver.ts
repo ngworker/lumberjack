@@ -1,13 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable, NgZone } from '@angular/core';
 
-import {
-  LumberjackLevel,
-  LumberjackLogDriver,
-  LumberjackLogDriverLog,
-  LumberjackLogLevel,
-  LumberjackLogPayload,
-} from '@ngworker/lumberjack';
+import { LumberjackLog, LumberjackLogDriver, LumberjackLogDriverLog, LumberjackLogPayload } from '@ngworker/lumberjack';
 
 import { lumberjackHttpDriverConfigToken } from '../configuration/lumberjack-http-driver-config.token';
 import { LumberjackHttpDriverConfig } from '../configuration/lumberjack-http-driver.config';
@@ -23,33 +17,33 @@ export class LumberjackHttpDriver<TPayload extends LumberjackLogPayload | void =
     private ngZone: NgZone
   ) {}
 
-  logCritical({ formattedLog, log: { payload } }: LumberjackLogDriverLog<TPayload>): void {
-    this.sendLog(formattedLog, LumberjackLevel.Critical, payload);
+  logCritical({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
+    this.sendLog(formattedLog, log);
   }
 
-  logDebug({ formattedLog, log: { payload } }: LumberjackLogDriverLog<TPayload>): void {
-    this.sendLog(formattedLog, LumberjackLevel.Debug, payload);
+  logDebug({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
+    this.sendLog(formattedLog, log);
   }
 
-  logError({ formattedLog, log: { payload } }: LumberjackLogDriverLog<TPayload>): void {
-    this.sendLog(formattedLog, LumberjackLevel.Error, payload);
+  logError({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
+    this.sendLog(formattedLog, log);
   }
 
-  logInfo({ formattedLog, log: { payload } }: LumberjackLogDriverLog<TPayload>): void {
-    this.sendLog(formattedLog, LumberjackLevel.Info, payload);
+  logInfo({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
+    this.sendLog(formattedLog, log);
   }
 
-  logTrace({ formattedLog, log: { payload } }: LumberjackLogDriverLog<TPayload>): void {
-    this.sendLog(formattedLog, LumberjackLevel.Trace, payload);
+  logTrace({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
+    this.sendLog(formattedLog, log);
   }
 
-  logWarning({ formattedLog, log: { payload } }: LumberjackLogDriverLog<TPayload>): void {
-    this.sendLog(formattedLog, LumberjackLevel.Warning, payload);
+  logWarning({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
+    this.sendLog(formattedLog, log);
   }
 
-  private sendLog(formattedLog: string, logLevel: LumberjackLogLevel, payload?: TPayload): void {
+  private sendLog(formattedLog: string, log: LumberjackLog<TPayload>): void {
     const { origin, retryOptions, storeUrl } = this.config;
-    const httpLog: LumberjackHttpLog<TPayload> = { formattedLog, level: logLevel, origin, payload };
+    const httpLog: LumberjackHttpLog<TPayload> = { formattedLog, origin, log };
 
     this.ngZone.runOutsideAngular(() => {
       this.http
