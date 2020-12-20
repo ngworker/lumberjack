@@ -3,13 +3,20 @@ import { TestBed } from '@angular/core/testing';
 import { resolveDependency } from '@internal/test-util';
 import { LumberjackLevel, LumberjackLogDriverConfig, lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
 
+import { LumberjackConsoleDriver } from '../log-drivers/lumberjack-console.driver';
+
 import { lumberjackConsoleDriverConfigToken } from './lumberjack-console-driver-config.token';
 
 const debugDriverConfig: LumberjackLogDriverConfig = {
   levels: [LumberjackLevel.Debug],
+  identifier: 'uuid',
 };
-const verboseDriverConfig: LumberjackLogDriverConfig = {
+const verboseDriverConfig: Partial<LumberjackLogDriverConfig> = {
   levels: [LumberjackLevel.Verbose],
+};
+const verboseConsoleDriverConfig: LumberjackLogDriverConfig = {
+  levels: [LumberjackLevel.Verbose],
+  identifier: LumberjackConsoleDriver.name,
 };
 
 describe('consoleDriverConfigToken', () => {
@@ -40,7 +47,7 @@ describe('consoleDriverConfigToken', () => {
     it('then the value of the log driver config is resolved', () => {
       const actualDriverConfig = resolveDependency(lumberjackConsoleDriverConfigToken);
 
-      expect(actualDriverConfig).toBe(verboseDriverConfig);
+      expect(actualDriverConfig).toEqual(verboseConsoleDriverConfig);
     });
   });
 });

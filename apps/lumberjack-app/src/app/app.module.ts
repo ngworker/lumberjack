@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { LumberjackLevel, LumberjackModule } from '@ngworker/lumberjack';
 import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
-import { LumberjackHttpDriverModule } from '@ngworker/lumberjack/http-driver';
+import { LumberjackHttpDriver, LumberjackHttpDriverModule } from '@ngworker/lumberjack/http-driver';
 
 import { AppComponent } from './app.component';
 
@@ -20,6 +20,7 @@ import { AppComponent } from './app.component';
       origin: 'ForestApp',
       storeUrl: '/api/logs',
       retryOptions: { maxRetries: 5, delayMs: 250 },
+      identifier: LumberjackHttpDriver.name,
     }),
   ],
   providers: [],

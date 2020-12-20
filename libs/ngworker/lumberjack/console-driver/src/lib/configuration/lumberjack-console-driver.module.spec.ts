@@ -49,6 +49,7 @@ describe(LumberjackConsoleDriverModule.name, () => {
     it('registers the specified log driver configuration', () => {
       const expectedConfig: LumberjackLogDriverConfig = {
         levels: [LumberjackLevel.Error],
+        identifier: 'uuid',
       };
 
       const consoleDriver = createConsoleDriver({ config: expectedConfig });
@@ -64,6 +65,7 @@ describe(LumberjackConsoleDriverModule.name, () => {
       const logConfig = resolveDependency(lumberjackConfigToken);
       const defaultLogDriverConfig: LumberjackLogDriverConfig = {
         levels: logConfig.levels,
+        identifier: LumberjackConsoleDriver.name,
       };
       expect(actualConfig).toEqual(defaultLogDriverConfig);
     });
@@ -71,6 +73,7 @@ describe(LumberjackConsoleDriverModule.name, () => {
     it('does register the specified log driver configuration when the lumberjack module is imported after the console driver module', () => {
       const expectedConfig: LumberjackLogDriverConfig = {
         levels: [LumberjackLevel.Debug],
+        identifier: 'uuid',
       };
 
       const consoleDriver = createConsoleDriver({

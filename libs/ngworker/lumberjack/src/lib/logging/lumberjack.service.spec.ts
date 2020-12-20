@@ -36,14 +36,14 @@ import { LumberjackLogBuilder } from './lumberjack-log.builder';
 import { LumberjackLoggerBuilder } from './lumberjack-logger.builder';
 import { LumberjackService } from './lumberjack.service';
 
-const noLogsConfig: LumberjackLogDriverConfig = {
+const noLogsConfig: Omit<LumberjackLogDriverConfig, 'identifier'> = {
   levels: [],
 };
 const noLogsProvider: StaticProvider = {
   provide: lumberjackLogDriverConfigToken,
   useValue: noLogsConfig,
 };
-const allLogsConfig: LumberjackLogDriverConfig = {
+const allLogsConfig: Omit<LumberjackLogDriverConfig, 'identifier'> = {
   levels: [
     LumberjackLevel.Critical,
     LumberjackLevel.Debug,
@@ -57,7 +57,7 @@ const allLogsProvider: StaticProvider = {
   provide: lumberjackLogDriverConfigToken,
   useValue: allLogsConfig,
 };
-const verboseLoggingConfig: LumberjackLogDriverConfig = {
+const verboseLoggingConfig: Omit<LumberjackLogDriverConfig, 'identifier'> = {
   levels: [LumberjackLevel.Verbose],
 };
 const verboseLoggingProvider: StaticProvider = {
@@ -610,9 +610,11 @@ describe(LumberjackService.name, () => {
             }),
             SpyDriverModule.forRoot({
               levels: [LumberjackLevel.Debug, LumberjackLevel.Info, LumberjackLevel.Trace],
+              identifier: SpyDriver.name,
             }),
             NoopDriverModule.forRoot({
               levels: [LumberjackLevel.Critical, LumberjackLevel.Error, LumberjackLevel.Warning],
+              identifier: NoopDriver.name,
             }),
           ],
           providers: [verboseLoggingProvider],

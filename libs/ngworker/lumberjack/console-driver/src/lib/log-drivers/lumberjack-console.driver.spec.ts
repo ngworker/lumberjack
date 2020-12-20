@@ -18,7 +18,13 @@ import { LumberjackConsoleDriver } from './lumberjack-console.driver';
 describe(LumberjackConsoleDriver.name, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [LumberjackConsoleDriverModule.forRoot({ levels: [LumberjackLevel.Verbose] }), SpyConsoleModule],
+      imports: [
+        LumberjackConsoleDriverModule.forRoot({
+          levels: [LumberjackLevel.Verbose],
+          identifier: LumberjackConsoleDriver.name,
+        }),
+        SpyConsoleModule,
+      ],
     });
 
     const [_driver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];

@@ -5,6 +5,6 @@ import { LumberjackLogDriverConfig, lumberjackLogDriverConfigToken } from '@ngwo
 export const lumberjackConsoleDriverConfigToken = new InjectionToken<LumberjackLogDriverConfig>(
   '__LUMBERJACK_CONSOLE_DRIVER_CONFIG__',
   {
-    factory: () => inject(lumberjackLogDriverConfigToken),
+    factory: () => ({ ...inject(lumberjackLogDriverConfigToken), identifier: 'LumberjackConsoleDriver' }),
   }
 );
