@@ -51,6 +51,41 @@
         "tool",
         "userTesting"
       ]
+    },
+    {
+      "login": "santoshyadavdev",
+      "name": "Santosh Yadav",
+      "avatar_url": "https://avatars3.githubusercontent.com/u/11923975?v=4",
+      "profile": "https://www.santoshyadav.dev/",
+      "contributions": [
+        "code",
+        "doc",
+        "example",
+        "infra",
+        "plugin",
+        "test"
+      ]
+    },
+    {
+      "login": "dzhavat",
+      "name": "Dzhavat Ushev",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/1096332?v=4",
+      "profile": "https://dzhavat.github.io/",
+      "contributions": [
+        "doc"
+      ]
+    },
+    {
+      "login": "alex-okrushko",
+      "name": "Alex Okrushko",
+      "avatar_url": "https://avatars0.githubusercontent.com/u/2830407?v=4",
+      "profile": "https://twitter.com/AlexOkrushko",
+      "contributions": [
+        "code",
+        "ideas",
+        "mentoring",
+        "research"
+      ]
     }
   ],
   "contributorsPerLine": 7
