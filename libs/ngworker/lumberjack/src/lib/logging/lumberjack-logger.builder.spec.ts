@@ -9,6 +9,7 @@ import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
+import { LumberjackLogBuilder } from './lumberjack-log.builder';
 import { LumberjackLoggerBuilder } from './lumberjack-logger.builder';
 import { LumberjackService } from './lumberjack.service';
 
@@ -104,13 +105,21 @@ describe(LumberjackLoggerBuilder.name, () => {
     it('logs the specified static payload', () => {
       const logFunction = builder.withPayload(payload).build();
       logFunction();
-      const expectedLog: LumberjackLog<TestPayload> = {
-        message: testMessage,
+      // const expectedLog = new LumberjackLogBuilder<TestPayload>(
+      //   resolveDependency(LumberjackTimeService),
+      //   level,
+      //   testMessage
+      // )
+      //   .withScope('')
+      //   .withPayload(payload) // 👈 Assertion doesn't accept the type produced
+      //   .build();
+      const expectedLog = new LumberjackLogBuilder<TestPayload>(
+        resolveDependency(LumberjackTimeService),
         level,
-        createdAt: fakeTime.getUnixEpochTicks(),
-        payload,
-        scope: '',
-      };
+        testMessage
+      )
+        .withScope('')
+        .build(payload);
 
       expect(((lumberjackService as unknown) as LumberjackService<TestPayload>).log).toHaveBeenCalledWith(expectedLog);
     });
