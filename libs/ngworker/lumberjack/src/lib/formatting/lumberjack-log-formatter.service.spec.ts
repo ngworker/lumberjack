@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
+import { FakeTimeService } from '@internal/test-util';
 import {
   createCriticalLog,
   createDebugLog,
@@ -22,18 +22,6 @@ function createFormattingErrorLog(formattingErrorMessage: string, log: Lumberjac
     `Could not format message "${log.message}". Error: "${formattingErrorMessage}"`,
     logFormattingErrorScope
   );
-}
-
-@Injectable()
-class FakeTimeService extends LumberjackTimeService {
-  private now = new Date();
-
-  getUnixEpochTicks() {
-    return this.now.valueOf();
-  }
-  setTime(fakeNow: Date): void {
-    this.now = fakeNow;
-  }
 }
 
 const logFormattingErrorScope = 'LumberjackLogFormattingError';
