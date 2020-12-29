@@ -15,6 +15,12 @@ describe('Logs API', () => {
 
       expect(value).toBeUndefined();
     });
+
+    it('exposes LumberjackLogPayload', () => {
+      const value: LumberjackLogPayload | undefined = undefined;
+
+      expect(value).toBeUndefined();
+    });
   });
 
   describe('Types', () => {
@@ -26,12 +32,6 @@ describe('Logs API', () => {
 
     it('exposes LumberjackLogLevel', () => {
       const value: LumberjackLogLevel | undefined = undefined;
-
-      expect(value).toBeUndefined();
-    });
-
-    it('exposes LumberjackLogPayload', () => {
-      const value: LumberjackLogPayload | undefined = undefined;
 
       expect(value).toBeUndefined();
     });
