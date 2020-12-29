@@ -5,7 +5,7 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
 import { LumberjackService } from './lumberjack.service';
 
 export class LumberjackLoggerBuilder<TPayload extends LumberjackLogPayload | void = void> {
-  private scope? = '';
+  private scope?: string;
   private payload?: TPayload;
 
   constructor(
