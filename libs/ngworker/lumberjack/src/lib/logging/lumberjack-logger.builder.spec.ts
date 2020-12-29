@@ -93,19 +93,18 @@ describe(LumberjackLoggerBuilder.name, () => {
     it('logs the specified static payload', () => {
       const logFunction = builder.withPayload(payload).build();
       logFunction();
-      // const expectedLog = new LumberjackLogBuilder<TestPayload>(
-      //   resolveDependency(LumberjackTimeService),
-      //   level,
-      //   testMessage
-      // )
-      //   .withScope('')
-      //   .withPayload(payload) // 👈 Assertion doesn't accept the type produced
-      //   .build();
       const expectedLog = new LumberjackLogBuilder<TestPayload>(
         resolveDependency(LumberjackTimeService),
         level,
         testMessage
-      ).build(payload);
+      )
+        .withPayload(payload) // 👈 Assertion doesn't accept the type produced
+        .build();
+      // const expectedLog = new LumberjackLogBuilder<TestPayload>(
+      //   resolveDependency(LumberjackTimeService),
+      //   level,
+      //   testMessage
+      // ).build(payload);
 
       expect(((lumberjackService as unknown) as LumberjackService<TestPayload>).log).toHaveBeenCalledWith(expectedLog);
     });
