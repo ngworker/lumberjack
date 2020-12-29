@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FakeTimeService, resolveDependency } from '@internal/test-util';
+import { createLog, FakeTimeService, resolveDependency } from '@internal/test-util';
 
 import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackLevel } from '../logs/lumberjack-level';
@@ -61,13 +61,7 @@ describe(LumberjackLoggerBuilder.name, () => {
     const builder = new LumberjackLoggerBuilder(lumberjackService, fakeTime, level, testMessage);
     const logFunction = builder.withScope(scope).build();
     logFunction();
-    const expectedLog: LumberjackLog = {
-      message: testMessage,
-      level,
-      createdAt: fakeTime.getUnixEpochTicks(),
-      payload: undefined,
-      scope,
-    };
+    const expectedLog = createLog(level, testMessage, scope);
 
     expect(lumberjackService.log).toHaveBeenCalledWith(expectedLog);
   });
@@ -91,13 +85,7 @@ describe(LumberjackLoggerBuilder.name, () => {
     it('logs the specified payload', () => {
       const logFunction = builder.withScope(scope).build();
       logFunction(payload);
-      const expectedLog: LumberjackLog<TestPayload> = {
-        message: testMessage,
-        level,
-        createdAt: fakeTime.getUnixEpochTicks(),
-        payload,
-        scope,
-      };
+      const expectedLog = createLog(level, testMessage, scope, payload);
 
       expect(((lumberjackService as unknown) as LumberjackService<TestPayload>).log).toHaveBeenCalledWith(expectedLog);
     });
@@ -125,13 +113,7 @@ describe(LumberjackLoggerBuilder.name, () => {
     it('logs the specified scope and payload', () => {
       const logFunction = builder.withScope(scope).withPayload(payload).build();
       logFunction();
-      const expectedLog: LumberjackLog<TestPayload> = {
-        message: testMessage,
-        level,
-        createdAt: fakeTime.getUnixEpochTicks(),
-        payload,
-        scope,
-      };
+      const expectedLog = createLog(level, testMessage, scope, payload);
 
       expect(((lumberjackService as unknown) as LumberjackService<TestPayload>).log).toHaveBeenCalledWith(expectedLog);
     });

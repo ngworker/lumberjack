@@ -38,7 +38,7 @@ describe(LumberjackConsoleDriver.name, () => {
     driver.logCritical({ formattedLog: expectedMessage, log: expectedLog });
 
     expect(spyLogger.error).toHaveBeenCalledTimes(1);
-    expect(spyLogger.error).toHaveBeenCalledWith(expectedMessage, '');
+    expect(spyLogger.error).toHaveBeenCalledWith(expectedMessage, undefined);
   });
 
   it("logs the debug level to the console's debug channel", () => {
@@ -48,7 +48,7 @@ describe(LumberjackConsoleDriver.name, () => {
     driver.logDebug({ formattedLog: expectedMessage, log: expectedLog });
 
     expect(spyLogger.debug).toHaveBeenCalledTimes(1);
-    expect(spyLogger.debug).toHaveBeenCalledWith(expectedMessage, '');
+    expect(spyLogger.debug).toHaveBeenCalledWith(expectedMessage, undefined);
   });
 
   it("logs the error level to the console's error channel", () => {
@@ -58,7 +58,7 @@ describe(LumberjackConsoleDriver.name, () => {
     driver.logError({ formattedLog: expectedMessage, log: expectedLog });
 
     expect(spyLogger.error).toHaveBeenCalledTimes(1);
-    expect(spyLogger.error).toHaveBeenCalledWith(expectedMessage, '');
+    expect(spyLogger.error).toHaveBeenCalledWith(expectedMessage, undefined);
   });
 
   it("logs the info level to the console's info channel", () => {
@@ -68,7 +68,7 @@ describe(LumberjackConsoleDriver.name, () => {
     driver.logInfo({ formattedLog: expectedMessage, log: expectedLog });
 
     expect(spyLogger.info).toHaveBeenCalledTimes(1);
-    expect(spyLogger.info).toHaveBeenCalledWith(expectedMessage, '');
+    expect(spyLogger.info).toHaveBeenCalledWith(expectedMessage, undefined);
   });
 
   it("logs the trace level to the console's trace channel", () => {
@@ -78,7 +78,7 @@ describe(LumberjackConsoleDriver.name, () => {
     driver.logTrace({ formattedLog: expectedMessage, log: expectedLog });
 
     expect(spyLogger.trace).toHaveBeenCalledTimes(1);
-    expect(spyLogger.trace).toHaveBeenCalledWith(expectedMessage, '');
+    expect(spyLogger.trace).toHaveBeenCalledWith(expectedMessage, undefined);
   });
 
   it("logs the warning level to the console's warn channel", () => {
@@ -88,6 +88,6 @@ describe(LumberjackConsoleDriver.name, () => {
     driver.logWarning({ formattedLog: expectedMessage, log: expectedLog });
 
     expect(spyLogger.warn).toHaveBeenCalledTimes(1);
-    expect(spyLogger.warn).toHaveBeenCalledWith(expectedMessage, '');
+    expect(spyLogger.warn).toHaveBeenCalledWith(expectedMessage, undefined);
   });
 });
