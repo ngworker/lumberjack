@@ -47,7 +47,7 @@ describe(LumberjackLoggerBuilder.name, () => {
           level,
           createdAt: fakeTime.getUnixEpochTicks(),
           payload: undefined,
-          scope: '',
+          scope: undefined,
         };
 
         expect(lumberjackService.log).toHaveBeenCalledWith(expectedLog);
@@ -117,9 +117,7 @@ describe(LumberjackLoggerBuilder.name, () => {
         resolveDependency(LumberjackTimeService),
         level,
         testMessage
-      )
-        .withScope('')
-        .build(payload);
+      ).build(payload);
 
       expect(((lumberjackService as unknown) as LumberjackService<TestPayload>).log).toHaveBeenCalledWith(expectedLog);
     });
