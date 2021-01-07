@@ -1,12 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 
-import { createLog, FakeTimeService, resolveDependency } from '@internal/test-util';
+import { FakeTimeService, resolveDependency } from '@internal/test-util';
 
 import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
-import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { LumberjackLogBuilder } from './lumberjack-log.builder';
@@ -42,13 +41,11 @@ describe(LumberjackLoggerBuilder.name, () => {
         const builder = new LumberjackLoggerBuilder(lumberjackService, fakeTime, level, testMessage);
         const logFunction = builder.build();
         logFunction();
-        const expectedLog: LumberjackLog = {
-          message: testMessage,
+        const expectedLog = new LumberjackLogBuilder(
+          resolveDependency(LumberjackTimeService),
           level,
-          createdAt: fakeTime.getUnixEpochTicks(),
-          payload: undefined,
-          scope: undefined,
-        };
+          testMessage
+        ).build();
 
         expect(lumberjackService.log).toHaveBeenCalledWith(expectedLog);
       })
@@ -61,7 +58,9 @@ describe(LumberjackLoggerBuilder.name, () => {
     const builder = new LumberjackLoggerBuilder(lumberjackService, fakeTime, level, testMessage);
     const logFunction = builder.withScope(scope).build();
     logFunction();
-    const expectedLog = createLog(level, testMessage, scope);
+    const expectedLog = new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), level, testMessage)
+      .withScope(scope)
+      .build();
 
     expect(lumberjackService.log).toHaveBeenCalledWith(expectedLog);
   });
@@ -85,7 +84,14 @@ describe(LumberjackLoggerBuilder.name, () => {
     it('logs the specified payload', () => {
       const logFunction = builder.withScope(scope).build();
       logFunction(payload);
-      const expectedLog = createLog(level, testMessage, scope, payload);
+      const expectedLog = new LumberjackLogBuilder<TestPayload>(
+        resolveDependency(LumberjackTimeService),
+        level,
+        testMessage
+      )
+        .withScope(scope)
+        .withPayload(payload)
+        .build();
 
       expect(((lumberjackService as unknown) as LumberjackService<TestPayload>).log).toHaveBeenCalledWith(expectedLog);
     });
@@ -98,13 +104,8 @@ describe(LumberjackLoggerBuilder.name, () => {
         level,
         testMessage
       )
-        .withPayload(payload) // 👈 Assertion doesn't accept the type produced
+        .withPayload(payload)
         .build();
-      // const expectedLog = new LumberjackLogBuilder<TestPayload>(
-      //   resolveDependency(LumberjackTimeService),
-      //   level,
-      //   testMessage
-      // ).build(payload);
 
       expect(((lumberjackService as unknown) as LumberjackService<TestPayload>).log).toHaveBeenCalledWith(expectedLog);
     });
@@ -112,7 +113,14 @@ describe(LumberjackLoggerBuilder.name, () => {
     it('logs the specified scope and payload', () => {
       const logFunction = builder.withScope(scope).withPayload(payload).build();
       logFunction();
-      const expectedLog = createLog(level, testMessage, scope, payload);
+      const expectedLog = new LumberjackLogBuilder<TestPayload>(
+        resolveDependency(LumberjackTimeService),
+        level,
+        testMessage
+      )
+        .withScope(scope)
+        .withPayload(payload)
+        .build();
 
       expect(((lumberjackService as unknown) as LumberjackService<TestPayload>).log).toHaveBeenCalledWith(expectedLog);
     });

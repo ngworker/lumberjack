@@ -20,6 +20,7 @@ export { lumberjackLogDriverToken } from './lib/log-drivers/lumberjack-log-drive
 export { LumberjackLogger } from './lib/logging/lumberjack-logger.service';
 export { ScopedLumberjackLogger } from './lib/logging/scoped-lumberjack-logger.service';
 export { LumberjackService } from './lib/logging/lumberjack.service';
+export { LumberjackLogBuilder } from './lib/logging/lumberjack-log.builder';
 
 // Logs
 export { LumberjackConfigLevels } from './lib/logs/lumberjack-config-levels';

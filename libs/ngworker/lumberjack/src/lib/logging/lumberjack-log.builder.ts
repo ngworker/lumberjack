@@ -9,9 +9,7 @@ export class LumberjackLogBuilder<TPayload extends LumberjackLogPayload | void =
 
   constructor(private time: LumberjackTimeService, private level: LumberjackLogLevel, private message: string) {}
 
-  build(
-    ...payloadArg: TPayload extends void | TPayload ? [never?] : [TPayload]
-  ): LumberjackLog<Exclude<TPayload, void>> {
+  build(...payloadArg: TPayload extends void ? [never?] : [TPayload]): LumberjackLog<Exclude<TPayload, void>> {
     return {
       level: this.level,
       message: this.message,
