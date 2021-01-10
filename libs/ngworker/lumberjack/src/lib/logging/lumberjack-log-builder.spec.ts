@@ -75,6 +75,20 @@ describe(LumberjackLogBuilder.name, () => {
     });
 
     it('logs the specified payload', () => {
+      const actualLog = builder.build(payload);
+
+      const expectedLog: LumberjackLog<TestPayload> = {
+        level,
+        message: testMessage,
+        createdAt: fakeTime.getUnixEpochTicks(),
+        scope: undefined,
+        payload,
+      };
+
+      expect(actualLog).toEqual(expectedLog);
+    });
+
+    it('logs the specified payload with scope', () => {
       const actualLog = builder.withScope(scope).build(payload);
 
       const expectedLog: LumberjackLog<TestPayload> = {
@@ -102,7 +116,7 @@ describe(LumberjackLogBuilder.name, () => {
       expect(actualLog).toEqual(expectedLog);
     });
 
-    it('logs the specified scope and payload', () => {
+    it('logs the specified scope and static payload', () => {
       const actualLog = builder.withScope(scope).withPayload(payload).build();
       const expectedLog: LumberjackLog<TestPayload> = {
         level,
