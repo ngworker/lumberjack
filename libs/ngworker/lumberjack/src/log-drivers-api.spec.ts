@@ -1,11 +1,17 @@
 import { InjectionToken } from '@angular/core';
 
-import { LumberjackLogDriver, lumberjackLogDriverToken } from './index';
+import { LumberjackLogDriver, LumberjackLogDriverLog, lumberjackLogDriverToken } from './index';
 
 describe('Log drivers API', () => {
   describe('Interfaces', () => {
     it('exposes LumberjackLogDriver', () => {
       const value: LumberjackLogDriver | undefined = undefined;
+
+      expect(value).toBeUndefined();
+    });
+
+    it('exposes LumberjackLogDriverLog', () => {
+      const value: LumberjackLogDriverLog | undefined = undefined;
 
       expect(value).toBeUndefined();
     });

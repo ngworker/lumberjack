@@ -193,14 +193,23 @@ Lumberjack offers basic log drivers out-of-the-box, namely the `LumberjackConsol
 Every log driver implements the `LumberjackLogDriver` interface.
 
 ```ts
-interface LumberjackLogDriver {
+export interface LumberjackLogDriver<TPayload extends LumberjackLogPayload | void = void> {
   readonly config: LumberjackLogDriverConfig;
-  logCritical(formattedLog: string): void;
-  logDebug(formattedLog: string): void;
-  logError(formattedLog: string): void;
-  logInfo(formattedLog: string): void;
-  logTrace(formattedLog: string): void;
-  logWarning(formattedLog: string): void;
+  logCritical(driverLog: LumberjackLogDriverLog<TPayload>): void;
+  logDebug(driverLog: LumberjackLogDriverLog<TPayload>): void;
+  logError(driverLog: LumberjackLogDriverLog<TPayload>): void;
+  logInfo(driverLog: LumberjackLogDriverLog<TPayload>): void;
+  logTrace(driverLog: LumberjackLogDriverLog<TPayload>): void;
+  logWarning(driverLog: LumberjackLogDriverLog<TPayload>): void;
+}
+```
+
+The `LumberjackLogDriverLog` holds a formatted string representation of the `LumberjackLog` and the `LumberjackLog` itself.
+
+```ts
+export interface LumberjackLogDriverLog<TPayload extends LumberjackLogPayload | void = void> {
+  readonly formattedLog: string;
+  readonly log: LumberjackLog<TPayload>;
 }
 ```
 
@@ -240,42 +249,134 @@ export class AppModule {}
 Let's create a simple log driver for the browser console.
 
 ```ts
-import { Injectable } from '@angular/core';
-import { LumberjackLogDriver, LumberjackLogDriverConfig } from '@ngworker/lumberjack';
+import { Inject, Injectable } from '@angular/core';
+
+import { LumberjackLogDriver, LumberjackLogDriverConfig, LumberjackLogDriverLog } from '@ngworker/lumberjack';
+import { lumberjackConsoleToken, LumberjackConsole } from '@ngworker/lumberjack/console-driver';
 
 import { consoleDriverConfigToken } from './console-driver-config.token';
 
 @Injectable()
 export class ConsoleDriver implements LumberjackLogDriver {
-  constructor(@Inject(consoleDriverConfigToken) public config: LumberjackLogDriverConfig) {}
+  constructor(
+    @Inject(consoleDriverConfigToken) public config: LumberjackLogDriverConfig,
+    @Inject(lumberjackConsoleToken) private console: LumberjackConsole
+  ) {}
 
-  logCritical(formattedLog: string): void {
-    console.error(formattedLog);
+  logCritical({ formattedLog }: LumberjackLogDriverLog): void {
+    this.console.error(formattedLog);
   }
 
-  logDebug(formattedLog: string): void {
-    console.debug(formattedLog);
+  logDebug({ formattedLog }: LumberjackLogDriverLog): void {
+    this.console.debug(formattedLog);
   }
 
-  logError(formattedLog: string): void {
-    console.error(formattedLog);
+  logError({ formattedLog }: LumberjackLogDriverLog): void {
+    this.console.error(formattedLog);
   }
 
-  logInfo(formattedLog: string): void {
-    console.info(formattedLog);
+  logInfo({ formattedLog }: LumberjackLogDriverLog): void {
+    this.console.info(formattedLog);
   }
 
-  logTrace(formattedLog: string): void {
-    console.trace(formattedLog);
+  logTrace({ formattedLog }: LumberjackLogDriverLog): void {
+    this.console.trace(formattedLog);
   }
 
-  logWarning(formattedLog: string): void {
-    console.warn(formattedLog);
+  logWarning({ formattedLog }: LumberjackLogDriverLog): void {
+    this.console.warn(formattedLog);
   }
 }
 ```
 
-There is nothing special about it. The only remarkable thing is that the config is passed down its constructor and that it is assigned to the public `config` property. Lumberjack uses this configuration to determine which logs to pass to the driver.
+There is nothing special about it. The only remarkable thing is that the config is passed down its constructor and that it is assigned to the public `config` property. **Lumberjack** uses this configuration to determine which logs should the driver handle.
+
+#### Using a LumberjackLogPayload
+
+It is possible that our driver needs some extra data not provided by the `LumberjackLog`.
+
+For such cases, Lumberjack exposes the `LumberjackLog#payload` property.
+
+```ts
+/**
+ * A Lumberjack log entry
+ */
+export interface LumberjackLog<TPayload extends LumberjackLogPayload | void = void> {
+  /**
+   * Scope, for example domain, application, component, or service.
+   */
+  readonly scope?: string;
+  /**
+   * Unix epoch ticks (milliseconds) timestamp when log entry was created.
+   */
+  readonly createdAt: number;
+  /**
+   * Level of severity.
+   */
+  readonly level: LumberjackLogLevel;
+  /**
+   * Log message, for example describing an event that happened.
+   */
+  readonly message: string;
+
+  /**
+   * Holds any payload info
+   */
+  readonly payload?: TPayload;
+}
+```
+
+We can modify the `ConsoleDriver` to handle such payload information
+
+```ts
+import { Inject, Injectable } from '@angular/core';
+
+import {
+  LumberjackLogDriver,
+  LumberjackLogDriverConfig,
+  LumberjackLogDriverLog,
+  LumberjackLogPayload,
+} from '@ngworker/lumberjack';
+import { LumberjackConsole, lumberjackConsoleToken } from '@ngworker/lumberjack/console-driver';
+
+import { consoleDriverConfigToken } from './console-driver-config.token';
+
+export interface AnalyticsPayload extends LumberjackLogPayload {
+  angularVersion: string;
+}
+
+@Injectable()
+export class ConsoleDriver implements LumberjackLogDriver<AnalyticsPayload> {
+  constructor(
+    @Inject(consoleDriverConfigToken) public config: LumberjackLogDriverConfig,
+    @Inject(lumberjackConsoleToken) private console: LumberjackConsole
+  ) {}
+
+  logCritical({ formattedLog, log }: LumberjackLogDriverLog<AnalyticsPayload>): void {
+    this.console.error(formattedLog, log.payload || '');
+  }
+
+  logDebug({ formattedLog, log }: LumberjackLogDriverLog<AnalyticsPayload>): void {
+    this.console.debug(formattedLog, log.payload || '');
+  }
+
+  logError({ formattedLog, log }: LumberjackLogDriverLog<AnalyticsPayload>): void {
+    this.console.error(formattedLog, log.payload || '');
+  }
+
+  logInfo({ formattedLog, log }: LumberjackLogDriverLog<AnalyticsPayload>): void {
+    this.console.info(formattedLog, log.payload || '');
+  }
+
+  logTrace({ formattedLog, log }: LumberjackLogDriverLog<AnalyticsPayload>): void {
+    this.console.trace(formattedLog, log.payload || '');
+  }
+
+  logWarning({ formattedLog, log }: LumberjackLogDriverLog<AnalyticsPayload>): void {
+    this.console.warn(formattedLog, log.payload || '');
+  }
+}
+```
 
 #### Creating a custom log driver module
 
@@ -358,17 +459,47 @@ The `LumberjackLogger` service is an abstract class that wraps the `LumberjackSe
 This is the abstract interface of `LumberjackLogger`:
 
 ```ts
-import { LumberjackService, LumberjackTimeService } from '@ngworker/lumberjack';
+import { Injectable } from '@angular/core';
 
-export abstract class LumberjackLogger {
-  constructor(lumberjack: LumberjackService, time: LumberjackTimeService) {}
+import { LumberjackLevel } from '../logs/lumberjack-level';
+import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
+import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
+import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
-  protected createCriticalLogger(message: string, scope?: string): () => void {}
-  protected createDebugLogger(message: string, scope?: string): () => void {}
-  protected createErrorLogger(message: string, scope?: string): () => void {}
-  protected createInfoLogger(message: string, scope?: string): () => void {}
-  protected createTraceLogger(message: string, scope?: string): () => void {}
-  protected createWarningLogger(message: string, scope?: string): () => void {}
+import { LumberjackLoggerBuilder } from './lumberjack-logger.builder';
+import { LumberjackService } from './lumberjack.service';
+
+@Injectable()
+export abstract class LumberjackLogger<TPayload extends LumberjackLogPayload | void = void> {
+  constructor(protected lumberjack: LumberjackService<TPayload>, protected time: LumberjackTimeService) {}
+
+  protected createCriticalLogger(message: string): LumberjackLoggerBuilder<TPayload> {
+    return this.createLoggerBuilder(LumberjackLevel.Critical, message);
+  }
+
+  protected createDebugLogger(message: string): LumberjackLoggerBuilder<TPayload> {
+    return this.createLoggerBuilder(LumberjackLevel.Debug, message);
+  }
+
+  protected createErrorLogger(message: string): LumberjackLoggerBuilder<TPayload> {
+    return this.createLoggerBuilder(LumberjackLevel.Error, message);
+  }
+
+  protected createInfoLogger(message: string): LumberjackLoggerBuilder<TPayload> {
+    return this.createLoggerBuilder(LumberjackLevel.Info, message);
+  }
+
+  protected createTraceLogger(message: string): LumberjackLoggerBuilder<TPayload> {
+    return this.createLoggerBuilder(LumberjackLevel.Trace, message);
+  }
+
+  protected createWarningLogger(message: string): LumberjackLoggerBuilder<TPayload> {
+    return this.createLoggerBuilder(LumberjackLevel.Warning, message);
+  }
+
+  protected createLoggerBuilder(level: LumberjackLogLevel, message: string): LumberjackLoggerBuilder<TPayload> {
+    return new LumberjackLoggerBuilder<TPayload>(this.lumberjack, this.time, level, message);
+  }
 }
 ```
 
@@ -380,7 +511,8 @@ As an example, let's create a custom logger for our example application.
 
 ```ts
 import { Injectable } from '@angular/core';
-import { LumberjackLogger } from '@ngworker/lumberjack';
+
+import { LumberjackLogger, LumberjackService, LumberjackTimeService } from '@ngworker/lumberjack';
 
 @Injectable({
   providedIn: 'root',
@@ -388,9 +520,13 @@ import { LumberjackLogger } from '@ngworker/lumberjack';
 export class AppLogger extends LumberjackLogger {
   public static scope = 'Forest App';
 
-  forestOnFire = this.createCriticalLogger('The forest is on fire!', AppLogger.scope);
+  constructor(lumberjack: LumberjackService, time: LumberjackTimeService) {
+    super(lumberjack, time);
+  }
 
-  helloForest = this.createInfoLogger('Hello, forest!', AppLogger.scope);
+  forestOnFire = this.createCriticalLogger('The forest is on fire').withScope(AppLogger.scope).build();
+
+  helloForest = this.createInfoLogger('HelloForest').withScope(AppLogger.scope).build();
 }
 ```
 
@@ -421,6 +557,75 @@ export class AppComponent implements OnInit {
 ```
 
 The previous example logs _Hello, forest!_ when the application is initialized, then logs _The forest is on fire!_ if a forest fire is detected.
+
+#### Simplifying with ScopedLumberjackLogger
+
+Alternative to the `LumberjackLogger` interface, where we need to manually specify the lumberjack log scope, we could use the `ScopedLumberjackLogger`.
+
+The result `AppLogger` would be
+
+```ts
+import { Injectable } from '@angular/core';
+
+import { LumberjackService, LumberjackTimeService, ScopedLumberjackLogger } from '@ngworker/lumberjack';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AppLogger extends ScopedLumberjackLogger {
+  public scope = 'Forest App';
+
+  constructor(lumberjack: LumberjackService, time: LumberjackTimeService) {
+    super(lumberjack, time);
+  }
+
+  forestOnFire = this.createCriticalLogger('The forest is on fire').build();
+
+  helloForest = this.createInfoLogger('HelloForest').build();
+}
+```
+
+#### Using Loggers with a LumberjackLog payload
+
+As seen in the [Log drivers](#log-drivers) section we can send extra info to our drivers using a `LumberjackLog#payload`.
+
+The `LumberjackLogger` and `ScopedLumberjackLogger` provide a convenient interface for such scenario.
+
+```ts
+import { Injectable, VERSION } from '@angular/core';
+
+import {
+  LumberjackLogPayload,
+  LumberjackService,
+  LumberjackTimeService,
+  ScopedLumberjackLogger,
+} from '@ngworker/lumberjack';
+
+export interface LogPayload extends LumberjackLogPayload {
+  angularVersion: string;
+}
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AppLogger extends ScopedLumberjackLogger<LogPayload> {
+  private static payload: LogPayload = {
+    angularVersion: VERSION.full,
+  };
+
+  public scope = 'Forest App';
+
+  constructor(lumberjack: LumberjackService<LogPayload>, time: LumberjackTimeService) {
+    super(lumberjack, time);
+  }
+
+  forestOnFire = this.createCriticalLogger('The forest is on fire').build();
+
+  helloForest = this.createInfoLogger('HelloForest').withPayload(AppLogger.payload).build();
+}
+```
+
+The usage of the `AppLogger` remains the same using a `LumberjackLogger` or `ScopedLumberjackLogger`, with payload or without.
 
 ## Wallaby.js
 

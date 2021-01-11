@@ -1,11 +1,17 @@
 import { isClass } from '@internal/test-util';
 
-import { LumberjackLogger, LumberjackService } from './index';
+import { LumberjackLogger, LumberjackService, ScopedLumberjackLogger } from './index';
 
 describe('Logging API', () => {
   describe('Services', () => {
     it(`exposes ${LumberjackLogger.name}`, () => {
       const sut = LumberjackLogger;
+
+      expect(isClass(sut)).withContext(`${sut.name} is not a class`).toBeTrue();
+    });
+
+    it(`exposes ${ScopedLumberjackLogger.name}`, () => {
+      const sut = ScopedLumberjackLogger;
 
       expect(isClass(sut)).withContext(`${sut.name} is not a class`).toBeTrue();
     });

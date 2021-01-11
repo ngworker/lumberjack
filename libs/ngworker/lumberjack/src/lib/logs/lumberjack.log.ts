@@ -1,9 +1,10 @@
 import { LumberjackLogLevel } from './lumberjack-log-level';
+import { LumberjackLogPayload } from './lumberjack-log-payload';
 
 /**
  * A Lumberjack log entry
  */
-export interface LumberjackLog {
+export interface LumberjackLog<TPayload extends LumberjackLogPayload | void = void> {
   /**
    * Scope, for example domain, application, component, or service.
    */
@@ -20,4 +21,9 @@ export interface LumberjackLog {
    * Log message, for example describing an event that happened.
    */
   readonly message: string;
+
+  /**
+   * Holds any payload info
+   */
+  readonly payload?: TPayload;
 }

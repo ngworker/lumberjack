@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, VERSION } from '@angular/core';
 
 import { AppLogger } from './app-logger.service';
 
@@ -14,6 +14,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.logger.helloForest();
-    this.logger.forestOnFire();
+    this.logger.forestOnFire({ angularVersion: VERSION.full });
   }
 }

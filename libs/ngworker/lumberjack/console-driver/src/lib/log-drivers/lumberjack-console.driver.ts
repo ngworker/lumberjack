@@ -1,40 +1,46 @@
 import { Inject, Injectable } from '@angular/core';
 
-import { LumberjackLogDriver, LumberjackLogDriverConfig } from '@ngworker/lumberjack';
+import {
+  LumberjackLogDriver,
+  LumberjackLogDriverConfig,
+  LumberjackLogDriverLog,
+  LumberjackLogPayload,
+} from '@ngworker/lumberjack';
 
 import { lumberjackConsoleDriverConfigToken } from '../configuration/lumberjack-console-driver-config.token';
 import { LumberjackConsole } from '../console/lumberjack-console';
 import { lumberjackConsoleToken } from '../console/lumberjack-console.token';
 
 @Injectable()
-export class LumberjackConsoleDriver implements LumberjackLogDriver {
+export class LumberjackConsoleDriver<TPayload extends LumberjackLogPayload | void = void>
+  implements LumberjackLogDriver<TPayload> {
   constructor(
     @Inject(lumberjackConsoleDriverConfigToken) public config: LumberjackLogDriverConfig,
     @Inject(lumberjackConsoleToken) private console: LumberjackConsole
   ) {}
 
-  logCritical(formattedLog: string): void {
-    this.console.error(formattedLog);
+  logCritical({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
+    this.console.error(formattedLog, log.payload);
   }
 
-  logDebug(formattedLog: string): void {
-    this.console.debug(formattedLog);
+  logDebug({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
+    this.console.debug(formattedLog, log.payload);
   }
 
-  logError(formattedLog: string): void {
-    this.console.error(formattedLog);
+  logError({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
+    this.console.error(formattedLog, log.payload);
   }
 
-  logInfo(formattedLog: string): void {
-    this.console.info(formattedLog);
+  logInfo({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
+    this.console.info(formattedLog, log.payload);
   }
 
-  logTrace(formattedLog: string): void {
+  logTrace({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
     // tslint:disable-next-line: no-console
-    this.console.trace(formattedLog);
+    this.console.trace(formattedLog, log.payload);
   }
 
-  logWarning(formattedLog: string): void {
-    this.console.warn(formattedLog);
+  logWarning({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
+    this.console.warn(formattedLog, log.payload);
   }
 }

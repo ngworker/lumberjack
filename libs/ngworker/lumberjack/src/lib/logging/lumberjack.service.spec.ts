@@ -3,16 +3,19 @@ import { TestBed } from '@angular/core/testing';
 
 import { NoopConsoleModule } from '@internal/console-driver/test-util';
 import {
-  createCriticalLog,
-  createDebugLog,
-  createErrorLog,
-  createInfoLog,
-  createTraceLog,
-  createWarningLog,
+  createCriticalDriverLog,
+  createDebugDriverLog,
+  createErrorDriverLog,
+  createInfoDriverLog,
+  createTraceDriverLog,
+  createWarningDriverLog,
   ErrorThrowingDriver,
   ErrorThrowingDriverModule,
   NoopDriver,
   NoopDriverModule,
+  ObjectDriverModule,
+  ObjectPayload,
+  ObjectService,
   resolveDependency,
   SpyDriver,
   SpyDriverModule,
@@ -23,9 +26,14 @@ import { lumberjackLogDriverConfigToken } from '../configuration/lumberjack-log-
 import { LumberjackLogDriverConfig } from '../configuration/lumberjack-log-driver.config';
 import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
+import { LumberjackLogDriverLog } from '../log-drivers/lumberjack-log-driver.log';
 import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
 import { LumberjackLevel } from '../logs/lumberjack-level';
+import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
+import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
+import { LumberjackLogBuilder } from './lumberjack-log.builder';
+import { LumberjackLoggerBuilder } from './lumberjack-logger.builder';
 import { LumberjackService } from './lumberjack.service';
 
 const noLogsConfig: LumberjackLogDriverConfig = {
@@ -56,8 +64,35 @@ const verboseLoggingProvider: StaticProvider = {
   provide: lumberjackLogDriverConfigToken,
   useValue: verboseLoggingConfig,
 };
+const fakeDate = new Date('2020-02-02T02:02:02.000Z');
 
-const logDebugMessage = () => resolveDependency(LumberjackService).log(createDebugLog());
+interface PayloadFieldInfo extends LumberjackLogPayload {
+  payloadInfo: string;
+}
+
+const payloadInfo: PayloadFieldInfo = { payloadInfo: 'PayloadINFO' };
+const objectPayloadInfo: ObjectPayload = { isWorking: true };
+
+const logDebugMessage = () =>
+  resolveDependency(LumberjackService).log(
+    new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Debug, '')
+      .withScope('Test')
+      .build()
+  );
+const logDebugMessageWithPayloadField = () =>
+  resolveDependency<LumberjackService<PayloadFieldInfo>>(LumberjackService).log(
+    new LumberjackLogBuilder<PayloadFieldInfo>(resolveDependency(LumberjackTimeService), LumberjackLevel.Debug, '')
+      .withScope('Test')
+      .withPayload(payloadInfo)
+      .build()
+  );
+const logDebugMessageWithObjectPayloadField = () =>
+  resolveDependency<LumberjackService<ObjectPayload>>(LumberjackService).log(
+    new LumberjackLogBuilder<ObjectPayload>(resolveDependency(LumberjackTimeService), LumberjackLevel.Debug, '')
+      .withScope('Test')
+      .withPayload(objectPayloadInfo)
+      .build()
+  );
 
 describe(LumberjackService.name, () => {
   describe('Log drivers', () => {
@@ -90,6 +125,46 @@ describe(LumberjackService.name, () => {
       expect(logDebugMessage).not.toThrow();
     });
 
+    describe('Drivers with custom lumberjack logs', () => {
+      it('receives the payload parameter in the provided driver', () => {
+        TestBed.configureTestingModule({
+          imports: [LumberjackModule.forRoot(), SpyDriverModule.forRoot()],
+        });
+        const fakeTime = resolveDependency(LumberjackTimeService);
+        spyOn(fakeTime, 'getUnixEpochTicks').and.returnValue(fakeDate.valueOf());
+
+        const logDrivers = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver<
+          PayloadFieldInfo
+        >[];
+        const spyDriver = logDrivers[0] as SpyDriver;
+
+        expect(logDebugMessageWithPayloadField).not.toThrow();
+
+        expect(spyDriver.logDebug).toHaveBeenCalledWith(
+          createDebugDriverLog(
+            // tslint:disable-next-line: no-any
+            jasmine.any(String) as any,
+            undefined,
+            undefined,
+            payloadInfo
+          )
+        );
+      });
+
+      it('uses the payload as part of driver logic', () => {
+        TestBed.configureTestingModule({
+          imports: [LumberjackModule.forRoot(), ObjectDriverModule.forRoot()],
+        });
+
+        const objectService = resolveDependency(ObjectService);
+        spyOn(objectService, 'log').and.callThrough();
+
+        expect(logDebugMessageWithObjectPayloadField).not.toThrow();
+
+        expect(objectService.log).toHaveBeenCalledWith(objectPayloadInfo);
+      });
+    });
+
     describe('Error-throwing log drivers', () => {
       beforeEach(() => {
         consoleErrorSpy = spyOn(console, 'error');
@@ -117,6 +192,8 @@ describe(LumberjackService.name, () => {
             ErrorThrowingDriverModule.forRoot({ logsBeforeThrowing: 1 }),
           ],
         });
+        const fakeTime = resolveDependency(LumberjackTimeService);
+        spyOn(fakeTime, 'getUnixEpochTicks').and.returnValue(fakeDate.valueOf());
         const logDrivers = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
         const spyDriver = logDrivers[0] as SpyDriver;
         const errorDriver = logDrivers[1] as ErrorThrowingDriver;
@@ -128,11 +205,13 @@ describe(LumberjackService.name, () => {
 
         expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
         expect(spyDriver.logError).not.toHaveBeenCalled();
-        expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLevel.Debug);
+        expect(spyDriver.logDebug).toHaveBeenCalledWith(createDebugDriverLog(LumberjackLevel.Debug));
 
         expect(errorDriver.logDebug).toHaveBeenCalledTimes(1);
         expect(errorDriver.logError).toHaveBeenCalledTimes(1);
-        expect(errorDriver.logDebug).toHaveBeenCalledWith(LumberjackLevel.Debug);
+        expect((errorDriver as LumberjackLogDriver).logDebug).toHaveBeenCalledWith(
+          createDebugDriverLog(LumberjackLevel.Debug)
+        );
 
         expect(consoleErrorSpy).toHaveBeenCalledTimes(2);
       });
@@ -148,6 +227,8 @@ describe(LumberjackService.name, () => {
             NoopDriverModule.forRoot(),
           ],
         });
+        const fakeTime = resolveDependency(LumberjackTimeService);
+        spyOn(fakeTime, 'getUnixEpochTicks').and.returnValue(fakeDate.valueOf());
         const logDrivers = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
         const spyDriver = logDrivers[0] as SpyDriver;
         const errorDriver = logDrivers[1] as ErrorThrowingDriver;
@@ -162,14 +243,16 @@ describe(LumberjackService.name, () => {
 
         expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
         expect(spyDriver.logError).not.toHaveBeenCalled();
-        expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLevel.Debug);
+        expect(spyDriver.logDebug).toHaveBeenCalledWith(createDebugDriverLog(LumberjackLevel.Debug));
 
         expect(noopDriver.logDebug).toHaveBeenCalledTimes(1);
         expect(noopDriver.logError).toHaveBeenCalledTimes(1);
 
         expect(errorDriver.logDebug).toHaveBeenCalledTimes(1);
         expect(errorDriver.logError).toHaveBeenCalledTimes(2);
-        expect(errorDriver.logDebug).toHaveBeenCalledWith(LumberjackLevel.Debug);
+        expect((errorDriver as LumberjackLogDriver).logDebug).toHaveBeenCalledWith(
+          createDebugDriverLog(LumberjackLevel.Debug)
+        );
 
         expect(consoleErrorSpy).toHaveBeenCalledTimes(2);
       });
@@ -184,6 +267,8 @@ describe(LumberjackService.name, () => {
             ErrorThrowingDriverModule.forRoot(),
           ],
         });
+        const fakeTime = resolveDependency(LumberjackTimeService);
+        spyOn(fakeTime, 'getUnixEpochTicks').and.returnValue(fakeDate.valueOf());
         const logDrivers = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
         const spyDriver = logDrivers[0] as SpyDriver;
 
@@ -191,9 +276,11 @@ describe(LumberjackService.name, () => {
 
         expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
         expect(spyDriver.logError).toHaveBeenCalledTimes(1);
-        expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLevel.Debug);
-        const [actualLastErrorMessage] = spyDriver.logError.calls.mostRecent().args as ReadonlyArray<string>;
-        expect(actualLastErrorMessage).toMatch(
+        expect(spyDriver.logDebug).toHaveBeenCalledWith(createDebugDriverLog(LumberjackLevel.Debug));
+        const [actualLastErrorMessage] = spyDriver.logError.calls.mostRecent().args as ReadonlyArray<
+          LumberjackLogDriverLog
+        >;
+        expect(actualLastErrorMessage.formattedLog).toMatch(
           new RegExp(`^Could not log message ".*?" to ${ErrorThrowingDriver.name}.\n Error: ".*?"`)
         );
         expect(consoleErrorSpy).not.toHaveBeenCalled();
@@ -209,13 +296,15 @@ describe(LumberjackService.name, () => {
             SpyDriverModule.forRoot(),
           ],
         });
+        const fakeTime = resolveDependency(LumberjackTimeService);
+        spyOn(fakeTime, 'getUnixEpochTicks').and.returnValue(fakeDate.valueOf());
         const logDrivers = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
         const spyDriver = logDrivers[1] as SpyDriver;
 
         expect(logDebugMessage).not.toThrow();
 
         expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
-        expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLevel.Debug);
+        expect(spyDriver.logDebug).toHaveBeenCalledWith(createDebugDriverLog(LumberjackLevel.Debug));
         expect(consoleErrorSpy).not.toHaveBeenCalled();
       });
 
@@ -262,7 +351,7 @@ describe(LumberjackService.name, () => {
           ],
         });
 
-        lumberjack = resolveDependency(LumberjackService);
+        lumberjack = resolveDependency(LumberjackService) as LumberjackService;
 
         const [logDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
         spyDriver = logDriver as SpyDriver;
@@ -272,37 +361,49 @@ describe(LumberjackService.name, () => {
       let spyDriver: SpyDriver;
 
       it('logs an error to a log driver', () => {
-        lumberjack.log(createCriticalLog());
+        lumberjack.log(
+          new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Critical, '').build()
+        );
 
         expect(spyDriver.logError).toHaveBeenCalledTimes(1);
       });
 
       it('does not log a critical error to a log driver', () => {
-        lumberjack.log(createCriticalLog());
+        lumberjack.log(
+          new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Critical, '').build()
+        );
 
         expect(spyDriver.logCritical).not.toHaveBeenCalled();
       });
 
       it('does not log a debug message to a log driver', () => {
-        lumberjack.log(createDebugLog());
+        lumberjack.log(
+          new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Debug, '').build()
+        );
 
         expect(spyDriver.logDebug).not.toHaveBeenCalled();
       });
 
       it('does not log an info message to a log driver', () => {
-        lumberjack.log(createInfoLog());
+        lumberjack.log(
+          new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Info, '').build()
+        );
 
         expect(spyDriver.logInfo).not.toHaveBeenCalled();
       });
 
       it('does not log a trace to a log driver', () => {
-        lumberjack.log(createTraceLog());
+        lumberjack.log(
+          new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Trace, '').build()
+        );
 
         expect(spyDriver.logTrace).not.toHaveBeenCalled();
       });
 
       it('does not log a warning to a log driver', () => {
-        lumberjack.log(createWarningLog());
+        lumberjack.log(
+          new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Warning, '').build()
+        );
 
         expect(spyDriver.logWarning).not.toHaveBeenCalled();
       });
@@ -320,55 +421,82 @@ describe(LumberjackService.name, () => {
         ],
       });
 
-      lumberjack = resolveDependency(LumberjackService);
+      lumberjack = resolveDependency(LumberjackService) as LumberjackService;
 
       const [logDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
       spyDriver = logDriver as SpyDriver;
+
+      const fakeTime = resolveDependency(LumberjackTimeService);
+      spyOn(fakeTime, 'getUnixEpochTicks').and.returnValue(fakeDate.valueOf());
     });
 
     let lumberjack: LumberjackService;
     let spyDriver: SpyDriver;
 
     it('logs a critical error to a log driver', () => {
-      lumberjack.log(createCriticalLog());
+      lumberjack.log(
+        new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Critical, '')
+          .withScope('Test')
+          .build()
+      );
 
       expect(spyDriver.logCritical).toHaveBeenCalledTimes(1);
-      expect(spyDriver.logCritical).toHaveBeenCalledWith(LumberjackLevel.Critical);
+      expect(spyDriver.logCritical).toHaveBeenCalledWith(createCriticalDriverLog(LumberjackLevel.Critical));
     });
 
     it('logs a debug message to a log driver', () => {
-      lumberjack.log(createDebugLog());
+      lumberjack.log(
+        new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Debug, '')
+          .withScope('Test')
+          .build()
+      );
 
       expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
-      expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLevel.Debug);
+      expect(spyDriver.logDebug).toHaveBeenCalledWith(createDebugDriverLog(LumberjackLevel.Debug));
     });
 
     it('logs an error message to a log driver', () => {
-      lumberjack.log(createErrorLog());
+      lumberjack.log(
+        new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Error, '')
+          .withScope('Test')
+          .build()
+      );
 
       expect(spyDriver.logError).toHaveBeenCalledTimes(1);
-      expect(spyDriver.logError).toHaveBeenCalledWith(LumberjackLevel.Error);
+      expect(spyDriver.logError).toHaveBeenCalledWith(createErrorDriverLog(LumberjackLevel.Error));
     });
 
     it('logs an info message to a log driver', () => {
-      lumberjack.log(createInfoLog());
+      lumberjack.log(
+        new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Info, '')
+          .withScope('Test')
+          .build()
+      );
 
       expect(spyDriver.logInfo).toHaveBeenCalledTimes(1);
-      expect(spyDriver.logInfo).toHaveBeenCalledWith(LumberjackLevel.Info);
+      expect(spyDriver.logInfo).toHaveBeenCalledWith(createInfoDriverLog(LumberjackLevel.Info));
     });
 
     it('logs a trace to a log driver', () => {
-      lumberjack.log(createTraceLog());
+      lumberjack.log(
+        new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Trace, '')
+          .withScope('Test')
+          .build()
+      );
 
       expect(spyDriver.logTrace).toHaveBeenCalledTimes(1);
-      expect(spyDriver.logTrace).toHaveBeenCalledWith(LumberjackLevel.Trace);
+      expect(spyDriver.logTrace).toHaveBeenCalledWith(createTraceDriverLog(LumberjackLevel.Trace));
     });
 
     it('logs a warning to a log driver', () => {
-      lumberjack.log(createWarningLog());
+      lumberjack.log(
+        new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Warning, '')
+          .withScope('Test')
+          .build()
+      );
 
       expect(spyDriver.logWarning).toHaveBeenCalledTimes(1);
-      expect(spyDriver.logWarning).toHaveBeenCalledWith(LumberjackLevel.Warning);
+      expect(spyDriver.logWarning).toHaveBeenCalledWith(createWarningDriverLog(LumberjackLevel.Warning));
     });
   });
 
@@ -413,10 +541,13 @@ describe(LumberjackService.name, () => {
         providers: [verboseLoggingProvider],
       });
 
-      lumberjack = resolveDependency(LumberjackService);
+      lumberjack = resolveDependency(LumberjackService) as LumberjackService;
 
       const [logDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
       spyDriver = logDriver as SpyDriver;
+
+      const fakeTime = resolveDependency(LumberjackTimeService);
+      spyOn(fakeTime, 'getUnixEpochTicks').and.returnValue(fakeDate.valueOf());
     });
 
     let lumberjack: LumberjackService;
@@ -424,31 +555,47 @@ describe(LumberjackService.name, () => {
 
     describe('when a log driver is registered', () => {
       it('debug logs are logged', () => {
-        lumberjack.log(createDebugLog());
+        lumberjack.log(
+          new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Debug, '')
+            .withScope('Test')
+            .build()
+        );
 
         expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
-        expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLevel.Debug);
+        expect(spyDriver.logDebug).toHaveBeenCalledWith(createDebugDriverLog(LumberjackLevel.Debug));
       });
 
       it('errors are logged', () => {
-        lumberjack.log(createErrorLog());
+        lumberjack.log(
+          new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Error, '')
+            .withScope('Test')
+            .build()
+        );
 
         expect(spyDriver.logError).toHaveBeenCalledTimes(1);
-        expect(spyDriver.logError).toHaveBeenCalledWith(LumberjackLevel.Error);
+        expect(spyDriver.logError).toHaveBeenCalledWith(createErrorDriverLog(LumberjackLevel.Error));
       });
 
       it('info is logged', () => {
-        lumberjack.log(createInfoLog());
+        lumberjack.log(
+          new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Info, '')
+            .withScope('Test')
+            .build()
+        );
 
         expect(spyDriver.logInfo).toHaveBeenCalledTimes(1);
-        expect(spyDriver.logInfo).toHaveBeenCalledWith(LumberjackLevel.Info);
+        expect(spyDriver.logInfo).toHaveBeenCalledWith(createInfoDriverLog(LumberjackLevel.Info));
       });
 
       it('warnings are logged', () => {
-        lumberjack.log(createWarningLog());
+        lumberjack.log(
+          new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Warning, '')
+            .withScope('Test')
+            .build()
+        );
 
         expect(spyDriver.logWarning).toHaveBeenCalledTimes(1);
-        expect(spyDriver.logWarning).toHaveBeenCalledWith(LumberjackLevel.Warning);
+        expect(spyDriver.logWarning).toHaveBeenCalledWith(createWarningDriverLog(LumberjackLevel.Warning));
       });
     });
   });
@@ -471,7 +618,10 @@ describe(LumberjackService.name, () => {
           providers: [verboseLoggingProvider],
         });
 
-        lumberjack = resolveDependency(LumberjackService);
+        lumberjack = resolveDependency(LumberjackService) as LumberjackService;
+
+        const fakeTime = resolveDependency(LumberjackTimeService);
+        spyOn(fakeTime, 'getUnixEpochTicks').and.returnValue(fakeDate.valueOf());
 
         const [_spyDriver, _noopDriver] = (resolveDependency(
           lumberjackLogDriverToken
@@ -487,12 +637,36 @@ describe(LumberjackService.name, () => {
       });
 
       beforeEach(() => {
-        lumberjack.log(createCriticalLog());
-        lumberjack.log(createDebugLog());
-        lumberjack.log(createErrorLog());
-        lumberjack.log(createInfoLog());
-        lumberjack.log(createTraceLog());
-        lumberjack.log(createWarningLog());
+        lumberjack.log(
+          new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Critical, '')
+            .withScope('Test')
+            .build()
+        );
+        lumberjack.log(
+          new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Debug, '')
+            .withScope('Test')
+            .build()
+        );
+        lumberjack.log(
+          new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Error, '')
+            .withScope('Test')
+            .build()
+        );
+        lumberjack.log(
+          new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Info, '')
+            .withScope('Test')
+            .build()
+        );
+        lumberjack.log(
+          new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Trace, '')
+            .withScope('Test')
+            .build()
+        );
+        lumberjack.log(
+          new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Warning, '')
+            .withScope('Test')
+            .build()
+        );
       });
 
       let lumberjack: LumberjackService;
@@ -501,18 +675,24 @@ describe(LumberjackService.name, () => {
 
       it('then logs of configured levels are passed to each of them', () => {
         expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
-        expect(spyDriver.logDebug).toHaveBeenCalledWith(LumberjackLevel.Debug);
+        expect(spyDriver.logDebug).toHaveBeenCalledWith(createDebugDriverLog(LumberjackLevel.Debug));
         expect(spyDriver.logInfo).toHaveBeenCalledTimes(1);
-        expect(spyDriver.logInfo).toHaveBeenCalledWith(LumberjackLevel.Info);
+        expect(spyDriver.logInfo).toHaveBeenCalledWith(createInfoDriverLog(LumberjackLevel.Info));
         expect(spyDriver.logTrace).toHaveBeenCalledTimes(1);
-        expect(spyDriver.logTrace).toHaveBeenCalledWith(LumberjackLevel.Trace);
+        expect(spyDriver.logTrace).toHaveBeenCalledWith(createTraceDriverLog(LumberjackLevel.Trace));
 
         expect(noopDriver.logCritical).toHaveBeenCalledTimes(1);
-        expect(noopDriver.logCritical).toHaveBeenCalledWith(LumberjackLevel.Critical);
+        expect((noopDriver as LumberjackLogDriver).logCritical).toHaveBeenCalledWith(
+          createCriticalDriverLog(LumberjackLevel.Critical)
+        );
         expect(noopDriver.logError).toHaveBeenCalledTimes(1);
-        expect(noopDriver.logError).toHaveBeenCalledWith(LumberjackLevel.Error);
+        expect((noopDriver as LumberjackLogDriver).logError).toHaveBeenCalledWith(
+          createErrorDriverLog(LumberjackLevel.Error)
+        );
         expect(noopDriver.logWarning).toHaveBeenCalledTimes(1);
-        expect(noopDriver.logWarning).toHaveBeenCalledWith(LumberjackLevel.Warning);
+        expect((noopDriver as LumberjackLogDriver).logWarning).toHaveBeenCalledWith(
+          createWarningDriverLog(LumberjackLevel.Warning)
+        );
       });
 
       it('then logs of other levels are not passed to either of them', () => {

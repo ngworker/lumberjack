@@ -3,6 +3,7 @@ import { Inject, Injectable } from '@angular/core';
 import { lumberjackConfigToken } from '../configuration/lumberjack-config.token';
 import { LumberjackConfig } from '../configuration/lumberjack.config';
 import { LumberjackLevel } from '../logs/lumberjack-level';
+import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
@@ -12,12 +13,15 @@ import { LumberjackLogFormatterResult } from './lumberjack-log-formatter-result'
 @Injectable({
   providedIn: 'root',
 })
-export class LumberjackLogFormatter {
-  constructor(@Inject(lumberjackConfigToken) private config: LumberjackConfig, private time: LumberjackTimeService) {}
+export class LumberjackLogFormatter<TPayload extends LumberjackLogPayload | void = void> {
+  constructor(
+    @Inject(lumberjackConfigToken) private config: LumberjackConfig<TPayload>,
+    private time: LumberjackTimeService
+  ) {}
 
-  formatLog(log: LumberjackLog): LumberjackLogFormatterResult {
+  formatLog(log: LumberjackLog<TPayload>): LumberjackLogFormatterResult<TPayload> {
     const { format } = this.config;
-    let result: LumberjackLogFormatterResult;
+    let result: LumberjackLogFormatterResult<TPayload>;
 
     try {
       result = {
@@ -37,7 +41,7 @@ export class LumberjackLogFormatter {
     return result;
   }
 
-  private createFormattingErrorLog(formatError: unknown, log: LumberjackLog): LumberjackLog {
+  private createFormattingErrorLog(formatError: unknown, log: LumberjackLog<TPayload>): LumberjackLog<TPayload> {
     const formattingErrorMessage = (formatError as Error).message || String(formatError);
 
     return {
@@ -45,15 +49,16 @@ export class LumberjackLogFormatter {
       createdAt: this.time.getUnixEpochTicks(),
       level: LumberjackLevel.Error,
       message: `Could not format message "${log.message}". Error: "${formattingErrorMessage}"`,
+      payload: undefined,
     };
   }
 
-  private formatFormattingError(errorEntry: LumberjackLog): string {
+  private formatFormattingError(errorEntry: LumberjackLog<TPayload>): string {
     const { format } = this.config;
     let errorMessage = '';
 
     try {
-      errorMessage = format(errorEntry);
+      errorMessage = format(errorEntry as LumberjackLog<TPayload>);
     } catch {
       errorMessage = lumberjackFormatLog(errorEntry);
     }
