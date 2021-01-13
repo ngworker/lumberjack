@@ -26,7 +26,8 @@ If applicable, add screenshots to help explain your problem.
 **Environment**
  - OS: [e.g. iOS]
  - Browser [e.g. chrome, safari]
- - Version [e.g. 2.0.0]
+ - Lumberjack Version [e.g. 2.0.0]
+ - Lumberjack Driver [e.g. LumberjackFirestoreDriver v2.0.0]
 <!-- Check whether this is still an issue in the most recent Angular version -->
 - Angular version: X.Y.Z
 
