@@ -190,7 +190,7 @@ describe(LumberjackHttpDriverModule.name, () => {
       expect(actualConfig).toEqual(expectedConfig);
     });
 
-    it('gets defaulted options from the log driver config', () => {
+    it('gets default options from the log driver config', () => {
       const options = createHttpOptions();
 
       const httpDriver = createHttpDriverWithOptions({ options });

@@ -9,7 +9,7 @@ import { lumberjackConsoleDriverConfigToken } from './lumberjack-console-driver-
 
 const debugDriverConfig: LumberjackLogDriverConfig = {
   levels: [LumberjackLevel.Debug],
-  identifier: 'uuid',
+  identifier: 'TestConsoleDriver',
 };
 const verboseDriverConfig: Partial<LumberjackLogDriverConfig> = {
   levels: [LumberjackLevel.Verbose],
