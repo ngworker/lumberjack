@@ -11,15 +11,15 @@ import { LumberjackHttpDriver } from '../log-drivers/lumberjack-http.driver';
 
 import { lumberjackHttpDriverConfigToken } from './lumberjack-http-driver-config.token';
 import { LumberjackHttpDriverDefaultIdentifier } from './lumberjack-http-driver-default-identifier';
-import { LumberjackHttpDriverConfig } from './lumberjack-http-driver.config';
+import { LumberjackHttpDriverInternalConfig } from './lumberjack-http-driver-internal.config';
 
 export function httpDriverFactory(
   http: HttpClient,
   logDriverConfig: LumberjackLogDriverConfig,
-  httpDriverConfig: LumberjackHttpDriverConfig,
+  httpDriverConfig: LumberjackHttpDriverInternalConfig,
   ngZone: NgZone
 ): LumberjackHttpDriver {
-  const config: LumberjackHttpDriverConfig = {
+  const config: LumberjackHttpDriverInternalConfig = {
     ...{ ...logDriverConfig, identifier: LumberjackHttpDriverDefaultIdentifier },
     ...httpDriverConfig,
   };
