@@ -22,7 +22,6 @@ describe('AppComponent', () => {
         origin: 'ForestAPP',
         storeUrl: '/api/logs',
         retryOptions: { maxRetries: 5, delayMs: 250 },
-        identifier: LumberjackConsoleDriver.name,
       }),
     ],
   });

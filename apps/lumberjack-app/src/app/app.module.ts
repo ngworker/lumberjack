@@ -20,7 +20,6 @@ import { AppComponent } from './app.component';
       origin: 'ForestApp',
       storeUrl: '/api/logs',
       retryOptions: { maxRetries: 5, delayMs: 250 },
-      identifier: LumberjackHttpDriver.name,
     }),
   ],
   providers: [],

@@ -12,6 +12,7 @@ import {
 
 import { LumberjackHttpDriver } from '../log-drivers/lumberjack-http.driver';
 
+import { LumberjackHttpDriverModuleConfig } from './lumberjack-http-driver-module.config';
 import { LumberjackHttpDriverConfig } from './lumberjack-http-driver.config';
 import { LumberjackHttpDriverModule } from './lumberjack-http-driver.module';
 import { LumberjackHttpDriverOptions } from './lumberjack-http-driver.options';
@@ -27,14 +28,20 @@ function createHttpOptions(
   };
 }
 
-function createHttpConfig(levels: LumberjackConfigLevels, identifier: string): LumberjackHttpDriverConfig {
-  return {
+function createModuleHttpConfig(levels: LumberjackConfigLevels, identifier?: string): LumberjackHttpDriverModuleConfig {
+  const config = {
     levels,
     origin: 'TEST_MODULE',
     retryOptions: { maxRetries: 5, delayMs: 250 },
     storeUrl: 'api/logstore',
     identifier,
   };
+
+  if (!identifier) {
+    delete config.identifier;
+  }
+
+  return config;
 }
 
 const createHttpDriver = (
@@ -42,10 +49,10 @@ const createHttpDriver = (
     config,
     isLumberjackModuleImportedFirst = true,
   }: {
-    config: LumberjackHttpDriverConfig;
+    config: LumberjackHttpDriverModuleConfig;
     isLumberjackModuleImportedFirst?: boolean;
   } = {
-    config: createHttpConfig([LumberjackLevel.Verbose], LumberjackHttpDriver.name),
+    config: createModuleHttpConfig([LumberjackLevel.Verbose], LumberjackHttpDriver.name),
   }
 ) => {
   TestBed.configureTestingModule({
@@ -96,17 +103,26 @@ describe(LumberjackHttpDriverModule.name, () => {
       expect(httpDriver).toBeInstanceOf(LumberjackHttpDriver);
     });
 
-    it('registers the specified log driver configuration', () => {
-      const expectedConfig = createHttpConfig([LumberjackLevel.Error], 'uuid');
+    it('registers the specified log driver configuration WITH a specified identifier', () => {
+      const expectedConfig = createModuleHttpConfig([LumberjackLevel.Error], 'uuid');
 
       const httpDriver = createHttpDriver({ config: expectedConfig });
 
       const actualConfig = httpDriver.config;
-      expect(actualConfig).toEqual(expectedConfig);
+      expect(actualConfig).toEqual(expectedConfig as LumberjackHttpDriverConfig);
+    });
+
+    it('registers the specified log driver configuration WITHOUT a specified identifier', () => {
+      const config = createModuleHttpConfig([LumberjackLevel.Error]);
+      const expectedConfig = { ...config, identifier: LumberjackHttpDriver.name };
+      const httpDriver = createHttpDriver({ config });
+
+      const actualConfig = httpDriver.config;
+      expect(actualConfig).toEqual(expectedConfig as LumberjackHttpDriverConfig);
     });
 
     it('does register the specified log driver configuration when the lumberjack module is imported after the http driver module', () => {
-      const expectedConfig = createHttpConfig([LumberjackLevel.Debug], 'uuid');
+      const expectedConfig = createModuleHttpConfig([LumberjackLevel.Debug], 'uuid');
 
       const httpDriver = createHttpDriver({
         config: expectedConfig,
@@ -114,7 +130,7 @@ describe(LumberjackHttpDriverModule.name, () => {
       });
 
       const actualConfig = httpDriver.config;
-      expect(actualConfig).toEqual(expectedConfig);
+      expect(actualConfig).toEqual(expectedConfig as LumberjackHttpDriverConfig);
     });
   });
 

@@ -12,13 +12,14 @@ import {
 
 import { LumberjackConsoleDriver } from '../log-drivers/lumberjack-console.driver';
 
+import { LumberjackConsoleDriverConfig } from './lumberjack-console-driver.config';
 import { LumberjackConsoleDriverModule } from './lumberjack-console-driver.module';
 
 const createConsoleDriver = ({
   config,
   isLumberjackModuleImportedFirst = true,
 }: {
-  config?: LumberjackLogDriverConfig;
+  config?: LumberjackConsoleDriverConfig;
   isLumberjackModuleImportedFirst?: boolean;
 } = {}) => {
   TestBed.configureTestingModule({
@@ -46,13 +47,25 @@ describe(LumberjackConsoleDriverModule.name, () => {
       expect(consoleDriver).toBeInstanceOf(LumberjackConsoleDriver);
     });
 
-    it('registers the specified log driver configuration', () => {
+    it('registers the specified log driver configuration WITH the identifier', () => {
       const expectedConfig: LumberjackLogDriverConfig = {
         levels: [LumberjackLevel.Error],
         identifier: 'uuid',
       };
 
       const consoleDriver = createConsoleDriver({ config: expectedConfig });
+
+      const actualConfig = consoleDriver.config;
+      expect(actualConfig).toEqual(expectedConfig);
+    });
+
+    it('registers the specified log driver configuration WITHOUT the identifier', () => {
+      const config: LumberjackConsoleDriverConfig = {
+        levels: [LumberjackLevel.Error],
+      };
+      const expectedConfig: LumberjackLogDriverConfig = { ...config, identifier: LumberjackConsoleDriver.name };
+
+      const consoleDriver = createConsoleDriver({ config });
 
       const actualConfig = consoleDriver.config;
       expect(actualConfig).toEqual(expectedConfig);
