@@ -89,8 +89,8 @@ You must also import log driver modules for the log drivers that you want to ena
 ```ts
 // ...
 import { LumberjackModule } from '@ngworker/lumberjack';
-import { LumberjackHttpDriverModule } from "@ngworker/lumberjack/http-driver";
-import { LumberjackConsoleDriverModule } from "@ngworker/lumberjack/console-driver";
+import { LumberjackHttpDriverModule } from '@ngworker/lumberjack/http-driver';
+import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
 
 @NgModule({
   imports: [

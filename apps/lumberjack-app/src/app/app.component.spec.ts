@@ -3,7 +3,7 @@ import { createComponentFactory, Spectator } from '@ngneat/spectator';
 
 import { NoopConsoleModule } from '@internal/console-driver/test-util';
 import { LumberjackLevel, LumberjackModule } from '@ngworker/lumberjack';
-import { LumberjackConsoleDriver, LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
+import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
 import { LumberjackHttpDriverModule } from '@ngworker/lumberjack/http-driver';
 
 import { AppComponent } from './app.component';

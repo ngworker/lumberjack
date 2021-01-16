@@ -4,7 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 
 import { LumberjackLevel, LumberjackModule } from '@ngworker/lumberjack';
 import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
-import { LumberjackHttpDriver, LumberjackHttpDriverModule } from '@ngworker/lumberjack/http-driver';
+import { LumberjackHttpDriverModule } from '@ngworker/lumberjack/http-driver';
 
 import { AppComponent } from './app.component';
 
