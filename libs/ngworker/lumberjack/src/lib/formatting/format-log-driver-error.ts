@@ -8,5 +8,5 @@ export function formatLogDriverError<TPayload extends LumberjackLogPayload | voi
 }: LumberjackLogDriverError<TPayload>): string {
   const thrownErrorMessage = (error as Error).message || String(error);
 
-  return `Could not log message "${formattedLog}" to ${logDriver.constructor.name}.\n Error: "${thrownErrorMessage}"`;
+  return `Could not log message "${formattedLog}" to ${logDriver.config.identifier}.\n Error: "${thrownErrorMessage}"`;
 }
