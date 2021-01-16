@@ -150,7 +150,7 @@ export function httpDriverFactory(
   ngZone: NgZone
 ): LumberjackHttpDriver {
   const config: LumberjackHttpDriverConfig = {
-    ...{ ...logDriverConfig, identifier: LumberjackHttpDriver.name },
+    ...{ ...logDriverConfig, identifier: LumberjackHttpDriverDefaultIdentifier },
     ...httpDriverConfig,
   };
 

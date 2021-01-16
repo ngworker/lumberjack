@@ -3,9 +3,8 @@ import { TestBed } from '@angular/core/testing';
 import { resolveDependency } from '@internal/test-util';
 import { LumberjackLevel, LumberjackLogDriverConfig, lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
 
-import { LumberjackConsoleDriver } from '../log-drivers/lumberjack-console.driver';
-
 import { lumberjackConsoleDriverConfigToken } from './lumberjack-console-driver-config.token';
+import { LumberjackConsoleDriverDefaultIdentifier } from './lumberjack-console-driver-default-identifier';
 
 const debugDriverConfig: LumberjackLogDriverConfig = {
   levels: [LumberjackLevel.Debug],
@@ -16,7 +15,7 @@ const verboseDriverConfig: Partial<LumberjackLogDriverConfig> = {
 };
 const verboseConsoleDriverConfig: LumberjackLogDriverConfig = {
   levels: [LumberjackLevel.Verbose],
-  identifier: LumberjackConsoleDriver.name,
+  identifier: LumberjackConsoleDriverDefaultIdentifier,
 };
 
 describe('consoleDriverConfigToken', () => {

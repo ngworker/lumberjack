@@ -12,6 +12,7 @@ import {
 
 import { LumberjackHttpDriver } from '../log-drivers/lumberjack-http.driver';
 
+import { LumberjackHttpDriverDefaultIdentifier } from './lumberjack-http-driver-default-identifier';
 import { LumberjackHttpDriverModuleConfig } from './lumberjack-http-driver-module.config';
 import { LumberjackHttpDriverConfig } from './lumberjack-http-driver.config';
 import { LumberjackHttpDriverModule } from './lumberjack-http-driver.module';
@@ -52,7 +53,7 @@ const createHttpDriver = (
     config: LumberjackHttpDriverModuleConfig;
     isLumberjackModuleImportedFirst?: boolean;
   } = {
-    config: createModuleHttpConfig([LumberjackLevel.Verbose], LumberjackHttpDriver.name),
+    config: createModuleHttpConfig([LumberjackLevel.Verbose], LumberjackHttpDriverDefaultIdentifier),
   }
 ) => {
   TestBed.configureTestingModule({
@@ -114,7 +115,7 @@ describe(LumberjackHttpDriverModule.name, () => {
 
     it('registers the specified log driver configuration WITHOUT a specified identifier', () => {
       const config = createModuleHttpConfig([LumberjackLevel.Error]);
-      const expectedConfig = { ...config, identifier: LumberjackHttpDriver.name };
+      const expectedConfig = { ...config, identifier: LumberjackHttpDriverDefaultIdentifier };
       const httpDriver = createHttpDriver({ config });
 
       const actualConfig = httpDriver.config;
@@ -197,7 +198,7 @@ describe(LumberjackHttpDriverModule.name, () => {
 
       const { levels, identifier } = httpDriver.config;
       expect(levels).toEqual([LumberjackLevel.Verbose]);
-      expect(identifier).toEqual(LumberjackHttpDriver.name);
+      expect(identifier).toEqual(LumberjackHttpDriverDefaultIdentifier);
     });
 
     it('does register the specified log driver configuration when the lumberjack module is imported after the http driver module', () => {
@@ -213,7 +214,7 @@ describe(LumberjackHttpDriverModule.name, () => {
         ...options,
         // tslint:disable-next-line: no-any
         levels: jasmine.any(Array) as any,
-        identifier: LumberjackHttpDriver.name,
+        identifier: LumberjackHttpDriverDefaultIdentifier,
       };
       expect(actualConfig).toEqual(expectedConfig);
     });

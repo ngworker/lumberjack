@@ -1,6 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { lumberjackConsoleDriverConfigToken } from './lumberjack-console-driver-config.token';
+import { LumberjackConsoleDriverDefaultIdentifier } from './lumberjack-console-driver-default-identifier';
 import { LumberjackConsoleDriverRootModule } from './lumberjack-console-driver-root.module';
 import { LumberjackConsoleDriverConfig } from './lumberjack-console-driver.config';
 
@@ -13,7 +14,7 @@ export class LumberjackConsoleDriverModule {
         (config && [
           {
             provide: lumberjackConsoleDriverConfigToken,
-            useValue: { ...{ identifier: 'LumberjackConsoleDriver' }, ...config },
+            useValue: { ...{ identifier: LumberjackConsoleDriverDefaultIdentifier }, ...config },
           },
         ]) ||
         [],
