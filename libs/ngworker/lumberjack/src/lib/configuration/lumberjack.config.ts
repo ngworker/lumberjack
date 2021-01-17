@@ -4,8 +4,7 @@ import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackFormatFunction } from './lumberjack-format-function';
 
 /**
- * The Lumberjack configuration is a set of settings used internally by various
- * Lumberjack services.
+ * Settings used internally by various Lumberjack services.
  */
 export interface LumberjackConfig<TPayload extends LumberjackLogPayload | void = void> {
   /**
