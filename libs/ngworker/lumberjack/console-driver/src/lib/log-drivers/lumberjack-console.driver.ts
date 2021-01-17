@@ -14,7 +14,7 @@ import { lumberjackConsoleToken } from '../console/lumberjack-console.token';
 /**
  * The console driver outputs logs to the browser console.
  *
- * I forwards the formatted log and the optional log payload to the relevant
+ * It forwards the formatted log and the optional log payload to the relevant
  * method of the brower console API.
  */
 @Injectable()
