@@ -165,7 +165,8 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
             driverErrorIndex = noReportedLogDriverErrorIndex;
           }
         } catch (error) {
-          driverErrors = [...driverErrors, { error, formattedLog, log, logDriver: driver }];
+          const caughtDriverError: LumberjackLogDriverError<TPayload> = { error, formattedLog, log, logDriver: driver };
+          driverErrors = [...driverErrors, caughtDriverError];
         }
       });
     this.handleDriverErrors(stableDrivers, driverErrors);
