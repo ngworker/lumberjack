@@ -7,7 +7,7 @@ import { LumberjackLog } from '../logs/lumberjack.log';
  */
 export interface LumberjackLogDriverLog<TPayload extends LumberjackLogPayload | void = void> {
   /**
-   * The text representation of a log.
+   * The text representation of the log.
    */
   readonly formattedLog: string;
   /**
