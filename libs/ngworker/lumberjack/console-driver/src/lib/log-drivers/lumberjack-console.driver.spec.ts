@@ -10,7 +10,6 @@ import {
   LumberjackTimeService,
 } from '@ngworker/lumberjack';
 
-import { LumberjackConsoleDriverDefaultIdentifier } from '../configuration/lumberjack-console-driver-default-identifier';
 import { LumberjackConsoleDriverModule } from '../configuration/lumberjack-console-driver.module';
 import { lumberjackConsoleToken } from '../console/lumberjack-console.token';
 
@@ -22,7 +21,7 @@ describe(LumberjackConsoleDriver.name, () => {
       imports: [
         LumberjackConsoleDriverModule.forRoot({
           levels: [LumberjackLevel.Verbose],
-          identifier: LumberjackConsoleDriverDefaultIdentifier,
+          identifier: LumberjackConsoleDriver.driverIdentifier,
         }),
         SpyConsoleModule,
       ],

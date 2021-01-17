@@ -12,7 +12,6 @@ import {
 
 import { LumberjackConsoleDriver } from '../log-drivers/lumberjack-console.driver';
 
-import { LumberjackConsoleDriverDefaultIdentifier } from './lumberjack-console-driver-default-identifier';
 import { LumberjackConsoleDriverConfig } from './lumberjack-console-driver.config';
 import { LumberjackConsoleDriverModule } from './lumberjack-console-driver.module';
 
@@ -66,7 +65,7 @@ describe(LumberjackConsoleDriverModule.name, () => {
       };
       const expectedConfig: LumberjackLogDriverConfig = {
         ...config,
-        identifier: LumberjackConsoleDriverDefaultIdentifier,
+        identifier: LumberjackConsoleDriver.driverIdentifier,
       };
 
       const consoleDriver = createConsoleDriver({ config });
@@ -82,7 +81,7 @@ describe(LumberjackConsoleDriverModule.name, () => {
       const logConfig = resolveDependency(lumberjackConfigToken);
       const defaultLogDriverConfig: LumberjackLogDriverConfig = {
         levels: logConfig.levels,
-        identifier: LumberjackConsoleDriverDefaultIdentifier,
+        identifier: LumberjackConsoleDriver.driverIdentifier,
       };
       expect(actualConfig).toEqual(defaultLogDriverConfig);
     });
