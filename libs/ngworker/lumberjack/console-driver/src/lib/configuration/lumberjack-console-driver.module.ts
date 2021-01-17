@@ -9,7 +9,7 @@ import { LumberjackConsoleDriverRootModule } from './lumberjack-console-driver-r
  * The console driver Angular module is used to configure and register the
  * console driver.
  *
- * NOTE! Do not import `LumberjackModule` directly. Use
+ * NOTE! Do not import `LumberjackConsoleDriverModule` directly. Use
  * `LumberjackConsoleDriverModule.forRoot`.
  */
 @NgModule()
