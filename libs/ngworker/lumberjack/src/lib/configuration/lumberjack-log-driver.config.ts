@@ -1,8 +1,7 @@
 import { LumberjackConfigLevels } from '../logs/lumberjack-config-levels';
 
 /**
- * A Lumberjack log driver configuration is a set of settings for a Lumberjack
- * log driver.
+ * A set of settings for a log driver.
  */
 export interface LumberjackLogDriverConfig {
   /**
