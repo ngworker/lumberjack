@@ -11,6 +11,12 @@ import { lumberjackConsoleDriverConfigToken } from '../configuration/lumberjack-
 import { LumberjackConsole } from '../console/lumberjack-console';
 import { lumberjackConsoleToken } from '../console/lumberjack-console.token';
 
+/**
+ * The console driver outputs logs to the browser console.
+ *
+ * I forwards the formatted log and the optional log payload to the relevant
+ * method of the brower console API.
+ */
 @Injectable()
 export class LumberjackConsoleDriver<TPayload extends LumberjackLogPayload | void = void>
   implements LumberjackLogDriver<TPayload> {
@@ -19,28 +25,58 @@ export class LumberjackConsoleDriver<TPayload extends LumberjackLogPayload | voi
     @Inject(lumberjackConsoleToken) private console: LumberjackConsole
   ) {}
 
-  logCritical({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
-    this.console.error(formattedLog, log.payload);
+  /**
+   * Output console error.
+   *
+   * @param param0 The log and its text representation.
+   */
+  logCritical({ formattedLog, log: { payload } }: LumberjackLogDriverLog<TPayload>): void {
+    this.console.error(formattedLog, payload);
   }
 
-  logDebug({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
-    this.console.debug(formattedLog, log.payload);
+  /**
+   * Output console debug message.
+   *
+   * @param param0 The log and its text representation.
+   */
+  logDebug({ formattedLog, log: { payload } }: LumberjackLogDriverLog<TPayload>): void {
+    this.console.debug(formattedLog, payload);
   }
 
-  logError({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
-    this.console.error(formattedLog, log.payload);
+  /**
+   * Output console error.
+   *
+   * @param param0 The log and its text representation.
+   */
+  logError({ formattedLog, log: { payload } }: LumberjackLogDriverLog<TPayload>): void {
+    this.console.error(formattedLog, payload);
   }
 
-  logInfo({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
-    this.console.info(formattedLog, log.payload);
+  /**
+   * Output console info.
+   *
+   * @param param0 The log and its text representation.
+   */
+  logInfo({ formattedLog, log: { payload } }: LumberjackLogDriverLog<TPayload>): void {
+    this.console.info(formattedLog, payload);
   }
 
-  logTrace({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
+  /**
+   * Output console trace.
+   *
+   * @param param0 The log and its text representation.
+   */
+  logTrace({ formattedLog, log: { payload } }: LumberjackLogDriverLog<TPayload>): void {
     // tslint:disable-next-line: no-console
-    this.console.trace(formattedLog, log.payload);
+    this.console.trace(formattedLog, payload);
   }
 
-  logWarning({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
-    this.console.warn(formattedLog, log.payload);
+  /**
+   * Output console warning.
+   *
+   * @param param0 The log and its text representation.
+   */
+  logWarning({ formattedLog, log: { payload } }: LumberjackLogDriverLog<TPayload>): void {
+    this.console.warn(formattedLog, payload);
   }
 }
