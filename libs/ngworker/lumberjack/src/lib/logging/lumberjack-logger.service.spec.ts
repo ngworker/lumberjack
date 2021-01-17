@@ -9,19 +9,22 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
 import { LumberjackLogBuilder } from './lumberjack-log.builder';
 import { LumberjackLogger } from './lumberjack-logger.service';
 import { LumberjackService } from './lumberjack.service';
+import { ScopedLumberjackLogger } from './scoped-lumberjack-logger.service';
 
 @Injectable({
   providedIn: 'root',
 })
-export class TestLogger extends LumberjackLogger {
+export class TestLogger extends ScopedLumberjackLogger {
   static scope = 'Test';
 
-  criticalLogger = this.createCriticalLogger('').withScope(TestLogger.scope).build();
-  debugLogger = this.createDebugLogger('').withScope(TestLogger.scope).build();
-  errorLogger = this.createErrorLogger('').withScope(TestLogger.scope).build();
-  infoLogger = this.createInfoLogger('').withScope(TestLogger.scope).build();
-  traceLogger = this.createTraceLogger('').withScope(TestLogger.scope).build();
-  warningLogger = this.createWarningLogger('').withScope(TestLogger.scope).build();
+  scope = TestLogger.scope;
+
+  criticalLogger = this.createCriticalLogger('').build();
+  debugLogger = this.createDebugLogger('').build();
+  errorLogger = this.createErrorLogger('').build();
+  infoLogger = this.createInfoLogger('').build();
+  traceLogger = this.createTraceLogger('').build();
+  warningLogger = this.createWarningLogger('').build();
 }
 
 const fakeDate = new Date('2020-02-02T02:02:02.000Z');
