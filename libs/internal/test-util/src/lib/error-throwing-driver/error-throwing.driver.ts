@@ -12,6 +12,7 @@ import { ErrorThrowingDriverConfig } from './error-throwing-driver.config';
  */
 @Injectable()
 export class ErrorThrowingDriver implements LumberjackLogDriver {
+  static driverIdentifier = 'ErrorThrowingDriver';
   private logCount = 0;
 
   constructor(@Inject(errorThrowingDriverConfigToken) public config: ErrorThrowingDriverConfig) {}

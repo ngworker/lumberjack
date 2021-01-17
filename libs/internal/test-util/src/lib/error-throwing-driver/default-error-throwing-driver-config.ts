@@ -7,5 +7,5 @@ import { ErrorThrowingDriver } from './error-throwing.driver';
 export const defaultErrorThrowingDriverConfig: ErrorThrowingDriverConfig = {
   ...defaultErrorThrowingDriverOptions,
   levels: [LumberjackLevel.Verbose],
-  identifier: ErrorThrowingDriver.name,
+  identifier: ErrorThrowingDriver.driverIdentifier,
 };

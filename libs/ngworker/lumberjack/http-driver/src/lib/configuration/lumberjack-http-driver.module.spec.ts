@@ -104,7 +104,7 @@ describe(LumberjackHttpDriverModule.name, () => {
     });
 
     it('registers the specified log driver configuration WITH a specified identifier', () => {
-      const expectedConfig = createModuleHttpConfig([LumberjackLevel.Error], 'uuid');
+      const expectedConfig = createModuleHttpConfig([LumberjackLevel.Error], 'TestDriverIdentifier');
 
       const httpDriver = createHttpDriver({ config: expectedConfig });
 
@@ -122,7 +122,7 @@ describe(LumberjackHttpDriverModule.name, () => {
     });
 
     it('does register the specified log driver configuration when the lumberjack module is imported after the http driver module', () => {
-      const expectedConfig = createModuleHttpConfig([LumberjackLevel.Debug], 'uuid');
+      const expectedConfig = createModuleHttpConfig([LumberjackLevel.Debug], 'TestDriverIdentifier');
 
       const httpDriver = createHttpDriver({
         config: expectedConfig,
@@ -175,7 +175,7 @@ describe(LumberjackHttpDriverModule.name, () => {
     });
 
     it('registers the specified options with custom identifier', () => {
-      const customIdentifier = 'uuid';
+      const customIdentifier = 'TestDriverIdentifier';
       const options = createHttpOptions({ identifier: customIdentifier });
 
       const httpDriver = createHttpDriverWithOptions({ options });

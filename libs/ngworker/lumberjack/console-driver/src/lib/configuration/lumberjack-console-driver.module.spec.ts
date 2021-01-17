@@ -50,7 +50,7 @@ describe(LumberjackConsoleDriverModule.name, () => {
     it('registers the specified log driver configuration given the specified identifier', () => {
       const expectedConfig: LumberjackLogDriverConfig = {
         levels: [LumberjackLevel.Error],
-        identifier: 'uuid',
+        identifier: 'TestDriverIdentifier',
       };
 
       const consoleDriver = createConsoleDriver({ config: expectedConfig });
