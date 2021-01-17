@@ -16,11 +16,15 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
 const noReportedLogDriverErrorIndex = -1;
 
 /**
- * Service with programmatic access to pass logs to Lumberjack. Optionally
+ * Service with programmatic API to pass logs to Lumberjack. Optionally
  * supports a log payload.
  *
  * Lumberjack passes the logs to the registered log drivers based on their
  * configurations.
+ *
+ * NOTE! Consider extending the `LumberjackLogger` or `ScopedLumberjackLogger`
+ * base classes to set up predefined loggers unless you need a programmatic
+ * API.
  */
 @Injectable({ providedIn: LumberjackRootModule })
 export class LumberjackService<TPayload extends LumberjackLogPayload | void = void> {
@@ -41,6 +45,8 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
   /**
    * Pass a log to Lumberjack which will be forwarded to the registered log
    * drivers based on their configurations.
+   *
+   * NOTE! It's recommended to use `LumberjackLogBuilder` to create the log.
    *
    * @param lumberjackLog The Lumberjack log. Optionally supports a log payload.
    */
