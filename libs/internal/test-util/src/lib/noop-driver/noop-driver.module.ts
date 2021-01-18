@@ -15,7 +15,12 @@ export class NoopDriverModule {
   static forRoot(config?: LumberjackLogDriverConfig): ModuleWithProviders<NoopDriverRootModule> {
     return {
       ngModule: NoopDriverRootModule,
-      providers: (config && [{ provide: noopDriverConfigToken, useValue: config }]) || [],
+      providers: [
+        {
+          provide: noopDriverConfigToken,
+          useValue: config || {},
+        },
+      ],
     };
   }
 

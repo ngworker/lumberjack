@@ -15,7 +15,12 @@ export class SpyDriverModule {
   static forRoot(config?: LumberjackLogDriverConfig): ModuleWithProviders<SpyDriverRootModule> {
     return {
       ngModule: SpyDriverRootModule,
-      providers: (config && [{ provide: spyDriverConfigToken, useValue: config }]) || [],
+      providers: [
+        {
+          provide: spyDriverConfigToken,
+          useValue: config || {},
+        },
+      ],
     };
   }
 

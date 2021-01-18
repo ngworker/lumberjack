@@ -15,7 +15,12 @@ export class ObjectDriverModule {
   static forRoot(config?: LumberjackLogDriverConfig): ModuleWithProviders<ObjectDriverRootModule> {
     return {
       ngModule: ObjectDriverRootModule,
-      providers: (config && [{ provide: objectDriverConfigToken, useValue: config }]) || [],
+      providers: [
+        {
+          provide: objectDriverConfigToken,
+          useValue: config || {},
+        },
+      ],
     };
   }
 
