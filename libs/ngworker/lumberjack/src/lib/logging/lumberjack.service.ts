@@ -124,7 +124,7 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
    * If any stable log drivers are specified, the log driver errors will be
    * forward to them. Otherwise, they will be output to the browser console.
    *
-   * @param stableDrivers The stable log drivers.
+   * @param stableDrivers The log drivers that haven't failed.
    * @param driverErrors The reported log driver errors.
    */
   private handleDriverErrors(
@@ -147,7 +147,7 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
    * @param log The log with an optional log payload.
    * @param formattedLog The text representation of the specified log.
    * @param drivers The log drivers.
-   * @param driverErrors Reported log driver errors.
+   * @param driverErrors The reported log driver errors.
    * @param driverErrorIndex Index of the reported driver error to handle.
    */
   private logWithErrorHandling(
@@ -182,7 +182,7 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
    * Pass the log driver errors to the specified stable log drivers.
    *
    * @param driverErrors The reported log driver errors.
-   * @param stableDrivers The log drivers that haven't fail.   
+   * @param stableDrivers The log drivers that haven't failed.
    */
   private logDriverErrorsToStableDrivers(
     driverErrors: LumberjackLogDriverError<TPayload>[],
