@@ -1,10 +1,7 @@
-import { InjectionToken } from '@angular/core';
-
 import { isClass } from '@internal/test-util';
 
 import {
   LumberjackHttpDriverConfig,
-  lumberjackHttpDriverConfigToken,
   LumberjackHttpDriverModule,
   LumberjackHttpDriverOptions,
   LumberjackHttpDriverRetryOptions,
@@ -30,14 +27,6 @@ describe('Configuration API', () => {
       const value: LumberjackHttpDriverOptions | undefined = undefined;
 
       expect(value).toBeUndefined();
-    });
-  });
-
-  describe('Dependency injection tokens', () => {
-    it('exposes lumberjackHttpDriverConfigToken', () => {
-      const sut = lumberjackHttpDriverConfigToken;
-
-      expect(sut).toBeInstanceOf(InjectionToken);
     });
   });
 
