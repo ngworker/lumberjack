@@ -4,35 +4,44 @@ import { TestBed } from '@angular/core/testing';
 import { expectNgModuleToBeGuardedAgainstDirectImport, resolveDependency } from '@internal/test-util';
 import {
   LumberjackConfigLevels,
-  lumberjackConfigToken,
   LumberjackLevel,
   LumberjackLogDriver,
-  LumberjackLogDriverConfig,
   lumberjackLogDriverToken,
   LumberjackModule,
 } from '@ngworker/lumberjack';
 
 import { LumberjackHttpDriver } from '../log-drivers/lumberjack-http.driver';
 
+import { LumberjackHttpDriverInternalConfig } from './lumberjack-http-driver-internal.config';
 import { LumberjackHttpDriverConfig } from './lumberjack-http-driver.config';
 import { LumberjackHttpDriverModule } from './lumberjack-http-driver.module';
 import { LumberjackHttpDriverOptions } from './lumberjack-http-driver.options';
 
-function createHttpOptions(): LumberjackHttpDriverOptions {
+function createHttpOptions(
+  extraOptions: { levels?: LumberjackConfigLevels; identifier?: string } = {}
+): LumberjackHttpDriverOptions {
   return {
     origin: 'TEST_MODULE',
     retryOptions: { maxRetries: 5, delayMs: 250 },
     storeUrl: 'api/logstore',
+    ...extraOptions,
   };
 }
 
-function createHttpConfig(levels: LumberjackConfigLevels): LumberjackHttpDriverConfig {
-  return {
+function createHttpConfig(levels: LumberjackConfigLevels, identifier?: string): LumberjackHttpDriverConfig {
+  const config = {
     levels,
     origin: 'TEST_MODULE',
     retryOptions: { maxRetries: 5, delayMs: 250 },
     storeUrl: 'api/logstore',
+    identifier,
   };
+
+  if (!identifier) {
+    delete config.identifier;
+  }
+
+  return config;
 }
 
 const createHttpDriver = (
@@ -43,7 +52,7 @@ const createHttpDriver = (
     config: LumberjackHttpDriverConfig;
     isLumberjackModuleImportedFirst?: boolean;
   } = {
-    config: createHttpConfig([LumberjackLevel.Verbose]),
+    config: createHttpConfig([LumberjackLevel.Verbose], LumberjackHttpDriver.driverIdentifier),
   }
 ) => {
   TestBed.configureTestingModule({
@@ -94,31 +103,26 @@ describe(LumberjackHttpDriverModule.name, () => {
       expect(httpDriver).toBeInstanceOf(LumberjackHttpDriver);
     });
 
-    it('registers the specified log driver configuration', () => {
-      const expectedConfig = createHttpConfig([LumberjackLevel.Error]);
+    it('registers the specified log driver configuration WITH a specified identifier', () => {
+      const expectedConfig = createHttpConfig([LumberjackLevel.Error], 'TestDriverIdentifier');
 
       const httpDriver = createHttpDriver({ config: expectedConfig });
 
       const actualConfig = httpDriver.config;
-      expect(actualConfig).toEqual(expectedConfig);
+      expect(actualConfig).toEqual(expectedConfig as LumberjackHttpDriverInternalConfig);
     });
 
-    it('registers a default level configuration if none is specified', () => {
-      const customHttpConfig = createHttpConfig([LumberjackLevel.Verbose]);
-
-      const httpDriver = createHttpDriver({ config: customHttpConfig });
+    it('registers the specified log driver configuration WITHOUT a specified identifier', () => {
+      const config = createHttpConfig([LumberjackLevel.Error]);
+      const expectedConfig = { ...config, identifier: LumberjackHttpDriver.driverIdentifier };
+      const httpDriver = createHttpDriver({ config });
 
       const actualConfig = httpDriver.config;
-      const logConfig = resolveDependency(lumberjackConfigToken);
-      const defaultLogDriverConfig: LumberjackLogDriverConfig = {
-        levels: logConfig.levels,
-      };
-      const expectedConfig: LumberjackHttpDriverConfig = { ...defaultLogDriverConfig, ...customHttpConfig };
-      expect(actualConfig).toEqual(expectedConfig);
+      expect(actualConfig).toEqual(expectedConfig as LumberjackHttpDriverInternalConfig);
     });
 
     it('does register the specified log driver configuration when the lumberjack module is imported after the http driver module', () => {
-      const expectedConfig = createHttpConfig([LumberjackLevel.Debug]);
+      const expectedConfig = createHttpConfig([LumberjackLevel.Debug], 'TestDriverIdentifier');
 
       const httpDriver = createHttpDriver({
         config: expectedConfig,
@@ -126,7 +130,7 @@ describe(LumberjackHttpDriverModule.name, () => {
       });
 
       const actualConfig = httpDriver.config;
-      expect(actualConfig).toEqual(expectedConfig);
+      expect(actualConfig).toEqual(expectedConfig as LumberjackHttpDriverInternalConfig);
     });
   });
 
@@ -143,21 +147,57 @@ describe(LumberjackHttpDriverModule.name, () => {
       const httpDriver = createHttpDriverWithOptions({ options });
 
       const actualConfig = httpDriver.config;
-      const expectedConfig: LumberjackHttpDriverConfig = {
+      const expectedConfig: LumberjackHttpDriverInternalConfig = {
         ...options,
         // tslint:disable-next-line: no-any
         levels: jasmine.any(Array) as any,
+        // tslint:disable-next-line: no-any
+        identifier: jasmine.any(String) as any,
       };
       expect(actualConfig).toEqual(expectedConfig);
     });
 
-    it('gets common options from the log driver config', () => {
+    it('registers the specified options with custom levels', () => {
+      const customLevels: LumberjackConfigLevels = [LumberjackLevel.Critical];
+      const options = createHttpOptions({ levels: customLevels });
+
+      const httpDriver = createHttpDriverWithOptions({ options });
+
+      const actualConfig = httpDriver.config;
+      const expectedConfig: LumberjackHttpDriverInternalConfig = {
+        ...options,
+        // tslint:disable-next-line: no-any
+        levels: customLevels,
+        // tslint:disable-next-line: no-any
+        identifier: jasmine.any(String) as any,
+      };
+      expect(actualConfig).toEqual(expectedConfig);
+    });
+
+    it('registers the specified options with custom identifier', () => {
+      const customIdentifier = 'TestDriverIdentifier';
+      const options = createHttpOptions({ identifier: customIdentifier });
+
+      const httpDriver = createHttpDriverWithOptions({ options });
+
+      const actualConfig = httpDriver.config;
+      const expectedConfig: LumberjackHttpDriverInternalConfig = {
+        ...options,
+        // tslint:disable-next-line: no-any
+        levels: jasmine.any(Array) as any,
+        identifier: customIdentifier,
+      };
+      expect(actualConfig).toEqual(expectedConfig);
+    });
+
+    it('gets default options from the log driver config', () => {
       const options = createHttpOptions();
 
       const httpDriver = createHttpDriverWithOptions({ options });
 
-      const { levels } = httpDriver.config;
+      const { levels, identifier } = httpDriver.config;
       expect(levels).toEqual([LumberjackLevel.Verbose]);
+      expect(identifier).toEqual(LumberjackHttpDriver.driverIdentifier);
     });
 
     it('does register the specified log driver configuration when the lumberjack module is imported after the http driver module', () => {
@@ -169,10 +209,11 @@ describe(LumberjackHttpDriverModule.name, () => {
       });
 
       const actualConfig = httpDriver.config;
-      const expectedConfig: LumberjackHttpDriverConfig = {
+      const expectedConfig: LumberjackHttpDriverInternalConfig = {
         ...options,
         // tslint:disable-next-line: no-any
         levels: jasmine.any(Array) as any,
+        identifier: LumberjackHttpDriver.driverIdentifier,
       };
       expect(actualConfig).toEqual(expectedConfig);
     });

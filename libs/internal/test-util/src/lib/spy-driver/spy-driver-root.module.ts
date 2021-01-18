@@ -1,14 +1,31 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 
-import { lumberjackLogDriverToken } from '@ngworker/lumberjack';
+import {
+  LumberjackLogDriverConfig,
+  lumberjackLogDriverConfigToken,
+  lumberjackLogDriverToken,
+} from '@ngworker/lumberjack';
 
+import { spyDriverConfigToken } from './spy-driver-config.token';
+import { SpyDriverConfig } from './spy-driver.config';
 import { SpyDriver } from './spy.driver';
+
+export function spyDriverFactory(
+  logDriverConfig: LumberjackLogDriverConfig,
+  spyDriverConfig: SpyDriverConfig
+): SpyDriver {
+  const baseConfig = { ...logDriverConfig, identifier: SpyDriver.driverIdentifier };
+  const fullConfig = { ...baseConfig, ...spyDriverConfig };
+
+  return new SpyDriver(fullConfig);
+}
 
 @NgModule({
   providers: [
     {
       provide: lumberjackLogDriverToken,
-      useClass: SpyDriver,
+      useFactory: spyDriverFactory,
+      deps: [lumberjackLogDriverConfigToken, spyDriverConfigToken],
       multi: true,
     },
   ],

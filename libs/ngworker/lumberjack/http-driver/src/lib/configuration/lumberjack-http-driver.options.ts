@@ -1,4 +1,5 @@
 import { LumberjackLogDriverConfig } from '@ngworker/lumberjack';
 
-import { LumberjackHttpDriverConfig } from './lumberjack-http-driver.config';
-export type LumberjackHttpDriverOptions = Omit<LumberjackHttpDriverConfig, keyof LumberjackLogDriverConfig>;
+import { LumberjackHttpDriverInternalConfig } from './lumberjack-http-driver-internal.config';
+export type LumberjackHttpDriverOptions = Omit<LumberjackHttpDriverInternalConfig, keyof LumberjackLogDriverConfig> &
+  Partial<LumberjackLogDriverConfig>;

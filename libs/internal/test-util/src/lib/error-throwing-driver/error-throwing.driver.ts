@@ -1,6 +1,6 @@
 import { Inject, Injectable } from '@angular/core';
 
-import { LumberjackLogDriver, LumberjackLogDriverConfig, LumberjackLogDriverLog } from '@ngworker/lumberjack';
+import { LumberjackLogDriver, LumberjackLogDriverLog } from '@ngworker/lumberjack';
 
 import { errorThrowingDriverConfigToken } from './error-throwing-driver-config.token';
 import { ErrorThrowingDriverConfig } from './error-throwing-driver.config';
@@ -12,6 +12,7 @@ import { ErrorThrowingDriverConfig } from './error-throwing-driver.config';
  */
 @Injectable()
 export class ErrorThrowingDriver implements LumberjackLogDriver {
+  static driverIdentifier = 'ErrorThrowingDriver';
   private logCount = 0;
 
   constructor(@Inject(errorThrowingDriverConfigToken) public config: ErrorThrowingDriverConfig) {}
