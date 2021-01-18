@@ -180,6 +180,9 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
 
   /**
    * Pass the log driver errors to the specified stable log drivers.
+   *
+   * @param driverErrors The reported log driver errors.
+   * @param stableDrivers The log drivers that haven't fail.   
    */
   private logDriverErrorsToStableDrivers(
     driverErrors: LumberjackLogDriverError<TPayload>[],
