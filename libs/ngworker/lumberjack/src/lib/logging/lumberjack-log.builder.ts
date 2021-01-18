@@ -5,16 +5,33 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 /**
  * The generic parameter of `LumberjackLogBuilder` is evaluated to this type
- * when the `withPayload` method is used.
+ * when the `LumberjackLogBuilder#withPayload` method is used.
  */
 type InternalWithStaticPayload = '__LUMBERJACK_INTERNAL_WITH_STATIC_PAYLOAD__' & LumberjackLogPayload;
 
+/**
+ * Builder for a log with the specified log level and messsage.
+ *
+ * Use this to create a log before passing it to `LumberjackService`.
+ */
 export class LumberjackLogBuilder<TPayload extends LumberjackLogPayload | void = void> {
   private payload?: TPayload;
   private scope?: string;
 
+  /**
+   * Create a log builder with the specified log level and message.
+   *
+   * @param time Pass the `LumberjackTimeService`. Used for timestamping the log.
+   * @param level The log level.
+   * @param message The log message.
+   */
   constructor(private time: LumberjackTimeService, private level: LumberjackLogLevel, private message: string) {}
 
+  /**
+   * Create a log with the specified properties and timestamp it.
+   *
+   * @param payloadArg Optional dynamic payload.
+   */
   build(
     ...payloadArg: Extract<TPayload, InternalWithStaticPayload> extends never ? [TPayload] : [never?]
   ): LumberjackLog<Exclude<TPayload, InternalWithStaticPayload>> {
@@ -28,7 +45,7 @@ export class LumberjackLogBuilder<TPayload extends LumberjackLogPayload | void =
   }
 
   /**
-   * Add payload with custom data to the `LumberjackLog`
+   * Optionally add a static payload to the log.
    */
   withPayload(
     ...payloadArg: TPayload extends void ? [never?] : [TPayload]
@@ -39,7 +56,7 @@ export class LumberjackLogBuilder<TPayload extends LumberjackLogPayload | void =
   }
 
   /**
-   * Add a scope to the `LumberjackLog`
+   * Add a scope to the log.
    */
   withScope(scope: string): LumberjackLogBuilder<TPayload> {
     this.scope = scope;

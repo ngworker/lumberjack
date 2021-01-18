@@ -5,10 +5,21 @@ import { LumberjackHttpDriverRootModule } from './lumberjack-http-driver-root.mo
 import { LumberjackHttpDriverConfig } from './lumberjack-http-driver.config';
 import { LumberjackHttpDriverOptions } from './lumberjack-http-driver.options';
 
+/**
+ * The HTTP driver Angular module is used to configure and register the HTTP
+ * driver.
+ *
+ * NOTE! Do not import `LumberjackHttpDriverModule` directly. Use
+ * `LumberjackHttpDriverModule.forRoot` or
+ * `LumberjackHttpDriverModule.withOptions`.
+ */
 @NgModule()
 export class LumberjackHttpDriverModule {
   /**
-   * Pass a full HTTP driver configuration.
+   * Configure and register the HTTP driver, including settings that log drivers
+   * have in common.
+   *
+   * @param config Settings used by the HTTP driver.
    */
   static forRoot(config: LumberjackHttpDriverConfig): ModuleWithProviders<LumberjackHttpDriverRootModule> {
     return {
@@ -23,8 +34,9 @@ export class LumberjackHttpDriverModule {
   }
 
   /**
-   * Pass options exclusive to the HTTP driver configuration, but fall back on
-   * the log driver config for common options.
+   * Configure and register the HTTP driver, but fall back on the default log
+   * driver settings for settings that log drivers have in common.
+   * @param options Settings used by the HTTP driver.
    */
   static withOptions(options: LumberjackHttpDriverOptions): ModuleWithProviders<LumberjackHttpDriverRootModule> {
     return {
@@ -39,6 +51,8 @@ export class LumberjackHttpDriverModule {
   }
 
   constructor() {
-    throw new Error('Do not import LumberjackHttpDriverModule directly. Use LumberjackHttpDriverModule.forRoot.');
+    throw new Error(
+      'Do not import LumberjackHttpDriverModule directly. Use LumberjackHttpDriverModule.forRoot or LumberjackHttpDriverModule.withOptions.'
+    );
   }
 }

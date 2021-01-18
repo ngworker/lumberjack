@@ -1,11 +1,13 @@
 import { LumberjackConfigLevels } from '../logs/lumberjack-config-levels';
 
+/**
+ * Settings for a log driver.
+ */
 export interface LumberjackLogDriverConfig {
   /**
-   * List of levels to which the log-driver is allowed to log.
+   * Used to filter logs passed to the log driver based on the log's log level.
    *
-   * If undefined or [LumberjackLevel.Verbose], all levels are allowed.
-   *
+   * `[LumberjackLevel.Verbose]` indicates that all log levels are allowed.
    */
   readonly levels: LumberjackConfigLevels;
 

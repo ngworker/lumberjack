@@ -2,20 +2,24 @@ import { LumberjackLogDriverConfig } from '@ngworker/lumberjack';
 
 import { LumberjackHttpDriverRetryOptions } from './lumberjack-http-driver-retry.options';
 
+/**
+ * Settings used by the HTTP driver.
+ */
 export interface LumberjackHttpDriverInternalConfig extends LumberjackLogDriverConfig {
   /**
-   * The identifier of the app which emitted the log.
-   * This is used to organize logs on the log store.
+   * The identifier of the application that emitted the log.
+   *
+   * This is used by the log store to organize logs.
    */
   readonly origin: string;
   /**
-   * The desired retry behavior options on failed requests.
+   * Settings for retrying failed HTTP requests.
    */
   readonly retryOptions: LumberjackHttpDriverRetryOptions;
   /**
-   * The url of the log store endpoint.
+   * The URL of the log store endpoint.
    *
-   * The endpoint matching this url MUST support the POST method.
+   * NOTE! The endpoint matching this url MUST support the POST HTTP verb.
    */
   readonly storeUrl: string;
 }

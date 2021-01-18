@@ -2,28 +2,30 @@ import { LumberjackLogLevel } from './lumberjack-log-level';
 import { LumberjackLogPayload } from './lumberjack-log-payload';
 
 /**
- * A Lumberjack log entry
+ * A Lumberjack log. Optionally supports a payload.
  */
 export interface LumberjackLog<TPayload extends LumberjackLogPayload | void = void> {
   /**
-   * Scope, for example domain, application, component, or service.
-   */
-  readonly scope?: string;
-  /**
-   * Unix epoch ticks (milliseconds) timestamp when log entry was created.
+   * Unix epoch ticks in milliseconds representing when the log was created.
    */
   readonly createdAt: number;
   /**
    * Level of severity.
    */
   readonly level: LumberjackLogLevel;
+
   /**
    * Log message, for example describing an event that happened.
    */
   readonly message: string;
-
   /**
-   * Holds any payload info
+   * Optional payload with custom properties.
+   *
+   * NOTE! Make sure that these properties are supported by your log drivers.
    */
   readonly payload?: TPayload;
+  /**
+   * Scope, for example domain, application, component, or service.
+   */
+  readonly scope?: string;
 }

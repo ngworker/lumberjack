@@ -1,3 +1,6 @@
+/**
+ * Level used to configure log drivers or add a log level to a log.
+ */
 export enum LumberjackLevel {
   Critical = 'critical',
   Debug = 'debug',
