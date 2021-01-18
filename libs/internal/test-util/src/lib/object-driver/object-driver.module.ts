@@ -1,9 +1,8 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import { LumberjackLogDriverConfig } from '@ngworker/lumberjack';
-
 import { objectDriverConfigToken } from './object-driver-config.token';
 import { ObjectDriverRootModule } from './object-driver-root.module';
+import { ObjectDriverConfig } from './object-driver.config';
 
 /**
  * Service module for `ObjectDriver`.
@@ -12,10 +11,15 @@ import { ObjectDriverRootModule } from './object-driver-root.module';
  */
 @NgModule()
 export class ObjectDriverModule {
-  static forRoot(config?: LumberjackLogDriverConfig): ModuleWithProviders<ObjectDriverRootModule> {
+  static forRoot(config?: ObjectDriverConfig): ModuleWithProviders<ObjectDriverRootModule> {
     return {
       ngModule: ObjectDriverRootModule,
-      providers: (config && [{ provide: objectDriverConfigToken, useValue: config }]) || [],
+      providers: [
+        {
+          provide: objectDriverConfigToken,
+          useValue: config || {},
+        },
+      ],
     };
   }
 

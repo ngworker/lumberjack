@@ -1,9 +1,8 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import { LumberjackLogDriverConfig } from '@ngworker/lumberjack';
-
 import { noopDriverConfigToken } from './noop-driver-config.token';
 import { NoopDriverRootModule } from './noop-driver-root.module';
+import { NoopDriverConfig } from './noop-driver.config';
 
 /**
  * Service module for `NoopDriver`.
@@ -12,10 +11,15 @@ import { NoopDriverRootModule } from './noop-driver-root.module';
  */
 @NgModule()
 export class NoopDriverModule {
-  static forRoot(config?: LumberjackLogDriverConfig): ModuleWithProviders<NoopDriverRootModule> {
+  static forRoot(config?: NoopDriverConfig): ModuleWithProviders<NoopDriverRootModule> {
     return {
       ngModule: NoopDriverRootModule,
-      providers: (config && [{ provide: noopDriverConfigToken, useValue: config }]) || [],
+      providers: [
+        {
+          provide: noopDriverConfigToken,
+          useValue: config || {},
+        },
+      ],
     };
   }
 
