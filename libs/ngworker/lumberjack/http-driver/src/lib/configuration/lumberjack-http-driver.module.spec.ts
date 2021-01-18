@@ -28,7 +28,7 @@ function createHttpOptions(
   };
 }
 
-function createModuleHttpConfig(levels: LumberjackConfigLevels, identifier?: string): LumberjackHttpDriverConfig {
+function createHttpConfig(levels: LumberjackConfigLevels, identifier?: string): LumberjackHttpDriverConfig {
   const config = {
     levels,
     origin: 'TEST_MODULE',
@@ -52,7 +52,7 @@ const createHttpDriver = (
     config: LumberjackHttpDriverConfig;
     isLumberjackModuleImportedFirst?: boolean;
   } = {
-    config: createModuleHttpConfig([LumberjackLevel.Verbose], LumberjackHttpDriver.driverIdentifier),
+    config: createHttpConfig([LumberjackLevel.Verbose], LumberjackHttpDriver.driverIdentifier),
   }
 ) => {
   TestBed.configureTestingModule({
@@ -104,7 +104,7 @@ describe(LumberjackHttpDriverModule.name, () => {
     });
 
     it('registers the specified log driver configuration WITH a specified identifier', () => {
-      const expectedConfig = createModuleHttpConfig([LumberjackLevel.Error], 'TestDriverIdentifier');
+      const expectedConfig = createHttpConfig([LumberjackLevel.Error], 'TestDriverIdentifier');
 
       const httpDriver = createHttpDriver({ config: expectedConfig });
 
@@ -113,7 +113,7 @@ describe(LumberjackHttpDriverModule.name, () => {
     });
 
     it('registers the specified log driver configuration WITHOUT a specified identifier', () => {
-      const config = createModuleHttpConfig([LumberjackLevel.Error]);
+      const config = createHttpConfig([LumberjackLevel.Error]);
       const expectedConfig = { ...config, identifier: LumberjackHttpDriver.driverIdentifier };
       const httpDriver = createHttpDriver({ config });
 
@@ -122,7 +122,7 @@ describe(LumberjackHttpDriverModule.name, () => {
     });
 
     it('does register the specified log driver configuration when the lumberjack module is imported after the http driver module', () => {
-      const expectedConfig = createModuleHttpConfig([LumberjackLevel.Debug], 'TestDriverIdentifier');
+      const expectedConfig = createHttpConfig([LumberjackLevel.Debug], 'TestDriverIdentifier');
 
       const httpDriver = createHttpDriver({
         config: expectedConfig,
