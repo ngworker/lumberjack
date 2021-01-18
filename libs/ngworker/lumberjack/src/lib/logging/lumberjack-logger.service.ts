@@ -28,7 +28,7 @@ export abstract class LumberjackLogger<TPayload extends LumberjackLogPayload | v
   }
 
   /**
-   * Create a logger builder for a critical log with the specified message.
+   * Create a logger builder for a debug log with the specified message.
    */
   protected createDebugLogger(message: string): LumberjackLoggerBuilder<TPayload> {
     return this.createLoggerBuilder(LumberjackLevel.Debug, message);
