@@ -11,6 +11,8 @@ import { noopDriverConfigToken } from './noop-driver-config.token';
  */
 @Injectable()
 export class NoopDriver implements LumberjackLogDriver {
+  static driverIdentifier = 'NoopDriver';
+
   constructor(@Inject(noopDriverConfigToken) public config: LumberjackLogDriverConfig) {}
 
   logCritical({ formattedLog }: LumberjackLogDriverLog): void {}

@@ -10,4 +10,9 @@ export interface LumberjackLogDriverConfig {
    * `[LumberjackLevel.Verbose]` indicates that all log levels are allowed.
    */
   readonly levels: LumberjackConfigLevels;
+
+  /**
+   * Driver Identifier, necessary for driver filtering.
+   */
+  readonly identifier: string;
 }

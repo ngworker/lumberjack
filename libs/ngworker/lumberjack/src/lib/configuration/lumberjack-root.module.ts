@@ -20,7 +20,7 @@ export function configFactory(options: LumberjackOptions = {}, isProductionEnvir
   };
 }
 
-export function logDriverConfigFactory({ levels }: LumberjackConfig): LumberjackLogDriverConfig {
+export function logDriverConfigFactory({ levels }: LumberjackConfig): Omit<LumberjackLogDriverConfig, 'identifier'> {
   return {
     levels,
   };

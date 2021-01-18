@@ -6,7 +6,6 @@ import { isProductionEnvironmentToken } from '../environment/is-production-envir
 import { utcTimestampFor } from '../formatting/utc-timestamp-for';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLog } from '../logs/lumberjack.log';
-import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { defaultDevelopmentLevels } from './default-development-levels';
 import { defaultProductionLevels } from './default-production-levels';
@@ -104,12 +103,12 @@ describe(LumberjackModule.name, () => {
         imports: [LumberjackModule.forRoot()],
       });
       const logConfig = resolveDependency(lumberjackConfigToken);
-      const defaultLogDriverConfig: LumberjackLogDriverConfig = {
+      const defaultLogDriverConfig: Omit<LumberjackLogDriverConfig, 'identifier'> = {
         levels: logConfig.levels,
       };
 
       const actualConfig = resolveDependency(lumberjackLogDriverConfigToken);
-      expect(actualConfig).toEqual(defaultLogDriverConfig);
+      expect(actualConfig).toEqual(defaultLogDriverConfig as LumberjackLogDriverConfig);
     });
 
     describe('Default format function', () => {
