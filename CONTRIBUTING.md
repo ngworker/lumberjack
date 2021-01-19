@@ -7,26 +7,26 @@
 Start by installing all dependencies:
 
 ```bash
-yarn
+pnpm install
 ```
 
 Run the tests:
 
 ```bash
-yarn test
-yarn e2e
+pnpm test
+pnpm e2e
 ```
 
 Run the playground app:
 
 ```bash
-yarn start
+pnpm start
 ```
 
 ## Building
 
 ```bash
-yarn build
+pnpm build
 ```
 
 ## <a name="rules"></a> Coding Rules

@@ -6,22 +6,22 @@
     "start": "ng serve lumberjack-app",
     "build": "ng build lumberjack-app --prod",
     "test": "ng test lumberjack-app",
-    "test:ci": "yarn test --configuration=ci",
+    "test:ci": "pnpm test -- --configuration=ci",
     "lint": "ng lint",
     "e2e": "ng e2e lumberjack-app-e2e",
     "contributors:add": "all-contributors add",
     "hooks:pre-commit": "node hooks/pre-commit.js",
     "commit": "git-cz",
-    "release:first": "yarn release -- --first-release",
+    "release:first": "pnpm release -- --first-release",
     "build:lib": "ng build ngworker-lumberjack --prod && npx copy README.md ./dist/ngworker/lumberjack",
     "test:lib": "ng test ngworker-lumberjack",
-    "test:lib:ci": "yarn test:lib --configuration=ci",
+    "test:lib:ci": "pnpm test:lib -- --configuration=ci",
     "test:internal": "ng test internal-test-util && ng test internal-console-driver-test-util",
     "test:internal:ci": "ng test internal-test-util --configuration=ci && ng test internal-console-driver-test-util --configuration=ci",
     "release": "cd libs/ngworker/lumberjack && standard-version --infile ../../../CHANGELOG.md",
     "publish": "cd dist/ngworker/lumberjack && npm publish",
-    "ci": "yarn install && yarn lint && yarn build:lib && yarn test:internal:ci && yarn test:lib:ci && yarn build && yarn test:ci && yarn e2e",
-    "format": "npx prettier --config prettier.config.js --write \"**/*.*\" \"!dist/**\" \"!yarn.lock\"",
+    "ci": "pnpm install && pnpm lint && pnpm build:lib && pnpm test:internal:ci && pnpm test:lib:ci && pnpm build && pnpm test:ci && pnpm e2e",
+    "format": "npx prettier --config prettier.config.js --write \"**/*.*\" \"!node_modules/**\" \"!dist/**\" \"!pnpm-lock.yaml\"",
     "delete-path-alias": "node tools/delete-path-alias.js"
   },
   "private": true,
@@ -50,6 +50,7 @@
     "@types/jasmine": "~3.6.2",
     "@types/node": "^12.12.62",
     "all-contributors-cli": "^6.8.1",
+    "chalk": "^4.1.0",
     "codelyzer": "^6.0.0",
     "copy": "~0.3.2",
     "git-cz": "^3.3.0",
@@ -65,6 +66,7 @@
     "lint-staged": "^9.5.0",
     "ng-packagr": "^11.0.3",
     "prettier": "^2.0.5",
+    "pretty-format": "^26.6.2",
     "protractor": "~7.0.0",
     "standard-version": "^6.0.1",
     "ts-node": "~8.3.0",
@@ -87,8 +89,8 @@
   "husky": {
     "hooks": {
       "commit-msg": "commitlint -e $HUSKY_GIT_PARAMS",
-      "pre-commit": "yarn hooks:pre-commit && lint-staged && yarn lint",
-      "pre-push": "yarn test:lib:ci"
+      "pre-commit": "pnpm hooks:pre-commit && lint-staged && pnpm lint",
+      "pre-push": "pnpm test:lib:ci"
     }
   }
 }
