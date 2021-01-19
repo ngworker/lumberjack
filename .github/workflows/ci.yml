@@ -87,6 +87,7 @@ jobs:
       matrix:
         node-version: [12.x]
         angular-version: [9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x]
+      fail-fast: false
 
     steps:
       - uses: actions/checkout@v2
@@ -99,6 +100,7 @@ jobs:
         with:
           angular_version: ${{ matrix.angular-version }}
 
+      - run: rm pnpm-lock.yaml
       - run: npm install --global pnpm
       - run: pnpm config set store-dir $PNPM_STORE_PATH
       # - name: Cache PNPM store
@@ -112,6 +114,8 @@ jobs:
       #       ${{ runner.os }}-node-
       - run: pnpm install --reporter silent --frozen-lockfile false --verify-store-integrity false
       - run: pnpm store prune
+
+      - run: pnpm ngcc
 
       # - if: matrix.angular-version == '9.0.x'
       #   run: pnpm install --save-dev @angular/compiler@9.1.x @angular/compiler-cli@9.1.x
