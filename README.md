@@ -246,6 +246,8 @@ export class AppModule {}
 
 ### Creating a custom log driver
 
+> Note, you can use the [ngworker/lumberjack-custom-driver](https://github.com/ngworker/lumberjack-custom-driver/generate) template Git repository to start a separate Lumberjack log driver workspace.
+
 Let's create a simple log driver for the browser console.
 
 ```ts
