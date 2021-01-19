@@ -112,7 +112,8 @@ jobs:
       #       ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-pnpm-
       #       ${{ runner.os }}-node-${{ matrix.node-version }}-angular-
       #       ${{ runner.os }}-node-
-      - run: pnpm install --reporter silent --frozen-lockfile false --verify-store-integrity false
+      # - run: pnpm install --reporter silent --frozen-lockfile false --verify-store-integrity false
+      - run: pnpm install --reporter append-only --frozen-lockfile false --verify-store-integrity false
       - run: pnpm store prune
 
       - if: matrix.angular-version == '10.0.x'
