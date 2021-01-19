@@ -1,7 +1,6 @@
 dependencies:
   '@angular/animations': 11.0.9_@angular+core@11.0.9
   '@angular/common': 11.0.9_@angular+core@11.0.9+rxjs@6.6.3
-  '@angular/compiler': 11.0.9
   '@angular/core': 11.0.9_rxjs@6.6.3+zone.js@0.10.3
   '@angular/forms': 11.0.9_58109f712dfe1a39e6d2d2dc0ca2a98b
   '@angular/platform-browser': 11.0.9_0d11ba2a2337edbaa2684af2277e7862
@@ -14,6 +13,7 @@ devDependencies:
   '@angular-devkit/build-angular': 0.1100.7_e1f784ef19278fb41f0859101322b356
   '@angular-devkit/build-ng-packagr': 0.1002.0_ng-packagr@11.0.3
   '@angular/cli': 11.0.7
+  '@angular/compiler': 11.0.9
   '@angular/compiler-cli': 11.0.9_3656b9d387a5ec1e283954a14f07f018
   '@commitlint/cli': 8.1.0
   '@commitlint/config-angular': 8.3.4
@@ -343,7 +343,7 @@ packages:
   /@angular/compiler/11.0.9:
     dependencies:
       tslib: 2.1.0
-    dev: false
+    dev: true
     resolution:
       integrity: sha512-H2IfS6ciPWN0kmKhbwDuvS8ry5GcRFKfoyA/HGk+nQwCE2nAHC8VNwldbtoisO7XfRWr/uaTrh6z/vdfxsAiHw==
   /@angular/compiler/9.0.0_tslib@1.14.1:
@@ -1458,7 +1458,7 @@ packages:
       integrity: sha512-f4HigYjeIBn9f7OuNv5zh2y5vWaAhNFrfeul8CRJDy82l3Y+09lxOTGxfF3uMXKrZq4LmuK6qvvRCZ8mUrVvzQ==
   /@commitlint/format/8.3.4:
     dependencies:
-      chalk: 2.3.1
+      chalk: 2.4.2
     dev: true
     engines:
       node: '>=4'
@@ -2390,7 +2390,7 @@ packages:
       colorette: 1.2.1
       normalize-range: 0.1.2
       num2fraction: 1.2.2
-      postcss: 7.0.32
+      postcss: 7.0.35
       postcss-value-parser: 4.1.0
     dev: true
     hasBin: true
