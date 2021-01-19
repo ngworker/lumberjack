@@ -114,7 +114,7 @@ jobs:
       - run: pnpm store prune
 
       - if: matrix.angular-version == '9.0.x'
-        run: pnpx ngcc
+        run: pnpm install --save-dev @angular/compiler@9.1.x @angular/compiler-cli@9.1.x
 
       - run: pnpm test:internal:ci
       - run: pnpm test:lib:ci
