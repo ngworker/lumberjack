@@ -86,7 +86,7 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x]
-        angular-version: [9.0.x, 9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x]
+        angular-version: [9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -113,8 +113,8 @@ jobs:
       - run: pnpm install --reporter silent --frozen-lockfile false --verify-store-integrity false
       - run: pnpm store prune
 
-      - if: matrix.angular-version == '9.0.x'
-        run: pnpm install --save-dev @angular/compiler@9.1.x @angular/compiler-cli@9.1.x
+      # - if: matrix.angular-version == '9.0.x'
+      #   run: pnpm install --save-dev @angular/compiler@9.1.x @angular/compiler-cli@9.1.x
 
       - run: pnpm test:internal:ci
       - run: pnpm test:lib:ci
@@ -126,7 +126,7 @@ jobs:
     strategy:
       matrix:
         node-version: [10.x, 12.x]
-        angular-version: [9.0.x, 9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x]
+        angular-version: [9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -171,7 +171,7 @@ jobs:
     strategy:
       matrix:
         node-version: [12.x]
-        angular-version: [9.0.x, 9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x]
+        angular-version: [9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x]
 
     steps:
       - uses: actions/checkout@v2
