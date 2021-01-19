@@ -48,7 +48,6 @@ Lumberjack is published as the `@ngworker/lumberjack` package.
 | ----------- | --------------------------------------- |
 | Angular CLI | `ng add @ngworker/lumberjack@next`      |
 | NPM CLI     | `npm install @ngworker/lumberjack@next` |
-| Nx CLI      | `nx add @ngworker/lumberjack@next`      |
 | Yarn CLI    | `yarn add @ngworker/lumberjack@next`    |
 
 ## Compatibility
