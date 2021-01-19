@@ -13,7 +13,7 @@
     "hooks:pre-commit": "node hooks/pre-commit.js",
     "commit": "git-cz",
     "release:first": "pnpm release -- --first-release",
-    "build:lib": "ng build ngworker-lumberjack --prod && npx copy README.md ./dist/ngworker/lumberjack",
+    "build:lib": "ng build ngworker-lumberjack --prod && pnpx copy README.md ./dist/ngworker/lumberjack",
     "test:lib": "ng test ngworker-lumberjack",
     "test:lib:ci": "pnpm test:lib -- --configuration=ci",
     "test:internal": "ng test internal-test-util && ng test internal-console-driver-test-util",
@@ -21,7 +21,7 @@
     "release": "cd libs/ngworker/lumberjack && standard-version --infile ../../../CHANGELOG.md",
     "publish": "cd dist/ngworker/lumberjack && npm publish",
     "ci": "pnpm install && pnpm lint && pnpm build:lib && pnpm test:internal:ci && pnpm test:lib:ci && pnpm build && pnpm test:ci && pnpm e2e",
-    "format": "npx prettier --config prettier.config.js --write \"**/*.*\" \"!node_modules/**\" \"!dist/**\" \"!pnpm-lock.yaml\"",
+    "format": "pnpx prettier --config prettier.config.js --write \"**/*.*\" \"!node_modules/**\" \"!dist/**\" \"!pnpm-lock.yaml\"",
     "delete-path-alias": "node tools/delete-path-alias.js"
   },
   "private": true,
