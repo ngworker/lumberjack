@@ -38,7 +38,7 @@ devDependencies:
   lint-staged: 9.5.0
   ng-packagr: 11.0.3_2988bec49a6f87c979ce0f61c7d20de7
   prettier: 2.2.1
-  pretty-format: 26.6.2
+  pretty-format: 24.9.0
   protractor: 7.0.0
   standard-version: 6.0.1
   ts-node: 8.3.0_typescript@4.0.5
@@ -1579,18 +1579,6 @@ packages:
       node: '>= 6'
     resolution:
       integrity: sha512-XKK7ze1apu5JWQ5eZjHITP66AX+QsLlbaJRBGYr8pNzwcAE2JVkwnf0yqjHTsDRcjR0mujy/NmZMXw5kl+kGBw==
-  /@jest/types/26.6.2:
-    dependencies:
-      '@types/istanbul-lib-coverage': 2.0.3
-      '@types/istanbul-reports': 3.0.0
-      '@types/node': 12.19.14
-      '@types/yargs': 15.0.12
-      chalk: 4.1.0
-    dev: true
-    engines:
-      node: '>= 10.14.2'
-    resolution:
-      integrity: sha512-fC6QCp7Sc5sX6g8Tvbmj4XUTbyrik0akgRy03yjXbQaBWWNWGE7SGtJk98m0N8nzegD/7SggrUlivxo5ax4KWQ==
   /@jsdevtools/coverage-istanbul-loader/3.0.5:
     dependencies:
       convert-source-map: 1.7.0
@@ -1830,12 +1818,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-P/W9yOX/3oPZSpaYOCQzGqgCQRXn0FFO/V8bWrCQs+wLmvVVxk6CRBXALEvNs9OHIatlnlFokfhuDo2ug01ciw==
-  /@types/istanbul-reports/3.0.0:
-    dependencies:
-      '@types/istanbul-lib-report': 3.0.0
-    dev: true
-    resolution:
-      integrity: sha512-nwKNbvnwJ2/mndE9ItP/zc2TCzw6uuodnF4EHYWD+gCQDVBuRQL5UzbZD0/ezy1iKsFU2ZQiDqg4M9dN4+wZgA==
   /@types/jasmine/3.6.2:
     dev: true
     resolution:
@@ -1910,12 +1892,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-NRqD6T4gktUrDi1o1wLH3EKC1o2caCr7/wR87ODcbVITQF106OM3sFN92ysZ++wqelOd1CTzatnOBRDYYG6wGQ==
-  /@types/yargs/15.0.12:
-    dependencies:
-      '@types/yargs-parser': 20.2.0
-    dev: true
-    resolution:
-      integrity: sha512-f+fD/fQAo3BCbCDlrUpznF1A5Zp9rB0noS5vnoormHSIPFKL0Z2DcUJ3Gxp5ytH4uLRNxy7AwYUC9exZzqGMAw==
   /@webassemblyjs/ast/1.9.0:
     dependencies:
       '@webassemblyjs/helper-module-context': 1.9.0
@@ -9417,17 +9393,6 @@ packages:
       node: '>= 6'
     resolution:
       integrity: sha512-00ZMZUiHaJrNfk33guavqgvfJS30sLYf0f8+Srklv0AMPodGGHcoHgksZ3OThYnIvOd+8yMCn0YiEOogjlgsnA==
-  /pretty-format/26.6.2:
-    dependencies:
-      '@jest/types': 26.6.2
-      ansi-regex: 5.0.0
-      ansi-styles: 4.3.0
-      react-is: 17.0.1
-    dev: true
-    engines:
-      node: '>= 10'
-    resolution:
-      integrity: sha512-7AeGuCYNGmycyQbCqd/3PWH4eOoX/OiCa0uphp57NVTeAGdJGaAliecxwBDHYQCIvrW7aDBZCYeNTP/WX69mkg==
   /process-nextick-args/2.0.1:
     dev: true
     resolution:
@@ -9650,10 +9615,6 @@ packages:
     dev: true
     resolution:
       integrity: sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ==
-  /react-is/17.0.1:
-    dev: true
-    resolution:
-      integrity: sha512-NAnt2iGDXohE5LI7uBnLnqvLQMtzhkiAOLXTmv+qnF9Ky7xAPcX8Up/xWIhxvLVGJvuLiNc4xQLtuqDRzb4fSA==
   /read-cache/1.0.0:
     dependencies:
       pify: 2.3.0
@@ -12498,7 +12459,7 @@ specifiers:
   lint-staged: ^9.5.0
   ng-packagr: ^11.0.3
   prettier: ^2.0.5
-  pretty-format: ^26.6.2
+  pretty-format: ^24.9.0
   protractor: ~7.0.0
   rxjs: ~6.6.3
   standard-version: ^6.0.1
