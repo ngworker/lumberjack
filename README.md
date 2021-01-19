@@ -70,7 +70,7 @@ If the version you are using is not listed, please [raise an issue in our GitHub
 
 ## Usage
 
-To start using Lumberjack, import it in your root or core Angular module.
+To register Lumberjack, add the `LumberjackModule.forRoot()` to your root or core Angular module.
 
 ```ts
 // ...
@@ -86,7 +86,7 @@ import { LumberjackModule } from '@ngworker/lumberjack';
 export class AppModule {}
 ```
 
-You must also import log driver modules for the log drivers that you want to enable.
+You must also register the log driver modules for the log drivers that you want to enable.
 
 ```ts
 // ...
@@ -109,6 +109,8 @@ import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driv
 })
 export class AppModule {}
 ```
+
+See the [_Log drivers_](#log-drivers) section for more information.
 
 ### Using the `LumberjackService`
 
@@ -219,7 +221,7 @@ export interface LumberjackLogDriverLog<TPayload extends LumberjackLogPayload | 
 
 Log drivers should make it possible to configure the logging levels on a per driver basis.
 
-For example, we could use the default logging levels for the console driver, but only enable the critical and error levels for the HTTP driver as seen in the following example.
+For example, we could use the default logging levels for the console driver, but only enable the critical and error levels for the **HTTP driver** as seen in the following example.
 
 ```ts
 import { NgModule } from '@angular/core';
@@ -384,7 +386,7 @@ export class ConsoleDriver implements LumberjackLogDriver<AnalyticsPayload> {
 
 #### Creating a custom log driver module
 
-A driver module provides configuration and other dependencies to a log driver. It also provides the log driver, making it available to Lumberjack.
+A driver module provides configuration and other dependencies to a log driver. It also provides the log driver, making it available to **Lumberjack**.
 
 ```ts
 import { ModuleWithProviders, NgModule } from '@angular/core';
