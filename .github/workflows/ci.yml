@@ -27,15 +27,15 @@ jobs:
 
       - run: npm install --global pnpm
       - run: pnpm config set store-dir $PNPM_STORE_PATH
-      - name: Cache PNPM store
-        uses: actions/cache@v2
-        with:
-          path: ${{ env.PNPM_STORE_PATH }}
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-pnpm-
-            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-
-            ${{ runner.os }}-node-
+      # - name: Cache PNPM store
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: ${{ env.PNPM_STORE_PATH }}
+      #     key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-pnpm-
+      #       ${{ runner.os }}-node-${{ matrix.node-version }}-angular-
+      #       ${{ runner.os }}-node-
       - run: pnpm install --reporter silent --frozen-lockfile false --verify-store-integrity false
       - run: pnpm store prune
 
@@ -58,15 +58,15 @@ jobs:
 
       - run: npm install --global pnpm
       - run: pnpm config set store-dir $PNPM_STORE_PATH
-      - name: Cache PNPM store
-        uses: actions/cache@v2
-        with:
-          path: ${{ env.PNPM_STORE_PATH }}
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-pnpm-
-            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-
-            ${{ runner.os }}-node-
+      # - name: Cache PNPM store
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: ${{ env.PNPM_STORE_PATH }}
+      #     key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-pnpm-
+      #       ${{ runner.os }}-node-${{ matrix.node-version }}-angular-
+      #       ${{ runner.os }}-node-
       - if: github.event_name == 'push'
         run: pnpm install --reporter silent --frozen-lockfile --verify-store-integrity
       - if: github.event_name == 'pull_request'
@@ -101,15 +101,15 @@ jobs:
 
       - run: npm install --global pnpm
       - run: pnpm config set store-dir $PNPM_STORE_PATH
-      - name: Cache PNPM store
-        uses: actions/cache@v2
-        with:
-          path: ${{ env.PNPM_STORE_PATH }}
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-pnpm-
-            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-
-            ${{ runner.os }}-node-
+      # - name: Cache PNPM store
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: ${{ env.PNPM_STORE_PATH }}
+      #     key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-pnpm-
+      #       ${{ runner.os }}-node-${{ matrix.node-version }}-angular-
+      #       ${{ runner.os }}-node-
       - run: pnpm install --reporter silent --frozen-lockfile false --verify-store-integrity false
       - run: pnpm store prune
 
@@ -138,15 +138,15 @@ jobs:
 
       - run: npm install --global pnpm
       - run: pnpm config set store-dir $PNPM_STORE_PATH
-      - name: Cache PNPM store
-        uses: actions/cache@v2
-        with:
-          path: ${{ env.PNPM_STORE_PATH }}
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-pnpm-
-            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-
-            ${{ runner.os }}-node-
+      # - name: Cache PNPM store
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: ${{ env.PNPM_STORE_PATH }}
+      #     key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-pnpm-
+      #       ${{ runner.os }}-node-${{ matrix.node-version }}-angular-
+      #       ${{ runner.os }}-node-
       - run: pnpm install --reporter silent --frozen-lockfile false --verify-store-integrity false
       - run: pnpm store prune
 
@@ -183,15 +183,15 @@ jobs:
 
       - run: npm install --global pnpm
       - run: pnpm config set store-dir $PNPM_STORE_PATH
-      - name: Cache PNPM store
-        uses: actions/cache@v2
-        with:
-          path: ${{ env.PNPM_STORE_PATH }}
-          key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-pnpm-
-            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-
-            ${{ runner.os }}-node-
+      # - name: Cache PNPM store
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: ${{ env.PNPM_STORE_PATH }}
+      #     key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-pnpm-${{ hashFiles('pnpm-lock.yaml') }}
+      #     restore-keys: |
+      #       ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-pnpm-
+      #       ${{ runner.os }}-node-${{ matrix.node-version }}-angular-
+      #       ${{ runner.os }}-node-
       - run: pnpm install --reporter silent --frozen-lockfile false --verify-store-integrity false
       - run: pnpm store prune
 
