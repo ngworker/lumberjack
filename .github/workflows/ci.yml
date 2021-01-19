@@ -39,6 +39,8 @@ jobs:
       - run: pnpm install --reporter silent --frozen-lockfile false --verify-store-integrity false
       - run: pnpm store prune
 
+      - run: npx ngcc || true
+
       - run: pnpm lint
 
   build:
