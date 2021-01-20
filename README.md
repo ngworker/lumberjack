@@ -469,7 +469,17 @@ If you want your driver listed here just open a PR and follow the same format.
 
 Every log can be represented as a combination of its level, creation time, message, and scope. Using inline logs with the `LumberjackService` can cause structure duplication and/or de-standardization.
 
-The following practices are recommended to mitigate these problems.
+The following next table shows the different ways to interact with `Lumberjack` along the team recommendation level for each one.
+
+### Lumberjack usage recommendations
+
+| Logging Method                                  | Recommendation Level | Description                                                                                                                |
+| ----------------------------------------------- | -------------------- | -------------------------------------------------------------------------------------------------------------------------- |
+| `Lumberjack Loggers`                            | High                 | Extend `LumberjackLogger` or `ScopeLumberjackLogger` and use the inherited method to build a logger                        |
+| `LumberjackLogBuilder` with `LumberjackService` | Medium               | Create your `LumberjackLogs` using a `LumberjackBuilder`. Dispatch the created logs directly using the `LumberjackService` |
+| Inline logs with `LumberjackService`            | Low                  | Create your logs inline in the `LumberjackService#log` method.                                                             |
+
+Continue reading to know more about the recommended best practice.
 
 ### Loggers
 
