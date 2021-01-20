@@ -46,7 +46,6 @@
     "@commitlint/cli": "8.1.0",
     "@commitlint/config-angular": "^8.3.4",
     "@commitlint/config-conventional": "^8.3.4",
-    "@ngneat/spectator": "^6.0.0",
     "@types/jasmine": "~3.6.2",
     "@types/node": "^12.12.62",
     "all-contributors-cli": "^6.8.1",
