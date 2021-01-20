@@ -133,9 +133,9 @@ describe(LumberjackService.name, () => {
         const fakeTime = resolveDependency(LumberjackTimeService);
         spyOn(fakeTime, 'getUnixEpochTicks').and.returnValue(fakeDate.valueOf());
 
-        const logDrivers = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver<
-          PayloadFieldInfo
-        >[];
+        const logDrivers = (resolveDependency(
+          lumberjackLogDriverToken
+        ) as unknown) as LumberjackLogDriver<PayloadFieldInfo>[];
         const spyDriver = logDrivers[0] as SpyDriver;
 
         expect(logDebugMessageWithPayloadField).not.toThrow();
@@ -277,9 +277,8 @@ describe(LumberjackService.name, () => {
         expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
         expect(spyDriver.logError).toHaveBeenCalledTimes(1);
         expect(spyDriver.logDebug).toHaveBeenCalledWith(createDebugDriverLog(LumberjackLevel.Debug));
-        const [actualLastErrorMessage] = spyDriver.logError.calls.mostRecent().args as ReadonlyArray<
-          LumberjackLogDriverLog
-        >;
+        const [actualLastErrorMessage] = spyDriver.logError.calls.mostRecent()
+          .args as ReadonlyArray<LumberjackLogDriverLog>;
         expect(actualLastErrorMessage.formattedLog).toMatch(
           new RegExp(`^Could not log message ".*?" to ${ErrorThrowingDriver.name}.\n Error: ".*?"`)
         );
