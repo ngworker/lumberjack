@@ -71,7 +71,7 @@ If the version you are using is not listed, please [raise an issue in our GitHub
 
 ## Usage
 
-To register Lumberjack, add the `LumberjackModule.forRoot()` to your root or core Angular module.
+To register Lumberjack, add `LumberjackModule.forRoot()` to your root or core Angular module.
 
 ```ts
 // ...
@@ -115,7 +115,7 @@ See the [_Log drivers_](#log-drivers) section for more information.
 
 ### Using the `LumberjackService`
 
-You can use the `LumberjackService` directly passing logs to its `log` method for short or simple use cases. However, we recommend implementing application-specific logger services instead. See the [_Best practices_](#best-practices) section.
+You can use the `LumberjackService` by directly passing logs to its `log` method for short or simple use cases.However, we recommend implementing application-specific logger services instead. See the [_Best practices_](#best-practices) section.
 
 First, inject the `LumberjackService` where you want to use it.
 
@@ -132,18 +132,23 @@ export class MyComponent implements OnInit {
 }
 ```
 
-Then you can start logging.
+Then you can start logging. However, you'll also want to inject `LumberjackTimeService` to maintain a high level of testability.
 
 ```ts
 // (...)
+import { LumberjackService, LumberjackTimeService } from '@ngworker/lumberjack';
+
+// (...)
 export class MyComponent implements OnInit {
+  constructor(private lumberjack: LumberjackService, private time: LumberjackTimeService) {}
+
   // (...)
   ngOnInit(): void {
     this.lumberjack.log({
       level: LumberjackLevel.Info,
       message: 'Hello, World!',
       scope: 'MyComponent',
-      createdAt: Date.now(),
+      createdAt: this.time.getUnixEpochTicks(),
     });
   }
 }
@@ -189,9 +194,9 @@ By default, in production mode, the following log levels are enabled:
 
 ## Log drivers
 
-Earlier, we briefly introduced the term _log driver_. This section explains in-depth how to use and configure them and how to create custom log drivers.
+Earlier, we briefly introduced the term _log driver_. This section explains in depth how to use and configure them and how to create custom log drivers.
 
-A log driver is the conduit used by the Lumberjack to output or persists application logs.
+A log driver is the conduit used by the Lumberjack to output or persist application logs.
 
 Lumberjack offers basic log drivers out-of-the-box, namely the `LumberjackConsoleDriver` and the `LumberjackHttpDriver`.
 
@@ -567,11 +572,7 @@ import { LumberjackLogger, LumberjackService, LumberjackTimeService } from '@ngw
   providedIn: 'root',
 })
 export class AppLogger extends LumberjackLogger {
-  public static scope = 'Forest App';
-
-  constructor(lumberjack: LumberjackService, time: LumberjackTimeService) {
-    super(lumberjack, time);
-  }
+  static scope = 'Forest App';
 
   forestOnFire = this.createCriticalLogger('The forest is on fire').withScope(AppLogger.scope).build();
 
@@ -654,11 +655,7 @@ import { LumberjackService, LumberjackTimeService, ScopedLumberjackLogger } from
   providedIn: 'root',
 })
 export class AppLogger extends ScopedLumberjackLogger {
-  public scope = 'Forest App';
-
-  constructor(lumberjack: LumberjackService, time: LumberjackTimeService) {
-    super(lumberjack, time);
-  }
+  scope = 'Forest App';
 
   forestOnFire = this.createCriticalLogger('The forest is on fire').build();
 
@@ -666,7 +663,7 @@ export class AppLogger extends ScopedLumberjackLogger {
 }
 ```
 
-Notice that now every lumberjack log written using the `AppLogger` will have the `'Forest App'` scope
+Notice that now every log written using the `AppLogger` will have the `'Forest App'` scope
 
 #### Using Loggers with a LumberjackLog payload
 
@@ -714,13 +711,11 @@ The `AppLogger` usage remains the same using a `LumberjackLogger` or `ScopedLumb
 
 Lumberjack recommended way of creating logs is by using a `LumberjackLogger`.
 
-However, there are some times that we want to create inline logs and send them over to the `LumberjackService`.
+However, there are some times that we want to create logs manullly and pass them to the `LumberjackService`.
 
-The `LumberjackLogBuilder` provides a handy way of creating logs robustly.
+The `LumberjackLogBuilder` provides a robust way of creating logs. It's also useful for creating logs in unit tests.
 
-It can also help create logs used in unit tests.
-
-This is how we should write an inline log
+This is how we create logs manually:
 
 ```ts
 import { Component, OnInit, VERSION } from '@angular/core';
