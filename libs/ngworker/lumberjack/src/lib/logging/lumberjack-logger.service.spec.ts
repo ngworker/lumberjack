@@ -3,10 +3,9 @@ import { TestBed } from '@angular/core/testing';
 
 import { resolveDependency } from '@internal/test-util';
 
-import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
-import { LumberjackLogBuilder } from './lumberjack-log.builder';
+import { LumberjackLogFactory } from './lumberjack-log-factory';
 import { LumberjackLogger } from './lumberjack-logger.service';
 import { LumberjackService } from './lumberjack.service';
 import { ScopedLumberjackLogger } from './scoped-lumberjack-logger.service';
@@ -15,9 +14,7 @@ import { ScopedLumberjackLogger } from './scoped-lumberjack-logger.service';
   providedIn: 'root',
 })
 export class TestLogger extends ScopedLumberjackLogger {
-  static scope = 'Test';
-
-  scope = TestLogger.scope;
+  scope = 'Test';
 
   criticalLogger = this.createCriticalLogger('').build();
   debugLogger = this.createDebugLogger('').build();
@@ -40,8 +37,10 @@ describe(LumberjackLogger.name, () => {
     const fakeTime = resolveDependency(LumberjackTimeService);
     spyOn(fakeTime, 'getUnixEpochTicks').and.returnValue(fakeDate.valueOf());
     logger = resolveDependency(TestLogger);
+    logFactory = resolveDependency(LumberjackLogFactory);
   });
 
+  let logFactory: LumberjackLogFactory;
   let logger: TestLogger;
   let lumberjackStub: jasmine.SpyObj<LumberjackService>;
 
@@ -49,65 +48,41 @@ describe(LumberjackLogger.name, () => {
     logger.criticalLogger();
 
     expect(lumberjackStub.log).toHaveBeenCalledTimes(1);
-    expect(lumberjackStub.log).toHaveBeenCalledWith(
-      new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Critical, '')
-        .withScope(TestLogger.scope)
-        .build()
-    );
+    expect(lumberjackStub.log).toHaveBeenCalledWith(logFactory.createCriticalLog('').withScope(logger.scope).build());
   });
 
   it('can create a debug logger', () => {
     logger.debugLogger();
 
     expect(lumberjackStub.log).toHaveBeenCalledTimes(1);
-    expect(lumberjackStub.log).toHaveBeenCalledWith(
-      new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Debug, '')
-        .withScope(TestLogger.scope)
-        .build()
-    );
+    expect(lumberjackStub.log).toHaveBeenCalledWith(logFactory.createDebugLog('').withScope(logger.scope).build());
   });
 
   it('can create an error logger', () => {
     logger.errorLogger();
 
     expect(lumberjackStub.log).toHaveBeenCalledTimes(1);
-    expect(lumberjackStub.log).toHaveBeenCalledWith(
-      new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Error, '')
-        .withScope(TestLogger.scope)
-        .build()
-    );
+    expect(lumberjackStub.log).toHaveBeenCalledWith(logFactory.createErrorLog('').withScope(logger.scope).build());
   });
 
   it('can create an info logger', () => {
     logger.infoLogger();
 
     expect(lumberjackStub.log).toHaveBeenCalledTimes(1);
-    expect(lumberjackStub.log).toHaveBeenCalledWith(
-      new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Info, '')
-        .withScope(TestLogger.scope)
-        .build()
-    );
+    expect(lumberjackStub.log).toHaveBeenCalledWith(logFactory.createInfoLog('').withScope(logger.scope).build());
   });
 
   it('can create a trace logger', () => {
     logger.traceLogger();
 
     expect(lumberjackStub.log).toHaveBeenCalledTimes(1);
-    expect(lumberjackStub.log).toHaveBeenCalledWith(
-      new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Trace, '')
-        .withScope(TestLogger.scope)
-        .build()
-    );
+    expect(lumberjackStub.log).toHaveBeenCalledWith(logFactory.createTraceLog('').withScope(logger.scope).build());
   });
 
   it('can create a warning logger', () => {
     logger.warningLogger();
 
     expect(lumberjackStub.log).toHaveBeenCalledTimes(1);
-    expect(lumberjackStub.log).toHaveBeenCalledWith(
-      new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Warning, '')
-        .withScope(TestLogger.scope)
-        .build()
-    );
+    expect(lumberjackStub.log).toHaveBeenCalledWith(logFactory.createWarningLog('').withScope(logger.scope).build());
   });
 });
