@@ -432,11 +432,11 @@ export const consoleDriverConfigToken = new InjectionToken<LumberjackLogDriverCo
 });
 ```
 
-This is possible because the `ConsoleDriver` has the same configuration options as the `LumberjackLogDriverConfig`. We only have to include the driver identifier since it can not be predefined.
+This is possible because the `ConsoleDriver` has the same configuration options as the `LumberjackLogDriverConfig`. We only have to include the driver identifier since it cannot be predefined.
 
 The driver identifier is a unique string that allows identifying one driver instance from other drivers and even from another lazy-loaded instance of itself.
 
-For adding custom settings, see [LumberjackHttpDriver](https://github.com/ngworker/lumberjack/blob/main/libs/ngworker/lumberjack/http-driver/src/lib/lumberjack-http-driver-root.module.ts).
+To add custom options, see [LumberjackHttpDriver](https://github.com/ngworker/lumberjack/blob/main/libs/ngworker/lumberjack/http-driver/src/lib/lumberjack-http-driver-root.module.ts).
 
 The most important thing about the `LumberjackConsoleDriverModule` is that it provides the `LumberjackConsoleDriver` using the `lumberjackLogDriverToken` with the `multi` flag on. This allows us to provide multiple log drivers for Lumberjack at the same time.
 
@@ -464,11 +464,10 @@ For a more advanced log driver implementation, see [LumberjackHttpDriver](https:
 
 > Note, you can use the [ngworker/lumberjack-custom-driver](https://github.com/ngworker/lumberjack-custom-driver/generate) template Git repository to start a separate Lumberjack log driver workspace.
 
-This is a list of some recommended Lumberjack community drivers.
 
 If you want your driver listed here, open a PR and follow the same format.
 
-- [LumberjackFirestoreDriver](https://github.com/marcinmilewicz/lumberjack-firestore-driver), custom log driver for `ngworker/lumberjack`. It sends logs and stores them in [Cloud Firestore](https://firebase.google.com/docs/firestore).
+- [LumberjackFirestoreDriver](https://github.com/marcinmilewicz/lumberjack-firestore-driver), community log driver using [Cloud Firestore](https://firebase.google.com/docs/firestore) as a log store.
 
 ## Best practices
 
@@ -644,7 +643,7 @@ export abstract class ScopedLumberjackLogger<
 }
 ```
 
-The result `AppLogger` after refactoring to using the `ScopedLumberjackLogger` would be
+The resulting `AppLogger` after refactoring to using the `ScopedLumberjackLogger` would be:
 
 ```ts
 import { Injectable } from '@angular/core';
