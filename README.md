@@ -227,7 +227,7 @@ export interface LumberjackLogDriverLog<TPayload extends LumberjackLogPayload | 
 
 Log drivers should make it possible to configure the logging levels on a per driver basis.
 
-For example, we could use the default logging levels for the console driver and the critical and error levels for the **HTTP driver** as seen in the following example.
+For example, we could use the default logging levels for the console driver, but only enable the critical and error levels for the **HTTP driver** as seen in the following example.
 
 ```ts
 import { NgModule } from '@angular/core';
@@ -434,9 +434,7 @@ export const consoleDriverConfigToken = new InjectionToken<LumberjackLogDriverCo
 
 This is possible because the `ConsoleDriver` has the same configuration options as the `LumberjackLogDriverConfig`. We only have to include the driver identifier since it cannot be predefined.
 
-The driver identifier is a unique string that allows identifying one driver instance from other drivers and even from another lazy-loaded instance of itself.
-
-To add custom options, see [LumberjackHttpDriver](https://github.com/ngworker/lumberjack/blob/main/libs/ngworker/lumberjack/http-driver/src/lib/lumberjack-http-driver-root.module.ts).
+For adding custom settings, see [LumberjackHttpDriver](https://github.com/ngworker/lumberjack/blob/main/libs/ngworker/lumberjack/http-driver/src/lib/lumberjack-http-driver-root.module.ts).
 
 The most important thing about the `LumberjackConsoleDriverModule` is that it provides the `LumberjackConsoleDriver` using the `lumberjackLogDriverToken` with the `multi` flag on. This allows us to provide multiple log drivers for Lumberjack at the same time.
 
@@ -471,19 +469,9 @@ If you want your driver listed here, open a PR and follow the same format.
 
 ## Best practices
 
-Every log can be represented as a combination of its level, creation time, message, and scope. Using inline logs with the `LumberjackService` can cause structure duplication and-or de-standardization.
+Every log can be represented as a combination of its level, creation time, message, scope and payload. Using inline logs with the `LumberjackService` can cause structure duplication and-or de-standardization.
 
-The next table shows the different ways to interact with `Lumberjack` and the team recommendation level for each one.
-
-### Lumberjack usage recommendations
-
-| Logging Method                                  | Recommendation Level | Description                                                                                                                |
-| ----------------------------------------------- | -------------------- | -------------------------------------------------------------------------------------------------------------------------- |
-| `Lumberjack Loggers`                            | High                 | Extend `LumberjackLogger` or `ScopeLumberjackLogger` and use the inherited method to build a logger                        |
-| `LumberjackLogBuilder` with `LumberjackService` | Medium               | Create your `LumberjackLogs` using a `LumberjackBuilder`. Dispatch the created logs directly using the `LumberjackService` |
-| Inline logs with `LumberjackService`            | Low                  | Create your logs inline in the `LumberjackService#log` method.                                                             |
-
-Continue reading to know more about the recommended best practice.
+Continue reading to know more about the recommended best practices designed to tackle this issues.
 
 ### Loggers
 
@@ -491,7 +479,7 @@ The `LumberjackLogger` service is an abstract class that wraps the `LumberjackSe
 
 `LumberjackLogger` is used as the base class for any other logger that we need.
 
-This is the abstract class `LumberjackLogger`:
+This is the abstract interface of `LumberjackLogger`:
 
 ```ts
 /**
