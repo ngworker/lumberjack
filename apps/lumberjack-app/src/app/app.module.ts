@@ -12,7 +12,6 @@ import { AppComponent } from './app.component';
   declarations: [AppComponent],
   imports: [
     BrowserModule,
-    HttpClientModule,
     LumberjackModule.forRoot(),
     LumberjackConsoleDriverModule.forRoot(),
     LumberjackHttpDriverModule.forRoot({

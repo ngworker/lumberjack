@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { Inject, NgModule, NgZone, Optional, SkipSelf } from '@angular/core';
 
 import {
@@ -27,6 +27,7 @@ export function httpDriverFactory(
 }
 
 @NgModule({
+  imports: [HttpClientModule],
   providers: [
     {
       deps: [HttpClient, lumberjackLogDriverConfigToken, lumberjackHttpDriverConfigToken, NgZone],
