@@ -137,7 +137,7 @@ export class MyComponent implements OnInit {
   // (...)
   ngOnInit(): void {
     this.lumberjack.log({
-      level: LumberjackLogLevel.Info,
+      level: LumberjackLevel.Info,
       message: 'Hello, World!',
       scope: 'MyComponent',
       createdAt: Date.now(),
