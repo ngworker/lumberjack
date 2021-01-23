@@ -1,4 +1,3 @@
-import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 
 import { expectNgModuleToBeGuardedAgainstDirectImport, resolveDependency } from '@internal/test-util';
@@ -57,7 +56,6 @@ const createHttpDriver = (
 ) => {
   TestBed.configureTestingModule({
     imports: [
-      HttpClientTestingModule,
       isLumberjackModuleImportedFirst ? LumberjackModule.forRoot() : [],
       LumberjackHttpDriverModule.forRoot(config),
       isLumberjackModuleImportedFirst ? [] : LumberjackModule.forRoot(),
@@ -79,7 +77,6 @@ const createHttpDriverWithOptions = (
 ) => {
   TestBed.configureTestingModule({
     imports: [
-      HttpClientTestingModule,
       isLumberjackModuleImportedFirst ? LumberjackModule.forRoot() : [],
       LumberjackHttpDriverModule.withOptions(options),
       isLumberjackModuleImportedFirst ? [] : LumberjackModule.forRoot(),

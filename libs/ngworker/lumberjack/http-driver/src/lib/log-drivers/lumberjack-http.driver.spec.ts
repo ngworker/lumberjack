@@ -86,7 +86,7 @@ describe(LumberjackHttpDriver.name, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule, LumberjackModule.forRoot(), LumberjackHttpDriverModule.withOptions(options)],
+      imports: [LumberjackModule.forRoot(), LumberjackHttpDriverModule.withOptions(options), HttpClientTestingModule],
     });
 
     [httpDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver<HttpDriverPayload>[];
