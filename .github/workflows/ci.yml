@@ -109,11 +109,13 @@ jobs:
             ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-
       - run: yarn install
       - run: yarn test:internal:ci
-      - name: Upload @internal/* coverage report
+      # remove after debugging
+      - run: ls -la
+      - name: Upload @internal/test-util coverage report
         uses: actions/upload-artifact@v2
         with:
-          name: internal-coverage
-          path: coverage/libs/internal
+          name: internal-test-util-coverage
+          path: coverage/libs/internal/test-util
           if-no-files-found: error
 
       - run: yarn test:lib:ci
