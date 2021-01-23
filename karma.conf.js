@@ -4,6 +4,11 @@
 const { constants } = require('karma');
 const path = require('path');
 
+const minimumTestCoveragePercentage = 85;
+const yellowTestCoveragePercentage = 90;
+const greenTestCoveragePercentage = 95;
+const testCoverageWatermarks = [yellowTestCoveragePercentage, greenTestCoveragePercentage];
+
 module.exports = () => ({
   basePath: '',
   frameworks: ['jasmine', '@angular-devkit/build-angular'],
@@ -21,9 +26,33 @@ module.exports = () => ({
     suppressAll: true, // removes the duplicated traces
   },
   coverageReporter: {
-    dir: require('path').join(__dirname, 'coverage'),
+    dir: path.join(__dirname, 'coverage'),
     subdir: '.',
     reporters: [{ type: 'html' }, { type: 'text-summary' }],
+    // see https://github.com/karma-runner/karma-coverage/blob/master/docs/configuration.md
+    check: {
+      // minimum overall test coverage
+      global: {
+        statements: minimumTestCoveragePercentage,
+        branches: minimumTestCoveragePercentage,
+        functions: minimumTestCoveragePercentage,
+        lines: minimumTestCoveragePercentage,
+      },
+      // minimum test coverage on a per file basis
+      each: {
+        statements: minimumTestCoveragePercentage,
+        branches: minimumTestCoveragePercentage,
+        functions: minimumTestCoveragePercentage,
+        lines: minimumTestCoveragePercentage,
+      },
+    },
+    // coverage threshold colors
+    watermarks: {
+      statements: testCoverageWatermarks,
+      functions: testCoverageWatermarks,
+      branches: testCoverageWatermarks,
+      lines: testCoverageWatermarks,
+    },
   },
   reporters: ['progress', 'kjhtml'],
   port: 9876,
