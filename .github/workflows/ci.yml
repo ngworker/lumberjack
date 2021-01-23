@@ -109,7 +109,20 @@ jobs:
             ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-
       - run: yarn install
       - run: yarn test:internal:ci
+      - name: Upload @internal/* coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: internal-coverage
+          path: coverage/libs/internal
+          if-no-files-found: error
+
       - run: yarn test:lib:ci
+      - name: Upload @ngworker/lumberjack coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: lumberjack-coverage
+          path: coverage/libs/ngworker/lumberjack
+          if-no-files-found: error
 
   app:
     runs-on: ubuntu-latest
@@ -151,6 +164,13 @@ jobs:
       - run: npx ngcc || true
 
       - run: yarn test:ci
+      - name: Upload lumberjack-app coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: lumberjack-app-coverage
+          path: coverage/apps/lumberjack-app
+          if-no-files-found: error
+
       - run: yarn build
 
   e2e:
