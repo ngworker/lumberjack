@@ -8,6 +8,7 @@ import { LumberjackLogDriverError } from '../log-drivers/lumberjack-log-driver-e
 import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
 import { LumberjackLogBuilder } from '../logging/lumberjack-log.builder';
 import { LumberjackLevel } from '../logs/lumberjack-level';
+import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
@@ -19,39 +20,84 @@ describe(formatLogDriverError.name, () => {
     TestBed.configureTestingModule({
       imports: [LumberjackModule.forRoot(), NoopDriverModule.forRoot()],
     });
-    const time = resolveDependency(LumberjackTimeService);
+    time = resolveDependency(LumberjackTimeService);
     const [_logDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
     logDriver = _logDriver;
-    log = new LumberjackLogBuilder(time, LumberjackLevel.Info, 'Test info').build();
   });
 
   const errorMessage = 'Test error message';
-  let log: LumberjackLog;
   let logDriver: NoopDriver;
+  let time: LumberjackTimeService;
 
-  it('includes the message of an Error', () => {
-    const logDriverError: LumberjackLogDriverError = {
-      error: new Error(errorMessage),
-      formattedLog: lumberjackFormatLog(log),
-      log,
-      logDriver,
-    };
+  describe('Error message', () => {
+    beforeEach(() => {
+      log = new LumberjackLogBuilder(time, LumberjackLevel.Info, 'Test info').build();
+    });
 
-    const formattedError = formatLogDriverError(logDriverError);
+    let log: LumberjackLog;
 
-    expect(formattedError).toContain(errorMessage);
+    it('includes the message of an Error', () => {
+      const logDriverError: LumberjackLogDriverError = {
+        error: new Error(errorMessage),
+        formattedLog: lumberjackFormatLog(log),
+        log,
+        logDriver,
+      };
+      const formattedError = formatLogDriverError(logDriverError);
+
+      expect(formattedError).toContain(errorMessage);
+    });
+
+    it('includes a string message', () => {
+      const logDriverError: LumberjackLogDriverError = {
+        error: errorMessage,
+        formattedLog: lumberjackFormatLog(log),
+        log,
+        logDriver,
+      };
+
+      const formattedError = formatLogDriverError(logDriverError);
+
+      expect(formattedError).toContain(errorMessage);
+    });
   });
 
-  it('includes a string message', () => {
-    const logDriverError: LumberjackLogDriverError = {
-      error: errorMessage,
-      formattedLog: lumberjackFormatLog(log),
-      log,
-      logDriver,
-    };
+  describe('Payload', () => {
+    interface TestPayload extends LumberjackLogPayload {
+      readonly test: boolean;
+    }
 
-    const formattedError = formatLogDriverError(logDriverError);
+    it('includes the payload when the log has a payload', () => {
+      const payload: TestPayload = {
+        test: true,
+      };
+      const log = new LumberjackLogBuilder<TestPayload>(time, LumberjackLevel.Info, 'Test info')
+        .withPayload(payload)
+        .build();
+      const logDriverError: LumberjackLogDriverError<TestPayload> = {
+        error: new Error(errorMessage),
+        formattedLog: lumberjackFormatLog(log),
+        log,
+        logDriver: logDriver as LumberjackLogDriver<TestPayload>,
+      };
 
-    expect(formattedError).toContain(errorMessage);
+      const formattedError = formatLogDriverError(logDriverError);
+
+      expect(formattedError).toContain(`with payload "${JSON.stringify(payload)}"`);
+    });
+
+    it('does not mention payload when the log has no payload', () => {
+      const log = new LumberjackLogBuilder(time, LumberjackLevel.Info, 'Test info').build();
+      const logDriverError: LumberjackLogDriverError = {
+        error: new Error(errorMessage),
+        formattedLog: lumberjackFormatLog(log),
+        log,
+        logDriver,
+      };
+
+      const formattedError = formatLogDriverError(logDriverError);
+
+      expect(formattedError).not.toContain('with payload');
+    });
   });
 });
