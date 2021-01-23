@@ -109,7 +109,7 @@ jobs:
             ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-
       - run: yarn install
       - if: matrix.angular-version == '11.1.x'
-        run: yarn test:internal:ci
+        run: yarn test:internal:ci --code-coverage=true
       - if: matrix.angular-version != '11.1.x'
         run: yarn test:internal:ci --code-coverage=false
       # remove after debugging
