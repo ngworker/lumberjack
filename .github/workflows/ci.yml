@@ -222,19 +222,23 @@ jobs:
       - run: npx ngcc || true
 
       - run: yarn test:lib:coverage #--no-fail-on-failing-test-suite
+      - name: Rename @ngworker/lumberjack base test coverage report
+        run: mv coverage/libs/ngworker/lumberjack/lcov.info coverage/libs/ngworker/lumberjack/lcov-base.info
       - name: Upload @ngworker/lumberjack base test coverage report
         uses: actions/upload-artifact@v2
         with:
           name: lumberjack-base-coverage
-          path: coverage/libs/ngworker/lumberjack/lcov.info
+          path: coverage/libs/ngworker/lumberjack/lcov-base.info
           if-no-files-found: error
 
       - run: yarn test:coverage #--no-fail-on-failing-test-suite
+      - name: Rename lumberjack-app base test coverage report
+        run: mv coverage/apps/lumberjack-app/lcov.info coverage/apps/lumberjack-app/lcov-base.info
       - name: Upload lumberjack-app base test coverage report
         uses: actions/upload-artifact@v2
         with:
           name: lumberjack-app-base-coverage
-          path: coverage/apps/lumberjack-app/lcov.info
+          path: coverage/apps/lumberjack-app/lcov-base.info
           if-no-files-found: error
 
   coverage:
@@ -276,13 +280,13 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: lumberjack-base-coverage
-          path: coverage/base/lumberjack
-      - name: Report @ngworker/lumberjack test coverage in PR description
-        uses: romeovs/lcov-reporter-action@v0.2.19
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          lcov-file: coverage/libs/ngworker/lumberjack/lcov.info
-          lcov-base: coverage/base/lumberjack/lcov.info
+          path: coverage/libs/ngworker/lumberjack
+      # - name: Report @ngworker/lumberjack test coverage in PR description
+      #   uses: romeovs/lcov-reporter-action@v0.2.19
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     lcov-file: coverage/libs/ngworker/lumberjack/lcov.info
+      #     lcov-base: coverage/base/lumberjack/lcov.info
 
       - run: yarn test:coverage #--no-fail-on-failing-test-suite
       - name: Upload lumberjack-app coverage report
@@ -296,10 +300,16 @@ jobs:
       - uses: actions/download-artifact@v2
         with:
           name: lumberjack-app-base-coverage
-          path: coverage/base/lumberjack-app
-      - name: Report lumberjack-app test coverage in PR description
-        uses: romeovs/lcov-reporter-action@v0.2.19
+          path: coverage/apps/lumberjack-app
+      # - name: Report lumberjack-app test coverage in PR description
+      #   uses: romeovs/lcov-reporter-action@v0.2.19
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     lcov-file: coverage/apps/lumberjack-app/lcov.info
+      #     lcov-base: coverage/base/lumberjack-app/lcov.info
+
+      - name: Report test coverage in PR description
+        uses: ScaCap/code-coverage-assistant@v0.1
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          lcov-file: coverage/apps/lumberjack-app/lcov.info
-          lcov-base: coverage/base/lumberjack-app/lcov.info
+          monorepo-base-path: coverage
