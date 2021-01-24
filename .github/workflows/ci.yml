@@ -298,7 +298,7 @@ jobs:
           name: lumberjack-app-base-coverage
           path: coverage/apps/lumberjack-app
 
-      - run: mv coverage/libs/* coverage
+      - run: mv coverage/libs/ngworker/* coverage
       - run: mv coverage/apps/* coverage
       - name: Report test coverage in PR description
         uses: ScaCap/code-coverage-assistant@v0.1
