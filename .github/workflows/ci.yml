@@ -194,12 +194,12 @@ jobs:
 
     steps:
       # consolidate after PR#66 has been merged
-      - if: github.ref != 'refs/heads/chore/verify-test-coverage'
+      - if: github.ref != 'refs/pull/66/merge'
         uses: actions/checkout@v2
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
-      - if: github.ref == 'refs/heads/chore/verify-test-coverage'
+      - if: github.ref == 'refs/pull/66/merge'
         uses: actions/checkout@v2
 
       - name: Use Node.js ${{ env.NODE_LATEST }}
