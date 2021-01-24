@@ -188,6 +188,8 @@ jobs:
       - run: yarn e2e
 
   coverage:
+    runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ env.NODE_LATEST }}
