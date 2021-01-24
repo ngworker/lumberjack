@@ -283,12 +283,6 @@ jobs:
         with:
           name: lumberjack-base-coverage
           path: coverage/libs/ngworker/lumberjack
-      # - name: Report @ngworker/lumberjack test coverage in PR description
-      #   uses: romeovs/lcov-reporter-action@v0.2.19
-      #   with:
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      #     lcov-file: coverage/libs/ngworker/lumberjack/lcov.info
-      #     lcov-base: coverage/base/lumberjack/lcov.info
 
       - run: yarn test:coverage #--no-fail-on-failing-test-suite
       - name: Upload lumberjack-app coverage report
@@ -303,13 +297,9 @@ jobs:
         with:
           name: lumberjack-app-base-coverage
           path: coverage/apps/lumberjack-app
-      # - name: Report lumberjack-app test coverage in PR description
-      #   uses: romeovs/lcov-reporter-action@v0.2.19
-      #   with:
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      #     lcov-file: coverage/apps/lumberjack-app/lcov.info
-      #     lcov-base: coverage/base/lumberjack-app/lcov.info
 
+      - run: mv coverage/libs/* coverage
+      - run: mv coverage/apps/* coverage
       - name: Report test coverage in PR description
         uses: ScaCap/code-coverage-assistant@v0.1
         with:

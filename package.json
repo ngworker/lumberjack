@@ -24,8 +24,7 @@
     "publish": "cd dist/ngworker/lumberjack && npm publish",
     "ci": "yarn install && yarn lint && yarn build:lib && yarn test:internal:ci && yarn test:lib:ci && yarn build && yarn test:ci && yarn e2e",
     "format": "npx prettier --config prettier.config.js --write \"**/*.*\" \"!dist/**\" \"!yarn.lock\"",
-    "delete-path-alias": "node tools/delete-path-alias.js",
-    "merge-lcov-reports": "lcov-result-merger 'coverage/**/lcov.info' 'coverage/lcov.info'"
+    "delete-path-alias": "node tools/delete-path-alias.js"
   },
   "private": true,
   "dependencies": {
@@ -64,7 +63,6 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.1",
     "karma-jasmine-html-reporter": "^1.5.4",
-    "lcov-result-merger": "^3.1.0",
     "lint-staged": "^10.5.3",
     "ng-packagr": "^11.1.2",
     "prettier": "^2.2.1",
