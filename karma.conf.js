@@ -14,6 +14,7 @@ module.exports = () => ({
     require('karma-coverage'),
     require('karma-junit-reporter'),
     require('@angular-devkit/build-angular/plugins/karma'),
+    require('karma-sonarqube-unit-reporter'),
   ],
   client: {
     clearContext: false, // leave Jasmine Spec Runner output visible in browser
@@ -36,7 +37,15 @@ module.exports = () => ({
     properties: {}, // key value pair of properties to add to the <properties> section of the report
     xmlVersion: 1, // use '1' if reporting to be per SonarQube 6.2 XML format
   },
-  reporters: ['progress', 'kjhtml', 'junit'],
+  sonarQubeUnitReporter: {
+    sonarQubeVersion: 'LATEST',
+    outputFile: '../../../reports/test/sonar-lumberjack.xml',
+    useBrowserName: false,
+    // overrideTestDescription: true,
+    // testPaths: ['./src/app'],
+    // testFilePattern: '.spec.ts',
+  },
+  reporters: ['progress', 'kjhtml', 'junit', 'sonarqubeUnit'],
   port: 9876,
   colors: true,
   logLevel: constants.LOG_INFO,

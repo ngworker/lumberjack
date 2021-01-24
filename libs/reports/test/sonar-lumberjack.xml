@@ -1,0 +1,224 @@
+<testExecutions version="1">
+  <file path="Configuration API">
+    <testCase name="Configuration API Angular modules exposes LumberjackConsoleDriverModule" duration="1"/>
+  </file>
+  <file path="LumberjackModule">
+    <testCase name="LumberjackModule cannot be imported without using the forRoot method" duration="10"/>
+    <testCase name="LumberjackModule forRoot accepts a Lumberjack configuration" duration="5"/>
+    <testCase name="LumberjackModule forRoot Default format function formats a log with a scope" duration="8"/>
+    <testCase name="LumberjackModule forRoot Default format function formats a log with no scope" duration="3"/>
+    <testCase name="LumberjackModule forRoot provides a default log driver configuration" duration="3"/>
+    <testCase name="LumberjackModule forRoot accepts Lumberjack options in development mode" duration="4"/>
+    <testCase name="LumberjackModule forRoot provides a default Lumberjack configuration in development mode" duration="3"/>
+    <testCase name="LumberjackModule forRoot provides a default Lumberjack configuration in production mode" duration="2"/>
+    <testCase name="LumberjackModule forRoot accepts Lumberjack options in production mode" duration="5"/>
+  </file>
+  <file path="Log drivers API">
+    <testCase name="Log drivers API Dependency injection tokens exposes lumberjackLogDriverToken" duration="1"/>
+    <testCase name="Log drivers API Interfaces exposes LumberjackLogDriver" duration="1"/>
+    <testCase name="Log drivers API Interfaces exposes LumberjackLogDriverLog" duration="1"/>
+  </file>
+  <file path="utcTimestampFor">
+    <testCase name="utcTimestampFor formats an ISO-8601 date-time string with 0 hours UTC offset and milliseconds resolution" duration="1"/>
+  </file>
+  <file path="Logs API">
+    <testCase name="Logs API Interfaces exposes LumberjackHttpLog" duration="1"/>
+  </file>
+  <file path="LumberjackLogBuilder">
+    <testCase name="LumberjackLogBuilder creates a log with the specified scope" duration="2"/>
+    <testCase name="LumberjackLogBuilder using Payload logs the specified static payload" duration="2"/>
+    <testCase name="LumberjackLogBuilder using Payload logs the specified scope and static payload" duration="1"/>
+    <testCase name="LumberjackLogBuilder using Payload logs the specified payload" duration="1"/>
+    <testCase name="LumberjackLogBuilder using Payload logs the specified payload with scope" duration="1"/>
+    <testCase name="LumberjackLogBuilder Base builder usage creates a LumberjackLog with a critical level log" duration="5"/>
+    <testCase name="LumberjackLogBuilder Base builder usage creates a LumberjackLog with a error level log" duration="1"/>
+  </file>
+  <file path="LumberjackHttpDriverRootModule">
+    <testCase name="LumberjackHttpDriverRootModule guards against being registered in multiple injectors" duration="1"/>
+    <testCase name="LumberjackHttpDriverRootModule does not guard the first injector that registers it" duration="1"/>
+  </file>
+  <file path="LumberjackConsoleDriverModule">
+    <testCase name="LumberjackConsoleDriverModule cannot be imported without using the forRoot method" duration="5"/>
+    <testCase name="LumberjackConsoleDriverModule forRoot registers a default configuration if none is specified" duration="2"/>
+    <testCase name="LumberjackConsoleDriverModule forRoot registers the specified log driver configuration given no identifier" duration="2"/>
+    <testCase name="LumberjackConsoleDriverModule forRoot provides the console driver" duration="3"/>
+    <testCase name="LumberjackConsoleDriverModule forRoot registers the specified log driver configuration given the specified identifier" duration="1"/>
+    <testCase name="LumberjackConsoleDriverModule forRoot registers the specified log driver configuration when the Lumberjack module is imported after the console driver module" duration="1"/>
+  </file>
+  <file path="LumberjackTimeService">
+    <testCase name="LumberjackTimeService getUnixEpochTicks returns the current number of milliseconds since the Unix epoch" duration="2"/>
+  </file>
+  <file path="LumberjackLogFormatter">
+    <testCase name="LumberjackLogFormatter Formatted message Error message returns a format error when formatting fails because of an Error" duration="2"/>
+    <testCase name="LumberjackLogFormatter Formatted message Error message returns a format error when formatting fails with a string error message" duration="1"/>
+    <testCase name="LumberjackLogFormatter Formatted message returns the formatted log when formatting succeeds" duration="1"/>
+    <testCase name="LumberjackLogFormatter Log returns the same log when formatting succeeds" duration="2"/>
+    <testCase name="LumberjackLogFormatter Log returns an error log when formatting fails" duration="1"/>
+  </file>
+  <file path="Configuration API">
+    <testCase name="Configuration API Angular modules exposes LumberjackHttpDriverModule" duration="1"/>
+    <testCase name="Configuration API Interfaces exposes LumberjackHttpDriverRetryOptions" duration="1"/>
+    <testCase name="Configuration API Interfaces exposes LumberjackHttpDriverConfig" duration="2"/>
+    <testCase name="Configuration API Types exposes LumberjackHttpDriverOptions" duration="1"/>
+  </file>
+  <file path="Time API">
+    <testCase name="Time API Services exposes LumberjackTimeService" duration="1"/>
+  </file>
+  <file path="Log drivers API">
+    <testCase name="Log drivers API Services exposes LumberjackHttpDriver" duration="1"/>
+  </file>
+  <file path="consoleDriverConfigToken">
+    <testCase name="consoleDriverConfigToken given a provided console log driver config then that config is resolved" duration="1"/>
+  </file>
+  <file path="LumberjackHttpDriverModule">
+    <testCase name="LumberjackHttpDriverModule cannot be imported without using the forRoot method" duration="3"/>
+    <testCase name="LumberjackHttpDriverModule forRoot provides the HTTP driver" duration="2"/>
+    <testCase name="LumberjackHttpDriverModule forRoot registers the specified log driver configuration WITH a specified identifier" duration="2"/>
+    <testCase name="LumberjackHttpDriverModule forRoot registers the specified log driver configuration WITHOUT a specified identifier" duration="1"/>
+    <testCase name="LumberjackHttpDriverModule forRoot does register the specified log driver configuration when the lumberjack module is imported after the http driver module" duration="1"/>
+    <testCase name="LumberjackHttpDriverModule withOptions registers the specified options with custom identifier" duration="3"/>
+    <testCase name="LumberjackHttpDriverModule withOptions registers the specified options with custom levels" duration="2"/>
+    <testCase name="LumberjackHttpDriverModule withOptions provides the HTTP driver" duration="2"/>
+    <testCase name="LumberjackHttpDriverModule withOptions does register the specified log driver configuration when the lumberjack module is imported after the http driver module" duration="2"/>
+    <testCase name="LumberjackHttpDriverModule withOptions gets default options from the log driver config" duration="1"/>
+    <testCase name="LumberjackHttpDriverModule withOptions registers the specified options" duration="2"/>
+  </file>
+  <file path="LumberjackConsoleDriver">
+    <testCase name="LumberjackConsoleDriver logs the trace level to the console's trace channel" duration="4"/>
+    <testCase name="LumberjackConsoleDriver logs the warning level to the console's warn channel" duration="3"/>
+    <testCase name="LumberjackConsoleDriver logs the error level to the console's error channel" duration="1"/>
+    <testCase name="LumberjackConsoleDriver logs the info level to the console's info channel" duration="1"/>
+    <testCase name="LumberjackConsoleDriver logs the critical level to the console's error channel" duration="1"/>
+    <testCase name="LumberjackConsoleDriver logs the debug level to the console's debug channel" duration="1"/>
+  </file>
+  <file path="Logging API">
+    <testCase name="Logging API Services exposes LumberjackService" duration="1"/>
+    <testCase name="Logging API Services exposes LumberjackLogger" duration="1"/>
+    <testCase name="Logging API Services exposes ScopedLumberjackLogger" duration="1"/>
+  </file>
+  <file path="Configuration API">
+    <testCase name="Configuration API Dependency injection tokens exposes lumberjackLogDriverConfigToken" duration="2"/>
+    <testCase name="Configuration API Dependency injection tokens exposes lumberjackConfigToken" duration="1"/>
+    <testCase name="Configuration API Types exposes LumberjackFormatFunction" duration="1"/>
+    <testCase name="Configuration API Types exposes LumberjackOptions" duration="1"/>
+    <testCase name="Configuration API Interfaces exposes LumberjackConfig" duration="1"/>
+    <testCase name="Configuration API Interfaces exposes LumberjackLogDriverConfig" duration="1"/>
+    <testCase name="Configuration API Angular modules exposes LumberjackModule" duration="1"/>
+  </file>
+  <file path="LumberjackRootModule">
+    <testCase name="LumberjackRootModule guards against being registered in multiple injectors" duration="1"/>
+    <testCase name="LumberjackRootModule does not guard the first injector that registers it" duration="1"/>
+  </file>
+  <file path="LumberjackConsoleDriverRootModule">
+    <testCase name="LumberjackConsoleDriverRootModule does not guard the first injector that registers it" duration="1"/>
+    <testCase name="LumberjackConsoleDriverRootModule guards against being registered in multiple injectors" duration="1"/>
+  </file>
+  <file path="Logs API">
+    <testCase name="Logs API Enums exposes LumberjackLevel" duration="1"/>
+    <testCase name="Logs API Types exposes LumberjackLogLevel" duration="2"/>
+    <testCase name="Logs API Types exposes LumberjackConfigLevels" duration="1"/>
+    <testCase name="Logs API Interfaces exposes LumberjackLogPayload" duration="1"/>
+    <testCase name="Logs API Interfaces exposes LumberjackLog" duration="1"/>
+  </file>
+  <file path="lumberjackConsoleToken">
+    <testCase name="lumberjackConsoleToken resolves to the console by default" duration="4"/>
+  </file>
+  <file path="LumberjackService">
+    <testCase name="LumberjackService Log levels accepts logs when no log levels are enabled" duration="3"/>
+    <testCase name="LumberjackService Log levels accepts logs when all log levels are enabled and a log driver is registered" duration="4"/>
+    <testCase name="LumberjackService Log levels accepts logs when all log levels are enabled" duration="2"/>
+    <testCase name="LumberjackService Verbose logging when a log driver is registered debug logs are logged" duration="5"/>
+    <testCase name="LumberjackService Verbose logging when a log driver is registered info is logged" duration="1"/>
+    <testCase name="LumberjackService Verbose logging when a log driver is registered errors are logged" duration="4"/>
+    <testCase name="LumberjackService Verbose logging when a log driver is registered warnings are logged" duration="3"/>
+    <testCase name="LumberjackService Log types logs a warning to a log driver" duration="2"/>
+    <testCase name="LumberjackService Log types logs a debug message to a log driver" duration="8"/>
+    <testCase name="LumberjackService Log types logs an error message to a log driver" duration="2"/>
+    <testCase name="LumberjackService Log types logs a trace to a log driver" duration="3"/>
+    <testCase name="LumberjackService Log types logs a critical error to a log driver" duration="2"/>
+    <testCase name="LumberjackService Log types logs an info message to a log driver" duration="2"/>
+    <testCase name="LumberjackService Formatter Error-throwing formatter does not log a trace to a log driver" duration="3"/>
+    <testCase name="LumberjackService Formatter Error-throwing formatter does not log an info message to a log driver" duration="3"/>
+    <testCase name="LumberjackService Formatter Error-throwing formatter does not log a debug message to a log driver" duration="1"/>
+    <testCase name="LumberjackService Formatter Error-throwing formatter does not log a critical error to a log driver" duration="2"/>
+    <testCase name="LumberjackService Formatter Error-throwing formatter does not log a warning to a log driver" duration="1"/>
+    <testCase name="LumberjackService Formatter Error-throwing formatter logs an error to a log driver" duration="2"/>
+    <testCase name="LumberjackService Log drivers accepts logs when no log drivers are registered" duration="4"/>
+    <testCase name="LumberjackService Log drivers accepts logs when a single log driver is registered" duration="2"/>
+    <testCase name="LumberjackService Log drivers accepts logs when multiple log drivers are registered" duration="4"/>
+    <testCase name="LumberjackService Log drivers Error-throwing log drivers outputs an error mentioning the log and log driver name recursively" duration="5"/>
+    <testCase name="LumberjackService Log drivers Error-throwing log drivers outputs an error when a single log driver is registered" duration="2"/>
+    <testCase name="LumberjackService Log drivers Error-throwing log drivers accepts logs when multiple log drivers are registered" duration="2"/>
+    <testCase name="LumberjackService Log drivers Error-throwing log drivers logs an error message to stable drivers when a driver fails" duration="2"/>
+    <testCase name="LumberjackService Log drivers Error-throwing log drivers outputs errors when multiple drivers are registered and last green driver fails while logging errors" duration="2"/>
+    <testCase name="LumberjackService Log drivers Error-throwing log drivers outputs only unprocessed driver errors" duration="3"/>
+    <testCase name="LumberjackService Log drivers Drivers with custom lumberjack logs receives the payload parameter in the provided driver" duration="1"/>
+    <testCase name="LumberjackService Log drivers Drivers with custom lumberjack logs uses the payload as part of driver logic" duration="2"/>
+    <testCase name="LumberjackService Multiple log drivers given drivers with different log levels then logs of other levels are not passed to either of them" duration="2"/>
+    <testCase name="LumberjackService Multiple log drivers given drivers with different log levels then logs of configured levels are passed to each of them" duration="3"/>
+  </file>
+  <file path="LumberjackLoggerBuilder">
+    <testCase name="LumberjackLoggerBuilder logs the specified scope" duration="2"/>
+    <testCase name="LumberjackLoggerBuilder LumberjackLogPayload logs the specified static payload" duration="2"/>
+    <testCase name="LumberjackLoggerBuilder LumberjackLogPayload logs the specified payload" duration="1"/>
+    <testCase name="LumberjackLoggerBuilder LumberjackLogPayload logs the specified scope and payload" duration="2"/>
+    <testCase name="LumberjackLoggerBuilder Base builder usage sends a error level log" duration="2"/>
+    <testCase name="LumberjackLoggerBuilder Base builder usage sends a critical level log" duration="1"/>
+  </file>
+  <file path="LumberjackHttpDriver">
+    <testCase name="LumberjackHttpDriver logs to a web API using the right log level sends a critical level log to the configured URL" duration="5"/>
+    <testCase name="LumberjackHttpDriver logs to a web API using the right log level sends a warn level log to the configured URL" duration="2"/>
+    <testCase name="LumberjackHttpDriver logs to a web API using the right log level sends a debug level log to the configured URL" duration="4"/>
+    <testCase name="LumberjackHttpDriver logs to a web API using the right log level sends a info level log to the configured URL" duration="2"/>
+    <testCase name="LumberjackHttpDriver logs to a web API using the right log level sends a error level log to the configured URL" duration="3"/>
+    <testCase name="LumberjackHttpDriver logs to a web API using the right log level sends a trace level log to the configured URL" duration="3"/>
+    <testCase name="LumberjackHttpDriver retries the specified number of times after failures and then stops retrying" duration="8"/>
+    <testCase name="LumberjackHttpDriver retries after two failures and then succeeds" duration="3"/>
+  </file>
+  <file path="formatLogDriverError">
+    <testCase name="formatLogDriverError Payload does not mention payload when the log has no payload" duration="3"/>
+    <testCase name="formatLogDriverError Payload includes the payload when the log has a payload" duration="2"/>
+    <testCase name="formatLogDriverError Error message includes a string message" duration="1"/>
+    <testCase name="formatLogDriverError Error message includes the message of an Error" duration="1"/>
+  </file>
+  <file path="LumberjackLogger">
+    <testCase name="LumberjackLogger can create a trace logger" duration="2"/>
+    <testCase name="LumberjackLogger can create a warning logger" duration="3"/>
+    <testCase name="LumberjackLogger can create an info logger" duration="2"/>
+    <testCase name="LumberjackLogger can create a debug logger" duration="2"/>
+    <testCase name="LumberjackLogger can create an error logger" duration="1"/>
+    <testCase name="LumberjackLogger can create a critical logger" duration="1"/>
+  </file>
+  <file path="lumberjackFormatLog">
+    <testCase name="lumberjackFormatLog Log level prefixes the message with log level &quot;debug&quot;" duration="1"/>
+    <testCase name="lumberjackFormatLog Log level prefixes the message with log level &quot;info&quot;" duration="3"/>
+    <testCase name="lumberjackFormatLog Log level prefixes the message with log level &quot;error&quot;" duration="1"/>
+    <testCase name="lumberjackFormatLog Log level prefixes the message with log level &quot;critical&quot;" duration="1"/>
+    <testCase name="lumberjackFormatLog Log level prefixes the message with log level &quot;trace&quot;" duration="2"/>
+    <testCase name="lumberjackFormatLog Log level prefixes the message with log level &quot;warn&quot;" duration="1"/>
+    <testCase name="lumberjackFormatLog Timestamp adds the 0 hours UTC offset with milliseconds resolution" duration="1"/>
+    <testCase name="lumberjackFormatLog Timestamp adds the 0 hours UTC offset with milliseconds resolution" duration="1"/>
+    <testCase name="lumberjackFormatLog Timestamp adds the 0 hours UTC offset with milliseconds resolution" duration="1"/>
+    <testCase name="lumberjackFormatLog Scope does not add a tag without a scope" duration="2"/>
+    <testCase name="lumberjackFormatLog Scope tags the specified scope" duration="1"/>
+    <testCase name="lumberjackFormatLog Scope tags the specified scope" duration="1"/>
+    <testCase name="lumberjackFormatLog Scope tags the specified scope" duration="5"/>
+    <testCase name="lumberjackFormatLog Message places the message at the end with a scope" duration="4"/>
+    <testCase name="lumberjackFormatLog Message places the message at the end with a scope" duration="2"/>
+    <testCase name="lumberjackFormatLog Message places the message at the end without a scope" duration="1"/>
+    <testCase name="lumberjackFormatLog Message places the message at the end with a scope" duration="1"/>
+    <testCase name="lumberjackFormatLog Message places the message at the end without a scope" duration="1"/>
+    <testCase name="lumberjackFormatLog Message places the message at the end without a scope" duration="4"/>
+  </file>
+  <file path="ScopedLumberjackLogger">
+    <testCase name="ScopedLumberjackLogger can create an info logger" duration="2"/>
+    <testCase name="ScopedLumberjackLogger can create an error logger" duration="2"/>
+    <testCase name="ScopedLumberjackLogger can create a debug logger" duration="1"/>
+    <testCase name="ScopedLumberjackLogger can create a trace logger" duration="2"/>
+    <testCase name="ScopedLumberjackLogger can create a warning logger" duration="3"/>
+    <testCase name="ScopedLumberjackLogger can create a critical logger" duration="2"/>
+  </file>
+  <file path="Log drivers API">
+    <testCase name="Log drivers API Services exposes LumberjackConsoleDriver" duration="1"/>
+  </file>
+</testExecutions>
