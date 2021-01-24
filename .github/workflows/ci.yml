@@ -193,11 +193,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
-        # enable after PR#66 has been merged
-        # with:
-        #   ref: ${{ github.event.pull_request.head.ref }}
-        #   fetch-depth: 0
+      # consolidate after PR#66 has been merged
+      - if: github.ref != 'refs/heads/chore/verify-test-coverage'
+        uses: actions/checkout@v2
+        with:
+          ref: ${{ github.event.pull_request.head.ref }}
+          fetch-depth: 0
+      - if: github.ref == 'refs/heads/chore/verify-test-coverage'
+        uses: actions/checkout@v2
 
       - name: Use Node.js ${{ env.NODE_LATEST }}
         uses: actions/setup-node@v2
@@ -233,15 +236,6 @@ jobs:
           name: lumberjack-app-base-coverage
           path: coverage/apps/lumberjack-app/lcov.info
           if-no-files-found: error
-
-      # - name: Merge test coverage reports
-      #   run: yarn merge-lcov-reports
-      # - name: Upload merged test coverage report
-      #   uses: actions/upload-artifact@v2
-      #   with:
-      #     name: base-coverage
-      #     path: coverage/lcov.info
-      #     if-no-files-found: error
 
   coverage:
     if: github.event_name == 'pull_request'
@@ -309,16 +303,3 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           lcov-file: coverage/apps/lumberjack-app/lcov.info
           lcov-base: coverage/base/lumberjack-app/lcov.info
-
-      # - name: Merge test coverage reports
-      #   run: yarn merge-lcov-reports
-      # - uses: actions/download-artifact@v2
-      #   with:
-      #     name: base-coverage
-      #     path: coverage/base
-      # - name: Report test coverage in PR description
-      #   uses: romeovs/lcov-reporter-action@v0.2.19
-      #   with:
-      #     github-token: ${{ secrets.GITHUB_TOKEN }}
-      #     lcov-file: coverage/lcov.info
-      #     lcov-base: coverage/base/lcov.info
