@@ -219,19 +219,19 @@ jobs:
       - run: npx ngcc || true
 
       - run: yarn test:lib:coverage #--no-fail-on-failing-test-suite
-      - name: Upload lumberjack-aåå base test coverage report
-        uses: actions/upload-artifact@v2
-        with:
-          name: lumberjack-app-base-coverage
-          path: coverage/apps/lumberjack-app/lcov.info
-          if-no-files-found: error
-
-      - run: yarn test:coverage #--no-fail-on-failing-test-suite
       - name: Upload @ngworker/lumberjack base test coverage report
         uses: actions/upload-artifact@v2
         with:
           name: lumberjack-base-coverage
           path: coverage/libs/ngworker/lcov.info
+          if-no-files-found: error
+
+      - run: yarn test:coverage #--no-fail-on-failing-test-suite
+      - name: Upload lumberjack-app base test coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: lumberjack-app-base-coverage
+          path: coverage/apps/lumberjack-app/lcov.info
           if-no-files-found: error
 
       # - name: Merge test coverage reports
