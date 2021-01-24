@@ -72,9 +72,6 @@ jobs:
       matrix:
         angular-version: [9.0.x, 9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x, 11.1.x]
 
-    env:
-      IS_ANGULAR_LATEST: ${{ matrix.angular-version == env.ANGULAR_LATEST }}
-
     steps:
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ env.NODE_LATEST }}
