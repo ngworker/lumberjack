@@ -28,7 +28,7 @@ module.exports = () => ({
   coverageReporter: {
     dir: path.join(__dirname, 'coverage'),
     subdir: '.',
-    reporters: [{ type: 'html' }, { type: 'text-summary' }],
+    reporters: [{ type: 'html' }, { type: 'text-summary' }, { type: 'lcovonly', subdir: '.', file: 'lcov.info' }],
     // see https://github.com/karma-runner/karma-coverage/blob/master/docs/configuration.md
     check: {
       // minimum overall test coverage

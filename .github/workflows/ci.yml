@@ -115,11 +115,20 @@ jobs:
       - if: matrix.angular-version != '11.1.x'
         run: yarn test:lib:ci --code-coverage=false
       - if: matrix.angular-version == '11.1.x'
+        run: yarn merge-lcov-reports
+      - if: matrix.angular-version == '11.1.x'
+        uses: romeovs/lcov-reporter-action@v0.2.19
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          lcov-file: coverage/lcov.info
+      - if: matrix.angular-version == '11.1.x'
         name: Upload @ngworker/lumberjack coverage report
         uses: actions/upload-artifact@v2
         with:
           name: lumberjack-coverage
-          path: coverage/libs/ngworker/lumberjack
+          path: |
+            coverage/libs/ngworker/lumberjack
+            !coverage/**/lcov.info
           if-no-files-found: error
 
   app:
@@ -166,11 +175,20 @@ jobs:
       - if: matrix.angular-version != '11.1.x'
         run: yarn test:ci --code-coverage=false
       - if: matrix.angular-version == '11.1.x'
+        run: yarn merge-lcov-reports
+      - if: matrix.angular-version == '11.1.x'
+        uses: romeovs/lcov-reporter-action@v0.2.19
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          lcov-file: coverage/lcov.info
+      - if: matrix.angular-version == '11.1.x'
         name: Upload lumberjack-app coverage report
         uses: actions/upload-artifact@v2
         with:
           name: lumberjack-app-coverage
-          path: coverage/apps/lumberjack-app
+          path: |
+            coverage/apps/lumberjack-app
+            !coverage/**/lcov.info
           if-no-files-found: error
 
       - run: yarn build
