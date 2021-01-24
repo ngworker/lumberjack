@@ -199,6 +199,8 @@ jobs:
         with:
           ref: ${{ github.event.pull_request.head.ref }}
           fetch-depth: 0
+      - if: github.ref != 'refs/pull/66/merge'
+        run: git fetch --no-tags --prune --depth=5 origin main
       - if: github.ref == 'refs/pull/66/merge'
         uses: actions/checkout@v2
 
