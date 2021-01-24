@@ -187,70 +187,14 @@ jobs:
           google-chrome --version
       - run: yarn e2e
 
-  coverage-base:
-    if: github.event_name == 'pull_request'
-
-    runs-on: ubuntu-latest
-
-    steps:
-      # consolidate after PR#66 has been merged
-      - if: github.ref != 'refs/pull/66/merge'
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.pull_request.head.ref }}
-          fetch-depth: 0
-      - if: github.ref != 'refs/pull/66/merge'
-        run: git fetch --no-tags --prune --depth=5 origin main
-      - if: github.ref == 'refs/pull/66/merge'
-        uses: actions/checkout@v2
-
-      - name: Use Node.js ${{ env.NODE_LATEST }}
-        uses: actions/setup-node@v2
-        with:
-          node-version: ${{ env.NODE_LATEST }}
-
-      - name: Variable-Yarn cache directory path
-        id: yarn-cache-dir-path
-        run: echo "::set-output name=dir::$(yarn cache dir)"
-      - name: Cache Yarn cache directory
-        uses: actions/cache@v2
-        with:
-          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ env.NODE_LATEST }}-angular-${{ env.ANGULAR_LATEST }}-yarn-${{ hashFiles('yarn.lock') }}
-          restore-keys: |
-            ${{ runner.os }}-node-${{ env.NODE_LATEST }}-angular-${{ env.ANGULAR_LATEST }}-yarn-
-            ${{ runner.os }}-node-${{ env.NODE_LATEST }}-angular-
-      - run: yarn install
-      - run: npx ngcc || true
-
-      - run: yarn test:lib:coverage #--no-fail-on-failing-test-suite
-      - name: Rename @ngworker/lumberjack base test coverage report
-        run: mv coverage/libs/ngworker/lumberjack/lcov.info coverage/libs/ngworker/lumberjack/lcov-base.info
-      - name: Upload @ngworker/lumberjack base test coverage report
-        uses: actions/upload-artifact@v2
-        with:
-          name: lumberjack-base-coverage
-          path: coverage/libs/ngworker/lumberjack/lcov-base.info
-          if-no-files-found: error
-
-      - run: yarn test:coverage #--no-fail-on-failing-test-suite
-      - name: Rename lumberjack-app base test coverage report
-        run: mv coverage/apps/lumberjack-app/lcov.info coverage/apps/lumberjack-app/lcov-base.info
-      - name: Upload lumberjack-app base test coverage report
-        uses: actions/upload-artifact@v2
-        with:
-          name: lumberjack-app-base-coverage
-          path: coverage/apps/lumberjack-app/lcov-base.info
-          if-no-files-found: error
-
   coverage:
-    if: github.event_name == 'pull_request'
-    needs: coverage-base
-
     runs-on: ubuntu-latest
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          # shallow clone is disabled for a better relevancy of SonarCloud analysis
+          fetch-depth: 0
       - name: Use Node.js ${{ env.NODE_LATEST }}
         uses: actions/setup-node@v2
         with:
@@ -271,37 +215,14 @@ jobs:
       - run: npx ngcc || true
 
       - run: yarn test:lib:coverage #--no-fail-on-failing-test-suite
-      - name: Upload @ngworker/lumberjack coverage report
-        uses: actions/upload-artifact@v2
-        with:
-          name: lumberjack-coverage
-          path: |
-            coverage/libs/ngworker/lumberjack
-            !coverage/**/lcov.info
-          if-no-files-found: error
-      - uses: actions/download-artifact@v2
-        with:
-          name: lumberjack-base-coverage
-          path: coverage/libs/ngworker/lumberjack
-
       - run: yarn test:coverage #--no-fail-on-failing-test-suite
-      - name: Upload lumberjack-app coverage report
-        uses: actions/upload-artifact@v2
-        with:
-          name: lumberjack-app-coverage
-          path: |
-            coverage/apps/lumberjack-app
-            !coverage/**/lcov.info
-          if-no-files-found: error
-      - uses: actions/download-artifact@v2
-        with:
-          name: lumberjack-app-base-coverage
-          path: coverage/apps/lumberjack-app
-
-      - run: mv coverage/libs/ngworker/* coverage
-      - run: mv coverage/apps/* coverage
-      - name: Report test coverage in PR description
-        uses: ScaCap/code-coverage-assistant@v0.1
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          monorepo-base-path: coverage
+      # - run: mv coverage/libs/ngworker/* coverage
+      # - run: mv coverage/apps/* coverage
+      - name: SonarCloud scan
+        uses: SonarSource/sonarcloud-github-action@v1.5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        # with:
+        #   args: >
+        #     -Dsonar.organization=ngworker

@@ -15,6 +15,9 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 [![ngworker](https://img.shields.io/badge/ngworker-%40-red)](https://github.com/ngworker/)
 [![Wallaby.js](https://img.shields.io/badge/wallaby.js-powered-blue.svg?style=flat&logo=github)](https://wallabyjs.com/oss/)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=ngworker_lumberjack&metric=ncloc)](https://sonarcloud.io/dashboard?id=ngworker_lumberjack)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=ngworker_lumberjack&metric=coverage)](https://sonarcloud.io/dashboard?id=ngworker_lumberjack)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ngworker_lumberjack&metric=alert_status)](https://sonarcloud.io/dashboard?id=ngworker_lumberjack)
 
 Lumberjack is a versatile Angular logging library, specially designed to be extended and customized. It provides a few simple [log drivers](https://en.wikipedia.org/wiki/Log_driving) (logging mechanisms, transports, log drivers) out-of-the-box. It's easy to enable bundled log drivers or create and use custom log drivers.
 

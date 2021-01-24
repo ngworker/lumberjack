@@ -4,11 +4,6 @@
 const { constants } = require('karma');
 const path = require('path');
 
-const minimumTestCoveragePercentage = 85;
-const yellowTestCoveragePercentage = 90;
-const greenTestCoveragePercentage = 95;
-const testCoverageWatermarks = [yellowTestCoveragePercentage, greenTestCoveragePercentage];
-
 module.exports = () => ({
   basePath: '',
   frameworks: ['jasmine', '@angular-devkit/build-angular'],
@@ -17,6 +12,7 @@ module.exports = () => ({
     require('karma-chrome-launcher'),
     require('karma-jasmine-html-reporter'),
     require('karma-coverage'),
+    require('karma-junit-reporter'),
     require('@angular-devkit/build-angular/plugins/karma'),
   ],
   client: {
@@ -28,33 +24,19 @@ module.exports = () => ({
   coverageReporter: {
     dir: path.join(__dirname, 'coverage'),
     subdir: '.',
-    reporters: [{ type: 'html' }, { type: 'text-summary' }, { type: 'lcovonly', subdir: '.', file: 'lcov.info' }],
-    // see https://github.com/karma-runner/karma-coverage/blob/master/docs/configuration.md
-    check: {
-      // minimum overall test coverage
-      global: {
-        statements: minimumTestCoveragePercentage,
-        branches: minimumTestCoveragePercentage,
-        functions: minimumTestCoveragePercentage,
-        lines: minimumTestCoveragePercentage,
-      },
-      // minimum test coverage on a per file basis
-      each: {
-        statements: minimumTestCoveragePercentage,
-        branches: minimumTestCoveragePercentage,
-        functions: minimumTestCoveragePercentage,
-        lines: minimumTestCoveragePercentage,
-      },
-    },
-    // coverage threshold colors
-    watermarks: {
-      statements: testCoverageWatermarks,
-      functions: testCoverageWatermarks,
-      branches: testCoverageWatermarks,
-      lines: testCoverageWatermarks,
-    },
+    reporters: [{ type: 'text-summary' }, { type: 'lcovonly', subdir: '.', file: 'lcov.info' }],
   },
-  reporters: ['progress', 'kjhtml'],
+  junitReporter: {
+    outputDir: path.join(__dirname, 'reports', 'test'), // results will be saved as $outputDir/$browserName.xml
+    outputFile: undefined, // if included, results will be saved as $outputDir/$browserName/$outputFile
+    suite: '', // suite will become the package name attribute in xml testsuite element
+    useBrowserName: false, // add browser name to report and classes names
+    nameFormatter: undefined, // function (browser, result) to customize the name attribute in xml testcase element
+    classNameFormatter: undefined, // function (browser, result) to customize the classname attribute in xml testcase element
+    properties: {}, // key value pair of properties to add to the <properties> section of the report
+    xmlVersion: 1, // use '1' if reporting to be per SonarQube 6.2 XML format
+  },
+  reporters: ['progress', 'kjhtml', 'junit'],
   port: 9876,
   colors: true,
   logLevel: constants.LOG_INFO,

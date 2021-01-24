@@ -63,6 +63,7 @@
     "karma-coverage": "~2.0.3",
     "karma-jasmine": "~4.0.1",
     "karma-jasmine-html-reporter": "^1.5.4",
+    "karma-junit-reporter": "^2.0.1",
     "lint-staged": "^10.5.3",
     "ng-packagr": "^11.1.2",
     "prettier": "^2.2.1",
