@@ -223,7 +223,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: lumberjack-base-coverage
-          path: coverage/libs/ngworker/lcov.info
+          path: coverage/libs/ngworker/lumberjack/lcov.info
           if-no-files-found: error
 
       - run: yarn test:coverage #--no-fail-on-failing-test-suite
