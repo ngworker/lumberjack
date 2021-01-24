@@ -218,16 +218,30 @@ jobs:
       - run: yarn install
       - run: npx ngcc || true
 
-      - run: yarn test:coverage #--no-fail-on-failing-test-suite
       - run: yarn test:lib:coverage #--no-fail-on-failing-test-suite
-      - name: Merge test coverage reports
-        run: yarn merge-lcov-reports
-      - name: Upload merged test coverage report
+      - name: Upload lumberjack-aåå base test coverage report
         uses: actions/upload-artifact@v2
         with:
-          name: base-coverage
-          path: coverage/lcov.info
+          name: lumberjack-app-base-coverage
+          path: coverage/apps/lumberjack-app/lcov.info
           if-no-files-found: error
+
+      - run: yarn test:coverage #--no-fail-on-failing-test-suite
+      - name: Upload @ngworker/lumberjack base test coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: lumberjack-base-coverage
+          path: coverage/libs/ngworker/lcov.info
+          if-no-files-found: error
+
+      # - name: Merge test coverage reports
+      #   run: yarn merge-lcov-reports
+      # - name: Upload merged test coverage report
+      #   uses: actions/upload-artifact@v2
+      #   with:
+      #     name: base-coverage
+      #     path: coverage/lcov.info
+      #     if-no-files-found: error
 
   coverage:
     if: github.event_name == 'pull_request'
@@ -256,16 +270,6 @@ jobs:
       - run: yarn install
       - run: npx ngcc || true
 
-      - run: yarn test:coverage #--no-fail-on-failing-test-suite
-      - name: Upload lumberjack-app coverage report
-        uses: actions/upload-artifact@v2
-        with:
-          name: lumberjack-app-coverage
-          path: |
-            coverage/apps/lumberjack-app
-            !coverage/**/lcov.info
-          if-no-files-found: error
-
       - run: yarn test:lib:coverage #--no-fail-on-failing-test-suite
       - name: Upload @ngworker/lumberjack coverage report
         uses: actions/upload-artifact@v2
@@ -275,16 +279,46 @@ jobs:
             coverage/libs/ngworker/lumberjack
             !coverage/**/lcov.info
           if-no-files-found: error
-
-      - name: Merge test coverage reports
-        run: yarn merge-lcov-reports
       - uses: actions/download-artifact@v2
         with:
-          name: base-coverage
-          path: coverage/base
-      - name: Report test coverage in PR description
+          name: lumberjack-base-coverage
+          path: coverage/base/lumberjack
+      - name: Report @ngworker/lumberjack test coverage in PR description
         uses: romeovs/lcov-reporter-action@v0.2.19
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          lcov-file: coverage/lcov.info
-          lcov-base: coverage/base/lcov.info
+          lcov-file: coverage/libs/ngworker/lumberjack/lcov.info
+          lcov-base: coverage/base/lumberjack/lcov.info
+
+      - run: yarn test:coverage #--no-fail-on-failing-test-suite
+      - name: Upload lumberjack-app coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: lumberjack-app-coverage
+          path: |
+            coverage/apps/lumberjack-app
+            !coverage/**/lcov.info
+          if-no-files-found: error
+      - uses: actions/download-artifact@v2
+        with:
+          name: lumberjack-app-base-coverage
+          path: coverage/base/lumberjack-app
+      - name: Report lumberjack-app test coverage in PR description
+        uses: romeovs/lcov-reporter-action@v0.2.19
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          lcov-file: coverage/apps/lumberjack-app/lcov.info
+          lcov-base: coverage/base/lumberjack-app/lcov.info
+
+      # - name: Merge test coverage reports
+      #   run: yarn merge-lcov-reports
+      # - uses: actions/download-artifact@v2
+      #   with:
+      #     name: base-coverage
+      #     path: coverage/base
+      # - name: Report test coverage in PR description
+      #   uses: romeovs/lcov-reporter-action@v0.2.19
+      #   with:
+      #     github-token: ${{ secrets.GITHUB_TOKEN }}
+      #     lcov-file: coverage/lcov.info
+      #     lcov-base: coverage/base/lcov.info
