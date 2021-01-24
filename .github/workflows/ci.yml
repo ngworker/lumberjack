@@ -187,7 +187,52 @@ jobs:
           google-chrome --version
       - run: yarn e2e
 
+  coverage-base:
+    if: github.event_name == 'pull_request'
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        # enable after PR#66 has been merged
+        # with:
+        #   ref: ${{ github.event.pull_request.head.ref }}
+        #   fetch-depth: 0
+
+      - name: Use Node.js ${{ env.NODE_LATEST }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_LATEST }}
+
+      - name: Variable-Yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Cache Yarn cache directory
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ env.NODE_LATEST }}-angular-${{ env.ANGULAR_LATEST }}-yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ env.NODE_LATEST }}-angular-${{ env.ANGULAR_LATEST }}-yarn-
+            ${{ runner.os }}-node-${{ env.NODE_LATEST }}-angular-
+      - run: yarn install
+      - run: npx ngcc || true
+
+      - run: yarn test:coverage #--no-fail-on-failing-test-suite
+      - run: yarn test:lib:coverage #--no-fail-on-failing-test-suite
+      - name: Merge test coverage reports
+        run: yarn merge-lcov-reports
+      - name: Upload merged test coverage report
+        uses: actions/upload-artifact@v2
+        with:
+          name: base-coverage
+          path: coverage/lcov.info
+          if-no-files-found: error
+
   coverage:
+    if: github.event_name == 'pull_request'
+    needs: coverage-base
+
     runs-on: ubuntu-latest
 
     steps:
@@ -233,8 +278,13 @@ jobs:
 
       - name: Merge test coverage reports
         run: yarn merge-lcov-reports
+      - uses: actions/download-artifact@v2
+        with:
+          name: base-coverage
+          path: coverage/base
       - name: Report test coverage in PR description
         uses: romeovs/lcov-reporter-action@v0.2.19
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           lcov-file: coverage/lcov.info
+          lcov-base: coverage/base/lcov.info
