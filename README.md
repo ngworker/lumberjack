@@ -227,7 +227,7 @@ export interface LumberjackLogDriverLog<TPayload extends LumberjackLogPayload | 
 
 Log drivers should make it possible to configure the logging levels on a per driver basis.
 
-For example, we could use the default logging levels for the console driver, but only enable the critical and error levels for the **HTTP driver** as seen in the following example.
+For example, we could use the default logging levels for the console driver, but only enable the critical and error levels for the HTTP driver as seen in the following example.
 
 ```ts
 import { NgModule } from '@angular/core';
@@ -301,7 +301,7 @@ export class ConsoleDriver implements LumberjackLogDriver {
 }
 ```
 
-There is nothing special about it. The only remarkable thing is that the config is passed down its constructor and assigned to the public `config` property. **Lumberjack** uses this configuration to determine which logs the driver should handle.
+There is nothing special about it. The only remarkable thing is that the config is passed down its constructor and assigned to the public `config` property. Lumberjack uses this configuration to determine which logs the driver should handle.
 
 #### Using a LumberjackLogPayload
 
@@ -471,7 +471,7 @@ If you want your driver listed here, open a PR and follow the same format.
 
 Every log can be represented as a combination of its level, creation time, message, scope and payload. Using inline logs with the `LumberjackService` can cause structure duplication and-or de-standardization.
 
-Continue reading to know more about the recommended best practices designed to tackle this issues.
+Continue reading to know more about the recommended best practices designed to tackle this issue.
 
 ### Loggers
 
