@@ -392,7 +392,7 @@ export class ConsoleDriver implements LumberjackLogDriver<AnalyticsPayload> {
 
 #### Creating a custom log driver module
 
-A driver module provides configuration and other dependencies to a log driver. It also provides the log driver, making it available to **Lumberjack**.
+A driver module provides configuration and other dependencies to a log driver. It also provides the log driver, making it available to Lumberjack.
 
 ```ts
 import { ModuleWithProviders, NgModule } from '@angular/core';
