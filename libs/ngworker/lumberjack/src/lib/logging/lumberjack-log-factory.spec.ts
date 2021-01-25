@@ -98,6 +98,12 @@ describe(LumberjackLogFactory.name, () => {
 
       expect(log.payload?.test).toBe(true);
     });
+
+    it('creates a log without a payload', () => {
+      const log = logFactory.createTraceLog(testMessage).build();
+
+      expect(log.payload).toBeUndefined();
+    });
   });
 
   describe('Created at timestamp', () => {
