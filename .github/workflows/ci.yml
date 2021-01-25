@@ -187,7 +187,7 @@ jobs:
           google-chrome --version
       - run: yarn e2e
 
-  coverage:
+  sonar:
     runs-on: ubuntu-latest
 
     steps:
@@ -214,11 +214,8 @@ jobs:
       - run: yarn install
       - run: npx ngcc || true
 
+      - run: yarn generate-lint-reports
       - run: yarn generate-test-coverage-reports
-      - name: List test coverage reports
-        run: ls -la
-        working-directory: coverage
-
       - name: SonarCloud scan
         uses: SonarSource/sonarcloud-github-action@v1.5
         env:
