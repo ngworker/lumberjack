@@ -214,15 +214,9 @@ jobs:
       - run: yarn install
       - run: npx ngcc || true
 
-      - run: yarn test:lib:coverage #--no-fail-on-failing-test-suite
-      - run: yarn test:coverage #--no-fail-on-failing-test-suite
-      # - run: mv coverage/libs/ngworker/* coverage
-      # - run: mv coverage/apps/* coverage
+      - run: yarn generate-test-coverage-reports
       - name: SonarCloud scan
         uses: SonarSource/sonarcloud-github-action@v1.5
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        # with:
-        #   args: >
-        #     -Dsonar.organization=ngworker
