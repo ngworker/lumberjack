@@ -215,6 +215,10 @@ jobs:
       - run: npx ngcc || true
 
       - run: yarn generate-test-coverage-reports
+      - name: List test coverage reports
+        run: ls -la
+        working-directory: coverage
+
       - name: SonarCloud scan
         uses: SonarSource/sonarcloud-github-action@v1.5
         env:
