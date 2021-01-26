@@ -462,7 +462,6 @@ For a more advanced log driver implementation, see [LumberjackHttpDriver](https:
 
 > Note, you can use the [ngworker/lumberjack-custom-driver](https://github.com/ngworker/lumberjack-custom-driver/generate) template Git repository to start a separate Lumberjack log driver workspace.
 
-
 If you want your driver listed here, open a PR and follow the same format.
 
 - [LumberjackFirestoreDriver](https://github.com/marcinmilewicz/lumberjack-firestore-driver), community log driver using [Cloud Firestore](https://firebase.google.com/docs/firestore) as a log store.
@@ -694,20 +693,20 @@ export class AppLogger extends ScopedLumberjackLogger<LogPayload> {
 
 The `AppLogger` usage remains the same using a `LumberjackLogger` or `ScopedLumberjackLogger`, with payload or without.
 
-### LumberjackLogBuilder
+### LumberjackLogFactory
 
 Lumberjack recommended way of creating logs is by using a `LumberjackLogger`.
 
 However, there are some times that we want to create logs manually and pass them to the `LumberjackService`.
 
-The `LumberjackLogBuilder` provides a robust way of creating logs. It's also useful for creating logs in unit tests.
+The `LumberjackLogFactory` provides a robust way of creating logs. It's also useful for creating logs in unit tests.
 
 This is how we create logs manually:
 
 ```ts
 import { Component, OnInit, VERSION } from '@angular/core';
 
-import { LumberjackLevel, LumberjackLogBuilder, LumberjackService, LumberjackTimeService } from '@ngworker/lumberjack';
+import { LumberjackLogFactory, LumberjackService } from '@ngworker/lumberjack';
 
 import { LogPayload } from './log-payload';
 
@@ -723,10 +722,14 @@ export class AppComponent implements OnInit {
     angularVersion: VERSION.full,
   };
 
-  constructor(private lumberjackService: LumberjackService<LogPayload>, private time: LumberjackTimeService) {}
+  constructor(
+    private lumberjackService: LumberjackService<LogPayload>,
+    private lumberjackLogFactory: LumberjackLogFactory<LogPayload>
+  ) {}
 
   ngOnInit(): void {
-    const helloForest = new LumberjackLogBuilder<LogPayload>(this.time, LumberjackLevel.Info, 'Hello Forest!')
+    const helloForest = this.lumberjackLogFactory
+      .createInfoLog('Hello Forest!')
       .withScope(this.scope)
       .withPayload(this.payload)
       .build();
