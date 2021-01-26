@@ -301,7 +301,7 @@ export class ConsoleDriver implements LumberjackLogDriver {
 }
 ```
 
-There is nothing special about it. The only remarkable thing is that the config is passed down its constructor and assigned to the public `config` property. Lumberjack uses this configuration to determine which logs the driver should handle.
+In the above snippet the config is passed down its constructor and assigned to the public `config` property. Lumberjack uses this configuration to determine which logs the driver should handle.
 
 #### Using a LumberjackLogPayload
 
@@ -544,7 +544,7 @@ export abstract class LumberjackLogger<TPayload extends LumberjackLogPayload | v
   }
 ```
 
-By extending `LumberjackLogger`, we only have to worry about our pre-defined logs' message and scope.
+By extending `LumberjackLogger`, you only have to worry about our pre-defined logs' message and scope.
 
 All logger factory methods are protected as it is recommended to create a custom logger per _scope_ rather than using logger factories directly in a consumer.
 
@@ -698,7 +698,7 @@ The `AppLogger` usage remains the same using a `LumberjackLogger` or `ScopedLumb
 
 Lumberjack recommended way of creating logs is by using a `LumberjackLogger`.
 
-However, there are some times that we want to create logs manullly and pass them to the `LumberjackService`.
+However, there are some times that we want to create logs manually and pass them to the `LumberjackService`.
 
 The `LumberjackLogBuilder` provides a robust way of creating logs. It's also useful for creating logs in unit tests.
 
