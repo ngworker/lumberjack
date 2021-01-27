@@ -10,7 +10,6 @@ export { LumberjackHttpDriverOptions } from './lib/configuration/lumberjack-http
 
 // Log drivers
 export { LumberjackHttpDriver } from './lib/log-drivers/lumberjack-http.driver';
-export { LumberjackHttp2Driver } from './lib/log-drivers/lumberjack-http-2.driver';
 
 // Logs
 export { LumberjackHttpLog } from './lib/logs/lumberjack-http.log';
