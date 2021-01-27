@@ -29,7 +29,10 @@ function runTestCoverageTargets() {
     .filter(([_projectName, project]) => hasTestCoverage(project))
     .map(([projectName]) => projectName)
     .forEach((projectName) => {
-      execSync(`ng test ${projectName} --configuration=coverage`, {
+      const coverageCommand = `ng test ${projectName} --configuration=coverage`;
+
+      console.log(`> ${coverageCommand}`);
+      execSync(coverageCommand, {
         stdio: 'inherit',
       });
     });
