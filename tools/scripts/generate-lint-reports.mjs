@@ -3,6 +3,8 @@ import { mkdirSync, readFileSync, writeFileSync } from 'fs';
 import * as path from 'path';
 import readdirp from 'readdirp';
 
+import { validateProjectName } from './util/validate-project-name.mjs';
+
 function generateLintReports() {
   const workspace = JSON.parse(readFileSync('./angular.json').toString());
 
@@ -16,6 +18,7 @@ function generateLintReports() {
     .filter(([_projectName, project]) => hasLint(project))
     .map(([projectName]) => projectName)
     .forEach((projectName) => {
+      validateProjectName(projectName);
       const lintCommand = `ng lint ${projectName} --format=json --force > reports/lint/${projectName}.json`;
 
       console.log(`> ${lintCommand}`);

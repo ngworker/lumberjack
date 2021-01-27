@@ -3,6 +3,8 @@ import { readFileSync, renameSync } from 'fs';
 import * as path from 'path';
 import readdirp from 'readdirp';
 
+import { validateProjectName } from './util/validate-project-name.mjs';
+
 async function flattenCoverageReports() {
   const coverageDirectory = 'coverage';
 
@@ -29,6 +31,7 @@ function runTestCoverageTargets() {
     .filter(([_projectName, project]) => hasTestCoverage(project))
     .map(([projectName]) => projectName)
     .forEach((projectName) => {
+      validateProjectName(projectName);
       const coverageCommand = `ng test ${projectName} --configuration=coverage`;
 
       console.log(`> ${coverageCommand}`);
