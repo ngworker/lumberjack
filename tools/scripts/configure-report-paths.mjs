@@ -26,8 +26,12 @@ async function configureLintReportPaths() {
 }
 
 function listCoverageReports() {
+  return listFilePaths('coverage/*-lcov.info');
+}
+
+function listFilePaths(pattern) {
   return new Promise((resolve, reject) => {
-    glob('coverage/*-lcov.info', (error, filePaths) => {
+    glob(pattern, (error, filePaths) => {
       if (error) {
         reject(error);
 
@@ -40,17 +44,7 @@ function listCoverageReports() {
 }
 
 function listLintReports() {
-  return new Promise((resolve, reject) => {
-    glob('reports/lint/*.json', (error, filePaths) => {
-      if (error) {
-        reject(error);
-
-        return;
-      }
-
-      resolve(filePaths);
-    });
-  });
+  return listFilePaths('reports/lint/*.json');
 }
 
 (async () => {
