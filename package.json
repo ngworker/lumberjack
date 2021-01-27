@@ -25,7 +25,7 @@
     "ci": "yarn install && yarn lint && yarn build:lib && yarn test:internal:ci && yarn test:lib:ci && yarn build && yarn test:ci && yarn e2e",
     "format": "npx prettier --config prettier.config.js --write \"**/*.*\" \"!dist/**\" \"!yarn.lock\"",
     "configure-report-paths": "node tools/scripts/configure-report-paths.mjs",
-    "delete-path-alias": "node tools/scripts/delete-path-alias.js",
+    "delete-path-alias": "node tools/scripts/delete-path-alias.mjs",
     "generate-lint-reports": "node tools/scripts/generate-lint-reports.mjs",
     "generate-test-coverage-reports": "node tools/scripts/generate-test-coverage-reports.mjs"
   },
