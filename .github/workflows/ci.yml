@@ -215,12 +215,6 @@ jobs:
       - run: npx ngcc || true
 
       - run: yarn generate-lint-reports
-      - name: Upload lint reports as artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: lint-reports
-          path: reports/lint
-          if-no-files-found: error
       - run: yarn generate-test-coverage-reports
       - name: SonarCloud scan
         uses: SonarSource/sonarcloud-github-action@v1.5
