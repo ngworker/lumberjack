@@ -216,6 +216,7 @@ jobs:
 
       - run: yarn generate-lint-reports
       - run: yarn generate-test-coverage-reports
+      - run: yarn configure-report-paths
       - name: SonarCloud scan
         uses: SonarSource/sonarcloud-github-action@v1.5
         env:
