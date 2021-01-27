@@ -1,17 +1,22 @@
+import { HttpClient } from '@angular/common/http';
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
+import { NgZone } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { VERSION } from '@angular/platform-browser';
 
 import { createCriticalDriverLog, createDriverLog, repeatSideEffect, resolveDependency } from '@internal/test-util';
 import {
   LumberjackLevel,
+  LumberjackLogBuilder,
   LumberjackLogDriver,
   LumberjackLogDriverLog,
   lumberjackLogDriverToken,
   LumberjackLogLevel,
   LumberjackLogPayload,
   LumberjackModule,
+  LumberjackTimeService,
 } from '@ngworker/lumberjack';
+import { resolve } from 'dns';
 
 import { LumberjackHttpDriverModule } from '../configuration/lumberjack-http-driver.module';
 import { LumberjackHttpDriverOptions } from '../configuration/lumberjack-http-driver.options';
@@ -76,7 +81,34 @@ function createHttpDriverLog(
 }
 
 describe(LumberjackHttp2Driver.name, () => {
-  let httpDriver: LumberjackLogDriver<HttpDriverPayload>;
+  it('logs a trace', () => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+    });
+    const httpClient = resolveDependency(HttpClient);
+    const ngZone = resolveDependency(NgZone);
+    const httpDriver = new LumberjackHttp2Driver(
+      httpClient,
+      {
+        identifier: 'HttpDriver',
+        levels: [LumberjackLevel.Verbose],
+        origin: 'HttpDriverTest',
+        retryOptions: { delayMs: 250, maxRetries: 5 },
+        storeUrl: '/test/api',
+      },
+      ngZone
+    );
+    const time = resolveDependency(LumberjackTimeService);
+    const log = new LumberjackLogBuilder(time, LumberjackLevel.Trace, 'Test message').build();
+
+    httpDriver.logTrace({ formattedLog: 'Formatted test message', log });
+
+    expect(true).toBeTrue();
+  });
+});
+
+describe(LumberjackHttp2Driver.name, () => {
+  let httpDriver: LumberjackHttp2Driver<HttpDriverPayload>;
   let httpTestingController: HttpTestingController;
   const options: LumberjackHttpDriverOptions = {
     origin: 'TEST_MODULE',
@@ -89,7 +121,9 @@ describe(LumberjackHttp2Driver.name, () => {
       imports: [LumberjackModule.forRoot(), LumberjackHttpDriverModule.withOptions(options), HttpClientTestingModule],
     });
 
-    [httpDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver<HttpDriverPayload>[];
+    [httpDriver] = (resolveDependency(
+      lumberjackLogDriverToken
+    ) as unknown) as LumberjackHttp2Driver<HttpDriverPayload>[];
     httpTestingController = resolveDependency(HttpTestingController);
 
     jasmine.clock().uninstall();
@@ -120,6 +154,32 @@ describe(LumberjackHttp2Driver.name, () => {
         expectRequest(httpTestingController, options, createHttpDriverLog(expectedDriverLog));
       });
     });
+  });
+
+  it('sends a critical log to the configured URL', () => {
+    const expectedDriverLog = createDriverLog<HttpDriverPayload>(
+      LumberjackLevel.Critical,
+      LumberjackLevel.Critical,
+      '',
+      'Test',
+      analyticsPayload
+    );
+    httpDriver.logCritical(expectedDriverLog);
+
+    expectRequest(httpTestingController, options, createHttpDriverLog(expectedDriverLog));
+  });
+
+  it('sends a debug log to the configured URL', () => {
+    const expectedDriverLog = createDriverLog<HttpDriverPayload>(
+      LumberjackLevel.Debug,
+      LumberjackLevel.Debug,
+      '',
+      'Test',
+      analyticsPayload
+    );
+    httpDriver.logDebug(expectedDriverLog);
+
+    expectRequest(httpTestingController, options, createHttpDriverLog(expectedDriverLog));
   });
 
   it('retries after two failures and then succeeds', () => {
