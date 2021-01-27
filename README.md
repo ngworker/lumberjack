@@ -115,7 +115,7 @@ See the [_Log drivers_](#log-drivers) section for more information.
 
 ### Using the `LumberjackService`
 
-You can use the `LumberjackService` by directly passing logs to its `log` method for short or simple use cases.However, we recommend implementing application-specific logger services instead. See the [_Best practices_](#best-practices) section.
+For quick or simple use cases, you can use the `LumberjackService` directly by passing logs to its `log` method. However, we recommend implementing application-specific logger services instead. See the [_Best practices_](#best-practices) section.
 
 First, inject the `LumberjackService` where you want to use it.
 
@@ -543,7 +543,7 @@ export abstract class LumberjackLogger<TPayload extends LumberjackLogPayload | v
   }
 ```
 
-By extending `LumberjackLogger`, you only have to worry about our pre-defined logs' message and scope.
+By extending `LumberjackLogger`, we only have to worry about our pre-defined logs' message and scope.
 
 All logger factory methods are protected as it is recommended to create a custom logger per _scope_ rather than using logger factories directly in a consumer.
 
