@@ -22,7 +22,9 @@ exports.config = {
   jasmineNodeOpts: {
     showColors: true,
     defaultTimeoutInterval: 30000,
-    print: function () {},
+    print() {
+      // we're not outputting test results to the console as we're using Karma
+    },
   },
   onPrepare() {
     require('ts-node').register({
