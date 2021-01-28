@@ -15,15 +15,27 @@ export class NoopDriver implements LumberjackLogDriver {
 
   constructor(@Inject(noopDriverConfigToken) public config: LumberjackLogDriverConfig) {}
 
-  logCritical({ formattedLog }: LumberjackLogDriverLog): void {}
+  logCritical({ formattedLog }: LumberjackLogDriverLog): void {
+    // intentionally a no-op
+  }
 
-  logDebug({ formattedLog }: LumberjackLogDriverLog): void {}
+  logDebug({ formattedLog }: LumberjackLogDriverLog): void {
+    // intentionally a no-op
+  }
 
-  logError({ formattedLog }: LumberjackLogDriverLog): void {}
+  logError({ formattedLog }: LumberjackLogDriverLog): void {
+    // intentionally a no-op
+  }
 
-  logInfo({ formattedLog }: LumberjackLogDriverLog): void {}
+  logInfo({ formattedLog }: LumberjackLogDriverLog): void {
+    // intentionally a no-op
+  }
 
-  logTrace({ formattedLog }: LumberjackLogDriverLog): void {}
+  logTrace({ formattedLog }: LumberjackLogDriverLog): void {
+    // intentionally a no-op
+  }
 
-  logWarning({ formattedLog }: LumberjackLogDriverLog): void {}
+  logWarning({ formattedLog }: LumberjackLogDriverLog): void {
+    // intentionally a no-op
+  }
 }
