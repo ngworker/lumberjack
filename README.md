@@ -301,7 +301,7 @@ export class ConsoleDriver implements LumberjackLogDriver {
 }
 ```
 
-In the above snippet the config is passed down its constructor and assigned to the public `config` property. Lumberjack uses this configuration to determine which logs the driver should handle.
+In the above snippet, the config is passed down its constructor and assigned to the public `config` property. Lumberjack uses this configuration to determine which logs the log driver should handle.
 
 #### Using a LumberjackLogPayload
 
