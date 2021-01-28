@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FakeTimeService } from '@internal/test-util';
-import { resolveDependency } from '@internal/test-util';
+import { FakeTimeService, resolveDependency } from '@internal/test-util';
 
 import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackOptions } from '../configuration/lumberjack.options';
@@ -90,28 +89,54 @@ describe(LumberjackLogFormatter.name, () => {
       expect(actualFormattedLog).toBe(LumberjackLevel.Warning);
     });
 
-    it('returns a format error when formatting fails', () => {
-      const formatterErrorMessage = 'TestFormatter';
-      const { fakeTime, service } = setup({
-        format: () => {
-          throw new Error(formatterErrorMessage);
-        },
+    describe('Error message', () => {
+      it('returns a format error when formatting fails because of an Error', () => {
+        const formatterErrorMessage = 'TestFormatter';
+        const { fakeTime, service } = setup({
+          format: () => {
+            throw new Error(formatterErrorMessage);
+          },
+        });
+        const nowTimestamp = '2020-07-07T00:00:00.000Z';
+        fakeTime.setTime(new Date(nowTimestamp));
+
+        const criticalLog = new LumberjackLogBuilder(
+          resolveDependency(LumberjackTimeService),
+          LumberjackLevel.Warning,
+          'Critical test'
+        ).build();
+        const formattingErrorLog = createFormattingErrorLog(formatterErrorMessage, criticalLog);
+
+        const { formattedLog: actualFormattedLog } = service.formatLog(criticalLog);
+
+        expect(actualFormattedLog).toBe(
+          `${formattingErrorLog.level} ${nowTimestamp} [${logFormattingErrorScope}] ${formattingErrorLog.message}`
+        );
       });
-      const nowTimestamp = '2020-07-07T00:00:00.000Z';
-      fakeTime.setTime(new Date(nowTimestamp));
 
-      const criticalLog = new LumberjackLogBuilder(
-        resolveDependency(LumberjackTimeService),
-        LumberjackLevel.Warning,
-        'Critical test'
-      ).build();
-      const formattingErrorLog = createFormattingErrorLog(formatterErrorMessage, criticalLog);
+      it('returns a format error when formatting fails with a string error message', () => {
+        const formatterErrorMessage = 'TestFormatter';
+        const { fakeTime, service } = setup({
+          format: () => {
+            throw formatterErrorMessage;
+          },
+        });
+        const nowTimestamp = '2020-07-07T00:00:00.000Z';
+        fakeTime.setTime(new Date(nowTimestamp));
 
-      const { formattedLog: actualFormattedLog } = service.formatLog(criticalLog);
+        const criticalLog = new LumberjackLogBuilder(
+          resolveDependency(LumberjackTimeService),
+          LumberjackLevel.Warning,
+          'Critical test'
+        ).build();
+        const formattingErrorLog = createFormattingErrorLog(formatterErrorMessage, criticalLog);
 
-      expect(actualFormattedLog).toBe(
-        `${formattingErrorLog.level} ${nowTimestamp} [${logFormattingErrorScope}] ${formattingErrorLog.message}`
-      );
+        const { formattedLog: actualFormattedLog } = service.formatLog(criticalLog);
+
+        expect(actualFormattedLog).toBe(
+          `${formattingErrorLog.level} ${nowTimestamp} [${logFormattingErrorScope}] ${formattingErrorLog.message}`
+        );
+      });
     });
   });
 });

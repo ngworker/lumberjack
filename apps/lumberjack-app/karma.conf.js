@@ -6,8 +6,8 @@ module.exports = (config) => {
   const baseConfig = getBaseKarmaConfig();
   config.set({
     ...baseConfig,
-    coverageIstanbulReporter: {
-      ...baseConfig.coverageIstanbulReporter,
+    coverageReporter: {
+      ...baseConfig.coverageReporter,
       dir: path.join(__dirname, '../../coverage/apps/lumberjack-app'),
     },
   });

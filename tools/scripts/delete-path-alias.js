@@ -8,6 +8,6 @@ function deletePathAlias(alias) {
   editJsonInPlace('tsconfig.json', [`delete this.compilerOptions.paths["${alias}"]`]);
 }
 
-const [alias] = process.argv.slice(2);
+const [aliasArgument] = process.argv.slice(2);
 
-deletePathAlias(alias);
+deletePathAlias(aliasArgument);

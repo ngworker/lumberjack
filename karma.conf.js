@@ -21,9 +21,9 @@ module.exports = () => ({
     suppressAll: true, // removes the duplicated traces
   },
   coverageReporter: {
-    dir: require('path').join(__dirname, 'coverage'),
+    dir: path.join(__dirname, 'coverage'),
     subdir: '.',
-    reporters: [{ type: 'html' }, { type: 'text-summary' }],
+    reporters: [{ type: 'text-summary' }, { type: 'lcovonly', subdir: '.', file: 'lcov.info' }],
   },
   reporters: ['progress', 'kjhtml'],
   port: 9876,
