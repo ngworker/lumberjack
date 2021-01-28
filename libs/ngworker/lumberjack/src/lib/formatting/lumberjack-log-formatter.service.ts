@@ -58,7 +58,7 @@ export class LumberjackLogFormatter<TPayload extends LumberjackLogPayload | void
     let errorMessage = '';
 
     try {
-      errorMessage = format(errorEntry as LumberjackLog<TPayload>);
+      errorMessage = format(errorEntry);
     } catch {
       errorMessage = lumberjackFormatLog(errorEntry);
     }
