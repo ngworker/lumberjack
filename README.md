@@ -132,7 +132,7 @@ export class MyComponent implements OnInit {
 }
 ```
 
-Then you can start logging. However, you'll also want to inject `LumberjackTimeService` to maintain a high level of testability.
+Then we can start logging. However, you'll also want to inject `LumberjackTimeService` to maintain a high level of testability.
 
 ```ts
 // (...)
@@ -165,7 +165,7 @@ Optionally, we can pass one or more options to `LumberjackModule.forRoot`.
 
 ### Default options
 
-Lumberjack's configuration is flexible. You can provide a full configuration object, a partial option set, or no options at all.
+Lumberjack's configuration is flexible. We can provide a full configuration object, a partial option set, or no options at all.
 
 Lumberjack replaces omitted options with defaults.
 
@@ -181,7 +181,7 @@ Where `utcTimestampFor` is a function that converts Unix Epoch ticks to UTC 0 ho
 
 #### Default log levels
 
-When the `levels` setting is not configured, log levels are configured depending on whether your application runs in development mode or production mode.
+When the `levels` setting is not configured, log levels are configured depending on whether our application runs in development mode or production mode.
 
 By default, in development mode, **all** log levels are enabled.
 
@@ -305,7 +305,7 @@ In the above snippet the config is passed down its constructor and assigned to t
 
 #### Using a LumberjackLogPayload
 
-Your driver may need some extra data not provided by the `LumberjackLog`.
+We might want to add some extra data not present in the `LumberjackLog` to our log driver.
 
 For such cases, Lumberjack exposes the `LumberjackLog#payload` property.
 
@@ -468,7 +468,7 @@ If you want your driver listed here, open a PR and follow the same format.
 
 ## Best practices
 
-Every log can be represented as a combination of its level, creation time, message, scope and payload. Using inline logs with the `LumberjackService` can cause structure duplication and-or de-standardization.
+Every log can be represented as a combination of its level, creation time, message, scope and payload. Using inline logs with the `LumberjackService` can cause structure duplication and/or denormalization.
 
 Continue reading to know more about the recommended best practices designed to tackle this issue.
 
@@ -616,10 +616,6 @@ export abstract class ScopedLumberjackLogger<
 > extends LumberjackLogger<TPayload> {
   abstract readonly scope: string;
 
-  constructor(protected lumberjack: LumberjackService<TPayload>, protected time: LumberjackTimeService) {
-    super(lumberjack, time);
-  }
-
   /**
    * Create a logger builder for a log with the shared scope as well as the
    * specified log level and message.
@@ -695,7 +691,7 @@ The `AppLogger` usage remains the same using a `LumberjackLogger` or `ScopedLumb
 
 ### LumberjackLogFactory
 
-Lumberjack recommended way of creating logs is by using a `LumberjackLogger`.
+Lumberjack's recommended way of creating logs is by using a `LumberjackLogger`.
 
 However, there are some times that we want to create logs manually and pass them to the `LumberjackService`.
 
