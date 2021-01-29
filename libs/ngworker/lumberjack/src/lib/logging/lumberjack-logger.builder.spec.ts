@@ -31,7 +31,7 @@ describe(LumberjackLoggerBuilder.name, () => {
     });
 
     fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
-    lumberjackService = (resolveDependency(LumberjackService) as unknown) as LumberjackService;
+    lumberjackService = resolveDependency(LumberjackService) as LumberjackService;
     spyOn(lumberjackService, 'log').and.stub();
   });
 

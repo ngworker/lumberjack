@@ -52,7 +52,7 @@ export class LumberjackLogBuilder<TPayload extends LumberjackLogPayload | void =
   ): LumberjackLogBuilder<InternalWithStaticPayload | TPayload> {
     this.payload = payloadArg[0] as TPayload;
 
-    return (this as unknown) as LumberjackLogBuilder<InternalWithStaticPayload | TPayload>;
+    return this as LumberjackLogBuilder<InternalWithStaticPayload | TPayload>;
   }
 
   /**
