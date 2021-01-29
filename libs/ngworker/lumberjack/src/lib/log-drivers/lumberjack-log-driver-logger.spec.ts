@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SpyDriver, SpyDriverModule } from '@internal/test-util';
+import { resolveDependency, SpyDriver, SpyDriverModule } from '@internal/test-util';
 
 import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
@@ -15,9 +15,9 @@ describe(LumberjackLogDriverLogger.name, () => {
     TestBed.configureTestingModule({
       imports: [LumberjackModule.forRoot(), SpyDriverModule.forRoot()],
     });
-    [logDriver] = (TestBed.inject(lumberjackLogDriverToken) as unknown) as [SpyDriver];
-    logFactory = TestBed.inject(LumberjackLogFactory);
-    logger = TestBed.inject(LumberjackLogDriverLogger);
+    [logDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as [SpyDriver];
+    logFactory = resolveDependency(LumberjackLogFactory);
+    logger = resolveDependency(LumberjackLogDriverLogger);
   });
 
   let logDriver: SpyDriver;
