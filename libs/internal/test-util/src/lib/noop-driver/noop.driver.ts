@@ -13,7 +13,7 @@ import { noopDriverConfigToken } from './noop-driver-config.token';
 export class NoopDriver implements LumberjackLogDriver {
   static driverIdentifier = 'NoopDriver';
 
-  constructor(@Inject(noopDriverConfigToken) public config: LumberjackLogDriverConfig) {}
+  constructor(@Inject(noopDriverConfigToken) readonly config: LumberjackLogDriverConfig) {}
 
   logCritical({ formattedLog }: LumberjackLogDriverLog): void {
     // intentionally a no-op

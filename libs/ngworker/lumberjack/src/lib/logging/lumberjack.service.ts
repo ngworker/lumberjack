@@ -31,12 +31,12 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
   /**
    * The registered log drivers.
    */
-  private drivers: LumberjackLogDriver<TPayload>[];
+  private readonly drivers: LumberjackLogDriver<TPayload>[];
 
   constructor(
     @Optional() @Inject(lumberjackLogDriverToken) drivers: LumberjackLogDriver<TPayload>[],
-    private logFormatter: LumberjackLogFormatter<TPayload>,
-    private time: LumberjackTimeService
+    private readonly logFormatter: LumberjackLogFormatter<TPayload>,
+    private readonly time: LumberjackTimeService
   ) {
     drivers = drivers || [];
     this.drivers = Array.isArray(drivers) ? drivers : [drivers];

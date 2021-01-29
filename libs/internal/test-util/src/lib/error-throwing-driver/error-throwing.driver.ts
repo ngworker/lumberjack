@@ -16,7 +16,7 @@ export class ErrorThrowingDriver implements LumberjackLogDriver {
 
   private logCount = 0;
 
-  constructor(@Inject(errorThrowingDriverConfigToken) public config: ErrorThrowingDriverConfig) {}
+  constructor(@Inject(errorThrowingDriverConfigToken) readonly config: ErrorThrowingDriverConfig) {}
 
   logCritical({ formattedLog }: LumberjackLogDriverLog): void {
     this.log(formattedLog);

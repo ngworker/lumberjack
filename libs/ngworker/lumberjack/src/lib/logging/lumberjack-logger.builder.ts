@@ -9,10 +9,10 @@ export class LumberjackLoggerBuilder<TPayload extends LumberjackLogPayload | voi
   private payload?: TPayload;
 
   constructor(
-    private lumberjack: LumberjackService<TPayload>,
-    private time: LumberjackTimeService,
-    private level: LumberjackLogLevel,
-    private message: string
+    private readonly lumberjack: LumberjackService<TPayload>,
+    private readonly time: LumberjackTimeService,
+    private readonly level: LumberjackLogLevel,
+    private readonly message: string
   ) {}
 
   build(): (...payloadArg: TPayload extends void ? [never?] : [TPayload]) => void {

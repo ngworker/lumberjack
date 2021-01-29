@@ -16,8 +16,8 @@ export class ObjectDriver implements LumberjackLogDriver<ObjectPayload> {
   static driverIdentifier = 'ObjectDriver';
 
   constructor(
-    @Inject(objectDriverConfigToken) public config: LumberjackLogDriverConfig,
-    private objectService: ObjectService
+    @Inject(objectDriverConfigToken) readonly config: LumberjackLogDriverConfig,
+    private readonly objectService: ObjectService
   ) {}
 
   logCritical({ log }: LumberjackLogDriverLog<ObjectPayload>): void {

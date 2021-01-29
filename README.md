@@ -279,8 +279,8 @@ import { consoleDriverConfigToken } from './console-driver-config.token';
 @Injectable()
 export class ConsoleDriver implements LumberjackLogDriver {
   constructor(
-    @Inject(consoleDriverConfigToken) public config: LumberjackLogDriverConfig,
-    @Inject(lumberjackConsoleToken) private console: LumberjackConsole
+    @Inject(consoleDriverConfigToken) readonly config: LumberjackLogDriverConfig,
+    @Inject(lumberjackConsoleToken) private readonly console: LumberjackConsole
   ) {}
 
   logCritical({ formattedLog }: LumberjackLogDriverLog): void {
@@ -368,8 +368,8 @@ export interface AnalyticsPayload extends LumberjackLogPayload {
 @Injectable()
 export class ConsoleDriver implements LumberjackLogDriver<AnalyticsPayload> {
   constructor(
-    @Inject(consoleDriverConfigToken) public config: LumberjackLogDriverConfig,
-    @Inject(lumberjackConsoleToken) private console: LumberjackConsole
+    @Inject(consoleDriverConfigToken) readonly config: LumberjackLogDriverConfig,
+    @Inject(lumberjackConsoleToken) private readonly console: LumberjackConsole
   ) {}
 
   logCritical({ formattedLog, log }: LumberjackLogDriverLog<AnalyticsPayload>): void {
@@ -683,7 +683,7 @@ export class AppLogger extends ScopedLumberjackLogger<LogPayload> {
     angularVersion: VERSION.full,
   };
 
-  public scope = 'Forest App';
+  scope = 'Forest App';
 
   constructor(lumberjack: LumberjackService<LogPayload>, time: LumberjackTimeService) {
     super(lumberjack, time);

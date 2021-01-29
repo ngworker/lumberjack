@@ -25,7 +25,11 @@ export class LumberjackLogBuilder<TPayload extends LumberjackLogPayload | void =
    * @param level The log level.
    * @param message The log message.
    */
-  constructor(private time: LumberjackTimeService, private level: LumberjackLogLevel, private message: string) {}
+  constructor(
+    private readonly time: LumberjackTimeService,
+    private readonly level: LumberjackLogLevel,
+    private readonly message: string
+  ) {}
 
   /**
    * Create a log with the specified properties and timestamp it.

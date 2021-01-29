@@ -19,7 +19,7 @@ import { LumberjackLogBuilder } from './lumberjack-log.builder';
   providedIn: 'root',
 })
 export class LumberjackLogFactory<TPayload extends LumberjackLogPayload | void = void> {
-  constructor(private time: LumberjackTimeService) {}
+  constructor(private readonly time: LumberjackTimeService) {}
 
   /**
    * Create a log builder for a critical log with the specified message.

@@ -15,8 +15,8 @@ import { LumberjackLogFormatterResult } from './lumberjack-log-formatter-result'
 })
 export class LumberjackLogFormatter<TPayload extends LumberjackLogPayload | void = void> {
   constructor(
-    @Inject(lumberjackConfigToken) private config: LumberjackConfig<TPayload>,
-    private time: LumberjackTimeService
+    @Inject(lumberjackConfigToken) private readonly config: LumberjackConfig<TPayload>,
+    private readonly time: LumberjackTimeService
   ) {}
 
   formatLog(log: LumberjackLog<TPayload>): LumberjackLogFormatterResult<TPayload> {

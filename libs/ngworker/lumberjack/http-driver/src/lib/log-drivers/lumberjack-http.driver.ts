@@ -19,9 +19,9 @@ export class LumberjackHttpDriver<TPayload extends LumberjackLogPayload | void =
   implements LumberjackLogDriver<TPayload> {
   static driverIdentifier = 'LumberjackHttpDriver';
   constructor(
-    private http: HttpClient,
-    @Inject(lumberjackHttpDriverConfigToken) public config: LumberjackHttpDriverInternalConfig,
-    private ngZone: NgZone
+    private readonly http: HttpClient,
+    @Inject(lumberjackHttpDriverConfigToken) readonly config: LumberjackHttpDriverInternalConfig,
+    private readonly ngZone: NgZone
   ) {}
 
   /**
