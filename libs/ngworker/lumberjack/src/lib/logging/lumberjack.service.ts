@@ -3,9 +3,9 @@ import { Inject, Injectable, Optional } from '@angular/core';
 import { LumberjackRootModule } from '../configuration/lumberjack-root.module';
 import { formatLogDriverError } from '../formatting/format-log-driver-error';
 import { LumberjackLogFormatter } from '../formatting/lumberjack-log-formatter.service';
-import { LogDriverLogger } from '../log-drivers/log-driver-logger';
 import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
 import { LumberjackLogDriverError } from '../log-drivers/lumberjack-log-driver-error';
+import { LumberjackLogDriverLogger } from '../log-drivers/lumberjack-log-driver-logger';
 import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
@@ -37,7 +37,7 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
     @Optional() @Inject(lumberjackLogDriverToken) drivers: LumberjackLogDriver<TPayload>[],
     private readonly logFormatter: LumberjackLogFormatter<TPayload>,
     private readonly time: LumberjackTimeService,
-    private readonly driverLogger: LogDriverLogger<TPayload>
+    private readonly driverLogger: LumberjackLogDriverLogger<TPayload>
   ) {
     drivers = drivers || [];
     this.drivers = Array.isArray(drivers) ? drivers : [drivers];

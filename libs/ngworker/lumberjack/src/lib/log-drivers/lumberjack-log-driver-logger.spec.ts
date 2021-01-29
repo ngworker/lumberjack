@@ -6,23 +6,23 @@ import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 
-import { LogDriverLogger } from './log-driver-logger';
+import { LumberjackLogDriverLogger } from './lumberjack-log-driver-logger';
 import { LumberjackLogDriverLog } from './lumberjack-log-driver.log';
 import { lumberjackLogDriverToken } from './lumberjack-log-driver.token';
 
-describe(LogDriverLogger.name, () => {
+describe(LumberjackLogDriverLogger.name, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [LumberjackModule.forRoot(), SpyDriverModule.forRoot()],
     });
     [logDriver] = (TestBed.inject(lumberjackLogDriverToken) as unknown) as [SpyDriver];
     logFactory = TestBed.inject(LumberjackLogFactory);
-    logger = TestBed.inject(LogDriverLogger);
+    logger = TestBed.inject(LumberjackLogDriverLogger);
   });
 
   let logDriver: SpyDriver;
   let logFactory: LumberjackLogFactory;
-  let logger: LogDriverLogger;
+  let logger: LumberjackLogDriverLogger;
 
   it('logs a critical log driver log', () => {
     const logDriverLog: LumberjackLogDriverLog = {
