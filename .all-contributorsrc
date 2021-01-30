@@ -86,6 +86,22 @@
         "mentoring",
         "research"
       ]
+    },
+    {
+      "login": "SerkanSipahi",
+      "name": "Bitcollage",
+      "avatar_url": "https://avatars.githubusercontent.com/u/1880749?v=4",
+      "profile": "https://www.linkedin.com/in/serkan-sipahi-59b20081/",
+      "contributions": [
+        "bug",
+        "code",
+        "doc",
+        "ideas",
+        "platform",
+        "review",
+        "test",
+        "tool"
+      ]
     }
   ],
   "contributorsPerLine": 7
