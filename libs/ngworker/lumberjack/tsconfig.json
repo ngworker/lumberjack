@@ -5,6 +5,6 @@
     "outDir": "../../../out-tsc",
     "types": ["jest", "node"]
   },
-  "files": ["test.ts"],
+  "files": [],
   "include": ["**/*.spec.ts", "**/*.d.ts"]
 }
