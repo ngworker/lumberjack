@@ -1,3 +1,4 @@
+/* tslint:disable */
 import { Inject, Injectable } from '@angular/core';
 
 import { LumberjackLogDriver, LumberjackLogDriverConfig } from '@ngworker/lumberjack';
@@ -39,13 +40,15 @@ export class SpyDriver implements LumberjackLogDriver, jest.Mocked<LumberjackLog
   }
 }
 
+// tslint-disable-next-statement
 export const createSpyObj = <T = unknown>(_baseName: string, methodNames?: string[]): jest.Mocked<T> => {
+  // tslint-disable-next-statement
   const obj: any = {};
   if (methodNames) {
+    // tslint-disable-next-statement
     for (let i = 0; i < methodNames.length; i++) {
       obj[methodNames[i]] = jest.fn();
     }
-
   }
 
   return obj;

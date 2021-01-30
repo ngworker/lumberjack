@@ -31,6 +31,6 @@ export class LumberjackConsoleDriverModule {
   }
 
   constructor() {
-    throw new Error('Do not import LumberjackConsoleDriverModule directly. Use LumberjackConsoleDriverModule.forRoot.');
+    throw new Error('LumberjackConsoleDriverModule must guard against being imported directly');
   }
 }

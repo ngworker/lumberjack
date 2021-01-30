@@ -147,9 +147,9 @@ describe(LumberjackHttpDriverModule.name, () => {
       const expectedConfig: LumberjackHttpDriverInternalConfig = {
         ...options,
         // tslint:disable-next-line: no-any
-        levels: jest.fn(Array) as any,
+        levels: [LumberjackLevel.Verbose],
         // tslint:disable-next-line: no-any
-        identifier: jest.fn(String) as any,
+        identifier: 'LumberjackHttpDriver',
       };
       expect(actualConfig).toEqual(expectedConfig);
     });
@@ -166,9 +166,9 @@ describe(LumberjackHttpDriverModule.name, () => {
         // tslint:disable-next-line: no-any
         levels: customLevels,
         // tslint:disable-next-line: no-any
-        identifier: jest.fn(String) as any,
+        identifier: 'LumberjackHttpDriver',
       };
-      expect(actualConfig).toEqual(expectedConfig);
+      expect(actualConfig).toMatchObject(expectedConfig);
     });
 
     it('registers the specified options with custom identifier', () => {
@@ -181,7 +181,7 @@ describe(LumberjackHttpDriverModule.name, () => {
       const expectedConfig: LumberjackHttpDriverInternalConfig = {
         ...options,
         // tslint:disable-next-line: no-any
-        levels: jest.fn(Array) as any,
+        levels: [LumberjackLevel.Verbose],
         identifier: customIdentifier,
       };
       expect(actualConfig).toMatchObject(expectedConfig);
@@ -209,10 +209,10 @@ describe(LumberjackHttpDriverModule.name, () => {
       const expectedConfig: LumberjackHttpDriverInternalConfig = {
         ...options,
         // tslint:disable-next-line: no-any
-        levels: jest.fn(Array) as any,
+        levels: [LumberjackLevel.Verbose],
         identifier: LumberjackHttpDriver.driverIdentifier,
       };
-      expect(actualConfig).toEqual(expectedConfig);
+      expect(actualConfig).toMatchObject(expectedConfig);
     });
   });
 });

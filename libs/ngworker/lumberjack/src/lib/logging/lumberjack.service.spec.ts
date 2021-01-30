@@ -134,7 +134,7 @@ describe(LumberjackService.name, () => {
         expect(spyDriver.logDebug).toHaveBeenCalledWith(
           createDebugDriverLog(
             // tslint:disable-next-line: no-any
-            jest.fn(String) as any,
+            'debug 2020-02-02T02:02:02.000Z [Test] ',
             undefined,
             undefined,
             payloadInfo

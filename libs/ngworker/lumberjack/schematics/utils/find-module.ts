@@ -48,7 +48,6 @@ export function findModuleFromOptions(host: Tree, options: ModuleOptions): Path 
  * Function to find the "closest" module to a generated file's path.
  */
 export function findModule(host: Tree, generateDir: string): Path {
-  console.log(generateDir, 'findModule');
   let dir: DirEntry | null = host.getDir('/' + generateDir);
 
   const moduleRe = /\.module\.ts$/;

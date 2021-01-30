@@ -3,6 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { expectNgModuleToBeGuardedAgainstDirectImport, resolveDependency } from '@internal/test-util';
 
 import { isProductionEnvironmentToken } from '../environment/is-production-environment.token';
+import { lumberjackFormatLog } from '../formatting/lumberjack-format-log';
 import { utcTimestampFor } from '../formatting/utc-timestamp-for';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLog } from '../logs/lumberjack.log';
@@ -79,9 +80,7 @@ describe(LumberjackModule.name, () => {
       });
 
       const actualConfig = resolveDependency(lumberjackConfigToken);
-      console.log(actualConfig);
       expect(actualConfig).toMatchObject({
-        lumberjackFormatLog: jest.fn(),
         levels: defaultDevelopmentLevels,
       });
     });
@@ -94,7 +93,7 @@ describe(LumberjackModule.name, () => {
 
       const actualConfig = resolveDependency(lumberjackConfigToken);
       expect(actualConfig).toMatchObject({
-        format: jest.fn(),
+        format: lumberjackFormatLog,
         levels: defaultProductionLevels,
       });
     });

@@ -51,8 +51,6 @@ export class LumberjackHttpDriverModule {
   }
 
   constructor() {
-    throw new Error(
-      'Do not import LumberjackHttpDriverModule directly. Use LumberjackHttpDriverModule.forRoot or LumberjackHttpDriverModule.withOptions.'
-    );
+    throw new Error('LumberjackHttpDriverModule must guard against being imported directly');
   }
 }
