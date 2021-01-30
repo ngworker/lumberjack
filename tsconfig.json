@@ -21,7 +21,7 @@
       "@internal/console-driver/test-util": ["libs/internal/console-driver/test-util/src/index.ts"],
       "@ngworker/lumberjack": ["libs/ngworker/lumberjack/src/index.ts"],
       "@ngworker/lumberjack/console-driver": ["libs/ngworker/lumberjack/console-driver/src/index.ts"],
-      "@ngworker/lumberjack/httå-driver": ["libs/ngworker/lumberjack/http-driver/src/index.ts"]
+      "@ngworker/lumberjack/http-driver": ["libs/ngworker/lumberjack/http-driver/src/index.ts"]
     }
   },
   "angularCompilerOptions": {
