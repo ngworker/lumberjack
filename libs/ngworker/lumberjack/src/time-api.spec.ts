@@ -7,7 +7,7 @@ describe('Time API', () => {
     it(`exposes ${LumberjackTimeService.name}`, () => {
       const sut = LumberjackTimeService;
 
-      expect(isClass(sut)).withContext(`${sut.name} is not a class`).toBeTrue();
+      expect(isClass(sut)).toBe(true);
     });
   });
 });

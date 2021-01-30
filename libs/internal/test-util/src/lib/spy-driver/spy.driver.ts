@@ -38,3 +38,19 @@ export class SpyDriver implements LumberjackLogDriver, jest.Mocked<LumberjackLog
     this.logWarning.mockClear();
   }
 }
+
+export const createSpyObj = <T = unknown>(_baseName: string, methodNames?: string[]): jest.Mocked<T> => {
+  const obj: any = {};
+  if (methodNames) {
+    for (let i = 0; i < methodNames.length; i++) {
+      obj[methodNames[i]] = jest.fn();
+    }
+
+  }
+
+  return obj;
+};
+
+export const createSpy = (_baseName?: string) => {
+  return jest.fn();
+};

@@ -79,8 +79,9 @@ describe(LumberjackModule.name, () => {
       });
 
       const actualConfig = resolveDependency(lumberjackConfigToken);
-      expect(actualConfig).toEqual({
-        format: jest.fn(),
+      console.log(actualConfig);
+      expect(actualConfig).toMatchObject({
+        lumberjackFormatLog: jest.fn(),
         levels: defaultDevelopmentLevels,
       });
     });
@@ -92,7 +93,7 @@ describe(LumberjackModule.name, () => {
       });
 
       const actualConfig = resolveDependency(lumberjackConfigToken);
-      expect(actualConfig).toEqual({
+      expect(actualConfig).toMatchObject({
         format: jest.fn(),
         levels: defaultProductionLevels,
       });

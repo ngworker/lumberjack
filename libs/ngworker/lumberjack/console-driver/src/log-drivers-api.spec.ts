@@ -7,7 +7,7 @@ describe('Log drivers API', () => {
     it(`exposes ${LumberjackConsoleDriver.name}`, () => {
       const sut = LumberjackConsoleDriver;
 
-      expect(isClass(sut)).withContext(`${sut.name} is not a class`).toBeTrue();
+      expect(isClass(sut)).toBe(true);
     });
   });
 });

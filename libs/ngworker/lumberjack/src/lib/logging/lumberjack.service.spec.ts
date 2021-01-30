@@ -188,7 +188,7 @@ describe(LumberjackService.name, () => {
         const logDrivers = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
         const spyDriver = logDrivers[0] as SpyDriver;
         const errorDriver = logDrivers[1] as ErrorThrowingDriver;
-        spyDriver.logDebug.and.throwError('The hidden spy made an error');
+        spyDriver.logDebug.mockResolvedValue('The hidden spy made an error');
         spyOn(errorDriver, 'logDebug').and.callThrough();
         spyOn(errorDriver, 'logError').and.callThrough();
 
@@ -224,7 +224,7 @@ describe(LumberjackService.name, () => {
         const spyDriver = logDrivers[0] as SpyDriver;
         const errorDriver = logDrivers[1] as ErrorThrowingDriver;
         const noopDriver = logDrivers[2] as NoopDriver;
-        spyDriver.logDebug.and.throwError('The hidden spy made an error');
+        spyDriver.logDebug.mockRejectedValue('The hidden spy made an error');
         spyOn(errorDriver, 'logDebug').and.callThrough();
         spyOn(errorDriver, 'logError').and.callThrough();
         spyOn(noopDriver, 'logError').and.throwError('Noop is really an error');
@@ -268,7 +268,7 @@ describe(LumberjackService.name, () => {
         expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
         expect(spyDriver.logError).toHaveBeenCalledTimes(1);
         expect(spyDriver.logDebug).toHaveBeenCalledWith(createDebugDriverLog(LumberjackLevel.Debug));
-        const [actualLastErrorMessage] = spyDriver.logError.calls.mostRecent()
+        const [actualLastErrorMessage] = spyDriver.logError.mock.calls[0][0]
           .args as ReadonlyArray<LumberjackLogDriverLog>;
         expect(actualLastErrorMessage.formattedLog).toMatch(
           new RegExp(`^Could not log message ".*?" to ${ErrorThrowingDriver.name}.\n Error: ".*?"`)
@@ -309,7 +309,7 @@ describe(LumberjackService.name, () => {
         const logDrivers = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
         const spyDriver = logDrivers[0] as SpyDriver;
         const errorDriver = logDrivers[1] as ErrorThrowingDriver;
-        spyDriver.logDebug.and.throwError('The hidden spy made an error');
+        spyDriver.logDebug.mockResolvedValue('The hidden spy made an error');
         spyOn(errorDriver, 'logDebug').and.callThrough();
         spyOn(errorDriver, 'logError').and.callThrough();
 

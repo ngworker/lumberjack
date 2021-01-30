@@ -184,7 +184,7 @@ describe(LumberjackHttpDriverModule.name, () => {
         levels: jest.fn(Array) as any,
         identifier: customIdentifier,
       };
-      expect(actualConfig).toEqual(expectedConfig);
+      expect(actualConfig).toMatchObject(expectedConfig);
     });
 
     it('gets default options from the log driver config', () => {

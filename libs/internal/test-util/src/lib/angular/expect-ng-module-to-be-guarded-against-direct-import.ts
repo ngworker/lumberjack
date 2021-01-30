@@ -14,6 +14,5 @@ export const expectNgModuleToBeGuardedAgainstDirectImport = <TModule>(ngModuleTy
   expect(() => {
     resolveDependency(ngModuleType);
   })
-    .withContext(`${ngModuleType.name} must guard against being imported directly`)
-    .toThrow();
+    .toThrow(`${ngModuleType.name} must guard against being imported directly`);
 };
