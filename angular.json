@@ -76,14 +76,15 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
-            "codeCoverage": false
+            "coverage": false
           },
           "configurations": {
             "ci": {
               "watch": false
             },
             "coverage": {
-              "codeCoverage": true,
+              "coverage": true,
+              "silent": true,
               "watch": false
             }
           }
@@ -143,14 +144,15 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
-            "codeCoverage": false
+            "coverage": false
           },
           "configurations": {
             "ci": {
               "watch": false
             },
             "coverage": {
-              "codeCoverage": true,
+              "coverage": true,
+              "silent": true,
               "watch": false
             }
           }
@@ -173,7 +175,7 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
-            "codeCoverage": false
+            "coverage": false
           },
           "configurations": {
             "ci": {
@@ -199,7 +201,7 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
-            "codeCoverage": false
+            "coverage": false
           },
           "configurations": {
             "ci": {
