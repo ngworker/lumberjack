@@ -5,7 +5,7 @@ import { formatLogDriverError } from '../formatting/format-log-driver-error';
 import { LumberjackLogFormatter } from '../formatting/lumberjack-log-formatter.service';
 import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
 import { LumberjackLogDriverError } from '../log-drivers/lumberjack-log-driver-error';
-import { LumberjackLogDriverLog } from '../log-drivers/lumberjack-log-driver.log';
+import { LumberjackLogDriverLogger } from '../log-drivers/lumberjack-log-driver-logger';
 import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
@@ -31,12 +31,13 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
   /**
    * The registered log drivers.
    */
-  private drivers: LumberjackLogDriver<TPayload>[];
+  private readonly drivers: LumberjackLogDriver<TPayload>[];
 
   constructor(
     @Optional() @Inject(lumberjackLogDriverToken) drivers: LumberjackLogDriver<TPayload>[],
-    private logFormatter: LumberjackLogFormatter<TPayload>,
-    private time: LumberjackTimeService
+    private readonly logFormatter: LumberjackLogFormatter<TPayload>,
+    private readonly time: LumberjackTimeService,
+    private readonly driverLogger: LumberjackLogDriverLogger<TPayload>
   ) {
     drivers = drivers || [];
     this.drivers = Array.isArray(drivers) ? drivers : [drivers];
@@ -85,42 +86,6 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
   }
 
   /**
-   * Pass the driver log to the method of the specified log driver which
-   * corresponds to the log's log level.
-   *
-   * @param driver The log driver.
-   * @param driverLog The log driver log.
-   */
-  private driveLog(driver: LumberjackLogDriver<TPayload>, driverLog: LumberjackLogDriverLog<TPayload>): void {
-    switch (driverLog.log.level) {
-      case LumberjackLevel.Critical:
-        driver.logCritical(driverLog);
-
-        break;
-      case LumberjackLevel.Debug:
-        driver.logDebug(driverLog);
-
-        break;
-      case LumberjackLevel.Error:
-        driver.logError(driverLog);
-
-        break;
-      case LumberjackLevel.Info:
-        driver.logInfo(driverLog);
-
-        break;
-      case LumberjackLevel.Trace:
-        driver.logTrace(driverLog);
-
-        break;
-      case LumberjackLevel.Warning:
-        driver.logWarning(driverLog);
-
-        break;
-    }
-  }
-
-  /**
    * If any stable log drivers are specified, the log driver errors will be
    * forward to them. Otherwise, they will be output to the browser console.
    *
@@ -163,7 +128,7 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
       .filter((driver) => this.canDriveLog(driver, log.level))
       .forEach((driver) => {
         try {
-          this.driveLog(driver, { formattedLog, log });
+          this.driverLogger.log(driver, { formattedLog, log });
           stableDrivers.push(driver);
 
           if (driverErrorIndex !== noReportedLogDriverErrorIndex) {

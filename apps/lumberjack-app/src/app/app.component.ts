@@ -10,7 +10,7 @@ import { AppLogger } from './app-logger.service';
 export class AppComponent implements OnInit {
   title = 'lumberjack';
 
-  constructor(private logger: AppLogger) {}
+  constructor(private readonly logger: AppLogger) {}
 
   ngOnInit(): void {
     this.logger.helloForest();

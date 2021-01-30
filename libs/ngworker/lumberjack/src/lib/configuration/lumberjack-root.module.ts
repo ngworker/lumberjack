@@ -12,7 +12,7 @@ import { lumberjackOptionsToken } from './lumberjack-options.token';
 import { LumberjackConfig } from './lumberjack.config';
 import { LumberjackOptions } from './lumberjack.options';
 
-export function configFactory(options: LumberjackOptions = {}, isProductionEnvironment: boolean): LumberjackConfig {
+export function configFactory(isProductionEnvironment: boolean, options: LumberjackOptions = {}): LumberjackConfig {
   return {
     format: lumberjackFormatLog,
     levels: isProductionEnvironment ? defaultProductionLevels : defaultDevelopmentLevels,
@@ -29,7 +29,7 @@ export function logDriverConfigFactory({ levels }: LumberjackConfig): Omit<Lumbe
 @NgModule({
   providers: [
     {
-      deps: [lumberjackOptionsToken, isProductionEnvironmentToken],
+      deps: [isProductionEnvironmentToken, lumberjackOptionsToken],
       provide: lumberjackConfigToken,
       useFactory: configFactory,
     },

@@ -20,7 +20,7 @@
     "jsdoc-format": true,
     "label-position": true,
     "max-classes-per-file": [true, 5],
-    "member-access": false,
+    "member-access": [true, "no-public"],
     "member-ordering": [
       true,
       {
@@ -86,6 +86,7 @@
     "object-literal-sort-keys": false,
     "prefer-conditional-expression": false,
     "prefer-const": true,
+    "prefer-readonly": true,
     "prettier": true,
     "radix": true,
     "template-banana-in-box": true,

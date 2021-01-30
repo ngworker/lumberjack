@@ -22,8 +22,8 @@ export class LumberjackConsoleDriver<TPayload extends LumberjackLogPayload | voi
   implements LumberjackLogDriver<TPayload> {
   static driverIdentifier = 'LumberjackConsoleDriver';
   constructor(
-    @Inject(lumberjackConsoleDriverConfigToken) public config: LumberjackLogDriverConfig,
-    @Inject(lumberjackConsoleToken) private console: LumberjackConsole
+    @Inject(lumberjackConsoleDriverConfigToken) readonly config: LumberjackLogDriverConfig,
+    @Inject(lumberjackConsoleToken) private readonly console: LumberjackConsole
   ) {}
 
   /**

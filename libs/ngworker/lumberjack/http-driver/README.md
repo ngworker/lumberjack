@@ -25,8 +25,8 @@ The rest of the `LumberjackHttpDriver` is defined as follows
 export class LumberjackHttpDriver implements LumberjackLogDriver {
   constructor(
     private http: HttpClient,
-    @Inject(lumberjackHttpDriverConfigToken) public config: LumberjackHttpDriverConfig,
-    private ngZone: NgZone
+    @Inject(lumberjackHttpDriverConfigToken) readonly config: LumberjackHttpDriverConfig,
+    private readonly ngZone: NgZone
   ) {}
 
   logCritical({ formattedLog }: LumberjackLogDriverLog): void {

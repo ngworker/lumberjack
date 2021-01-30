@@ -13,7 +13,7 @@ import { spyDriverConfigToken } from './spy-driver-config.token';
 export class SpyDriver implements LumberjackLogDriver, jasmine.SpyObj<LumberjackLogDriver> {
   static driverIdentifier = 'SpyDriver';
 
-  constructor(@Inject(spyDriverConfigToken) public config: LumberjackLogDriverConfig) {}
+  constructor(@Inject(spyDriverConfigToken) readonly config: LumberjackLogDriverConfig) {}
 
   logCritical = jasmine.createSpy('logCritical');
 

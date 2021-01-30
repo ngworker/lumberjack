@@ -28,7 +28,8 @@
             "aot": true,
             "assets": ["apps/lumberjack-app/src/favicon.ico", "apps/lumberjack-app/src/assets"],
             "styles": ["apps/lumberjack-app/src/styles.scss"],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": ["zone.js"]
           },
           "configurations": {
             "production": {

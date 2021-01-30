@@ -15,9 +15,14 @@
 [![All Contributors](https://img.shields.io/badge/all_contributors-4-orange.svg?style=flat-square)](#contributors-)
 [![ngworker](https://img.shields.io/badge/ngworker-%40-red)](https://github.com/ngworker/)
 [![Wallaby.js](https://img.shields.io/badge/wallaby.js-powered-blue.svg?style=flat&logo=github)](https://wallabyjs.com/oss/)
+
 [![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=ngworker_lumberjack&metric=ncloc)](https://sonarcloud.io/dashboard?id=ngworker_lumberjack)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=ngworker_lumberjack&metric=coverage)](https://sonarcloud.io/dashboard?id=ngworker_lumberjack)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=ngworker_lumberjack&metric=duplicated_lines_density)](https://sonarcloud.io/dashboard?id=ngworker_lumberjack)  
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ngworker_lumberjack&metric=alert_status)](https://sonarcloud.io/dashboard?id=ngworker_lumberjack)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=ngworker_lumberjack&metric=security_rating)](https://sonarcloud.io/dashboard?id=ngworker_lumberjack)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=ngworker_lumberjack&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=ngworker_lumberjack)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=ngworker_lumberjack&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=ngworker_lumberjack)
 
 Lumberjack is a versatile Angular logging library, specially designed to be extended and customized. It provides a few simple [log drivers](https://en.wikipedia.org/wiki/Log_driving) (logging mechanisms, transports, log drivers) out-of-the-box. It's easy to enable bundled log drivers or create and use custom log drivers.
 
@@ -274,8 +279,8 @@ import { consoleDriverConfigToken } from './console-driver-config.token';
 @Injectable()
 export class ConsoleDriver implements LumberjackLogDriver {
   constructor(
-    @Inject(consoleDriverConfigToken) public config: LumberjackLogDriverConfig,
-    @Inject(lumberjackConsoleToken) private console: LumberjackConsole
+    @Inject(consoleDriverConfigToken) readonly config: LumberjackLogDriverConfig,
+    @Inject(lumberjackConsoleToken) private readonly console: LumberjackConsole
   ) {}
 
   logCritical({ formattedLog }: LumberjackLogDriverLog): void {
@@ -363,8 +368,8 @@ export interface AnalyticsPayload extends LumberjackLogPayload {
 @Injectable()
 export class ConsoleDriver implements LumberjackLogDriver<AnalyticsPayload> {
   constructor(
-    @Inject(consoleDriverConfigToken) public config: LumberjackLogDriverConfig,
-    @Inject(lumberjackConsoleToken) private console: LumberjackConsole
+    @Inject(consoleDriverConfigToken) readonly config: LumberjackLogDriverConfig,
+    @Inject(lumberjackConsoleToken) private readonly console: LumberjackConsole
   ) {}
 
   logCritical({ formattedLog, log }: LumberjackLogDriverLog<AnalyticsPayload>): void {
@@ -678,7 +683,7 @@ export class AppLogger extends ScopedLumberjackLogger<LogPayload> {
     angularVersion: VERSION.full,
   };
 
-  public scope = 'Forest App';
+  scope = 'Forest App';
 
   constructor(lumberjack: LumberjackService<LogPayload>, time: LumberjackTimeService) {
     super(lumberjack, time);

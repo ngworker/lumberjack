@@ -13,59 +13,40 @@ import { ErrorThrowingDriverConfig } from './error-throwing-driver.config';
 @Injectable()
 export class ErrorThrowingDriver implements LumberjackLogDriver {
   static driverIdentifier = 'ErrorThrowingDriver';
+
   private logCount = 0;
 
-  constructor(@Inject(errorThrowingDriverConfigToken) public config: ErrorThrowingDriverConfig) {}
+  constructor(@Inject(errorThrowingDriverConfigToken) readonly config: ErrorThrowingDriverConfig) {}
 
   logCritical({ formattedLog }: LumberjackLogDriverLog): void {
-    if (this.logCount < this.config.logsBeforeThrowing) {
-      this.logCount += 1;
-    } else {
-      this.throwError(formattedLog);
-    }
+    this.log(formattedLog);
   }
 
   logDebug({ formattedLog }: LumberjackLogDriverLog): void {
-    if (this.logCount < this.config.logsBeforeThrowing) {
-      this.logCount += 1;
-    } else {
-      this.throwError(formattedLog);
-    }
+    this.log(formattedLog);
   }
 
   logError({ formattedLog }: LumberjackLogDriverLog): void {
-    if (this.logCount < this.config.logsBeforeThrowing) {
-      this.logCount += 1;
-    } else {
-      this.throwError(formattedLog);
-    }
+    this.log(formattedLog);
   }
 
   logInfo({ formattedLog }: LumberjackLogDriverLog): void {
-    if (this.logCount < this.config.logsBeforeThrowing) {
-      this.logCount += 1;
-    } else {
-      this.throwError(formattedLog);
-    }
+    this.log(formattedLog);
   }
 
   logTrace({ formattedLog }: LumberjackLogDriverLog): void {
-    if (this.logCount < this.config.logsBeforeThrowing) {
-      this.logCount += 1;
-    } else {
-      this.throwError(formattedLog);
-    }
+    this.log(formattedLog);
   }
 
   logWarning({ formattedLog }: LumberjackLogDriverLog): void {
+    this.log(formattedLog);
+  }
+
+  private log(formattedLog: string): void | never {
     if (this.logCount < this.config.logsBeforeThrowing) {
       this.logCount += 1;
     } else {
-      this.throwError(formattedLog);
+      throw new Error(`${this.config.identifier}: Failed to log "${formattedLog}"`);
     }
-  }
-
-  private throwError(formattedLog: string): never {
-    throw new Error(`${ErrorThrowingDriver.name}: Failed to log "${formattedLog}"`);
   }
 }
