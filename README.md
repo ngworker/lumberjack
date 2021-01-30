@@ -81,6 +81,12 @@ If the version you are using is not listed, please [raise an issue in our GitHub
 
 To register Lumberjack, add `LumberjackModule.forRoot()` to your root or core Angular module.
 
+```shell
+ng add @ngworker/lumberjack
+```
+
+The `ng add` command will add the below code to your module.
+
 ```ts
 // ...
 import { LumberjackModule } from '@ngworker/lumberjack';
@@ -88,14 +94,21 @@ import { LumberjackModule } from '@ngworker/lumberjack';
 @NgModule({
   imports: [
     LumberjackModule.forRoot(),
-    // (...)
+    LumberjackConsoleDriverModule.forRoot(),
+      // (...)
   ],
   // (...)
 })
-export class AppModule {}
 ```
 
 You must also register the log driver modules for the log drivers that you want to enable.
+If you want to add `HttpDriver` use below command
+
+```shell
+ng add @ngworker/lumberjack --http-driver=true
+```
+
+this command will add below code to your module.
 
 ```ts
 // ...
@@ -108,7 +121,7 @@ import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driv
     LumberjackModule.forRoot(),
     LumberjackConsoleDriverModule.forRoot(),
     LumberjackHttpDriverModule.withOptions({
-      origin: 'ForestApp',
+      origin: {appName}',
       storeUrl: '/api/logs',
       retryOptions: { maxRetries: 5, delayMs: 250 },
     }),
@@ -119,7 +132,12 @@ import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driv
 export class AppModule {}
 ```
 
-See the [_Log drivers_](#log-drivers) section for more information.
+### Below are the ng add options
+
+| Option           | Type                          | Optional? | Description                                    |
+| ---------------- | ----------------------------- | --------- | ---------------------------------------------- |
+| `console-driver` | boolean (defaults to `true`)  | Yes       | Whether to register `LumberjackConsoleDriver`. |
+| `http-driver`    | boolean (defaults to `false`) | Yes       | Whether to register `LumberjackHttpDriver`.    |
 
 ### Using the `LumberjackService`
 
@@ -761,11 +779,12 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- markdownlint-disable -->
 <table>
   <tr>
-    <td align="center"><a href="https://github.com/NachoVazquez"><img src="https://avatars3.githubusercontent.com/u/9338604?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nacho Vazquez</b></sub></a><br /><a href="#question-NachoVazquez" title="Answering Questions">💬</a> <a href="https://github.com/ngworker/lumberjack/issues?q=author%3ANachoVazquez" title="Bug reports">🐛</a> <a href="#business-NachoVazquez" title="Business development">💼</a> <a href="https://github.com/ngworker/lumberjack/commits?author=NachoVazquez" title="Code">💻</a> <a href="https://github.com/ngworker/lumberjack/commits?author=NachoVazquez" title="Documentation">📖</a> <a href="#example-NachoVazquez" title="Examples">💡</a> <a href="#ideas-NachoVazquez" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-NachoVazquez" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-NachoVazquez" title="Maintenance">🚧</a> <a href="#projectManagement-NachoVazquez" title="Project Management">📆</a> <a href="https://github.com/ngworker/lumberjack/pulls?q=is%3Apr+reviewed-by%3ANachoVazquez" title="Reviewed Pull Requests">👀</a> <a href="#security-NachoVazquez" title="Security">🛡️</a> <a href="https://github.com/ngworker/lumberjack/commits?author=NachoVazquez" title="Tests">⚠️</a> <a href="#tool-NachoVazquez" title="Tools">🔧</a> <a href="#userTesting-NachoVazquez" title="User Testing">📓</a></td>
-    <td align="center"><a href="https://indepth.dev/author/layzee/"><img src="https://avatars1.githubusercontent.com/u/6364586?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Lars Gyrup Brink Nielsen</b></sub></a><br /><a href="https://github.com/ngworker/lumberjack/issues?q=author%3ALayZeeDK" title="Bug reports">🐛</a> <a href="https://github.com/ngworker/lumberjack/commits?author=LayZeeDK" title="Code">💻</a> <a href="https://github.com/ngworker/lumberjack/commits?author=LayZeeDK" title="Documentation">📖</a> <a href="#example-LayZeeDK" title="Examples">💡</a> <a href="#ideas-LayZeeDK" title="Ideas, Planning, & Feedback">🤔</a> <a href="#mentoring-LayZeeDK" title="Mentoring">🧑‍🏫</a> <a href="#plugin-LayZeeDK" title="Plugin/utility libraries">🔌</a> <a href="https://github.com/ngworker/lumberjack/pulls?q=is%3Apr+reviewed-by%3ALayZeeDK" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/ngworker/lumberjack/commits?author=LayZeeDK" title="Tests">⚠️</a> <a href="#tool-LayZeeDK" title="Tools">🔧</a> <a href="#userTesting-LayZeeDK" title="User Testing">📓</a></td>
-    <td align="center"><a href="https://www.santoshyadav.dev/"><img src="https://avatars3.githubusercontent.com/u/11923975?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Santosh Yadav</b></sub></a><br /><a href="https://github.com/ngworker/lumberjack/commits?author=santoshyadavdev" title="Code">💻</a> <a href="https://github.com/ngworker/lumberjack/commits?author=santoshyadavdev" title="Documentation">📖</a> <a href="#example-santoshyadavdev" title="Examples">💡</a> <a href="#infra-santoshyadavdev" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#plugin-santoshyadavdev" title="Plugin/utility libraries">🔌</a> <a href="https://github.com/ngworker/lumberjack/commits?author=santoshyadavdev" title="Tests">⚠️</a></td>
-    <td align="center"><a href="https://dzhavat.github.io/"><img src="https://avatars0.githubusercontent.com/u/1096332?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Dzhavat Ushev</b></sub></a><br /><a href="https://github.com/ngworker/lumberjack/commits?author=dzhavat" title="Documentation">📖</a></td>
-    <td align="center"><a href="https://twitter.com/AlexOkrushko"><img src="https://avatars0.githubusercontent.com/u/2830407?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Alex Okrushko</b></sub></a><br /><a href="https://github.com/ngworker/lumberjack/commits?author=alex-okrushko" title="Code">💻</a> <a href="#ideas-alex-okrushko" title="Ideas, Planning, & Feedback">🤔</a> <a href="#mentoring-alex-okrushko" title="Mentoring">🧑‍🏫</a> <a href="#research-alex-okrushko" title="Research">🔬</a></td> 
+    <td align="center"><a href="https://github.com/NachoVazquez"><img src="https://avatars3.githubusercontent.com/u/9338604?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nacho Vazquez</b></sub></a><br /><a href="#question-NachoVazquez" title="Answering Questions">💬</a> <a href="https://github.com/@ngworker/lumberjack/issues?q=author%3ANachoVazquez" title="Bug reports">🐛</a> <a href="#business-NachoVazquez" title="Business development">💼</a> <a href="https://github.com/@ngworker/lumberjack/commits?author=NachoVazquez" title="Code">💻</a> <a href="https://github.com/@ngworker/lumberjack/commits?author=NachoVazquez" title="Documentation">📖</a> <a href="#example-NachoVazquez" title="Examples">💡</a> <a href="#ideas-NachoVazquez" title="Ideas, Planning, & Feedback">🤔</a> <a href="#infra-NachoVazquez" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#maintenance-NachoVazquez" title="Maintenance">🚧</a> <a href="#projectManagement-NachoVazquez" title="Project Management">📆</a> <a href="https://github.com/@ngworker/lumberjack/pulls?q=is%3Apr+reviewed-by%3ANachoVazquez" title="Reviewed Pull Requests">👀</a> <a href="#security-NachoVazquez" title="Security">🛡️</a> <a href="https://github.com/@ngworker/lumberjack/commits?author=NachoVazquez" title="Tests">⚠️</a> <a href="#tool-NachoVazquez" title="Tools">🔧</a> <a href="#userTesting-NachoVazquez" title="User Testing">📓</a></td>
+    <td align="center"><a href="https://indepth.dev/author/layzee/"><img src="https://avatars1.githubusercontent.com/u/6364586?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Lars Gyrup Brink Nielsen</b></sub></a><br /><a href="https://github.com/@ngworker/lumberjack/issues?q=author%3ALayZeeDK" title="Bug reports">🐛</a> <a href="https://github.com/@ngworker/lumberjack/commits?author=LayZeeDK" title="Code">💻</a> <a href="https://github.com/@ngworker/lumberjack/commits?author=LayZeeDK" title="Documentation">📖</a> <a href="#example-LayZeeDK" title="Examples">💡</a> <a href="#ideas-LayZeeDK" title="Ideas, Planning, & Feedback">🤔</a> <a href="#mentoring-LayZeeDK" title="Mentoring">🧑‍🏫</a> <a href="#plugin-LayZeeDK" title="Plugin/utility libraries">🔌</a> <a href="https://github.com/@ngworker/lumberjack/pulls?q=is%3Apr+reviewed-by%3ALayZeeDK" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/@ngworker/lumberjack/commits?author=LayZeeDK" title="Tests">⚠️</a> <a href="#tool-LayZeeDK" title="Tools">🔧</a> <a href="#userTesting-LayZeeDK" title="User Testing">📓</a></td>
+    <td align="center"><a href="https://www.santoshyadav.dev/"><img src="https://avatars3.githubusercontent.com/u/11923975?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Santosh Yadav</b></sub></a><br /><a href="https://github.com/@ngworker/lumberjack/commits?author=santoshyadavdev" title="Code">💻</a> <a href="https://github.com/@ngworker/lumberjack/commits?author=santoshyadavdev" title="Documentation">📖</a> <a href="#example-santoshyadavdev" title="Examples">💡</a> <a href="#infra-santoshyadavdev" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#plugin-santoshyadavdev" title="Plugin/utility libraries">🔌</a> <a href="https://github.com/@ngworker/lumberjack/commits?author=santoshyadavdev" title="Tests">⚠️</a></td>
+    <td align="center"><a href="https://twitter.com/AlexOkrushko"><img src="https://avatars0.githubusercontent.com/u/2830407?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Alex Okrushko</b></sub></a><br /><a href="https://github.com/@ngworker/lumberjack/commits?author=alex-okrushko" title="Code">💻</a> <a href="#ideas-alex-okrushko" title="Ideas, Planning, & Feedback">🤔</a> <a href="#mentoring-alex-okrushko" title="Mentoring">🧑‍🏫</a> <a href="#research-alex-okrushko" title="Research">🔬</a></td>
+    <td align="center"><a href="https://dzhavat.github.io/"><img src="https://avatars0.githubusercontent.com/u/1096332?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Dzhavat Ushev</b></sub></a><br /><a href="https://github.com/@ngworker/lumberjack/commits?author=dzhavat" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://www.santoshyadav.dev/"><img src="https://avatars3.githubusercontent.com/u/11923975?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Santosh Yadav</b></sub></a><br /><a href="https://github.com/@ngworker/lumberjack/commits?author=santoshyadavdev" title="Code">💻</a></td>
   </tr>
 </table>
 

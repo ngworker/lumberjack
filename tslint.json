@@ -65,6 +65,7 @@
       "@angular/core/testing",
       "@angular/fire/database",
       "@angular/material",
+      "@angular-devkit/schematics",
       "@internal",
       "@ngworker",
       "zone.js"

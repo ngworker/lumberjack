@@ -1,11 +1,10 @@
 import { SpyConsole } from './spy-console.service';
 
+let spy: SpyConsole;
 describe(SpyConsole.name, () => {
   beforeEach(() => {
     spy = new SpyConsole();
   });
-
-  let spy: SpyConsole;
 
   it('can be passed a lot of arguments', () => {
     const hundredNumbers = Array(100)

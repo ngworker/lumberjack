@@ -134,7 +134,7 @@ describe(LumberjackService.name, () => {
         expect(spyDriver.logDebug).toHaveBeenCalledWith(
           createDebugDriverLog(
             // tslint:disable-next-line: no-any
-            jasmine.any(String) as any,
+            jest.fn(String) as any,
             undefined,
             undefined,
             payloadInfo
@@ -573,13 +573,13 @@ describe(LumberjackService.name, () => {
           lumberjackLogDriverToken
         ) as unknown) as LumberjackLogDriver[];
         spyDriver = _spyDriver as SpyDriver;
-        noopDriver = _noopDriver as jasmine.SpyObj<NoopDriver>;
-        spyOn(noopDriver, 'logCritical');
-        spyOn(noopDriver, 'logDebug');
-        spyOn(noopDriver, 'logError');
-        spyOn(noopDriver, 'logInfo');
-        spyOn(noopDriver, 'logTrace');
-        spyOn(noopDriver, 'logWarning');
+        noopDriver = _noopDriver as jest.Mocked<NoopDriver>;
+        jest.spyOn(noopDriver, 'logCritical');
+        jest.spyOn(noopDriver, 'logDebug');
+        jest.spyOn(noopDriver, 'logError');
+        jest.spyOn(noopDriver, 'logInfo');
+        jest.spyOn(noopDriver, 'logTrace');
+        jest.spyOn(noopDriver, 'logWarning');
         logFactory = resolveDependency(LumberjackLogFactory);
       });
 
@@ -594,7 +594,7 @@ describe(LumberjackService.name, () => {
 
       let logFactory: LumberjackLogFactory;
       let lumberjack: LumberjackService;
-      let noopDriver: jasmine.SpyObj<NoopDriver>;
+      let noopDriver: jest.Mocked<NoopDriver>;
       let spyDriver: SpyDriver;
 
       it('then logs of configured levels are passed to each of them', () => {

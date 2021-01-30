@@ -97,6 +97,7 @@ jobs:
       - run: yarn install
       - run: yarn test:internal:ci
       - run: yarn test:lib:ci
+      - run: yarn test:schematics
 
   app:
     runs-on: ubuntu-latest

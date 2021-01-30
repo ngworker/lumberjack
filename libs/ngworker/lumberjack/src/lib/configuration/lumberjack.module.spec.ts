@@ -80,7 +80,7 @@ describe(LumberjackModule.name, () => {
 
       const actualConfig = resolveDependency(lumberjackConfigToken);
       expect(actualConfig).toEqual({
-        format: jasmine.any(Function),
+        format: jest.fn(),
         levels: defaultDevelopmentLevels,
       });
     });
@@ -93,7 +93,7 @@ describe(LumberjackModule.name, () => {
 
       const actualConfig = resolveDependency(lumberjackConfigToken);
       expect(actualConfig).toEqual({
-        format: jasmine.any(Function),
+        format: jest.fn(),
         levels: defaultProductionLevels,
       });
     });

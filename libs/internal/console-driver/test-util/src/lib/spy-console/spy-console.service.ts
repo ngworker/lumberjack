@@ -8,25 +8,25 @@ import { LumberjackConsole } from '@ngworker/lumberjack/console-driver';
  * Every method is a spy.
  */
 @Injectable()
-export class SpyConsole implements LumberjackConsole, jasmine.SpyObj<LumberjackConsole> {
-  debug = jasmine.createSpy('debug');
+export class SpyConsole implements LumberjackConsole, jest.Mocked<LumberjackConsole> {
+  debug = jest.fn();
 
-  error = jasmine.createSpy('error');
+  error = jest.fn();
 
-  info = jasmine.createSpy('info');
+  info = jest.fn();
 
-  trace = jasmine.createSpy('trace');
+  trace = jest.fn();
 
-  warn = jasmine.createSpy('warn');
+  warn = jest.fn();
 
   /**
    * Reset tracking on spies.
    */
   reset(): void {
-    this.debug.calls.reset();
-    this.error.calls.reset();
-    this.info.calls.reset();
-    this.trace.calls.reset();
-    this.warn.calls.reset();
+    this.error.mockClear();
+    this.info.mockClear();
+    this.trace.mockClear();
+    this.warn.mockClear();
+    jest.clearAllMocks();
   }
 }

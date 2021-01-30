@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { resolveDependency } from '@internal/test-util';
+import { createSpyObj, resolveDependency } from '@internal/test-util';
 
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
@@ -28,7 +28,7 @@ const fakeDate = new Date('2020-02-02T02:02:02.000Z');
 
 describe(LumberjackLogger.name, () => {
   beforeEach(() => {
-    lumberjackStub = jasmine.createSpyObj<LumberjackService>(LumberjackTimeService.name, ['log']);
+    lumberjackStub = createSpyObj<LumberjackService>(LumberjackTimeService.name, ['log']);
 
     TestBed.configureTestingModule({
       providers: [{ provide: LumberjackService, useValue: lumberjackStub }],
@@ -42,7 +42,7 @@ describe(LumberjackLogger.name, () => {
 
   let logFactory: LumberjackLogFactory;
   let logger: TestLogger;
-  let lumberjackStub: jasmine.SpyObj<LumberjackService>;
+  let lumberjackStub: jest.Mocked<LumberjackService>;
 
   it('can create a critical logger', () => {
     logger.criticalLogger();

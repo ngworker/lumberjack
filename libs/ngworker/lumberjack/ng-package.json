@@ -3,5 +3,6 @@
   "dest": "../../../dist/ngworker/lumberjack",
   "lib": {
     "entryFile": "src/index.ts"
-  }
+  },
+  "assets": ["./schematics/**/*.json"]
 }

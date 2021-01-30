@@ -1,6 +1,7 @@
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { VERSION } from '@angular/platform-browser';
+import { advanceBy, advanceTo, clear } from 'jest-date-mock';
 
 import { createCriticalDriverLog, createDriverLog, repeatSideEffect, resolveDependency } from '@internal/test-util';
 import {
@@ -43,7 +44,7 @@ function expectRequest(
 
 function expectRequestToBeAborted(httpTestingController: HttpTestingController, options: LumberjackHttpDriverOptions) {
   const { cancelled } = httpTestingController.expectOne(options.storeUrl);
-  expect(cancelled).toBeTrue();
+  expect(cancelled).toBe(true);
 }
 
 function expectFailingRequest(
@@ -57,11 +58,11 @@ function expectFailingRequest(
     request: { method, body },
   } = req;
 
-  expect(cancelled).toBeFalse();
+  expect(cancelled).toBe(false);
   expect(method).toEqual('POST');
   expect(body).toEqual(expectedBody);
   respondWith503ServiceUnavailable(req);
-  jasmine.clock().tick(retryOptions.delayMs);
+  jest.advanceTimersByTime(retryOptions.delayMs);
 }
 
 function respondWith503ServiceUnavailable(request: TestRequest) {
@@ -92,9 +93,9 @@ describe(LumberjackHttpDriver.name, () => {
     [httpDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver<HttpDriverPayload>[];
     httpTestingController = resolveDependency(HttpTestingController);
 
-    jasmine.clock().uninstall();
-    jasmine.clock().install();
-    jasmine.clock().mockDate(new Date(0));
+    jest.useRealTimers();
+    jest.useFakeTimers();
+    advanceTo(0);
   });
 
   describe('logs to a web API using the right log level', () => {
@@ -159,6 +160,6 @@ describe(LumberjackHttpDriver.name, () => {
 
   afterEach(() => {
     httpTestingController.verify();
-    jasmine.clock().uninstall();
+    jest.useRealTimers();
   });
 });

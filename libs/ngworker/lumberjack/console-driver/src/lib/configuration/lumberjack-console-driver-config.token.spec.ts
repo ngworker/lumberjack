@@ -27,7 +27,7 @@ describe('consoleDriverConfigToken', () => {
     it('then that config is resolved', () => {
       const actualDriverConfig = resolveDependency(lumberjackConsoleDriverConfigToken);
 
-      expect(actualDriverConfig).toBe(debugDriverConfig);
+      expect(actualDriverConfig).toStrictEqual(debugDriverConfig);
     });
   });
 });

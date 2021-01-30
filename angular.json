@@ -74,12 +74,10 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular-builders/jest:run",
           "options": {
-            "main": "apps/lumberjack-app/src/test.ts",
             "polyfills": "apps/lumberjack-app/src/polyfills.ts",
             "tsConfig": "apps/lumberjack-app/tsconfig.spec.json",
-            "karmaConfig": "apps/lumberjack-app/karma.conf.js",
             "assets": ["apps/lumberjack-app/src/favicon.ico", "apps/lumberjack-app/src/assets"],
             "styles": ["apps/lumberjack-app/src/styles.scss"],
             "scripts": []
@@ -152,11 +150,9 @@
           }
         },
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular-builders/jest:run",
           "options": {
-            "main": "libs/ngworker/lumberjack/test.ts",
-            "tsConfig": "libs/ngworker/lumberjack/tsconfig.spec.json",
-            "karmaConfig": "libs/ngworker/lumberjack/karma.conf.js"
+            "tsConfig": "libs/ngworker/lumberjack/tsconfig.spec.json"
           },
           "configurations": {
             "ci": {
@@ -189,11 +185,9 @@
       "prefix": "internal",
       "architect": {
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular-builders/jest:run",
           "options": {
-            "main": "libs/internal/test-util/src/test.ts",
-            "tsConfig": "libs/internal/test-util/tsconfig.spec.json",
-            "karmaConfig": "libs/internal/test-util/karma.conf.js"
+            "tsConfig": "libs/internal/test-util/tsconfig.spec.json"
           },
           "configurations": {
             "ci": {
@@ -220,11 +214,9 @@
       "prefix": "internal",
       "architect": {
         "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+          "builder": "@angular-builders/jest:run",
           "options": {
-            "main": "libs/internal/console-driver/test-util/src/test.ts",
-            "tsConfig": "libs/internal/console-driver/test-util/tsconfig.spec.json",
-            "karmaConfig": "libs/internal/console-driver/test-util/karma.conf.js"
+            "tsConfig": "libs/internal/console-driver/test-util/tsconfig.spec.json"
           },
           "configurations": {
             "ci": {
@@ -248,5 +240,8 @@
       }
     }
   },
-  "defaultProject": "lumberjack-app"
+  "defaultProject": "lumberjack-app",
+  "cli": {
+    "analytics": false
+  }
 }
