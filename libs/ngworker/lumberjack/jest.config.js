@@ -4,7 +4,7 @@ module.exports = {
   ...baseConfig,
   globals: {
     'ts-jest': {
-      tsConfig: '<rootDir>/libs/ngworker/lumberjack/tsconfig.spec.json',
+      tsconfig: '<rootDir>/libs/ngworker/lumberjack/tsconfig.spec.json',
     },
   },
 };

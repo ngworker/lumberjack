@@ -23,7 +23,7 @@ exports.config = {
     showColors: true,
     defaultTimeoutInterval: 30000,
     print() {
-      // we're not outputting test results to the console as we're using Karma
+      // we're not outputting test results to the console
     },
   },
   onPrepare() {

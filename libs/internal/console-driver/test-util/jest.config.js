@@ -4,7 +4,7 @@ module.exports = {
   ...baseConfig,
   globals: {
     'ts-jest': {
-      tsConfig: '<rootDir>/libs/internal/console-driver/test-util/tsconfig.spec.json',
+      tsconfig: '<rootDir>/libs/internal/console-driver/test-util/tsconfig.spec.json',
     },
   },
 };

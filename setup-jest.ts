@@ -1,5 +1,3 @@
-import 'jest-preset-angular';
-
 /* global mocks for jsdom */
 const mock = () => {
   let storage: { [key: string]: string } = {};

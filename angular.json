@@ -76,23 +76,14 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
-            "polyfills": "apps/lumberjack-app/src/polyfills.ts",
-            "tsConfig": "apps/lumberjack-app/tsconfig.spec.json",
-            "assets": ["apps/lumberjack-app/src/favicon.ico", "apps/lumberjack-app/src/assets"],
-            "styles": ["apps/lumberjack-app/src/styles.scss"],
-            "scripts": []
+            "codeCoverage": false
           },
           "configurations": {
             "ci": {
-              "browsers": "ChromeHeadless",
-              "codeCoverage": false,
-              "progress": false,
               "watch": false
             },
             "coverage": {
-              "browsers": "ChromeHeadless",
               "codeCoverage": true,
-              "progress": false,
               "watch": false
             }
           }
@@ -152,19 +143,14 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
-            "tsConfig": "libs/ngworker/lumberjack/tsconfig.spec.json"
+            "codeCoverage": false
           },
           "configurations": {
             "ci": {
-              "browsers": "ChromeHeadless",
-              "codeCoverage": false,
-              "progress": false,
               "watch": false
             },
             "coverage": {
-              "browsers": "ChromeHeadless",
               "codeCoverage": true,
-              "progress": false,
               "watch": false
             }
           }
@@ -187,13 +173,10 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
-            "tsConfig": "libs/internal/test-util/tsconfig.spec.json"
+            "codeCoverage": false
           },
           "configurations": {
             "ci": {
-              "browsers": "ChromeHeadless",
-              "codeCoverage": false,
-              "progress": false,
               "watch": false
             }
           }
@@ -216,13 +199,10 @@
         "test": {
           "builder": "@angular-builders/jest:run",
           "options": {
-            "tsConfig": "libs/internal/console-driver/test-util/tsconfig.spec.json"
+            "codeCoverage": false
           },
           "configurations": {
             "ci": {
-              "browsers": "ChromeHeadless",
-              "codeCoverage": false,
-              "progress": false,
               "watch": false
             }
           }
