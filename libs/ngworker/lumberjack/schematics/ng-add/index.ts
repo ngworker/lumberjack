@@ -17,44 +17,38 @@ function addImportToNgModule(options: NgAddOptions): Rule {
     }
 
     if (!host.exists(modulePath)) {
-      throw new Error('Specified module does not exist');
+      throw new Error('The specified module does not exist.');
     }
 
     const text = host.read(modulePath);
 
     if (text === null) {
-      throw new SchematicsException(`File ${modulePath} does not exist.`);
+      throw new SchematicsException(`The file "${modulePath}" does not exist.`);
     }
 
     const sourceText = text.toString('utf-8');
-
     const source = ts.createSourceFile(modulePath, sourceText, ts.ScriptTarget.Latest, true);
+    const [importChanges] = addImportToModule(source, modulePath, 'LumberjackModule.forRoot()', '@ngworker/lumberjack');
 
-    const importChanges = addImportToModule(
-      source,
-      modulePath,
-      'LumberjackModule.forRoot()',
-      '@ngworker/lumberjack'
-    ).shift();
-
-    const changes = [insertImport(source, modulePath, 'LumberjackModule', '@ngworker/lumberjack'), importChanges];
+    let changes = [insertImport(source, modulePath, 'LumberjackModule', '@ngworker/lumberjack'), importChanges];
 
     if (options.consoleDriver) {
-      const importConsoleChanges = addImportToModule(
+      const [importConsoleChanges] = addImportToModule(
         source,
         modulePath,
         'LumberjackConsoleDriverModule.forRoot()',
         '@ngworker/lumberjack/console-driver'
-      ).shift();
-
-      changes.push(
-        insertImport(source, modulePath, 'LumberjackConsoleDriverModule', '@ngworker/lumberjack/console-driver'),
-        importConsoleChanges
       );
+
+      changes = [
+        ...changes,
+        insertImport(source, modulePath, 'LumberjackConsoleDriverModule', '@ngworker/lumberjack/console-driver'),
+        importConsoleChanges,
+      ];
     }
 
     if (options.httpDriver) {
-      const importHttpChanges = addImportToModule(
+      const [importHttpChanges] = addImportToModule(
         source,
         modulePath,
         `LumberjackHttpDriverModule.withOptions({
@@ -63,21 +57,21 @@ function addImportToNgModule(options: NgAddOptions): Rule {
           retryOptions: { maxRetries: 5, delayMs: 250 },
         })`,
         '@ngworker/lumberjack/http-driver'
-      ).shift();
-
-      changes.push(
-        insertImport(source, modulePath, 'LumberjackHttpDriverModule ', '@ngworker/lumberjack/http-driver'),
-        importHttpChanges
       );
+
+      changes = [
+        ...changes,
+        insertImport(source, modulePath, 'LumberjackHttpDriverModule ', '@ngworker/lumberjack/http-driver'),
+        importHttpChanges,
+      ];
     }
 
     const recorder = host.beginUpdate(modulePath);
 
-    for (const change of changes) {
-      if (change instanceof InsertChange) {
-        recorder.insertLeft(change.pos, change.toAdd);
-      }
-    }
+    changes
+      .filter((change) => change instanceof InsertChange)
+      .map((change) => change as InsertChange)
+      .forEach((change) => recorder.insertLeft(change.pos, change.toAdd));
 
     host.commitUpdate(recorder);
 
