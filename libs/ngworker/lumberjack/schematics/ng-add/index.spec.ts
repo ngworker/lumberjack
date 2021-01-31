@@ -1,6 +1,6 @@
-/* tslint:disable */
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
-// import * as path from 'path';
+import * as path from 'path';
+
 import { NgAddOptions } from './schema';
 
 export const workspaceOptions = {
@@ -20,8 +20,7 @@ export const appOptions = {
   skipPackageJson: false,
 };
 
-// const collectionPath = path.join('../collection.json');
-const collectionPath = require.resolve('../collection.json');
+const collectionPath = path.resolve(__dirname, '../collection.json');
 
 describe('ng add function', () => {
   let appTree: UnitTestTree;
