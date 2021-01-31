@@ -183,7 +183,9 @@ describe(LumberjackService.name, () => {
           SpyDriver,
           ErrorThrowingDriver
         ];
-        spyDriver.logDebug.mockReturnValue('The hidden spy made an error');
+        spyDriver.logDebug.mockImplementation(() => {
+          throw new Error('The hidden spy made an error');
+        });
         const errorDebugSpy = jest.spyOn(errorDriver, 'logDebug');
         const errorErrorSpy = jest.spyOn(errorDriver, 'logError');
 
@@ -219,7 +221,9 @@ describe(LumberjackService.name, () => {
           ErrorThrowingDriver,
           NoopDriver
         ];
-        spyDriver.logDebug.mockRejectedValue('The hidden spy made an error');
+        spyDriver.logDebug.mockImplementation(() => {
+          throw new Error('The hidden spy made an error');
+        });
         const errorDebugSpy = jest.spyOn(errorDriver, 'logDebug');
         const errorErrorSpy = jest.spyOn(errorDriver, 'logError');
         const noopErrorSpy = jest.spyOn(noopDriver, 'logError').mockImplementation(() => {
@@ -308,7 +312,9 @@ describe(LumberjackService.name, () => {
         const logDrivers = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
         const spyDriver = logDrivers[0] as SpyDriver;
         const errorDriver = logDrivers[1] as ErrorThrowingDriver;
-        spyDriver.logDebug.mockResolvedValue('The hidden spy made an error');
+        spyDriver.logDebug.mockImplementation(() => {
+          throw new Error('The hidden spy made an error');
+        });
         jest.spyOn(errorDriver, 'logDebug');
         jest.spyOn(errorDriver, 'logError');
 
