@@ -183,7 +183,7 @@ describe(LumberjackService.name, () => {
           SpyDriver,
           ErrorThrowingDriver
         ];
-        spyDriver.logDebug.mockResolvedValue('The hidden spy made an error');
+        spyDriver.logDebug.mockReturnValue('The hidden spy made an error');
         const errorDebugSpy = jest.spyOn(errorDriver, 'logDebug');
         const errorErrorSpy = jest.spyOn(errorDriver, 'logError');
 
