@@ -6,6 +6,7 @@ import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
+import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { LumberjackLogBuilder } from './lumberjack-log.builder';
