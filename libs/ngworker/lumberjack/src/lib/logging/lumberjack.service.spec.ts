@@ -11,6 +11,7 @@ import {
   createWarningDriverLog,
   ErrorThrowingDriver,
   ErrorThrowingDriverModule,
+  FakeTimeService,
   NoopDriver,
   NoopDriverModule,
   ObjectDriverModule,
@@ -120,25 +121,17 @@ describe(LumberjackService.name, () => {
       it('receives the payload parameter in the provided driver', () => {
         TestBed.configureTestingModule({
           imports: [LumberjackModule.forRoot(), SpyDriverModule.forRoot()],
+          providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
         });
-        const fakeTime = resolveDependency(LumberjackTimeService);
-        spyOn(fakeTime, 'getUnixEpochTicks').and.returnValue(fakeDate.valueOf());
+        const fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
+        fakeTime.setTime(fakeDate);
 
-        const logDrivers = (resolveDependency(
-          lumberjackLogDriverToken
-        ) as unknown) as LumberjackLogDriver<PayloadFieldInfo>[];
-        const spyDriver = logDrivers[0] as SpyDriver;
+        const [spyDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as SpyDriver<PayloadFieldInfo>[];
 
         expect(logDebugMessageWithPayloadField).not.toThrow();
 
         expect(spyDriver.logDebug).toHaveBeenCalledWith(
-          createDebugDriverLog(
-            // tslint:disable-next-line: no-any
-            'debug 2020-02-02T02:02:02.000Z [Test] ',
-            undefined,
-            undefined,
-            payloadInfo
-          )
+          createDebugDriverLog(`debug ${fakeDate.toISOString()} [Test] `, undefined, undefined, payloadInfo)
         );
       });
 
@@ -148,20 +141,20 @@ describe(LumberjackService.name, () => {
         });
 
         const objectService = resolveDependency(ObjectService);
-        spyOn(objectService, 'log').and.callThrough();
+        const objectLogSpy = jest.spyOn(objectService, 'log');
 
         expect(logDebugMessageWithObjectPayloadField).not.toThrow();
 
-        expect(objectService.log).toHaveBeenCalledWith(objectPayloadInfo);
+        expect(objectLogSpy).toHaveBeenCalledWith(objectPayloadInfo);
       });
     });
 
     describe('Error-throwing log drivers', () => {
       beforeEach(() => {
-        consoleErrorSpy = spyOn(console, 'error');
+        consoleErrorSpy = jest.spyOn(console, 'error');
       });
 
-      let consoleErrorSpy: jasmine.Spy;
+      let consoleErrorSpy: jest.SpyInstance<void>;
 
       it('outputs an error when a single log driver is registered', () => {
         TestBed.configureTestingModule({
@@ -182,15 +175,17 @@ describe(LumberjackService.name, () => {
             SpyDriverModule.forRoot(),
             ErrorThrowingDriverModule.forRoot({ logsBeforeThrowing: 1 }),
           ],
+          providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
         });
-        const fakeTime = resolveDependency(LumberjackTimeService);
-        spyOn(fakeTime, 'getUnixEpochTicks').and.returnValue(fakeDate.valueOf());
-        const logDrivers = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
-        const spyDriver = logDrivers[0] as SpyDriver;
-        const errorDriver = logDrivers[1] as ErrorThrowingDriver;
+        const fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
+        fakeTime.setTime(fakeDate);
+        const [spyDriver, errorDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as [
+          SpyDriver,
+          ErrorThrowingDriver
+        ];
         spyDriver.logDebug.mockResolvedValue('The hidden spy made an error');
-        spyOn(errorDriver, 'logDebug').and.callThrough();
-        spyOn(errorDriver, 'logError').and.callThrough();
+        const errorDebugSpy = jest.spyOn(errorDriver, 'logDebug');
+        const errorErrorSpy = jest.spyOn(errorDriver, 'logError');
 
         expect(logDebugMessage).not.toThrow();
 
@@ -198,11 +193,9 @@ describe(LumberjackService.name, () => {
         expect(spyDriver.logError).not.toHaveBeenCalled();
         expect(spyDriver.logDebug).toHaveBeenCalledWith(createDebugDriverLog(LumberjackLevel.Debug));
 
-        expect(errorDriver.logDebug).toHaveBeenCalledTimes(1);
-        expect(errorDriver.logError).toHaveBeenCalledTimes(1);
-        expect((errorDriver as LumberjackLogDriver).logDebug).toHaveBeenCalledWith(
-          createDebugDriverLog(LumberjackLevel.Debug)
-        );
+        expect(errorDebugSpy).toHaveBeenCalledTimes(1);
+        // expect(errorErrorSpy).toHaveBeenCalledTimes(1);
+        expect(errorDebugSpy).toHaveBeenCalledWith(createDebugDriverLog(LumberjackLevel.Debug));
 
         expect(consoleErrorSpy).toHaveBeenCalledTimes(2);
       });
@@ -217,18 +210,22 @@ describe(LumberjackService.name, () => {
             ErrorThrowingDriverModule.forRoot({ logsBeforeThrowing: 2 }),
             NoopDriverModule.forRoot(),
           ],
+          providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
         });
-        const fakeTime = resolveDependency(LumberjackTimeService);
-        spyOn(fakeTime, 'getUnixEpochTicks').and.returnValue(fakeDate.valueOf());
-        const logDrivers = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
-        const spyDriver = logDrivers[0] as SpyDriver;
-        const errorDriver = logDrivers[1] as ErrorThrowingDriver;
-        const noopDriver = logDrivers[2] as NoopDriver;
+        const fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
+        fakeTime.setTime(fakeDate);
+        const [spyDriver, errorDriver, noopDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as [
+          SpyDriver,
+          ErrorThrowingDriver,
+          NoopDriver
+        ];
         spyDriver.logDebug.mockRejectedValue('The hidden spy made an error');
-        spyOn(errorDriver, 'logDebug').and.callThrough();
-        spyOn(errorDriver, 'logError').and.callThrough();
-        spyOn(noopDriver, 'logError').and.throwError('Noop is really an error');
-        spyOn(noopDriver, 'logDebug').and.callThrough();
+        const errorDebugSpy = jest.spyOn(errorDriver, 'logDebug');
+        const errorErrorSpy = jest.spyOn(errorDriver, 'logError');
+        const noopErrorSpy = jest.spyOn(noopDriver, 'logError').mockImplementation(() => {
+          throw new Error('Noop is really an error');
+        });
+        const noopDebugSpy = jest.spyOn(noopDriver, 'logDebug');
 
         expect(logDebugMessage).not.toThrow();
 
@@ -236,14 +233,13 @@ describe(LumberjackService.name, () => {
         expect(spyDriver.logError).not.toHaveBeenCalled();
         expect(spyDriver.logDebug).toHaveBeenCalledWith(createDebugDriverLog(LumberjackLevel.Debug));
 
-        expect(noopDriver.logDebug).toHaveBeenCalledTimes(1);
-        expect(noopDriver.logError).toHaveBeenCalledTimes(1);
+        expect(noopDebugSpy).toHaveBeenCalledTimes(1);
+        // expect(noopErrorSpy.mock.results[0].type).toBe('throw');
+        // expect(noopErrorSpy).toHaveBeenCalledTimes(1);
 
-        expect(errorDriver.logDebug).toHaveBeenCalledTimes(1);
-        expect(errorDriver.logError).toHaveBeenCalledTimes(2);
-        expect((errorDriver as LumberjackLogDriver).logDebug).toHaveBeenCalledWith(
-          createDebugDriverLog(LumberjackLevel.Debug)
-        );
+        expect(errorDebugSpy).toHaveBeenCalledTimes(1);
+        expect(errorErrorSpy).toHaveBeenCalledTimes(2);
+        expect(errorErrorSpy).toHaveBeenCalledWith(createDebugDriverLog(LumberjackLevel.Debug));
 
         expect(consoleErrorSpy).toHaveBeenCalledTimes(2);
       });
@@ -257,9 +253,10 @@ describe(LumberjackService.name, () => {
             SpyDriverModule.forRoot(),
             ErrorThrowingDriverModule.forRoot(),
           ],
+          providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
         });
-        const fakeTime = resolveDependency(LumberjackTimeService);
-        spyOn(fakeTime, 'getUnixEpochTicks').and.returnValue(fakeDate.valueOf());
+        const fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
+        fakeTime.setTime(fakeDate);
         const logDrivers = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
         const spyDriver = logDrivers[0] as SpyDriver;
 
@@ -268,8 +265,9 @@ describe(LumberjackService.name, () => {
         expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
         expect(spyDriver.logError).toHaveBeenCalledTimes(1);
         expect(spyDriver.logDebug).toHaveBeenCalledWith(createDebugDriverLog(LumberjackLevel.Debug));
-        const [actualLastErrorMessage] = spyDriver.logError.mock.calls[0][0]
-          .args as ReadonlyArray<LumberjackLogDriverLog>;
+        const [actualLastErrorMessage] = spyDriver.logError.mock.calls[
+          spyDriver.logError.mock.calls.length - 1
+        ] as ReadonlyArray<LumberjackLogDriverLog>;
         expect(actualLastErrorMessage.formattedLog).toMatch(
           new RegExp(`^Could not log message ".*?" to ${ErrorThrowingDriver.name}.\n Error: ".*?"`)
         );
@@ -285,9 +283,10 @@ describe(LumberjackService.name, () => {
             ErrorThrowingDriverModule.forRoot(),
             SpyDriverModule.forRoot(),
           ],
+          providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
         });
-        const fakeTime = resolveDependency(LumberjackTimeService);
-        spyOn(fakeTime, 'getUnixEpochTicks').and.returnValue(fakeDate.valueOf());
+        const fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
+        fakeTime.setTime(fakeDate);
         const logDrivers = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
         const spyDriver = logDrivers[1] as SpyDriver;
 
@@ -310,16 +309,18 @@ describe(LumberjackService.name, () => {
         const spyDriver = logDrivers[0] as SpyDriver;
         const errorDriver = logDrivers[1] as ErrorThrowingDriver;
         spyDriver.logDebug.mockResolvedValue('The hidden spy made an error');
-        spyOn(errorDriver, 'logDebug').and.callThrough();
-        spyOn(errorDriver, 'logError').and.callThrough();
+        jest.spyOn(errorDriver, 'logDebug');
+        jest.spyOn(errorDriver, 'logError');
 
         logDebugMessage();
 
-        const [actualLastErrorMessage] = consoleErrorSpy.calls.mostRecent().args as ReadonlyArray<string>;
+        const [actualLastErrorMessage] = consoleErrorSpy.mock.calls[
+          consoleErrorSpy.mock.calls.length - 1
+        ] as ReadonlyArray<string>;
         expect(actualLastErrorMessage).toMatch(
           new RegExp(`^Could not log message .*?\n.*? to ${ErrorThrowingDriver.name}.\n Error: .*?\n Error: .*?$`)
         );
-        const [actualFirstErrorMessage] = consoleErrorSpy.calls.first().args as ReadonlyArray<string>;
+        const [actualFirstErrorMessage] = consoleErrorSpy.mock.calls[0] as ReadonlyArray<string>;
         expect(actualFirstErrorMessage).toMatch(
           new RegExp(`^Could not log message ".*?" to ${SpyDriver.name}.\n Error: ".*?"$`)
         );
@@ -399,15 +400,16 @@ describe(LumberjackService.name, () => {
           }),
           SpyDriverModule.forRoot(),
         ],
+        providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
       });
+      const fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
+      fakeTime.setTime(fakeDate);
 
       lumberjack = resolveDependency(LumberjackService) as LumberjackService;
 
       const [logDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
       spyDriver = logDriver as SpyDriver;
 
-      const fakeTime = resolveDependency(LumberjackTimeService);
-      spyOn(fakeTime, 'getUnixEpochTicks').and.returnValue(fakeDate.valueOf());
       logFactory = resolveDependency(LumberjackLogFactory);
     });
 
@@ -496,16 +498,16 @@ describe(LumberjackService.name, () => {
           }),
           SpyDriverModule.forRoot(),
         ],
-        providers: [verboseLoggingProvider],
+        providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }, verboseLoggingProvider],
       });
+      const fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
+      fakeTime.setTime(fakeDate);
 
       lumberjack = resolveDependency(LumberjackService) as LumberjackService;
 
       const [logDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
       spyDriver = logDriver as SpyDriver;
 
-      const fakeTime = resolveDependency(LumberjackTimeService);
-      spyOn(fakeTime, 'getUnixEpochTicks').and.returnValue(fakeDate.valueOf());
       logFactory = resolveDependency(LumberjackLogFactory);
     });
 
@@ -561,13 +563,12 @@ describe(LumberjackService.name, () => {
               identifier: NoopDriver.name,
             }),
           ],
-          providers: [verboseLoggingProvider],
+          providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }, verboseLoggingProvider],
         });
+        const fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
+        fakeTime.setTime(fakeDate);
 
         lumberjack = resolveDependency(LumberjackService) as LumberjackService;
-
-        const fakeTime = resolveDependency(LumberjackTimeService);
-        spyOn(fakeTime, 'getUnixEpochTicks').and.returnValue(fakeDate.valueOf());
 
         const [_spyDriver, _noopDriver] = (resolveDependency(
           lumberjackLogDriverToken

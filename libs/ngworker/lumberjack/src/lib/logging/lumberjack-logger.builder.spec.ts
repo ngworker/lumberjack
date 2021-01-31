@@ -21,9 +21,6 @@ const lumberjackLogLevels: LumberjackLogLevel[] = [LumberjackLevel.Critical, Lum
 describe(LumberjackLoggerBuilder.name, () => {
   const testMessage = 'Test Message';
 
-  let fakeTime: FakeTimeService;
-  let lumberjackService: LumberjackService;
-
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [LumberjackModule.forRoot()],
@@ -32,8 +29,12 @@ describe(LumberjackLoggerBuilder.name, () => {
 
     fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
     lumberjackService = resolveDependency(LumberjackService) as LumberjackService;
-    spyOn(lumberjackService, 'log').and.stub();
+    lumberjackLogSpy = jest.spyOn(lumberjackService, 'log').mockImplementation(() => {});
   });
+
+  let fakeTime: FakeTimeService;
+  let lumberjackService: LumberjackService;
+  let lumberjackLogSpy: jest.SpyInstance<void, [lumberjackLog: LumberjackLog<void | LumberjackLogPayload>]>;
 
   describe('Base builder usage', () => {
     lumberjackLogLevels.forEach((level) =>
@@ -47,7 +48,7 @@ describe(LumberjackLoggerBuilder.name, () => {
           testMessage
         ).build();
 
-        expect(lumberjackService.log).toHaveBeenCalledWith(expectedLog);
+        expect(lumberjackLogSpy).toHaveBeenCalledWith(expectedLog);
       })
     );
   });
@@ -62,7 +63,7 @@ describe(LumberjackLoggerBuilder.name, () => {
       .withScope(scope)
       .build();
 
-    expect(lumberjackService.log).toHaveBeenCalledWith(expectedLog);
+    expect(lumberjackLogSpy).toHaveBeenCalledWith(expectedLog);
   });
 
   describe('LumberjackLogPayload', () => {
@@ -93,7 +94,7 @@ describe(LumberjackLoggerBuilder.name, () => {
         .withPayload(payload)
         .build();
 
-      expect(((lumberjackService as unknown) as LumberjackService<TestPayload>).log).toHaveBeenCalledWith(expectedLog);
+      expect(lumberjackLogSpy).toHaveBeenCalledWith(expectedLog);
     });
 
     it('logs the specified static payload', () => {
@@ -107,7 +108,7 @@ describe(LumberjackLoggerBuilder.name, () => {
         .withPayload(payload)
         .build();
 
-      expect(((lumberjackService as unknown) as LumberjackService<TestPayload>).log).toHaveBeenCalledWith(expectedLog);
+      expect(lumberjackLogSpy).toHaveBeenCalledWith(expectedLog);
     });
 
     it('logs the specified scope and payload', () => {
@@ -122,7 +123,7 @@ describe(LumberjackLoggerBuilder.name, () => {
         .withPayload(payload)
         .build();
 
-      expect(((lumberjackService as unknown) as LumberjackService<TestPayload>).log).toHaveBeenCalledWith(expectedLog);
+      expect(lumberjackLogSpy).toHaveBeenCalledWith(expectedLog);
     });
   });
 });

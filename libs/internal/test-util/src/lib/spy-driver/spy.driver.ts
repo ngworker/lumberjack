@@ -1,7 +1,7 @@
 /* tslint:disable */
 import { Inject, Injectable } from '@angular/core';
 
-import { LumberjackLogDriver, LumberjackLogDriverConfig } from '@ngworker/lumberjack';
+import { LumberjackLogDriver, LumberjackLogDriverConfig, LumberjackLogPayload } from '@ngworker/lumberjack';
 
 import { spyDriverConfigToken } from './spy-driver-config.token';
 
@@ -11,7 +11,8 @@ import { spyDriverConfigToken } from './spy-driver-config.token';
  * Every logging method is a spy.
  */
 @Injectable()
-export class SpyDriver implements LumberjackLogDriver, jest.Mocked<LumberjackLogDriver> {
+export class SpyDriver<TPayload extends LumberjackLogPayload | void = void>
+  implements LumberjackLogDriver<TPayload>, jest.Mocked<LumberjackLogDriver> {
   static driverIdentifier = 'SpyDriver';
 
   constructor(@Inject(spyDriverConfigToken) readonly config: LumberjackLogDriverConfig) {}
@@ -39,21 +40,3 @@ export class SpyDriver implements LumberjackLogDriver, jest.Mocked<LumberjackLog
     this.logWarning.mockClear();
   }
 }
-
-// tslint-disable-next-statement
-export const createSpyObj = <T = unknown>(_baseName: string, methodNames?: string[]): jest.Mocked<T> => {
-  // tslint-disable-next-statement
-  const obj: any = {};
-  if (methodNames) {
-    // tslint-disable-next-statement
-    for (let i = 0; i < methodNames.length; i++) {
-      obj[methodNames[i]] = jest.fn();
-    }
-  }
-
-  return obj;
-};
-
-export const createSpy = (_baseName?: string) => {
-  return jest.fn();
-};
