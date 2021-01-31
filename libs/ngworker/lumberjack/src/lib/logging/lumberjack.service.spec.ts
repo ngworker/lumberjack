@@ -196,7 +196,7 @@ describe(LumberjackService.name, () => {
         expect(spyDriver.logDebug).toHaveBeenCalledWith(createDebugDriverLog(LumberjackLevel.Debug));
 
         expect(errorDebugSpy).toHaveBeenCalledTimes(1);
-        // expect(errorErrorSpy).toHaveBeenCalledTimes(1);
+        expect(errorErrorSpy).toHaveBeenCalledTimes(1);
         expect(errorDebugSpy).toHaveBeenCalledWith(createDebugDriverLog(LumberjackLevel.Debug));
 
         expect(consoleErrorSpy).toHaveBeenCalledTimes(2);
@@ -238,12 +238,12 @@ describe(LumberjackService.name, () => {
         expect(spyDriver.logDebug).toHaveBeenCalledWith(createDebugDriverLog(LumberjackLevel.Debug));
 
         expect(noopDebugSpy).toHaveBeenCalledTimes(1);
-        // expect(noopErrorSpy.mock.results[0].type).toBe('throw');
-        // expect(noopErrorSpy).toHaveBeenCalledTimes(1);
+        expect(noopErrorSpy.mock.results[0].type).toBe('throw');
+        expect(noopErrorSpy).toHaveBeenCalledTimes(1);
 
         expect(errorDebugSpy).toHaveBeenCalledTimes(1);
         expect(errorErrorSpy).toHaveBeenCalledTimes(2);
-        expect(errorErrorSpy).toHaveBeenCalledWith(createDebugDriverLog(LumberjackLevel.Debug));
+        expect(errorDebugSpy).toHaveBeenCalledWith(createDebugDriverLog(LumberjackLevel.Debug));
 
         expect(consoleErrorSpy).toHaveBeenCalledTimes(2);
       });

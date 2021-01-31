@@ -7,25 +7,25 @@ describe('Logging API', () => {
     it(`exposes ${LumberjackLogFactory.name}`, () => {
       const sut = LumberjackLogger;
 
-      expect(isClass(sut)).toBe(true);
+      expect(isClass(sut)).toBeTruthy();
     });
 
     it(`exposes ${LumberjackLogger.name}`, () => {
       const sut = LumberjackLogger;
 
-      expect(isClass(sut)).toBe(true);
+      expect(isClass(sut)).toBeTruthy();
     });
 
     it(`exposes ${ScopedLumberjackLogger.name}`, () => {
       const sut = ScopedLumberjackLogger;
 
-      expect(isClass(sut)).toBe(true);
+      expect(isClass(sut)).toBeTruthy();
     });
 
     it(`exposes ${LumberjackService.name}`, () => {
       const sut = LumberjackService;
 
-      expect(isClass(sut)).toBe(true);
+      expect(isClass(sut)).toBeTruthy();
     });
   });
 });

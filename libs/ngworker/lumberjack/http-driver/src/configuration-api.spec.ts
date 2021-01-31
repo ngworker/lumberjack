@@ -34,7 +34,7 @@ describe('Configuration API', () => {
     it(`exposes ${LumberjackHttpDriverModule.name}`, () => {
       const sut = LumberjackHttpDriverModule;
 
-      expect(isClass(sut)).toBe(true);
+      expect(isClass(sut)).toBeTruthy();
     });
   });
 });

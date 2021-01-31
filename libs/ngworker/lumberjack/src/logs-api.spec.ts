@@ -41,7 +41,7 @@ describe('Logs API', () => {
     it('exposes LumberjackLevel', () => {
       const sut = LumberjackLevel;
 
-      expect(isObject(sut)).toBe(true);
+      expect(isObject(sut)).toBeTruthy();
     });
   });
 });

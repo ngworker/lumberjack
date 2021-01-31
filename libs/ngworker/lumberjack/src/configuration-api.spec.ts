@@ -45,7 +45,7 @@ describe('Configuration API', () => {
     it(`exposes ${LumberjackModule.name}`, () => {
       const sut = LumberjackModule;
 
-      expect(isClass(sut)).toBe(true);
+      expect(isClass(sut)).toBeTruthy();
     });
   });
 

@@ -7,7 +7,7 @@ describe('Time API', () => {
     it(`exposes ${LumberjackTimeService.name}`, () => {
       const sut = LumberjackTimeService;
 
-      expect(isClass(sut)).toBe(true);
+      expect(isClass(sut)).toBeTruthy();
     });
   });
 });
