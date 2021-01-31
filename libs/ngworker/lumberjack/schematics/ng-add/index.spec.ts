@@ -1,17 +1,18 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
+import { VERSION } from '@angular/core';
 import * as path from 'path';
 
 import { NgAddOptions } from './schema';
 
-export const workspaceOptions = {
+const projectName = 'bar';
+const workspaceOptions = {
   name: 'workspace',
   newProjectRoot: 'projects',
-  version: '6.0.0',
-  defaultProject: 'bar',
+  version: VERSION.full,
+  defaultProject: projectName,
 };
-
-export const appOptions = {
-  name: 'bar',
+const appOptions = {
+  name: projectName,
   inlineStyle: false,
   inlineTemplate: false,
   routing: false,
@@ -19,19 +20,9 @@ export const appOptions = {
   skipTests: false,
   skipPackageJson: false,
 };
-
 const collectionPath = path.resolve(__dirname, '../collection.json');
 
-describe('ng add function', () => {
-  let appTree: UnitTestTree;
-  let schematicRunner: SchematicTestRunner;
-
-  const defaultOptions: NgAddOptions = {
-    project: 'bar',
-    module: 'app',
-    name: '',
-  };
-
+describe('@ngworker/lumberjack:ng-add schematic', () => {
   beforeEach(async () => {
     schematicRunner = new SchematicTestRunner('schematics', collectionPath);
     appTree = await schematicRunner
@@ -40,13 +31,23 @@ describe('ng add function', () => {
     appTree = await schematicRunner
       .runExternalSchematicAsync('@schematics/angular', 'application', appOptions, appTree)
       .toPromise();
+    options = {
+      project: 'bar',
+      module: 'app',
+      name: '',
+    };
   });
 
-  it('should import LumberjackModule a specified module', async () => {
-    const options = { ...defaultOptions };
+  let appTree: UnitTestTree;
+  let schematicRunner: SchematicTestRunner;
+  let options: NgAddOptions;
 
+  it('adds LumberjackModule in an import statement in the specified module', async () => {
     const tree = await schematicRunner.runSchematicAsync('ng-add', options, appTree).toPromise();
-    const content = tree.readContent(`/projects/bar/src/app/app.module.ts`);
+
+    const content = tree.readContent(
+      `/${workspaceOptions.newProjectRoot}/${options.project}/src/app/${options.module}.module.ts`
+    );
     expect(content).toContain(`import { LumberjackModule } from '@ngworker/lumberjack'`);
   });
 });
