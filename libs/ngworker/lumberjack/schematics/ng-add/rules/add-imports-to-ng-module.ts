@@ -1,10 +1,13 @@
 import { Rule, SchematicsException, Tree } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
+import { ScriptTarget } from 'typescript';
 
-import { addImportToModule, insertImport } from '../../utils/ast-utils';
 import { InsertChange } from '../../utils/change';
 import { findModuleFromOptions } from '../../utils/find-module';
 import { NgAddOptions } from '../schema';
+import { addConsoleDriverToNgModule } from '../tasks/add-console-driver-to-ng-module';
+import { addHttpDriverToNgModule } from '../tasks/add-http-driver-to-ng-module';
+import { addLumberjackToNgModule } from '../tasks/add-lumberjack-to-ng-module';
 
 export function addImportsToNgModule(options: NgAddOptions): Rule {
   return (host: Tree) => {
@@ -25,45 +28,16 @@ export function addImportsToNgModule(options: NgAddOptions): Rule {
     }
 
     const sourceText = text.toString('utf-8');
-    const source = ts.createSourceFile(modulePath, sourceText, ts.ScriptTarget.Latest, true);
-    const [importChanges] = addImportToModule(source, modulePath, 'LumberjackModule.forRoot()', '@ngworker/lumberjack');
-
-    let changes = [insertImport(source, modulePath, 'LumberjackModule', '@ngworker/lumberjack'), importChanges];
-
-    if (options.consoleDriver) {
-      const [importConsoleChanges] = addImportToModule(
-        source,
+    const source = ts.createSourceFile(modulePath, sourceText, ScriptTarget.Latest, true);
+    const changes = [
+      ...addLumberjackToNgModule({ modulePath, source }),
+      ...addConsoleDriverToNgModule({
+        options,
         modulePath,
-        'LumberjackConsoleDriverModule.forRoot()',
-        '@ngworker/lumberjack/console-driver'
-      );
-
-      changes = [
-        ...changes,
-        insertImport(source, modulePath, 'LumberjackConsoleDriverModule', '@ngworker/lumberjack/console-driver'),
-        importConsoleChanges,
-      ];
-    }
-
-    if (options.httpDriver) {
-      const [importHttpChanges] = addImportToModule(
         source,
-        modulePath,
-        `LumberjackHttpDriverModule.withOptions({
-          origin: '${options.project}',
-          storeUrl: '/api/logs',
-          retryOptions: { maxRetries: 5, delayMs: 250 },
-        })`,
-        '@ngworker/lumberjack/http-driver'
-      );
-
-      changes = [
-        ...changes,
-        insertImport(source, modulePath, 'LumberjackHttpDriverModule ', '@ngworker/lumberjack/http-driver'),
-        importHttpChanges,
-      ];
-    }
-
+      }),
+      ...addHttpDriverToNgModule({ options, modulePath, source }),
+    ];
     const recorder = host.beginUpdate(modulePath);
 
     changes
