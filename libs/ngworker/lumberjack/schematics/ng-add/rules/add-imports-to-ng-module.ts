@@ -1,6 +1,5 @@
 import { Rule, SchematicsException, Tree } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
-import { ScriptTarget } from 'typescript';
 
 import { InsertChange } from '../../utils/change';
 import { findModuleFromOptions } from '../../utils/find-module';
@@ -28,7 +27,7 @@ export function addImportsToNgModule(options: NgAddOptions): Rule {
     }
 
     const sourceText = text.toString('utf-8');
-    const source = ts.createSourceFile(modulePath, sourceText, ScriptTarget.Latest, true);
+    const source = ts.createSourceFile(modulePath, sourceText, ts.ScriptTarget.Latest, true);
     const changes = [
       ...addLumberjackToNgModule({ modulePath, source }),
       ...addConsoleDriverToNgModule({
