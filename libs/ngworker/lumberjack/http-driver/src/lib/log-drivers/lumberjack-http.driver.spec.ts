@@ -130,8 +130,9 @@ describe(LumberjackHttpDriver.name, () => {
 
     httpDriver.logCritical(expectedDriverLog);
 
-    expectFailingRequest(httpTestingController, options, createHttpDriverLog(expectedDriverLog));
-    expectFailingRequest(httpTestingController, options, createHttpDriverLog(expectedDriverLog));
+    repeatSideEffect(2, () =>
+      expectFailingRequest(httpTestingController, options, createHttpDriverLog(expectedDriverLog))
+    );
 
     expectRequest(httpTestingController, options, createHttpDriverLog(expectedDriverLog));
   });
