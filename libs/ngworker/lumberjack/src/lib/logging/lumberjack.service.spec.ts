@@ -151,10 +151,11 @@ describe(LumberjackService.name, () => {
 
     describe('Error-throwing log drivers', () => {
       beforeEach(() => {
-        consoleErrorSpy = jest.spyOn(console, 'error');
+        consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {});
       });
 
-      let consoleErrorSpy: jest.SpyInstance<void>;
+      // tslint:disable-next-line: no-any
+      let consoleErrorSpy: jest.SpyInstance<void, [any?, ...any[]]>;
 
       it('outputs an error when a single log driver is registered', () => {
         TestBed.configureTestingModule({
