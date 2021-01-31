@@ -15,7 +15,7 @@ export function addImportsToNgModule(options: NgAddOptions): Rule {
     }
 
     if (!host.exists(modulePath)) {
-      throw new Error('The specified module does not exist.');
+      throw new SchematicsException('The specified module does not exist.');
     }
 
     const text = host.read(modulePath);
