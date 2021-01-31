@@ -41,7 +41,7 @@ describe(LumberjackLogger.name, () => {
 
   let logFactory: LumberjackLogFactory;
   let logger: TestLogger;
-  let lumberjackLogSpy: jest.SpyInstance<void, [lumberjackLog: LumberjackLog<void | LumberjackLogPayload>]>;
+  let lumberjackLogSpy: jest.SpyInstance<void, [LumberjackLog<void | LumberjackLogPayload>]>;
 
   it('can create a critical logger', () => {
     logger.critical();
