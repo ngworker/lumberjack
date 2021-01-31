@@ -21,9 +21,11 @@ function addImportToNgModule(options: NgAddOptions): Rule {
     }
 
     const text = host.read(modulePath);
+
     if (text === null) {
       throw new SchematicsException(`File ${modulePath} does not exist.`);
     }
+
     const sourceText = text.toString('utf-8');
 
     const source = ts.createSourceFile(modulePath, sourceText, ts.ScriptTarget.Latest, true);
@@ -76,6 +78,7 @@ function addImportToNgModule(options: NgAddOptions): Rule {
         recorder.insertLeft(change.pos, change.toAdd);
       }
     }
+
     host.commitUpdate(recorder);
 
     return host;
@@ -86,7 +89,8 @@ function addImportToNgModule(options: NgAddOptions): Rule {
 export default function (options: NgAddOptions): Rule {
   return async (host: Tree) => {
     const workspace = await getWorkspace(host);
-    const project = workspace.projects.get(options.project as string);
+    const project = workspace.projects.get(options.project);
+
     if (options.path === undefined && project) {
       options.path = buildDefaultPath(project);
     }
