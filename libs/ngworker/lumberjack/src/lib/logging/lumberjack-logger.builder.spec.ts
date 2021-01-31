@@ -35,7 +35,7 @@ describe(LumberjackLoggerBuilder.name, () => {
 
   let fakeTime: FakeTimeService;
   let lumberjackService: LumberjackService;
-  let lumberjackLogSpy: jest.SpyInstance<void, [lumberjackLog: LumberjackLog<void | LumberjackLogPayload>]>;
+  let lumberjackLogSpy: jest.SpyInstance<void, [lumberjackLog: LumberjackLog<void>]>;
 
   describe('Base builder usage', () => {
     lumberjackLogLevels.forEach((level) =>
