@@ -1,7 +1,6 @@
 import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@angular/common/http/testing';
 import { TestBed } from '@angular/core/testing';
 import { VERSION } from '@angular/platform-browser';
-import { advanceBy, advanceTo, clear } from 'jest-date-mock';
 
 import { createCriticalDriverLog, createDriverLog, repeatSideEffect, resolveDependency } from '@internal/test-util';
 import {
@@ -44,7 +43,7 @@ function expectRequest(
 
 function expectRequestToBeAborted(httpTestingController: HttpTestingController, options: LumberjackHttpDriverOptions) {
   const { cancelled } = httpTestingController.expectOne(options.storeUrl);
-  expect(cancelled).toBe(true);
+  expect(cancelled).toBeTruthy();
 }
 
 function expectFailingRequest(
@@ -58,7 +57,7 @@ function expectFailingRequest(
     request: { method, body },
   } = req;
 
-  expect(cancelled).toBe(false);
+  expect(cancelled).toBeFalsy();
   expect(method).toEqual('POST');
   expect(body).toEqual(expectedBody);
   respondWith503ServiceUnavailable(req);
@@ -93,9 +92,7 @@ describe(LumberjackHttpDriver.name, () => {
     [httpDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver<HttpDriverPayload>[];
     httpTestingController = resolveDependency(HttpTestingController);
 
-    jest.useRealTimers();
-    jest.useFakeTimers();
-    advanceTo(0);
+    jest.useFakeTimers('modern');
   });
 
   describe('logs to a web API using the right log level', () => {
@@ -133,9 +130,8 @@ describe(LumberjackHttpDriver.name, () => {
 
     httpDriver.logCritical(expectedDriverLog);
 
-    repeatSideEffect(2, () =>
-      expectFailingRequest(httpTestingController, options, createHttpDriverLog(expectedDriverLog))
-    );
+    expectFailingRequest(httpTestingController, options, createHttpDriverLog(expectedDriverLog));
+    expectFailingRequest(httpTestingController, options, createHttpDriverLog(expectedDriverLog));
 
     expectRequest(httpTestingController, options, createHttpDriverLog(expectedDriverLog));
   });
@@ -160,6 +156,5 @@ describe(LumberjackHttpDriver.name, () => {
 
   afterEach(() => {
     httpTestingController.verify();
-    jest.useRealTimers();
   });
 });
