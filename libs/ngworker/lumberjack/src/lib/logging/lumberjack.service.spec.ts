@@ -155,7 +155,7 @@ describe(LumberjackService.name, () => {
       });
 
       // tslint:disable-next-line: no-any
-      let consoleErrorSpy: jest.SpyInstance<void, [any?, ...any[]]>;
+      let consoleErrorSpy: jest.SpyInstance<void, any[]>;
 
       it('outputs an error when a single log driver is registered', () => {
         TestBed.configureTestingModule({
