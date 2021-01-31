@@ -18,13 +18,10 @@ export function addConsoleDriverToNgModule({
     return [];
   }
 
-  return [
-    insertImport(source, modulePath, 'LumberjackConsoleDriverModule', '@ngworker/lumberjack/console-driver'),
-    ...addImportToModule(
-      source,
-      modulePath,
-      'LumberjackConsoleDriverModule.forRoot()',
-      '@ngworker/lumberjack/console-driver'
-    ),
-  ];
+  return addImportToModule(
+    source,
+    modulePath,
+    'LumberjackConsoleDriverModule.forRoot()',
+    '@ngworker/lumberjack/console-driver'
+  );
 }

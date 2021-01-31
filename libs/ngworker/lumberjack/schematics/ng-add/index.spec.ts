@@ -107,4 +107,58 @@ describe('@ngworker/lumberjack:ng-add schematic', () => {
       expect(content).not.toMatch(consoleDriverImportPattern);
     });
   });
+
+  describe('HTTP driver', () => {
+    beforeEach(() => {
+      options = {
+        ...options,
+        consoleDriver: false,
+      };
+    });
+
+    const httpDriverImportPattern = /\s+imports:\s*\[\s*BrowserModule,\s*LumberjackModule.forRoot\(\),\s*LumberjackHttpDriverModule.withOptions\(\{.*\}\)/;
+
+    it('imports LumberjackConsoleDriverModule in the specified ES module when the "httpDriver" option is true', async () => {
+      options = {
+        ...options,
+        httpDriver: true,
+      };
+
+      const tree = await schematicRunner.runSchematicAsync('ng-add', options, appTree).toPromise();
+
+      const content /*?*/ = readModuleFile(tree, options.project, options.module || '');
+      expect(content).toMatch(/\nimport { LumberjackHttpDriverModule } from '@ngworker\/lumberjack\/http-driver';/);
+    });
+
+    it('does not register the HTTP driver in the specified Angular module by default', async () => {
+      const tree = await schematicRunner.runSchematicAsync('ng-add', options, appTree).toPromise();
+
+      const content = readModuleFile(tree, options.project, options.module || '');
+      expect(content).not.toMatch(httpDriverImportPattern);
+    });
+
+    it('registers the HTTP driver in the specified Angular module when the "httpDriver" option is true', async () => {
+      options = {
+        ...options,
+        httpDriver: true,
+      };
+
+      const tree = await schematicRunner.runSchematicAsync('ng-add', options, appTree).toPromise();
+
+      const content = readModuleFile(tree, options.project, options.module || '');
+      expect(content).toMatch(httpDriverImportPattern);
+    });
+
+    it('does not register the HTTP driver in the specified Angular module when the "httpDriver" option is false', async () => {
+      options = {
+        ...options,
+        httpDriver: false,
+      };
+
+      const tree = await schematicRunner.runSchematicAsync('ng-add', options, appTree).toPromise();
+
+      const content = readModuleFile(tree, options.project, options.module || '');
+      expect(content).not.toMatch(httpDriverImportPattern);
+    });
+  });
 });

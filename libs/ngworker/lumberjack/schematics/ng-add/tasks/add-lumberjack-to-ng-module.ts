@@ -11,8 +11,5 @@ export function addLumberjackToNgModule({
   readonly source: SourceFile;
   readonly modulePath: Path;
 }): Change[] {
-  return [
-    insertImport(source, modulePath, 'LumberjackModule', '@ngworker/lumberjack'),
-    ...addImportToModule(source, modulePath, 'LumberjackModule.forRoot()', '@ngworker/lumberjack'),
-  ];
+  return addImportToModule(source, modulePath, 'LumberjackModule.forRoot()', '@ngworker/lumberjack');
 }

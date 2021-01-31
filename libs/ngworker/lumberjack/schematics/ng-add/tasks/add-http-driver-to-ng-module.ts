@@ -18,17 +18,10 @@ export function addHttpDriverToNgModule({
     return [];
   }
 
-  return [
-    insertImport(source, modulePath, 'LumberjackHttpDriverModule ', '@ngworker/lumberjack/http-driver'),
-    ...addImportToModule(
-      source,
-      modulePath,
-      `LumberjackHttpDriverModule.withOptions({
-      origin: '${options.project}',
-      storeUrl: '/api/logs',
-      retryOptions: { maxRetries: 5, delayMs: 250 },
-    })`,
-      '@ngworker/lumberjack/http-driver'
-    ),
-  ];
+  return addImportToModule(
+    source,
+    modulePath,
+    `LumberjackHttpDriverModule.withOptions({ origin: '${options.project}', storeUrl: '/api/logs', retryOptions: { maxRetries: 5, delayMs: 250 } })`,
+    '@ngworker/lumberjack/http-driver'
+  );
 }
