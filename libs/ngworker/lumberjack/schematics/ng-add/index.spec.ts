@@ -4,6 +4,12 @@ import * as path from 'path';
 
 import { NgAddOptions } from './schema';
 
+function readModuleFile(tree: UnitTestTree, project: string, module: string): string {
+  return tree.readContent(
+    path.sep + path.join(workspaceOptions.newProjectRoot, project, 'src', 'app', `${module}.module.ts`)
+  );
+}
+
 const projectName = 'bar';
 const workspaceOptions = {
   name: 'workspace',
@@ -32,7 +38,7 @@ describe('@ngworker/lumberjack:ng-add schematic', () => {
       .runExternalSchematicAsync('@schematics/angular', 'application', appOptions, appTree)
       .toPromise();
     options = {
-      project: 'bar',
+      project: projectName,
       module: 'app',
       name: '',
     };
@@ -42,12 +48,19 @@ describe('@ngworker/lumberjack:ng-add schematic', () => {
   let schematicRunner: SchematicTestRunner;
   let options: NgAddOptions;
 
-  it('adds LumberjackModule in an import statement in the specified module', async () => {
-    const tree = await schematicRunner.runSchematicAsync('ng-add', options, appTree).toPromise();
+  describe('LumberjackModule', () => {
+    it('imports LumberjackModule in the specified ES module', async () => {
+      const tree = await schematicRunner.runSchematicAsync('ng-add', options, appTree).toPromise();
 
-    const content = tree.readContent(
-      `/${workspaceOptions.newProjectRoot}/${options.project}/src/app/${options.module}.module.ts`
-    );
-    expect(content).toContain(`import { LumberjackModule } from '@ngworker/lumberjack'`);
+      const content = readModuleFile(tree, options.project, options.module || '');
+      expect(content).toMatch(/\nimport { LumberjackModule } from '@ngworker\/lumberjack';/);
+    });
+
+    it('registers Lumberjack in the specified Angular module', async () => {
+      const tree = await schematicRunner.runSchematicAsync('ng-add', options, appTree).toPromise();
+
+      const content = readModuleFile(tree, options.project, options.module || '');
+      expect(content).toMatch(/\s+imports:\s*\[\s*BrowserModule,\s*LumberjackModule.forRoot()/);
+    });
   });
 });
