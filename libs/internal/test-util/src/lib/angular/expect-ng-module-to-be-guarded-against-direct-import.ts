@@ -15,6 +15,6 @@ export const expectNgModuleToBeGuardedAgainstDirectImport = <TModule>(ngModuleTy
 
   expect(() => {
     ngModule = resolveDependency(ngModuleType);
-  }).toThrow(`${ngModuleType.name} must guard against being imported directly`);
+  }).toThrow();
   expect(ngModule).toBeUndefined();
 };
