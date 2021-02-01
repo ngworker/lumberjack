@@ -146,7 +146,7 @@ describe(addImportsToNgModule.name, () => {
       expect(act).rejects.toThrow("Specified module 'app' does not exist.");
     });
 
-    it('throws an exception when the specified Angular module cannot be read', () => {
+    it('throws an error when the specified Angular module cannot be read', () => {
       // tslint:disable-next-line: no-null-keyword
       jest.spyOn(appTree, 'read').mockReturnValue(null);
 
