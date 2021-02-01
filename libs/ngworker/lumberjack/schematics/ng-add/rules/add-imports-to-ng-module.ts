@@ -1,7 +1,7 @@
 import { Rule, SchematicsException, Tree } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
 
-import { InsertChange } from '../../utils/change';
+import { applyToUpdateRecorder } from '../../utils/change';
 import { findModuleFromOptions } from '../../utils/find-module';
 import { NgAddOptions } from '../schema';
 import { addConsoleDriverToNgModule } from '../tasks/add-console-driver-to-ng-module';
@@ -39,11 +39,7 @@ export function addImportsToNgModule(options: NgAddOptions): Rule {
     ];
     const recorder = host.beginUpdate(modulePath);
 
-    changes
-      .filter((change) => change instanceof InsertChange)
-      .map((change) => change as InsertChange)
-      .forEach((change) => recorder.insertLeft(change.pos, change.toAdd));
-
+    applyToUpdateRecorder(recorder, changes);
     host.commitUpdate(recorder);
 
     return host;
