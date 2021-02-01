@@ -10,7 +10,7 @@ export function ngAdd(options: NgAddOptions): Rule {
     const workspace = await getWorkspace(host);
     const project = workspace.projects.get(options.project);
 
-    if (options.path === undefined && project) {
+    if (!options.path && !!project) {
       options.path = buildDefaultPath(project);
     }
 
