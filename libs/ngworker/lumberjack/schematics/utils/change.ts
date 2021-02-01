@@ -1,8 +1,4 @@
 /* tslint:disable */
-import { Tree, UpdateRecorder } from '@angular-devkit/schematics';
-import * as ts from 'typescript';
-
-/* istanbul ignore file */
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -10,12 +6,16 @@ import * as ts from 'typescript';
  * Use of this source code is governed by an MIT-style license that can be
  * found in the LICENSE file at https://angular.io/license
  */
+import { UpdateRecorder } from '@angular-devkit/schematics';
+
 export interface Host {
   write(path: string, content: string): Promise<void>;
   read(path: string): Promise<string>;
 }
 
 export interface Change {
+  apply(host: Host): Promise<void>;
+
   // The file this change should be applied to. Some changes might not apply to
   // a file (maybe the config).
   readonly path: string | null;
@@ -26,7 +26,6 @@ export interface Change {
 
   // The description of this change. This will be outputted in a dry or verbose run.
   readonly description: string;
-  apply(host: Host): Promise<void>;
 }
 
 /**
@@ -76,18 +75,18 @@ export class RemoveChange implements Change {
   order: number;
   description: string;
 
-  constructor(public path: string, public pos: number, public end: number) {
-    if (pos < 0 || end < 0) {
+  constructor(public path: string, private pos: number, public toRemove: string) {
+    if (pos < 0) {
       throw new Error('Negative positions are invalid');
     }
-    this.description = `Removed text in position ${pos} to ${end} of ${path}`;
+    this.description = `Removed ${toRemove} into position ${pos} of ${path}`;
     this.order = pos;
   }
 
   apply(host: Host): Promise<void> {
     return host.read(this.path).then((content) => {
       const prefix = content.substring(0, this.pos);
-      const suffix = content.substring(this.end);
+      const suffix = content.substring(this.pos + this.toRemove.length);
 
       // TODO: throw error if toRemove doesn't match removed string.
       return host.write(this.path, `${prefix}${suffix}`);
@@ -102,7 +101,7 @@ export class ReplaceChange implements Change {
   order: number;
   description: string;
 
-  constructor(public path: string, public pos: number, public oldText: string, public newText: string) {
+  constructor(public path: string, private pos: number, public oldText: string, public newText: string) {
     if (pos < 0) {
       throw new Error('Negative positions are invalid');
     }
@@ -126,45 +125,17 @@ export class ReplaceChange implements Change {
   }
 }
 
-export function createReplaceChange(
-  sourceFile: ts.SourceFile,
-  node: ts.Node,
-  oldText: string,
-  newText: string
-): ReplaceChange {
-  return new ReplaceChange(sourceFile.fileName, node.getStart(sourceFile), oldText, newText);
-}
-
-export function createRemoveChange(
-  sourceFile: ts.SourceFile,
-  node: ts.Node,
-  from = node.getStart(sourceFile),
-  to = node.getEnd()
-): RemoveChange {
-  return new RemoveChange(sourceFile.fileName, from, to);
-}
-
-export function createChangeRecorder(tree: Tree, path: string, changes: Change[]): UpdateRecorder {
-  const recorder = tree.beginUpdate(path);
+export function applyToUpdateRecorder(recorder: UpdateRecorder, changes: Change[]): void {
   for (const change of changes) {
     if (change instanceof InsertChange) {
       recorder.insertLeft(change.pos, change.toAdd);
     } else if (change instanceof RemoveChange) {
-      recorder.remove(change.pos, change.end - change.pos);
+      recorder.remove(change.order, change.toRemove.length);
     } else if (change instanceof ReplaceChange) {
-      recorder.remove(change.pos, change.oldText.length);
-      recorder.insertLeft(change.pos, change.newText);
+      recorder.remove(change.order, change.oldText.length);
+      recorder.insertLeft(change.order, change.newText);
+    } else if (!(change instanceof NoopChange)) {
+      throw new Error('Unknown Change type encountered when updating a recorder.');
     }
   }
-  return recorder;
-}
-
-export function commitChanges(tree: Tree, path: string, changes: Change[]) {
-  if (changes.length === 0) {
-    return false;
-  }
-
-  const recorder = createChangeRecorder(tree, path, changes);
-  tree.commitUpdate(recorder);
-  return true;
 }

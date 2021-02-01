@@ -7,8 +7,7 @@
  * found in the LICENSE file at https://angular.io/license
  */
 import { json, virtualFs, workspaces } from '@angular-devkit/core';
-import { noop, Rule, Tree } from '@angular-devkit/schematics';
-
+import { Rule, Tree, noop } from '@angular-devkit/schematics';
 import { ProjectType } from './workspace-models';
 
 function createHost(tree: Tree): workspaces.WorkspaceHost {
