@@ -4,9 +4,7 @@ describe(LumberjackConsoleDriverRootModule.name, () => {
   it('guards against being registered in multiple injectors', () => {
     const rootInjectorInstance = new LumberjackConsoleDriverRootModule();
 
-    expect(() => new LumberjackConsoleDriverRootModule(rootInjectorInstance)).toThrowError(
-      'LumberjackConsoleDriverModule must guard against being imported directly'
-    );
+    expect(() => new LumberjackConsoleDriverRootModule(rootInjectorInstance)).toThrowError(/multiple injectors/);
   });
 
   it('does not guard the first injector that registers it', () => {

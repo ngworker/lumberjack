@@ -24,6 +24,6 @@ export class NoopDriverModule {
   }
 
   constructor() {
-    throw new Error('NoopDriverModule must guard against being imported directly');
+    throw new Error('Do not import NoopDriverModule directly. Use NoopDriverModule.forRoot.');
   }
 }

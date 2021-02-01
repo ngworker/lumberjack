@@ -24,6 +24,6 @@ export class ObjectDriverModule {
   }
 
   constructor() {
-    throw new Error('ObjectDriverModule must guard against being imported directly');
+    throw new Error('Do not import ObjectDriverModule directly. Use ObjectDriverModule.forRoot.');
   }
 }

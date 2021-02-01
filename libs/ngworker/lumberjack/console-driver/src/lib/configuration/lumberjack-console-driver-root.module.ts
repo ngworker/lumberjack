@@ -44,7 +44,9 @@ export class LumberjackConsoleDriverRootModule {
     // tslint:enable: no-any no-null-keyword
   ) {
     if (maybeNgModuleFromParentInjector) {
-      throw new Error('LumberjackConsoleDriverModule must guard against being imported directly');
+      throw new Error(
+        'LumberjackConsoleDriverModule.forRoot registered in multiple injectors. Only call it from your root injector such as in AppModule.'
+      );
     }
   }
 }

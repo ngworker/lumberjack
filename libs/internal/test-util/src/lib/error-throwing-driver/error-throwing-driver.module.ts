@@ -46,6 +46,6 @@ export class ErrorThrowingDriverModule {
   }
 
   constructor() {
-    throw new Error('ErrorThrowingDriverModule must guard against being imported directly');
+    throw new Error('Do not import ErrorThrowingDriverModule directly. Use ErrorThrowingDriverModule.forRoot.');
   }
 }

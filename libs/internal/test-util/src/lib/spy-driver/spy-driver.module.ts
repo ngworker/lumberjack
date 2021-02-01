@@ -24,6 +24,6 @@ export class SpyDriverModule {
   }
 
   constructor() {
-    throw new Error('SpyDriverModule must guard against being imported directly');
+    throw new Error('Do not import SpyDriverModule directly. Use SpyDriverModule.forRoot.');
   }
 }
