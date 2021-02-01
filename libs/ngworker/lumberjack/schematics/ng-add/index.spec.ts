@@ -1,28 +1,29 @@
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import { VERSION } from '@angular/core';
+import { Schema as ApplicationOptions, Style } from '@schematics/angular/application/schema';
+import { Schema as WorkspaceOptions } from '@schematics/angular/workspace/schema';
 import * as path from 'path';
 
 import { NgAddOptions } from './schema';
 
 function readModuleFile(tree: UnitTestTree, project: string, module: string): string {
   return tree.readContent(
-    path.sep + path.join(workspaceOptions.newProjectRoot, project, 'src', 'app', `${module}.module.ts`)
+    path.sep + path.join(workspaceOptions.newProjectRoot || 'projects', project, 'src', 'app', `${module}.module.ts`)
   );
 }
 
 const projectName = 'bar';
-const workspaceOptions = {
+const workspaceOptions: WorkspaceOptions = {
   name: 'workspace',
   newProjectRoot: 'projects',
   version: VERSION.full,
-  defaultProject: projectName,
 };
-const appOptions = {
+const appOptions: ApplicationOptions = {
   name: projectName,
   inlineStyle: false,
   inlineTemplate: false,
   routing: false,
-  style: 'css',
+  style: Style.Css,
   skipTests: false,
   skipPackageJson: false,
 };
