@@ -31,7 +31,7 @@ const collectionPath = path.resolve(__dirname, '../collection.json');
 
 describe('@ngworker/lumberjack:ng-add schematic', () => {
   beforeEach(async () => {
-    schematicRunner = new SchematicTestRunner('schematics', collectionPath);
+    schematicRunner = new SchematicTestRunner('@ngworker/lumberjack', collectionPath);
     appTree = await schematicRunner
       .runExternalSchematicAsync('@schematics/angular', 'workspace', workspaceOptions)
       .toPromise();
