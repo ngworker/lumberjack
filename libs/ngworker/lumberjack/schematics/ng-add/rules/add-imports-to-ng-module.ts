@@ -1,4 +1,4 @@
-import { Rule, SchematicsException, Tree } from '@angular-devkit/schematics';
+import { Rule, Tree } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
 
 import { applyToUpdateRecorder } from '../../utils/change';
@@ -13,20 +13,13 @@ export function addImportsToNgModule(options: NgAddOptions): Rule {
     const modulePath = findModuleFromOptions(host, options);
 
     if (!modulePath) {
+      // import skipped
       return host;
-    }
-
-    if (!host.exists(modulePath)) {
-      throw new SchematicsException('The specified module does not exist.');
     }
 
     const text = host.read(modulePath);
 
-    if (text === null) {
-      throw new SchematicsException(`The file "${modulePath}" does not exist.`);
-    }
-
-    const sourceText = text.toString('utf-8');
+    const sourceText = (text || '').toString('utf-8');
     const source = ts.createSourceFile(modulePath, sourceText, ts.ScriptTarget.Latest, true);
     const changes = [
       ...addLumberjackToNgModule({ modulePath, source }),

@@ -115,4 +115,35 @@ describe(addImportsToNgModule.name, () => {
       expect(content).not.toMatch(consoleDriverImportPattern);
     });
   });
+
+  describe('Error handling', () => {
+    it('is a no-op when the "skipImport" option is true', async () => {
+      options = {
+        ...options,
+        skipImport: true,
+      };
+
+      const tree = await schematicRunner.callRule(addImportsToNgModule(options), appTree).toPromise();
+
+      expect(appTree).toBe(tree);
+    });
+
+    it('throws an error when the specified module does not exist', () => {
+      const modulePath =
+        path.sep +
+        path.join(
+          workspaceOptions.newProjectRoot || 'projects',
+          projectName,
+          'src',
+          'app',
+          `${options.module}.module.ts`
+        );
+      appTree.delete(modulePath);
+
+      const act = schematicRunner.callRule(addImportsToNgModule(options), appTree).toPromise();
+
+      // tslint:disable-next-line: no-floating-promises
+      expect(act).rejects.toThrow("Specified module 'app' does not exist.");
+    });
+  });
 });
