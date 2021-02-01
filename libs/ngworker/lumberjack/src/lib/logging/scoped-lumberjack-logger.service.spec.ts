@@ -43,7 +43,6 @@ describe(ScopedLumberjackLogger.name, () => {
   });
 
   let logger: TestLogger;
-  // let lumberjackStub: jest.Mocked<LumberjackService>;
   let lumberjackLogSpy: jest.SpyInstance<void, [LumberjackLog<void | LumberjackLogPayload>]>;
 
   it('can create a critical logger', () => {

@@ -27,6 +27,6 @@ export class LumberjackModule {
   }
 
   constructor() {
-    throw new Error('LumberjackModule must guard against being imported directly');
+    throw new Error('Do not import LumberjackModule directly. Use LumberjackModule.forRoot.');
   }
 }
