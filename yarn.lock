@@ -12,12 +12,12 @@
     jest-preset-angular "^8.3.2"
     lodash "^4.17.15"
 
-"@angular-devkit/architect@0.1002.0":
-  version "0.1002.0"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.1002.0.tgz#470b78aaf79308a23da6a0d3935f2d1f85dcb212"
-  integrity sha512-twM8V03ujBIGVpgV1PBlSDodUdxtUb7WakutfWafAvEHUsgwzfvQz2VtKWvjNZ9AiYjnCuwkQaclqVv0VHNo9w==
+"@angular-devkit/architect@0.1002.1":
+  version "0.1002.1"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/architect/-/architect-0.1002.1.tgz#bd33dda1361b5d7c23e07b41a603b48ac9c3c744"
+  integrity sha512-vP27xCe++p3zm+zwSDXDm9/rsM71Q4MYidLLi0MQfo8wxsWS/4mWXycCBoMwDkvW44SPJ4Ds1/F46bb3/xRDvA==
   dependencies:
-    "@angular-devkit/core" "10.2.0"
+    "@angular-devkit/core" "10.2.1"
     rxjs "6.6.2"
 
 "@angular-devkit/architect@0.1101.2", "@angular-devkit/architect@>=0.1100.0 < 0.1200.0":
@@ -105,12 +105,12 @@
     webpack-subresource-integrity "1.5.2"
     worker-plugin "5.0.0"
 
-"@angular-devkit/build-ng-packagr@~0.1002.0":
-  version "0.1002.0"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/build-ng-packagr/-/build-ng-packagr-0.1002.0.tgz#07fd264f98f0084c2897925e094cb9bd002d34e8"
-  integrity sha512-JngcuLuPpu2oOhi1qBPzco+ETjDbv90zyWZELO3qXeCelug1z83E0Qi2sLgnNYayzSHfrivrRamL8CbYYT+M9Q==
+"@angular-devkit/build-ng-packagr@~0.1002.1":
+  version "0.1002.1"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/build-ng-packagr/-/build-ng-packagr-0.1002.1.tgz#07e62c16627f4f6fb05185002d197347c66ed5bc"
+  integrity sha512-PqpioA73o+xAuuBx9+hDYwfN5OOw4oCa0n2zhNZAs+HcAgD8TOrpu56YXZOjbQR35Bfiz2Sbc4/lCKzwjBvrpw==
   dependencies:
-    "@angular-devkit/architect" "0.1002.0"
+    "@angular-devkit/architect" "0.1002.1"
     rxjs "6.6.2"
 
 "@angular-devkit/build-optimizer@0.1101.2":
@@ -133,10 +133,10 @@
     "@angular-devkit/core" "11.1.2"
     rxjs "6.6.3"
 
-"@angular-devkit/core@10.2.0":
-  version "10.2.0"
-  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-10.2.0.tgz#fcde160afc2786d2da0166526f065c6cf98684c0"
-  integrity sha512-XAszFhSF3mZw1VjoOsYGbArr5NJLcStjOvcCGjBPl1UBM2AKpuCQXHxI9XJGYKL3B93Vp5G58d8qkHvamT53OA==
+"@angular-devkit/core@10.2.1":
+  version "10.2.1"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/core/-/core-10.2.1.tgz#3ae38be4ca56c745788481b3577173ac2007e9e0"
+  integrity sha512-dzlF9Gl7KNt9sPYT2HYq6ySZYwKzkyYR5mrBj3DZOD0OQsoc21LvLkWAHNSL2iYGdHJQS1oJDNs8iRYxYIOY3w==
   dependencies:
     ajv "6.12.4"
     fast-json-stable-stringify "2.1.0"
