@@ -15,5 +15,5 @@
     "strictMetadataEmit": true,
     "enableResourceInlining": true
   },
-  "exclude": ["**/*.spec.ts", "schematics/**/*"]
+  "exclude": ["**/*.spec.ts"]
 }
