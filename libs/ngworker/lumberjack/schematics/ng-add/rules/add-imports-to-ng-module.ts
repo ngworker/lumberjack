@@ -19,7 +19,11 @@ export function addImportsToNgModule(options: NgAddOptions): Rule {
 
     const text = host.read(modulePath);
 
-    const sourceText = (text || '').toString('utf-8');
+    if (!text) {
+      throw new Error(`Cannot read "${modulePath}".`);
+    }
+
+    const sourceText = text.toString('utf-8');
     const source = ts.createSourceFile(modulePath, sourceText, ts.ScriptTarget.Latest, true);
     const changes = [
       ...addLumberjackToNgModule({ modulePath, source }),

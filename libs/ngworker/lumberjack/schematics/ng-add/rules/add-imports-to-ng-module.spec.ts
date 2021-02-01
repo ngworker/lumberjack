@@ -128,7 +128,7 @@ describe(addImportsToNgModule.name, () => {
       expect(appTree).toBe(tree);
     });
 
-    it('throws an error when the specified module does not exist', () => {
+    it('throws an error when the specified Angular module does not exist', () => {
       const modulePath =
         path.sep +
         path.join(
@@ -144,6 +144,16 @@ describe(addImportsToNgModule.name, () => {
 
       // tslint:disable-next-line: no-floating-promises
       expect(act).rejects.toThrow("Specified module 'app' does not exist.");
+    });
+
+    it('throws an exception when the specified Angular module cannot be read', () => {
+      // tslint:disable-next-line: no-null-keyword
+      jest.spyOn(appTree, 'read').mockReturnValue(null);
+
+      const act = schematicRunner.callRule(addImportsToNgModule(options), appTree).toPromise();
+
+      // tslint:disable-next-line: no-floating-promises
+      expect(act).rejects.toThrow('Cannot read "/projects/bar/src/app/app.module.ts".');
     });
   });
 });
