@@ -27,6 +27,6 @@ export class SpyConsole implements LumberjackConsole, jest.Mocked<LumberjackCons
     this.info.mockClear();
     this.trace.mockClear();
     this.warn.mockClear();
-    jest.clearAllMocks();
+    this.debug.mockClear();
   }
 }
