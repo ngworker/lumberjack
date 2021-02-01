@@ -1,15 +1,19 @@
+import { Tree } from '@angular-devkit/schematics';
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import { VERSION } from '@angular/core';
 import { Schema as ApplicationOptions, Style } from '@schematics/angular/application/schema';
 import { Schema as WorkspaceOptions } from '@schematics/angular/workspace/schema';
 import * as path from 'path';
 
+import { ngAdd } from './index';
 import { NgAddOptions } from './schema';
 
-function readModuleFile(tree: UnitTestTree, project: string, module: string): string {
-  return tree.readContent(
-    path.sep + path.join(workspaceOptions.newProjectRoot || 'projects', project, 'src', 'app', `${module}.module.ts`)
-  );
+function readModuleFile(tree: Tree, project: string, module: string): string {
+  return (
+    tree.read(
+      path.sep + path.join(workspaceOptions.newProjectRoot || 'projects', project, 'src', 'app', `${module}.module.ts`)
+    ) || ''
+  ).toString('utf-8');
 }
 
 const projectName = 'bar';
@@ -160,6 +164,15 @@ describe('@ngworker/lumberjack:ng-add schematic', () => {
 
       const content = readModuleFile(tree, options.project, options.module || '');
       expect(content).not.toMatch(httpDriverImportPattern);
+    });
+  });
+
+  describe('path parameter', () => {
+    it('assumes a default path when only a project is passed', async () => {
+      const tree = await schematicRunner.callRule(ngAdd(options), appTree).toPromise();
+
+      const content = readModuleFile(tree as UnitTestTree, options.project, options.module || '');
+      expect(content).toMatch(/\nimport { LumberjackModule } from '@ngworker\/lumberjack';/);
     });
   });
 });
