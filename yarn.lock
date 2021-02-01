@@ -1677,7 +1677,7 @@
   dependencies:
     any-observable "^0.3.0"
 
-"@schematics/angular@11.1.2":
+"@schematics/angular@11.1.2", "@schematics/angular@^11.1.2":
   version "11.1.2"
   resolved "https://registry.yarnpkg.com/@schematics/angular/-/angular-11.1.2.tgz#048259848c01171b28aeab197eb418fb3da3f3c4"
   integrity sha512-ZhaB/QBwfWsvZYJplLH8VK/7vnFpUbk1nptjC106K/I38xlmWdB4pStLJK94eyJk0KlItnsPvE0a9KuLPKA/Ow==

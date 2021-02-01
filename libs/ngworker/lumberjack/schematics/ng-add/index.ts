@@ -1,6 +1,5 @@
 import { chain, Rule, Tree } from '@angular-devkit/schematics';
-
-import { buildDefaultPath, getWorkspace } from '../utils/workspace';
+import { buildDefaultPath, getWorkspace } from '@schematics/angular/utility/workspace';
 
 import { addImportsToNgModule } from './rules/add-imports-to-ng-module';
 import { NgAddOptions } from './schema';

@@ -1,8 +1,8 @@
 import { Path } from '@angular-devkit/core';
+import { addImportToModule } from '@schematics/angular/utility/ast-utils';
+import { Change } from '@schematics/angular/utility/change';
 import { SourceFile } from 'typescript';
 
-import { addImportToModule } from '../../utils/ast-utils';
-import { Change } from '../../utils/change';
 import { NgAddOptions } from '../schema';
 
 export function addConsoleDriverToNgModule({
