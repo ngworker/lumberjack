@@ -168,7 +168,7 @@ describe(LumberjackHttpDriverModule.name, () => {
         // tslint:disable-next-line: no-any
         identifier: 'LumberjackHttpDriver',
       };
-      expect(actualConfig).toMatchObject(expectedConfig);
+      expect(actualConfig).toEqual(expectedConfig);
     });
 
     it('registers the specified options with custom identifier', () => {
@@ -184,7 +184,7 @@ describe(LumberjackHttpDriverModule.name, () => {
         levels: [LumberjackLevel.Verbose],
         identifier: customIdentifier,
       };
-      expect(actualConfig).toMatchObject(expectedConfig);
+      expect(actualConfig).toEqual(expectedConfig);
     });
 
     it('gets default options from the log driver config', () => {
@@ -212,7 +212,7 @@ describe(LumberjackHttpDriverModule.name, () => {
         levels: [LumberjackLevel.Verbose],
         identifier: LumberjackHttpDriver.driverIdentifier,
       };
-      expect(actualConfig).toMatchObject(expectedConfig);
+      expect(actualConfig).toEqual(expectedConfig);
     });
   });
 });

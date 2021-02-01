@@ -80,8 +80,9 @@ describe(LumberjackModule.name, () => {
       });
 
       const actualConfig = resolveDependency(lumberjackConfigToken);
-      expect(actualConfig).toMatchObject({
+      expect(actualConfig).toEqual({
         levels: defaultDevelopmentLevels,
+        format: expect.any(Function),
       });
     });
 
@@ -92,7 +93,7 @@ describe(LumberjackModule.name, () => {
       });
 
       const actualConfig = resolveDependency(lumberjackConfigToken);
-      expect(actualConfig).toMatchObject({
+      expect(actualConfig).toEqual({
         format: lumberjackFormatLog,
         levels: defaultProductionLevels,
       });
