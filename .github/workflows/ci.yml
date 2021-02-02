@@ -228,9 +228,6 @@ jobs:
             ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-
             ${{ runner.os }}-node-${{ matrix.node-version }}-angular-
       - run: yarn install
-      - run: yarn delete-path-alias @ngworker/lumberjack
-      - run: yarn delete-path-alias @ngworker/lumberjack/console-driver
-      - run: yarn delete-path-alias @ngworker/lumberjack/http-driver
       - uses: actions/download-artifact@v2
         with:
           name: lumberjack-package
@@ -241,6 +238,10 @@ jobs:
         run: yarn delete-commonjs-allowlist
 
       - run: yarn schematics-e2e
+
+      - run: yarn delete-path-alias @ngworker/lumberjack
+      - run: yarn delete-path-alias @ngworker/lumberjack/console-driver
+      - run: yarn delete-path-alias @ngworker/lumberjack/http-driver
 
       - name: 'ng-add: HTTP driver'
         run: yarn run ng add @ngworker/lumberjack --project=lumberjack-schematics-app --http-driver
