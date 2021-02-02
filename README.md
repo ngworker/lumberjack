@@ -88,11 +88,13 @@ ng add @ngworker/lumberjack
 The `ng add` command will add the below code to your module.
 
 ```ts
-// ...
+// (...)
 import { LumberjackModule } from '@ngworker/lumberjack';
+import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
 
 @NgModule({
   imports: [
+      // (...)
     LumberjackModule.forRoot(),
     LumberjackConsoleDriverModule.forRoot(),
       // (...)
@@ -111,13 +113,14 @@ ng add @ngworker/lumberjack --http-driver=true
 this command will add below code to your module.
 
 ```ts
-// ...
+// (...)
 import { LumberjackModule } from '@ngworker/lumberjack';
 import { LumberjackHttpDriverModule } from '@ngworker/lumberjack/http-driver';
 import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
 
 @NgModule({
   imports: [
+    // (...)
     LumberjackModule.forRoot(),
     LumberjackConsoleDriverModule.forRoot(),
     LumberjackHttpDriverModule.withOptions({
