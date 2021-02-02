@@ -33,7 +33,8 @@
     "delete-path-alias": "node tools/scripts/delete-path-alias.js",
     "generate-lint-reports": "node tools/scripts/generate-lint-reports.mjs",
     "generate-test-coverage-reports": "node tools/scripts/generate-test-coverage-reports.mjs",
-    "ng-add": "schematics --dry-run=false ./dist/ngworker/lumberjack/schematics:ng-add"
+    "ng-add": "schematics --dry-run=false ./dist/ngworker/lumberjack/schematics:ng-add",
+    "schematics-e2e:output-app-module": "cat apps/lumberjack-schematics-app/src/app/app.module.ts"
   },
   "private": true,
   "dependencies": {

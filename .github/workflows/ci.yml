@@ -242,16 +242,19 @@ jobs:
 
       - name: 'ng-add: Default options'
         run: yarn run ng add @ngworker/lumberjack --project=lumberjack-schematics-app
+      - run: yarn schematics-e2e:output-app-module
       - run: yarn run ng build lumberjack-schematics-app --prod
       - run: git reset --hard
 
       - name: 'ng-add: HTTP driver'
         run: yarn run ng add @ngworker/lumberjack --project=lumberjack-schematics-app --http-driver
+      - run: yarn schematics-e2e:output-app-module
       - run: yarn run ng build lumberjack-schematics-app --prod
       - run: git reset --hard
 
       - name: 'ng-add: Console driver'
         run: yarn run ng add @ngworker/lumberjack --project=lumberjack-schematics-app --console-driver
+      - run: yarn schematics-e2e:output-app-module
       - run: yarn run ng build lumberjack-schematics-app --prod
       - run: git reset --hard
 
