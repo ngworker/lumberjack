@@ -155,6 +155,19 @@
     rxjs "6.6.3"
     source-map "0.7.3"
 
+"@angular-devkit/schematics-cli@^0.1101.2":
+  version "0.1101.2"
+  resolved "https://registry.yarnpkg.com/@angular-devkit/schematics-cli/-/schematics-cli-0.1101.2.tgz#2f08d4fbc8651e4c00edb3a0680a705df48e1b26"
+  integrity sha512-QyZT178T9JUJLfthxUTow4IemYM6qveF1IWrv2byhQN+uUzb8dKerb7Ln76z+2Kz+R3eiZYk8BYva3fL/6Gl2A==
+  dependencies:
+    "@angular-devkit/core" "11.1.2"
+    "@angular-devkit/schematics" "11.1.2"
+    "@schematics/schematics" "0.1101.2"
+    ansi-colors "4.1.1"
+    inquirer "7.3.3"
+    minimist "1.2.5"
+    symbol-observable "3.0.0"
+
 "@angular-devkit/schematics@11.1.2":
   version "11.1.2"
   resolved "https://registry.yarnpkg.com/@angular-devkit/schematics/-/schematics-11.1.2.tgz#454ad37cc6d28520336ac7ebfe4f2644dc3050bd"
@@ -1613,6 +1626,14 @@
     "@angular-devkit/core" "11.1.2"
     "@angular-devkit/schematics" "11.1.2"
     jsonc-parser "3.0.0"
+
+"@schematics/schematics@0.1101.2":
+  version "0.1101.2"
+  resolved "https://registry.yarnpkg.com/@schematics/schematics/-/schematics-0.1101.2.tgz#299bf38afa17e541fc9dd22efcf9547662040ba8"
+  integrity sha512-yuZeJg7RJe/d3aYXIwsAfb4u1D211NPhEPadV96xeyQefPs4ERZWxZc01kSxwMtREwAjLSWxjBCWTlfSEq1xdg==
+  dependencies:
+    "@angular-devkit/core" "11.1.2"
+    "@angular-devkit/schematics" "11.1.2"
 
 "@schematics/update@0.1101.2":
   version "0.1101.2"
@@ -7823,7 +7844,7 @@ minimist-options@^3.0.1:
     arrify "^1.0.1"
     is-plain-obj "^1.1.0"
 
-minimist@^1.1.1, minimist@^1.1.3, minimist@^1.2.0, minimist@^1.2.5:
+minimist@1.2.5, minimist@^1.1.1, minimist@^1.1.3, minimist@^1.2.0, minimist@^1.2.5:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
   integrity sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==

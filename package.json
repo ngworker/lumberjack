@@ -32,7 +32,8 @@
     "delete-commonjs-allowlist": "json -f angular.json --in-place -e \"delete this.projects['lumberjack-app'].architect.build.options.allowedCommonJsDependencies;\"",
     "delete-path-alias": "node tools/scripts/delete-path-alias.js",
     "generate-lint-reports": "node tools/scripts/generate-lint-reports.mjs",
-    "generate-test-coverage-reports": "node tools/scripts/generate-test-coverage-reports.mjs"
+    "generate-test-coverage-reports": "node tools/scripts/generate-test-coverage-reports.mjs",
+    "ng-add": "schematics --dry-run=false ./dist/ngworker/lumberjack/schematics:ng-add"
   },
   "private": true,
   "dependencies": {
@@ -52,6 +53,7 @@
     "@angular-builders/jest": "11.0.0",
     "@angular-devkit/build-angular": "^0.1101.2",
     "@angular-devkit/build-ng-packagr": "~0.1002.1",
+    "@angular-devkit/schematics-cli": "^0.1101.2",
     "@angular/cli": "~11.1.2",
     "@angular/compiler-cli": "~11.1.1",
     "@commitlint/cli": "11.0.0",
