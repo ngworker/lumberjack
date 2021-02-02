@@ -2,17 +2,22 @@
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
   "newProjectRoot": "libs",
+  "cli": {
+    "analytics": false
+  },
+  "schematics": {
+    "@schematics/angular:component": {
+      "style": "scss"
+    },
+    "@schematics/angular:application": {
+      "routing": false,
+      "strict": true,
+      "style": "scss"
+    }
+  },
   "projects": {
     "lumberjack-app": {
       "projectType": "application",
-      "schematics": {
-        "@schematics/angular:component": {
-          "style": "scss"
-        },
-        "@schematics/angular:application": {
-          "strict": true
-        }
-      },
       "root": "apps/lumberjack-app",
       "sourceRoot": "apps/lumberjack-app/src",
       "prefix": "app",
@@ -220,10 +225,75 @@
           }
         }
       }
+    },
+    "lumberjack-schematics-app": {
+      "projectType": "application",
+      "root": "apps/lumberjack-schematics-app",
+      "sourceRoot": "apps/lumberjack-schematics-app/src",
+      "prefix": "schematics",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/lumberjack-schematics-app",
+            "index": "apps/lumberjack-schematics-app/src/index.html",
+            "main": "apps/lumberjack-schematics-app/src/main.ts",
+            "polyfills": "apps/lumberjack-schematics-app/src/polyfills.ts",
+            "tsConfig": "apps/lumberjack-schematics-app/tsconfig.app.json",
+            "aot": true,
+            "assets": ["apps/lumberjack-schematics-app/src/favicon.ico", "apps/lumberjack-schematics-app/src/assets"],
+            "styles": ["apps/lumberjack-schematics-app/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/lumberjack-schematics-app/src/environments/environment.ts",
+                  "with": "apps/lumberjack-schematics-app/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "options": {
+            "browserTarget": "lumberjack-schematics-app:build"
+          },
+          "configurations": {
+            "production": {
+              "browserTarget": "lumberjack-schematics-app:build:production"
+            }
+          }
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "lumberjack-schematics-app:build"
+          }
+        }
+      }
     }
   },
-  "defaultProject": "lumberjack-app",
-  "cli": {
-    "analytics": false
-  }
+  "defaultProject": "lumberjack-app"
 }
