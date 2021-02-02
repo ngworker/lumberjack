@@ -258,6 +258,12 @@ jobs:
       - run: yarn run ng build lumberjack-schematics-app --prod
       - run: git reset --hard
 
+      - name: 'ng-add: Console and HTTP driver'
+        run: yarn run ng add @ngworker/lumberjack --project=lumberjack-schematics-app --http-driver --console-driver
+      - run: yarn schematics-e2e:output-app-module
+      - run: yarn run ng build lumberjack-schematics-app --prod
+      - run: git reset --hard
+
   sonar:
     runs-on: ubuntu-latest
 
