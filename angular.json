@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
   "version": 1,
-  "newProjectRoot": "libs",
+  "newProjectRoot": "apps",
   "cli": {
     "analytics": false
   },
@@ -243,7 +243,8 @@
             "aot": true,
             "assets": ["apps/lumberjack-schematics-app/src/favicon.ico", "apps/lumberjack-schematics-app/src/assets"],
             "styles": ["apps/lumberjack-schematics-app/src/styles.scss"],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": ["zone.js"]
           },
           "configurations": {
             "production": {
@@ -290,6 +291,33 @@
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
             "browserTarget": "lumberjack-schematics-app:build"
+          }
+        }
+      }
+    },
+    "schematics-e2e": {
+      "projectType": "application",
+      "root": "apps/schematics-e2e",
+      "sourceRoot": "apps/schematics-e2e/src",
+      "prefix": "schematics-e2e",
+      "architect": {
+        "e2e": {
+          "builder": "@angular-builders/jest:run",
+          "options": {
+            "coverage": false,
+            "run-in-band": false
+          },
+          "configurations": {
+            "ci": {
+              "watch": false
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["apps/schematics-e2e/tsconfig.json"],
+            "exclude": ["**/node_modules/**", "!apps/schematics-e2e/**", "apps/schematics-e2e/**/golden-files/**"]
           }
         }
       }

@@ -1701,6 +1701,13 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
+"@types/copy@^0.3.1":
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/@types/copy/-/copy-0.3.1.tgz#9e48b8074d5045e84f862c817a7b1d409fbd5504"
+  integrity sha512-pPGzQ6C+9R7MViAJXl4VoqFrf6WK3UjpDLbqKiotr4DCY8AMzfIi2Kiy41pd+yPxb4cihjmtoO53Fonzctz+Aw==
+  dependencies:
+    "@types/vinyl" "*"
+
 "@types/estree@*":
   version "0.0.46"
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.46.tgz#0fb6bfbbeabd7a30880504993369c4bf1deab1fe"
@@ -1711,7 +1718,12 @@
   resolved "https://registry.yarnpkg.com/@types/estree/-/estree-0.0.39.tgz#e177e699ee1b8c22d23174caaa7422644389509f"
   integrity sha512-EYNwp3bU+98cpU4lAWYYL7Zz+2gryWH1qbdDTidVd6hkiR6weksdbMadyXKXNPEkQFhXM+hVO9ZygomHXp+AIw==
 
-"@types/glob@^7.1.1":
+"@types/expect@^1.20.4":
+  version "1.20.4"
+  resolved "https://registry.yarnpkg.com/@types/expect/-/expect-1.20.4.tgz#8288e51737bf7e3ab5d7c77bfa695883745264e5"
+  integrity sha512-Q5Vn3yjTDyCMV50TB6VRIbQNxSE4OmZR86VSbGaNpfUolm0iePBB4KdEEHmxoY5sT2+2DIvXW0rvMDP2nHZ4Mg==
+
+"@types/glob@*", "@types/glob@^7.1.1":
   version "7.1.3"
   resolved "https://registry.yarnpkg.com/@types/glob/-/glob-7.1.3.tgz#e6ba80f36b7daad2c685acd9266382e68985c183"
   integrity sha512-SEYeGAIQIQX8NN6LDKprLjbrd5dARM5EXsd8GI/A5l0apYI1fGMWgPHSe4ZKL4eozlAyI+doUE9XbYS4xCkQ1w==
@@ -1815,6 +1827,14 @@
   dependencies:
     "@types/node" "*"
 
+"@types/rimraf@^3.0.0":
+  version "3.0.0"
+  resolved "https://registry.yarnpkg.com/@types/rimraf/-/rimraf-3.0.0.tgz#b9d03f090ece263671898d57bb7bb007023ac19f"
+  integrity sha512-7WhJ0MdpFgYQPXlF4Dx+DhgvlPCfz/x5mHaeDQAKhcenvQP1KCpLQ18JklAqeGMYSAT2PxLpzd0g2/HE7fj7hQ==
+  dependencies:
+    "@types/glob" "*"
+    "@types/node" "*"
+
 "@types/selenium-webdriver@^3.0.0":
   version "3.0.17"
   resolved "https://registry.yarnpkg.com/@types/selenium-webdriver/-/selenium-webdriver-3.0.17.tgz#50bea0c3c2acc31c959c5b1e747798b3b3d06d4b"
@@ -1829,6 +1849,14 @@
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/@types/stack-utils/-/stack-utils-2.0.0.tgz#7036640b4e21cc2f259ae826ce843d277dad8cff"
   integrity sha512-RJJrrySY7A8havqpGObOB4W92QXKJo63/jFLLgpvOtsGUqbQZ9Sbgl35KMm1DjC6j7AvmmU2bIno+3IyEaemaw==
+
+"@types/vinyl@*":
+  version "2.0.4"
+  resolved "https://registry.yarnpkg.com/@types/vinyl/-/vinyl-2.0.4.tgz#9a7a8071c8d14d3a95d41ebe7135babe4ad5995a"
+  integrity sha512-2o6a2ixaVI2EbwBPg1QYLGQoHK56p/8X/sGfKbFC8N6sY9lfjsMf/GprtkQkSya0D4uRiutRZ2BWj7k3JvLsAQ==
+  dependencies:
+    "@types/expect" "^1.20.4"
+    "@types/node" "*"
 
 "@types/webpack-sources@^0.1.5":
   version "0.1.8"

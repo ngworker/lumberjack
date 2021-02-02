@@ -240,11 +240,7 @@ jobs:
       - if: matrix.angular-version == '9.0.x' || matrix.angular-version == '9.1.x'
         run: yarn delete-commonjs-allowlist
 
-      - name: 'ng-add: Default options'
-        run: yarn run ng add @ngworker/lumberjack --project=lumberjack-schematics-app
-      - run: yarn schematics-e2e:output-app-module
-      - run: yarn run ng build lumberjack-schematics-app --prod
-      - run: git reset --hard
+      - run: yarn schematics-e2e
 
       - name: 'ng-add: HTTP driver'
         run: yarn run ng add @ngworker/lumberjack --project=lumberjack-schematics-app --http-driver
