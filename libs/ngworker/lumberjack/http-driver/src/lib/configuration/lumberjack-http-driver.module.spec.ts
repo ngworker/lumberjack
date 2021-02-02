@@ -146,9 +146,7 @@ describe(LumberjackHttpDriverModule.name, () => {
       const actualConfig = httpDriver.config;
       const expectedConfig: LumberjackHttpDriverInternalConfig = {
         ...options,
-        // tslint:disable-next-line: no-any
         levels: [LumberjackLevel.Verbose],
-        // tslint:disable-next-line: no-any
         identifier: 'LumberjackHttpDriver',
       };
       expect(actualConfig).toEqual(expectedConfig);
@@ -163,9 +161,7 @@ describe(LumberjackHttpDriverModule.name, () => {
       const actualConfig = httpDriver.config;
       const expectedConfig: LumberjackHttpDriverInternalConfig = {
         ...options,
-        // tslint:disable-next-line: no-any
         levels: customLevels,
-        // tslint:disable-next-line: no-any
         identifier: 'LumberjackHttpDriver',
       };
       expect(actualConfig).toEqual(expectedConfig);
@@ -180,7 +176,6 @@ describe(LumberjackHttpDriverModule.name, () => {
       const actualConfig = httpDriver.config;
       const expectedConfig: LumberjackHttpDriverInternalConfig = {
         ...options,
-        // tslint:disable-next-line: no-any
         levels: [LumberjackLevel.Verbose],
         identifier: customIdentifier,
       };
@@ -208,7 +203,6 @@ describe(LumberjackHttpDriverModule.name, () => {
       const actualConfig = httpDriver.config;
       const expectedConfig: LumberjackHttpDriverInternalConfig = {
         ...options,
-        // tslint:disable-next-line: no-any
         levels: [LumberjackLevel.Verbose],
         identifier: LumberjackHttpDriver.driverIdentifier,
       };
