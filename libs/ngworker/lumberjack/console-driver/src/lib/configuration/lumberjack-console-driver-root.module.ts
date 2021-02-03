@@ -45,7 +45,7 @@ export class LumberjackConsoleDriverRootModule {
   ) {
     if (maybeNgModuleFromParentInjector) {
       throw new Error(
-        'ConsoleDriverModule.forRoot registered in multiple injectors. Only call it from your root injector such as in AppModule.'
+        'LumberjackConsoleDriverModule.forRoot registered in multiple injectors. Only call it from your root injector such as in AppModule.'
       );
     }
   }

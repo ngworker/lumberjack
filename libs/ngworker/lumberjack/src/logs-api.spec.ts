@@ -41,7 +41,7 @@ describe('Logs API', () => {
     it('exposes LumberjackLevel', () => {
       const sut = LumberjackLevel;
 
-      expect(isObject(sut)).withContext('LumberjackLevel is not an enum').toBeTrue();
+      expect(isObject(sut)).toBeTruthy();
     });
   });
 });

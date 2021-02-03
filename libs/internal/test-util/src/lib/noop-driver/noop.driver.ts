@@ -1,6 +1,11 @@
 import { Inject, Injectable } from '@angular/core';
 
-import { LumberjackLogDriver, LumberjackLogDriverConfig, LumberjackLogDriverLog } from '@ngworker/lumberjack';
+import {
+  LumberjackLogDriver,
+  LumberjackLogDriverConfig,
+  LumberjackLogDriverLog,
+  LumberjackLogPayload,
+} from '@ngworker/lumberjack';
 
 import { noopDriverConfigToken } from './noop-driver-config.token';
 
@@ -10,32 +15,32 @@ import { noopDriverConfigToken } from './noop-driver-config.token';
  * Every logging method is a no-op.
  */
 @Injectable()
-export class NoopDriver implements LumberjackLogDriver {
+export class NoopDriver<TPayload extends LumberjackLogPayload | void = void> implements LumberjackLogDriver<TPayload> {
   static driverIdentifier = 'NoopDriver';
 
   constructor(@Inject(noopDriverConfigToken) readonly config: LumberjackLogDriverConfig) {}
 
-  logCritical({ formattedLog }: LumberjackLogDriverLog): void {
+  logCritical(driverLog: LumberjackLogDriverLog<TPayload>): void {
     // intentionally a no-op
   }
 
-  logDebug({ formattedLog }: LumberjackLogDriverLog): void {
+  logDebug(driverLog: LumberjackLogDriverLog<TPayload>): void {
     // intentionally a no-op
   }
 
-  logError({ formattedLog }: LumberjackLogDriverLog): void {
+  logError(driverLog: LumberjackLogDriverLog<TPayload>): void {
     // intentionally a no-op
   }
 
-  logInfo({ formattedLog }: LumberjackLogDriverLog): void {
+  logInfo(driverLog: LumberjackLogDriverLog<TPayload>): void {
     // intentionally a no-op
   }
 
-  logTrace({ formattedLog }: LumberjackLogDriverLog): void {
+  logTrace(driverLog: LumberjackLogDriverLog<TPayload>): void {
     // intentionally a no-op
   }
 
-  logWarning({ formattedLog }: LumberjackLogDriverLog): void {
+  logWarning(driverLog: LumberjackLogDriverLog<TPayload>): void {
     // intentionally a no-op
   }
 }

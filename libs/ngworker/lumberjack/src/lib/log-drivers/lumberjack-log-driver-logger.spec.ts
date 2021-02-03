@@ -32,7 +32,7 @@ describe(LumberjackLogDriverLogger.name, () => {
 
     logger.log(logDriver, logDriverLog);
 
-    expect(logDriver.logCritical).toHaveBeenCalledOnceWith(logDriverLog);
+    expect(logDriver.logCritical).toHaveBeenNthCalledWith(1, logDriverLog);
   });
 
   it('logs a debug log driver log', () => {
@@ -43,7 +43,7 @@ describe(LumberjackLogDriverLogger.name, () => {
 
     logger.log(logDriver, logDriverLog);
 
-    expect(logDriver.logDebug).toHaveBeenCalledOnceWith(logDriverLog);
+    expect(logDriver.logDebug).toHaveBeenNthCalledWith(1, logDriverLog);
   });
 
   it('logs an error log driver log', () => {
@@ -54,7 +54,7 @@ describe(LumberjackLogDriverLogger.name, () => {
 
     logger.log(logDriver, logDriverLog);
 
-    expect(logDriver.logError).toHaveBeenCalledOnceWith(logDriverLog);
+    expect(logDriver.logError).toHaveBeenNthCalledWith(1, logDriverLog);
   });
 
   it('logs an info log driver log', () => {
@@ -65,7 +65,7 @@ describe(LumberjackLogDriverLogger.name, () => {
 
     logger.log(logDriver, logDriverLog);
 
-    expect(logDriver.logInfo).toHaveBeenCalledOnceWith(logDriverLog);
+    expect(logDriver.logInfo).toHaveBeenNthCalledWith(1, logDriverLog);
   });
 
   it('logs a trace log driver log', () => {
@@ -76,7 +76,7 @@ describe(LumberjackLogDriverLogger.name, () => {
 
     logger.log(logDriver, logDriverLog);
 
-    expect(logDriver.logTrace).toHaveBeenCalledOnceWith(logDriverLog);
+    expect(logDriver.logTrace).toHaveBeenNthCalledWith(1, logDriverLog);
   });
 
   it('logs a warning log driver log', () => {
@@ -87,6 +87,6 @@ describe(LumberjackLogDriverLogger.name, () => {
 
     logger.log(logDriver, logDriverLog);
 
-    expect(logDriver.logWarning).toHaveBeenCalledOnceWith(logDriverLog);
+    expect(logDriver.logWarning).toHaveBeenNthCalledWith(1, logDriverLog);
   });
 });

@@ -90,13 +90,13 @@ describe(LumberjackLogFactory.name, () => {
     it('creates a log with a static payload', () => {
       const log = logFactoryWithPayload.createErrorLog(testMessage).withPayload({ test: true }).build();
 
-      expect(log.payload?.test).toBe(true);
+      expect(log.payload?.test).toBeTruthy();
     });
 
     it('creates a log with a dynamic payload', () => {
       const log = logFactoryWithPayload.createInfoLog(testMessage).build({ test: true });
 
-      expect(log.payload?.test).toBe(true);
+      expect(log.payload?.test).toBeTruthy();
     });
 
     it('creates a log without a payload', () => {

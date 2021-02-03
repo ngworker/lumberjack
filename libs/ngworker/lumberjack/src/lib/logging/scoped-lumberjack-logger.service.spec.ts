@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { resolveDependency } from '@internal/test-util';
+import { FakeTimeService, resolveDependency } from '@internal/test-util';
 
+import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackLevel } from '../logs/lumberjack-level';
+import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
+import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { LumberjackLogBuilder } from './lumberjack-log.builder';
@@ -28,25 +31,25 @@ const fakeDate = new Date('2020-02-02T02:02:02.000Z');
 
 describe(ScopedLumberjackLogger.name, () => {
   beforeEach(() => {
-    lumberjackStub = jasmine.createSpyObj<LumberjackService>(LumberjackTimeService.name, ['log']);
-
     TestBed.configureTestingModule({
-      providers: [{ provide: LumberjackService, useValue: lumberjackStub }],
+      imports: [LumberjackModule.forRoot()],
+      providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
     });
-
-    const fakeTime = resolveDependency(LumberjackTimeService);
-    spyOn(fakeTime, 'getUnixEpochTicks').and.returnValue(fakeDate.valueOf());
+    const fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
+    fakeTime.setTime(fakeDate);
     logger = resolveDependency(TestLogger);
+    const lumberjack = resolveDependency(LumberjackService);
+    lumberjackLogSpy = jest.spyOn(lumberjack, 'log');
   });
 
   let logger: TestLogger;
-  let lumberjackStub: jasmine.SpyObj<LumberjackService>;
+  let lumberjackLogSpy: jest.SpyInstance<void, [LumberjackLog<void | LumberjackLogPayload>]>;
 
   it('can create a critical logger', () => {
     logger.criticalLogger();
 
-    expect(lumberjackStub.log).toHaveBeenCalledTimes(1);
-    expect(lumberjackStub.log).toHaveBeenCalledWith(
+    expect(lumberjackLogSpy).toHaveBeenCalledTimes(1);
+    expect(lumberjackLogSpy).toHaveBeenCalledWith(
       new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Critical, '')
         .withScope(logger.scope)
         .build()
@@ -56,8 +59,8 @@ describe(ScopedLumberjackLogger.name, () => {
   it('can create a debug logger', () => {
     logger.debugLogger();
 
-    expect(lumberjackStub.log).toHaveBeenCalledTimes(1);
-    expect(lumberjackStub.log).toHaveBeenCalledWith(
+    expect(lumberjackLogSpy).toHaveBeenCalledTimes(1);
+    expect(lumberjackLogSpy).toHaveBeenCalledWith(
       new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Debug, '')
         .withScope(logger.scope)
         .build()
@@ -67,8 +70,8 @@ describe(ScopedLumberjackLogger.name, () => {
   it('can create an error logger', () => {
     logger.errorLogger();
 
-    expect(lumberjackStub.log).toHaveBeenCalledTimes(1);
-    expect(lumberjackStub.log).toHaveBeenCalledWith(
+    expect(lumberjackLogSpy).toHaveBeenCalledTimes(1);
+    expect(lumberjackLogSpy).toHaveBeenCalledWith(
       new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Error, '')
         .withScope(logger.scope)
         .build()
@@ -78,8 +81,8 @@ describe(ScopedLumberjackLogger.name, () => {
   it('can create an info logger', () => {
     logger.infoLogger();
 
-    expect(lumberjackStub.log).toHaveBeenCalledTimes(1);
-    expect(lumberjackStub.log).toHaveBeenCalledWith(
+    expect(lumberjackLogSpy).toHaveBeenCalledTimes(1);
+    expect(lumberjackLogSpy).toHaveBeenCalledWith(
       new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Info, '')
         .withScope(logger.scope)
         .build()
@@ -89,8 +92,8 @@ describe(ScopedLumberjackLogger.name, () => {
   it('can create a trace logger', () => {
     logger.traceLogger();
 
-    expect(lumberjackStub.log).toHaveBeenCalledTimes(1);
-    expect(lumberjackStub.log).toHaveBeenCalledWith(
+    expect(lumberjackLogSpy).toHaveBeenCalledTimes(1);
+    expect(lumberjackLogSpy).toHaveBeenCalledWith(
       new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Trace, '')
         .withScope(logger.scope)
         .build()
@@ -100,8 +103,8 @@ describe(ScopedLumberjackLogger.name, () => {
   it('can create a warning logger', () => {
     logger.warningLogger();
 
-    expect(lumberjackStub.log).toHaveBeenCalledTimes(1);
-    expect(lumberjackStub.log).toHaveBeenCalledWith(
+    expect(lumberjackLogSpy).toHaveBeenCalledTimes(1);
+    expect(lumberjackLogSpy).toHaveBeenCalledWith(
       new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Warning, '')
         .withScope(logger.scope)
         .build()

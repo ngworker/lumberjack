@@ -1,6 +1,7 @@
+/* tslint:disable */
 import { Inject, Injectable } from '@angular/core';
 
-import { LumberjackLogDriver, LumberjackLogDriverConfig } from '@ngworker/lumberjack';
+import { LumberjackLogDriver, LumberjackLogDriverConfig, LumberjackLogPayload } from '@ngworker/lumberjack';
 
 import { spyDriverConfigToken } from './spy-driver-config.token';
 
@@ -10,32 +11,32 @@ import { spyDriverConfigToken } from './spy-driver-config.token';
  * Every logging method is a spy.
  */
 @Injectable()
-export class SpyDriver implements LumberjackLogDriver, jasmine.SpyObj<LumberjackLogDriver> {
+export class SpyDriver<TPayload extends LumberjackLogPayload | void = void>
+  implements LumberjackLogDriver<TPayload>, jest.Mocked<LumberjackLogDriver> {
   static driverIdentifier = 'SpyDriver';
 
   constructor(@Inject(spyDriverConfigToken) readonly config: LumberjackLogDriverConfig) {}
 
-  logCritical = jasmine.createSpy('logCritical');
+  logCritical = jest.fn();
 
-  logDebug = jasmine.createSpy('logDebug');
+  logDebug = jest.fn();
 
-  logError = jasmine.createSpy('logError');
+  logError = jest.fn();
 
-  logInfo = jasmine.createSpy('logInfo');
+  logInfo = jest.fn();
 
-  logTrace = jasmine.createSpy('logTrace');
-
-  logWarning = jasmine.createSpy('logWarning');
+  logTrace = jest.fn();
+  logWarning = jest.fn();
 
   /**
    * Reset tracking on spies.
    */
   reset(): void {
-    this.logCritical.calls.reset();
-    this.logDebug.calls.reset();
-    this.logError.calls.reset();
-    this.logInfo.calls.reset();
-    this.logTrace.calls.reset();
-    this.logWarning.calls.reset();
+    this.logCritical.mockClear();
+    this.logDebug.mockClear();
+    this.logError.mockClear();
+    this.logInfo.mockClear();
+    this.logTrace.mockClear();
+    this.logWarning.mockClear();
   }
 }

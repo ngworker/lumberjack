@@ -7,7 +7,7 @@ describe('Configuration API', () => {
     it(`exposes ${LumberjackConsoleDriverModule.name}`, () => {
       const sut = LumberjackConsoleDriverModule;
 
-      expect(isClass(sut)).withContext(`${sut.name} is not a class`).toBeTrue();
+      expect(isClass(sut)).toBeTruthy();
     });
   });
 });

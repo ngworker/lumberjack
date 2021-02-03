@@ -43,7 +43,7 @@ function expectRequest(
 
 function expectRequestToBeAborted(httpTestingController: HttpTestingController, options: LumberjackHttpDriverOptions) {
   const { cancelled } = httpTestingController.expectOne(options.storeUrl);
-  expect(cancelled).toBeTrue();
+  expect(cancelled).toBeTruthy();
 }
 
 function expectFailingRequest(
@@ -57,11 +57,11 @@ function expectFailingRequest(
     request: { method, body },
   } = req;
 
-  expect(cancelled).toBeFalse();
+  expect(cancelled).toBeFalsy();
   expect(method).toEqual('POST');
   expect(body).toEqual(expectedBody);
   respondWith503ServiceUnavailable(req);
-  jasmine.clock().tick(retryOptions.delayMs);
+  jest.advanceTimersByTime(retryOptions.delayMs);
 }
 
 function respondWith503ServiceUnavailable(request: TestRequest) {
@@ -92,9 +92,7 @@ describe(LumberjackHttpDriver.name, () => {
     [httpDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver<HttpDriverPayload>[];
     httpTestingController = resolveDependency(HttpTestingController);
 
-    jasmine.clock().uninstall();
-    jasmine.clock().install();
-    jasmine.clock().mockDate(new Date(0));
+    jest.useFakeTimers('modern');
   });
 
   describe('logs to a web API using the right log level', () => {
@@ -159,6 +157,5 @@ describe(LumberjackHttpDriver.name, () => {
 
   afterEach(() => {
     httpTestingController.verify();
-    jasmine.clock().uninstall();
   });
 });

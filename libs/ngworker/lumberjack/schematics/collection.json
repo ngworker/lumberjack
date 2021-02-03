@@ -1,0 +1,10 @@
+{
+  "schematics": {
+    "ng-add": {
+      "aliases": ["init"],
+      "factory": "./ng-add/index#ngAdd",
+      "schema": "./ng-add/schema.json",
+      "description": "Add Lumberjack to the application."
+    }
+  }
+}

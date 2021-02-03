@@ -65,8 +65,10 @@
       "@angular/core/testing",
       "@angular/fire/database",
       "@angular/material",
+      "@angular-devkit/schematics",
       "@internal",
       "@ngworker",
+      "@schematics/angular",
       "zone.js"
     ],
     "no-string-literal": false,
