@@ -11,7 +11,7 @@ describe('workspace-project App', () => {
 
   it('should display welcome message', async () => {
     await page.navigateTo();
-    await expect(await page.getTitleText()).toEqual('lumberjack app is running!');
+    expect(await page.getTitleText()).toEqual('lumberjack app is running!');
   });
 
   afterEach(async () => {
@@ -24,7 +24,7 @@ describe('workspace-project App', () => {
         !log.message.includes('polyfills.js')
     );
 
-    await expect(filteredLogs).not.toContain(
+    expect(filteredLogs).not.toContain(
       jasmine.objectContaining({
         level: logging.Level.SEVERE,
       } as logging.Entry)
