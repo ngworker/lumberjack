@@ -82,6 +82,9 @@ If the version you are using is not listed, please [raise an issue in our GitHub
 
 ## Usage
 
+> For a complete walkthrough video please visit [@ngworker/lumberjack v2 - Show & Tell BLS024](https://youtu.be/OV1ONtLAJnI)
+
+
 To register Lumberjack, add `LumberjackModule.forRoot()` to your root or core Angular module or use the schematics.
 
 ```shell
