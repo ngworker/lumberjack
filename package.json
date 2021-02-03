@@ -26,7 +26,7 @@
     "release": "cd libs/ngworker/lumberjack && standard-version --infile ../../../CHANGELOG.md",
     "publish": "cd dist/ngworker/lumberjack && npm publish",
     "preci": "yarn clean",
-    "ci": "yarn install && yarn lint && yarn test:internal:ci && yarn test:lib:ci && yarn test:ci && yarn build:lib && yarn build && yarn e2e",
+    "ci": "yarn install && yarn lint && yarn test:internal:ci && yarn test:lib:ci && yarn test:ci && yarn build:lib && yarn build && yarn e2e && yarn schematics-e2e",
     "format": "npx prettier --config prettier.config.js --write \"**/*.*\" \"!dist/**\" \"!yarn.lock\"",
     "clean": "rimraf dist coverage reports",
     "configure-report-paths": "node tools/scripts/configure-report-paths.mjs",

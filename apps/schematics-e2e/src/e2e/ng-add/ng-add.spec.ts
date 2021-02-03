@@ -8,6 +8,10 @@ function isCiWorkflow(): boolean {
   return process.env.CI === 'TRUE';
 }
 
+function normalizeNewlines(text: string): string {
+  return text.replace(/\r\n?/g, '\n');
+}
+
 describe('@ngworker/lumberjack:ng-add e2e', () => {
   beforeAll(async () => {
     execSync('yarn run delete-path-alias @ngworker/lumberjack', {
@@ -80,15 +84,67 @@ describe('@ngworker/lumberjack:ng-add e2e', () => {
   });
 
   it('default options', () => {
-    const expectedAppModule = readFileSync(
-      path.resolve(__dirname, './golden-files/default-options-app.module.golden')
-    ).toString('utf-8');
+    const expectedAppModule = normalizeNewlines(
+      readFileSync(path.resolve(__dirname, './golden-files/default-options/app.module.ts.golden')).toString('utf-8')
+    );
 
     execSync('yarn run ng add @ngworker/lumberjack --project=lumberjack-schematics-app', {
       stdio: 'inherit',
     });
 
-    const actualAppModule = readFileSync('apps/lumberjack-schematics-app/src/app/app.module.ts').toString('utf-8');
+    const actualAppModule = normalizeNewlines(
+      readFileSync('apps/lumberjack-schematics-app/src/app/app.module.ts').toString('utf-8')
+    );
+    expect(actualAppModule).toBe(expectedAppModule);
+  });
+
+  it('with console driver', () => {
+    const expectedAppModule = normalizeNewlines(
+      readFileSync(path.resolve(__dirname, './golden-files/with-console-driver/app.module.ts.golden')).toString('utf-8')
+    );
+
+    execSync('yarn run ng add @ngworker/lumberjack --project=lumberjack-schematics-app --console-driver', {
+      stdio: 'inherit',
+    });
+
+    const actualAppModule = normalizeNewlines(
+      readFileSync('apps/lumberjack-schematics-app/src/app/app.module.ts').toString('utf-8')
+    );
+    expect(actualAppModule).toBe(expectedAppModule);
+  });
+
+  it('with HTTP driver', () => {
+    const expectedAppModule = normalizeNewlines(
+      readFileSync(path.resolve(__dirname, './golden-files/with-http-driver/app.module.ts.golden')).toString('utf-8')
+    );
+
+    execSync('yarn run ng add @ngworker/lumberjack --project=lumberjack-schematics-app --http-driver', {
+      stdio: 'inherit',
+    });
+
+    const actualAppModule = normalizeNewlines(
+      readFileSync('apps/lumberjack-schematics-app/src/app/app.module.ts').toString('utf-8')
+    );
+    expect(actualAppModule).toBe(expectedAppModule);
+  });
+
+  it('with console driver and HTTP driver', () => {
+    const expectedAppModule = normalizeNewlines(
+      readFileSync(
+        path.resolve(__dirname, './golden-files/with-console-driver-and-http-driver/app.module.ts.golden')
+      ).toString('utf-8')
+    );
+
+    execSync(
+      'yarn run ng add @ngworker/lumberjack --project=lumberjack-schematics-app --console-driver --http-driver',
+      {
+        stdio: 'inherit',
+      }
+    );
+
+    const actualAppModule = normalizeNewlines(
+      readFileSync('apps/lumberjack-schematics-app/src/app/app.module.ts').toString('utf-8')
+    );
     expect(actualAppModule).toBe(expectedAppModule);
   });
 });
