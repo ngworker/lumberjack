@@ -54,12 +54,13 @@ Lumberjack is a versatile Angular logging library, specially designed to be exte
 
 Lumberjack is published as the `@ngworker/lumberjack` package.
 
-| Toolchain   | Command                                 |
-| ----------- | --------------------------------------- |
-| Angular CLI | `ng add @ngworker/lumberjack@next`      |
-| NPM CLI     | `npm install @ngworker/lumberjack@next` |
-| PNPM CLI    | `pnpm add @ngworker/lumberjack@next`    |
-| Yarn CLI    | `yarn add @ngworker/lumberjack@next`    |
+| Toolchain   | Command                                                                            |
+| ----------- | ---------------------------------------------------------------------------------- |
+| Angular CLI | `ng add @ngworker/lumberjack`                                                      |
+| NPM CLI     | `npm install @ngworker/lumberjack`                                                 |
+| PNPM CLI    | `pnpm add @ngworker/lumberjack`                                                    |
+| Nx CLI      | Install using your package manager, then `nx generate @ngworker/lumberjack:ng-add` |
+| Yarn CLI    | `yarn add @ngworker/lumberjack`                                                    |
 
 ## Compatibility
 
