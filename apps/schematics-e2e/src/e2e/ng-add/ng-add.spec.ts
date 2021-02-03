@@ -40,21 +40,21 @@ describe('@ngworker/lumberjack:ng-add e2e', () => {
       // it's okay if this directory already exists
     }
 
-    // const from = path.resolve(process.cwd(), './dist/ngworker/lumberjack');
-    const from = 'dist/ngworker/lumberjack';
-    // const to = path.resolve(process.cwd(), './node_modules/@ngworker/lumberjack');
-    const to = 'node_modules/@ngworker/lumberjack';
-    // renameSync(from, to);
     await new Promise((resolve, reject) => {
-      copy(`${from}/**`, to, { cwd: process.cwd() }, (error, files) => {
-        if (error) {
-          reject(error);
+      copy(
+        'dist/ngworker/lumberjack/**',
+        'node_modules/@ngworker/lumberjack',
+        { cwd: process.cwd() },
+        (error, files) => {
+          if (error) {
+            reject(error);
 
-          return;
+            return;
+          }
+
+          resolve(files);
         }
-
-        resolve(files);
-      });
+      );
     });
   });
 
