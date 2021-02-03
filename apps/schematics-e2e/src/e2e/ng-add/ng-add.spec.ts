@@ -147,4 +147,22 @@ describe('@ngworker/lumberjack:ng-add e2e', () => {
     );
     expect(actualAppModule).toBe(expectedAppModule);
   });
+
+  it('without log drivers', () => {
+    const expectedAppModule = normalizeNewlines(
+      readFileSync(path.resolve(__dirname, './golden-files/no-drivers/app.module.ts.golden')).toString('utf-8')
+    );
+
+    execSync(
+      'yarn run ng add @ngworker/lumberjack --project=lumberjack-schematics-app --console-driver=false --http-driver=false',
+      {
+        stdio: 'inherit',
+      }
+    );
+
+    const actualAppModule = normalizeNewlines(
+      readFileSync('apps/lumberjack-schematics-app/src/app/app.module.ts').toString('utf-8')
+    );
+    expect(actualAppModule).toBe(expectedAppModule);
+  });
 });
