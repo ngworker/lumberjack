@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [2.0.0](https://github.com/ngworker/lumberjack/compare/v2.0.0-rc.1...v2.0.0) (2021-02-04)
+
+
+### Features
+
+* add ng-add schematic ([#70](https://github.com/ngworker/lumberjack/issues/70)) ([219c6da](https://github.com/ngworker/lumberjack/commit/219c6daab024763c54f65cdb42dd4e8bb574a2d6))
+
 ## [2.0.0-rc.1](https://github.com/ngworker/lumberjack/compare/v2.0.0-rc.0...v2.0.0-rc.1) (2021-01-30)
 
 
