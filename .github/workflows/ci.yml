@@ -3,7 +3,7 @@ name: '@ngworker/lumberjack CI'
 env:
   ANGULAR_LATEST: 11.1.x
   NODE_LATEST: 12.x
-  NODE_OPTIONS: --max_old_space_size=4096
+  NODE_OPTIONS: --max_old_space_size=6144
 
 on:
   push:
