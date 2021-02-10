@@ -3,7 +3,7 @@ name: '@ngworker/lumberjack CI'
 env:
   ANGULAR_LATEST: 11.1.x
   NODE_LATEST: 12.x
-  NODE_OPTIONS: --max_old_space_size=4096
+  NODE_OPTIONS: --max_old_space_size=6144
 
 on:
   push:
@@ -70,7 +70,7 @@ jobs:
 
     strategy:
       matrix:
-        angular-version: [9.0.x, 9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x, 11.1.x]
+        angular-version: [9.0.x, 9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x, 11.1.x, 11.2.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -106,7 +106,7 @@ jobs:
     strategy:
       matrix:
         node-version: [10.x, 12.x]
-        angular-version: [9.0.x, 9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x, 11.1.x]
+        angular-version: [9.0.x, 9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x, 11.1.x, 11.2.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -152,7 +152,7 @@ jobs:
 
     strategy:
       matrix:
-        angular-version: [9.0.x, 9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x, 11.1.x]
+        angular-version: [9.0.x, 9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x, 11.1.x, 11.2.x]
 
     steps:
       - uses: actions/checkout@v2
@@ -204,7 +204,7 @@ jobs:
       matrix:
         node-version: [10.x, 12.x]
         # 9.0.x doesn't work due to Jest dependencies using TypeScript 3.8 import type syntax
-        angular-version: [9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x, 11.1.x]
+        angular-version: [9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x, 11.1.x, 11.2.x]
 
     steps:
       - uses: actions/checkout@v2

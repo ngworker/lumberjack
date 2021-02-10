@@ -68,6 +68,7 @@ Lumberjack version 2.x has verified compatibility with the following Angular ver
 
 | Angular version | Lumberjack 2.x support |
 | --------------- | ---------------------- |
+| 11.2.x          | ✅                     |
 | 11.1.x          | ✅                     |
 | 11.0.x          | ✅                     |
 | 10.2.x          | ✅                     |
@@ -83,7 +84,6 @@ If the version you are using is not listed, please [raise an issue in our GitHub
 ## Usage
 
 > For a complete walkthrough video please visit [@ngworker/lumberjack v2 - Show & Tell BLS024](https://youtu.be/OV1ONtLAJnI)
-
 
 To register Lumberjack, add `LumberjackModule.forRoot()` to your root or core Angular module or use the schematics.
 
