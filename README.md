@@ -111,7 +111,7 @@ import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driv
 
 You must also register the log driver modules for the log drivers that you want to enable.
 
-If you want to add `LumberjackHttpDriver`, use the following command
+If you want to add the `LumberjackHttpDriver`, use the following command
 
 ```shell
 ng add @ngworker/lumberjack --http-driver
