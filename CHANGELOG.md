@@ -4,17 +4,15 @@ All notable changes to this project will be documented in this file. See [standa
 
 ## [2.0.0](https://github.com/ngworker/lumberjack/compare/v2.0.0-rc.1...v2.0.0) (2021-02-04)
 
-
 ### Features
 
-* add ng-add schematic ([#70](https://github.com/ngworker/lumberjack/issues/70)) ([219c6da](https://github.com/ngworker/lumberjack/commit/219c6daab024763c54f65cdb42dd4e8bb574a2d6))
+- add ng-add schematic ([#70](https://github.com/ngworker/lumberjack/issues/70)) ([219c6da](https://github.com/ngworker/lumberjack/commit/219c6daab024763c54f65cdb42dd4e8bb574a2d6))
 
 ## [2.0.0-rc.1](https://github.com/ngworker/lumberjack/compare/v2.0.0-rc.0...v2.0.0-rc.1) (2021-01-30)
 
-
 ### Features
 
-* add LumberjackLogFactory ([#64](https://github.com/ngworker/lumberjack/issues/64)) ([938c2d6](https://github.com/ngworker/lumberjack/commit/938c2d6ab1ce7e3c81a5bd2dd085da7c9a6775d8))
+- add LumberjackLogFactory ([#64](https://github.com/ngworker/lumberjack/issues/64)) ([938c2d6](https://github.com/ngworker/lumberjack/commit/938c2d6ab1ce7e3c81a5bd2dd085da7c9a6775d8))
 
 ## [2.0.0-rc.0](https://github.com/ngworker/lumberjack/compare/v1.0.8...v2.0.0-rc.0) (2021-01-19)
 

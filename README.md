@@ -24,7 +24,7 @@
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=ngworker_lumberjack&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=ngworker_lumberjack)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=ngworker_lumberjack&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=ngworker_lumberjack)
 
-Lumberjack is a versatile Angular logging library, specially designed to be extended and customized. It provides a few simple [log drivers](https://en.wikipedia.org/wiki/Log_driving) (logging mechanisms, transports, log drivers) out-of-the-box. It's easy to enable bundled log drivers or create and use custom log drivers.
+Lumberjack is a versatile Angular logging library, specifically designed to be extended and customized. It provides a few simple [log drivers](https://en.wikipedia.org/wiki/Log_driving) (logging mechanisms, transports, log drivers) out-of-the-box. It's easy to enable the built-in log drivers or create and use custom log drivers.
 
 > For support, please refer to the `#lumberjack` channel in [the Angular Discord server](http://discord.gg/angular).
 
@@ -111,13 +111,13 @@ import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driv
 
 You must also register the log driver modules for the log drivers that you want to enable.
 
-If you want to add `HttpDriver` use the next command
+If you want to add the `LumberjackHttpDriver`, use the following command
 
 ```shell
-ng add @ngworker/lumberjack --http-driver=true
+ng add @ngworker/lumberjack --http-driver
 ```
 
-This command will add the below code to your module.
+This command will add the below code to your app module.
 
 ```ts
 // (...)
@@ -131,7 +131,7 @@ import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driv
     LumberjackModule.forRoot(),
     LumberjackConsoleDriverModule.forRoot(),
     LumberjackHttpDriverModule.withOptions({
-      origin: {appName}',
+      origin: '<app-name>',
       storeUrl: '/api/logs',
       retryOptions: { maxRetries: 5, delayMs: 250 },
     }),
@@ -148,8 +148,8 @@ export class AppModule {}
 
 | Option           | Type                          | Optional? | Description                                    |
 | ---------------- | ----------------------------- | --------- | ---------------------------------------------- |
-| `console-driver` | boolean (defaults to `true`)  | Yes       | Whether to register `LumberjackConsoleDriver`. |
-| `http-driver`    | boolean (defaults to `false`) | Yes       | Whether to register `LumberjackHttpDriver`.    |
+| `console-driver` | Boolean (defaults to `true`)  | Yes       | Whether to register `LumberjackConsoleDriver`. |
+| `http-driver`    | Boolean (defaults to `false`) | Yes       | Whether to register `LumberjackHttpDriver`.    |
 
 </br>
 
@@ -308,39 +308,35 @@ Let's create a simple log driver for the browser console.
 import { Inject, Injectable } from '@angular/core';
 
 import { LumberjackLogDriver, LumberjackLogDriverConfig, LumberjackLogDriverLog } from '@ngworker/lumberjack';
-import { lumberjackConsoleToken, LumberjackConsole } from '@ngworker/lumberjack/console-driver';
 
 import { consoleDriverConfigToken } from './console-driver-config.token';
 
 @Injectable()
 export class ConsoleDriver implements LumberjackLogDriver {
-  constructor(
-    @Inject(consoleDriverConfigToken) readonly config: LumberjackLogDriverConfig,
-    @Inject(lumberjackConsoleToken) private readonly console: LumberjackConsole
-  ) {}
+  constructor(@Inject(consoleDriverConfigToken) readonly config: LumberjackLogDriverConfig) {}
 
   logCritical({ formattedLog }: LumberjackLogDriverLog): void {
-    this.console.error(formattedLog);
+    console.error(formattedLog);
   }
 
   logDebug({ formattedLog }: LumberjackLogDriverLog): void {
-    this.console.debug(formattedLog);
+    console.debug(formattedLog);
   }
 
   logError({ formattedLog }: LumberjackLogDriverLog): void {
-    this.console.error(formattedLog);
+    console.error(formattedLog);
   }
 
   logInfo({ formattedLog }: LumberjackLogDriverLog): void {
-    this.console.info(formattedLog);
+    console.info(formattedLog);
   }
 
   logTrace({ formattedLog }: LumberjackLogDriverLog): void {
-    this.console.trace(formattedLog);
+    console.trace(formattedLog);
   }
 
   logWarning({ formattedLog }: LumberjackLogDriverLog): void {
-    this.console.warn(formattedLog);
+    console.warn(formattedLog);
   }
 }
 ```
@@ -393,7 +389,6 @@ import {
   LumberjackLogDriverLog,
   LumberjackLogPayload,
 } from '@ngworker/lumberjack';
-import { LumberjackConsole, lumberjackConsoleToken } from '@ngworker/lumberjack/console-driver';
 
 import { consoleDriverConfigToken } from './console-driver-config.token';
 
@@ -403,33 +398,30 @@ export interface AnalyticsPayload extends LumberjackLogPayload {
 
 @Injectable()
 export class ConsoleDriver implements LumberjackLogDriver<AnalyticsPayload> {
-  constructor(
-    @Inject(consoleDriverConfigToken) readonly config: LumberjackLogDriverConfig,
-    @Inject(lumberjackConsoleToken) private readonly console: LumberjackConsole
-  ) {}
+  constructor(@Inject(consoleDriverConfigToken) readonly config: LumberjackLogDriverConfig) {}
 
   logCritical({ formattedLog, log }: LumberjackLogDriverLog<AnalyticsPayload>): void {
-    this.console.error(formattedLog, log.payload || '');
+    console.error(formattedLog, log.payload);
   }
 
   logDebug({ formattedLog, log }: LumberjackLogDriverLog<AnalyticsPayload>): void {
-    this.console.debug(formattedLog, log.payload || '');
+    console.debug(formattedLog, log.payload);
   }
 
   logError({ formattedLog, log }: LumberjackLogDriverLog<AnalyticsPayload>): void {
-    this.console.error(formattedLog, log.payload || '');
+    console.error(formattedLog, log.payload);
   }
 
   logInfo({ formattedLog, log }: LumberjackLogDriverLog<AnalyticsPayload>): void {
-    this.console.info(formattedLog, log.payload || '');
+    console.info(formattedLog, log.payload);
   }
 
   logTrace({ formattedLog, log }: LumberjackLogDriverLog<AnalyticsPayload>): void {
-    this.console.trace(formattedLog, log.payload || '');
+    console.trace(formattedLog, log.payload);
   }
 
   logWarning({ formattedLog, log }: LumberjackLogDriverLog<AnalyticsPayload>): void {
-    this.console.warn(formattedLog, log.payload || '');
+    console.warn(formattedLog, log.payload);
   }
 }
 ```
@@ -508,7 +500,9 @@ For a more advanced log driver implementation, see [LumberjackHttpDriver](https:
 
 If you want your driver listed here, open a PR and follow the same format.
 
-- [LumberjackFirestoreDriver](https://github.com/marcinmilewicz/lumberjack-firestore-driver), community log driver using [Cloud Firestore](https://firebase.google.com/docs/firestore) as a log store.
+- [@ngworker/lumberjack-firestore-driver](https://github.com/marcinmilewicz/lumberjack-firestore-driver), community log driver using [Cloud Firestore](https://firebase.google.com/docs/firestore) as a log store.
+
+The ngworkers teams offers hosting of a community log driver in the [ngworker GitHub](https://github.com/ngworker) and [@ngworker NPM](https://www.npmjs.com/org/ngworker) organizations.
 
 ## Best practices
 
@@ -535,56 +529,43 @@ This is the abstract interface of `LumberjackLogger`:
  */
 @Injectable()
 export abstract class LumberjackLogger<TPayload extends LumberjackLogPayload | void = void> {
-  constructor(protected lumberjack: LumberjackService<TPayload>, protected time: LumberjackTimeService) {}
+  protected lumberjack: LumberjackService<TPayload>;
+  protected time: LumberjackTimeService;
 
   /**
    * Create a logger builder for a critical log with the specified message.
    */
-  protected createCriticalLogger(message: string): LumberjackLoggerBuilder<TPayload> {
-    return this.createLoggerBuilder(LumberjackLevel.Critical, message);
-  }
+  protected createCriticalLogger(message: string): LumberjackLoggerBuilder<TPayload>;
 
   /**
    * Create a logger builder for a debug log with the specified message.
    */
-  protected createDebugLogger(message: string): LumberjackLoggerBuilder<TPayload> {
-    return this.createLoggerBuilder(LumberjackLevel.Debug, message);
-  }
+  protected createDebugLogger(message: string): LumberjackLoggerBuilder<TPayload>;
 
   /**
    * Create a logger builder for an error log with the specified message.
    */
-  protected createErrorLogger(message: string): LumberjackLoggerBuilder<TPayload> {
-    return this.createLoggerBuilder(LumberjackLevel.Error, message);
-  }
+  protected createErrorLogger(message: string): LumberjackLoggerBuilder<TPayload>;
 
   /**
    * Create a logger builder for an info log with the specified message.
    */
-  protected createInfoLogger(message: string): LumberjackLoggerBuilder<TPayload> {
-    return this.createLoggerBuilder(LumberjackLevel.Info, message);
-  }
+  protected createInfoLogger(message: string): LumberjackLoggerBuilder<TPayload>;
 
   /**
    * Create a logger builder for a trace log with the specified message.
    */
-  protected createTraceLogger(message: string): LumberjackLoggerBuilder<TPayload> {
-    return this.createLoggerBuilder(LumberjackLevel.Trace, message);
-  }
+  protected createTraceLogger(message: string): LumberjackLoggerBuilder<TPayload>;
 
   /**
    * Create a logger builder for a warning log with the specified message.
    */
-  protected createWarningLogger(message: string): LumberjackLoggerBuilder<TPayload> {
-    return this.createLoggerBuilder(LumberjackLevel.Warning, message);
-  }
+  protected createWarningLogger(message: string): LumberjackLoggerBuilder<TPayload>;
 
   /**
    * Create a logger builder for a log with the specified log level and message.
    */
-  protected createLoggerBuilder(level: LumberjackLogLevel, message: string): LumberjackLoggerBuilder<TPayload> {
-    return new LumberjackLoggerBuilder<TPayload>(this.lumberjack, this.time, level, message);
-  }
+  protected createLoggerBuilder(level: LumberjackLogLevel, message: string): LumberjackLoggerBuilder<TPayload>;
 ```
 
 By extending `LumberjackLogger`, we only have to worry about our pre-defined logs' message and scope.
@@ -604,9 +585,9 @@ import { LumberjackLogger, LumberjackService, LumberjackTimeService } from '@ngw
 export class AppLogger extends LumberjackLogger {
   static scope = 'Forest App';
 
-  forestOnFire = this.createCriticalLogger('The forest is on fire').withScope(AppLogger.scope).build();
+  forestOnFire = this.createCriticalLogger('The forest is on fire!').withScope(AppLogger.scope).build();
 
-  helloForest = this.createInfoLogger('HelloForest').withScope(AppLogger.scope).build();
+  helloForest = this.createInfoLogger('Hello, Forest!').withScope(AppLogger.scope).build();
 }
 ```
 
@@ -636,7 +617,7 @@ export class AppComponent implements OnInit {
 }
 ```
 
-The previous example logs _Hello, forest!_ when the application is initialized, then logs _The forest is on fire!_ if a forest fire is detected.
+The previous example logs _Hello, Forest!_ when the application is initialized, then logs _The forest is on fire!_ if a forest fire is detected.
 
 #### Simplifying with ScopedLumberjackLogger
 
@@ -683,9 +664,9 @@ import { LumberjackService, LumberjackTimeService, ScopedLumberjackLogger } from
 export class AppLogger extends ScopedLumberjackLogger {
   scope = 'Forest App';
 
-  forestOnFire = this.createCriticalLogger('The forest is on fire').build();
+  forestOnFire = this.createCriticalLogger('The forest is on fire!').build();
 
-  helloForest = this.createInfoLogger('HelloForest').build();
+  helloForest = this.createInfoLogger('Hello, Forest!').build();
 }
 ```
 
@@ -708,7 +689,7 @@ import {
 } from '@ngworker/lumberjack';
 
 export interface LogPayload extends LumberjackLogPayload {
-  angularVersion: string;
+  readonly angularVersion: string;
 }
 
 @Injectable({
@@ -721,13 +702,9 @@ export class AppLogger extends ScopedLumberjackLogger<LogPayload> {
 
   scope = 'Forest App';
 
-  constructor(lumberjack: LumberjackService<LogPayload>, time: LumberjackTimeService) {
-    super(lumberjack, time);
-  }
+  forestOnFire = this.createCriticalLogger('The forest is on fire!').build();
 
-  forestOnFire = this.createCriticalLogger('The forest is on fire').build();
-
-  helloForest = this.createInfoLogger('HelloForest').withPayload(AppLogger.payload).build();
+  helloForest = this.createInfoLogger('Hello, Forest!').withPayload(AppLogger.payload).build();
 }
 ```
 
@@ -756,25 +733,24 @@ import { LogPayload } from './log-payload';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  title = 'lumberjack';
-  private scope = 'Forest App';
   private payload: LogPayload = {
     angularVersion: VERSION.full,
   };
+  private scope = 'Forest App';
 
   constructor(
-    private lumberjackService: LumberjackService<LogPayload>,
-    private lumberjackLogFactory: LumberjackLogFactory<LogPayload>
+    private lumberjack: LumberjackService<LogPayload>,
+    private logFactory: LumberjackLogFactory<LogPayload>
   ) {}
 
   ngOnInit(): void {
-    const helloForest = this.lumberjackLogFactory
-      .createInfoLog('Hello Forest!')
+    const helloForest = this.logFactory
+      .createInfoLog('Hello, Forest!')
       .withScope(this.scope)
       .withPayload(this.payload)
       .build();
 
-    this.lumberjackService.log(helloForest);
+    this.lumberjack.log(helloForest);
   }
 }
 ```
@@ -798,7 +774,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tr>
     <td align="center"><a href="https://github.com/NachoVazquez"><img src="https://avatars3.githubusercontent.com/u/9338604?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Nacho Vazquez</b></sub></a><br /><a href="https://github.com/ngworker/lumberjack/issues?q=author%3ANachoVazquez" title="Bug reports">🐛</a> <a href="https://github.com/ngworker/lumberjack/commits?author=NachoVazquez" title="Code">💻</a> <a href="https://github.com/ngworker/lumberjack/commits?author=NachoVazquez" title="Documentation">📖</a> <a href="#example-NachoVazquez" title="Examples">💡</a> <a href="#ideas-NachoVazquez" title="Ideas, Planning, & Feedback">🤔</a> <a href="#mentoring-NachoVazquez" title="Mentoring">🧑‍🏫</a> <a href="#maintenance-NachoVazquez" title="Maintenance">🚧</a> <a href="#projectManagement-NachoVazquez" title="Project Management">📆</a> <a href="https://github.com/ngworker/lumberjack/pulls?q=is%3Apr+reviewed-by%3ANachoVazquez" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/ngworker/lumberjack/commits?author=NachoVazquez" title="Tests">⚠️</a> <a href="#tool-NachoVazquez" title="Tools">🔧</a> <a href="#userTesting-NachoVazquez" title="User Testing">📓</a></td>
-    <td align="center"><a href="https://indepth.dev/author/layzee/"><img src="https://avatars1.githubusercontent.com/u/6364586?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Lars Gyrup Brink Nielsen</b></sub></a><br /><a href="https://github.com/ngworker/lumberjack/issues?q=author%3ALayZeeDK" title="Bug reports">🐛</a> <a href="https://github.com/ngworker/lumberjack/commits?author=LayZeeDK" title="Code">💻</a> <a href="https://github.com/ngworker/lumberjack/commits?author=LayZeeDK" title="Documentation">📖</a> <a href="#example-LayZeeDK" title="Examples">💡</a> <a href="#ideas-LayZeeDK" title="Ideas, Planning, & Feedback">🤔</a> <a href="#mentoring-LayZeeDK" title="Mentoring">🧑‍🏫</a> <a href="#maintenance-LayZeeDK" title="Maintenance">🚧</a> <a href="#projectManagement-LayZeeDK" title="Project Management">📆</a> <a href="https://github.com/ngworker/lumberjack/pulls?q=is%3Apr+reviewed-by%3ALayZeeDK" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/ngworker/lumberjack/commits?author=LayZeeDK" title="Tests">⚠️</a> <a href="#tool-LayZeeDK" title="Tools">🔧</a> <a href="#userTesting-LayZeeDK" title="User Testing">📓</a></td>
+    <td align="center"><a href="https://dev.to/layzee/"><img src="https://avatars1.githubusercontent.com/u/6364586?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Lars Gyrup Brink Nielsen</b></sub></a><br /><a href="https://github.com/ngworker/lumberjack/issues?q=author%3ALayZeeDK" title="Bug reports">🐛</a> <a href="https://github.com/ngworker/lumberjack/commits?author=LayZeeDK" title="Code">💻</a> <a href="https://github.com/ngworker/lumberjack/commits?author=LayZeeDK" title="Documentation">📖</a> <a href="#example-LayZeeDK" title="Examples">💡</a> <a href="#ideas-LayZeeDK" title="Ideas, Planning, & Feedback">🤔</a> <a href="#mentoring-LayZeeDK" title="Mentoring">🧑‍🏫</a> <a href="#maintenance-LayZeeDK" title="Maintenance">🚧</a> <a href="#projectManagement-LayZeeDK" title="Project Management">📆</a> <a href="https://github.com/ngworker/lumberjack/pulls?q=is%3Apr+reviewed-by%3ALayZeeDK" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/ngworker/lumberjack/commits?author=LayZeeDK" title="Tests">⚠️</a> <a href="#tool-LayZeeDK" title="Tools">🔧</a> <a href="#userTesting-LayZeeDK" title="User Testing">📓</a></td>
     <td align="center"><a href="https://www.santoshyadav.dev/"><img src="https://avatars3.githubusercontent.com/u/11923975?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Santosh Yadav</b></sub></a><br /><a href="https://github.com/ngworker/lumberjack/commits?author=santoshyadavdev" title="Code">💻</a> <a href="https://github.com/ngworker/lumberjack/commits?author=santoshyadavdev" title="Documentation">📖</a> <a href="#example-santoshyadavdev" title="Examples">💡</a> <a href="#infra-santoshyadavdev" title="Infrastructure (Hosting, Build-Tools, etc)">🚇</a> <a href="#plugin-santoshyadavdev" title="Plugin/utility libraries">🔌</a> <a href="https://github.com/ngworker/lumberjack/commits?author=santoshyadavdev" title="Tests">⚠️</a></td>
     <td align="center"><a href="https://dzhavat.github.io/"><img src="https://avatars0.githubusercontent.com/u/1096332?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Dzhavat Ushev</b></sub></a><br /><a href="https://github.com/ngworker/lumberjack/commits?author=dzhavat" title="Documentation">📖</a></td>
     <td align="center"><a href="https://twitter.com/AlexOkrushko"><img src="https://avatars0.githubusercontent.com/u/2830407?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Alex Okrushko</b></sub></a><br /><a href="https://github.com/ngworker/lumberjack/commits?author=alex-okrushko" title="Code">💻</a> <a href="#ideas-alex-okrushko" title="Ideas, Planning, & Feedback">🤔</a> <a href="#mentoring-alex-okrushko" title="Mentoring">🧑‍🏫</a> <a href="#research-alex-okrushko" title="Research">🔬</a> <a href="https://github.com/ngworker/lumberjack/commits?author=alex-okrushko" title="Code">💻</a></td>
