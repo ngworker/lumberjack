@@ -1,6 +1,6 @@
 {
   "name": "@ngworker/lumberjack",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Lumberjack for Angular - Chop and cut Angular logs like a professional Lumberjack.",
   "peerDependencies": {
     "@angular/core": ">=9.0.7"

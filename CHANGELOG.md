@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [2.0.1](https://github.com/ngworker/lumberjack/compare/v2.0.0...v2.0.1) (2021-02-12)
+
+### Documentation
+
+- Review readme
+- List Angular 11.2.x compatibility
+
 ## [2.0.0](https://github.com/ngworker/lumberjack/compare/v2.0.0-rc.1...v2.0.0) (2021-02-04)
 
 ### Features
