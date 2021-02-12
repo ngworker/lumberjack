@@ -14,7 +14,7 @@
   },
   "keywords": [
     "angular",
-    "angular 2",
+    "angular2",
     "lumberjack",
     "logging"
   ],
@@ -23,6 +23,18 @@
     "email": "nacho.vazquez.dev@gmail.com",
     "url": "https://github.com/NachoVazquez"
   },
+  "contributors": [
+    {
+      "email": "larsbrinknielsen@gmail.com",
+      "name": "Lars Gyrup Brink Nielsen",
+      "url": "https://github.com/LayZeeDK"
+    },
+    {
+      "email": "santosh.yadav198613@gmail.com",
+      "name": "Santosh Yadav",
+      "url": "https://github.com/santoshyadavdev"
+    }
+  ],
   "license": "MIT",
   "publishConfig": {
     "access": "public",
