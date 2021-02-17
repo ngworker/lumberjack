@@ -28,16 +28,12 @@ export class TestLogger extends ScopedLumberjackLogger {
   warning = (message: string): void => this.createWarningLogger(message).build().call(this);
 }
 
-const fakeDate = new Date('2020-02-02T02:02:02.000Z');
-
 describe(ScopedLumberjackLogger.name, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [LumberjackModule.forRoot()],
       providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
     });
-    const fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
-    fakeTime.setTime(fakeDate);
     logger = resolveDependency(TestLogger);
     logFactory = resolveDependency(LumberjackLogFactory);
     const lumberjack = resolveDependency(LumberjackService);
