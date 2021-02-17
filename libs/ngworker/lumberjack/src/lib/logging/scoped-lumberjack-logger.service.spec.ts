@@ -4,12 +4,11 @@ import { TestBed } from '@angular/core/testing';
 import { FakeTimeService, resolveDependency } from '@internal/test-util';
 
 import { LumberjackModule } from '../configuration/lumberjack.module';
-import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
-import { LumberjackLogBuilder } from './lumberjack-log.builder';
+import { LumberjackLogFactory } from './lumberjack-log-factory';
 import { LumberjackService } from './lumberjack.service';
 import { ScopedLumberjackLogger } from './scoped-lumberjack-logger.service';
 
@@ -38,10 +37,12 @@ describe(ScopedLumberjackLogger.name, () => {
     const fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
     fakeTime.setTime(fakeDate);
     logger = resolveDependency(TestLogger);
+    logFactory = resolveDependency(LumberjackLogFactory);
     const lumberjack = resolveDependency(LumberjackService);
     lumberjackLogSpy = jest.spyOn(lumberjack, 'log');
   });
 
+  let logFactory: LumberjackLogFactory;
   let logger: TestLogger;
   let lumberjackLogSpy: jest.SpyInstance<void, [LumberjackLog<void | LumberjackLogPayload>]>;
 
@@ -49,65 +50,41 @@ describe(ScopedLumberjackLogger.name, () => {
     logger.criticalLogger();
 
     expect(lumberjackLogSpy).toHaveBeenCalledTimes(1);
-    expect(lumberjackLogSpy).toHaveBeenCalledWith(
-      new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Critical, '')
-        .withScope(logger.scope)
-        .build()
-    );
+    expect(lumberjackLogSpy).toHaveBeenCalledWith(logFactory.createCriticalLog('').withScope(logger.scope).build());
   });
 
   it('can create a debug logger', () => {
     logger.debugLogger();
 
     expect(lumberjackLogSpy).toHaveBeenCalledTimes(1);
-    expect(lumberjackLogSpy).toHaveBeenCalledWith(
-      new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Debug, '')
-        .withScope(logger.scope)
-        .build()
-    );
+    expect(lumberjackLogSpy).toHaveBeenCalledWith(logFactory.createDebugLog('').withScope(logger.scope).build());
   });
 
   it('can create an error logger', () => {
     logger.errorLogger();
 
     expect(lumberjackLogSpy).toHaveBeenCalledTimes(1);
-    expect(lumberjackLogSpy).toHaveBeenCalledWith(
-      new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Error, '')
-        .withScope(logger.scope)
-        .build()
-    );
+    expect(lumberjackLogSpy).toHaveBeenCalledWith(logFactory.createErrorLog('').withScope(logger.scope).build());
   });
 
   it('can create an info logger', () => {
     logger.infoLogger();
 
     expect(lumberjackLogSpy).toHaveBeenCalledTimes(1);
-    expect(lumberjackLogSpy).toHaveBeenCalledWith(
-      new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Info, '')
-        .withScope(logger.scope)
-        .build()
-    );
+    expect(lumberjackLogSpy).toHaveBeenCalledWith(logFactory.createInfoLog('').withScope(logger.scope).build());
   });
 
   it('can create a trace logger', () => {
     logger.traceLogger();
 
     expect(lumberjackLogSpy).toHaveBeenCalledTimes(1);
-    expect(lumberjackLogSpy).toHaveBeenCalledWith(
-      new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Trace, '')
-        .withScope(logger.scope)
-        .build()
-    );
+    expect(lumberjackLogSpy).toHaveBeenCalledWith(logFactory.createTraceLog('').withScope(logger.scope).build());
   });
 
   it('can create a warning logger', () => {
     logger.warningLogger();
 
     expect(lumberjackLogSpy).toHaveBeenCalledTimes(1);
-    expect(lumberjackLogSpy).toHaveBeenCalledWith(
-      new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), LumberjackLevel.Warning, '')
-        .withScope(logger.scope)
-        .build()
-    );
+    expect(lumberjackLogSpy).toHaveBeenCalledWith(logFactory.createWarningLog('').withScope(logger.scope).build());
   });
 });
