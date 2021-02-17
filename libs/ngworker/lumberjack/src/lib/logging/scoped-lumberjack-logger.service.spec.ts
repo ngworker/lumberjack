@@ -18,12 +18,14 @@ import { ScopedLumberjackLogger } from './scoped-lumberjack-logger.service';
 export class TestLogger extends ScopedLumberjackLogger {
   readonly scope = 'Test';
 
-  critical = this.createCriticalLogger('').build();
-  debug = this.createDebugLogger('').build();
-  error = this.createErrorLogger('').build();
-  info = this.createInfoLogger('').build();
-  trace = this.createTraceLogger('').build();
-  warning = this.createWarningLogger('').build();
+  critical = (message: string): void => this.createCriticalLogger(message).build().call(this);
+
+  debug = (message: string): void => this.createDebugLogger(message).build().call(this);
+
+  error = (message: string): void => this.createErrorLogger(message).build().call(this);
+  info = (message: string): void => this.createInfoLogger(message).build().call(this);
+  trace = (message: string): void => this.createTraceLogger(message).build().call(this);
+  warning = (message: string): void => this.createWarningLogger(message).build().call(this);
 }
 
 const fakeDate = new Date('2020-02-02T02:02:02.000Z');
@@ -47,44 +49,68 @@ describe(ScopedLumberjackLogger.name, () => {
   let lumberjackLogSpy: jest.SpyInstance<void, [LumberjackLog<void | LumberjackLogPayload>]>;
 
   it('can create a critical logger', () => {
-    logger.critical();
+    const testMessage = 'Critical message';
+
+    logger.critical(testMessage);
 
     expect(lumberjackLogSpy).toHaveBeenCalledTimes(1);
-    expect(lumberjackLogSpy).toHaveBeenCalledWith(logFactory.createCriticalLog('').withScope(logger.scope).build());
+    expect(lumberjackLogSpy).toHaveBeenCalledWith(
+      logFactory.createCriticalLog(testMessage).withScope(logger.scope).build()
+    );
   });
 
   it('can create a debug logger', () => {
-    logger.debug();
+    const testMessage = 'Debug message';
+
+    logger.debug(testMessage);
 
     expect(lumberjackLogSpy).toHaveBeenCalledTimes(1);
-    expect(lumberjackLogSpy).toHaveBeenCalledWith(logFactory.createDebugLog('').withScope(logger.scope).build());
+    expect(lumberjackLogSpy).toHaveBeenCalledWith(
+      logFactory.createDebugLog(testMessage).withScope(logger.scope).build()
+    );
   });
 
   it('can create an error logger', () => {
-    logger.error();
+    const testMessage = 'Error message';
+
+    logger.error(testMessage);
 
     expect(lumberjackLogSpy).toHaveBeenCalledTimes(1);
-    expect(lumberjackLogSpy).toHaveBeenCalledWith(logFactory.createErrorLog('').withScope(logger.scope).build());
+    expect(lumberjackLogSpy).toHaveBeenCalledWith(
+      logFactory.createErrorLog(testMessage).withScope(logger.scope).build()
+    );
   });
 
   it('can create an info logger', () => {
-    logger.info();
+    const testMessage = 'Info message';
+
+    logger.info(testMessage);
 
     expect(lumberjackLogSpy).toHaveBeenCalledTimes(1);
-    expect(lumberjackLogSpy).toHaveBeenCalledWith(logFactory.createInfoLog('').withScope(logger.scope).build());
+    expect(lumberjackLogSpy).toHaveBeenCalledWith(
+      logFactory.createInfoLog(testMessage).withScope(logger.scope).build()
+    );
   });
 
   it('can create a trace logger', () => {
-    logger.trace();
+    const testMessage = 'Trace message';
+
+    logger.trace(testMessage);
 
     expect(lumberjackLogSpy).toHaveBeenCalledTimes(1);
-    expect(lumberjackLogSpy).toHaveBeenCalledWith(logFactory.createTraceLog('').withScope(logger.scope).build());
+    expect(lumberjackLogSpy).toHaveBeenCalledWith(
+      logFactory.createTraceLog(testMessage).withScope(logger.scope).build()
+    );
   });
 
   it('can create a warning logger', () => {
-    logger.warning();
+    const testMessage = 'Warning message';
+
+    logger.warning(testMessage);
 
     expect(lumberjackLogSpy).toHaveBeenCalledTimes(1);
-    expect(lumberjackLogSpy).toHaveBeenCalledWith(logFactory.createWarningLog('').withScope(logger.scope).build());
+    expect(lumberjackLogSpy).toHaveBeenCalledWith(
+      logFactory.createWarningLog(testMessage).withScope(logger.scope).build()
+    );
   });
 });
