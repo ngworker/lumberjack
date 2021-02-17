@@ -39,7 +39,7 @@ describe(ScopedLumberjackLogger.name, () => {
     logger = resolveDependency(TestLogger);
     logFactory = resolveDependency(LumberjackLogFactory);
     const lumberjack = resolveDependency(LumberjackService);
-    lumberjackLogSpy = jest.spyOn(lumberjack, 'log');
+    lumberjackLogSpy = jest.spyOn(lumberjack, 'log').mockImplementation(() => {});
   });
 
   let logFactory: LumberjackLogFactory;
