@@ -229,6 +229,9 @@ jobs:
             ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-
             ${{ runner.os }}-node-${{ matrix.node-version }}-angular-
       - run: yarn install
+      - run: yarn delete-path-alias @ngworker/lumberjack
+      - run: yarn delete-path-alias @ngworker/lumberjack/console-driver
+      - run: yarn delete-path-alias @ngworker/lumberjack/http-driver
       - uses: actions/download-artifact@v2
         with:
           name: lumberjack-package
