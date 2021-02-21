@@ -79,9 +79,9 @@ jobs:
         with:
           node-version: ${{ env.NODE_LATEST }}
       - name: Use Angular version ${{ matrix.angular-version }}
-        uses: ngworker/angular-versions-action@v2
+        uses: ngworker/angular-versions-action@v3
         with:
-          angular_version: ${{ matrix.angular-version }}
+          angular-version: ${{ matrix.angular-version }}
 
       - name: Variable-Yarn cache directory path
         id: yarn-cache-dir-path
@@ -115,9 +115,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Use Angular version ${{ matrix.angular-version }}
-        uses: ngworker/angular-versions-action@v2
+        uses: ngworker/angular-versions-action@v3
         with:
-          angular_version: ${{ matrix.angular-version }}
+          angular-version: ${{ matrix.angular-version }}
 
       - name: Variable-Yarn cache directory path
         id: yarn-cache-dir-path
@@ -161,9 +161,9 @@ jobs:
         with:
           node-version: ${{ env.NODE_LATEST }}
       - name: Use Angular version ${{ matrix.angular-version }}
-        uses: ngworker/angular-versions-action@v2
+        uses: ngworker/angular-versions-action@v3
         with:
-          angular_version: ${{ matrix.angular-version }}
+          angular-version: ${{ matrix.angular-version }}
 
       - name: Variable-Yarn cache directory path
         id: yarn-cache-dir-path
@@ -213,9 +213,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Use Angular version ${{ matrix.angular-version }}
-        uses: ngworker/angular-versions-action@v2
+        uses: ngworker/angular-versions-action@v3
         with:
-          angular_version: ${{ matrix.angular-version }}
+          angular-version: ${{ matrix.angular-version }}
 
       - name: Variable-Yarn cache directory path
         id: yarn-cache-dir-path
