@@ -4,7 +4,7 @@ import { FakeTimeService, resolveDependency } from '@internal/test-util';
 
 import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackOptions } from '../configuration/lumberjack.options';
-import { LumberjackLogBuilder } from '../logging/lumberjack-log.builder';
+import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
@@ -12,11 +12,10 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
 import { LumberjackLogFormatter } from './lumberjack-log-formatter.service';
 
 function createFormattingErrorLog(formattingErrorMessage: string, log: LumberjackLog): LumberjackLog {
-  return new LumberjackLogBuilder(
-    resolveDependency(LumberjackTimeService),
-    LumberjackLevel.Error,
-    `Could not format message "${log.message}". Error: "${formattingErrorMessage}"`
-  )
+  const logFactory = resolveDependency(LumberjackLogFactory);
+
+  return logFactory
+    .createErrorLog(`Could not format message "${log.message}". Error: "${formattingErrorMessage}"`)
     .withScope(logFormattingErrorScope)
     .build();
 }
@@ -32,21 +31,19 @@ describe(LumberjackLogFormatter.name, () => {
 
     const service = resolveDependency(LumberjackLogFormatter);
     const fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
+    const logFactory = resolveDependency(LumberjackLogFactory);
 
     return {
       fakeTime,
+      logFactory,
       service,
     };
   }
 
   describe('Log', () => {
     it('returns the same log when formatting succeeds', () => {
-      const { service } = setup();
-      const expectedLog = new LumberjackLogBuilder(
-        resolveDependency(LumberjackTimeService),
-        LumberjackLevel.Error,
-        ''
-      ).build();
+      const { logFactory, service } = setup();
+      const expectedLog = logFactory.createErrorLog('').build();
 
       const { log: actualLog } = service.formatLog(expectedLog);
 
@@ -55,16 +52,12 @@ describe(LumberjackLogFormatter.name, () => {
 
     it('returns an error log when formatting fails', () => {
       const formatterErrorMessage = 'TestFormatter';
-      const { service } = setup({
+      const { logFactory, service } = setup({
         format: () => {
           throw new Error(formatterErrorMessage);
         },
       });
-      const debugLog = new LumberjackLogBuilder(
-        resolveDependency(LumberjackTimeService),
-        LumberjackLevel.Debug,
-        'Test debug message'
-      ).build();
+      const debugLog = logFactory.createDebugLog('Test debug message').build();
       const expectedLog = createFormattingErrorLog(formatterErrorMessage, debugLog);
 
       const { log: actualLog } = service.formatLog(debugLog);
@@ -75,14 +68,10 @@ describe(LumberjackLogFormatter.name, () => {
 
   describe('Formatted message', () => {
     it('returns the formatted log when formatting succeeds', () => {
-      const { service } = setup({
+      const { logFactory, service } = setup({
         format: ({ level }) => level,
       });
-      const warning = new LumberjackLogBuilder(
-        resolveDependency(LumberjackTimeService),
-        LumberjackLevel.Warning,
-        ''
-      ).build();
+      const warning = logFactory.createWarningLog('').build();
 
       const { formattedLog: actualFormattedLog } = service.formatLog(warning);
 
@@ -92,7 +81,7 @@ describe(LumberjackLogFormatter.name, () => {
     describe('Error message', () => {
       it('returns a format error when formatting fails because of an Error', () => {
         const formatterErrorMessage = 'TestFormatter';
-        const { fakeTime, service } = setup({
+        const { fakeTime, logFactory, service } = setup({
           format: () => {
             throw new Error(formatterErrorMessage);
           },
@@ -100,11 +89,7 @@ describe(LumberjackLogFormatter.name, () => {
         const nowTimestamp = '2020-07-07T00:00:00.000Z';
         fakeTime.setTime(new Date(nowTimestamp));
 
-        const criticalLog = new LumberjackLogBuilder(
-          resolveDependency(LumberjackTimeService),
-          LumberjackLevel.Warning,
-          'Critical test'
-        ).build();
+        const criticalLog = logFactory.createCriticalLog('Critical test').build();
         const formattingErrorLog = createFormattingErrorLog(formatterErrorMessage, criticalLog);
 
         const { formattedLog: actualFormattedLog } = service.formatLog(criticalLog);
@@ -116,7 +101,7 @@ describe(LumberjackLogFormatter.name, () => {
 
       it('returns a format error when formatting fails with a string error message', () => {
         const formatterErrorMessage = 'TestFormatter';
-        const { fakeTime, service } = setup({
+        const { fakeTime, logFactory, service } = setup({
           format: () => {
             throw formatterErrorMessage;
           },
@@ -124,11 +109,7 @@ describe(LumberjackLogFormatter.name, () => {
         const nowTimestamp = '2020-07-07T00:00:00.000Z';
         fakeTime.setTime(new Date(nowTimestamp));
 
-        const criticalLog = new LumberjackLogBuilder(
-          resolveDependency(LumberjackTimeService),
-          LumberjackLevel.Warning,
-          'Critical test'
-        ).build();
+        const criticalLog = logFactory.createCriticalLog('Critical test').build();
         const formattingErrorLog = createFormattingErrorLog(formatterErrorMessage, criticalLog);
 
         const { formattedLog: actualFormattedLog } = service.formatLog(criticalLog);

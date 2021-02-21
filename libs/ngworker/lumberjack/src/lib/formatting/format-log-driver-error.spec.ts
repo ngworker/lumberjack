@@ -6,11 +6,9 @@ import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
 import { LumberjackLogDriverError } from '../log-drivers/lumberjack-log-driver-error';
 import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
-import { LumberjackLogBuilder } from '../logging/lumberjack-log.builder';
-import { LumberjackLevel } from '../logs/lumberjack-level';
+import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackLog } from '../logs/lumberjack.log';
-import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { formatLogDriverError } from './format-log-driver-error';
 import { lumberjackFormatLog } from './lumberjack-format-log';
@@ -20,18 +18,19 @@ describe(formatLogDriverError.name, () => {
     TestBed.configureTestingModule({
       imports: [LumberjackModule.forRoot(), NoopDriverModule.forRoot()],
     });
-    time = resolveDependency(LumberjackTimeService);
     const [_logDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
     logDriver = _logDriver;
+    logFactory = resolveDependency(LumberjackLogFactory);
   });
 
   const errorMessage = 'Test error message';
+  const testMessage = 'Test info';
   let logDriver: NoopDriver;
-  let time: LumberjackTimeService;
+  let logFactory: LumberjackLogFactory;
 
   describe('Error message', () => {
     beforeEach(() => {
-      log = new LumberjackLogBuilder(time, LumberjackLevel.Info, 'Test info').build();
+      log = logFactory.createInfoLog(testMessage).build();
     });
 
     let log: LumberjackLog;
@@ -71,9 +70,8 @@ describe(formatLogDriverError.name, () => {
       const payload: TestPayload = {
         test: true,
       };
-      const log = new LumberjackLogBuilder<TestPayload>(time, LumberjackLevel.Info, 'Test info')
-        .withPayload(payload)
-        .build();
+      const logFactoryWithPayload = (logFactory as unknown) as LumberjackLogFactory<TestPayload>;
+      const log = logFactoryWithPayload.createInfoLog(testMessage).withPayload(payload).build();
       const logDriverError: LumberjackLogDriverError<TestPayload> = {
         error: new Error(errorMessage),
         formattedLog: lumberjackFormatLog(log),
@@ -87,7 +85,7 @@ describe(formatLogDriverError.name, () => {
     });
 
     it('does not mention payload when the log has no payload', () => {
-      const log = new LumberjackLogBuilder(time, LumberjackLevel.Info, 'Test info').build();
+      const log = logFactory.createInfoLog(testMessage).build();
       const logDriverError: LumberjackLogDriverError = {
         error: new Error(errorMessage),
         formattedLog: lumberjackFormatLog(log),

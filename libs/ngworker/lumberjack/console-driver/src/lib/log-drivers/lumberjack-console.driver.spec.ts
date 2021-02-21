@@ -4,11 +4,10 @@ import { SpyConsole, SpyConsoleModule } from '@internal/console-driver/test-util
 import { resolveDependency } from '@internal/test-util';
 import {
   LumberjackLevel,
-  LumberjackLogBuilder,
   LumberjackLogDriver,
   lumberjackLogDriverToken,
+  LumberjackLogFactory,
   LumberjackModule,
-  LumberjackTimeService,
 } from '@ngworker/lumberjack';
 
 import { LumberjackConsoleDriverModule } from '../configuration/lumberjack-console-driver.module';
@@ -31,19 +30,17 @@ describe(LumberjackConsoleDriver.name, () => {
 
     const [_driver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
     driver = _driver as LumberjackConsoleDriver;
+    logFactory = resolveDependency(LumberjackLogFactory);
     spyLogger = resolveDependency(lumberjackConsoleToken) as SpyConsole;
   });
 
   let driver: LumberjackConsoleDriver;
+  let logFactory: LumberjackLogFactory;
   let spyLogger: SpyConsole;
 
   it("logs the critical level to the console's error channel", () => {
     const expectedMessage = LumberjackLevel.Critical;
-    const expectedLog = new LumberjackLogBuilder(
-      resolveDependency(LumberjackTimeService),
-      LumberjackLevel.Critical,
-      expectedMessage
-    ).build();
+    const expectedLog = logFactory.createCriticalLog(expectedMessage).build();
 
     driver.logCritical({ formattedLog: expectedMessage, log: expectedLog });
 
@@ -53,11 +50,7 @@ describe(LumberjackConsoleDriver.name, () => {
 
   it("logs the debug level to the console's debug channel", () => {
     const expectedMessage = LumberjackLevel.Debug;
-    const expectedLog = new LumberjackLogBuilder(
-      resolveDependency(LumberjackTimeService),
-      LumberjackLevel.Debug,
-      expectedMessage
-    ).build();
+    const expectedLog = logFactory.createDebugLog(expectedMessage).build();
 
     driver.logDebug({ formattedLog: expectedMessage, log: expectedLog });
 
@@ -67,11 +60,7 @@ describe(LumberjackConsoleDriver.name, () => {
 
   it("logs the error level to the console's error channel", () => {
     const expectedMessage = LumberjackLevel.Error;
-    const expectedLog = new LumberjackLogBuilder(
-      resolveDependency(LumberjackTimeService),
-      LumberjackLevel.Error,
-      expectedMessage
-    ).build();
+    const expectedLog = logFactory.createErrorLog(expectedMessage).build();
 
     driver.logError({ formattedLog: expectedMessage, log: expectedLog });
 
@@ -81,11 +70,7 @@ describe(LumberjackConsoleDriver.name, () => {
 
   it("logs the info level to the console's info channel", () => {
     const expectedMessage = LumberjackLevel.Info;
-    const expectedLog = new LumberjackLogBuilder(
-      resolveDependency(LumberjackTimeService),
-      LumberjackLevel.Info,
-      expectedMessage
-    ).build();
+    const expectedLog = logFactory.createInfoLog(expectedMessage).build();
 
     driver.logInfo({ formattedLog: expectedMessage, log: expectedLog });
 
@@ -95,11 +80,7 @@ describe(LumberjackConsoleDriver.name, () => {
 
   it("logs the trace level to the console's trace channel", () => {
     const expectedMessage = LumberjackLevel.Trace;
-    const expectedLog = new LumberjackLogBuilder(
-      resolveDependency(LumberjackTimeService),
-      LumberjackLevel.Trace,
-      expectedMessage
-    ).build();
+    const expectedLog = logFactory.createTraceLog(expectedMessage).build();
 
     driver.logTrace({ formattedLog: expectedMessage, log: expectedLog });
 
@@ -109,11 +90,7 @@ describe(LumberjackConsoleDriver.name, () => {
 
   it("logs the warning level to the console's warn channel", () => {
     const expectedMessage = LumberjackLevel.Warning;
-    const expectedLog = new LumberjackLogBuilder(
-      resolveDependency(LumberjackTimeService),
-      LumberjackLevel.Warning,
-      expectedMessage
-    ).build();
+    const expectedLog = logFactory.createWarningLog(expectedMessage).build();
 
     driver.logWarning({ formattedLog: expectedMessage, log: expectedLog });
 
