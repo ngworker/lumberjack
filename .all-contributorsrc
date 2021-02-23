@@ -101,6 +101,15 @@
         "test",
         "tool"
       ]
+    },
+    {
+      "login": "agroupp",
+      "name": "Arthur Groupp",
+      "avatar_url": "https://avatars.githubusercontent.com/u/20857362?v=4",
+      "profile": "https://github.com/agroupp",
+      "contributions": [
+        "ideas"
+      ]
     }
   ],
   "contributorsPerLine": 7
