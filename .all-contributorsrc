@@ -34,7 +34,7 @@
       "login": "LayZeeDK",
       "name": "Lars Gyrup Brink Nielsen",
       "avatar_url": "https://avatars1.githubusercontent.com/u/6364586?v=4",
-      "profile": "https://indepth.dev/author/layzee/",
+      "profile": "https://dev.to/layzee/",
       "contributions": [
         "bug",
         "code",
@@ -100,6 +100,15 @@
         "review",
         "test",
         "tool"
+      ]
+    },
+    {
+      "login": "agroupp",
+      "name": "Arthur Groupp",
+      "avatar_url": "https://avatars.githubusercontent.com/u/20857362?v=4",
+      "profile": "https://github.com/agroupp",
+      "contributions": [
+        "ideas"
       ]
     }
   ],
