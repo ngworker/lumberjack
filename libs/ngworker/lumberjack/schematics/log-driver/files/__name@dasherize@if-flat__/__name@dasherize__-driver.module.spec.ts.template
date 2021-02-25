@@ -1,0 +1,15 @@
+import { TestBed } from '@angular/core/testing';
+
+import { <%= classify(name) %>DriverModule } from './my-log-driver.module';
+
+describe(<%= classify(name) %>DriverModule.name, () => {
+  it('is guarded against direct import', () => {
+    TestBed.configureTestingModule({
+      imports: [<%= classify(name) %>DriverModule],
+    });
+
+    expect(() => TestBed.inject(<%= classify(name) %>DriverModule))
+      .withContext(`${<%= classify(name) %>DriverModule.name} must guard against direct import`)
+      .toThrow();
+  });
+});

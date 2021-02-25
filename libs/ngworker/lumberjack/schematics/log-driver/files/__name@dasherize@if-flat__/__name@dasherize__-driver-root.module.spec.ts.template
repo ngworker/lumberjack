@@ -1,0 +1,15 @@
+import {  <%= classify(name) %>RootModule } from './my-log-driver-root.module';
+
+const optionalAngularDependency = null;
+
+describe( <%= classify(name) %>RootModule.name, () => {
+  it('guards against being registered in multiple injectors', () => {
+    const rootInjectorInstance = new  <%= classify(name) %>RootModule(optionalAngularDependency as any);
+
+    expect(() => new  <%= classify(name) %>RootModule(rootInjectorInstance)).toThrowError(/multiple injectors/);
+  });
+
+  it('does not guard the first injector that registers it', () => {
+    expect(() => new  <%= classify(name) %>RootModule(optionalAngularDependency as any)).not.toThrow();
+  });
+});

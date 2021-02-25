@@ -1,0 +1,25 @@
+import { ModuleWithProviders, NgModule } from '@angular/core';
+
+import { LumberjackLogDriverConfig } from '@ngworker/lumberjack';
+
+import { <%= classify(name) %>DriverConfigToken } from './my-log-driver-config.token';
+import { <%= classify(name) %>DriverRootModule } from './my-log-driver-root.module';
+
+/**
+ * Service module for `MyLogDriver`.
+ *
+ * Use `MyLogDriverModule.forRoot` to import.
+ */
+@NgModule()
+export class <%= classify(name) %>DriverModule {
+  static forRoot(config?: LumberjackLogDriverConfig): ModuleWithProviders<<%= classify(name) %>RootModule> {
+    return {
+      ngModule: MyLogDriverRootModule,
+      providers: (config && [{ provide: myLogDriverConfigToken, useValue: config }]) || [],
+    };
+  }
+
+  constructor() {
+    throw new Error('Do not import MyLogDriverModule directly. Use <%= classify(name) %>DriverModule.forRoot.');
+  }
+}

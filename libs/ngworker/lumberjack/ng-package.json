@@ -4,5 +4,5 @@
   "lib": {
     "entryFile": "src/index.ts"
   },
-  "assets": ["./schematics/**/*.json"]
+  "assets": ["./schematics/**/*.json", "./schematics/log-driver/files"]
 }

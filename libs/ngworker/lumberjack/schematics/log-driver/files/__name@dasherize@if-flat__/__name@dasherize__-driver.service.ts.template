@@ -1,0 +1,25 @@
+import { Inject, Injectable } from '@angular/core';
+
+import { LumberjackLog, LumberjackLogDriver, LumberjackLogDriverConfig } from '@ngworker/lumberjack';
+
+import { myLogDriverConfigToken } from './<%= classify(name) %>-driver-config.token';
+
+/**
+ * My log driver.
+ */
+@Injectable()
+export class  <%= classify(name) %>Driver implements LumberjackLogDriver<TLog extends LumberjackLog = LumberjackLog> {
+  constructor(@Inject(myLogDriverConfigToken) public config: LumberjackLogDriverConfig) {}
+
+  logCritical(logDriverLog: LumberjackLogDriverLog<TLog>): void {}
+
+  logDebug(logDriverLog: LumberjackLogDriverLog<TLog>): void {}
+
+  logError(logDriverLog: LumberjackLogDriverLog<TLog>): void {}
+
+  logInfo(logDriverLog: LumberjackLogDriverLog<TLog>): void {}
+
+  logTrace(logDriverLog: LumberjackLogDriverLog<TLog>): void {}
+
+  logWarning(logDriverLog: LumberjackLogDriverLog<TLog>): void {}
+}
