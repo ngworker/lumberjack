@@ -23,7 +23,7 @@ const appOptions: ApplicationOptions = {
 };
 const collectionPath = path.resolve(__dirname, '../collection.json');
 
-describe('@ngworker/lumberjack:log-driver schematic', () => {
+describe('@ngworker/lumberjack:log-driver schematic with Tests', () => {
   beforeEach(async () => {
     schematicRunner = new SchematicTestRunner('@ngworker/lumberjack', collectionPath);
     appTree = await schematicRunner
@@ -42,25 +42,66 @@ describe('@ngworker/lumberjack:log-driver schematic', () => {
   let schematicRunner: SchematicTestRunner;
   let options: LogOptions;
 
-  describe('Lumberjack', () => {
-    it('imports LumberjackModule in the specified ES module', async () => {
-      const tree = await schematicRunner.runSchematicAsync('log-driver', options, appTree).toPromise();
+  it('should import myLogDriverConfigToken into service', async () => {
+    const tree = await schematicRunner.runSchematicAsync('log-driver', options, appTree).toPromise();
 
-      // const files =tree.files;
+    const consoleService = tree.readContent('/projects/bar/src/app/console-driver.service.ts');
 
-      // const content = tree.readContent('/projects/bar/src/app/console-driver-config.token.ts');
-      // console.log(content);
+    expect(consoleService).toContain(`import { myLogDriverConfigToken } from './console-driver-config.token';`);
+  });
 
-      // const content1 = tree.readContent('/projects/bar/src/app/console-driver-root.module.spec.ts');
-      // console.log(content1);
+  it('should create all files for logger', async () => {
+    const newOptions = { ...appOptions, skipTests: true };
+    const tree = await schematicRunner.runSchematicAsync('log-driver', options, appTree).toPromise();
 
-      // const content2 = tree.readContent('/projects/bar/src/app/console-driver-root.module.ts');
-      // console.log(content2);
+    const files = tree.files;
 
-      // const content3 = tree.readContent('/projects/bar/src/app/console-driver.service.ts');
-      // console.log(content3);
+    const driverFiles = tree.files.filter((file) => file.includes('console-driver'));
 
-      expect(true).toBe(true);
-    });
+    expect(driverFiles.length).toBe(6);
+  });
+
+  // const content = tree.readContent('/projects/bar/src/app/console-driver-config.token.ts');
+  // console.log(content);
+
+  // const content1 = tree.readContent('/projects/bar/src/app/console-driver-root.module.spec.ts');
+  // console.log(content1);
+
+  // const content2 = tree.readContent('/projects/bar/src/app/console-driver-root.module.ts');
+  // console.log(content2);
+
+  // const content3 = tree.readContent('/projects/bar/src/app/console-driver.service.ts');
+  // console.log(content3);
+});
+
+describe('@ngworker/lumberjack:log-driver schematic without Tests', () => {
+  const newOptions = { ...appOptions, skipTests: true };
+  beforeEach(async () => {
+    schematicRunner = new SchematicTestRunner('@ngworker/lumberjack', collectionPath);
+    appTree = await schematicRunner
+      .runExternalSchematicAsync('@schematics/angular', 'workspace', workspaceOptions)
+      .toPromise();
+    appTree = await schematicRunner
+      .runExternalSchematicAsync('@schematics/angular', 'application', newOptions, appTree)
+      .toPromise();
+    options = {
+      project: projectName,
+      name: 'console',
+    };
+  });
+
+  let appTree: UnitTestTree;
+  let schematicRunner: SchematicTestRunner;
+  let options: LogOptions;
+
+  it('create logger files without test files', async () => {
+    options = { ...options, skipTests: true };
+    const tree = await schematicRunner.runSchematicAsync('log-driver', options, appTree).toPromise();
+
+    const files = tree.files;
+
+    const testFiles = tree.files.filter((file) => file.includes('spec.ts'));
+
+    expect(testFiles.length).toBe(1);
   });
 });

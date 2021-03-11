@@ -2,7 +2,7 @@ import { Inject, Injectable } from '@angular/core';
 
 import { LumberjackLog, LumberjackLogDriver, LumberjackLogDriverConfig } from '@ngworker/lumberjack';
 
-import { myLogDriverConfigToken } from './<%= classify(name) %>-driver-config.token';
+import { myLogDriverConfigToken } from './<%= dasherize(name) %>-driver-config.token';
 
 /**
  * My log driver.
