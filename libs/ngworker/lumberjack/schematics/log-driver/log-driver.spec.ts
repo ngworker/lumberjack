@@ -57,6 +57,15 @@ describe('@ngworker/lumberjack:log-driver schematic with Tests', () => {
 
     expect(driverFiles.length).toBe(6);
   });
+
+  it('should create files inside a folder when flat is false', async () => {
+    options = { ...options, flat: false };
+    const tree = await schematicRunner.runSchematicAsync('log-driver', options, appTree).toPromise();
+
+    const consoleService = tree.readContent('/projects/bar/src/app/console/console-driver.service.ts');
+
+    expect(consoleService).toContain(`import { myLogDriverConfigToken } from './console-driver-config.token';`);
+  });
 });
 
 describe('@ngworker/lumberjack:log-driver schematic without Tests', () => {
