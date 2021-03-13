@@ -45,7 +45,7 @@ describe('@ngworker/lumberjack:log-driver schematic with Tests', () => {
   it('should import myLogDriverConfigToken into service', async () => {
     const tree = await schematicRunner.runSchematicAsync('log-driver', options, appTree).toPromise();
 
-    const consoleService = tree.readContent('/projects/bar/src/app/console-driver.service.ts');
+    const consoleService = tree.readContent('/projects/bar/src/app/console/console-driver.service.ts');
 
     expect(consoleService).toContain(`import { myLogDriverConfigToken } from './console-driver-config.token';`);
   });
@@ -59,10 +59,19 @@ describe('@ngworker/lumberjack:log-driver schematic with Tests', () => {
   });
 
   it('should create files inside a folder when flat is false', async () => {
-    options = { ...options, flat: false };
+    options = { ...options, flat: true };
     const tree = await schematicRunner.runSchematicAsync('log-driver', options, appTree).toPromise();
 
-    const consoleService = tree.readContent('/projects/bar/src/app/console/console-driver.service.ts');
+    const consoleService = tree.readContent('/projects/bar/src/app/console-driver.service.ts');
+
+    expect(consoleService).toContain(`import { myLogDriverConfigToken } from './console-driver-config.token';`);
+  });
+
+  it('should create files inside a folder when path is provided', async () => {
+    options = { ...options, path: 'logger' };
+    const tree = await schematicRunner.runSchematicAsync('log-driver', options, appTree).toPromise();
+
+    const consoleService = tree.readContent('/logger/console/console-driver.service.ts');
 
     expect(consoleService).toContain(`import { myLogDriverConfigToken } from './console-driver-config.token';`);
   });

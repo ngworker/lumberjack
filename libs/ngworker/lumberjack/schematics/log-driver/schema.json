@@ -29,7 +29,7 @@
     },
     "flat": {
       "type": "boolean",
-      "default": true,
+      "default": false,
       "description": "When true (the default), creates files at the top level of the project."
     },
     "skipTests": {
