@@ -4,6 +4,7 @@ import { LumberjackLogDriverConfig } from '@ngworker/lumberjack';
 
 import { <%= classify(name) %>DriverConfigToken } from './my-log-driver-config.token';
 import { <%= classify(name) %>DriverRootModule } from './my-log-driver-root.module';
+import { lumberjackCustomDriverConfigToken } from './lumberjack-custom-driver-config.token';
 
 /**
  * Service module for `MyLogDriver`.
@@ -15,7 +16,12 @@ export class <%= classify(name) %>DriverModule {
   static forRoot(config?: LumberjackLogDriverConfig): ModuleWithProviders<<%= classify(name) %>RootModule> {
     return {
       ngModule: MyLogDriverRootModule,
-      providers: (config && [{ provide: myLogDriverConfigToken, useValue: config }]) || [],
+      providers: [
+        {
+          provide: lumberjackCustomDriverConfigToken,
+          useValue: config || {},
+        },
+      ],
     };
   }
 

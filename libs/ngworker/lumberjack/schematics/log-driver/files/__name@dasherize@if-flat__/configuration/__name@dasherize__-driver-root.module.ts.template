@@ -1,0 +1,51 @@
+import { Inject, NgModule, Optional, SkipSelf } from '@angular/core';
+
+import {
+  LumberjackLogDriverConfig,
+  lumberjackLogDriverConfigToken,
+  lumberjackLogDriverToken,
+} from '@ngworker/lumberjack';
+
+import { LumberjackCustomDriver } from '../log-drivers/lumberjack-custom.driver';
+
+import { lumberjackCustomDriverConfigToken } from './lumberjack-custom-driver-config.token';
+import { LumberjackCustomDriverConfig } from './lumberjack-custom-driver.config';
+
+import { <%= classify(name) %>Driver } from './my-log-driver.service';
+
+export function customDriverFactory(
+  logDriverConfig: LumberjackLogDriverConfig,
+  customDriverConfig: LumberjackCustomDriverConfig,
+): LumberjackCustomDriver {
+  const baseConfig = { ...logDriverConfig, identifier: LumberjackCustomDriver.driverIdentifier };
+  const fullConfig = { ...baseConfig, ...customDriverConfig };
+
+  return new LumberjackCustomDriver(fullConfig);
+}
+
+@NgModule({
+  providers: [
+    {
+      provide: lumberjackLogDriverToken,
+      useFactory: customDriverFactory,
+      deps: [lumberjackLogDriverConfigToken, lumberjackCustomDriverConfigToken],
+      multi: true,
+    },
+  ],
+})
+export class LumberjackCustomDriverRootModule {
+  constructor(
+    // tslint:disable: no-any no-null-keyword
+    @Optional()
+    @SkipSelf()
+    @Inject(LumberjackCustomDriverRootModule)
+    maybeNgModuleFromParentInjector: LumberjackCustomDriverRootModule = null as any
+    // tslint:enable: no-any no-null-keyword
+  ) {
+    if (maybeNgModuleFromParentInjector) {
+      throw new Error(
+        'LumberjackCustomDriverModule.forRoot registered in multiple injectors. Only call it from your root injector such as in AppModule.'
+      );
+    }
+  }
+}

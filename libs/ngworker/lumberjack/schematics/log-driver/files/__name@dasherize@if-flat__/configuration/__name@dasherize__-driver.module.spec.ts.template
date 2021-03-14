@@ -1,0 +1,104 @@
+import { TestBed } from '@angular/core/testing';
+
+import { expectNgModuleToBeGuardedAgainstDirectImport, resolveDependency } from '@internal/test-util';
+import {
+  lumberjackConfigToken,
+  LumberjackLevel,
+  LumberjackLogDriver,
+  LumberjackLogDriverConfig,
+  lumberjackLogDriverToken,
+  LumberjackModule,
+} from '@ngworker/lumberjack';
+
+import { LumberjackCustomDriver } from '../log-drivers/lumberjack-custom.driver';
+
+import { LumberjackCustomDriverConfig } from './lumberjack-custom-driver.config';
+import { LumberjackCustomDriverModule } from './lumberjack-custom-driver.module';
+
+const createCustomDriver = ({
+  config,
+  isLumberjackModuleImportedFirst = true,
+}: {
+  config?: LumberjackCustomDriverConfig;
+  isLumberjackModuleImportedFirst?: boolean;
+} = {}) => {
+  TestBed.configureTestingModule({
+    imports: [
+      isLumberjackModuleImportedFirst ? LumberjackModule.forRoot() : [],
+      LumberjackCustomDriverModule.forRoot(config),
+      isLumberjackModuleImportedFirst ? [] : LumberjackModule.forRoot(),
+    ],
+  });
+
+  const [customDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
+
+  return customDriver;
+};
+
+describe(LumberjackCustomDriverModule.name, () => {
+  it(`cannot be imported without using the ${LumberjackCustomDriverModule.forRoot.name} method`, () => {
+    expectNgModuleToBeGuardedAgainstDirectImport(LumberjackCustomDriverModule);
+  });
+
+  describe(LumberjackCustomDriverModule.forRoot.name, () => {
+    it('provides the custom driver', () => {
+      const customDriver = createCustomDriver();
+
+      expect(customDriver).toBeInstanceOf(LumberjackCustomDriver);
+    });
+
+    it('registers the specified log driver configuration given the specified identifier', () => {
+      const expectedConfig: LumberjackLogDriverConfig = {
+        levels: [LumberjackLevel.Error],
+        identifier: 'TestDriverIdentifier',
+      };
+
+      const customDriver = createCustomDriver({ config: expectedConfig });
+
+      const actualConfig = customDriver.config;
+      expect(actualConfig).toEqual(expectedConfig);
+    });
+
+    it('registers the specified log driver configuration given no identifier', () => {
+      const config: LumberjackCustomDriverConfig = {
+        levels: [LumberjackLevel.Error],
+      };
+      const expectedConfig: LumberjackLogDriverConfig = {
+        ...config,
+        identifier: LumberjackCustomDriver.driverIdentifier,
+      };
+
+      const customDriver = createCustomDriver({ config });
+
+      const actualConfig = customDriver.config;
+      expect(actualConfig).toEqual(expectedConfig);
+    });
+
+    it('registers a default configuration if none is specified', () => {
+      const customDriver = createCustomDriver();
+
+      const actualConfig = customDriver.config;
+      const logConfig = resolveDependency(lumberjackConfigToken);
+      const defaultLogDriverConfig: LumberjackLogDriverConfig = {
+        levels: logConfig.levels,
+        identifier: LumberjackCustomDriver.driverIdentifier,
+      };
+      expect(actualConfig).toEqual(defaultLogDriverConfig);
+    });
+
+    it('registers the specified log driver configuration when the Lumberjack module is imported after the custom driver module', () => {
+      const expectedConfig: LumberjackLogDriverConfig = {
+        levels: [LumberjackLevel.Debug],
+        identifier: 'TestCustomDriver',
+      };
+
+      const customDriver = createCustomDriver({
+        config: expectedConfig,
+        isLumberjackModuleImportedFirst: false,
+      });
+
+      const actualConfig = customDriver.config;
+      expect(actualConfig).toEqual(expectedConfig);
+    });
+  });
+});

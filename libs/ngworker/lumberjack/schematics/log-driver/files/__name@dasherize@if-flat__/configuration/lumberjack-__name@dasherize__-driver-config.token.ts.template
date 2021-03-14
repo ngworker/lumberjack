@@ -1,0 +1,7 @@
+import { InjectionToken } from '@angular/core';
+
+import { LumberjackLogDriverConfig } from '@ngworker/lumberjack';
+
+export const lumberjackCustomDriverConfigToken = new InjectionToken<LumberjackLogDriverConfig>(
+  '__LUMBERJACK_CUSTOM_DRIVER_CONFIG__'
+);

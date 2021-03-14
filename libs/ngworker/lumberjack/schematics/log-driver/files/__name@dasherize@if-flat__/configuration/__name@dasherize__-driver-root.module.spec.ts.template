@@ -4,12 +4,12 @@ const optionalAngularDependency = null;
 
 describe( <%= classify(name) %>RootModule.name, () => {
   it('guards against being registered in multiple injectors', () => {
-    const rootInjectorInstance = new  <%= classify(name) %>RootModule(optionalAngularDependency as any);
+    const rootInjectorInstance = new  <%= classify(name) %>RootModule();
 
     expect(() => new  <%= classify(name) %>RootModule(rootInjectorInstance)).toThrowError(/multiple injectors/);
   });
 
   it('does not guard the first injector that registers it', () => {
-    expect(() => new  <%= classify(name) %>RootModule(optionalAngularDependency as any)).not.toThrow();
+    expect(() => new  <%= classify(name) %>RootModule()).not.toThrow();
   });
 });
