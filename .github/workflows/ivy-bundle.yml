@@ -35,7 +35,7 @@ jobs:
             ${{ runner.os }}-node-${{ env.NODE_LATEST }}-angular-
       - run: yarn remove @angular-devkit/build-ng-packagr
       - run: yarn install
-      - run: yarn use-modern-ngpackagr-builder
+
       - run: yarn enable-partial-ivy-compilation
       - run: yarn build:lib
       - uses: actions/upload-artifact@v2
