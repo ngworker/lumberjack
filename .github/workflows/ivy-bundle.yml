@@ -44,7 +44,7 @@ jobs:
 
   ivy-app:
     runs-on: ubuntu-latest
-    needs: build
+    needs: ivy-build
 
     strategy:
       matrix:
