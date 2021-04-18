@@ -89,5 +89,5 @@ jobs:
         run: yarn delete-commonjs-allowlist
 
       - run: yarn test:ci
-      - run: yarn enable-angular-linker
+      # - run: yarn enable-angular-linker
       - run: yarn build
