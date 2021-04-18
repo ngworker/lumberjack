@@ -87,7 +87,7 @@ jobs:
 
       - if: matrix.angular-version == '9.0.x' || matrix.angular-version == '9.1.x'
         run: yarn delete-commonjs-allowlist
-      - run: yarn enable-angular-linker
 
       - run: yarn test:ci
+      - run: yarn enable-angular-linker
       - run: yarn build
