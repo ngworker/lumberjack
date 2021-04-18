@@ -37,8 +37,7 @@
     "ng-add": "schematics --dry-run=false ./dist/ngworker/lumberjack/schematics:ng-add",
     "schematics-e2e:output-app-module": "cat apps/lumberjack-schematics-app/src/app/app.module.ts",
     "use-modern-ngpackagr-builder": "json -f angular.json --in-place -e \"this.projects['ngworker-lumberjack'].architect.build.builder = '@angular-devkit/build-angular:ng-packagr';\"",
-    "enable-partial-ivy-compilation": "json -f libs/ngworker/lumberjack/tsconfig.lib.prod.json --in-place -e \"this.angularCompilerOptions = { ...this.angularCompilerOptions, compilationMode: 'partial', enableIvy: true };\"",
-    "enable-angular-linker": "json -f angular.json --in-place -e \"this.projects['lumberjack-app'].architect.build.options.angularLinker = true;\""
+    "enable-partial-ivy-compilation": "json -f libs/ngworker/lumberjack/tsconfig.lib.prod.json --in-place -e \"this.angularCompilerOptions = { ...this.angularCompilerOptions, compilationMode: 'partial', enableIvy: true };\""
   },
   "private": true,
   "dependencies": {
