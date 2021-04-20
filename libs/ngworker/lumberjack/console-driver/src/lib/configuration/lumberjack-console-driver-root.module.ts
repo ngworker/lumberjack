@@ -24,6 +24,9 @@ export function consoleDriverFactory(
   return new LumberjackConsoleDriver(fullConfig, console);
 }
 
+/**
+ * Do not import directly. Use `LumberjackConsoleDriverModule.forRoot`.
+ */
 @NgModule({
   providers: [
     {
