@@ -7,6 +7,7 @@ export { LumberjackHttpDriverRetryOptions } from './lib/configuration/lumberjack
 export { LumberjackHttpDriverConfig } from './lib/configuration/lumberjack-http-driver.config';
 export { LumberjackHttpDriverModule } from './lib/configuration/lumberjack-http-driver.module';
 export { LumberjackHttpDriverOptions } from './lib/configuration/lumberjack-http-driver.options';
+export { LumberjackHttpDriverRootModule } from './lib/configuration/lumberjack-http-driver-root.module';
 
 // Log drivers
 export { LumberjackHttpDriver } from './lib/log-drivers/lumberjack-http.driver';
