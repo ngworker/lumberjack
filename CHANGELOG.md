@@ -2,7 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
-### [2.0.1](https://github.com/ngworker/lumberjack/compare/v2.0.0...v2.0.1) (2021-02-12)
+## [2.0.2](https://github.com/ngworker/lumberjack/compare/v2.0.1...v2.0.2) (2021-04-21)
+
+### Bug Fixes
+
+- export root Angular modules ([#85](https://github.com/ngworker/lumberjack/issues/85)) ([d9a4558](https://github.com/ngworker/lumberjack/commit/d9a455879732453e88904e77e7b35fa8e4c7459e))
+
+## [2.0.1](https://github.com/ngworker/lumberjack/compare/v2.0.0...v2.0.1) (2021-02-12)
 
 ### Documentation
 
