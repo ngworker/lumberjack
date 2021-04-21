@@ -10,6 +10,7 @@ export * from './lib/angular/resolve-dependency';
 export * from './lib/error-throwing-driver/error-throwing-driver.config';
 export * from './lib/error-throwing-driver/error-throwing-driver.module';
 export * from './lib/error-throwing-driver/error-throwing-driver.options';
+export * from './lib/error-throwing-driver/error-throwing-driver-root.module';
 export * from './lib/error-throwing-driver/error-throwing.driver';
 
 // Functions
@@ -20,14 +21,17 @@ export * from './lib/logs';
 
 // No-op driver
 export * from './lib/noop-driver/noop-driver.module';
+export * from './lib/noop-driver/noop-driver-root.module';
 export * from './lib/noop-driver/noop.driver';
 
 // Spy driver
 export * from './lib/spy-driver/spy-driver.module';
+export * from './lib/spy-driver/spy-driver-root.module';
 export * from './lib/spy-driver/spy.driver';
 
 // Object driver
 export * from './lib/object-driver/object-driver.module';
+export * from './lib/object-driver/object-driver-root.module';
 export * from './lib/object-driver/object.driver';
 export * from './lib/object-driver/object.service';
 export * from './lib/object-driver/object.payload';

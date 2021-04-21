@@ -26,6 +26,9 @@ export function logDriverConfigFactory({ levels }: LumberjackConfig): Omit<Lumbe
   };
 }
 
+/**
+ * Do not import directly. Use `LumberjackModule.forRoot`.
+ */
 @NgModule({
   providers: [
     {

@@ -26,6 +26,9 @@ export function httpDriverFactory(
   return new LumberjackHttpDriver(http, config, ngZone);
 }
 
+/**
+ * Do not import directly. Use `LumberjackHttpDriverModule.forRoot`.
+ */
 @NgModule({
   imports: [HttpClientModule],
   providers: [

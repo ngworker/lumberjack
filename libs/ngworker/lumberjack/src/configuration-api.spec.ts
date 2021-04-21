@@ -10,6 +10,7 @@ import {
   lumberjackLogDriverConfigToken,
   LumberjackModule,
   LumberjackOptions,
+  LumberjackRootModule,
 } from './index';
 
 describe('Configuration API', () => {
@@ -44,6 +45,12 @@ describe('Configuration API', () => {
   describe('Angular modules', () => {
     it(`exposes ${LumberjackModule.name}`, () => {
       const sut = LumberjackModule;
+
+      expect(isClass(sut)).toBeTruthy();
+    });
+
+    it(`exposes ${LumberjackRootModule.name}`, () => {
+      const sut = LumberjackRootModule;
 
       expect(isClass(sut)).toBeTruthy();
     });
