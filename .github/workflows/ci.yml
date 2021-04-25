@@ -1,8 +1,8 @@
 name: '@ngworker/lumberjack CI'
 
 env:
-  ANGULAR_LATEST: 12.0.x
-  NODE_LATEST: 14.x
+  ANGULAR_LATEST_STABLE: 11.2.x
+  NODE_LATEST: 12.x
   NODE_OPTIONS: --max_old_space_size=6144
 
 on:
