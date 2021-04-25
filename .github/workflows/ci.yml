@@ -2,8 +2,8 @@ name: '@ngworker/lumberjack CI'
 
 env:
   # Must match the Angular version in `package.json`
-  ANGULAR_LATEST_STABLE: 11.2.x
-  NODE_DEFAULT: 12.x
+  ANGULAR_CURRENT: 11.2.x
+  NODE_CURRENT: 12.x
   NODE_OPTIONS: --max_old_space_size=6144
 
 on:
@@ -18,10 +18,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ env.NODE_DEFAULT }}
+      - name: Use Node.js ${{ env.NODE_CURRENT }}
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ env.NODE_DEFAULT }}
+          node-version: ${{ env.NODE_CURRENT }}
 
       - name: Variable-Yarn cache directory path
         id: yarn-cache-dir-path
@@ -30,10 +30,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ env.NODE_DEFAULT }}-angular-${{ env.ANGULAR_LATEST_STABLE }}-yarn-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-node-${{ env.NODE_CURRENT }}-angular-${{ env.ANGULAR_CURRENT }}-yarn-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-node-${{ env.NODE_DEFAULT }}-angular-${{ env.ANGULAR_LATEST_STABLE }}-yarn-
-            ${{ runner.os }}-node-${{ env.NODE_DEFAULT }}-angular-
+            ${{ runner.os }}-node-${{ env.NODE_CURRENT }}-angular-${{ env.ANGULAR_CURRENT }}-yarn-
+            ${{ runner.os }}-node-${{ env.NODE_CURRENT }}-angular-
       - run: yarn install
       - run: yarn lint
 
@@ -42,10 +42,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ env.NODE_DEFAULT }}
+      - name: Use Node.js ${{ env.NODE_CURRENT }}
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ env.NODE_DEFAULT }}
+          node-version: ${{ env.NODE_CURRENT }}
 
       - name: Variable-Yarn cache directory path
         id: yarn-cache-dir-path
@@ -54,10 +54,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ env.NODE_DEFAULT }}-angular-${{ env.ANGULAR_LATEST_STABLE }}-yarn-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-node-${{ env.NODE_CURRENT }}-angular-${{ env.ANGULAR_CURRENT }}-yarn-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-node-${{ env.NODE_DEFAULT }}-angular-${{ env.ANGULAR_LATEST_STABLE }}-yarn-
-            ${{ runner.os }}-node-${{ env.NODE_DEFAULT }}-angular-
+            ${{ runner.os }}-node-${{ env.NODE_CURRENT }}-angular-${{ env.ANGULAR_CURRENT }}-yarn-
+            ${{ runner.os }}-node-${{ env.NODE_CURRENT }}-angular-
       - run: yarn install
       - run: yarn build:lib
       - uses: actions/upload-artifact@v2
@@ -270,10 +270,10 @@ jobs:
         with:
           # shallow clone is disabled for a better relevancy of SonarCloud analysis
           fetch-depth: 0
-      - name: Use Node.js ${{ env.NODE_DEFAULT }}
+      - name: Use Node.js ${{ env.NODE_CURRENT }}
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ env.NODE_DEFAULT }}
+          node-version: ${{ env.NODE_CURRENT }}
 
       - name: Variable-Yarn cache directory path
         id: yarn-cache-dir-path
@@ -282,10 +282,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ env.NODE_DEFAULT }}-angular-${{ env.ANGULAR_LATEST_STABLE }}-yarn-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-node-${{ env.NODE_CURRENT }}-angular-${{ env.ANGULAR_CURRENT }}-yarn-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-node-${{ env.NODE_DEFAULT }}-angular-${{ env.ANGULAR_LATEST_STABLE }}-yarn-
-            ${{ runner.os }}-node-${{ env.NODE_DEFAULT }}-angular-
+            ${{ runner.os }}-node-${{ env.NODE_CURRENT }}-angular-${{ env.ANGULAR_CURRENT }}-yarn-
+            ${{ runner.os }}-node-${{ env.NODE_CURRENT }}-angular-
       - run: yarn install
       - run: npx ngcc || true
 
