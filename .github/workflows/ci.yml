@@ -3,6 +3,7 @@ name: '@ngworker/lumberjack CI'
 env:
   # Must match the Angular version in `package.json`
   ANGULAR_CURRENT: 11.2.x
+  # The latest Node.js version compatible with the Angular version listed in `package.json`
   NODE_CURRENT: 12.x
   NODE_OPTIONS: --max_old_space_size=6144
 
@@ -165,8 +166,8 @@ jobs:
         node-version: [12.x]
         angular-version: [9.0.x, 9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x, 11.1.x, 11.2.x, 12.0.x]
         include:
-          - node-version: 14.x
-            angular-version: 12.0.x
+          - angular-version: 12.0.x
+            node-version: 14.x
 
     steps:
       - uses: actions/checkout@v2
