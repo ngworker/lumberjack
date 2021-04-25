@@ -2,7 +2,7 @@ name: '@ngworker/lumberjack CI'
 
 env:
   ANGULAR_LATEST_STABLE: 11.2.x
-  NODE_LATEST: 12.x
+  NODE_LATEST_STABLE: 12.x
   NODE_OPTIONS: --max_old_space_size=6144
 
 on:
@@ -17,10 +17,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ env.NODE_LATEST }}
+      - name: Use Node.js ${{ env.NODE_LATEST_STABLE }}
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ env.NODE_LATEST }}
+          node-version: ${{ env.NODE_LATEST_STABLE }}
 
       - name: Variable-Yarn cache directory path
         id: yarn-cache-dir-path
@@ -29,10 +29,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ env.NODE_LATEST }}-angular-${{ env.ANGULAR_LATEST }}-yarn-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-node-${{ env.NODE_LATEST_STABLE }}-angular-${{ env.ANGULAR_LATEST_STABLE }}-yarn-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-node-${{ env.NODE_LATEST }}-angular-${{ env.ANGULAR_LATEST }}-yarn-
-            ${{ runner.os }}-node-${{ env.NODE_LATEST }}-angular-
+            ${{ runner.os }}-node-${{ env.NODE_LATEST_STABLE }}-angular-${{ env.ANGULAR_LATEST_STABLE }}-yarn-
+            ${{ runner.os }}-node-${{ env.NODE_LATEST_STABLE }}-angular-
       - run: yarn install
       - run: yarn lint
 
@@ -41,10 +41,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ env.NODE_LATEST }}
+      - name: Use Node.js ${{ env.NODE_LATEST_STABLE }}
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ env.NODE_LATEST }}
+          node-version: ${{ env.NODE_LATEST_STABLE }}
 
       - name: Variable-Yarn cache directory path
         id: yarn-cache-dir-path
@@ -53,10 +53,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ env.NODE_LATEST }}-angular-${{ env.ANGULAR_LATEST }}-yarn-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-node-${{ env.NODE_LATEST_STABLE }}-angular-${{ env.ANGULAR_LATEST_STABLE }}-yarn-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-node-${{ env.NODE_LATEST }}-angular-${{ env.ANGULAR_LATEST }}-yarn-
-            ${{ runner.os }}-node-${{ env.NODE_LATEST }}-angular-
+            ${{ runner.os }}-node-${{ env.NODE_LATEST_STABLE }}-angular-${{ env.ANGULAR_LATEST_STABLE }}-yarn-
+            ${{ runner.os }}-node-${{ env.NODE_LATEST_STABLE }}-angular-
       - run: yarn install
       - run: yarn build:lib
       - uses: actions/upload-artifact@v2
@@ -74,10 +74,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ env.NODE_LATEST }}
+      - name: Use Node.js ${{ env.NODE_LATEST_STABLE }}
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ env.NODE_LATEST }}
+          node-version: ${{ env.NODE_LATEST_STABLE }}
       - name: Use Angular version ${{ matrix.angular-version }}
         uses: ngworker/angular-versions-action@v3
         with:
@@ -90,10 +90,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ env.NODE_LATEST }}-angular-${{ matrix.angular-version }}-yarn-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-node-${{ env.NODE_LATEST_STABLE }}-angular-${{ matrix.angular-version }}-yarn-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-node-${{ env.NODE_LATEST }}-angular-${{ matrix.angular-version }}-yarn-
-            ${{ runner.os }}-node-${{ env.NODE_LATEST }}-angular-
+            ${{ runner.os }}-node-${{ env.NODE_LATEST_STABLE }}-angular-${{ matrix.angular-version }}-yarn-
+            ${{ runner.os }}-node-${{ env.NODE_LATEST_STABLE }}-angular-
       - run: yarn install
       - run: yarn test:internal:ci
       - run: yarn test:lib:ci
@@ -105,11 +105,13 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
-        angular-version: [9.0.x, 9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x, 11.1.x, 11.2.x, 12.0.x]
-        exclude:
-          - node-version: 10.x
-            angular-version: 12.0.x
+        node-version: [10.x, 12.x]
+        angular-version: [9.0.x, 9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x, 11.1.x, 11.2.x]
+        include:
+          - angular-version: 12.0.x
+            node-version: 12.x
+          - angular-version: 12.0.x
+            node-version: 14.x
 
     steps:
       - uses: actions/checkout@v2
@@ -159,10 +161,10 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      - name: Use Node.js ${{ env.NODE_LATEST }}
+      - name: Use Node.js ${{ env.NODE_LATEST_STABLE }}
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ env.NODE_LATEST }}
+          node-version: ${{ env.NODE_LATEST_STABLE }}
       - name: Use Angular version ${{ matrix.angular-version }}
         uses: ngworker/angular-versions-action@v3
         with:
@@ -175,10 +177,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ env.NODE_LATEST }}-angular-${{ matrix.angular-version }}-yarn-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-node-${{ env.NODE_LATEST_STABLE }}-angular-${{ matrix.angular-version }}-yarn-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-node-${{ env.NODE_LATEST }}-angular-${{ matrix.angular-version }}-yarn-
-            ${{ runner.os }}-node-${{ env.NODE_LATEST }}-angular-
+            ${{ runner.os }}-node-${{ env.NODE_LATEST_STABLE }}-angular-${{ matrix.angular-version }}-yarn-
+            ${{ runner.os }}-node-${{ env.NODE_LATEST_STABLE }}-angular-
       - run: yarn install
       - run: yarn delete-path-alias @ngworker/lumberjack
       - run: yarn delete-path-alias @ngworker/lumberjack/console-driver
@@ -205,12 +207,14 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: [10.x, 12.x]
         # 9.0.x doesn't work due to Jest dependencies using TypeScript 3.8 import type syntax
-        angular-version: [9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x, 11.1.x, 11.2.x, 12.0.x]
-        exclude:
-          - node-version: 10.x
-            angular-version: 12.0.x
+        angular-version: [9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x, 11.1.x, 11.2.x]
+        include:
+          - angular-version: 12.0.x
+            node-version: 12.x
+          - angular-version: 12.0.x
+            node-version: 14.x
 
     steps:
       - uses: actions/checkout@v2
@@ -257,10 +261,10 @@ jobs:
         with:
           # shallow clone is disabled for a better relevancy of SonarCloud analysis
           fetch-depth: 0
-      - name: Use Node.js ${{ env.NODE_LATEST }}
+      - name: Use Node.js ${{ env.NODE_LATEST_STABLE }}
         uses: actions/setup-node@v2
         with:
-          node-version: ${{ env.NODE_LATEST }}
+          node-version: ${{ env.NODE_LATEST_STABLE }}
 
       - name: Variable-Yarn cache directory path
         id: yarn-cache-dir-path
@@ -269,10 +273,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-node-${{ env.NODE_LATEST }}-angular-${{ env.ANGULAR_LATEST }}-yarn-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-node-${{ env.NODE_LATEST_STABLE }}-angular-${{ env.ANGULAR_LATEST_STABLE }}-yarn-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-node-${{ env.NODE_LATEST }}-angular-${{ env.ANGULAR_LATEST }}-yarn-
-            ${{ runner.os }}-node-${{ env.NODE_LATEST }}-angular-
+            ${{ runner.os }}-node-${{ env.NODE_LATEST_STABLE }}-angular-${{ env.ANGULAR_LATEST_STABLE }}-yarn-
+            ${{ runner.os }}-node-${{ env.NODE_LATEST_STABLE }}-angular-
       - run: yarn install
       - run: npx ngcc || true
 
