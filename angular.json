@@ -30,11 +30,16 @@
             "main": "apps/lumberjack-app/src/main.ts",
             "polyfills": "apps/lumberjack-app/src/polyfills.ts",
             "tsConfig": "apps/lumberjack-app/tsconfig.app.json",
-            "aot": true,
             "assets": ["apps/lumberjack-app/src/favicon.ico", "apps/lumberjack-app/src/assets"],
             "styles": ["apps/lumberjack-app/src/styles.scss"],
             "scripts": [],
-            "allowedCommonJsDependencies": ["zone.js"]
+            "allowedCommonJsDependencies": ["zone.js"],
+            "vendorChunk": true,
+            "extractLicenses": true,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": false
           },
           "configurations": {
             "production": {
@@ -47,8 +52,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
               "budgets": [
@@ -240,11 +243,16 @@
             "main": "apps/lumberjack-schematics-app/src/main.ts",
             "polyfills": "apps/lumberjack-schematics-app/src/polyfills.ts",
             "tsConfig": "apps/lumberjack-schematics-app/tsconfig.app.json",
-            "aot": true,
             "assets": ["apps/lumberjack-schematics-app/src/favicon.ico", "apps/lumberjack-schematics-app/src/assets"],
             "styles": ["apps/lumberjack-schematics-app/src/styles.scss"],
             "scripts": [],
-            "allowedCommonJsDependencies": ["zone.js"]
+            "allowedCommonJsDependencies": ["zone.js"],
+            "vendorChunk": true,
+            "extractLicenses": true,
+            "buildOptimizer": false,
+            "sourceMap": true,
+            "optimization": false,
+            "namedChunks": false
           },
           "configurations": {
             "production": {
@@ -257,8 +265,6 @@
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
-              "namedChunks": false,
-              "extractLicenses": true,
               "vendorChunk": false,
               "buildOptimizer": true,
               "budgets": [
