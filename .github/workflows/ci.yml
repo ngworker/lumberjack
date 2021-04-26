@@ -75,8 +75,8 @@ jobs:
         node-version: [12.x]
         angular-version: [9.0.x, 9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x, 11.1.x, 11.2.x]
         include:
-          - angular-version: 12.0.x
-            node-version: 14.x
+          - node-version: 14.x
+            angular-version: 12.0.x
 
     steps:
       - uses: actions/checkout@v2
@@ -114,10 +114,10 @@ jobs:
         node-version: [10.x, 12.x]
         angular-version: [9.0.x, 9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x, 11.1.x, 11.2.x]
         include:
-          - angular-version: 12.0.x
-            node-version: 12.x
-          - angular-version: 12.0.x
-            node-version: 14.x
+          - node-version: 12.x
+            angular-version: 12.0.x
+          - node-version: 14.x
+            angular-version: 12.0.x
 
     steps:
       - uses: actions/checkout@v2
@@ -166,8 +166,8 @@ jobs:
         node-version: [12.x]
         angular-version: [9.0.x, 9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x, 11.1.x, 11.2.x]
         include:
-          - angular-version: 12.0.x
-            node-version: 14.x
+          - node-version: 14.x
+            angular-version: 12.0.x
 
     steps:
       - uses: actions/checkout@v2
@@ -221,10 +221,11 @@ jobs:
         # 9.0.x doesn't work due to Jest dependencies using TypeScript 3.8 import type syntax
         angular-version: [9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x, 11.1.x, 11.2.x]
         include:
-          - angular-version: 12.0.x
-            node-version: 12.x
-          - angular-version: 12.0.x
-            node-version: 14.x
+          - node-version: 12.x
+            angular-version: 12.0.x
+
+          - node-version: 14.x
+            angular-version: 12.0.x
 
     steps:
       - uses: actions/checkout@v2
