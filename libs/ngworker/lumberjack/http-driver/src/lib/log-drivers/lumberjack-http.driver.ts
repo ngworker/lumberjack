@@ -97,7 +97,9 @@ export class LumberjackHttpDriver<TPayload extends LumberjackLogPayload | void =
       this.http
         .post<void>(storeUrl, httpLog)
         .pipe(retryWithDelay(retryOptions.maxRetries, retryOptions.delayMs))
-        .subscribe();
+        .subscribe(() => {
+          // No-op
+        });
     });
   }
 }
