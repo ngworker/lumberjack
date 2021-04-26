@@ -68,6 +68,7 @@ Lumberjack version 2.x has verified compatibility with the following Angular ver
 
 | Angular version | Lumberjack 2.x support |
 | --------------- | ---------------------- |
+| 12.0.x          | ✅                     |
 | 11.2.x          | ✅                     |
 | 11.1.x          | ✅                     |
 | 11.0.x          | ✅                     |
