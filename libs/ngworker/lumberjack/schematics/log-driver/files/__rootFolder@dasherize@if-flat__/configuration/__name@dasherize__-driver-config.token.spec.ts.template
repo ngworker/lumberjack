@@ -1,0 +1,31 @@
+import { TestBed } from '@angular/core/testing';
+import { LumberjackLevel, LumberjackLogDriverConfig, lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
+
+import { <%= camelize(name) %>DriverConfigToken } from './<%= dasherize(name) %>-driver-config.token';
+
+const debugDriverConfig: LumberjackLogDriverConfig = {
+  levels: [LumberjackLevel.Debug],
+  identifier: '<%= classify(name) %>Driver',
+};
+const verboseDriverConfig: Partial<LumberjackLogDriverConfig> = {
+  levels: [LumberjackLevel.Verbose],
+};
+
+describe('<%= camelize(name) %>DriverConfigToken', () => {
+  describe('given a provided <%= name %> log driver config', () => {
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        providers: [
+          { provide: lumberjackLogDriverConfigToken, useValue: verboseDriverConfig },
+          { provide: <%= camelize(name) %>DriverConfigToken, useValue: debugDriverConfig },
+        ],
+      });
+    });
+
+    it('then that config is resolved', () => {
+      const actualDriverConfig = TestBed.inject(<%= camelize(name) %>DriverConfigToken);
+
+      expect(actualDriverConfig).toBe(debugDriverConfig);
+    });
+  });
+});

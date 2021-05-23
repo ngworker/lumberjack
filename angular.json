@@ -171,6 +171,32 @@
         }
       }
     },
+    "internal-e2e-util": {
+      "projectType": "library",
+      "root": "libs/internal/e2e-util",
+      "sourceRoot": "libs/internal/e2e-util/src",
+      "prefix": "internal",
+      "architect": {
+        "test": {
+          "builder": "@angular-builders/jest:run",
+          "options": {
+            "coverage": false
+          },
+          "configurations": {
+            "ci": {
+              "watch": false
+            }
+          }
+        },
+        "lint": {
+          "builder": "@angular-devkit/build-angular:tslint",
+          "options": {
+            "tsConfig": ["libs/internal/e2e-util/tsconfig.lib.json", "libs/internal/e2e-util/tsconfig.spec.json"],
+            "exclude": ["**/node_modules/**", "!libs/internal/e2e-util/**"]
+          }
+        }
+      }
+    },
     "internal-test-util": {
       "projectType": "library",
       "root": "libs/internal/test-util",

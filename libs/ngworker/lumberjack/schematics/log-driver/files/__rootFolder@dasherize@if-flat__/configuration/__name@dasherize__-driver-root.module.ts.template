@@ -1,0 +1,45 @@
+import { Inject, NgModule, Optional, SkipSelf } from '@angular/core';
+import {
+  LumberjackLogDriverConfig,
+  lumberjackLogDriverConfigToken,
+  lumberjackLogDriverToken,
+} from '@ngworker/lumberjack';
+
+import { <%= classify(name) %>Driver } from '../log-drivers/<%= dasherize(name) %>.driver';
+import { <%= camelize(name) %>DriverConfigToken } from './<%= dasherize(name) %>-driver-config.token';
+import { <%= classify(name) %>DriverConfig } from './<%= dasherize(name) %>-driver.config';
+
+export function <%= camelize(name) %>DriverFactory(
+  logDriverConfig: LumberjackLogDriverConfig,
+  <%= camelize(name) %>DriverConfig: <%= classify(name) %>DriverConfig,
+): <%= classify(name) %>Driver {
+  const baseConfig = { ...logDriverConfig, identifier: <%= classify(name) %>Driver.driverIdentifier };
+  const fullConfig = { ...baseConfig, ...<%= camelize(name) %>DriverConfig };
+
+  return new <%= classify(name) %>Driver(fullConfig);
+}
+
+@NgModule({
+  providers: [
+    {
+      provide: lumberjackLogDriverToken,
+      useFactory: <%= camelize(name) %>DriverFactory,
+      deps: [lumberjackLogDriverConfigToken, <%= camelize(name) %>DriverConfigToken],
+      multi: true,
+    },
+  ],
+})
+export class <%= classify(name) %>DriverRootModule {
+  constructor(
+    @Optional()
+    @SkipSelf()
+    @Inject(<%= classify(name) %>DriverRootModule)
+    maybeNgModuleFromParentInjector: <%= classify(name) %>DriverRootModule = null as any
+  ) {
+    if (maybeNgModuleFromParentInjector) {
+      throw new Error(
+        '<%= classify(name) %>DriverModule.forRoot registered in multiple injectors. Only call it from your root injector such as in AppModule.'
+      );
+    }
+  }
+}

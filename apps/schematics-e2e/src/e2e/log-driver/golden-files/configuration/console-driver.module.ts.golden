@@ -1,0 +1,29 @@
+import { ModuleWithProviders, NgModule } from '@angular/core';
+
+import { consoleDriverConfigToken } from './console-driver-config.token';
+import { ConsoleDriverRootModule } from './console-driver-root.module';
+import { ConsoleDriverConfig } from './console-driver.config';
+
+/**
+ * Service module for `ConsoleDriver`.
+ *
+ * Use `ConsoleDriverModule.forRoot` to import.
+ */
+@NgModule()
+export class ConsoleDriverModule {
+  static forRoot(config?: ConsoleDriverConfig): ModuleWithProviders<ConsoleDriverRootModule> {
+    return {
+      ngModule: ConsoleDriverRootModule,
+      providers: [
+        {
+          provide: consoleDriverConfigToken,
+          useValue: config || {},
+        },
+      ],
+    };
+  }
+
+  constructor() {
+    throw new Error('Do not import ConsoleDriverModule directly. Use ConsoleDriverModule.forRoot.');
+  }
+}

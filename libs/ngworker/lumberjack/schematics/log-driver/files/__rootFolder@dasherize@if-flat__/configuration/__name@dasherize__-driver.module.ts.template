@@ -1,0 +1,29 @@
+import { ModuleWithProviders, NgModule } from '@angular/core';
+
+import { <%= camelize(name) %>DriverConfigToken } from './<%= dasherize(name) %>-driver-config.token';
+import { <%= classify(name) %>DriverRootModule } from './<%= dasherize(name) %>-driver-root.module';
+import { <%= classify(name) %>DriverConfig } from './<%= dasherize(name) %>-driver.config';
+
+/**
+ * Service module for `<%= classify(name) %>Driver`.
+ *
+ * Use `<%= classify(name) %>DriverModule.forRoot` to import.
+ */
+@NgModule()
+export class <%= classify(name) %>DriverModule {
+  static forRoot(config?: <%= classify(name) %>DriverConfig): ModuleWithProviders<<%= classify(name) %>DriverRootModule> {
+    return {
+      ngModule: <%= classify(name) %>DriverRootModule,
+      providers: [
+        {
+          provide: <%= camelize(name) %>DriverConfigToken,
+          useValue: config || {},
+        },
+      ],
+    };
+  }
+
+  constructor() {
+    throw new Error('Do not import <%= classify(name) %>DriverModule directly. Use <%= classify(name) %>DriverModule.forRoot.');
+  }
+}

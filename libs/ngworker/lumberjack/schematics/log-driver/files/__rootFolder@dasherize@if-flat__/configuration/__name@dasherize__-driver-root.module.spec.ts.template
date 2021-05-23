@@ -1,0 +1,13 @@
+import { <%= classify(name) %>DriverRootModule } from './<%= dasherize(name) %>-driver-root.module';
+
+describe(<%= classify(name) %>DriverRootModule.name, () => {
+  it('guards against being registered in multiple injectors', () => {
+    const rootInjectorInstance = new <%= classify(name) %>DriverRootModule();
+
+    expect(() => new <%= classify(name) %>DriverRootModule(rootInjectorInstance)).toThrowError(/multiple injectors/);
+  });
+
+  it('does not guard the first injector that registers it', () => {
+    expect(() => new <%= classify(name) %>DriverRootModule()).not.toThrow();
+  });
+});

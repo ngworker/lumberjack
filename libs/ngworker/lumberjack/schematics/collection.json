@@ -5,6 +5,12 @@
       "factory": "./ng-add/index#ngAdd",
       "schema": "./ng-add/schema.json",
       "description": "Add Lumberjack to the application."
+    },
+    "log-driver": {
+      "factory": "./log-driver/log-driver#logDriver",
+      "schema": "./log-driver/schema.json",
+      "aliases": ["driver"],
+      "description": "Create a project-specific Lumberjack log driver."
     }
   }
 }

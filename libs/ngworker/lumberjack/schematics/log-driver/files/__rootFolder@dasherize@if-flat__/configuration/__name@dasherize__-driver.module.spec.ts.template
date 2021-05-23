@@ -1,0 +1,110 @@
+import { TestBed } from '@angular/core/testing';
+import {
+  lumberjackConfigToken,
+  LumberjackLevel,
+  LumberjackLogDriver,
+  LumberjackLogDriverConfig,
+  lumberjackLogDriverToken,
+  LumberjackModule,
+} from '@ngworker/lumberjack';
+
+import { <%= classify(name) %>Driver } from '../log-drivers/<%= dasherize(name) %>.driver';
+import { <%= classify(name) %>DriverConfig } from './<%= dasherize(name) %>-driver.config';
+import { <%= classify(name) %>DriverModule } from './<%= dasherize(name) %>-driver.module';
+
+const create<%= classify(name) %>Driver = ({
+  config,
+  isLumberjackModuleImportedFirst = true,
+}: {
+  config?: <%= classify(name) %>DriverConfig;
+  isLumberjackModuleImportedFirst?: boolean;
+} = {}) => {
+  TestBed.configureTestingModule({
+    imports: [
+      isLumberjackModuleImportedFirst ? LumberjackModule.forRoot() : [],
+      <%= classify(name) %>DriverModule.forRoot(config),
+      isLumberjackModuleImportedFirst ? [] : LumberjackModule.forRoot(),
+    ],
+  });
+
+  const [<%= camelize(name) %>Driver] = (TestBed.inject(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
+
+  return <%= camelize(name) %>Driver;
+};
+
+describe(<%= classify(name) %>DriverModule.name, () => {
+  it(`cannot be imported without using the ${<%= classify(name) %>DriverModule.forRoot.name} method`, () => {
+    let ngModule: <%= classify(name) %>DriverModule | undefined;
+
+    TestBed.configureTestingModule({
+      imports: [<%= classify(name) %>DriverModule],
+    });
+
+    expect(() => {
+      ngModule = TestBed.inject(<%= classify(name) %>DriverModule);
+    }).toThrow();
+    expect(ngModule).toBeUndefined();
+  });
+
+  describe(<%= classify(name) %>DriverModule.forRoot.name, () => {
+    it('provides the <%= name %> driver', () => {
+      const <%= camelize(name) %>Driver = create<%= classify(name) %>Driver();
+
+      expect(<%= camelize(name) %>Driver).toBeInstanceOf(<%= classify(name) %>Driver);
+    });
+
+    it('registers the specified log driver configuration given the specified identifier', () => {
+      const expectedConfig: LumberjackLogDriverConfig = {
+        levels: [LumberjackLevel.Error],
+        identifier: 'Test<%= classify(name) %>DriverIdentifier',
+      };
+
+      const <%= camelize(name) %>Driver = create<%= classify(name) %>Driver({ config: expectedConfig });
+
+      const actualConfig = <%= camelize(name) %>Driver.config;
+      expect(actualConfig).toEqual(expectedConfig);
+    });
+
+    it('registers the specified log driver configuration given no identifier', () => {
+      const config: <%= classify(name) %>DriverConfig = {
+        levels: [LumberjackLevel.Error],
+      };
+      const expectedConfig: LumberjackLogDriverConfig = {
+        ...config,
+        identifier: <%= classify(name) %>Driver.driverIdentifier,
+      };
+
+      const <%= camelize(name) %>Driver = create<%= classify(name) %>Driver({ config });
+
+      const actualConfig = <%= camelize(name) %>Driver.config;
+      expect(actualConfig).toEqual(expectedConfig);
+    });
+
+    it('registers a default configuration if none is specified', () => {
+      const <%= camelize(name) %>Driver = create<%= classify(name) %>Driver();
+
+      const actualConfig = <%= camelize(name) %>Driver.config;
+      const logConfig = TestBed.inject(lumberjackConfigToken);
+      const defaultLogDriverConfig: LumberjackLogDriverConfig = {
+        levels: logConfig.levels,
+        identifier: <%= classify(name) %>Driver.driverIdentifier,
+      };
+      expect(actualConfig).toEqual(defaultLogDriverConfig);
+    });
+
+    it('registers the specified log driver configuration when the Lumberjack module is imported after the <%= name %> driver module', () => {
+      const expectedConfig: LumberjackLogDriverConfig = {
+        levels: [LumberjackLevel.Debug],
+        identifier: '<%= classify(name) %>Driver',
+      };
+
+      const <%= camelize(name) %>Driver = create<%= classify(name) %>Driver({
+        config: expectedConfig,
+        isLumberjackModuleImportedFirst: false,
+      });
+
+      const actualConfig = <%= camelize(name) %>Driver.config;
+      expect(actualConfig).toEqual(expectedConfig);
+    });
+  });
+});

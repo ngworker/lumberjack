@@ -301,6 +301,33 @@ export class AppModule {}
 
 ### Creating a custom log driver
 
+Lumberjack provides the schematics to create all starter files needed to create you own custom log driver.
+
+```shell
+ng generate @ngworker/lumberjack:log-driver --name=<driver-name>
+OR 
+ng generate @ngworker/lumberjack:log-driver --name=<driver-name> --project=<project-name>
+```
+
+## 📦 Options <a name="options"></a>
+### --project <a name="project"></a>
+- **optional**
+- Default: `defaultApplication mentioned in angular.json` (string)
+- Example:
+  - `ng generate @ngworker/lumberjack:log-driver --project=forest-app --name=console` – Generates all files required to write your `console logger` in project `forest-app` under a folder called `console`
+
+### --flat <a name="flat"></a>
+- **optional**
+- Default: `false` (true)
+- Example:
+  - `ng generate @ngworker/lumberjack:log-driver --name=console --flat=true` – Generates all files required to write your `console logger` in the root folder or the folder you are currently in.
+
+### --name <a name="name"></a>
+- **required**
+- Example:
+  - `ng generate @ngworker/lumberjack:log-driver --name=console` – name is the driver name you want to create.
+
+ 
 > Note, you can use the [ngworker/lumberjack-custom-driver](https://github.com/ngworker/lumberjack-custom-driver/generate) template Git repository to start a separate Lumberjack log driver workspace.
 
 Let's create a simple log driver for the browser console.
@@ -494,6 +521,10 @@ export class AppModule {}
 ### HTTP driver
 
 For a more advanced log driver implementation, see [LumberjackHttpDriver](https://github.com/ngworker/lumberjack/blob/main/projects/ngworker/lumberjack/http-driver/README.md)
+
+
+
+
 
 ## Community drivers
 

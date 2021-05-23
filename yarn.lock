@@ -1547,6 +1547,13 @@
     enhanced-resolve "5.7.0"
     webpack-sources "2.2.0"
 
+"@ngworker/lumberjack@^2.0.1":
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/@ngworker/lumberjack/-/lumberjack-2.0.1.tgz#1e492bb4eca074f39318202d2fedfeaba86ebb98"
+  integrity sha512-xUaYbvvCcfrjC8NsKvG1M57TePuhYmPZA/jm0Wglxck5Idx2x/Ni3Zco3MhSN0660JyhYUCq8fzUzd9qpBnnOg==
+  dependencies:
+    tslib "^2.0.0"
+
 "@nodelib/fs.scandir@2.1.4":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@nodelib/fs.scandir/-/fs.scandir-2.1.4.tgz#d4b3549a5db5de2683e0c1071ab4f140904bbf69"

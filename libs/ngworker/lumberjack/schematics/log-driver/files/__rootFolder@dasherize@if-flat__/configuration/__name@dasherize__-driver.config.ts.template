@@ -1,0 +1,7 @@
+import { LumberjackLogDriverConfig } from '@ngworker/lumberjack';
+
+/**
+ * Settings used by the custom driver.
+ */
+export type <%= classify(name) %>DriverConfig = Omit<LumberjackLogDriverConfig, 'identifier'> &
+  Partial<Pick<LumberjackLogDriverConfig, 'identifier'>>;

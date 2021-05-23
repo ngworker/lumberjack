@@ -1,0 +1,6 @@
+import { InjectionToken } from '@angular/core';
+import { LumberjackLogDriverConfig } from '@ngworker/lumberjack';
+
+export const <%= camelize(name) %>DriverConfigToken = new InjectionToken<LumberjackLogDriverConfig>(
+  '__<%= name.toLocaleUpperCase() %>_DRIVER_CONFIG__'
+);
