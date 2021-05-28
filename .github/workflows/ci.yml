@@ -31,10 +31,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-cache-v1-node-${{ env.NODE_CURRENT }}-angular-${{ env.ANGULAR_CURRENT }}-yarn-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-node-${{ env.NODE_CURRENT }}-angular-${{ env.ANGULAR_CURRENT }}-yarn-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-cache-v1-node-${{ env.NODE_CURRENT }}-angular-${{ env.ANGULAR_CURRENT }}-yarn-
-            ${{ runner.os }}-cache-v1-node-${{ env.NODE_CURRENT }}-angular-
+            ${{ runner.os }}-node-${{ env.NODE_CURRENT }}-angular-${{ env.ANGULAR_CURRENT }}-yarn-
+            ${{ runner.os }}-node-${{ env.NODE_CURRENT }}-angular-
       - run: yarn install
       - run: yarn lint
 
@@ -55,10 +55,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-cache-v1-node-${{ env.NODE_CURRENT }}-angular-${{ env.ANGULAR_CURRENT }}-yarn-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-node-${{ env.NODE_CURRENT }}-angular-${{ env.ANGULAR_CURRENT }}-yarn-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-cache-v1-node-${{ env.NODE_CURRENT }}-angular-${{ env.ANGULAR_CURRENT }}-yarn-
-            ${{ runner.os }}-cache-v1-node-${{ env.NODE_CURRENT }}-angular-
+            ${{ runner.os }}-node-${{ env.NODE_CURRENT }}-angular-${{ env.ANGULAR_CURRENT }}-yarn-
+            ${{ runner.os }}-node-${{ env.NODE_CURRENT }}-angular-
       - run: yarn install
       - run: yarn build:lib
       - uses: actions/upload-artifact@v2
@@ -96,10 +96,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-cache-v1-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-cache-v1-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-
-            ${{ runner.os }}-cache-v1-node-${{ matrix.node-version }}-angular-
+            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-
+            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-
       - run: yarn install
       - run: yarn test:internal:ci
       - run: yarn test:lib:ci
@@ -137,10 +137,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-cache-v1-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-cache-v1-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-
-            ${{ runner.os }}-cache-v1-node-${{ matrix.node-version }}-angular-
+            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-
+            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-
       - run: yarn install
       - run: yarn delete-path-alias @ngworker/lumberjack
       - run: yarn delete-path-alias @ngworker/lumberjack/console-driver
@@ -187,10 +187,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-cache-v1-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-cache-v1-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-
-            ${{ runner.os }}-cache-v1-node-${{ matrix.node-version }}-angular-
+            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-
+            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-
       - run: yarn install
       - run: yarn delete-path-alias @ngworker/lumberjack
       - run: yarn delete-path-alias @ngworker/lumberjack/console-driver
@@ -245,10 +245,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-cache-v1-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-cache-v1-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-
-            ${{ runner.os }}-cache-v1-node-${{ matrix.node-version }}-angular-
+            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-${{ matrix.angular-version }}-yarn-
+            ${{ runner.os }}-node-${{ matrix.node-version }}-angular-
       - run: yarn install
       - run: yarn delete-path-alias @ngworker/lumberjack
       - run: yarn delete-path-alias @ngworker/lumberjack/console-driver
@@ -284,10 +284,10 @@ jobs:
         uses: actions/cache@v2
         with:
           path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
-          key: ${{ runner.os }}-cache-v1-node-${{ env.NODE_CURRENT }}-angular-${{ env.ANGULAR_CURRENT }}-yarn-${{ hashFiles('yarn.lock') }}
+          key: ${{ runner.os }}-node-${{ env.NODE_CURRENT }}-angular-${{ env.ANGULAR_CURRENT }}-yarn-${{ hashFiles('yarn.lock') }}
           restore-keys: |
-            ${{ runner.os }}-cache-v1-node-${{ env.NODE_CURRENT }}-angular-${{ env.ANGULAR_CURRENT }}-yarn-
-            ${{ runner.os }}-cache-v1-node-${{ env.NODE_CURRENT }}-angular-
+            ${{ runner.os }}-node-${{ env.NODE_CURRENT }}-angular-${{ env.ANGULAR_CURRENT }}-yarn-
+            ${{ runner.os }}-node-${{ env.NODE_CURRENT }}-angular-
       - run: yarn install
       - run: npx ngcc || true
 
