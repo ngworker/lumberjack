@@ -85,7 +85,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Use Angular version ${{ matrix.angular-version }}
-        uses: ngworker/angular-versions-action@v4
+        uses: ngworker/angular-versions-action@v4.1.0
         with:
           angular-version: ${{ matrix.angular-version }}
 
@@ -126,7 +126,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Use Angular version ${{ matrix.angular-version }}
-        uses: ngworker/angular-versions-action@v4
+        uses: ngworker/angular-versions-action@v4.1.0
         with:
           angular-version: ${{ matrix.angular-version }}
 
@@ -176,7 +176,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Use Angular version ${{ matrix.angular-version }}
-        uses: ngworker/angular-versions-action@v4
+        uses: ngworker/angular-versions-action@v4.1.0
         with:
           angular-version: ${{ matrix.angular-version }}
 
@@ -234,7 +234,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Use Angular version ${{ matrix.angular-version }}
-        uses: ngworker/angular-versions-action@v4
+        uses: ngworker/angular-versions-action@v4.1.0
         with:
           angular-version: ${{ matrix.angular-version }}
 
