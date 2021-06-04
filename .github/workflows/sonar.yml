@@ -1,0 +1,50 @@
+name: '@ngworker/lumberjack Sonar'
+
+env:
+  # Must match the Angular version in `package.json`
+  ANGULAR_CURRENT: 11.2.x
+  # The latest Node.js version compatible with the Angular version listed in `package.json`
+  NODE_CURRENT: 12.x
+
+on:
+  workflow_run:
+    workflows: ['@ngworker/lumberjack CI']
+    types:
+      - completed
+
+jobs:
+  sonar:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          # necessary for SonarCloud Scan
+          fetch-depth: 0
+      - name: Use Node.js ${{ env.NODE_CURRENT }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ env.NODE_CURRENT }}
+
+      - name: Variable-Yarn cache directory path
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - name: Cache Yarn cache directory
+        uses: actions/cache@v2
+        with:
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ env.NODE_CURRENT }}-angular-${{ env.ANGULAR_CURRENT }}-yarn-${{ hashFiles('yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-node-${{ env.NODE_CURRENT }}-angular-${{ env.ANGULAR_CURRENT }}-yarn-
+            ${{ runner.os }}-node-${{ env.NODE_CURRENT }}-angular-
+      - run: yarn install
+      - run: npx ngcc || true
+
+      - run: yarn generate-lint-reports
+      - run: yarn generate-test-coverage-reports
+      - run: yarn configure-report-paths
+      - name: SonarCloud scan
+        uses: SonarSource/sonarcloud-github-action@v1.5
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
