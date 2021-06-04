@@ -8,10 +8,11 @@ env:
 
 on:
   workflow_run:
-    workflows:
-      - '@ngworker/lumberjack CI'
+    workflows: [lumberjackCI]
+    branches: [main]
     types:
       - completed
+      - requested
 
 jobs:
   sonar:
