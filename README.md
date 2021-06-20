@@ -783,6 +783,9 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://www.linkedin.com/in/serkan-sipahi-59b20081/"><img src="https://avatars.githubusercontent.com/u/1880749?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Bitcollage</b></sub></a><br /><a href="https://github.com/ngworker/lumberjack/issues?q=author%3ASerkanSipahi" title="Bug reports">🐛</a> <a href="https://github.com/ngworker/lumberjack/commits?author=SerkanSipahi" title="Code">💻</a> <a href="https://github.com/ngworker/lumberjack/commits?author=SerkanSipahi" title="Documentation">📖</a> <a href="#ideas-SerkanSipahi" title="Ideas, Planning, & Feedback">🤔</a> <a href="#platform-SerkanSipahi" title="Packaging/porting to new platform">📦</a> <a href="https://github.com/ngworker/lumberjack/pulls?q=is%3Apr+reviewed-by%3ASerkanSipahi" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/ngworker/lumberjack/commits?author=SerkanSipahi" title="Tests">⚠️</a> <a href="#tool-SerkanSipahi" title="Tools">🔧</a></td>
     <td align="center"><a href="https://github.com/agroupp"><img src="https://avatars.githubusercontent.com/u/20857362?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Arthur Groupp</b></sub></a><br /><a href="#ideas-agroupp" title="Ideas, Planning, & Feedback">🤔</a></td>
   </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/SergeyCherman"><img src="https://avatars.githubusercontent.com/u/10699293?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Serg</b></sub></a><br /><a href="https://github.com/ngworker/lumberjack/commits?author=SergeyCherman" title="Documentation">📖</a></td>
+  </tr>
 </table>
 
 <!-- markdownlint-restore -->

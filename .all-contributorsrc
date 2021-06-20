@@ -110,7 +110,17 @@
       "contributions": [
         "ideas"
       ]
+    },
+    {
+      "login": "SergeyCherman",
+      "name": "Serg",
+      "avatar_url": "https://avatars.githubusercontent.com/u/10699293?v=4",
+      "profile": "https://github.com/SergeyCherman",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
-  "contributorsPerLine": 7
+  "contributorsPerLine": 7,
+  "skipCi": true
 }
