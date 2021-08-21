@@ -15,7 +15,7 @@ describe(LumberjackLogDriverLogger.name, () => {
     TestBed.configureTestingModule({
       imports: [LumberjackModule.forRoot(), SpyDriverModule.forRoot()],
     });
-    [logDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as [SpyDriver];
+    [logDriver] = resolveDependency(lumberjackLogDriverToken) as unknown as [SpyDriver];
     logFactory = resolveDependency(LumberjackLogFactory);
     logger = resolveDependency(LumberjackLogDriverLogger);
   });

@@ -30,7 +30,7 @@ const createConsoleDriver = ({
     ],
   });
 
-  const [consoleDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
+  const [consoleDriver] = resolveDependency(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
 
   return consoleDriver;
 };
