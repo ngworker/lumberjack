@@ -13,8 +13,8 @@
     "experimentalDecorators": true,
     "moduleResolution": "node",
     "importHelpers": true,
-    "target": "es2015",
-    "module": "esnext",
+    "target": "es2017",
+    "module": "es2020",
     "lib": ["es2018", "dom"],
     "paths": {
       "@internal/test-util": ["libs/internal/test-util/src/index.ts"],
