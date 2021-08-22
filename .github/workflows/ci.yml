@@ -138,6 +138,10 @@ jobs:
         with:
           angular-version: ${{ matrix.angular-version }}
 
+        # use jest version compatible with Node 10
+      - if: matrix.node-version == '10.0.x'
+        run: yarn use-node10-jest-version
+
       - name: Variable-Yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -162,9 +166,7 @@ jobs:
       - if: matrix.angular-version == '9.0.x' || matrix.angular-version == '9.1.x'
         run: yarn delete-commonjs-allowlist
 
-      - if: matrix.node-version != '10.0.x'
-        run: yarn test:ci
-
+      - run: yarn test:ci
       - run: yarn build
 
   e2e:

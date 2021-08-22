@@ -30,6 +30,7 @@
     "clean": "rimraf dist coverage reports",
     "configure-report-paths": "node tools/scripts/configure-report-paths.mjs",
     "delete-commonjs-allowlist": "json -f angular.json --in-place -e \"delete this.projects['lumberjack-app'].architect.build.options.allowedCommonJsDependencies; delete this.projects['lumberjack-schematics-app'].architect.build.options.allowedCommonJsDependencies;\"",
+    "use-node10-jest-version": "json -f package.json --in-place -e \"this.devDependencies['@types/jest'] = '^26.0.24'; this.devDependencies['jest'] = '^26.6.3';\"",
     "delete-path-alias": "node tools/scripts/delete-path-alias.js",
     "generate-lint-reports": "node tools/scripts/generate-lint-reports.mjs",
     "generate-test-coverage-reports": "node tools/scripts/generate-test-coverage-reports.mjs",
