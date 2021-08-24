@@ -7,6 +7,7 @@
     "declaration": true,
     "inlineSources": true,
     "types": [],
+    "module": "esnext",
     "lib": ["dom", "es2018"]
   },
   "angularCompilerOptions": {

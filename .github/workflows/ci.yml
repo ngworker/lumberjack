@@ -94,6 +94,9 @@ jobs:
         with:
           angular-version: ${{ matrix.angular-version }}
 
+      - if: matrix.angular-version != '12.0.x' && matrix.angular-version != '12.1.x' && matrix.angular-version != '12.2.x'
+        run: yarn use-node10-jest-version
+
       - name: Variable-Yarn cache directory path
         id: yarn-cache-dir-path
         run: echo "::set-output name=dir::$(yarn cache dir)"
@@ -139,7 +142,7 @@ jobs:
           angular-version: ${{ matrix.angular-version }}
 
         # use jest version compatible with Node 10
-      - if: matrix.node-version == '10.0.x'
+      - if: matrix.angular-version != '12.0.x' && matrix.angular-version != '12.1.x' && matrix.angular-version != '12.2.x'
         run: yarn use-node10-jest-version
 
       - name: Variable-Yarn cache directory path
