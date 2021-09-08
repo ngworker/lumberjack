@@ -9,9 +9,10 @@ env:
 
 on:
   push:
-    branches: [main]
-  pull_request:
-    branches: [main]
+    branches:
+      - main
+  pull_request: {}
+  workflow_dispatch: {}
 
 jobs:
   lint:
@@ -85,7 +86,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Use Angular version ${{ matrix.angular-version }}
-        uses: ngworker/angular-versions-action@v3
+        uses: ngworker/angular-versions-action@v4
         with:
           angular-version: ${{ matrix.angular-version }}
 
@@ -126,7 +127,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Use Angular version ${{ matrix.angular-version }}
-        uses: ngworker/angular-versions-action@v3
+        uses: ngworker/angular-versions-action@v4
         with:
           angular-version: ${{ matrix.angular-version }}
 
@@ -176,7 +177,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Use Angular version ${{ matrix.angular-version }}
-        uses: ngworker/angular-versions-action@v3
+        uses: ngworker/angular-versions-action@v4
         with:
           angular-version: ${{ matrix.angular-version }}
 
@@ -234,7 +235,7 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
       - name: Use Angular version ${{ matrix.angular-version }}
-        uses: ngworker/angular-versions-action@v3
+        uses: ngworker/angular-versions-action@v4
         with:
           angular-version: ${{ matrix.angular-version }}
 
@@ -270,7 +271,7 @@ jobs:
     steps:
       - uses: actions/checkout@v2
         with:
-          # shallow clone is disabled for a better relevancy of SonarCloud analysis
+          # necessary for SonarCloud Scan
           fetch-depth: 0
       - name: Use Node.js ${{ env.NODE_CURRENT }}
         uses: actions/setup-node@v2

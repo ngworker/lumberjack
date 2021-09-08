@@ -520,7 +520,7 @@ export class AppModule {}
 
 ### HTTP driver
 
-For a more advanced log driver implementation, see [LumberjackHttpDriver](https://github.com/ngworker/lumberjack/blob/main/projects/ngworker/lumberjack/http-driver/README.md)
+For a more advanced log driver implementation, see [LumberjackHttpDriver](https://github.com/ngworker/lumberjack/blob/main/libs/ngworker/lumberjack/http-driver/README.md)
 
 
 
@@ -813,6 +813,10 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
     <td align="center"><a href="https://twitter.com/AlexOkrushko"><img src="https://avatars0.githubusercontent.com/u/2830407?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Alex Okrushko</b></sub></a><br /><a href="https://github.com/ngworker/lumberjack/commits?author=alex-okrushko" title="Code">💻</a> <a href="#ideas-alex-okrushko" title="Ideas, Planning, & Feedback">🤔</a> <a href="#mentoring-alex-okrushko" title="Mentoring">🧑‍🏫</a> <a href="#research-alex-okrushko" title="Research">🔬</a> <a href="https://github.com/ngworker/lumberjack/commits?author=alex-okrushko" title="Code">💻</a></td>
     <td align="center"><a href="https://www.linkedin.com/in/serkan-sipahi-59b20081/"><img src="https://avatars.githubusercontent.com/u/1880749?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Bitcollage</b></sub></a><br /><a href="https://github.com/ngworker/lumberjack/issues?q=author%3ASerkanSipahi" title="Bug reports">🐛</a> <a href="https://github.com/ngworker/lumberjack/commits?author=SerkanSipahi" title="Code">💻</a> <a href="https://github.com/ngworker/lumberjack/commits?author=SerkanSipahi" title="Documentation">📖</a> <a href="#ideas-SerkanSipahi" title="Ideas, Planning, & Feedback">🤔</a> <a href="#platform-SerkanSipahi" title="Packaging/porting to new platform">📦</a> <a href="https://github.com/ngworker/lumberjack/pulls?q=is%3Apr+reviewed-by%3ASerkanSipahi" title="Reviewed Pull Requests">👀</a> <a href="https://github.com/ngworker/lumberjack/commits?author=SerkanSipahi" title="Tests">⚠️</a> <a href="#tool-SerkanSipahi" title="Tools">🔧</a></td>
     <td align="center"><a href="https://github.com/agroupp"><img src="https://avatars.githubusercontent.com/u/20857362?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Arthur Groupp</b></sub></a><br /><a href="#ideas-agroupp" title="Ideas, Planning, & Feedback">🤔</a></td>
+  </tr>
+  <tr>
+    <td align="center"><a href="https://github.com/SergeyCherman"><img src="https://avatars.githubusercontent.com/u/10699293?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Serg</b></sub></a><br /><a href="https://github.com/ngworker/lumberjack/commits?author=SergeyCherman" title="Documentation">📖</a></td>
+    <td align="center"><a href="https://github.com/sumitparakh"><img src="https://avatars.githubusercontent.com/u/4236211?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Sumit Parakh</b></sub></a><br /><a href="https://github.com/ngworker/lumberjack/commits?author=sumitparakh" title="Code">💻</a></td>
   </tr>
 </table>
 
