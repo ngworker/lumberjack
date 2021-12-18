@@ -42,6 +42,6 @@ export class LumberjackLoggerBuilder<TPayload extends LumberjackLogPayload | voi
   withPayload(...payloadArg: TPayload extends void ? [never?] : [TPayload]): LumberjackLoggerBuilder {
     this.payload = payloadArg[0] as TPayload;
 
-    return (this as unknown) as LumberjackLoggerBuilder;
+    return this as unknown as LumberjackLoggerBuilder;
   }
 }

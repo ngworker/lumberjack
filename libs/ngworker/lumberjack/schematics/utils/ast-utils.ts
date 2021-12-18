@@ -407,7 +407,7 @@ export function addSymbolToNgModuleMetadata(
   }
 
   if (Array.isArray(node)) {
-    const nodeArray = (node as {}) as Array<ts.Node>;
+    const nodeArray = node as {} as Array<ts.Node>;
     const symbolsArray = nodeArray.map((node) => node.getText());
     if (symbolsArray.includes(symbolName)) {
       return [];

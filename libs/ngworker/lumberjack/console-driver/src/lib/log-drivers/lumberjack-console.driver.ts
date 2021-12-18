@@ -19,7 +19,8 @@ import { lumberjackConsoleToken } from '../console/lumberjack-console.token';
  */
 @Injectable()
 export class LumberjackConsoleDriver<TPayload extends LumberjackLogPayload | void = void>
-  implements LumberjackLogDriver<TPayload> {
+  implements LumberjackLogDriver<TPayload>
+{
   static driverIdentifier = 'LumberjackConsoleDriver';
   constructor(
     @Inject(lumberjackConsoleDriverConfigToken) readonly config: LumberjackLogDriverConfig,

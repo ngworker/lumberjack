@@ -18,7 +18,7 @@ describe(formatLogDriverError.name, () => {
     TestBed.configureTestingModule({
       imports: [LumberjackModule.forRoot(), NoopDriverModule.forRoot()],
     });
-    const [_logDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
+    const [_logDriver] = resolveDependency(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
     logDriver = _logDriver;
     logFactory = resolveDependency(LumberjackLogFactory);
   });
@@ -70,7 +70,7 @@ describe(formatLogDriverError.name, () => {
       const payload: TestPayload = {
         test: true,
       };
-      const logFactoryWithPayload = (logFactory as unknown) as LumberjackLogFactory<TestPayload>;
+      const logFactoryWithPayload = logFactory as unknown as LumberjackLogFactory<TestPayload>;
       const log = logFactoryWithPayload.createInfoLog(testMessage).withPayload(payload).build();
       const logDriverError: LumberjackLogDriverError<TestPayload> = {
         error: new Error(errorMessage),

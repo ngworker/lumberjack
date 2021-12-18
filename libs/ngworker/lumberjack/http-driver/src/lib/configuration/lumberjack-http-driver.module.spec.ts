@@ -62,7 +62,7 @@ const createHttpDriver = (
     ],
   });
 
-  const [httpDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
+  const [httpDriver] = resolveDependency(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
 
   return httpDriver;
 };
@@ -83,7 +83,7 @@ const createHttpDriverWithOptions = (
     ],
   });
 
-  const [httpDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
+  const [httpDriver] = resolveDependency(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
 
   return httpDriver;
 };

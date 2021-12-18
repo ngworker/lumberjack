@@ -76,7 +76,7 @@ describe(LumberjackLoggerBuilder.name, () => {
     let builder: LumberjackLoggerBuilder<TestPayload>;
     beforeEach(() => {
       builder = new LumberjackLoggerBuilder<TestPayload>(
-        (lumberjackService as unknown) as LumberjackService<TestPayload>,
+        lumberjackService as unknown as LumberjackService<TestPayload>,
         fakeTime,
         level,
         testMessage

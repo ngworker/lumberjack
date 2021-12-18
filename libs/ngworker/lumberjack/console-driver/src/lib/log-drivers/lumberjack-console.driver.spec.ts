@@ -28,7 +28,7 @@ describe(LumberjackConsoleDriver.name, () => {
       ],
     });
 
-    const [_driver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver[];
+    const [_driver] = resolveDependency(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
     driver = _driver as LumberjackConsoleDriver;
     logFactory = resolveDependency(LumberjackLogFactory);
     spyLogger = resolveDependency(lumberjackConsoleToken) as SpyConsole;
