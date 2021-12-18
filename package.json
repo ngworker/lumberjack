@@ -20,7 +20,6 @@
     "test:lib": "ng test ngworker-lumberjack",
     "test:lib:ci": "yarn test:lib --configuration=ci",
     "test:lib:coverage": "yarn test:lib --configuration=coverage",
-    "test:schematics": "jasmine dist/ngworker/lumberjack/**/*/*_spec.js",
     "test:internal": "ng test internal-test-util && ng test internal-console-driver-test-util",
     "test:internal:ci": "ng test internal-test-util --configuration=ci && ng test internal-console-driver-test-util --configuration=ci",
     "release": "cd libs/ngworker/lumberjack && standard-version --infile ../../../CHANGELOG.md",
