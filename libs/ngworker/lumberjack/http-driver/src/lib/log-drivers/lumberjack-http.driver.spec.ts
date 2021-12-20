@@ -70,7 +70,7 @@ function respondWith503ServiceUnavailable(request: TestRequest) {
 
 function createHttpDriverLog(
   { log, formattedLog }: LumberjackLogDriverLog<HttpDriverPayload>,
-  origin: string = 'TEST_MODULE'
+  origin = 'TEST_MODULE'
 ): LumberjackHttpLog<HttpDriverPayload> {
   return { formattedLog, log, origin };
 }
@@ -89,28 +89,30 @@ describe(LumberjackHttpDriver.name, () => {
       imports: [LumberjackModule.forRoot(), LumberjackHttpDriverModule.withOptions(options), HttpClientTestingModule],
     });
 
-    [httpDriver] = (resolveDependency(lumberjackLogDriverToken) as unknown) as LumberjackLogDriver<HttpDriverPayload>[];
+    [httpDriver] = resolveDependency(lumberjackLogDriverToken) as unknown as LumberjackLogDriver<HttpDriverPayload>[];
     httpTestingController = resolveDependency(HttpTestingController);
 
     jest.useFakeTimers('modern');
   });
 
   describe('logs to a web API using the right log level', () => {
-    ([
-      [LumberjackLevel.Critical, (driver) => driver.logCritical],
-      [LumberjackLevel.Debug, (driver) => driver.logDebug],
-      [LumberjackLevel.Error, (driver) => driver.logError],
-      [LumberjackLevel.Info, (driver) => driver.logInfo],
-      [LumberjackLevel.Trace, (driver) => driver.logTrace],
-      [LumberjackLevel.Warning, (driver) => driver.logWarning],
-    ] as ReadonlyArray<
+    (
       [
-        LumberjackLogLevel,
-        (
-          driver: LumberjackLogDriver<HttpDriverPayload>
-        ) => (driverLog: LumberjackLogDriverLog<HttpDriverPayload>) => void
-      ]
-    >).forEach(([logLevel, logMethod]) => {
+        [LumberjackLevel.Critical, (driver) => driver.logCritical],
+        [LumberjackLevel.Debug, (driver) => driver.logDebug],
+        [LumberjackLevel.Error, (driver) => driver.logError],
+        [LumberjackLevel.Info, (driver) => driver.logInfo],
+        [LumberjackLevel.Trace, (driver) => driver.logTrace],
+        [LumberjackLevel.Warning, (driver) => driver.logWarning],
+      ] as ReadonlyArray<
+        [
+          LumberjackLogLevel,
+          (
+            driver: LumberjackLogDriver<HttpDriverPayload>
+          ) => (driverLog: LumberjackLogDriverLog<HttpDriverPayload>) => void
+        ]
+      >
+    ).forEach(([logLevel, logMethod]) => {
       it(`sends a ${logLevel} level log to the configured URL`, () => {
         const expectedDriverLog = createDriverLog<HttpDriverPayload>(logLevel, logLevel, '', 'Test', analyticsPayload);
         logMethod(httpDriver).call(httpDriver, expectedDriverLog);

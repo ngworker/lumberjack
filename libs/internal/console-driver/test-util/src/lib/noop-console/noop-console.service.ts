@@ -9,7 +9,7 @@ import { LumberjackConsole } from '@ngworker/lumberjack/console-driver';
  */
 @Injectable()
 export class NoopConsole implements LumberjackConsole {
-  // tslint:disable: no-any
+  /* eslint-disable @typescript-eslint/no-explicit-any */
   debug(...data: any[]): void;
   debug(message?: any, ...optionalParams: any[]): void;
   debug(message?: any, ...optionalParams: any[]) {
@@ -39,5 +39,5 @@ export class NoopConsole implements LumberjackConsole {
   warn(message?: any, ...optionalParams: any[]) {
     // intentionally a no-op
   }
-  // tslint:enable: no-any
+  /* eslint-enable @typescript-eslint/no-explicit-any */
 }

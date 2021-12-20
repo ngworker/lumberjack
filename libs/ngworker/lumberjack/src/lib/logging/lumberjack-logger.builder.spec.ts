@@ -30,7 +30,9 @@ describe(LumberjackLoggerBuilder.name, () => {
 
     fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
     lumberjackService = resolveDependency(LumberjackService) as LumberjackService;
-    lumberjackLogSpy = jest.spyOn(lumberjackService, 'log').mockImplementation(() => {});
+    lumberjackLogSpy = jest.spyOn(lumberjackService, 'log').mockImplementation(() => {
+      /* do nothing */
+    });
   });
 
   let fakeTime: FakeTimeService;
@@ -76,7 +78,7 @@ describe(LumberjackLoggerBuilder.name, () => {
     let builder: LumberjackLoggerBuilder<TestPayload>;
     beforeEach(() => {
       builder = new LumberjackLoggerBuilder<TestPayload>(
-        (lumberjackService as unknown) as LumberjackService<TestPayload>,
+        lumberjackService as unknown as LumberjackService<TestPayload>,
         fakeTime,
         level,
         testMessage

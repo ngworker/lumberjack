@@ -19,7 +19,8 @@ import { lumberjackConsoleToken } from '../console/lumberjack-console.token';
  */
 @Injectable()
 export class LumberjackConsoleDriver<TPayload extends LumberjackLogPayload | void = void>
-  implements LumberjackLogDriver<TPayload> {
+  implements LumberjackLogDriver<TPayload>
+{
   static driverIdentifier = 'LumberjackConsoleDriver';
   constructor(
     @Inject(lumberjackConsoleDriverConfigToken) readonly config: LumberjackLogDriverConfig,
@@ -68,7 +69,7 @@ export class LumberjackConsoleDriver<TPayload extends LumberjackLogPayload | voi
    * @param param0 The log and its text representation.
    */
   logTrace({ formattedLog, log: { payload } }: LumberjackLogDriverLog<TPayload>): void {
-    // tslint:disable-next-line: no-console
+    // eslint-disable-next-line no-console
     this.console.trace(formattedLog, payload);
   }
 
