@@ -1,6 +1,6 @@
 import { LumberjackRootModule } from './lumberjack-root.module';
 
-const optionalAngularDependency = null;
+const optionalAngularDependency = undefined;
 
 describe(LumberjackRootModule.name, () => {
   it('guards against being registered in multiple injectors', () => {

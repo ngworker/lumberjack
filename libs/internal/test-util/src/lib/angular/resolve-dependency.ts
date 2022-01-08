@@ -18,6 +18,7 @@ export function resolveDependency<T>(
   notFoundValue?: T,
   flags?: InjectFlags
 ): T;
+// eslint-disable-next-line no-redeclare
 export function resolveDependency<T>(
   token: Type<T> | InjectionToken<T> | AbstractType<T>,
   notFoundValue: null,

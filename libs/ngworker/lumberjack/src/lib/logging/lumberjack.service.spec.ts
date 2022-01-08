@@ -274,7 +274,7 @@ describe(LumberjackService.name, () => {
         expect(spyDriver.logDebug).toHaveBeenCalledWith(createDebugDriverLog(LumberjackLevel.Debug));
         const [actualLastErrorMessage] = spyDriver.logError.mock.calls[
           spyDriver.logError.mock.calls.length - 1
-        ] as ReadonlyArray<LumberjackLogDriverLog>;
+        ] as LumberjackLogDriverLog[];
         expect(actualLastErrorMessage.formattedLog).toMatch(
           new RegExp(`^Could not log message ".*?" to ${ErrorThrowingDriver.name}.\n Error: ".*?"`)
         );
@@ -323,13 +323,11 @@ describe(LumberjackService.name, () => {
 
         logDebugMessage();
 
-        const [actualLastErrorMessage] = consoleErrorSpy.mock.calls[
-          consoleErrorSpy.mock.calls.length - 1
-        ] as ReadonlyArray<string>;
+        const [actualLastErrorMessage] = consoleErrorSpy.mock.calls[consoleErrorSpy.mock.calls.length - 1] as string[];
         expect(actualLastErrorMessage).toMatch(
           new RegExp(`^Could not log message .*?\n.*? to ${ErrorThrowingDriver.name}.\n Error: .*?\n Error: .*?$`)
         );
-        const [actualFirstErrorMessage] = consoleErrorSpy.mock.calls[0] as ReadonlyArray<string>;
+        const [actualFirstErrorMessage] = consoleErrorSpy.mock.calls[0] as string[];
         expect(actualFirstErrorMessage).toMatch(
           new RegExp(`^Could not log message ".*?" to ${SpyDriver.name}.\n Error: ".*?"$`)
         );

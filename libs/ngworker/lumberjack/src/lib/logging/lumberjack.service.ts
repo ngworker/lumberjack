@@ -176,7 +176,7 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
    *
    * @param driverErrors The reported log driver errors.
    */
-  private outputUnhandledDriverErrors(driverErrors: ReadonlyArray<LumberjackLogDriverError<TPayload>>) {
+  private outputUnhandledDriverErrors(driverErrors: LumberjackLogDriverError<TPayload>[]) {
     driverErrors.forEach((error) => this.outputDriverError(error));
   }
 

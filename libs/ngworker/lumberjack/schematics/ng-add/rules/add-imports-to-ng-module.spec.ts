@@ -1,9 +1,9 @@
+import * as path from 'path';
 import { Tree } from '@angular-devkit/schematics';
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import { VERSION } from '@angular/core';
 import { Schema as ApplicationOptions, Style } from '@schematics/angular/application/schema';
 import { Schema as WorkspaceOptions } from '@schematics/angular/workspace/schema';
-import * as path from 'path';
 
 import { NgAddOptions } from '../schema';
 
@@ -148,6 +148,7 @@ describe(addImportsToNgModule.name, () => {
     });
 
     it('throws an error when the specified Angular module cannot be read', () => {
+      // eslint-disable-next-line no-null/no-null
       jest.spyOn(appTree, 'read').mockReturnValue(null);
 
       const act = schematicRunner.callRule(addImportsToNgModule(options), appTree).toPromise();

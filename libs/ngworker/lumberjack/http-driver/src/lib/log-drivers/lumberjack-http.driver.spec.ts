@@ -104,6 +104,7 @@ describe(LumberjackHttpDriver.name, () => {
         [LumberjackLevel.Info, (driver) => driver.logInfo],
         [LumberjackLevel.Trace, (driver) => driver.logTrace],
         [LumberjackLevel.Warning, (driver) => driver.logWarning],
+        // eslint-disable-next-line @typescript-eslint/array-type
       ] as ReadonlyArray<
         [
           LumberjackLogLevel,
