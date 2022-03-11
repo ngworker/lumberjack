@@ -35,6 +35,16 @@
       "url": "https://github.com/santoshyadavdev"
     }
   ],
+  "funding": [
+    {
+      "type": "individual",
+      "url": "https://github.com/sponsors/LayZeeDK"
+    },
+    {
+      "type": "individual",
+      "url": "https://github.com/sponsors/santoshyadavdev"
+    }
+  ],
   "license": "MIT",
   "publishConfig": {
     "access": "public",
