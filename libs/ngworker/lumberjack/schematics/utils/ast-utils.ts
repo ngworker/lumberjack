@@ -1,4 +1,4 @@
-/* tslint:disable */
+/* eslint-disable */
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -341,7 +341,7 @@ export function addSymbolToNgModuleMetadata(
   importPath: string | null = null
 ): Change[] {
   const nodes = getDecoratorMetadata(source, 'NgModule', '@angular/core');
-  let node: any = nodes[0]; // tslint:disable-line:no-any
+  let node: any = nodes[0]; // eslint-disable-line @typescript-eslint/no-explicit-any
 
   // Find the decorator declaration.
   if (!node) {
@@ -400,14 +400,14 @@ export function addSymbolToNgModuleMetadata(
   }
 
   if (!node) {
-    // tslint:disable-next-line: no-console
+    // eslint-disable-next-line no-console
     console.error('No app module found. Please add your new class to your component.');
 
     return [];
   }
 
   if (Array.isArray(node)) {
-    const nodeArray = (node as {}) as Array<ts.Node>;
+    const nodeArray = node as {} as Array<ts.Node>;
     const symbolsArray = nodeArray.map((node) => node.getText());
     if (symbolsArray.includes(symbolName)) {
       return [];

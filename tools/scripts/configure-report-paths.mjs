@@ -19,12 +19,12 @@ async function configureCoverageReportPaths() {
 async function configureLintReportPaths() {
   const lintReports = await listLintReports();
   const lintReportsPattern = lintReports.join(',');
-  const to = `sonar.typescript.tslint.reportPaths=${lintReportsPattern}`;
+  const to = `sonar.typescript.eslint.reportPaths=${lintReportsPattern}`;
 
   console.log(to);
   await replaceInFile({
     files: sonarConfigurationPath,
-    from: 'sonar.typescript.tslint.reportPaths=<PLACEHOLDER>',
+    from: 'sonar.typescript.eslint.reportPaths=<PLACEHOLDER>',
     to,
   });
 }

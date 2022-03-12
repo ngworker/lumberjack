@@ -1,8 +1,8 @@
-import { execSync } from 'child_process';
-import * as copy from 'copy';
-import { mkdirSync, readFileSync } from 'fs';
 import * as path from 'path';
 import * as rimraf from 'rimraf';
+import { execSync } from 'child_process';
+import { mkdirSync, readFileSync } from 'fs';
+import * as copy from 'copy';
 
 function isCiWorkflow(): boolean {
   return process.env.CI === 'TRUE';

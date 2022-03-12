@@ -1,4 +1,4 @@
-/* tslint:disable */
+/* eslint-disable */
 import { Inject, Injectable } from '@angular/core';
 
 import { LumberjackLogDriver, LumberjackLogDriverConfig, LumberjackLogPayload } from '@ngworker/lumberjack';
@@ -12,7 +12,8 @@ import { spyDriverConfigToken } from './spy-driver-config.token';
  */
 @Injectable()
 export class SpyDriver<TPayload extends LumberjackLogPayload | void = void>
-  implements LumberjackLogDriver<TPayload>, jest.Mocked<LumberjackLogDriver> {
+  implements LumberjackLogDriver<TPayload>, jest.Mocked<LumberjackLogDriver>
+{
   static driverIdentifier = 'SpyDriver';
 
   constructor(@Inject(spyDriverConfigToken) readonly config: LumberjackLogDriverConfig) {}

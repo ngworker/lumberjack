@@ -39,12 +39,10 @@ export function consoleDriverFactory(
 })
 export class LumberjackConsoleDriverRootModule {
   constructor(
-    // tslint:disable: no-any no-null-keyword
     @Optional()
     @SkipSelf()
     @Inject(LumberjackConsoleDriverRootModule)
-    maybeNgModuleFromParentInjector: LumberjackConsoleDriverRootModule = null as any
-    // tslint:enable: no-any no-null-keyword
+    maybeNgModuleFromParentInjector: LumberjackConsoleDriverRootModule = undefined as any // eslint-disable-line  @typescript-eslint/no-explicit-any
   ) {
     if (maybeNgModuleFromParentInjector) {
       throw new Error(

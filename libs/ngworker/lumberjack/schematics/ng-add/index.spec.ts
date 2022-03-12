@@ -1,12 +1,12 @@
+import * as path from 'path';
 import { Tree } from '@angular-devkit/schematics';
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import { VERSION } from '@angular/core';
 import { Schema as ApplicationOptions, Style } from '@schematics/angular/application/schema';
 import { Schema as WorkspaceOptions } from '@schematics/angular/workspace/schema';
-import * as path from 'path';
 
-import { ngAdd } from './index';
 import { NgAddOptions } from './schema';
+import { ngAdd } from './index';
 
 function readModuleFile(tree: Tree, project: string, module: string): string {
   return (
@@ -70,7 +70,8 @@ describe('@ngworker/lumberjack:ng-add schematic', () => {
   });
 
   describe('Console driver', () => {
-    const consoleDriverImportPattern = /\s+imports:\s*\[\s*BrowserModule,\s*LumberjackModule.forRoot\(\),\s*LumberjackConsoleDriverModule.forRoot\(\)/;
+    const consoleDriverImportPattern =
+      /\s+imports:\s*\[\s*BrowserModule,\s*LumberjackModule.forRoot\(\),\s*LumberjackConsoleDriverModule.forRoot\(\)/;
 
     it('imports LumberjackConsoleDriverModule in the specified ES module', async () => {
       const tree = await schematicRunner.runSchematicAsync('ng-add', options, appTree).toPromise();
@@ -121,7 +122,8 @@ describe('@ngworker/lumberjack:ng-add schematic', () => {
       };
     });
 
-    const httpDriverImportPattern = /\s+imports:\s*\[\s*BrowserModule,\s*LumberjackModule.forRoot\(\),\s*LumberjackHttpDriverModule.withOptions\(\{.*\}\)/;
+    const httpDriverImportPattern =
+      /\s+imports:\s*\[\s*BrowserModule,\s*LumberjackModule.forRoot\(\),\s*LumberjackHttpDriverModule.withOptions\(\{.*\}\)/;
 
     it('imports LumberjackConsoleDriverModule in the specified ES module when the "httpDriver" option is true', async () => {
       options = {

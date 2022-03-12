@@ -10,6 +10,7 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
 import { lumberjackFormatLog } from './lumberjack-format-log';
 
 function parseFormattedLog(formattedLog: string) {
+  // eslint-disable-next-line
   const formattedLogPattern = /^([a-z]+) ([0-9\.:\-TZ]+) (\[(.+)\] )?(.*)$/;
   const [_, level, timestamp, taggedScopeWithEndingSpace = '', scope = '', message] =
     formattedLogPattern.exec(formattedLog) || [];
@@ -32,7 +33,7 @@ describe(lumberjackFormatLog.name, () => {
   let logFactory: LumberjackLogFactory;
 
   describe('Log level', () => {
-    const logLevels: ReadonlyArray<LumberjackLogLevel> = [
+    const logLevels: LumberjackLogLevel[] = [
       LumberjackLevel.Critical,
       LumberjackLevel.Debug,
       LumberjackLevel.Error,
@@ -56,7 +57,7 @@ describe(lumberjackFormatLog.name, () => {
   });
 
   describe('Timestamp', () => {
-    const dateTimeToUtcTimestampRecord: ReadonlyArray<[number, string]> = [
+    const dateTimeToUtcTimestampRecord: [number, string][] = [
       ['2020-01-02T00:00:00+03:00', '2020-01-01T21:00:00.000Z'],
       ['2020-07-06T23:00:00-05:00', '2020-07-07T04:00:00.000Z'],
       ['2020-02-28T22:00:00-02:30', '2020-02-29T00:30:00.000Z'],

@@ -1,9 +1,9 @@
+import * as path from 'path';
 import { Tree } from '@angular-devkit/schematics';
 import { SchematicTestRunner, UnitTestTree } from '@angular-devkit/schematics/testing';
 import { VERSION } from '@angular/core';
 import { Schema as ApplicationOptions, Style } from '@schematics/angular/application/schema';
 import { Schema as WorkspaceOptions } from '@schematics/angular/workspace/schema';
-import * as path from 'path';
 
 import { NgAddOptions } from '../schema';
 
@@ -73,7 +73,8 @@ describe(addImportsToNgModule.name, () => {
   });
 
   describe('Console driver', () => {
-    const consoleDriverImportPattern = /\s+imports:\s*\[\s*BrowserModule,\s*LumberjackModule.forRoot\(\),\s*LumberjackConsoleDriverModule.forRoot\(\)/;
+    const consoleDriverImportPattern =
+      /\s+imports:\s*\[\s*BrowserModule,\s*LumberjackModule.forRoot\(\),\s*LumberjackConsoleDriverModule.forRoot\(\)/;
 
     it('imports LumberjackConsoleDriverModule in the specified ES module', async () => {
       const tree = await schematicRunner.callRule(addImportsToNgModule(options), appTree).toPromise();
@@ -142,17 +143,17 @@ describe(addImportsToNgModule.name, () => {
 
       const act = schematicRunner.callRule(addImportsToNgModule(options), appTree).toPromise();
 
-      // tslint:disable-next-line: no-floating-promises
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       expect(act).rejects.toThrow("Specified module 'app' does not exist.");
     });
 
     it('throws an error when the specified Angular module cannot be read', () => {
-      // tslint:disable-next-line: no-null-keyword
+      // eslint-disable-next-line no-null/no-null
       jest.spyOn(appTree, 'read').mockReturnValue(null);
 
       const act = schematicRunner.callRule(addImportsToNgModule(options), appTree).toPromise();
 
-      // tslint:disable-next-line: no-floating-promises
+      // eslint-disable-next-line @typescript-eslint/no-floating-promises
       expect(act).rejects.toThrow('Cannot read "/projects/bar/src/app/app.module.ts".');
     });
   });

@@ -1,4 +1,4 @@
-/* tslint:disable */
+/* eslint-disable */
 /**
  * @license
  * Copyright Google Inc. All Rights Reserved.
@@ -16,7 +16,7 @@ export enum Builders {
   Server = '@angular-devkit/build-angular:server',
   Browser = '@angular-devkit/build-angular:browser',
   Karma = '@angular-devkit/build-angular:karma',
-  TsLint = '@angular-devkit/build-angular:tslint',
+  EsLint = '@angular-eslint/builder:lint',
   DeprecatedNgPackagr = '@angular-devkit/build-ng-packagr:build',
   NgPackagr = '@angular-devkit/build-angular:ng-packagr',
   DevServer = '@angular-devkit/build-angular:dev-server',
@@ -128,7 +128,7 @@ export type LibraryBuilderTarget = BuilderTarget<Builders.NgPackagr, LibraryBuil
 export type BrowserBuilderTarget = BuilderTarget<Builders.Browser, BrowserBuilderOptions>;
 export type ServerBuilderTarget = BuilderTarget<Builders.Server, ServerBuilderOptions>;
 export type AppShellBuilderTarget = BuilderTarget<Builders.AppShell, AppShellBuilderOptions>;
-export type LintBuilderTarget = BuilderTarget<Builders.TsLint, LintBuilderOptions>;
+export type LintBuilderTarget = BuilderTarget<Builders.EsLint, LintBuilderOptions>;
 export type TestBuilderTarget = BuilderTarget<Builders.Karma, TestBuilderOptions>;
 export type ServeBuilderTarget = BuilderTarget<Builders.DevServer, ServeBuilderOptions>;
 export type ExtractI18nBuilderTarget = BuilderTarget<Builders.ExtractI18n, ExtractI18nOptions>;
@@ -175,6 +175,6 @@ export interface WorkspaceTargets<TProjectType extends ProjectType = ProjectType
   'app-shell'?: AppShellBuilderTarget;
   'extract-i18n'?: ExtractI18nBuilderTarget;
   // TODO(hans): change this any to unknown when google3 supports TypeScript 3.0.
-  // tslint:disable-next-line:no-any
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any;
 }

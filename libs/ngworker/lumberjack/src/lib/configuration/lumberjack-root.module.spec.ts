@@ -1,18 +1,17 @@
 import { LumberjackRootModule } from './lumberjack-root.module';
 
-// tslint:disable-next-line: no-null-keyword
-const optionalAngularDependency = null;
+const optionalAngularDependency = undefined;
 
 describe(LumberjackRootModule.name, () => {
   it('guards against being registered in multiple injectors', () => {
-    // tslint:disable-next-line: no-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const rootInjectorInstance = new LumberjackRootModule(optionalAngularDependency as any);
 
     expect(() => new LumberjackRootModule(rootInjectorInstance)).toThrowError(/multiple injectors/);
   });
 
   it('does not guard the first injector that registers it', () => {
-    // tslint:disable-next-line: no-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     expect(() => new LumberjackRootModule(optionalAngularDependency as any)).not.toThrow();
   });
 });

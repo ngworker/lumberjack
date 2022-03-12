@@ -11,7 +11,7 @@ describe(SpyConsole.name, () => {
       .fill(undefined)
       .map((_, index) => index + 1);
 
-    spy.debug.apply(spy, hundredNumbers);
+    spy.debug(...hundredNumbers);
 
     expect(spy.debug).toHaveBeenCalledTimes(1);
     expect(spy.debug).toHaveBeenCalledWith(...hundredNumbers);

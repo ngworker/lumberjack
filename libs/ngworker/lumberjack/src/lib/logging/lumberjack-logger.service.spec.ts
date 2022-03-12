@@ -33,7 +33,9 @@ describe(LumberjackLogger.name, () => {
       providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
     });
     const lumberjack = resolveDependency(LumberjackService);
-    lumberjackLogSpy = jest.spyOn(lumberjack, 'log').mockImplementation(() => {});
+    lumberjackLogSpy = jest.spyOn(lumberjack, 'log').mockImplementation(() => {
+      /* do nothing */
+    });
 
     logger = resolveDependency(TestLogger);
     logFactory = resolveDependency(LumberjackLogFactory);

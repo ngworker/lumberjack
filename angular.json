@@ -3,7 +3,8 @@
   "version": 1,
   "newProjectRoot": "apps",
   "cli": {
-    "analytics": false
+    "analytics": false,
+    "defaultCollection": "@angular-eslint/schematics"
   },
   "schematics": {
     "@schematics/angular:component": {
@@ -95,10 +96,9 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": ["apps/lumberjack-app/tsconfig.app.json", "apps/lumberjack-app/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**", "!apps/lumberjack-app/**"]
+            "lintFilePatterns": ["apps/lumberjack-app/**/*.ts", "apps/lumberjack-app/**/*.html"]
           }
         }
       }
@@ -108,10 +108,9 @@
       "root": "apps/lumberjack-app-e2e",
       "architect": {
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": "apps/lumberjack-app-e2e/tsconfig.json",
-            "exclude": ["**/node_modules/**", "!apps/lumberjack-app-e2e/**"]
+            "lintFilePatterns": ["apps/lumberjack-app-e2e/**/*.ts", "apps/lumberjack-app-e2e/**/*.html"]
           }
         },
         "e2e": {
@@ -163,10 +162,9 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": ["libs/ngworker/lumberjack/tsconfig.lib.json", "libs/ngworker/lumberjack/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**", "!libs/ngworker/lumberjack/**"]
+            "lintFilePatterns": ["libs/ngworker/lumberjack/**/*.ts", "libs/ngworker/lumberjack/**/*.html"]
           }
         }
       }
@@ -189,10 +187,9 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": ["libs/internal/test-util/tsconfig.lib.json", "libs/internal/test-util/tsconfig.spec.json"],
-            "exclude": ["**/node_modules/**", "!libs/internal/test-util/**"]
+            "lintFilePatterns": ["libs/internal/test-util/**/*.ts", "libs/internal/test-util/**/*.html"]
           }
         }
       }
@@ -215,13 +212,12 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": [
-              "libs/internal/console-driver/test-util/tsconfig.lib.json",
-              "libs/internal/console-driver/test-util/tsconfig.spec.json"
-            ],
-            "exclude": ["**/node_modules/**", "!libs/internal/console-driver/test-util/**"]
+            "lintFilePatterns": [
+              "libs/internal/console-driver/test-util/**/*.ts",
+              "libs/internal/console-driver/test-util/**/*.html"
+            ]
           }
         }
       }
@@ -292,6 +288,12 @@
           "options": {
             "browserTarget": "lumberjack-schematics-app:build"
           }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["apps/lumberjack-schematics-app/**/*.ts", "apps/lumberjack-schematics-app/**/*.html"]
+          }
         }
       }
     },
@@ -314,10 +316,9 @@
           }
         },
         "lint": {
-          "builder": "@angular-devkit/build-angular:tslint",
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "tsConfig": ["apps/schematics-e2e/tsconfig.json"],
-            "exclude": ["**/node_modules/**", "!apps/schematics-e2e/**", "apps/schematics-e2e/**/golden-files/**"]
+            "lintFilePatterns": ["apps/schematics-e2e/**/*.ts", "apps/schematics-e2e/**/*.html"]
           }
         }
       }

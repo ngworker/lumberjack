@@ -1,5 +1,5 @@
-import { Rule, Tree } from '@angular-devkit/schematics';
 import * as ts from 'typescript';
+import { Rule, Tree } from '@angular-devkit/schematics';
 
 import { applyToUpdateRecorder } from '../../utils/change';
 import { findModuleFromOptions } from '../../utils/find-module';

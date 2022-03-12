@@ -42,12 +42,10 @@ export function httpDriverFactory(
 })
 export class LumberjackHttpDriverRootModule {
   constructor(
-    // tslint:disable: no-any no-null-keyword
     @Optional()
     @SkipSelf()
     @Inject(LumberjackHttpDriverRootModule)
-    maybeNgModuleFromParentInjector: LumberjackHttpDriverRootModule = null as any
-    // tslint:enable: no-any no-null-keyword
+    maybeNgModuleFromParentInjector: LumberjackHttpDriverRootModule = undefined as any // eslint-disable-line  @typescript-eslint/no-explicit-any
   ) {
     if (maybeNgModuleFromParentInjector) {
       throw new Error(
