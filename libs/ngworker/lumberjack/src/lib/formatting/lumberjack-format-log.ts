@@ -8,7 +8,7 @@ export function lumberjackFormatLog<TPayload extends LumberjackLogPayload | void
   createdAt: timestamp,
   level,
   message,
-}: LumberjackLog<TPayload>) {
+}: LumberjackLog<TPayload>): string {
   const formattedScope = scope ? ` [${scope}]` : '';
 
   return `${level} ${utcTimestampFor(timestamp)}${formattedScope} ${message}`;

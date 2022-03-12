@@ -38,12 +38,7 @@
           }
         ],
         "@angular-eslint/no-forward-ref": "error",
-        "@typescript-eslint/array-type": [
-          "error",
-          {
-            "default": "array"
-          }
-        ],
+        "@typescript-eslint/array-type": "off",
         "@typescript-eslint/consistent-type-definitions": "error",
         "@typescript-eslint/dot-notation": "off",
         "@typescript-eslint/explicit-member-accessibility": [
@@ -103,11 +98,12 @@
               "@schematics/angular/application/*",
               "@schematics/angular/workspace/*",
               "zone.js/*",
-              "zone.js/dist/*"
+              "zone.js/dist/*",
+              "zone.js/plugins/*"
             ]
           }
         ],
-        "import/named": "warn",
+        "import/named": "off",
         "import/no-unresolved": ["off", { "commonjs": true, "amd": true }],
         "linebreak-style": "off",
         "max-classes-per-file": ["error", 5],

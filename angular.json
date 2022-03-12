@@ -134,7 +134,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-ng-packagr:build",
+          "builder": "@angular-devkit/build-angular:ng-packagr",
           "options": {
             "tsConfig": "libs/ngworker/lumberjack/tsconfig.lib.json",
             "project": "libs/ngworker/lumberjack/ng-package.json"

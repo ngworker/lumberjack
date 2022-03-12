@@ -1,7 +1,7 @@
-import { concat, throwError } from 'rxjs';
+import { concat, MonoTypeOperatorFunction, throwError } from 'rxjs';
 import { delay, retryWhen, take } from 'rxjs/operators';
 
-export const retryWithDelay = <T>(maxRetries: number, delayMs: number) =>
+export const retryWithDelay = <T>(maxRetries: number, delayMs: number): MonoTypeOperatorFunction<T> =>
   retryWhen<T>((errors) =>
     concat(errors.pipe(delay(delayMs), take(maxRetries + 1)), throwError(`Failed after ${maxRetries} retries.`))
   );

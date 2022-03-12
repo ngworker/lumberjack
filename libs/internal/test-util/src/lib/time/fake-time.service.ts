@@ -6,7 +6,7 @@ import { LumberjackTimeService } from '@ngworker/lumberjack';
 export class FakeTimeService extends LumberjackTimeService {
   private now = new Date();
 
-  getUnixEpochTicks() {
+  getUnixEpochTicks(): number {
     return this.now.valueOf();
   }
   setTime(fakeNow: Date): void {

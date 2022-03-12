@@ -6,7 +6,7 @@ import { resolveDependency } from './resolve-dependency';
 /**
  * Assert that an NgModule is guarded against direct import.
  */
-export const expectNgModuleToBeGuardedAgainstDirectImport = <TModule>(ngModuleType: Type<TModule>) => {
+export const expectNgModuleToBeGuardedAgainstDirectImport = <TModule>(ngModuleType: Type<TModule>): void => {
   let ngModule: TModule | undefined;
 
   TestBed.configureTestingModule({
