@@ -65,7 +65,7 @@
             }
           }
         ],
-        "@typescript-eslint/no-explicit-any": "error",
+        "@typescript-eslint/no-explicit-any": "warn",
         "@typescript-eslint/no-floating-promises": "error",
         "@typescript-eslint/no-require-imports": "error",
         "@typescript-eslint/prefer-readonly": "error",
@@ -107,7 +107,6 @@
             ]
           }
         ],
-        "import/order": "warn",
         "import/named": "warn",
         "import/no-unresolved": ["off", { "commonjs": true, "amd": true }],
         "linebreak-style": "off",

@@ -11,7 +11,8 @@ describe(SpyConsole.name, () => {
       .fill(undefined)
       .map((_, index) => index + 1);
 
-    spy.debug(...hundredNumbers);
+    // eslint-disable-next-line prefer-spread
+    spy.debug.apply(spy, hundredNumbers);
 
     expect(spy.debug).toHaveBeenCalledTimes(1);
     expect(spy.debug).toHaveBeenCalledWith(...hundredNumbers);

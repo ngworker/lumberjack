@@ -31,16 +31,11 @@
             "main": "apps/lumberjack-app/src/main.ts",
             "polyfills": "apps/lumberjack-app/src/polyfills.ts",
             "tsConfig": "apps/lumberjack-app/tsconfig.app.json",
+            "aot": true,
             "assets": ["apps/lumberjack-app/src/favicon.ico", "apps/lumberjack-app/src/assets"],
             "styles": ["apps/lumberjack-app/src/styles.scss"],
             "scripts": [],
-            "allowedCommonJsDependencies": ["zone.js"],
-            "vendorChunk": true,
-            "extractLicenses": false,
-            "buildOptimizer": false,
-            "sourceMap": true,
-            "optimization": false,
-            "namedChunks": true
+            "allowedCommonJsDependencies": ["zone.js"]
           },
           "configurations": {
             "production": {
@@ -65,8 +60,7 @@
                 }
               ]
             }
-          },
-          "defaultConfiguration": ""
+          }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
@@ -140,7 +134,7 @@
       "prefix": "lib",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "builder": "@angular-devkit/build-ng-packagr:build",
           "options": {
             "tsConfig": "libs/ngworker/lumberjack/tsconfig.lib.json",
             "project": "libs/ngworker/lumberjack/ng-package.json"
@@ -242,16 +236,11 @@
             "main": "apps/lumberjack-schematics-app/src/main.ts",
             "polyfills": "apps/lumberjack-schematics-app/src/polyfills.ts",
             "tsConfig": "apps/lumberjack-schematics-app/tsconfig.app.json",
+            "aot": true,
             "assets": ["apps/lumberjack-schematics-app/src/favicon.ico", "apps/lumberjack-schematics-app/src/assets"],
             "styles": ["apps/lumberjack-schematics-app/src/styles.scss"],
             "scripts": [],
-            "allowedCommonJsDependencies": ["zone.js"],
-            "vendorChunk": true,
-            "extractLicenses": false,
-            "buildOptimizer": false,
-            "sourceMap": true,
-            "optimization": false,
-            "namedChunks": true
+            "allowedCommonJsDependencies": ["zone.js"]
           },
           "configurations": {
             "production": {
@@ -281,8 +270,7 @@
                 }
               ]
             }
-          },
-          "defaultConfiguration": ""
+          }
         },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",

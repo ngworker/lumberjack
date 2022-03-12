@@ -1,3 +1,4 @@
+/* eslint-disable no-null/no-null */
 import { Inject, NgModule, Optional, SkipSelf } from '@angular/core';
 
 import {
@@ -42,7 +43,8 @@ export class LumberjackConsoleDriverRootModule {
     @Optional()
     @SkipSelf()
     @Inject(LumberjackConsoleDriverRootModule)
-    maybeNgModuleFromParentInjector: LumberjackConsoleDriverRootModule = undefined as any // eslint-disable-line  @typescript-eslint/no-explicit-any
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    maybeNgModuleFromParentInjector: LumberjackConsoleDriverRootModule = null as any
   ) {
     if (maybeNgModuleFromParentInjector) {
       throw new Error(
