@@ -178,7 +178,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [12.x]
+        node-version: [16.x]
         angular-version: [9.0.x, 9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x, 11.1.x, 11.2.x]
         include:
           - node-version: 14.x
@@ -236,7 +236,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x]
+        node-version: [16.x]
         # 9.0.x doesn't work due to Jest dependencies using TypeScript 3.8 import type syntax
         angular-version: [9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x, 11.1.x, 11.2.x]
         include:
