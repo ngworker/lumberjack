@@ -4,7 +4,7 @@ env:
   # Must match the Angular version in `package.json`
   ANGULAR_CURRENT: 12.2.x
   # The latest Node.js version compatible with the Angular version listed in `package.json`
-  NODE_CURRENT: 16.x
+  NODE_CURRENT: 14.x
   NODE_OPTIONS: --max_old_space_size=6144
 
 on:
@@ -178,7 +178,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [14.x]
         # angular-version: [9.0.x, 9.1.x, 10.0.x, 10.1.x, 10.2.x, 11.0.x, 11.1.x, 11.2.x]
         # angular-version: [12.2.x, 12.1.x, 12.0.x, 11.2.x, 11.1.x, 11.0.x]
         angular-version: [11.2.x, 11.1.x, 11.0.x]
@@ -238,7 +238,7 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [14.x]
         # 9.0.x doesn't work due to Jest dependencies using TypeScript 3.8 import type syntax
         angular-version: [11.2.x, 11.1.x, 11.0.x]
         # angular-version: [12.2.x, 12.1.x, 12.0.x, 11.2.x, 11.1.x, 11.0.x]
