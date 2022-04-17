@@ -1,6 +1,6 @@
 {
   "$schema": "http://json-schema.org/schema",
-  "id": "SchematicsNgWorker",
+  "$id": "SchematicsNgWorker",
   "title": "Ng Worker add schematics",
   "type": "object",
   "properties": {

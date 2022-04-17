@@ -1,3 +1,4 @@
+jest.setTimeout(30000);
 import * as copy from 'copy';
 import * as path from 'path';
 import * as rimraf from 'rimraf';
