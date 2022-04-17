@@ -306,8 +306,7 @@
         "e2e": {
           "builder": "@angular-builders/jest:run",
           "options": {
-            "coverage": false,
-            "run-in-band": false
+            "coverage": false
           },
           "configurations": {
             "ci": {
