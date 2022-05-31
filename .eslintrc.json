@@ -99,7 +99,8 @@
               "@schematics/angular/workspace/*",
               "zone.js/*",
               "zone.js/dist/*",
-              "zone.js/plugins/*"
+              "zone.js/plugins/*",
+              "jest-preset-angular/*"
             ]
           }
         ],
