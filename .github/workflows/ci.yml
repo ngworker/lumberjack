@@ -231,10 +231,8 @@ jobs:
         run: yarn delete-commonjs-allowlist
 
       - name: Update Chrome
-        run: |
-          sudo apt-get update
-          sudo apt-get install google-chrome-stable
-          google-chrome --version
+        uses: browser-actions/setup-chrome@latest
+        run: chrome --version
       - run: yarn e2e
 #
 #  schematics-e2e:
