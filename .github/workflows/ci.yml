@@ -232,6 +232,8 @@ jobs:
 
       - name: Update Chrome
         uses: browser-actions/setup-chrome@latest
+        with:
+          chrome-version: beta
       - run: chrome --version
       - run: yarn e2e
 #
