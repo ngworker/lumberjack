@@ -19,9 +19,9 @@ jobs:
   #   runs-on: ubuntu-latest
 
   #   steps:
-  #     - uses: actions/checkout@v2
+  #     - uses: actions/checkout@v3
   #     - name: Use Node.js ${{ env.NODE_CURRENT }}
-  #       uses: actions/setup-node@v2
+  #       uses: actions/setup-node@v3
   #       with:
   #         node-version: ${{ env.NODE_CURRENT }}
 
@@ -43,9 +43,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Use Node.js ${{ env.NODE_CURRENT }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ env.NODE_CURRENT }}
 
@@ -84,9 +84,9 @@ jobs:
   #           angular-version: 12.2.x
 
   #   steps:
-  #     - uses: actions/checkout@v2
+  #     - uses: actions/checkout@v3
   #     - name: Use Node.js ${{ matrix.node-version }}
-  #       uses: actions/setup-node@v2
+  #       uses: actions/setup-node@v3
   #       with:
   #         node-version: ${{ matrix.node-version }}
   #     - name: Use Angular version ${{ matrix.angular-version }}
@@ -131,9 +131,9 @@ jobs:
   #           angular-version: 12.2.x
 
   #   steps:
-  #     - uses: actions/checkout@v2
+  #     - uses: actions/checkout@v3
   #     - name: Use Node.js ${{ matrix.node-version }}
-  #       uses: actions/setup-node@v2
+  #       uses: actions/setup-node@v3
   #       with:
   #         node-version: ${{ matrix.node-version }}
   #     - name: Use Angular version ${{ matrix.angular-version }}
@@ -191,9 +191,9 @@ jobs:
         #     angular-version: 12.2.x
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
       - name: Use Angular version ${{ matrix.angular-version }}
@@ -254,9 +254,9 @@ jobs:
         #     angular-version: 12.2.x
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       - name: Use Node.js ${{ matrix.node-version }}
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
       - name: Use Angular version ${{ matrix.angular-version }}
@@ -294,12 +294,12 @@ jobs:
   #   runs-on: ubuntu-latest
 
   #   steps:
-  #     - uses: actions/checkout@v2
+  #     - uses: actions/checkout@v3
   #       with:
   #         # necessary for SonarCloud Scan
   #         fetch-depth: 0
   #     - name: Use Node.js ${{ env.NODE_CURRENT }}
-  #       uses: actions/setup-node@v2
+  #       uses: actions/setup-node@v3
   #       with:
   #         node-version: ${{ env.NODE_CURRENT }}
 
