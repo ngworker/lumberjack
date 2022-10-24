@@ -65,12 +65,12 @@ Refer to the following table to determine which version of Lumberjack is compati
 
 | Angular version | Lumberjack version |
 | --------------- | ------------------ |
-|            14.x |               14.x |
-|            13.x |                2.x |
-|            12.x |                2.x |
-|            11.x |                2.x |
-|            10.x |                2.x |
-|             9.x |                2.x |
+| 14.x            | 14.x               |
+| 13.x            | 2.x                |
+| 12.x            | 2.x                |
+| 11.x            | 2.x                |
+| 10.x            | 2.x                |
+| 9.x             | 2.x                |
 
 ## Usage
 
