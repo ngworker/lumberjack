@@ -111,8 +111,8 @@
           "yarn delete-path-alias @ngworker/lumberjack",
           "yarn delete-path-alias @ngworker/lumberjack/console-driver",
           "yarn delete-path-alias @ngworker/lumberjack/http-driver",
-          "mkdir -p packages/examples/lumberjack-app/node_modules/@ngworker/lumberjack",
-          "cp -r dist/packages/ngworker/lumberjack packages/examples/lumberjack-app/node_modules/@ngworker/lumberjack"
+          "mkdir -p packages/examples/lumberjack-app/node_modules/@ngworker",
+          "cp -r dist/packages/ngworker/lumberjack packages/examples/lumberjack-app/node_modules/@ngworker"
         ],
         "parallel": false
       }
