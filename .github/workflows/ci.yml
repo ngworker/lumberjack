@@ -82,6 +82,7 @@ jobs:
       number-of-agents: 4
 
   sonarcloud:
+    name: Publish reports to SonarCloud
     needs: dte_coordinator
     runs-on: ubuntu-latest
     permissions:
