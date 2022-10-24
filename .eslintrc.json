@@ -1,167 +1,79 @@
 {
   "root": true,
-  "ignorePatterns": ["dist", "coverage"],
+  "ignorePatterns": ["**/*"],
+  "plugins": ["@nrwl/nx", "etc", "rxjs", "rxjs-angular", "sonarjs"],
+  "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 2020
+    "project": ["{e2e,packages}/**/tsconfig.*?.json", "e2e/**/*-e2e/tsconfig.json"]
   },
   "overrides": [
     {
-      "files": ["*.ts"],
-      "parserOptions": {
-        "project": ["tsconfig.json"],
-        "createDefaultProgram": true
-      },
-      "extends": [
-        "plugin:@angular-eslint/recommended",
-        "eslint:recommended",
-        "plugin:@typescript-eslint/recommended",
-        "plugin:ordered-imports/recommended",
-        "plugin:import/errors",
-        "plugin:import/warnings"
-      ],
-      "plugins": ["no-null", "ordered-imports"],
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "excludedFiles": ["*.spec.ts"],
       "rules": {
-        "@angular-eslint/component-selector": [
+        "@nrwl/nx/enforce-module-boundaries": [
           "error",
           {
-            "type": "element",
-            "prefix": "ngworker",
-            "style": "kebab-case"
-          }
-        ],
-        "@angular-eslint/directive-selector": [
-          "error",
-          {
-            "type": "attribute",
-            "prefix": "ngworker",
-            "style": "camelCase"
-          }
-        ],
-        "@angular-eslint/no-forward-ref": "error",
-        "@typescript-eslint/array-type": [
-          "error",
-          {
-            "default": "array"
-          }
-        ],
-        "@typescript-eslint/consistent-type-definitions": "error",
-        "@typescript-eslint/dot-notation": "off",
-        "@typescript-eslint/explicit-member-accessibility": [
-          "error",
-          {
-            "accessibility": "no-public"
-          }
-        ],
-        "@typescript-eslint/member-delimiter-style": [
-          "off",
-          {
-            "multiline": {
-              "delimiter": "none",
-              "requireLast": true
-            },
-            "singleline": {
-              "delimiter": "semi",
-              "requireLast": false
-            }
-          }
-        ],
-        "@typescript-eslint/no-explicit-any": "error",
-        "@typescript-eslint/no-floating-promises": "error",
-        "@typescript-eslint/no-require-imports": "error",
-        "@typescript-eslint/prefer-readonly": "error",
-        "@typescript-eslint/quotes": [
-          "off",
-          "single",
-          {
-            "allowTemplateLiterals": true
-          }
-        ],
-        "@typescript-eslint/semi": ["off", null],
-        "@typescript-eslint/type-annotation-spacing": "off",
-        "arrow-parens": ["off", "always"],
-        "brace-style": ["off", "off"],
-        "eol-last": "off",
-        "import/no-internal-modules": [
-          "error",
-          {
-            "allow": [
-              "rxjs/operators",
-              "rxjs/operators/*",
-              "@angular/common/*",
-              "@angular/common/http/*",
-              "@angular/core",
-              "@angular/core/*",
-              "@angular/platform-browser/*",
-              "@angular/platform-browser-dynamic/*",
-              "@angular/core/testing/*",
-              "@angular/fire/database/*",
-              "@angular/material/*",
-              "@angular-devkit/schematics/*",
-              "@internal/*",
-              "@ngworker/*",
-              "@schematics/angular/*",
-              "@schematics/angular/application/*",
-              "@schematics/angular/workspace/*",
-              "zone.js/*",
-              "zone.js/dist/*"
-            ]
-          }
-        ],
-        "import/order": "warn",
-        "import/named": "warn",
-        "import/no-unresolved": ["off", { "commonjs": true, "amd": true }],
-        "linebreak-style": "off",
-        "max-classes-per-file": ["error", 5],
-        "max-len": "off",
-        "new-parens": "off",
-        "newline-per-chained-call": "off",
-        "no-extra-semi": "off",
-        "no-irregular-whitespace": "off",
-        "no-null/no-null": "error",
-        "no-redeclare": "error",
-        "no-trailing-spaces": "off",
-        "ordered-imports/ordered-imports": [
-          "warn",
-          {
-            "symbols-first": true,
-            "declaration-ordering": [
-              "type",
+            "enforceBuildableLibDependency": true,
+            "allow": [],
+            "depConstraints": [
               {
-                "ordering": ["side-effect", "default", "namespace", "destructured"],
-                "secondaryOrdering": ["name", "case-insensitive"]
+                "sourceTag": "scope:public",
+                "onlyDependOnLibsWithTags": ["scope:public"]
+              },
+              {
+                "sourceTag": "scope:internal",
+                "onlyDependOnLibsWithTags": ["scope:public", "scope:internal"]
+              },
+              {
+                "sourceTag": "type:app",
+                "onlyDependOnLibsWithTags": ["type:lib"]
+              },
+              {
+                "sourceTag": "type:lib",
+                "onlyDependOnLibsWithTags": ["type:lib", "type:test-util"]
+              },
+              {
+                "sourceTag": "type:e2e",
+                "onlyDependOnLibsWithTags": ["type:app"]
               }
-            ],
-            "specifier-ordering": "case-insensitive",
-            "group-ordering": [
-              {
-                "name": "project root",
-                "match": "^@(?!(ngworker|internal)).*|^[a-zA-Z].*",
-                "order": 20
-              },
-              {
-                "name": "internal routes",
-                "match": "^@(ngworker|internal).*",
-                "order": 30
-              },
-              { "name": "parent directories", "match": "^\\.\\.", "order": 40 },
-              { "name": "current directory", "match": "^\\.", "order": 50 },
-              { "name": "third-party", "match": ".*", "order": 10 }
             ]
           }
-        ],
-        "quote-props": "off",
-        "space-before-function-paren": "off",
-        "space-in-parens": ["off", "never"],
-        "prefer-arrow/prefer-arrow-functions": "off",
-        "eqeqeq": "off"
+        ]
       }
     },
     {
-      "files": ["*.html"],
-      "extends": ["plugin:@angular-eslint/template/recommended"],
+      "files": ["*.ts", "*.tsx"],
+      "extends": ["plugin:@nrwl/nx/typescript"],
+      "rules": {}
+    },
+    {
+      "files": ["*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"],
       "rules": {
-        "@angular-eslint/template/eqeqeq": "off",
-        "@angular-eslint/template/no-negated-async": "off"
+        "@nrwl/nx/enforce-module-boundaries": "off"
+      }
+    },
+    {
+      "files": ["*.js", "*.jsx"],
+      "extends": ["plugin:@nrwl/nx/javascript"],
+      "rules": {}
+    },
+    {
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "extends": ["plugin:etc/recommended", "plugin:rxjs/recommended", "plugin:sonarjs/recommended"],
+      "rules": {
+        "etc/no-commented-out-code": "error",
+        "etc/no-const-enum": "error",
+        "sonarjs/cognitive-complexity": ["error", 8]
+      }
+    },
+    {
+      "files": ["*.ts"],
+      "rules": {
+        "rxjs-angular/prefer-composition": [
+          "error",
+          { "checkDecorators": ["Component", "Directive", "Injectable", "NgModule", "Pipe"] }
+        ]
       }
     }
   ]

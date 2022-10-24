@@ -2,7 +2,7 @@
 
 🙏 We would ❤️ for you to contribute to Lumberjack and help make it even better than it is today!
 
-# Developing
+## Developing
 
 Start by installing all dependencies:
 
@@ -73,3 +73,54 @@ fix(release): need to depend on latest rxjs and zone.js
 
 The version in our package.json gets copied to the one we publish, and users need the latest of these.
 ```
+
+## ESLint parser
+
+As this workspace has a small amount of projects, we opt in to use the ESLint TypeScript parser globally (see the `parser` option in `.eslintrc.json`) in order to enable type-depending lint rules such as some from SonarLint.
+
+## Creating new applications
+
+In this workspace we have chosen to use the `npm` Nx preset which has the following workspace layout:
+
+```json
+  "workspaceLayout": {
+    "appsDir": "e2e",
+    "libsDir": "packages"
+  }
+```
+
+That means that our applications are created by default in the `e2e` folder and our libraries in the `packages` folder.
+
+However, this is semantically incorrect and we have also decided that our application will leave in the packages folder.
+
+When creating a new app there are some steps that need to be taken in order to bypass the default behavior of the **npm nx preset**.
+
+First, we need to **temporarily** modify the workspace layout inside the `nx.json` file from
+
+```json
+  "workspaceLayout": {
+    "appsDir": "e2e",
+    "libsDir": "packages"
+  }
+```
+
+To
+
+```json
+  "workspaceLayout": {
+    "appsDir": "packages",
+    "libsDir": "e2e"
+  }
+```
+
+Once that's completed we can create our application with the corresponding generator command.
+
+Finally we MUST revert the changes made to the `nx.json` file.
+
+In cases where the application generator creates a companion e2e project, we need to move it to the `e2e` folder. This is done using the `@nrwl/workspace:move` generator.
+
+```bash
+nx generate move [<grouping-folder>/]<e2e-project-directory-name> --project-name=<e2e-project-name>
+```
+
+> Notice that this is only possible after reverting the nx.json file back to its original form.

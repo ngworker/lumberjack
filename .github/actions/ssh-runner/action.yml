@@ -1,0 +1,28 @@
+name: Open SSH debug session
+
+description: SSH into the GitHub runner. Run tmux attach once connected. Run exit to close the session.
+
+# A consumer must add the following permissions
+# permissions:
+#   id-token: write
+#   contents: read
+#   actions: read
+
+inputs:
+  ssh_gateway:
+    description: The gateway hostname address or IP address.
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Setup SSH server for Actor
+      uses: alexellis/setup-sshd-actor@master
+    - name: Connect to the actuated SSH gateway
+      uses: alexellis/actuated-ssh-gateway-action@master
+      with:
+        gatewayaddr: ${{ inputs.ssh_gateway }}
+        # Use TLS
+        secure: true
+    - name: Setup a blocking tmux session
+      uses: alexellis/block-with-tmux-action@master

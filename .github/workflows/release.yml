@@ -1,0 +1,50 @@
+name: Release NPM packages
+
+env:
+  NODE_OPTIONS: --max-old-space-size=6144
+  NX_MAX_PARALLEL: 2
+
+on:
+  workflow_dispatch:
+    inputs:
+      release_as:
+        type: 'choice'
+        description: 'The release type. It can be one of: major, minor, patch, premajor, preminor, prepatch, or prerelease. Defaults to "patch"'
+        required: true
+        default: 'patch'
+        options:
+          - major
+          - minor
+          - patch
+          - premajor
+          - preminor
+          - prepatch
+          - prerelease
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+
+    # Only release from the main branch
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          # Necessary for nx affected commands
+          fetch-depth: 0
+      - name: Setup
+        uses: ./.github/actions/setup
+
+      # Set ups the git user for the Changelog commit
+      - name: Setup git user to "🤖 NgWorker Bot"
+        shell: bash
+        run: git config user.email "-" && git config user.name "🤖 NgWorker Bot"
+
+      - name: Release @ngworker/lumberjack
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # Generates the changelog commit and tags and pushes them to Github.
+        # Use two post actions to Create a release in Github and for Publishing the package to NPM
+        run: npx nx version ngworker-lumberjack --releaseAs=${{ github.event.inputs.release_as }}
