@@ -73,7 +73,7 @@
         "tagPrefix": "v",
         "push": true,
         "preid": "beta",
-        "syncVersions": true,
+        "syncVersions": false,
         "postTargets": ["ngworker-lumberjack:publish", "ngworker-lumberjack:github"]
       }
     },
