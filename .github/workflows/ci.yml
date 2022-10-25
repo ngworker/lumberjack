@@ -32,7 +32,8 @@ jobs:
   dte_coordinator:
     name: DTE Coordinator
     uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.8
-    secrets: inherit
+    secrets:
+      NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
     permissions:
       contents: read
       actions: read
@@ -70,7 +71,8 @@ jobs:
   dte_agents:
     name: DTE Agents
     uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.8
-    secrets: inherit
+    secrets:
+      NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
     permissions:
       contents: read
       actions: read
