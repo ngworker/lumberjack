@@ -5,6 +5,12 @@
   "targets": {
     "build": {
       "executor": "nx:run-commands",
+      "dependsOn": [
+        {
+          "projects": "self",
+          "target": "build-package"
+        }
+      ],
       "options": {
         "outputPath": ["dist/packages/ngworker/lumberjack"],
         "commands": [
