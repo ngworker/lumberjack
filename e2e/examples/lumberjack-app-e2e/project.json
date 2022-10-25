@@ -8,7 +8,7 @@
       "dependsOn": [
         {
           "projects": "dependencies",
-          "target": "use-package"
+          "target": "build"
         }
       ],
       "options": {

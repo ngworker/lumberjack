@@ -53,6 +53,12 @@
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build"
+        }
+      ],
       "configurations": {
         "production": {
           "browserTarget": "examples-lumberjack-app:build:production"
@@ -96,26 +102,6 @@
           "ci": true,
           "coverageReporters": ["lcovonly", "text-summary"]
         }
-      }
-    },
-    "use-package": {
-      "executor": "nx:run-commands",
-      "dependsOn": [
-        {
-          "projects": "dependencies",
-          "target": "build"
-        }
-      ],
-      "options": {
-        "commands": [
-          "yarn delete-path-alias @ngworker/lumberjack",
-          "yarn delete-path-alias @ngworker/lumberjack/console-driver",
-          "yarn delete-path-alias @ngworker/lumberjack/http-driver",
-          "mkdir -p packages/examples/lumberjack-app/node_modules/@ngworker",
-          "cp -r dist/packages/ngworker/lumberjack packages/examples/lumberjack-app/node_modules/@ngworker"
-        ],
-        "outputPath": ["packages/examples/lumberjack-app/node_modules/@ngworker/lumberjack"],
-        "parallel": false
       }
     }
   },
