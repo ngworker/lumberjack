@@ -7,10 +7,14 @@ describe('Console log driver', () => {
       },
     });
   }
+
+  const expectedPayload = {
+    angularVersion: '14',
+  };
   it('logs a greeting info message', () => {
     visit();
 
-    cy.get('@consoleInfo').should('have.been.calledWith', 'info [Forest App] Hello, Forest!');
+    cy.get('@consoleInfo').should('have.been.calledWith', 'info [Forest App] Hello, Forest!', expectedPayload);
   });
 
   it('logs a critical forest fire message after 2 seconds', () => {
@@ -18,6 +22,10 @@ describe('Console log driver', () => {
     visit();
 
     cy.tick(2000);
-    cy.get('@consoleError').should('have.been.calledWith', 'critical [Forest App] The forest is on fire!');
+    cy.get('@consoleError').should(
+      'have.been.calledWith',
+      'critical [Forest App] The forest is on fire!',
+      expectedPayload
+    );
   });
 });
