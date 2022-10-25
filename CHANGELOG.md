@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [14.0.0](https://github.com/ngworker/lumberjack/compare/v2.0.3...v14.0.0) (2022-10-26)
+
+### Performance improvements
+
+- The package is now published with partial Ivy compilation
+
+### ⚠ BREAKING CHANGES
+
+- Require Angular 14.0
+- Require RxJS 7.4
+
 ## [2.0.3](https://github.com/ngworker/lumberjack/compare/v2.0.2...v2.0.3) (2021-04-26)
 
 ### Documentation
