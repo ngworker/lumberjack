@@ -27,11 +27,11 @@
               },
               {
                 "sourceTag": "type:app",
-                "onlyDependOnLibsWithTags": ["type:lib"]
+                "onlyDependOnLibsWithTags": ["type:package"]
               },
               {
-                "sourceTag": "type:lib",
-                "onlyDependOnLibsWithTags": ["type:lib", "type:test-util"]
+                "sourceTag": "type:package",
+                "onlyDependOnLibsWithTags": ["type:package", "type:test-util"]
               },
               {
                 "sourceTag": "type:e2e",
