@@ -148,6 +148,6 @@ The following are valid project types in this workspace.
 | Type        | Description                                               |
 | ----------- | --------------------------------------------------------- |
 | `app`       | An application project.                                   |
-| `e2e`       | An end-to-end testing project.                      |
+| `e2e`       | An end-to-end testing project.                            |
 | `package`   | A publishable library project released as an npm package. |
 | `test-util` | A library project containing internal test utilities.     |
