@@ -124,3 +124,30 @@ nx generate move [<grouping-folder>/]<e2e-project-directory-name> --project-name
 ```
 
 > Notice that this is only possible after reverting the nx.json file back to its original form.
+
+## Project tags
+
+A project must have the following dimensions.
+
+- Scope
+- Type
+
+### Scope
+
+A project is either _internal_ to the workspace or _public_ for external use.
+
+| Scope      | Description                                                                    |
+| ---------- | ------------------------------------------------------------------------------ |
+| `internal` | The project is internal to the workspace and is not intended for external use. |
+| `public`   | The project is publicly released and intended for external use.                |
+
+### Type
+
+The following are valid project types in this workspace.
+
+| Type        | Description                                               |
+| ----------- | --------------------------------------------------------- |
+| `app`       | An application project.                                   |
+| `e2e`       | An end-to-end testing project.                      |
+| `package`   | A publishable library project released as an npm package. |
+| `test-util` | A library project containing internal test utilities.     |
