@@ -32,6 +32,7 @@ jobs:
   dte_coordinator:
     name: DTE Coordinator
     uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.8
+    secrets: inherit
     with:
       # Must match dte_agents.number-of-agents
       number-of-agents: 4
@@ -66,6 +67,7 @@ jobs:
   dte_agents:
     name: DTE Agents
     uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.8
+    secrets: inherit
     with:
       # The Free GitHub plan has a limit of 20 concurrent jobs on Ubuntu images
       # Reference: https://docs.github.com/en/actions/learn-github-actions/usage-limits-billing-and-administration
