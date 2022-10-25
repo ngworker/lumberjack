@@ -13,12 +13,23 @@
       ],
       "options": {
         "outputPath": ["dist/packages/ngworker/lumberjack"],
-        "commands": [
-          "nx run ngworker-lumberjack:build-package",
-          "yarn copy README.md dist/packages/ngworker/lumberjack"
-        ],
         "parallel": false
-      }
+      },
+      "configurations": {
+        "production": {
+          "commands": [
+            "nx run ngworker-lumberjack:build-package:production",
+            "yarn copy README.md dist/packages/ngworker/lumberjack"
+          ]
+        },
+        "development": {
+          "commands": [
+            "nx run ngworker-lumberjack:build-package:development",
+            "yarn copy README.md dist/packages/ngworker/lumberjack"
+          ]
+        }
+      },
+      "defaultConfiguration": "production"
     },
     "build-package": {
       "executor": "@nrwl/angular:package",
