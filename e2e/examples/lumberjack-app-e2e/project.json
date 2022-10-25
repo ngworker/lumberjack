@@ -1,0 +1,41 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "e2e/examples/lumberjack-app-e2e/src",
+  "projectType": "application",
+  "targets": {
+    "e2e": {
+      "executor": "@nrwl/cypress:cypress",
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build"
+        }
+      ],
+      "options": {
+        "cypressConfig": "e2e/examples/lumberjack-app-e2e/cypress.json",
+        "devServerTarget": "examples-lumberjack-app:serve:development"
+      },
+      "configurations": {
+        "production": {
+          "devServerTarget": "examples-lumberjack-app:serve:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["e2e/examples/lumberjack-app-e2e/**/*.{js,ts}"]
+      },
+      "configurations": {
+        "report": {
+          "format": "json",
+          "force": true,
+          "outputFile": "reports/e2e/examples/lumberjack-app-e2e/lint/report.json"
+        }
+      }
+    }
+  },
+  "tags": ["scope:internal", "type:e2e"],
+  "implicitDependencies": ["examples-lumberjack-app"]
+}

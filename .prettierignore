@@ -1,2 +1,6 @@
-# golden files for e2e tests
-golden-files/*
+# Add files here to ignore them from prettier formatting
+
+/dist
+/coverage
+/reports
+/.angular/

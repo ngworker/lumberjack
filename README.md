@@ -42,7 +42,6 @@ Lumberjack is a versatile Angular logging library, specifically designed to be e
 ## Table of Contents
 
 - [Installation](#installation)
-- [Compatibility](#compatibility)
 - [Usage](#usage)
 - [Log drivers](#log-drivers)
 - [Community Drivers](#community-drivers)
@@ -54,56 +53,39 @@ Lumberjack is a versatile Angular logging library, specifically designed to be e
 
 Lumberjack is published as the `@ngworker/lumberjack` package.
 
-| Toolchain   | Command                                                                            |
-| ----------- | ---------------------------------------------------------------------------------- |
-| Angular CLI | `ng add @ngworker/lumberjack`                                                      |
-| NPM CLI     | `npm install @ngworker/lumberjack`                                                 |
-| PNPM CLI    | `pnpm add @ngworker/lumberjack`                                                    |
-| Nx CLI      | Install using your package manager, then `nx generate @ngworker/lumberjack:ng-add` |
-| Yarn CLI    | `yarn add @ngworker/lumberjack`                                                    |
+| Toolchain | Command                            |
+| --------- | ---------------------------------- |
+| NPM CLI   | `npm install @ngworker/lumberjack` |
+| PNPM CLI  | `pnpm add @ngworker/lumberjack`    |
+| Yarn CLI  | `yarn add @ngworker/lumberjack`    |
 
 ## Compatibility
 
-Lumberjack version 2.x has verified compatibility with the following Angular versions.
+Refer to the following table to determine which version of Lumberjack is compatible with your Angular version.
 
-| Angular version | Lumberjack 2.x support |
-| --------------- | ---------------------- |
-| 12.0.x          | ✅                     |
-| 11.2.x          | ✅                     |
-| 11.1.x          | ✅                     |
-| 11.0.x          | ✅                     |
-| 10.2.x          | ✅                     |
-| 10.1.x          | ✅                     |
-| 10.0.x          | ✅                     |
-| 9.1.x           | ✅                     |
-| 9.0.x           | ✅                     |
-
-If the version you are using is not listed, please [raise an issue in our GitHub repository](https://github.com/ngworker/lumberjack/issues/new).
-
-</br>
+| Angular version | Lumberjack version |
+| --------------- | ------------------ |
+| 14.x            | 14.x               |
+| 13.x            | 2.x                |
+| 12.x            | 2.x                |
+| 11.x            | 2.x                |
+| 10.x            | 2.x                |
+| 9.x             | 2.x                |
 
 ## Usage
 
 > For a complete walkthrough video please visit [@ngworker/lumberjack v2 - Show & Tell BLS024](https://youtu.be/OV1ONtLAJnI)
 
-To register Lumberjack, add `LumberjackModule.forRoot()` to your root or core Angular module or use the schematics.
-
-```shell
-ng add @ngworker/lumberjack
-```
-
-The `ng add` command will add the following code to your module.
+To register Lumberjack, add `LumberjackModule.forRoot()` to your root or core Angular module.
 
 ```ts
 // (...)
 import { LumberjackModule } from '@ngworker/lumberjack';
-import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
 
 @NgModule({
   imports: [
       // (...)
     LumberjackModule.forRoot(),
-    LumberjackConsoleDriverModule.forRoot(),
       // (...)
   ],
   // (...)
@@ -112,13 +94,7 @@ import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driv
 
 You must also register the log driver modules for the log drivers that you want to enable.
 
-If you want to add the `LumberjackHttpDriver`, use the following command
-
-```shell
-ng add @ngworker/lumberjack --http-driver
-```
-
-This command will add the below code to your app module.
+If you want to add the `LumberjackHttpDriver` and the `LumberjackConsoleDriver`, add the following code
 
 ```ts
 // (...)
@@ -142,15 +118,6 @@ import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driv
 })
 export class AppModule {}
 ```
-
-</br>
-
-### `ng add` schematic options
-
-| Option           | Type                          | Optional? | Description                                    |
-| ---------------- | ----------------------------- | --------- | ---------------------------------------------- |
-| `console-driver` | Boolean (defaults to `true`)  | Yes       | Whether to register `LumberjackConsoleDriver`. |
-| `http-driver`    | Boolean (defaults to `false`) | Yes       | Whether to register `LumberjackHttpDriver`.    |
 
 </br>
 
@@ -471,7 +438,7 @@ export const consoleDriverConfigToken = new InjectionToken<LumberjackLogDriverCo
 
 This is possible because the `ConsoleDriver` has the same configuration options as the `LumberjackLogDriverConfig`. We only have to include the driver identifier since it cannot be predefined.
 
-For adding custom settings, see [LumberjackHttpDriver](https://github.com/ngworker/lumberjack/blob/main/libs/ngworker/lumberjack/http-driver/src/lib/lumberjack-http-driver-root.module.ts).
+For adding custom settings, see [LumberjackHttpDriver](https://github.com/ngworker/lumberjack/blob/main/packages/ngworker/lumberjack/http-driver/src/lib/lumberjack-http-driver-root.module.ts).
 
 The most important thing about the `LumberjackConsoleDriverModule` is that it provides the `LumberjackConsoleDriver` using the `lumberjackLogDriverToken` with the `multi` flag on. This allows us to provide multiple log drivers for Lumberjack at the same time.
 
@@ -493,7 +460,7 @@ export class AppModule {}
 
 ### HTTP driver
 
-For a more advanced log driver implementation, see [LumberjackHttpDriver](https://github.com/ngworker/lumberjack/blob/main/libs/ngworker/lumberjack/http-driver/README.md)
+For a more advanced log driver implementation, see [LumberjackHttpDriver](https://github.com/ngworker/lumberjack/blob/main/packages/ngworker/lumberjack/http-driver/README.md)
 
 ## Community drivers
 
@@ -786,7 +753,6 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tr>
     <td align="center"><a href="https://github.com/SergeyCherman"><img src="https://avatars.githubusercontent.com/u/10699293?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Serg</b></sub></a><br /><a href="https://github.com/ngworker/lumberjack/commits?author=SergeyCherman" title="Documentation">📖</a></td>
     <td align="center"><a href="https://github.com/sumitparakh"><img src="https://avatars.githubusercontent.com/u/4236211?v=4?s=100" width="100px;" alt=""/><br /><sub><b>Sumit Parakh</b></sub></a><br /><a href="https://github.com/ngworker/lumberjack/commits?author=sumitparakh" title="Code">💻</a></td>
-    <td align="center"><a href="http://patelvimal.github.io"><img src="https://avatars.githubusercontent.com/u/6451223?v=4?s=100" width="100px;" alt=""/><br /><sub><b>vimal patel</b></sub></a><br /><a href="https://github.com/ngworker/lumberjack/commits?author=patelvimal" title="Code">💻</a></td>
   </tr>
 </table>
 

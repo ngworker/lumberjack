@@ -1,0 +1,109 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "packages/examples/lumberjack-app/src",
+  "prefix": "ngworker",
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/examples/lumberjack-app",
+        "index": "packages/examples/lumberjack-app/src/index.html",
+        "main": "packages/examples/lumberjack-app/src/main.ts",
+        "polyfills": "packages/examples/lumberjack-app/src/polyfills.ts",
+        "tsConfig": "packages/examples/lumberjack-app/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
+        "assets": ["packages/examples/lumberjack-app/src/favicon.ico", "packages/examples/lumberjack-app/src/assets"],
+        "styles": ["packages/examples/lumberjack-app/src/styles.scss"],
+        "scripts": []
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "fileReplacements": [
+            {
+              "replace": "packages/examples/lumberjack-app/src/environments/environment.ts",
+              "with": "packages/examples/lumberjack-app/src/environments/environment.prod.ts"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build"
+        }
+      ],
+      "configurations": {
+        "production": {
+          "browserTarget": "examples-lumberjack-app:build:production"
+        },
+        "development": {
+          "browserTarget": "examples-lumberjack-app:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "examples-lumberjack-app:build"
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/examples/lumberjack-app/**/*.ts", "packages/examples/lumberjack-app/**/*.html"]
+      },
+      "configurations": {
+        "report": {
+          "format": "json",
+          "force": true,
+          "outputFile": "reports/packages/examples/lumberjack-app/lint/report.json"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/examples/lumberjack-app"],
+      "options": {
+        "jestConfig": "packages/examples/lumberjack-app/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "coverage": {
+          "codeCoverage": true,
+          "ci": true,
+          "coverageReporters": ["lcovonly", "text-summary"]
+        }
+      }
+    }
+  },
+  "tags": ["scope:internal", "type:app"]
+}
