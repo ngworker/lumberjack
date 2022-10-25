@@ -39,7 +39,7 @@ jobs:
       # in the parallel-commands-on-agents command list
       # The --agent-count parameter must match the number-of-agents parameter
       init-commands: |
-        yarn nx-cloud start-ci-run --agent-count=4
+        yarn nx-cloud start-ci-run --stop-agents-after="e2e" --agent-count=4
       # Commands run in parallel on this DTE coordinator
       parallel-commands: |
         yarn nx-cloud record -- yarn nx workspace-lint
@@ -54,12 +54,9 @@ jobs:
         yarn nx affected --target=lint --configuration=report --parallel=2 --max-warnings=0
         yarn nx affected --target=test --configuration=coverage --parallel=1 --max-workers=2
         yarn nx affected --target=build --parallel=2
-        yarn nx affected --target=e2e --exclude=examples-lumberjack-app-e2e --parallel=1
+        yarn nx affected --target=e2e --parallel=1
       # Commands run sequentially on this DTE coordinator after parallel jobs
-      # For the end-to-end test of our application, we use the output bundle
-      final-commands: |
-        NX_CLOUD_DISTRIBUTED_EXECUTION=false yarn nx run examples-lumberjack-app:use-lumberjack-bundle
-        NX_CLOUD_DISTRIBUTED_EXECUTION=false yarn nx e2e examples-lumberjack-app-e2e
+      # final-commands: |
 
   # We're using Nx Cloud for Distributed Task Execution
   # Reference: https://nx.dev/using-nx/dte

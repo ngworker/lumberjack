@@ -98,7 +98,7 @@
         }
       }
     },
-    "use-lumberjack-bundle": {
+    "use-package": {
       "executor": "nx:run-commands",
       "dependsOn": [
         {
@@ -114,6 +114,7 @@
           "mkdir -p packages/examples/lumberjack-app/node_modules/@ngworker",
           "cp -r dist/packages/ngworker/lumberjack packages/examples/lumberjack-app/node_modules/@ngworker"
         ],
+        "outputPath": ["packages/examples/lumberjack-app/node_modules/@ngworker/lumberjack"],
         "parallel": false
       }
     }

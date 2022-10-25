@@ -5,6 +5,12 @@
   "targets": {
     "e2e": {
       "executor": "@nrwl/cypress:cypress",
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "use-package"
+        }
+      ],
       "options": {
         "cypressConfig": "e2e/examples/lumberjack-app-e2e/cypress.json",
         "devServerTarget": "examples-lumberjack-app:serve:development"
