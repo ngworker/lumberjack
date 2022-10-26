@@ -10,24 +10,28 @@ import { errorThrowingDriverConfigToken } from './error-throwing-driver-config.t
 import { ErrorThrowingDriverConfig } from './error-throwing-driver.config';
 import { ErrorThrowingDriver } from './error-throwing.driver';
 
-export function errorThrowingDriverFactory(
+export function combinedErrorThrowingDriverConfigFactory(
   logDriverConfig: LumberjackLogDriverConfig,
   errorThrowingDriverConfig: ErrorThrowingDriverConfig
-): ErrorThrowingDriver {
+): ErrorThrowingDriverConfig {
   const config: ErrorThrowingDriverConfig = {
     ...logDriverConfig,
     ...errorThrowingDriverConfig,
   };
 
-  return new ErrorThrowingDriver(config);
+  return config;
 }
 
 @NgModule({
   providers: [
     {
       deps: [lumberjackLogDriverConfigToken, errorThrowingDriverConfigToken],
+      provide: errorThrowingDriverConfigToken,
+      useFactory: combinedErrorThrowingDriverConfigFactory,
+    },
+    {
       provide: lumberjackLogDriverToken,
-      useFactory: errorThrowingDriverFactory,
+      useClass: ErrorThrowingDriver,
       multi: true,
     },
   ],
