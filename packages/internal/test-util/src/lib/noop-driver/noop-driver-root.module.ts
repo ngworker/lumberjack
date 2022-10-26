@@ -10,22 +10,24 @@ import { noopDriverConfigToken } from './noop-driver-config.token';
 import { NoopDriverConfig } from './noop-driver.config';
 import { NoopDriver } from './noop.driver';
 
-export function noopDriverFactory(
+export function combinedNoopDriverConfigFactory(
   logDriverConfig: LumberjackLogDriverConfig,
   noopDriverConfig: NoopDriverConfig
-): NoopDriver {
+): NoopDriverConfig {
   const baseConfig = { ...logDriverConfig, identifier: NoopDriver.driverIdentifier };
-  const fullConfig = { ...baseConfig, ...noopDriverConfig };
-
-  return new NoopDriver(fullConfig);
+  return { ...baseConfig, ...noopDriverConfig };
 }
 
 @NgModule({
   providers: [
     {
-      provide: lumberjackLogDriverToken,
-      useFactory: noopDriverFactory,
+      provide: noopDriverConfigToken,
+      useFactory: combinedNoopDriverConfigFactory,
       deps: [lumberjackLogDriverConfigToken, noopDriverConfigToken],
+    },
+    {
+      provide: lumberjackLogDriverToken,
+      useClass: NoopDriver,
       multi: true,
     },
   ],
