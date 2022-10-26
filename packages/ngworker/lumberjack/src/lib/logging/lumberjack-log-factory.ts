@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
@@ -19,7 +19,7 @@ import { LumberjackLogBuilder } from './lumberjack-log.builder';
   providedIn: 'root',
 })
 export class LumberjackLogFactory<TPayload extends LumberjackLogPayload | void = void> {
-  constructor(private readonly time: LumberjackTimeService) {}
+  private readonly time = inject(LumberjackTimeService);
 
   /**
    * Create a log builder for a critical log with the specified message.

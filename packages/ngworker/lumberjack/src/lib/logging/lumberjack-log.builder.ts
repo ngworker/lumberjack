@@ -10,7 +10,7 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
 type InternalWithStaticPayload = '__LUMBERJACK_INTERNAL_WITH_STATIC_PAYLOAD__' & LumberjackLogPayload;
 
 /**
- * Builder for a log with the specified log level and messsage.
+ * Builder for a log with the specified log level and message.
  *
  * Use this to create a log before passing it to `LumberjackService`.
  */

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AppLogger } from './app-logger.service';
 import { ForestService } from './forest.service';
@@ -10,10 +10,10 @@ import { ForestService } from './forest.service';
 })
 export class AppComponent implements OnInit, OnDestroy {
   private subscriptions = new Subscription();
+  private logger = inject(AppLogger);
+  private forest = inject(ForestService);
 
   title = 'lumberjack-app';
-
-  constructor(private logger: AppLogger, private forest: ForestService) {}
 
   ngOnInit(): void {
     this.logger.helloForest();

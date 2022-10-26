@@ -1,4 +1,4 @@
-import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { inject, NgModule, InjectFlags } from '@angular/core';
 
 import {
   LumberjackLogDriverConfig,
@@ -33,8 +33,9 @@ export function errorThrowingDriverFactory(
   ],
 })
 export class ErrorThrowingDriverRootModule {
-  constructor(@Optional() @SkipSelf() maybeNgModuleFromParentInjector?: ErrorThrowingDriverRootModule) {
-    if (maybeNgModuleFromParentInjector) {
+  maybeNgModuleFromParentInjector = inject(ErrorThrowingDriverRootModule, InjectFlags.SkipSelf | InjectFlags.Optional);
+  constructor() {
+    if (this.maybeNgModuleFromParentInjector) {
       throw new Error(
         'ErrorThrowingDriverModule.forRoot registered in multiple injectors. Only call it from your root injector such as in AppModule.'
       );

@@ -1,4 +1,4 @@
-import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { inject, NgModule, InjectFlags } from '@angular/core';
 
 import {
   LumberjackLogDriverConfig,
@@ -31,8 +31,9 @@ export function spyDriverFactory(
   ],
 })
 export class SpyDriverRootModule {
-  constructor(@Optional() @SkipSelf() maybeNgModuleFromParentInjector?: SpyDriverRootModule) {
-    if (maybeNgModuleFromParentInjector) {
+  maybeNgModuleFromParentInjector = inject(SpyDriverRootModule, InjectFlags.Optional | InjectFlags.SkipSelf);
+  constructor() {
+    if (this.maybeNgModuleFromParentInjector) {
       throw new Error(
         'SpyDriverModule.forRoot registered in multiple injectors. Only call it from your root injector such as in AppModule.'
       );

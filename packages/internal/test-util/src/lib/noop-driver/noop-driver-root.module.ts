@@ -1,4 +1,4 @@
-import { NgModule, Optional, SkipSelf } from '@angular/core';
+import { inject, InjectFlags, NgModule } from '@angular/core';
 
 import {
   LumberjackLogDriverConfig,
@@ -31,8 +31,9 @@ export function noopDriverFactory(
   ],
 })
 export class NoopDriverRootModule {
-  constructor(@Optional() @SkipSelf() maybeNgModuleFromParentInjector?: NoopDriverRootModule) {
-    if (maybeNgModuleFromParentInjector) {
+  maybeNgModuleFromParentInjector? = inject(NoopDriverRootModule, InjectFlags.SkipSelf | InjectFlags.Optional);
+  constructor() {
+    if (this.maybeNgModuleFromParentInjector) {
       throw new Error(
         'NoopDriverModule.forRoot registered in multiple injectors. Only call it from your root injector such as in AppModule.'
       );
