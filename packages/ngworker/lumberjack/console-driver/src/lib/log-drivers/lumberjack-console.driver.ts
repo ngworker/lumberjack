@@ -1,14 +1,8 @@
-import { Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
-import {
-  LumberjackLogDriver,
-  LumberjackLogDriverConfig,
-  LumberjackLogDriverLog,
-  LumberjackLogPayload,
-} from '@ngworker/lumberjack';
+import { LumberjackLogDriver, LumberjackLogDriverLog, LumberjackLogPayload } from '@ngworker/lumberjack';
 
 import { lumberjackConsoleDriverConfigToken } from '../configuration/lumberjack-console-driver-config.token';
-import { LumberjackConsole } from '../console/lumberjack-console';
 import { lumberjackConsoleToken } from '../console/lumberjack-console.token';
 
 /**
@@ -22,10 +16,8 @@ export class LumberjackConsoleDriver<TPayload extends LumberjackLogPayload | voi
   implements LumberjackLogDriver<TPayload>
 {
   static driverIdentifier = 'LumberjackConsoleDriver';
-  constructor(
-    @Inject(lumberjackConsoleDriverConfigToken) readonly config: LumberjackLogDriverConfig,
-    @Inject(lumberjackConsoleToken) private readonly console: LumberjackConsole
-  ) {}
+  readonly config = inject(lumberjackConsoleDriverConfigToken);
+  private readonly console = inject(lumberjackConsoleToken);
 
   /**
    * Output console error.

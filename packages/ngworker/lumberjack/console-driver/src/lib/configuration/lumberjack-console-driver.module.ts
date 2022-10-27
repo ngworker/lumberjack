@@ -1,4 +1,6 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
+import { LumberjackLogDriverConfig, lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
+import { LumberjackConsoleDriver } from '../log-drivers/lumberjack-console.driver';
 
 import { lumberjackConsoleDriverConfigToken } from './lumberjack-console-driver-config.token';
 import { LumberjackConsoleDriverRootModule } from './lumberjack-console-driver-root.module';
@@ -18,13 +20,20 @@ export class LumberjackConsoleDriverModule {
    *
    * @param config Settings used by the console driver.
    */
-  static forRoot(config?: LumberjackConsoleDriverConfig): ModuleWithProviders<LumberjackConsoleDriverRootModule> {
+  static forRoot(
+    config: Partial<LumberjackConsoleDriverConfig> = {}
+  ): ModuleWithProviders<LumberjackConsoleDriverRootModule> {
     return {
       ngModule: LumberjackConsoleDriverRootModule,
       providers: [
         {
           provide: lumberjackConsoleDriverConfigToken,
-          useValue: config || {},
+          deps: [lumberjackLogDriverConfigToken],
+          useFactory: (logDriverConfig: LumberjackLogDriverConfig) => ({
+            ...logDriverConfig,
+            identifier: LumberjackConsoleDriver.driverIdentifier,
+            ...config,
+          }),
         },
       ],
     };
