@@ -1,9 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { inject, Inject, Injectable, NgZone, OnDestroy } from '@angular/core';
+import { inject, Injectable, NgZone, OnDestroy } from '@angular/core';
 import { LumberjackLog, LumberjackLogDriver, LumberjackLogDriverLog, LumberjackLogPayload } from '@ngworker/lumberjack';
 import { Subscription } from 'rxjs';
 import { lumberjackHttpDriverConfigToken } from '../configuration/lumberjack-http-driver-config.token';
-import { LumberjackHttpDriverInternalConfig } from '../configuration/lumberjack-http-driver-internal.config';
 import { LumberjackHttpLog } from '../logs/lumberjack-http.log';
 import { retryWithDelay } from '../operators/retry-with-delay.operator';
 
