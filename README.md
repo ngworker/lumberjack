@@ -140,6 +140,21 @@ export class MyComponent implements OnInit {
 }
 ```
 
+or using the `inject` function
+
+```ts
+import { inject, Component } from '@angular/core';
+import { LumberjackService } from '@ngworker/lumberjack';
+
+@Component({
+  // (...)
+})
+export class MyComponent implements OnInit {
+  private lumberjack = inject(LumberjackService);
+  // (...)
+}
+```
+
 Then we can start logging. However, you'll also want to inject `LumberjackTimeService` to maintain a high level of testability.
 
 ```ts
@@ -148,7 +163,8 @@ import { LumberjackService, LumberjackTimeService } from '@ngworker/lumberjack';
 
 // (...)
 export class MyComponent implements OnInit {
-  constructor(private lumberjack: LumberjackService, private time: LumberjackTimeService) {}
+  private lumberjack = inject(LumberjackService);
+  private time = inject(LumberjackTimeService);
 
   // (...)
   ngOnInit(): void {
@@ -273,7 +289,7 @@ export class AppModule {}
 Let's create a simple log driver for the browser console.
 
 ```ts
-import { Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import { LumberjackLogDriver, LumberjackLogDriverConfig, LumberjackLogDriverLog } from '@ngworker/lumberjack';
 
@@ -281,7 +297,7 @@ import { consoleDriverConfigToken } from './console-driver-config.token';
 
 @Injectable()
 export class ConsoleDriver implements LumberjackLogDriver {
-  constructor(@Inject(consoleDriverConfigToken) readonly config: LumberjackLogDriverConfig) {}
+  readonly config = inject(consoleDriverConfigToken);
 
   logCritical({ formattedLog }: LumberjackLogDriverLog): void {
     console.error(formattedLog);
@@ -309,7 +325,7 @@ export class ConsoleDriver implements LumberjackLogDriver {
 }
 ```
 
-In the above snippet, the config is passed down its constructor and assigned to the public `config` property. Lumberjack uses this configuration to determine which logs the log driver should handle.
+In the above snippet, the config is injected and assigned to the public `config` property. Lumberjack uses this configuration to determine which logs the log driver should handle.
 
 #### Using a LumberjackLogPayload
 
@@ -349,7 +365,7 @@ export interface LumberjackLog<TPayload extends LumberjackLogPayload | void = vo
 We can modify the `ConsoleDriver` to handle such payload information
 
 ```ts
-import { Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import {
   LumberjackLogDriver,
@@ -366,7 +382,7 @@ export interface AnalyticsPayload extends LumberjackLogPayload {
 
 @Injectable()
 export class ConsoleDriver implements LumberjackLogDriver<AnalyticsPayload> {
-  constructor(@Inject(consoleDriverConfigToken) readonly config: LumberjackLogDriverConfig) {}
+  readonly config = inject(consoleDriverConfigToken);
 
   logCritical({ formattedLog, log }: LumberjackLogDriverLog<AnalyticsPayload>): void {
     console.error(formattedLog, log.payload);
@@ -565,7 +581,7 @@ export class AppLogger extends LumberjackLogger {
 Now that we have defined our first Lumberjack logger let's use it to log logs from our application.
 
 ```ts
-import { Component, OnInit } from '@angular/core';
+import { inject, Component, OnInit } from '@angular/core';
 import { LumberjackLogger } from '@ngworker/lumberjack';
 
 import { AppLogger } from './app.logger';
@@ -576,7 +592,8 @@ import { ForestService } from './forest.service';
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
-  constructor(private logger: AppLogger, private forest: ForestService) {}
+  private logger = inject(AppLogger);
+  private forest = inject(ForestService);
 
   ngOnInit(): void {
     this.logger.helloForest();
@@ -690,7 +707,7 @@ The `LumberjackLogFactory` provides a robust way of creating logs. It's also use
 This is how we create logs manually:
 
 ```ts
-import { Component, OnInit, VERSION } from '@angular/core';
+import { inject, Component, OnInit, VERSION } from '@angular/core';
 
 import { LumberjackLogFactory, LumberjackService } from '@ngworker/lumberjack';
 
@@ -707,10 +724,8 @@ export class AppComponent implements OnInit {
   };
   private scope = 'Forest App';
 
-  constructor(
-    private lumberjack: LumberjackService<LogPayload>,
-    private logFactory: LumberjackLogFactory<LogPayload>
-  ) {}
+  private lumberjack = inject<LumberjackService<LogPayload>>(LumberjackService);
+  private logFactory: inject<LumberjackLogFactory<LogPayload>>(LumberjackLogFactory);
 
   ngOnInit(): void {
     const helloForest = this.logFactory
