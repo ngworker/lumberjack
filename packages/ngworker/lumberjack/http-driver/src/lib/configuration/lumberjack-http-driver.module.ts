@@ -1,4 +1,6 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
+import { LumberjackLogDriverConfig, lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
+import { LumberjackHttpDriver } from '../log-drivers/lumberjack-http.driver';
 
 import { lumberjackHttpDriverConfigToken } from './lumberjack-http-driver-config.token';
 import { LumberjackHttpDriverRootModule } from './lumberjack-http-driver-root.module';
@@ -27,7 +29,12 @@ export class LumberjackHttpDriverModule {
       providers: [
         {
           provide: lumberjackHttpDriverConfigToken,
-          useValue: config,
+          deps: [lumberjackLogDriverConfigToken],
+          useFactory: (logDriverConfig: LumberjackLogDriverConfig) => ({
+            ...logDriverConfig,
+            identifier: LumberjackHttpDriver.driverIdentifier,
+            ...config,
+          }),
         },
       ],
     };
@@ -44,7 +51,12 @@ export class LumberjackHttpDriverModule {
       providers: [
         {
           provide: lumberjackHttpDriverConfigToken,
-          useValue: options,
+          deps: [lumberjackLogDriverConfigToken],
+          useFactory: (logDriverConfig: LumberjackLogDriverConfig) => ({
+            ...logDriverConfig,
+            identifier: LumberjackHttpDriver.driverIdentifier,
+            ...options,
+          }),
         },
       ],
     };

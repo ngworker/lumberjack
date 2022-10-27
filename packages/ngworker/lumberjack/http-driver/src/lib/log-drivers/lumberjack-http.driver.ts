@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable, NgZone, OnDestroy } from '@angular/core';
+import { inject, Inject, Injectable, NgZone, OnDestroy } from '@angular/core';
 import { LumberjackLog, LumberjackLogDriver, LumberjackLogDriverLog, LumberjackLogPayload } from '@ngworker/lumberjack';
 import { Subscription } from 'rxjs';
 import { lumberjackHttpDriverConfigToken } from '../configuration/lumberjack-http-driver-config.token';
@@ -21,11 +21,9 @@ export class LumberjackHttpDriver<TPayload extends LumberjackLogPayload | void =
 
   private subscriptions = new Subscription();
 
-  constructor(
-    private readonly http: HttpClient,
-    @Inject(lumberjackHttpDriverConfigToken) readonly config: LumberjackHttpDriverInternalConfig,
-    private readonly ngZone: NgZone
-  ) {}
+  private readonly http = inject(HttpClient);
+  readonly config = inject(lumberjackHttpDriverConfigToken);
+  private readonly ngZone = inject(NgZone);
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();
