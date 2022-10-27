@@ -1,6 +1,6 @@
-import { Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
-import { LumberjackLogDriver, LumberjackLogDriverConfig, LumberjackLogPayload } from '@ngworker/lumberjack';
+import { LumberjackLogDriver, LumberjackLogPayload } from '@ngworker/lumberjack';
 
 import { spyDriverConfigToken } from './spy-driver-config.token';
 
@@ -15,7 +15,7 @@ export class SpyDriver<TPayload extends LumberjackLogPayload | void = void>
 {
   static driverIdentifier = 'SpyDriver';
 
-  constructor(@Inject(spyDriverConfigToken) readonly config: LumberjackLogDriverConfig) {}
+  readonly config = inject(spyDriverConfigToken);
 
   logCritical = jest.fn();
 

@@ -1,31 +1,14 @@
 import { inject, NgModule, InjectFlags } from '@angular/core';
 
-import {
-  LumberjackLogDriverConfig,
-  lumberjackLogDriverConfigToken,
-  lumberjackLogDriverToken,
-} from '@ngworker/lumberjack';
+import { lumberjackLogDriverToken } from '@ngworker/lumberjack';
 
-import { spyDriverConfigToken } from './spy-driver-config.token';
-import { SpyDriverConfig } from './spy-driver.config';
 import { SpyDriver } from './spy.driver';
-
-export function spyDriverFactory(
-  logDriverConfig: LumberjackLogDriverConfig,
-  spyDriverConfig: SpyDriverConfig
-): SpyDriver {
-  const baseConfig = { ...logDriverConfig, identifier: SpyDriver.driverIdentifier };
-  const fullConfig = { ...baseConfig, ...spyDriverConfig };
-
-  return new SpyDriver(fullConfig);
-}
 
 @NgModule({
   providers: [
     {
       provide: lumberjackLogDriverToken,
-      useFactory: spyDriverFactory,
-      deps: [lumberjackLogDriverConfigToken, spyDriverConfigToken],
+      useClass: SpyDriver,
       multi: true,
     },
   ],
