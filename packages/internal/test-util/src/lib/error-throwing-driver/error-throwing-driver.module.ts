@@ -46,7 +46,8 @@ export class ErrorThrowingDriverModule {
       providers: [
         {
           provide: errorThrowingDriverConfigToken,
-          useValue: allOptions,
+          useFactory: (logDriverConfig: LumberjackLogDriverConfig) => ({ ...logDriverConfig, ...allOptions }),
+          deps: [lumberjackLogDriverConfigToken],
         },
       ],
     };
