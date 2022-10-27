@@ -1,33 +1,14 @@
 import { inject, InjectFlags, NgModule } from '@angular/core';
 
-import {
-  LumberjackLogDriverConfig,
-  lumberjackLogDriverConfigToken,
-  lumberjackLogDriverToken,
-} from '@ngworker/lumberjack';
+import { lumberjackLogDriverToken } from '@ngworker/lumberjack';
 
-import { objectDriverConfigToken } from './object-driver-config.token';
-import { ObjectDriverConfig } from './object-driver.config';
 import { ObjectDriver } from './object.driver';
-import { ObjectService } from './object.service';
-
-export function objectDriverFactory(
-  logDriverConfig: LumberjackLogDriverConfig,
-  objectDriverConfig: ObjectDriverConfig,
-  objectService: ObjectService
-): ObjectDriver {
-  const baseConfig = { ...logDriverConfig, identifier: ObjectDriver.driverIdentifier };
-  const fullConfig = { ...baseConfig, ...objectDriverConfig };
-
-  return new ObjectDriver(fullConfig, objectService);
-}
 
 @NgModule({
   providers: [
     {
       provide: lumberjackLogDriverToken,
-      useFactory: objectDriverFactory,
-      deps: [lumberjackLogDriverConfigToken, objectDriverConfigToken, ObjectService],
+      useClass: ObjectDriver,
       multi: true,
     },
   ],
