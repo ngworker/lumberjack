@@ -1,5 +1,7 @@
-import { LumberjackModule } from '@ngworker/lumberjack';
 import { TestBed } from '@angular/core/testing';
+
+import { LumberjackModule } from '@ngworker/lumberjack';
+
 import { AppComponent } from './app.component';
 import { NxWelcomeComponent } from './nx-welcome.component';
 
