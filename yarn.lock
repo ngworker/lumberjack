@@ -5849,6 +5849,11 @@ eslint-plugin-etc@2.0.2:
     tslib "^2.0.0"
     tsutils "^3.0.0"
 
+eslint-plugin-ordered-imports@^0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-ordered-imports/-/eslint-plugin-ordered-imports-0.6.0.tgz#027a5deecfe918c451ee2d705a44cd61be2273e5"
+  integrity sha512-jTzJw7ZbXFwmY1FNrPQRs9nUU17hpHnkN92tYsdBETFP9imNxAGz9TCmCc4Cz4CAyJrCBdlpMCHVRiZ1eGa7og==
+
 eslint-plugin-rxjs-angular@2.0.0:
   version "2.0.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-rxjs-angular/-/eslint-plugin-rxjs-angular-2.0.0.tgz#32bc31500ba4ad797d9f14137943b6d81a1476ef"

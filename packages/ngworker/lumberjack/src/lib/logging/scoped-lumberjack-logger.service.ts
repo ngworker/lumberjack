@@ -21,10 +21,10 @@ import { LumberjackService } from './lumberjack.service';
 export abstract class ScopedLumberjackLogger<
   TPayload extends LumberjackLogPayload | void = void
 > extends LumberjackLogger<TPayload> {
-  abstract readonly scope: string;
-
   protected override lumberjack = inject<LumberjackService<TPayload>>(LumberjackService);
   protected override time = inject(LumberjackTimeService);
+
+  abstract readonly scope: string;
 
   /**
    * Create a logger builder for a log with the shared scope as well as the

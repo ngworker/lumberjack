@@ -1,7 +1,7 @@
 {
   "root": true,
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nrwl/nx", "etc", "rxjs", "rxjs-angular", "sonarjs"],
+  "plugins": ["@nrwl/nx", "etc", "rxjs", "rxjs-angular", "sonarjs", "ordered-imports"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": ["{e2e,packages}/**/tsconfig.*?.json", "e2e/**/*-e2e/tsconfig.json"]
@@ -60,11 +60,45 @@
     },
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
-      "extends": ["plugin:etc/recommended", "plugin:rxjs/recommended", "plugin:sonarjs/recommended"],
+      "extends": [
+        "plugin:etc/recommended",
+        "plugin:rxjs/recommended",
+        "plugin:sonarjs/recommended",
+        "plugin:ordered-imports/recommended"
+      ],
       "rules": {
         "etc/no-commented-out-code": "error",
         "etc/no-const-enum": "error",
-        "sonarjs/cognitive-complexity": ["error", 8]
+        "sonarjs/cognitive-complexity": ["error", 8],
+        "ordered-imports/ordered-imports": [
+          "error",
+          {
+            "symbols-first": true,
+            "declaration-ordering": [
+              "type",
+              {
+                "ordering": ["side-effect", "default", "namespace", "destructured"],
+                "secondaryOrdering": ["name", "case-insensitive"]
+              }
+            ],
+            "specifier-ordering": "case-insensitive",
+            "group-ordering": [
+              {
+                "name": "project root",
+                "match": "^@(?!(ngworker|internal)).*|^[a-zA-Z].*",
+                "order": 20
+              },
+              {
+                "name": "internal routes",
+                "match": "^@(ngworker|internal).*",
+                "order": 30
+              },
+              { "name": "parent directories", "match": "^\\.\\.", "order": 40 },
+              { "name": "current directory", "match": "^\\.", "order": 50 },
+              { "name": "third-party", "match": ".*", "order": 10 }
+            ]
+          }
+        ]
       }
     },
     {

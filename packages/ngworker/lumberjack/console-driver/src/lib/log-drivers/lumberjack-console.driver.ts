@@ -9,15 +9,17 @@ import { lumberjackConsoleToken } from '../console/lumberjack-console.token';
  * The console driver outputs logs to the browser console.
  *
  * It forwards the formatted log and the optional log payload to the relevant
- * method of the brower console API.
+ * method of the browser console API.
  */
 @Injectable()
 export class LumberjackConsoleDriver<TPayload extends LumberjackLogPayload | void = void>
   implements LumberjackLogDriver<TPayload>
 {
   static driverIdentifier = 'LumberjackConsoleDriver';
-  readonly config = inject(lumberjackConsoleDriverConfigToken);
-  private readonly console = inject(lumberjackConsoleToken);
+
+  private console = inject(lumberjackConsoleToken);
+
+  config = inject(lumberjackConsoleDriverConfigToken);
 
   /**
    * Output console error.

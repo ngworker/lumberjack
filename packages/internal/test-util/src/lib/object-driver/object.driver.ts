@@ -15,8 +15,9 @@ import { ObjectService } from './object.service';
 export class ObjectDriver implements LumberjackLogDriver<ObjectPayload> {
   static driverIdentifier = 'ObjectDriver';
 
-  readonly config = inject(objectDriverConfigToken);
   private readonly objectService = inject(ObjectService);
+
+  readonly config = inject(objectDriverConfigToken);
 
   logCritical({ log }: LumberjackLogDriverLog<ObjectPayload>): void {
     this.objectService.log(log.payload);

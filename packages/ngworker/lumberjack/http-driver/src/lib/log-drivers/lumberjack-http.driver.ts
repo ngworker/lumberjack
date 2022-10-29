@@ -1,7 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, NgZone, OnDestroy } from '@angular/core';
-import { LumberjackLog, LumberjackLogDriver, LumberjackLogDriverLog, LumberjackLogPayload } from '@ngworker/lumberjack';
 import { Subscription } from 'rxjs';
+
+import { LumberjackLog, LumberjackLogDriver, LumberjackLogDriverLog, LumberjackLogPayload } from '@ngworker/lumberjack';
+
 import { lumberjackHttpDriverConfigToken } from '../configuration/lumberjack-http-driver-config.token';
 import { LumberjackHttpLog } from '../logs/lumberjack-http.log';
 import { retryWithDelay } from '../operators/retry-with-delay.operator';
@@ -18,11 +20,11 @@ export class LumberjackHttpDriver<TPayload extends LumberjackLogPayload | void =
 {
   static driverIdentifier = 'LumberjackHttpDriver';
 
+  private readonly http = inject(HttpClient);
+  private readonly ngZone = inject(NgZone);
   private subscriptions = new Subscription();
 
-  private readonly http = inject(HttpClient);
   readonly config = inject(lumberjackHttpDriverConfigToken);
-  private readonly ngZone = inject(NgZone);
 
   ngOnDestroy(): void {
     this.subscriptions.unsubscribe();

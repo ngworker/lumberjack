@@ -29,10 +29,10 @@ export class LumberjackConsoleDriverModule {
         {
           provide: lumberjackConsoleDriverConfigToken,
           deps: [lumberjackLogDriverConfigToken],
-          useFactory: (logDriverConfig: LumberjackLogDriverConfig) => ({
+          useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackConsoleDriverConfig => ({
             ...logDriverConfig,
-            identifier: LumberjackConsoleDriver.driverIdentifier,
             ...config,
+            identifier: LumberjackConsoleDriver.driverIdentifier,
           }),
         },
       ],

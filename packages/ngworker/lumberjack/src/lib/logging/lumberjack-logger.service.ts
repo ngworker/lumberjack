@@ -20,6 +20,7 @@ import { LumberjackService } from './lumberjack.service';
 export abstract class LumberjackLogger<TPayload extends LumberjackLogPayload | void = void> {
   protected lumberjack = inject<LumberjackService<TPayload>>(LumberjackService);
   protected time = inject(LumberjackTimeService);
+
   /**
    * Create a logger builder for a critical log with the specified message.
    */

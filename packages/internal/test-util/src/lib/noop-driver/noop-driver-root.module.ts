@@ -14,7 +14,8 @@ import { NoopDriver } from './noop.driver';
   ],
 })
 export class NoopDriverRootModule {
-  maybeNgModuleFromParentInjector? = inject(NoopDriverRootModule, InjectFlags.SkipSelf | InjectFlags.Optional);
+  private maybeNgModuleFromParentInjector? = inject(NoopDriverRootModule, InjectFlags.SkipSelf | InjectFlags.Optional);
+
   constructor() {
     if (this.maybeNgModuleFromParentInjector) {
       throw new Error(

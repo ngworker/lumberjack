@@ -719,13 +719,12 @@ import { LogPayload } from './log-payload';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
+  private logFactory: inject<LumberjackLogFactory<LogPayload>>(LumberjackLogFactory);
+  private lumberjack = inject<LumberjackService<LogPayload>>(LumberjackService);
   private payload: LogPayload = {
-    angularVersion: VERSION.full,
+  angularVersion: VERSION.full,
   };
   private scope = 'Forest App';
-
-  private lumberjack = inject<LumberjackService<LogPayload>>(LumberjackService);
-  private logFactory: inject<LumberjackLogFactory<LogPayload>>(LumberjackLogFactory);
 
   ngOnInit(): void {
     const helloForest = this.logFactory

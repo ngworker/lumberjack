@@ -1,4 +1,5 @@
-import { TestBed } from '@angular/core/testing';
+import { TestBed } from '@angular/core/testing';\
+
 import {
   LumberjackLevel,
   LumberjackLogDriver,
@@ -7,8 +8,10 @@ import {
   LumberjackLogLevel,
   LumberjackModule,
 } from '@ngworker/lumberjack';
+
 import { resolveDependency } from '../angular/resolve-dependency';
 import { createDriverLog } from '../logs/driver-log-creators';
+
 import { SpyDriverModule } from './spy-driver.module';
 import { SpyDriver } from './spy.driver';
 

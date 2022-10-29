@@ -16,15 +16,10 @@ export class SpyDriver<TPayload extends LumberjackLogPayload | void = void>
   static driverIdentifier = 'SpyDriver';
 
   readonly config = inject(spyDriverConfigToken);
-
   logCritical = jest.fn();
-
   logDebug = jest.fn();
-
   logError = jest.fn();
-
   logInfo = jest.fn();
-
   logTrace = jest.fn();
   logWarning = jest.fn();
 

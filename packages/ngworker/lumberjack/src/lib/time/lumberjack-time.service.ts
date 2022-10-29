@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 /**
  * Used by Lumberjack to timestamp logs at their creation time.
  *
- * Can be overriden for testing purposes.
+ * Can be overridden for testing purposes.
  */
 @Injectable({
   providedIn: 'root',

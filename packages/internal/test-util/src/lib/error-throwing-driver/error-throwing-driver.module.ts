@@ -1,4 +1,5 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
+
 import { LumberjackLogDriverConfig, lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
 
 import { defaultErrorThrowingDriverConfig } from './default-error-throwing-driver-config';
@@ -26,7 +27,10 @@ export class ErrorThrowingDriverModule {
       providers: [
         {
           provide: errorThrowingDriverConfigToken,
-          useFactory: (logDriverConfig: LumberjackLogDriverConfig) => ({ ...logDriverConfig, ...fullConfig }),
+          useFactory: (logDriverConfig: LumberjackLogDriverConfig): ErrorThrowingDriverConfig => ({
+            ...logDriverConfig,
+            ...fullConfig,
+          }),
           deps: [lumberjackLogDriverConfigToken],
         },
       ],
@@ -46,7 +50,10 @@ export class ErrorThrowingDriverModule {
       providers: [
         {
           provide: errorThrowingDriverConfigToken,
-          useFactory: (logDriverConfig: LumberjackLogDriverConfig) => ({ ...logDriverConfig, ...allOptions }),
+          useFactory: (logDriverConfig: LumberjackLogDriverConfig): ErrorThrowingDriverConfig => ({
+            ...logDriverConfig,
+            ...allOptions,
+          }),
           deps: [lumberjackLogDriverConfigToken],
         },
       ],

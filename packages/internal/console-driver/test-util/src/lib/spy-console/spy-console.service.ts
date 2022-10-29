@@ -10,13 +10,9 @@ import { LumberjackConsole } from '@ngworker/lumberjack/console-driver';
 @Injectable()
 export class SpyConsole implements LumberjackConsole, jest.Mocked<LumberjackConsole> {
   debug = jest.fn();
-
   error = jest.fn();
-
   info = jest.fn();
-
   trace = jest.fn();
-
   warn = jest.fn();
 
   /**

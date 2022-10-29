@@ -1,4 +1,5 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
+
 import { LumberjackLogDriverConfig, lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
 
 import { noopDriverConfigToken } from './noop-driver-config.token';
@@ -18,10 +19,10 @@ export class NoopDriverModule {
       providers: [
         {
           provide: noopDriverConfigToken,
-          useFactory: (logDriverConfig: LumberjackLogDriverConfig) => ({
+          useFactory: (logDriverConfig: LumberjackLogDriverConfig): NoopDriverConfig => ({
             ...logDriverConfig,
-            identifier: NoopDriver.driverIdentifier,
             ...config,
+            identifier: NoopDriver.driverIdentifier,
           }),
           deps: [lumberjackLogDriverConfigToken],
         },

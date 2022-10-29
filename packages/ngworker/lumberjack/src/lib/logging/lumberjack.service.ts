@@ -31,7 +31,7 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
   /**
    * The registered log drivers.
    */
-  private drivers = inject<LumberjackLogDriver<TPayload>[]>(lumberjackLogDriverToken, InjectFlags.Optional) ?? [];
+  private readonly drivers = inject<LumberjackLogDriver<TPayload>[]>(lumberjackLogDriverToken, InjectFlags.Optional) ?? [];
   private readonly logFormatter = inject<LumberjackLogFormatter<TPayload>>(LumberjackLogFormatter);
   private readonly time = inject(LumberjackTimeService);
   private readonly driverLogger = inject<LumberjackLogDriverLogger<TPayload>>(LumberjackLogDriverLogger);

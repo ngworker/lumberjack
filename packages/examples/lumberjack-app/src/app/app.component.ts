@@ -1,5 +1,6 @@
 import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+
 import { AppLogger } from './app-logger.service';
 import { ForestService } from './forest.service';
 
@@ -9,9 +10,9 @@ import { ForestService } from './forest.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  private subscriptions = new Subscription();
-  private logger = inject(AppLogger);
   private forest = inject(ForestService);
+  private logger = inject(AppLogger);
+  private subscriptions = new Subscription();
 
   title = 'lumberjack-app';
 

@@ -1,4 +1,5 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
+
 import { LumberjackLogDriverConfig, lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
 
 import { spyDriverConfigToken } from './spy-driver-config.token';
@@ -19,7 +20,7 @@ export class SpyDriverModule {
       providers: [
         {
           provide: spyDriverConfigToken,
-          useFactory: (logDriverConfig: LumberjackLogDriverConfig) => ({
+          useFactory: (logDriverConfig: LumberjackLogDriverConfig): SpyDriverConfig => ({
             ...logDriverConfig,
             ...config,
             identifier: SpyDriver.driverIdentifier,

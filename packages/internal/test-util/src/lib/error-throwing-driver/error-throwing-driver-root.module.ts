@@ -1,4 +1,4 @@
-import { inject, NgModule, InjectFlags } from '@angular/core';
+import { inject, InjectFlags, NgModule } from '@angular/core';
 
 import { lumberjackLogDriverToken } from '@ngworker/lumberjack';
 

@@ -1,4 +1,4 @@
-import { inject, NgModule, InjectFlags } from '@angular/core';
+import { inject, InjectFlags, NgModule } from '@angular/core';
 
 import { lumberjackLogDriverToken } from '@ngworker/lumberjack';
 
@@ -14,7 +14,8 @@ import { SpyDriver } from './spy.driver';
   ],
 })
 export class SpyDriverRootModule {
-  maybeNgModuleFromParentInjector = inject(SpyDriverRootModule, InjectFlags.Optional | InjectFlags.SkipSelf);
+  private maybeNgModuleFromParentInjector = inject(SpyDriverRootModule, InjectFlags.Optional | InjectFlags.SkipSelf);
+
   constructor() {
     if (this.maybeNgModuleFromParentInjector) {
       throw new Error(
