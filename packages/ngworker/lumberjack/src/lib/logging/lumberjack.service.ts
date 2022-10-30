@@ -33,9 +33,9 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
    */
   private readonly drivers =
     inject<LumberjackLogDriver<TPayload>[]>(lumberjackLogDriverToken, InjectFlags.Optional) ?? [];
+  private readonly driverLogger = inject<LumberjackLogDriverLogger<TPayload>>(LumberjackLogDriverLogger);
   private readonly logFormatter = inject<LumberjackLogFormatter<TPayload>>(LumberjackLogFormatter);
   private readonly time = inject(LumberjackTimeService);
-  private readonly driverLogger = inject<LumberjackLogDriverLogger<TPayload>>(LumberjackLogDriverLogger);
 
   constructor() {
     this.drivers = Array.isArray(this.drivers) ? this.drivers : [this.drivers];

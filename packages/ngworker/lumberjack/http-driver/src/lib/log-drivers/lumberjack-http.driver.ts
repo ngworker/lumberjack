@@ -18,11 +18,11 @@ import { retryWithDelay } from '../operators/retry-with-delay.operator';
 export class LumberjackHttpDriver<TPayload extends LumberjackLogPayload | void = void>
   implements LumberjackLogDriver<TPayload>, OnDestroy
 {
-  static driverIdentifier = 'LumberjackHttpDriver';
+  static readonly driverIdentifier = 'LumberjackHttpDriver';
 
   private readonly http = inject(HttpClient);
   private readonly ngZone = inject(NgZone);
-  private subscriptions = new Subscription();
+  private readonly subscriptions = new Subscription();
 
   readonly config = inject(lumberjackHttpDriverConfigToken);
 

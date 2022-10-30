@@ -21,8 +21,8 @@ import { LumberjackService } from './lumberjack.service';
 export abstract class ScopedLumberjackLogger<
   TPayload extends LumberjackLogPayload | void = void
 > extends LumberjackLogger<TPayload> {
-  protected override lumberjack = inject<LumberjackService<TPayload>>(LumberjackService);
-  protected override time = inject(LumberjackTimeService);
+  protected override readonly lumberjack = inject<LumberjackService<TPayload>>(LumberjackService);
+  protected override readonly time = inject(LumberjackTimeService);
 
   abstract readonly scope: string;
 

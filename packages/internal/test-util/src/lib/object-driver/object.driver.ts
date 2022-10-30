@@ -13,7 +13,7 @@ import { ObjectService } from './object.service';
  */
 @Injectable()
 export class ObjectDriver implements LumberjackLogDriver<ObjectPayload> {
-  static driverIdentifier = 'ObjectDriver';
+  static readonly driverIdentifier = 'ObjectDriver';
 
   private readonly objectService = inject(ObjectService);
 

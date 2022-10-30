@@ -10,11 +10,11 @@ import { ForestService } from './forest.service';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  private forest = inject(ForestService);
-  private logger = inject(AppLogger);
-  private subscriptions = new Subscription();
+  private readonly forest = inject(ForestService);
+  private readonly logger = inject(AppLogger);
+  private readonly subscriptions = new Subscription();
 
-  title = 'lumberjack-app';
+  readonly title = 'lumberjack-app';
 
   ngOnInit(): void {
     this.logger.helloForest();

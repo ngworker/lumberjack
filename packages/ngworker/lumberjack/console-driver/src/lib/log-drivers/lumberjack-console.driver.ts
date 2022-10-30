@@ -15,11 +15,11 @@ import { lumberjackConsoleToken } from '../console/lumberjack-console.token';
 export class LumberjackConsoleDriver<TPayload extends LumberjackLogPayload | void = void>
   implements LumberjackLogDriver<TPayload>
 {
-  static driverIdentifier = 'LumberjackConsoleDriver';
+  static readonly driverIdentifier = 'LumberjackConsoleDriver';
 
-  private console = inject(lumberjackConsoleToken);
+  private readonly console = inject(lumberjackConsoleToken);
 
-  config = inject(lumberjackConsoleDriverConfigToken);
+  readonly config = inject(lumberjackConsoleDriverConfigToken);
 
   /**
    * Output console error.

@@ -150,7 +150,7 @@ import { LumberjackService } from '@ngworker/lumberjack';
   // (...)
 })
 export class MyComponent implements OnInit {
-  private lumberjack = inject(LumberjackService);
+  private readonly lumberjack = inject(LumberjackService);
   // (...)
 }
 ```
@@ -163,8 +163,8 @@ import { LumberjackService, LumberjackTimeService } from '@ngworker/lumberjack';
 
 // (...)
 export class MyComponent implements OnInit {
-  private lumberjack = inject(LumberjackService);
-  private time = inject(LumberjackTimeService);
+  private readonly lumberjack = inject(LumberjackService);
+  private readonly time = inject(LumberjackTimeService);
 
   // (...)
   ngOnInit(): void {
@@ -592,8 +592,8 @@ import { ForestService } from './forest.service';
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
-  private logger = inject(AppLogger);
-  private forest = inject(ForestService);
+  private readonly logger = inject(AppLogger);
+  private readonly forest = inject(ForestService);
 
   ngOnInit(): void {
     this.logger.helloForest();
@@ -682,7 +682,7 @@ export interface LogPayload extends LumberjackLogPayload {
   providedIn: 'root',
 })
 export class AppLogger extends ScopedLumberjackLogger<LogPayload> {
-  private static payload: LogPayload = {
+  private static readonly payload: LogPayload = {
     angularVersion: VERSION.full,
   };
 
@@ -719,12 +719,12 @@ import { LogPayload } from './log-payload';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  private logFactory: inject<LumberjackLogFactory<LogPayload>>(LumberjackLogFactory);
-  private lumberjack = inject<LumberjackService<LogPayload>>(LumberjackService);
-  private payload: LogPayload = {
+  private readonly logFactory: inject<LumberjackLogFactory<LogPayload>>(LumberjackLogFactory);
+  private readonly lumberjack = inject<LumberjackService<LogPayload>>(LumberjackService);
+  private readonly payload: LogPayload = {
   angularVersion: VERSION.full,
   };
-  private scope = 'Forest App';
+  private readonly scope = 'Forest App';
 
   ngOnInit(): void {
     const helloForest = this.logFactory

@@ -13,7 +13,7 @@ import { noopDriverConfigToken } from './noop-driver-config.token';
  */
 @Injectable()
 export class NoopDriver<TPayload extends LumberjackLogPayload | void = void> implements LumberjackLogDriver<TPayload> {
-  static driverIdentifier = 'NoopDriver';
+  static readonly driverIdentifier = 'NoopDriver';
 
   readonly config = inject(noopDriverConfigToken);
 

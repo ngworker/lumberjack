@@ -11,9 +11,9 @@ import { errorThrowingDriverConfigToken } from './error-throwing-driver-config.t
  */
 @Injectable()
 export class ErrorThrowingDriver implements LumberjackLogDriver {
-  static driverIdentifier = 'ErrorThrowingDriver';
+  static readonly driverIdentifier = 'ErrorThrowingDriver';
 
-  private logCount = 0;
+  private readonly logCount = 0;
 
   readonly config = inject(errorThrowingDriverConfigToken);
 
