@@ -13,7 +13,7 @@ import { errorThrowingDriverConfigToken } from './error-throwing-driver-config.t
 export class ErrorThrowingDriver implements LumberjackLogDriver {
   static readonly driverIdentifier = 'ErrorThrowingDriver';
 
-  private readonly logCount = 0;
+  private logCount = 0;
 
   readonly config = inject(errorThrowingDriverConfigToken);
 

@@ -22,8 +22,8 @@ export class SpyDriverModule {
           provide: spyDriverConfigToken,
           useFactory: (logDriverConfig: LumberjackLogDriverConfig): SpyDriverConfig => ({
             ...logDriverConfig,
-            ...config,
             identifier: SpyDriver.driverIdentifier,
+            ...config,
           }),
           deps: [lumberjackLogDriverConfigToken],
         },

@@ -23,8 +23,8 @@ export class ObjectDriverModule {
           deps: [lumberjackLogDriverConfigToken],
           useFactory: (logDriverConfig: LumberjackLogDriverConfig): ObjectDriverConfig => ({
             ...logDriverConfig,
-            ...config,
             identifier: ObjectDriver.driverIdentifier,
+            ...config,
           }),
         },
       ],

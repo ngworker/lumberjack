@@ -35,8 +35,8 @@ export class LumberjackHttpDriverModule {
           deps: [lumberjackLogDriverConfigToken],
           useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackHttpDriverInternalConfig => ({
             ...logDriverConfig,
-            ...config,
             identifier: LumberjackHttpDriver.driverIdentifier,
+            ...config,
           }),
         },
       ],
@@ -57,8 +57,8 @@ export class LumberjackHttpDriverModule {
           deps: [lumberjackLogDriverConfigToken],
           useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackHttpDriverInternalConfig => ({
             ...logDriverConfig,
-            ...options,
             identifier: LumberjackHttpDriver.driverIdentifier,
+            ...options,
           }),
         },
       ],

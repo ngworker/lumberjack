@@ -21,8 +21,8 @@ export class NoopDriverModule {
           provide: noopDriverConfigToken,
           useFactory: (logDriverConfig: LumberjackLogDriverConfig): NoopDriverConfig => ({
             ...logDriverConfig,
-            ...config,
             identifier: NoopDriver.driverIdentifier,
+            ...config,
           }),
           deps: [lumberjackLogDriverConfigToken],
         },

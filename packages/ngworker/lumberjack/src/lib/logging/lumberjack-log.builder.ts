@@ -15,8 +15,8 @@ type InternalWithStaticPayload = '__LUMBERJACK_INTERNAL_WITH_STATIC_PAYLOAD__' &
  * Use this to create a log before passing it to `LumberjackService`.
  */
 export class LumberjackLogBuilder<TPayload extends LumberjackLogPayload | void = void> {
-  private readonly payload?: TPayload;
-  private readonly scope?: string;
+  private payload?: TPayload;
+  private scope?: string;
 
   /**
    * Create a log builder with the specified log level and message.
