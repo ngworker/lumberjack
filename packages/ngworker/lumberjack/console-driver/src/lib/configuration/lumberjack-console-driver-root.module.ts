@@ -21,9 +21,9 @@ export class LumberjackConsoleDriverRootModule {
     @Optional()
     @SkipSelf()
     @Inject(LumberjackConsoleDriverRootModule)
-    maybeNgModuleFromParentInjector: LumberjackConsoleDriverRootModule | null | undefined = null
+    private maybeNgModuleFromParentInjector: LumberjackConsoleDriverRootModule | null | undefined = null
   ) {
-    if (maybeNgModuleFromParentInjector) {
+    if (this.maybeNgModuleFromParentInjector) {
       throw new Error(
         'LumberjackConsoleDriverModule.forRoot registered in multiple injectors. Only call it from your root injector such as in AppModule.'
       );
