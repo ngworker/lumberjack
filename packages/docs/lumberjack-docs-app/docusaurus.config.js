@@ -1,28 +1,32 @@
+const title = 'Lumberjack';
+
+const organizationName = 'ngworker';
+const projectName = 'lumberjack';
+
 module.exports = {
-  title: 'My Site',
-  tagline: 'The tagline of my site',
-  url: 'https://your-docusaurus-test-site.com',
-  baseUrl: '/',
+  title,
+  tagline: 'Chop and cut Angular logs like a professional lumberjack',
+  url: `https://${organizationName}.github.io`,
+  baseUrl: `/${projectName}/`,
   onBrokenLinks: 'throw',
-  onBrokenMarkdownLinks: 'warn',
+  onBrokenMarkdownLinks: 'throw',
   favicon: 'img/favicon.ico',
-  organizationName: 'facebook', // Usually your GitHub org/user name.
-  projectName: 'docusaurus', // Usually your repo name.
+  organizationName,
+  projectName,
   themeConfig: {
     navbar: {
-      title: 'My Site',
+      title,
       logo: {
-        alt: 'My Site Logo',
+        alt: title,
         src: 'img/logo.svg',
       },
       items: [
         {
-          to: 'docs/',
+          to: 'docs/installation',
           activeBasePath: 'docs',
           label: 'Docs',
           position: 'left',
         },
-        { to: 'blog', label: 'Blog', position: 'left' },
         {
           href: 'https://github.com/facebook/docusaurus',
           label: 'GitHub',
@@ -37,12 +41,28 @@ module.exports = {
           title: 'Docs',
           items: [
             {
-              label: 'Style Guide',
-              to: 'docs/',
+              label: 'Installation',
+              to: 'docs/installation',
             },
             {
-              label: 'Second Doc',
-              to: 'docs/doc2/',
+              label: 'Compatibility',
+              to: 'docs/compatibility',
+            },
+            {
+              label: 'Usage',
+              to: 'docs/usage',
+            },
+            {
+              label: 'Log drivers',
+              to: 'docs/log-drivers',
+            },
+            {
+              label: 'Community drivers',
+              to: 'docs/community-drivers',
+            },
+            {
+              label: 'Best practices',
+              to: 'docs/best-practices',
             },
           ],
         },
@@ -51,15 +71,7 @@ module.exports = {
           items: [
             {
               label: 'Stack Overflow',
-              href: 'https://stackoverflow.com/questions/tagged/docusaurus',
-            },
-            {
-              label: 'Discord',
-              href: 'https://discordapp.com/invite/docusaurus',
-            },
-            {
-              label: 'Twitter',
-              href: 'https://twitter.com/docusaurus',
+              href: 'https://stackoverflow.com/questions/tagged/lumberjack',
             },
           ],
         },
@@ -67,17 +79,13 @@ module.exports = {
           title: 'More',
           items: [
             {
-              label: 'Blog',
-              to: 'blog',
-            },
-            {
               label: 'GitHub',
               href: 'https://github.com/facebook/docusaurus',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} My Project, Inc. Built with Docusaurus.`,
+      copyright: `© ${new Date().getFullYear()} ngworkers. Licensed under the MIT license.`,
     },
   },
   presets: [
@@ -86,14 +94,9 @@ module.exports = {
       {
         docs: {
           sidebarPath: require.resolve('./sidebars.js'),
-          // Please change this to your repo.
-          editUrl: 'https://github.com/facebook/docusaurus/edit/master/website/',
+          editUrl: `https://github.com/${organizationName}/${projectName}/edit/main/packages/docs/lumberjack-docs-app`,
         },
-        blog: {
-          showReadingTime: true,
-          // Please change this to your repo.
-          editUrl: 'https://github.com/facebook/docusaurus/edit/master/website/blog/',
-        },
+        blog: false,
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
