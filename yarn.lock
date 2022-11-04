@@ -2714,6 +2714,13 @@
     yargs "^17.6.2"
     yargs-parser "21.1.1"
 
+"@nx-plus/docusaurus@14.1.0":
+  version "14.1.0"
+  resolved "https://registry.yarnpkg.com/@nx-plus/docusaurus/-/docusaurus-14.1.0.tgz#0d919aada8cd94b986fc74e8dc604ba06491dbdc"
+  integrity sha512-EjzaOm8GCpyADKn4G19AgZk/l8F5eyNCVN1oFki7KUPaig9N9IjRCEmUQtHuomGbCQRqHtpovEPJldCLRz4glw==
+  dependencies:
+    "@nrwl/devkit" "^14.3.6"
+
 "@parcel/watcher@2.0.4":
   version "2.0.4"
   resolved "https://registry.yarnpkg.com/@parcel/watcher/-/watcher-2.0.4.tgz#f300fef4cc38008ff4b8c29d92588eced3ce014b"
