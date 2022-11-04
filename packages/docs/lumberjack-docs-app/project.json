@@ -1,0 +1,21 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "packages/docs/lumberjack-docs-app/src",
+  "prefix": "ngworker",
+  "targets": {
+    "build": {
+      "executor": "@nx-plus/docusaurus:browser",
+      "options": {
+        "outputPath": "dist/packages/docs/lumberjack-docs-app"
+      }
+    },
+    "serve": {
+      "executor": "@nx-plus/docusaurus:dev-server",
+      "options": {
+        "port": 3000
+      }
+    }
+  },
+  "tags": ["scope:public", "type:app"]
+}
