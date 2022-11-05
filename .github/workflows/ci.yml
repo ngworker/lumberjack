@@ -91,7 +91,7 @@ jobs:
   deploy-docs:
     name: '[Merge] Deploy docs to GitHub Pages'
     needs: dte_coordinator
-    # if: github.event_name == 'push' && github.ref_name == 'main'
+    if: github.event_name == 'push' && github.ref_name == 'main'
     runs-on: ubuntu-latest
     permissions:
       contents: read
