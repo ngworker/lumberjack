@@ -14,7 +14,10 @@ import { SpyDriver } from './spy.driver';
   ],
 })
 export class SpyDriverRootModule {
-  private readonly maybeNgModuleFromParentInjector = inject(SpyDriverRootModule, InjectFlags.Optional | InjectFlags.SkipSelf);
+  private readonly maybeNgModuleFromParentInjector = inject(
+    SpyDriverRootModule,
+    InjectFlags.Optional | InjectFlags.SkipSelf
+  );
 
   constructor() {
     if (this.maybeNgModuleFromParentInjector) {

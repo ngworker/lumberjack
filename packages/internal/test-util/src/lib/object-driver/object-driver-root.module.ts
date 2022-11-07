@@ -14,7 +14,10 @@ import { ObjectDriver } from './object.driver';
   ],
 })
 export class ObjectDriverRootModule {
-  private readonly maybeNgModuleFromParentInjector = inject(ObjectDriverRootModule, InjectFlags.SkipSelf | InjectFlags.Optional);
+  private readonly maybeNgModuleFromParentInjector = inject(
+    ObjectDriverRootModule,
+    InjectFlags.SkipSelf | InjectFlags.Optional
+  );
 
   constructor() {
     if (this.maybeNgModuleFromParentInjector) {
