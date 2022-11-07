@@ -89,7 +89,7 @@
                 "order": 20
               },
               {
-                "name": "internal routes",
+                "name": "internal imports",
                 "match": "^@(ngworker|internal).*",
                 "order": 30
               },
