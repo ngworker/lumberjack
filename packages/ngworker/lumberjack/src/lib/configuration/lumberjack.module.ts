@@ -7,7 +7,7 @@ import { lumberjackLogDriverConfigToken } from './lumberjack-log-driver-config.t
 import { lumberjackOptionsToken } from './lumberjack-options.token';
 import { LumberjackRootModule } from './lumberjack-root.module';
 import { LumberjackOptions } from './lumberjack.options';
-import { configFactory, logDriverConfigFactory } from './providers';
+import { configFactory, logDriverConfigFactory } from './lumberjack.providers';
 
 /**
  * The Lumberjack Angular module is used to register necessary Lumberjack

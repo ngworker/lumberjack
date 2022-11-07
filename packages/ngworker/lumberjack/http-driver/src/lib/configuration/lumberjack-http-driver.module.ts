@@ -1,3 +1,4 @@
+import { HttpClientModule } from '@angular/common/http';
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { LumberjackLogDriverConfig, lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
@@ -9,6 +10,7 @@ import { LumberjackHttpDriverInternalConfig } from './lumberjack-http-driver-int
 import { LumberjackHttpDriverRootModule } from './lumberjack-http-driver-root.module';
 import { LumberjackHttpDriverConfig } from './lumberjack-http-driver.config';
 import { LumberjackHttpDriverOptions } from './lumberjack-http-driver.options';
+import { HTTP_PROVIDER } from './lumberjack-http-driver.providers';
 
 /**
  * The HTTP driver Angular module is used to configure and register the HTTP
@@ -18,7 +20,7 @@ import { LumberjackHttpDriverOptions } from './lumberjack-http-driver.options';
  * `LumberjackHttpDriverModule.forRoot` or
  * `LumberjackHttpDriverModule.withOptions`.
  */
-@NgModule()
+@NgModule({ imports: [HttpClientModule] })
 export class LumberjackHttpDriverModule {
   /**
    * Configure and register the HTTP driver, including settings that log drivers
@@ -30,6 +32,7 @@ export class LumberjackHttpDriverModule {
     return {
       ngModule: LumberjackHttpDriverRootModule,
       providers: [
+        HTTP_PROVIDER,
         {
           provide: lumberjackHttpDriverConfigToken,
           deps: [lumberjackLogDriverConfigToken],
@@ -52,6 +55,7 @@ export class LumberjackHttpDriverModule {
     return {
       ngModule: LumberjackHttpDriverRootModule,
       providers: [
+        HTTP_PROVIDER,
         {
           provide: lumberjackHttpDriverConfigToken,
           deps: [lumberjackLogDriverConfigToken],

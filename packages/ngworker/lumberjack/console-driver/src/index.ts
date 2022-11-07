@@ -5,7 +5,7 @@
 // Configuration
 export { LumberjackConsoleDriverModule } from './lib/configuration/lumberjack-console-driver.module';
 export { LumberjackConsoleDriverRootModule } from './lib/configuration/lumberjack-console-driver-root.module';
-export { provideLumberjackConsoleDriver } from './lib/configuration/providers';
+export { provideLumberjackConsoleDriver } from './lib/configuration/lumberjack-console-driver.providers';
 
 // Console
 export { LumberjackConsole } from './lib/console/lumberjack-console';
