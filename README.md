@@ -722,7 +722,7 @@ export class AppComponent implements OnInit {
   private readonly logFactory: inject<LumberjackLogFactory<LogPayload>>(LumberjackLogFactory);
   private readonly lumberjack = inject<LumberjackService<LogPayload>>(LumberjackService);
   private readonly payload: LogPayload = {
-  angularVersion: VERSION.full,
+      angularVersion: VERSION.full,
   };
   private readonly scope = 'Forest App';
 
