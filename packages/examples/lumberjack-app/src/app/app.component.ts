@@ -3,8 +3,12 @@ import { Subscription } from 'rxjs';
 
 import { AppLogger } from './app-logger.service';
 import { ForestService } from './forest.service';
+import { NxWelcomeComponent } from './nx-welcome.component';
 
 @Component({
+  standalone: true,
+  imports: [NxWelcomeComponent],
+
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
