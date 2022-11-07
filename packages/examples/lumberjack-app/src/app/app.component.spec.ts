@@ -3,13 +3,11 @@ import { TestBed } from '@angular/core/testing';
 import { LumberjackModule } from '@ngworker/lumberjack';
 
 import { AppComponent } from './app.component';
-import { NxWelcomeComponent } from './nx-welcome.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [AppComponent, NxWelcomeComponent],
-      imports: [LumberjackModule.forRoot()],
+      imports: [AppComponent, LumberjackModule.forRoot()],
     }).compileComponents();
   });
 
