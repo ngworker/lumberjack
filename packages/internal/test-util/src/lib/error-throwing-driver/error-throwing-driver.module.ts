@@ -1,4 +1,4 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
+import { ModuleWithProviders, NgModule, Provider } from '@angular/core';
 
 import { LumberjackLogDriverConfig, lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
 
@@ -63,4 +63,80 @@ export class ErrorThrowingDriverModule {
   constructor() {
     throw new Error('Do not import ErrorThrowingDriverModule directly. Use ErrorThrowingDriverModule.forRoot.');
   }
+}
+
+/**
+ * Returns the [dependency-injection providers](guide/glossary#provider)
+ * for the `ErrorThrowingDriver`.
+ *
+ * @usageNotes
+ *
+ * The function is useful when you want to bootstrap an application using
+ * the `bootstrapApplication` function and want to make available the `ErrorThrowingDriver`.
+ *
+ * ```typescript
+ * bootstrapApplication(RootComponent, {
+ *   providers: [
+ *    provideLumberjack({...})
+ *    provideLumberjackErrorThrowingDriver({...}),
+ *   ]
+ * });
+ * ```
+ *
+ * @publicApi
+ */
+export function provideLumberjackErrorThrowingDriver(config: Partial<ErrorThrowingDriverConfig> = {}): Provider[] {
+  const fullConfig: ErrorThrowingDriverConfig = {
+    ...defaultErrorThrowingDriverConfig,
+    ...config,
+  };
+  return [
+    {
+      provide: errorThrowingDriverConfigToken,
+      useFactory: (logDriverConfig: LumberjackLogDriverConfig): ErrorThrowingDriverConfig => ({
+        ...logDriverConfig,
+        ...fullConfig,
+      }),
+      deps: [lumberjackLogDriverConfigToken],
+    },
+  ];
+}
+
+/**
+ * Returns the [dependency-injection providers](guide/glossary#provider)
+ * for the `ErrorThrowingDriver` using the `ErrorThrowingDriverOptions`.
+ *
+ * @usageNotes
+ *
+ * The function is useful when you want to bootstrap an application using
+ * the `bootstrapApplication` function and want to make available the `ErrorThrowingDriver`.
+ *
+ * ```typescript
+ * bootstrapApplication(RootComponent, {
+ *   providers: [
+ *    provideLumberjack({...})
+ *    provideLumberjackErrorThrowingDriverWithOptions({...}),
+ *   ]
+ * });
+ * ```
+ *
+ * @publicApi
+ */
+export function provideLumberjackErrorThrowingDriverWithOptions(
+  options: Partial<ErrorThrowingDriverOptions> = {}
+): Provider[] {
+  const allOptions: ErrorThrowingDriverOptions = {
+    ...defaultErrorThrowingDriverOptions,
+    ...options,
+  };
+  return [
+    {
+      provide: errorThrowingDriverConfigToken,
+      useFactory: (logDriverConfig: LumberjackLogDriverConfig): ErrorThrowingDriverConfig => ({
+        ...logDriverConfig,
+        ...allOptions,
+      }),
+      deps: [lumberjackLogDriverConfigToken],
+    },
+  ];
 }
