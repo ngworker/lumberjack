@@ -14,7 +14,7 @@ import { ErrorThrowingDriver } from './error-throwing.driver';
   ],
 })
 export class ErrorThrowingDriverRootModule {
-  private maybeNgModuleFromParentInjector = inject(
+  private readonly maybeNgModuleFromParentInjector = inject(
     ErrorThrowingDriverRootModule,
     InjectFlags.SkipSelf | InjectFlags.Optional
   );

@@ -70,7 +70,6 @@
         "etc/no-commented-out-code": "error",
         "etc/no-const-enum": "error",
         "@typescript-eslint/prefer-readonly": "error",
-        "@typescript-eslint/prefer-readonly-parameter-types": "error",
         "sonarjs/cognitive-complexity": ["error", 8],
         "ordered-imports/ordered-imports": [
           "error",

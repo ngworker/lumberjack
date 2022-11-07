@@ -21,7 +21,7 @@ export class LumberjackConsoleDriverRootModule {
     @Optional()
     @SkipSelf()
     @Inject(LumberjackConsoleDriverRootModule)
-    private maybeNgModuleFromParentInjector: LumberjackConsoleDriverRootModule | null | undefined = null
+    private readonly maybeNgModuleFromParentInjector: LumberjackConsoleDriverRootModule | null | undefined = null
   ) {
     if (this.maybeNgModuleFromParentInjector) {
       throw new Error(

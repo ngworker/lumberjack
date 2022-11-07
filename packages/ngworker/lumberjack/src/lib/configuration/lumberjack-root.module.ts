@@ -48,7 +48,7 @@ export class LumberjackRootModule {
     @Optional()
     @SkipSelf()
     @Inject(LumberjackRootModule)
-    private maybeNgModuleFromParentInjector: LumberjackRootModule
+    private readonly maybeNgModuleFromParentInjector: LumberjackRootModule
   ) {
     if (this.maybeNgModuleFromParentInjector) {
       throw new Error(

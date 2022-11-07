@@ -23,7 +23,7 @@ export class LumberjackHttpDriverRootModule {
     @Optional()
     @SkipSelf()
     @Inject(LumberjackHttpDriverRootModule)
-    private maybeNgModuleFromParentInjector: LumberjackHttpDriverRootModule | undefined | null = null
+    private readonly maybeNgModuleFromParentInjector: LumberjackHttpDriverRootModule | undefined | null = null
   ) {
     if (this.maybeNgModuleFromParentInjector) {
       throw new Error(
