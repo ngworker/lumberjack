@@ -1,7 +1,7 @@
-import { importProvidersFrom } from '@angular/core';
+import { enableProdMode, importProvidersFrom } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 
-import { LumberjackLog, LumberjackModule, LumberjackOptions } from '@ngworker/lumberjack';
+import { LumberjackLog, LumberjackOptions, provideLumberjack } from '@ngworker/lumberjack';
 import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
 
 import { AppComponent } from './app/app.component';
@@ -18,9 +18,7 @@ const cypressLumberjackOptions: LumberjackOptions = {
 
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom([
-      LumberjackModule.forRoot('Cypress' in window ? cypressLumberjackOptions : undefined),
-      LumberjackConsoleDriverModule.forRoot(),
-    ]),
+    provideLumberjack('Cypress' in window ? cypressLumberjackOptions : undefined),
+    importProvidersFrom([LumberjackConsoleDriverModule.forRoot()]),
   ],
 });

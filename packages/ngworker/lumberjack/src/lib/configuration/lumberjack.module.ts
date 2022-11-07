@@ -1,8 +1,13 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
+import { isProductionEnvironmentToken } from '../environment/is-production-environment.token';
+
+import { lumberjackConfigToken } from './lumberjack-config.token';
+import { lumberjackLogDriverConfigToken } from './lumberjack-log-driver-config.token';
 import { lumberjackOptionsToken } from './lumberjack-options.token';
 import { LumberjackRootModule } from './lumberjack-root.module';
 import { LumberjackOptions } from './lumberjack.options';
+import { configFactory, logDriverConfigFactory } from './providers';
 
 /**
  * The Lumberjack Angular module is used to register necessary Lumberjack
@@ -22,7 +27,19 @@ export class LumberjackModule {
   static forRoot(options?: LumberjackOptions): ModuleWithProviders<LumberjackRootModule> {
     return {
       ngModule: LumberjackRootModule,
-      providers: [{ provide: lumberjackOptionsToken, useValue: options }],
+      providers: [
+        { provide: lumberjackOptionsToken, useValue: options },
+        {
+          deps: [isProductionEnvironmentToken],
+          provide: lumberjackConfigToken,
+          useFactory: (isProductionEnvironment: boolean) => configFactory(isProductionEnvironment, options),
+        },
+        {
+          deps: [lumberjackConfigToken],
+          provide: lumberjackLogDriverConfigToken,
+          useFactory: logDriverConfigFactory,
+        },
+      ],
     };
   }
 
