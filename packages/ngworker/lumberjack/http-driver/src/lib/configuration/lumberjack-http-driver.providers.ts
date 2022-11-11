@@ -40,6 +40,7 @@ export const HTTP_PROVIDER: Provider = {
  * @publicApi
  */
 export function provideLumberjackHttpDriver(config: LumberjackHttpDriverConfig): Provider[] {
+  // TODO: provide HTTPClient when Angular 15 is released.
   return [
     HTTP_PROVIDER,
     {
@@ -75,6 +76,7 @@ export function provideLumberjackHttpDriver(config: LumberjackHttpDriverConfig):
  * @publicApi
  */
 export function provideLumberjackHttpDriverWithOptions(options: LumberjackHttpDriverOptions): Provider[] {
+  // TODO: provide HTTPClient when Angular 15 is released.
   return [
     HTTP_PROVIDER,
     {
