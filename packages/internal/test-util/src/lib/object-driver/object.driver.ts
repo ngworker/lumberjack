@@ -1,6 +1,6 @@
-import { Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
-import { LumberjackLogDriver, LumberjackLogDriverConfig, LumberjackLogDriverLog } from '@ngworker/lumberjack';
+import { LumberjackLogDriver, LumberjackLogDriverLog } from '@ngworker/lumberjack';
 
 import { objectDriverConfigToken } from './object-driver-config.token';
 import { ObjectPayload } from './object.payload';
@@ -13,12 +13,11 @@ import { ObjectService } from './object.service';
  */
 @Injectable()
 export class ObjectDriver implements LumberjackLogDriver<ObjectPayload> {
-  static driverIdentifier = 'ObjectDriver';
+  static readonly driverIdentifier = 'ObjectDriver';
 
-  constructor(
-    @Inject(objectDriverConfigToken) readonly config: LumberjackLogDriverConfig,
-    private readonly objectService: ObjectService
-  ) {}
+  private readonly objectService = inject(ObjectService);
+
+  readonly config = inject(objectDriverConfigToken);
 
   logCritical({ log }: LumberjackLogDriverLog<ObjectPayload>): void {
     this.objectService.log(log.payload);

@@ -1,4 +1,5 @@
 import { isClass } from '@internal/test-util';
+
 import { LumberjackHttpDriverError } from './index';
 
 describe('Errors API', () => {

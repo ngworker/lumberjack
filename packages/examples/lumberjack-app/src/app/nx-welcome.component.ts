@@ -3,6 +3,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 /* eslint-disable */
 
 @Component({
+  standalone: true,
   selector: 'ngworker-nx-welcome',
   template: `
     <!--

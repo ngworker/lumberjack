@@ -48,9 +48,9 @@ export class LumberjackRootModule {
     @Optional()
     @SkipSelf()
     @Inject(LumberjackRootModule)
-    maybeNgModuleFromParentInjector: LumberjackRootModule
+    private readonly maybeNgModuleFromParentInjector: LumberjackRootModule
   ) {
-    if (maybeNgModuleFromParentInjector) {
+    if (this.maybeNgModuleFromParentInjector) {
       throw new Error(
         'LumberjackModule.forRoot registered in multiple injectors. Only call it from your root injector such as in AppModule.'
       );

@@ -71,6 +71,7 @@
     "eslint-config-prettier": "8.1.0",
     "eslint-plugin-cypress": "2.10.3",
     "eslint-plugin-etc": "2.0.2",
+    "eslint-plugin-ordered-imports": "0.6.0",
     "eslint-plugin-rxjs": "5.0.2",
     "eslint-plugin-rxjs-angular": "2.0.0",
     "eslint-plugin-sonarjs": "0.13.0",

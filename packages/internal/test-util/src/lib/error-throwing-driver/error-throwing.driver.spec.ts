@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+
 import {
   LumberjackLevel,
   LumberjackLogDriver,
@@ -7,9 +8,11 @@ import {
   LumberjackLogLevel,
   LumberjackModule,
 } from '@ngworker/lumberjack';
+
 import { resolveDependency } from '../angular/resolve-dependency';
 import { repeatSideEffect } from '../functions/repeat-side-effect';
 import { createDriverLog } from '../logs/driver-log-creators';
+
 import { ErrorThrowingDriverModule } from './error-throwing-driver.module';
 import { ErrorThrowingDriver } from './error-throwing.driver';
 

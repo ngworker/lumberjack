@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+
 import { createDriverLog } from '@internal/test-util';
 import {
   LumberjackLevel,
@@ -8,7 +9,9 @@ import {
   LumberjackLogLevel,
   LumberjackModule,
 } from '@ngworker/lumberjack';
+
 import { resolveDependency } from '../angular/resolve-dependency';
+
 import { ObjectDriverModule } from './object-driver.module';
 import { ObjectDriver } from './object.driver';
 import { ObjectPayload } from './object.payload';

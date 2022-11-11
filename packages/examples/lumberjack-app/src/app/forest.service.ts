@@ -5,9 +5,9 @@ import { ReplaySubject } from 'rxjs';
   providedIn: 'root',
 })
 export class ForestService implements OnDestroy {
-  #fire$ = new ReplaySubject<void>(1);
+  readonly #fire$ = new ReplaySubject<void>(1);
 
-  fire$ = this.#fire$.asObservable();
+  readonly fire$ = this.#fire$.asObservable();
 
   constructor() {
     setTimeout(() => this.#fire$.next(), 2000);

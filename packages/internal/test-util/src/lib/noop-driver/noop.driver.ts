@@ -1,13 +1,8 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 // ⬆️ Maintain signature compatibility with LumberjackLogDriver
-import { Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
-import {
-  LumberjackLogDriver,
-  LumberjackLogDriverConfig,
-  LumberjackLogDriverLog,
-  LumberjackLogPayload,
-} from '@ngworker/lumberjack';
+import { LumberjackLogDriver, LumberjackLogDriverLog, LumberjackLogPayload } from '@ngworker/lumberjack';
 
 import { noopDriverConfigToken } from './noop-driver-config.token';
 
@@ -18,9 +13,9 @@ import { noopDriverConfigToken } from './noop-driver-config.token';
  */
 @Injectable()
 export class NoopDriver<TPayload extends LumberjackLogPayload | void = void> implements LumberjackLogDriver<TPayload> {
-  static driverIdentifier = 'NoopDriver';
+  static readonly driverIdentifier = 'NoopDriver';
 
-  constructor(@Inject(noopDriverConfigToken) readonly config: LumberjackLogDriverConfig) {}
+  readonly config = inject(noopDriverConfigToken);
 
   logCritical(_driverLog: LumberjackLogDriverLog<TPayload>): void {
     // intentionally a no-op

@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import { lumberjackConfigToken } from '../configuration/lumberjack-config.token';
 import { LumberjackConfig } from '../configuration/lumberjack.config';
@@ -14,10 +14,8 @@ import { LumberjackLogFormatterResult } from './lumberjack-log-formatter-result'
   providedIn: 'root',
 })
 export class LumberjackLogFormatter<TPayload extends LumberjackLogPayload | void = void> {
-  constructor(
-    @Inject(lumberjackConfigToken) private readonly config: LumberjackConfig<TPayload>,
-    private readonly time: LumberjackTimeService
-  ) {}
+  private readonly config = inject<LumberjackConfig<TPayload>>(lumberjackConfigToken);
+  private readonly time = inject(LumberjackTimeService);
 
   formatLog(log: LumberjackLog<TPayload>): LumberjackLogFormatterResult<TPayload> {
     const { format } = this.config;

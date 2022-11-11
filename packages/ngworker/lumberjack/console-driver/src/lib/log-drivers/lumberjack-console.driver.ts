@@ -1,31 +1,25 @@
-import { Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
-import {
-  LumberjackLogDriver,
-  LumberjackLogDriverConfig,
-  LumberjackLogDriverLog,
-  LumberjackLogPayload,
-} from '@ngworker/lumberjack';
+import { LumberjackLogDriver, LumberjackLogDriverLog, LumberjackLogPayload } from '@ngworker/lumberjack';
 
 import { lumberjackConsoleDriverConfigToken } from '../configuration/lumberjack-console-driver-config.token';
-import { LumberjackConsole } from '../console/lumberjack-console';
 import { lumberjackConsoleToken } from '../console/lumberjack-console.token';
 
 /**
  * The console driver outputs logs to the browser console.
  *
  * It forwards the formatted log and the optional log payload to the relevant
- * method of the brower console API.
+ * method of the browser console API.
  */
 @Injectable()
 export class LumberjackConsoleDriver<TPayload extends LumberjackLogPayload | void = void>
   implements LumberjackLogDriver<TPayload>
 {
-  static driverIdentifier = 'LumberjackConsoleDriver';
-  constructor(
-    @Inject(lumberjackConsoleDriverConfigToken) readonly config: LumberjackLogDriverConfig,
-    @Inject(lumberjackConsoleToken) private readonly console: LumberjackConsole
-  ) {}
+  static readonly driverIdentifier = 'LumberjackConsoleDriver';
+
+  private readonly console = inject(lumberjackConsoleToken);
+
+  readonly config = inject(lumberjackConsoleDriverConfigToken);
 
   /**
    * Output console error.

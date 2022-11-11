@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
 import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
@@ -21,14 +21,10 @@ import { LumberjackService } from './lumberjack.service';
 export abstract class ScopedLumberjackLogger<
   TPayload extends LumberjackLogPayload | void = void
 > extends LumberjackLogger<TPayload> {
-  abstract readonly scope: string;
+  protected override readonly lumberjack = inject<LumberjackService<TPayload>>(LumberjackService);
+  protected override readonly time = inject(LumberjackTimeService);
 
-  constructor(
-    protected override lumberjack: LumberjackService<TPayload>,
-    protected override time: LumberjackTimeService
-  ) {
-    super(lumberjack, time);
-  }
+  abstract readonly scope: string;
 
   /**
    * Create a logger builder for a log with the shared scope as well as the

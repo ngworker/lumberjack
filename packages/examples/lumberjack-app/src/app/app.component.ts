@@ -1,19 +1,24 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, inject, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
+
 import { AppLogger } from './app-logger.service';
 import { ForestService } from './forest.service';
+import { NxWelcomeComponent } from './nx-welcome.component';
 
 @Component({
+  standalone: true,
+  imports: [NxWelcomeComponent],
+
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
-  private subscriptions = new Subscription();
+  private readonly forest = inject(ForestService);
+  private readonly logger = inject(AppLogger);
+  private readonly subscriptions = new Subscription();
 
-  title = 'lumberjack-app';
-
-  constructor(private logger: AppLogger, private forest: ForestService) {}
+  readonly title = 'lumberjack-app';
 
   ngOnInit(): void {
     this.logger.helloForest();

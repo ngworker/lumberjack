@@ -1,6 +1,6 @@
-import { Inject, Injectable } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
-import { LumberjackLogDriver, LumberjackLogDriverConfig, LumberjackLogPayload } from '@ngworker/lumberjack';
+import { LumberjackLogDriver, LumberjackLogPayload } from '@ngworker/lumberjack';
 
 import { spyDriverConfigToken } from './spy-driver-config.token';
 
@@ -15,18 +15,13 @@ export class SpyDriver<TPayload extends LumberjackLogPayload | void = void>
 {
   static driverIdentifier = 'SpyDriver';
 
-  constructor(@Inject(spyDriverConfigToken) readonly config: LumberjackLogDriverConfig) {}
-
-  logCritical = jest.fn();
-
-  logDebug = jest.fn();
-
-  logError = jest.fn();
-
-  logInfo = jest.fn();
-
-  logTrace = jest.fn();
-  logWarning = jest.fn();
+  readonly config = inject(spyDriverConfigToken);
+  readonly logCritical = jest.fn();
+  readonly logDebug = jest.fn();
+  readonly logError = jest.fn();
+  readonly logInfo = jest.fn();
+  readonly logTrace = jest.fn();
+  readonly logWarning = jest.fn();
 
   /**
    * Reset tracking on spies.
