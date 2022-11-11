@@ -20,7 +20,7 @@ import { HTTP_PROVIDER } from './lumberjack-http-driver.providers';
  * `LumberjackHttpDriverModule.forRoot` or
  * `LumberjackHttpDriverModule.withOptions`.
  */
-@NgModule({ imports: [HttpClientModule] })
+@NgModule()
 export class LumberjackHttpDriverModule {
   /**
    * Configure and register the HTTP driver, including settings that log drivers

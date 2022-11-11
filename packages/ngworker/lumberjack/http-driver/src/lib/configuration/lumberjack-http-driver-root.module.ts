@@ -4,7 +4,7 @@ import { inject, NgModule } from '@angular/core';
 /**
  * Do not import directly. Use `LumberjackHttpDriverModule.forRoot`.
  */
-@NgModule()
+@NgModule({ imports: [HttpClientModule] })
 export class LumberjackHttpDriverRootModule {
   private readonly maybeNgModuleFromParentInjector = inject(LumberjackHttpDriverRootModule, {
     optional: true,
