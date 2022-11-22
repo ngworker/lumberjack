@@ -1,0 +1,12 @@
+name: Configure Sonar report paths
+description: Replace <PLACEHOLDER> in the SonarCloud configuration file with found report paths.
+
+inputs:
+  sonar_configuration_path:
+    description: Path to the SonarCloud configuration file, for example sonar-project.properties
+    required: true
+    default: sonar-project.properties
+
+runs:
+  using: node16
+  main: index.js

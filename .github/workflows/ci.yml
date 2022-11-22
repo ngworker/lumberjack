@@ -114,11 +114,8 @@ jobs:
           path: ./
 
       - name: Configure Sonar report paths
-        if: steps.download_reports.conclusion == 'success'
-        run: yarn configure-sonar-report-paths
-
+        uses: ./.github/actions/configure-sonar-report-paths
       - name: SonarCloud Scan
-        if: steps.download_reports.conclusion == 'success'
         uses: sonarsource/sonarcloud-github-action@v1.7
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
