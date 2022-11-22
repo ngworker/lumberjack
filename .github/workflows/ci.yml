@@ -61,8 +61,10 @@ jobs:
         yarn nx affected --target=build --parallel=2
         yarn nx affected --target=e2e --parallel=1
       # Commands run sequentially on this DTE coordinator after parallel jobs
-      # final-commands: |
+      final-commands: |
+        touch ./.gitkeep
       artifacts-path: |
+        ./.gitkeep
         coverage/
         reports/
       artifacts-name: reports
