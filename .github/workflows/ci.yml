@@ -61,10 +61,8 @@ jobs:
         yarn nx affected --target=build --parallel=2
         yarn nx affected --target=e2e --parallel=1
       # Commands run sequentially on this DTE coordinator after parallel jobs
-      final-commands: |
-        touch ./.gitkeep
+      # final-commands:
       artifacts-path: |
-        ./.gitkeep
         coverage/
         reports/
       artifacts-name: reports
@@ -108,15 +106,19 @@ jobs:
           # Necessary for SonarCloud Scan
           fetch-depth: 0
       - name: Download reports
+        id: download_reports
+        continue-on-error: true
         uses: actions/download-artifact@v3
         with:
           name: reports
           path: ./
 
       - name: Configure Sonar report paths
+        if: steps.download_reports.conclusion == 'success'
         run: yarn configure-sonar-report-paths
 
       - name: SonarCloud Scan
+        if: steps.download_reports.conclusion == 'success'
         uses: sonarsource/sonarcloud-github-action@v1.7
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
