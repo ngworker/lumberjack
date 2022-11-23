@@ -27,6 +27,10 @@
     "node": "18.12.1",
     "yarn": "1.22.19"
   },
+  "workspaces": [
+    "e2e/**",
+    "packages/**"
+  ],
   "dependencies": {
     "@angular/animations": "15.0.3",
     "@angular/common": "15.0.3",
