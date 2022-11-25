@@ -11,7 +11,8 @@
         "outputPath": "dist/packages/actions/configure-sonarcloud-report-paths",
         "main": "packages/actions/configure-sonarcloud-report-paths/src/main.ts",
         "tsConfig": "packages/actions/configure-sonarcloud-report-paths/tsconfig.app.json",
-        "assets": ["packages/actions/configure-sonarcloud-report-paths/src/action.yml"]
+        "assets": ["packages/actions/configure-sonarcloud-report-paths/src/action.yml"],
+        "externalDependencies": "none"
       },
       "configurations": {
         "production": {
