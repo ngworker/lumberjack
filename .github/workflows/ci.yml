@@ -58,14 +58,16 @@ jobs:
       parallel-commands-on-agents: |
         yarn nx run-many --all --target=lint --configuration=report --parallel=2 --max-warnings=0
         yarn nx run-many --all --target=test --configuration=coverage --parallel=1 --max-workers=2
-        yarn nx affected --target=build --parallel=2
+        yarn nx build actions-configure-sonarcloud-report-paths
+        yarn nx affected --target=build --parallel=2 --exclude=actions-configure-sonarcloud-report-paths
         yarn nx affected --target=e2e --parallel=1
       # Commands run sequentially on this DTE coordinator after parallel jobs
       # final-commands:
       artifacts-path: |
         coverage/
+        dist/packages/actions/
         reports/
-      artifacts-name: reports
+      artifacts-name: dte_artifacts
 
   # We're using Nx Cloud for Distributed Task Execution
   # Reference: https://nx.dev/using-nx/dte
@@ -105,16 +107,17 @@ jobs:
         with:
           # Necessary for SonarCloud Scan
           fetch-depth: 0
-      - name: Download reports
-        id: download_reports
+      - name: Download DTE build artifacts
         continue-on-error: true
         uses: actions/download-artifact@v3
         with:
-          name: reports
+          name: dte_artifacts
           path: ./
+      - name: Unpack GitHub actions
+        run: mv dist/packages/actions/* ./.github/actions
 
       - name: Configure Sonar report paths
-        uses: ./.github/actions/configure-sonar-report-paths
+        uses: ./.github/actions/configure-sonarcloud-report-paths
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@v1.7
         env:
