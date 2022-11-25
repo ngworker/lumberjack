@@ -1,4 +1,5 @@
 import * as core from '@actions/core';
+
 import { configureCoverageReportPaths } from './app/configure-coverage-report-paths';
 import { configureLintReportPaths } from './app/configure-lint-report-paths';
 

@@ -1,4 +1,5 @@
 import { replaceInFile } from 'replace-in-file';
+
 import { listFilePaths } from './list-file-paths';
 
 function listLintReports() {
