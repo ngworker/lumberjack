@@ -1,11 +1,12 @@
 {
+  "name": "internal-test-util",
   "projectType": "library",
   "sourceRoot": "packages/internal/test-util/src",
   "prefix": "ngworker",
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/internal/test-util"],
+      "outputs": ["{workspaceRoot}/coverage/packages/internal/test-util"],
       "options": {
         "jestConfig": "packages/internal/test-util/jest.config.ts",
         "passWithNoTests": true

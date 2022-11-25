@@ -33,7 +33,7 @@
     },
     "build-package": {
       "executor": "@nrwl/angular:package",
-      "outputs": ["dist/packages/ngworker/lumberjack"],
+      "outputs": ["{workspaceRoot}/dist/packages/ngworker/lumberjack"],
       "options": {
         "project": "packages/ngworker/lumberjack/ng-package.json"
       },
@@ -49,7 +49,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/ngworker/lumberjack"],
+      "outputs": ["{workspaceRoot}/coverage/packages/ngworker/lumberjack"],
       "options": {
         "jestConfig": "packages/ngworker/lumberjack/jest.config.ts",
         "passWithNoTests": true
@@ -110,5 +110,9 @@
     }
   },
   "tags": ["scope:public", "type:package"],
-  "implicitDependencies": ["!internal-console-driver-test-util", "!internal-test-util"]
+  "implicitDependencies": ["!internal-console-driver-test-util", "!internal-test-util"],
+  "namedInputs": {
+    "projectSpecificFiles": ["{workspaceRoot}/README.md"]
+  },
+  "name": "ngworker-lumberjack"
 }

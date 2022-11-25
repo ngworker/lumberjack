@@ -91,7 +91,7 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/examples/lumberjack-app"],
+      "outputs": ["{workspaceRoot}/coverage/packages/examples/lumberjack-app"],
       "options": {
         "jestConfig": "packages/examples/lumberjack-app/jest.config.ts",
         "passWithNoTests": true
@@ -105,5 +105,6 @@
       }
     }
   },
-  "tags": ["scope:internal", "type:app"]
+  "tags": ["scope:internal", "type:app"],
+  "name": "examples-lumberjack-app"
 }

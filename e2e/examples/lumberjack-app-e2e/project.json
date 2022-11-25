@@ -37,5 +37,6 @@
     }
   },
   "tags": ["scope:internal", "type:e2e"],
-  "implicitDependencies": ["examples-lumberjack-app"]
+  "implicitDependencies": ["examples-lumberjack-app"],
+  "name": "examples-lumberjack-app-e2e"
 }

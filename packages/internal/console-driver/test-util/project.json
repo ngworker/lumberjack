@@ -1,11 +1,12 @@
 {
+  "name": "internal-console-driver-test-util",
   "projectType": "library",
   "sourceRoot": "packages/internal/console-driver/test-util/src",
   "prefix": "ngworker",
   "targets": {
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/internal/console-driver/test-util"],
+      "outputs": ["{workspaceRoot}/coverage/packages/internal/console-driver/test-util"],
       "options": {
         "jestConfig": "packages/internal/console-driver/test-util/jest.config.ts",
         "passWithNoTests": true

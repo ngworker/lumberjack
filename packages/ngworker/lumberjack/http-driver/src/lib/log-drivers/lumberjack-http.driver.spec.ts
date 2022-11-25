@@ -92,7 +92,7 @@ describe(LumberjackHttpDriver.name, () => {
     [httpDriver] = resolveDependency(lumberjackLogDriverToken) as unknown as LumberjackLogDriver<HttpDriverPayload>[];
     httpTestingController = resolveDependency(HttpTestingController);
 
-    jest.useFakeTimers('modern');
+    jest.useFakeTimers();
   });
 
   describe.each([

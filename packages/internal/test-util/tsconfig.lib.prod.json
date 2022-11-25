@@ -3,5 +3,6 @@
   "compilerOptions": {
     "declarationMap": false
   },
-  "angularCompilerOptions": {}
+  "angularCompilerOptions": {},
+  "exclude": ["jest.config.ts"]
 }
