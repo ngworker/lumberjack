@@ -9,7 +9,7 @@ describe('Console log driver', () => {
   }
 
   const expectedPayload = {
-    angularVersion: '14',
+    angularVersion: '15',
   };
   it('logs a greeting info message', () => {
     visit();
