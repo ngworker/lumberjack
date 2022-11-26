@@ -45,11 +45,7 @@ describe(LumberjackLoggerBuilder.name, () => {
         const builder = new LumberjackLoggerBuilder(lumberjackService, fakeTime, level, testMessage);
         const logFunction = builder.build();
         logFunction();
-        const expectedLog = new LumberjackLogBuilder(
-          TestBed.inject(LumberjackTimeService),
-          level,
-          testMessage
-        ).build();
+        const expectedLog = new LumberjackLogBuilder(TestBed.inject(LumberjackTimeService), level, testMessage).build();
 
         expect(lumberjackLogSpy).toHaveBeenCalledWith(expectedLog);
       })
