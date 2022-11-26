@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FakeTimeService, resolveDependency } from '@internal/test-util';
+import { FakeTimeService } from '@internal/test-util';
 
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
@@ -15,8 +15,8 @@ describe(LumberjackLogFactory.name, () => {
       providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
     });
 
-    fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
-    logFactory = resolveDependency(LumberjackLogFactory);
+    fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
+    logFactory = TestBed.inject(LumberjackLogFactory);
   });
 
   const testMessage = 'Test message';
@@ -82,7 +82,7 @@ describe(LumberjackLogFactory.name, () => {
     }
 
     beforeEach(() => {
-      logFactoryWithPayload = resolveDependency(LumberjackLogFactory);
+      logFactoryWithPayload = TestBed.inject(LumberjackLogFactory);
     });
 
     let logFactoryWithPayload: LumberjackLogFactory<TestPayload>;

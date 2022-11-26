@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { NoopDriver, NoopDriverModule, resolveDependency } from '@internal/test-util';
+import { NoopDriver, NoopDriverModule } from '@internal/test-util';
 
 import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
@@ -18,9 +18,9 @@ describe(formatLogDriverError.name, () => {
     TestBed.configureTestingModule({
       imports: [LumberjackModule.forRoot(), NoopDriverModule.forRoot()],
     });
-    const [_logDriver] = resolveDependency(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
+    const [_logDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
     logDriver = _logDriver;
-    logFactory = resolveDependency(LumberjackLogFactory);
+    logFactory = TestBed.inject(LumberjackLogFactory);
   });
 
   const errorMessage = 'Test error message';

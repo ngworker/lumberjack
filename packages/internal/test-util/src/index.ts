@@ -4,7 +4,6 @@
 
 // Angular
 export * from './lib/angular/expect-ng-module-to-be-guarded-against-direct-import';
-export * from './lib/angular/resolve-dependency';
 
 // Error-throwing driver
 export * from './lib/error-throwing-driver/error-throwing-driver.config';

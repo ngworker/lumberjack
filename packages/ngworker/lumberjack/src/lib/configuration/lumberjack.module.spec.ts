@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { expectNgModuleToBeGuardedAgainstDirectImport, resolveDependency } from '@internal/test-util';
+import { expectNgModuleToBeGuardedAgainstDirectImport } from '@internal/test-util';
 
 import { isProductionEnvironmentToken } from '../environment/is-production-environment.token';
 import { lumberjackFormatLog } from '../formatting/lumberjack-format-log';
@@ -33,7 +33,7 @@ describe(LumberjackModule.name, () => {
         imports: [LumberjackModule.forRoot(expectedConfig)],
       });
 
-      const actualConfig = resolveDependency(lumberjackConfigToken);
+      const actualConfig = TestBed.inject(lumberjackConfigToken);
       expect(actualConfig).toEqual(expectedConfig);
     });
 
@@ -51,7 +51,7 @@ describe(LumberjackModule.name, () => {
         providers: [{ provide: isProductionEnvironmentToken, useValue: false }],
       });
 
-      const actualConfig = resolveDependency(lumberjackConfigToken);
+      const actualConfig = TestBed.inject(lumberjackConfigToken);
       expect(actualConfig).toEqual(expectedConfig as LumberjackConfig);
     });
 
@@ -69,7 +69,7 @@ describe(LumberjackModule.name, () => {
         providers: [{ provide: isProductionEnvironmentToken, useValue: true }],
       });
 
-      const actualConfig = resolveDependency(lumberjackConfigToken);
+      const actualConfig = TestBed.inject(lumberjackConfigToken);
       expect(actualConfig).toEqual(expectedConfig as LumberjackConfig);
     });
 
@@ -79,7 +79,7 @@ describe(LumberjackModule.name, () => {
         providers: [{ provide: isProductionEnvironmentToken, useValue: false }],
       });
 
-      const actualConfig = resolveDependency(lumberjackConfigToken);
+      const actualConfig = TestBed.inject(lumberjackConfigToken);
       expect(actualConfig).toEqual({
         levels: defaultDevelopmentLevels,
         format: expect.any(Function),
@@ -92,7 +92,7 @@ describe(LumberjackModule.name, () => {
         providers: [{ provide: isProductionEnvironmentToken, useValue: true }],
       });
 
-      const actualConfig = resolveDependency(lumberjackConfigToken);
+      const actualConfig = TestBed.inject(lumberjackConfigToken);
       expect(actualConfig).toEqual({
         format: lumberjackFormatLog,
         levels: defaultProductionLevels,
@@ -103,12 +103,12 @@ describe(LumberjackModule.name, () => {
       TestBed.configureTestingModule({
         imports: [LumberjackModule.forRoot()],
       });
-      const logConfig = resolveDependency(lumberjackConfigToken);
+      const logConfig = TestBed.inject(lumberjackConfigToken);
       const defaultLogDriverConfig: Omit<LumberjackLogDriverConfig, 'identifier'> = {
         levels: logConfig.levels,
       };
 
-      const actualConfig = resolveDependency(lumberjackLogDriverConfigToken);
+      const actualConfig = TestBed.inject(lumberjackLogDriverConfigToken);
       expect(actualConfig).toEqual(defaultLogDriverConfig as LumberjackLogDriverConfig);
     });
 
@@ -134,7 +134,7 @@ describe(LumberjackModule.name, () => {
 
         const expectedFormattedLog = `${level} ${fakeTimestamp} [${scope}] ${message}`;
 
-        const { format } = resolveDependency(lumberjackConfigToken);
+        const { format } = TestBed.inject(lumberjackConfigToken);
 
         expect(format(logWithScope)).toBe(expectedFormattedLog);
       });
@@ -150,7 +150,7 @@ describe(LumberjackModule.name, () => {
 
         const expectedFormattedLog = `${level} ${fakeTimestamp} ${message}`;
 
-        const { format } = resolveDependency(lumberjackConfigToken);
+        const { format } = TestBed.inject(lumberjackConfigToken);
 
         expect(format(logWithoutScope)).toEqual(expectedFormattedLog);
       });

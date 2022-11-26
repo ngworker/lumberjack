@@ -104,8 +104,7 @@ export class LumberjackHttpDriver<TPayload extends LumberjackLogPayload | void =
         this.http
           .post<void>(storeUrl, httpLog)
           .pipe(retryWithDelay(retryOptions.maxRetries, retryOptions.delayMs))
-          // HTTP requests complete after
-          // eslint-disable-next-line rxjs-angular/prefer-composition
+          // HTTP requests complete after the response is received, so there's no need to unsubscribe.
           .subscribe(() => {
             // No-op
           })

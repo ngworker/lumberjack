@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { expectNgModuleToBeGuardedAgainstDirectImport, resolveDependency } from '@internal/test-util';
+import { expectNgModuleToBeGuardedAgainstDirectImport } from '@internal/test-util';
 import {
   LumberjackConfigLevels,
   LumberjackLevel,
@@ -62,7 +62,7 @@ const createHttpDriver = (
     ],
   });
 
-  const [httpDriver] = resolveDependency(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
+  const [httpDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
 
   return httpDriver;
 };
@@ -83,7 +83,7 @@ const createHttpDriverWithOptions = (
     ],
   });
 
-  const [httpDriver] = resolveDependency(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
+  const [httpDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
 
   return httpDriver;
 };

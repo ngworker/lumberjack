@@ -1,10 +1,10 @@
-import { resolveDependency } from '@internal/test-util';
+import { TestBed } from '@angular/core/testing';
 
 import { LumberjackTimeService } from './lumberjack-time.service';
 
 describe(LumberjackTimeService.name, () => {
   beforeEach(() => {
-    service = resolveDependency(LumberjackTimeService);
+    service = TestBed.inject(LumberjackTimeService);
   });
 
   let service: LumberjackTimeService;

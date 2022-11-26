@@ -1,4 +1,4 @@
-import { resolveDependency } from '@internal/test-util';
+import { TestBed } from '@angular/core/testing';
 
 import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
 import { LumberjackLogBuilder } from '../logging/lumberjack-log.builder';
@@ -27,7 +27,7 @@ function parseFormattedLog(formattedLog: string) {
 
 describe(lumberjackFormatLog.name, () => {
   beforeEach(() => {
-    logFactory = resolveDependency(LumberjackLogFactory);
+    logFactory = TestBed.inject(LumberjackLogFactory);
   });
 
   let logFactory: LumberjackLogFactory;
@@ -44,7 +44,7 @@ describe(lumberjackFormatLog.name, () => {
 
     logLevels.forEach((expectedLevel) => {
       it(`prefixes the message with log level "${expectedLevel}"`, () => {
-        const log = new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), expectedLevel, 'Log level test')
+        const log = new LumberjackLogBuilder(TestBed.inject(LumberjackTimeService), expectedLevel, 'Log level test')
           .withScope('Log level')
           .build();
 
