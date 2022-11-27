@@ -1,11 +1,29 @@
 name: Configure Sonar report paths
-description: Replace <PLACEHOLDER> in the SonarCloud configuration file with found report paths.
+description: Replace the specified placeholder in the SonarCloud configuration file with the found report paths.
 
 inputs:
-  sonar_configuration_path:
-    description: Path to the SonarCloud configuration file, for example sonar-project.properties
+  lint_report_key:
+    description: The key of lint report paths in the SonarCloud configuration file. Defaults to "sonar.eslint.reportPaths".
+    required: true
+    default: sonar.eslint.reportPaths
+  lint_report_pattern:
+    description: Glob pattern for lint reports, for example "reports/**/lint/report.json".
+    required: true
+  placeholder:
+    description: The placeholder to replace with the found report paths. Defaults to "<PLACEHOLDER>".
+    required: true
+    default: <PLACEHOLDER>
+  sonar_file:
+    description: Path to the SonarCloud configuration file. Defaults to "sonar-project.properties".
     required: true
     default: sonar-project.properties
+  test_coverage_report_key:
+    description: The key of test coverage report paths in the SonarCloud configuration file. Defaults to "sonar.javascript.lcov.reportPaths".
+    required: true
+    default: sonar.javascript.lcov.reportPaths
+  test_coverage_report_pattern:
+    description: Glob pattern for test coverage reports, for example "coverage/**/lcov.info".
+    required: true
 
 runs:
   using: node16

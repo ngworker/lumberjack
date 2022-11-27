@@ -1,15 +1,39 @@
 import * as core from '@actions/core';
 
-import { configureCoverageReportPaths } from './app/configure-coverage-report-paths';
-import { configureLintReportPaths } from './app/configure-lint-report-paths';
+import { app } from './app/app';
 
 try {
-  const sonarConfigurationPath = core.getInput('sonar_configuration_path');
+  const lintReportKey = core.getInput('lint_report_key', {
+    required: true,
+  });
+  const lintReportPattern = core.getInput('lint_report_pattern', {
+    required: true,
+  });
+  const placeholder = core.getInput('placeholder', {
+    required: true,
+  });
+  const sonarFile = core.getInput('sonar_file', {
+    required: true,
+  });
+  const testCoverageReportKey = core.getInput('test_coverage_report_key', {
+    required: true,
+  });
+  const testCoverageReportPattern = core.getInput('test_coverage_report_pattern', {
+    required: true,
+  });
 
   (async () => {
-    await configureCoverageReportPaths({ sonarConfigurationPath });
-    await configureLintReportPaths({ sonarConfigurationPath });
+    await app({
+      lintReportKey,
+      lintReportPattern,
+      placeholder,
+      sonarFile,
+      testCoverageReportKey,
+      testCoverageReportPattern,
+    });
   })();
-} catch (error) {
-  core.setFailed(error.message);
+} catch (error: unknown) {
+  const errorMessage = error instanceof Error ? error.message : String(error);
+
+  core.setFailed(errorMessage);
 }

@@ -1,5 +1,5 @@
 import { glob } from 'glob';
 
-export function listFilePaths(pattern): Promise<readonly string[]> {
-  return glob(pattern);
-}
+export type ListFilePathsFn = (pattern: string) => Promise<readonly string[]>;
+
+export const listFilePaths: ListFilePathsFn = (pattern) => glob(pattern);
