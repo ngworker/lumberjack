@@ -1,6 +1,10 @@
 import * as core from '@actions/core';
 
-import { app } from './app/app';
+import { createApp } from './app/app';
+import { createConfigureSonar } from './app/configure-sonar';
+import { createConfigureSonarReportPaths } from './app/configure-sonar-report-paths';
+import { listFilePaths } from './app/list-file-paths';
+import { replaceTextInFile } from './app/replace-text-in-file';
 
 try {
   const lintReportKey = core.getInput('lint_report_key', {
@@ -20,6 +24,17 @@ try {
   });
   const testCoverageReportPattern = core.getInput('test_coverage_report_pattern', {
     required: true,
+  });
+
+  const configureSonar = createConfigureSonar({
+    replaceTextInFile,
+  });
+  const configureSonarReportPaths = createConfigureSonarReportPaths({
+    configureSonar,
+    listFilePaths,
+  });
+  const app = createApp({
+    configureSonarReportPaths,
   });
 
   (async () => {

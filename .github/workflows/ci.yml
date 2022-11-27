@@ -118,6 +118,9 @@ jobs:
 
       - name: Configure Sonar report paths
         uses: ./.github/actions/configure-sonarcloud-report-paths
+        with:
+          lint_report_pattern: reports/**/lint/report.json
+          test_coverage_report_pattern: coverage/**/lcov.info
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@v1.7
         env:

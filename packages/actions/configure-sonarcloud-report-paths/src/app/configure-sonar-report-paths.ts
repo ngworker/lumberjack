@@ -1,25 +1,26 @@
-import { configureSonar } from './configure-sonar';
-import { listFilePaths } from './list-file-paths';
+import { ConfigureSonarFn } from './configure-sonar';
+import { ListFilePathsFn } from './list-file-paths';
 
-interface ConfigureSonarReportPathsOptions {
+export interface ConfigureSonarReportPathsDependencies {
+  readonly listFilePaths: ListFilePathsFn;
+  readonly configureSonar: ConfigureSonarFn;
+}
+export type ConfigureSonarReportPathsFn = (options: ConfigureSonarReportPathsOptions) => Promise<void>;
+export interface ConfigureSonarReportPathsOptions {
   readonly placeholder: string;
   readonly reportPattern: string;
   readonly sonarFile: string;
   readonly sonarKey: string;
 }
 
-export async function configureSonarReportPaths({
-  placeholder,
-  reportPattern,
-  sonarFile,
-  sonarKey,
-}: ConfigureSonarReportPathsOptions): Promise<void> {
-  const reportPaths = await listFilePaths(reportPattern);
-
-  return configureSonar({
-    file: sonarFile,
-    key: sonarKey,
-    placeholder,
-    value: reportPaths.join(','),
-  });
-}
+export const createConfigureSonarReportPaths =
+  ({ configureSonar, listFilePaths }: ConfigureSonarReportPathsDependencies): ConfigureSonarReportPathsFn =>
+  ({ placeholder, reportPattern, sonarFile, sonarKey }: ConfigureSonarReportPathsOptions) =>
+    listFilePaths(reportPattern).then((reportPaths) =>
+      configureSonar({
+        file: sonarFile,
+        key: sonarKey,
+        placeholder,
+        value: reportPaths.join(','),
+      })
+    );

@@ -1,5 +1,9 @@
-import { configureSonarReportPaths } from './configure-sonar-report-paths';
+import { ConfigureSonarReportPathsFn } from './configure-sonar-report-paths';
 
+export interface AppDependencies {
+  readonly configureSonarReportPaths: ConfigureSonarReportPathsFn;
+}
+export type AppFn = (options: AppOptions) => Promise<void>;
 export interface AppOptions {
   readonly lintReportKey: string;
   readonly lintReportPattern: string;
@@ -9,26 +13,28 @@ export interface AppOptions {
   readonly testCoverageReportPattern: string;
 }
 
-export function app({
-  lintReportKey,
-  lintReportPattern,
-  placeholder,
-  sonarFile,
-  testCoverageReportKey,
-  testCoverageReportPattern,
-}: AppOptions): Promise<void> {
-  return Promise.all([
-    configureSonarReportPaths({
-      placeholder,
-      reportPattern: lintReportPattern,
-      sonarFile,
-      sonarKey: lintReportKey,
-    }),
-    configureSonarReportPaths({
-      placeholder,
-      reportPattern: testCoverageReportPattern,
-      sonarFile,
-      sonarKey: testCoverageReportKey,
-    }),
-  ]).then(() => undefined);
-}
+export const createApp =
+  ({ configureSonarReportPaths }: AppDependencies): AppFn =>
+  ({
+    lintReportKey,
+    lintReportPattern,
+    placeholder,
+    sonarFile,
+    testCoverageReportKey,
+    testCoverageReportPattern,
+  }: AppOptions) => {
+    return Promise.all([
+      configureSonarReportPaths({
+        placeholder,
+        reportPattern: lintReportPattern,
+        sonarFile,
+        sonarKey: lintReportKey,
+      }),
+      configureSonarReportPaths({
+        placeholder,
+        reportPattern: testCoverageReportPattern,
+        sonarFile,
+        sonarKey: testCoverageReportKey,
+      }),
+    ]).then(() => undefined);
+  };
