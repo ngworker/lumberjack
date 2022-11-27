@@ -18,13 +18,7 @@
         "production": {
           "optimization": true,
           "extractLicenses": true,
-          "inspect": false,
-          "fileReplacements": [
-            {
-              "replace": "packages/actions/configure-sonarcloud-report-paths/src/environments/environment.ts",
-              "with": "packages/actions/configure-sonarcloud-report-paths/src/environments/environment.prod.ts"
-            }
-          ]
+          "inspect": false
         }
       }
     },
