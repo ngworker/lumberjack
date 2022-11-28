@@ -1,6 +1,8 @@
+import { Log } from './log';
 import { ReplaceTextInFileFn } from './replace-text-in-file';
 
 export interface ConfigureSonarDependencies {
+  readonly log: Log;
   readonly replaceTextInFile: ReplaceTextInFileFn;
 }
 export type ConfigureSonarFn = (options: ConfigureSonarOptions) => Promise<void>;
@@ -12,10 +14,15 @@ export interface ConfigureSonarOptions {
 }
 
 export const createConfigureSonar =
-  ({ replaceTextInFile }: ConfigureSonarDependencies): ConfigureSonarFn =>
-  ({ file, key, placeholder, value }: ConfigureSonarOptions) =>
-    replaceTextInFile({
+  ({ log, replaceTextInFile }: ConfigureSonarDependencies): ConfigureSonarFn =>
+  ({ file, key, placeholder, value }: ConfigureSonarOptions) => {
+    const to = `${key}=${value}`;
+
+    log.info(to);
+
+    return replaceTextInFile({
       file,
       from: `${key}=${placeholder}`,
-      to: `${key}=${value}`,
+      to,
     });
+  };

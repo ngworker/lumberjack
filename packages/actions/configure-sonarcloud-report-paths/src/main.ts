@@ -4,6 +4,7 @@ import { createApp } from './app/app';
 import { createConfigureSonar } from './app/configure-sonar';
 import { createConfigureSonarReportPaths } from './app/configure-sonar-report-paths';
 import { listFilePaths } from './app/list-file-paths';
+import { Log } from './app/log';
 import { replaceTextInFile } from './app/replace-text-in-file';
 
 try {
@@ -26,7 +27,15 @@ try {
     required: true,
   });
 
+  const log: Log = {
+    debug: (message: string) => core.debug(message),
+    error: (message: string) => core.error(message),
+    info: (message: string) => core.info(message),
+    notice: (message: string) => core.notice(message),
+    warning: (message: string) => core.warning(message),
+  };
   const configureSonar = createConfigureSonar({
+    log,
     replaceTextInFile,
   });
   const configureSonarReportPaths = createConfigureSonarReportPaths({

@@ -1,4 +1,5 @@
 import { createConfigureSonar } from './configure-sonar';
+import { Log } from './log';
 import { ReplaceTextInFileOptions } from './replace-text-in-file';
 
 const identity = <TValue>(value: TValue): TValue => value;
@@ -15,13 +16,22 @@ describe('configureSonar', () => {
       mockReplaceTextInFile: identity,
     }
   ) {
+    const logSpy: jest.Mocked<Log> = {
+      debug: jest.fn<void, [string]>(),
+      error: jest.fn<void, [string]>(),
+      info: jest.fn<void, [string]>(),
+      notice: jest.fn<void, [string]>(),
+      warning: jest.fn<void, [string]>(),
+    };
     const replaceTextInFileMock = mockReplaceTextInFile(jest.fn<Promise<void>, [ReplaceTextInFileOptions]>());
     const configureSonar = createConfigureSonar({
+      log: logSpy,
       replaceTextInFile: replaceTextInFileMock,
     });
 
     return {
       configureSonar,
+      logSpy,
       replaceTextInFileMock,
     };
   }
@@ -44,6 +54,22 @@ describe('configureSonar', () => {
       from: 'success-test.sonar.key=<SUCCESS_TEST_PLACEHOLDER>',
       to: 'success-test.sonar.key=reports/apps/success-test-app/lint/report.json',
     });
+  });
+
+  it(`Given replaceTextInFile resolves
+  Then the configuration is logged`, async () => {
+    const { configureSonar, logSpy } = setup();
+    expect.assertions(2);
+
+    await configureSonar({
+      file: 'log-test-sonar-project.properties',
+      key: 'log-test.sonar.key',
+      placeholder: '<LOG_TEST_PLACEHOLDER>',
+      value: 'reports/apps/log-test-app/lint/report.json',
+    });
+
+    expect(logSpy.info).toHaveBeenCalledTimes(1);
+    expect(logSpy.info).toHaveBeenCalledWith('log-test.sonar.key=reports/apps/log-test-app/lint/report.json');
   });
 
   it(`Given "replaceTextInFile" rejects
