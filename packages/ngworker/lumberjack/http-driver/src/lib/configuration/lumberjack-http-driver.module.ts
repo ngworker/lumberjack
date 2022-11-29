@@ -9,7 +9,10 @@ import { LumberjackHttpDriverInternalConfig } from './lumberjack-http-driver-int
 import { LumberjackHttpDriverRootModule } from './lumberjack-http-driver-root.module';
 import { LumberjackHttpDriverConfig } from './lumberjack-http-driver.config';
 import { LumberjackHttpDriverOptions } from './lumberjack-http-driver.options';
-import { HTTP_PROVIDER } from './lumberjack-http-driver.providers';
+import {
+  provideLumberjackHttpDriver,
+  provideLumberjackHttpDriverWithOptions,
+} from './lumberjack-http-driver.providers';
 
 /**
  * The HTTP driver Angular module is used to configure and register the HTTP
@@ -30,18 +33,7 @@ export class LumberjackHttpDriverModule {
   static forRoot(config: LumberjackHttpDriverConfig): ModuleWithProviders<LumberjackHttpDriverRootModule> {
     return {
       ngModule: LumberjackHttpDriverRootModule,
-      providers: [
-        HTTP_PROVIDER,
-        {
-          provide: lumberjackHttpDriverConfigToken,
-          deps: [lumberjackLogDriverConfigToken],
-          useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackHttpDriverInternalConfig => ({
-            ...logDriverConfig,
-            identifier: LumberjackHttpDriver.driverIdentifier,
-            ...config,
-          }),
-        },
-      ],
+      providers: [provideLumberjackHttpDriver(config)],
     };
   }
 
@@ -53,18 +45,7 @@ export class LumberjackHttpDriverModule {
   static withOptions(options: LumberjackHttpDriverOptions): ModuleWithProviders<LumberjackHttpDriverRootModule> {
     return {
       ngModule: LumberjackHttpDriverRootModule,
-      providers: [
-        HTTP_PROVIDER,
-        {
-          provide: lumberjackHttpDriverConfigToken,
-          deps: [lumberjackLogDriverConfigToken],
-          useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackHttpDriverInternalConfig => ({
-            ...logDriverConfig,
-            identifier: LumberjackHttpDriver.driverIdentifier,
-            ...options,
-          }),
-        },
-      ],
+      providers: [provideLumberjackHttpDriverWithOptions(options)],
     };
   }
 
