@@ -19,12 +19,12 @@
     "test": "nx run-many --target=test --all"
   },
   "engines": {
-    "node": "16.18.0",
+    "node": "18.12.1",
     "npm": "Use the Yarn Classic (1.x) CLI instead of npm",
     "yarn": "1.22.19"
   },
   "volta": {
-    "node": "16.18.0",
+    "node": "18.12.1",
     "yarn": "1.22.19"
   },
   "dependencies": {
