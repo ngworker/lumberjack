@@ -88,7 +88,8 @@
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "packages/examples/lumberjack-app/jest.config.ts",
-        "passWithNoTests": true
+        "passWithNoTests": true,
+        "reporters": ["default", "github-actions"]
       },
       "configurations": {
         "coverage": {

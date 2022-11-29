@@ -52,7 +52,8 @@
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "packages/ngworker/lumberjack/jest.config.ts",
-        "passWithNoTests": true
+        "passWithNoTests": true,
+        "reporters": ["default", "github-actions"]
       },
       "configurations": {
         "coverage": {
