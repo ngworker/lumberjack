@@ -11,7 +11,7 @@
         "outputPath": "dist/packages/examples/lumberjack-app",
         "index": "packages/examples/lumberjack-app/src/index.html",
         "main": "packages/examples/lumberjack-app/src/main.ts",
-        "polyfills": "packages/examples/lumberjack-app/src/polyfills.ts",
+        "polyfills": ["zone.js"],
         "tsConfig": "packages/examples/lumberjack-app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": ["packages/examples/lumberjack-app/src/favicon.ico", "packages/examples/lumberjack-app/src/assets"],

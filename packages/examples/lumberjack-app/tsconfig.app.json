@@ -9,7 +9,7 @@
       "@ngworker/lumberjack/http-driver": ["dist/packages/ngworker/lumberjack/http-driver"]
     }
   },
-  "files": ["src/main.ts", "src/polyfills.ts"],
+  "files": ["src/main.ts"],
   "include": ["src/**/*.d.ts"],
   "exclude": ["**/*.test.ts", "**/*.spec.ts", "jest.config.ts"]
 }
