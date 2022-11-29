@@ -32,12 +32,6 @@
               "maximumError": "4kb"
             }
           ],
-          "fileReplacements": [
-            {
-              "replace": "packages/examples/lumberjack-app/src/environments/environment.ts",
-              "with": "packages/examples/lumberjack-app/src/environments/environment.prod.ts"
-            }
-          ],
           "outputHashing": "all"
         },
         "development": {
