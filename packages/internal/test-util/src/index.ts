@@ -4,6 +4,7 @@
 
 // Angular
 export * from './lib/angular/expect-ng-module-to-be-guarded-against-direct-import';
+export * from './lib/angular/expect-ng-module-to-be-guarded-against-duplicate-registration';
 
 // Error-throwing driver
 export * from './lib/error-throwing-driver/error-throwing-driver.config';

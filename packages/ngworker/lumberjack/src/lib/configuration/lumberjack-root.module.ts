@@ -1,4 +1,4 @@
-import { Inject, NgModule, Optional, SkipSelf } from '@angular/core';
+import { inject, NgModule } from '@angular/core';
 
 import { isProductionEnvironmentToken } from '../environment/is-production-environment.token';
 import { lumberjackFormatLog } from '../formatting/lumberjack-format-log';
@@ -44,12 +44,12 @@ export function logDriverConfigFactory({ levels }: LumberjackConfig): Omit<Lumbe
   ],
 })
 export class LumberjackRootModule {
-  constructor(
-    @Optional()
-    @SkipSelf()
-    @Inject(LumberjackRootModule)
-    private readonly maybeNgModuleFromParentInjector: LumberjackRootModule
-  ) {
+  private readonly maybeNgModuleFromParentInjector = inject(LumberjackRootModule, {
+    optional: true,
+    skipSelf: true,
+  });
+
+  constructor() {
     if (this.maybeNgModuleFromParentInjector) {
       throw new Error(
         'LumberjackModule.forRoot registered in multiple injectors. Only call it from your root injector such as in AppModule.'

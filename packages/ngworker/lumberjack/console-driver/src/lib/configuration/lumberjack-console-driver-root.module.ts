@@ -1,4 +1,4 @@
-import { Inject, NgModule, Optional, SkipSelf } from '@angular/core';
+import { inject, NgModule } from '@angular/core';
 
 import { lumberjackLogDriverToken } from '@ngworker/lumberjack';
 
@@ -17,12 +17,12 @@ import { LumberjackConsoleDriver } from '../log-drivers/lumberjack-console.drive
   ],
 })
 export class LumberjackConsoleDriverRootModule {
-  constructor(
-    @Optional()
-    @SkipSelf()
-    @Inject(LumberjackConsoleDriverRootModule)
-    private readonly maybeNgModuleFromParentInjector: LumberjackConsoleDriverRootModule | null | undefined = null
-  ) {
+  private readonly maybeNgModuleFromParentInjector = inject(LumberjackConsoleDriverRootModule, {
+    optional: true,
+    skipSelf: true,
+  });
+
+  constructor() {
     if (this.maybeNgModuleFromParentInjector) {
       throw new Error(
         'LumberjackConsoleDriverModule.forRoot registered in multiple injectors. Only call it from your root injector such as in AppModule.'
