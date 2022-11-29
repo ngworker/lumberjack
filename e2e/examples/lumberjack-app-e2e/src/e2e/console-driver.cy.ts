@@ -1,3 +1,5 @@
+import { VERSION } from '@angular/core';
+
 describe('Console log driver', () => {
   function visit() {
     cy.visit('/', {
@@ -9,7 +11,7 @@ describe('Console log driver', () => {
   }
 
   const expectedPayload = {
-    angularVersion: '15',
+    angularVersion: VERSION.major,
   };
   it('logs a greeting info message', () => {
     visit();
