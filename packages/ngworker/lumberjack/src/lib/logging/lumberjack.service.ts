@@ -25,7 +25,7 @@ const noReportedLogDriverErrorIndex = -1;
  * base classes to set up predefined loggers unless you need a programmatic
  * API.
  */
-@Injectable({ providedIn: 'root' })
+@Injectable()
 export class LumberjackService<TPayload extends LumberjackLogPayload | void = void> {
   /**
    * The registered log drivers.
