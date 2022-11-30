@@ -1,14 +1,5 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import {
-  LumberjackLogDriverConfig,
-  lumberjackLogDriverConfigToken,
-  lumberjackLogDriverToken,
-} from '@ngworker/lumberjack';
-
-import { LumberjackConsoleDriver } from '../log-drivers/lumberjack-console.driver';
-
-import { lumberjackConsoleDriverConfigToken } from './lumberjack-console-driver-config.token';
 import { LumberjackConsoleDriverRootModule } from './lumberjack-console-driver-root.module';
 import { LumberjackConsoleDriverConfig } from './lumberjack-console-driver.config';
 import { provideLumberjackConsoleDriver } from './lumberjack-console-driver.providers';
