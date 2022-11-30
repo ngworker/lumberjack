@@ -2,6 +2,7 @@ import { Provider } from '@angular/core';
 
 import { isProductionEnvironmentToken } from '../environment/is-production-environment.token';
 import { lumberjackFormatLog } from '../formatting/lumberjack-format-log';
+import { LumberjackService } from '../logging/lumberjack.service';
 
 import { defaultDevelopmentLevels } from './default-development-levels';
 import { defaultProductionLevels } from './default-production-levels';
@@ -58,5 +59,6 @@ export function provideLumberjack(options?: LumberjackOptions): Provider[] {
       provide: lumberjackLogDriverConfigToken,
       useFactory: logDriverConfigFactory,
     },
+    { provide: LumberjackService, useClass: LumberjackService },
   ];
 }

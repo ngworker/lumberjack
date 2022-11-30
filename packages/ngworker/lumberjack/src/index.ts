@@ -11,7 +11,7 @@ export { LumberjackConfig } from './lib/configuration/lumberjack.config';
 export { LumberjackModule } from './lib/configuration/lumberjack.module';
 export { LumberjackOptions } from './lib/configuration/lumberjack.options';
 export { LumberjackRootModule } from './lib/configuration/lumberjack-root.module';
-export { provideLumberjack } from './lib/configuration/lumberjack.providers';
+export { provideLumberjack } from './lib/configuration/provide-lumberjack';
 
 // Log drivers
 export { LumberjackLogDriver } from './lib/log-drivers/lumberjack-log-driver';

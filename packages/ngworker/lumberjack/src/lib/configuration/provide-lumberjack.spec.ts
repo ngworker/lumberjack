@@ -4,6 +4,7 @@ import { resolveDependency } from '@internal/test-util';
 
 import { isProductionEnvironmentToken } from '../environment/is-production-environment.token';
 import { lumberjackFormatLog } from '../formatting/lumberjack-format-log';
+import { LumberjackService } from '../logging/lumberjack.service';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 
 import { defaultDevelopmentLevels } from './default-development-levels';
@@ -13,7 +14,7 @@ import { lumberjackLogDriverConfigToken } from './lumberjack-log-driver-config.t
 import { LumberjackLogDriverConfig } from './lumberjack-log-driver.config';
 import { LumberjackConfig } from './lumberjack.config';
 import { LumberjackOptions } from './lumberjack.options';
-import { provideLumberjack } from './lumberjack.providers';
+import { provideLumberjack } from './provide-lumberjack';
 
 describe(provideLumberjack.name, () => {
   it('accepts a Lumberjack configuration', () => {
@@ -99,5 +100,14 @@ describe(provideLumberjack.name, () => {
 
     const actualConfig = resolveDependency(lumberjackLogDriverConfigToken);
     expect(actualConfig).toEqual(defaultLogDriverConfig as LumberjackLogDriverConfig);
+  });
+
+  it('provides the LumberjackService', () => {
+    TestBed.configureTestingModule({
+      providers: [provideLumberjack()],
+    });
+    const lumberjackService = resolveDependency(LumberjackService);
+
+    expect(lumberjackService).toBeDefined();
   });
 });
