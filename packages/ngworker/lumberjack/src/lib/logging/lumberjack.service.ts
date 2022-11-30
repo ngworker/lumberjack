@@ -1,6 +1,5 @@
 import { inject, Injectable } from '@angular/core';
 
-import { LumberjackRootModule } from '../configuration/lumberjack-root.module';
 import { formatLogDriverError } from '../formatting/format-log-driver-error';
 import { LumberjackLogFormatter } from '../formatting/lumberjack-log-formatter.service';
 import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
