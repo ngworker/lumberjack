@@ -15,9 +15,7 @@ import { LumberjackLogDriverLog } from './lumberjack-log-driver.log';
 /**
  * A context for a log driver logging strategy.
  */
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class LumberjackLogDriverLogger<TPayload extends LumberjackLogPayload | void = void> {
   private readonly [LumberjackLevel.Critical] = criticalLogDriverLoggingStrategy;
   private readonly [LumberjackLevel.Debug] = debugLogDriverLoggingStrategy;
@@ -27,7 +25,7 @@ export class LumberjackLogDriverLogger<TPayload extends LumberjackLogPayload | v
   private readonly [LumberjackLevel.Warning] = warningLogDriverLoggingStrategy;
 
   /**
-   * Log the specificed log to the log driver.
+   * Log the specified log to the log driver.
    *
    * Forwards control to the log driver logging strategy corresponding to the
    * level of the specified log driver log.

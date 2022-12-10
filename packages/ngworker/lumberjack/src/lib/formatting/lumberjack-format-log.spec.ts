@@ -27,6 +27,10 @@ function parseFormattedLog(formattedLog: string) {
 
 describe(lumberjackFormatLog.name, () => {
   beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [LumberjackLogFactory, LumberjackTimeService],
+    });
+
     logFactory = TestBed.inject(LumberjackLogFactory);
   });
 

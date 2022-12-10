@@ -2,7 +2,11 @@ import { inject, NgModule } from '@angular/core';
 
 import { isProductionEnvironmentToken } from '../environment/is-production-environment.token';
 import { lumberjackFormatLog } from '../formatting/lumberjack-format-log';
+import { LumberjackLogFormatter } from '../formatting/lumberjack-log-formatter.service';
+import { LumberjackLogDriverLogger } from '../log-drivers/lumberjack-log-driver-logger';
+import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
 import { LumberjackService } from '../logging/lumberjack.service';
+import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { defaultDevelopmentLevels } from './default-development-levels';
 import { defaultProductionLevels } from './default-production-levels';
@@ -42,7 +46,11 @@ export function logDriverConfigFactory({ levels }: LumberjackConfig): Omit<Lumbe
       provide: lumberjackLogDriverConfigToken,
       useFactory: logDriverConfigFactory,
     },
-    { provide: LumberjackService, useClass: LumberjackService },
+    LumberjackService,
+    LumberjackLogFormatter,
+    LumberjackLogDriverLogger,
+    LumberjackLogFactory,
+    LumberjackTimeService,
   ],
 })
 export class LumberjackRootModule {

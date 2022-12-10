@@ -4,6 +4,9 @@ import { LumberjackTimeService } from './lumberjack-time.service';
 
 describe(LumberjackTimeService.name, () => {
   beforeEach(() => {
+    TestBed.configureTestingModule({
+      providers: [LumberjackTimeService],
+    });
     service = TestBed.inject(LumberjackTimeService);
   });
 
