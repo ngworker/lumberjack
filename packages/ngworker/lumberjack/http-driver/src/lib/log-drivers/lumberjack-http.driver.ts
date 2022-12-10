@@ -92,6 +92,8 @@ export class LumberjackHttpDriver<TPayload extends LumberjackLogPayload | void =
    *
    * Failed HTTP requests are retried according to the configured retry options.
    *
+   * When the last retry fails, the error is caught and the log is discarded.
+   *
    * @param formattedLog The log's text representation.
    * @param log The log.
    */
