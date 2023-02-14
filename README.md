@@ -1,7 +1,7 @@
 > Chop and cut Angular logs like a professional lumberjack.
 
 <p align="center">
- <img width="40%" height="40%" src="./logo.svg">
+ <img width="40%" height="40%" src="https://pub-2294738bc2c249ff8040505bf960c018.r2.dev/logo.svg">
 </p>
 
 [Logo by Felipe Zambrano](http://instagram.com/octopez)
