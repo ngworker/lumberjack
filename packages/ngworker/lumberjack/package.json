@@ -1,6 +1,41 @@
 {
   "name": "@ngworker/lumberjack",
   "version": "14.0.0",
+  "description": "Lumberjack is a versatile Angular logging library, specifically designed to be extended and customized",
+  "homepage": "https://github.com/ngworker/lumberjack#readme",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ngworker/lumberjack.git",
+    "directory": "packages/ngworker/lumberjack"
+  },
+  "keywords": [
+    "angular",
+    "angular2",
+    "lumberjack",
+    "logging",
+    "plugin"
+  ],
+  "contributors": [
+    {
+      "name": "Nacho Vazquez",
+      "email": "nacho.vazquez.dev@gmail.com",
+      "url": "https://github.com/NachoVazquez"
+    },
+    {
+      "email": "larsbrinknielsen@gmail.com",
+      "name": "Lars Gyrup Brink Nielsen",
+      "url": "https://github.com/LayZeeDK"
+    },
+    {
+      "email": "santosh.yadav198613@gmail.com",
+      "name": "Santosh Yadav",
+      "url": "https://github.com/santoshyadavdev"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/ngworker/lumberjack/issues?q=is:issue+is:open+"
+  },
   "peerDependencies": {
     "@angular/core": "^15.0.1",
     "@angular/common": "^15.0.1",
