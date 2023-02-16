@@ -46,10 +46,10 @@ export function logDriverConfigFactory({ levels }: LumberjackConfig): Omit<Lumbe
       provide: lumberjackLogDriverConfigToken,
       useFactory: logDriverConfigFactory,
     },
-    LumberjackService,
-    LumberjackLogFormatter,
     LumberjackLogDriverLogger,
     LumberjackLogFactory,
+    LumberjackLogFormatter,
+    LumberjackService,
     LumberjackTimeService,
   ],
 })

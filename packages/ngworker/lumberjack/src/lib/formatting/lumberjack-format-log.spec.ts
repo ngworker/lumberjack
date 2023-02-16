@@ -1,5 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
+import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
 import { LumberjackLogBuilder } from '../logging/lumberjack-log.builder';
 import { LumberjackLevel } from '../logs/lumberjack-level';
@@ -28,7 +29,7 @@ function parseFormattedLog(formattedLog: string) {
 describe(lumberjackFormatLog.name, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [LumberjackLogFactory, LumberjackTimeService],
+      imports: [LumberjackModule.forRoot()],
     });
 
     logFactory = TestBed.inject(LumberjackLogFactory);
