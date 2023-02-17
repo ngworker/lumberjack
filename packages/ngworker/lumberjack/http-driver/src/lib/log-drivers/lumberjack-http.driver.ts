@@ -16,7 +16,8 @@ import { retryWithDelay } from '../operators/retry-with-delay.operator';
  */
 @Injectable()
 export class LumberjackHttpDriver<TPayload extends LumberjackLogPayload | void = void>
-  implements LumberjackLogDriver<TPayload>, OnDestroy {
+  implements LumberjackLogDriver<TPayload>, OnDestroy
+{
   static readonly driverIdentifier = 'LumberjackHttpDriver';
 
   private readonly http = inject(HttpClient);
