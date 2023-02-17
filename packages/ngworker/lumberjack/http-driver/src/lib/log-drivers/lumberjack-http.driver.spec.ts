@@ -42,7 +42,10 @@ function expectRequest(
   expect(body).toEqual(expectedBody);
 }
 
-function expectRequestToBeAborted(httpTestingController: HttpTestingController, options: LumberjackHttpDriverOptions) {
+function expectRequestToBeDiscarded(
+  httpTestingController: HttpTestingController,
+  options: LumberjackHttpDriverOptions
+) {
   httpTestingController.expectNone(options.storeUrl);
 }
 
@@ -149,7 +152,7 @@ describe(LumberjackHttpDriver.name, () => {
       );
     } catch (error) {
       expect(error).toEqual(new LumberjackHttpDriverError(`Failed after ${retryOptions.maxRetries} retries.`));
-      expectRequestToBeAborted(httpTestingController, options);
+      expectRequestToBeDiscarded(httpTestingController, options);
     }
   });
 

@@ -16,8 +16,7 @@ import { retryWithDelay } from '../operators/retry-with-delay.operator';
  */
 @Injectable()
 export class LumberjackHttpDriver<TPayload extends LumberjackLogPayload | void = void>
-  implements LumberjackLogDriver<TPayload>, OnDestroy
-{
+  implements LumberjackLogDriver<TPayload>, OnDestroy {
   static readonly driverIdentifier = 'LumberjackHttpDriver';
 
   private readonly http = inject(HttpClient);
@@ -92,7 +91,8 @@ export class LumberjackHttpDriver<TPayload extends LumberjackLogPayload | void =
    *
    * Failed HTTP requests are retried according to the configured retry options.
    *
-   * When the last retry fails, the error is caught and the log is discarded.
+   * When the last retry fails, the driver will throw a `LumberjackHttpDriverError`
+   * and the log being sent gets discarded.
    *
    * @param formattedLog The log's text representation.
    * @param log The log.
