@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FakeTimeService, resolveDependency } from '@internal/test-util';
+import { FakeTimeService } from '@internal/test-util';
 
 import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackOptions } from '../configuration/lumberjack.options';
@@ -12,7 +12,7 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
 import { LumberjackLogFormatter } from './lumberjack-log-formatter.service';
 
 function createFormattingErrorLog(formattingErrorMessage: string, log: LumberjackLog): LumberjackLog {
-  const logFactory = resolveDependency(LumberjackLogFactory);
+  const logFactory = TestBed.inject(LumberjackLogFactory);
 
   return logFactory
     .createErrorLog(`Could not format message "${log.message}". Error: "${formattingErrorMessage}"`)
@@ -29,9 +29,9 @@ describe(LumberjackLogFormatter.name, () => {
       providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
     });
 
-    const service = resolveDependency(LumberjackLogFormatter);
-    const fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
-    const logFactory = resolveDependency(LumberjackLogFactory);
+    const service = TestBed.inject(LumberjackLogFormatter);
+    const fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
+    const logFactory = TestBed.inject(LumberjackLogFactory);
 
     return {
       fakeTime,

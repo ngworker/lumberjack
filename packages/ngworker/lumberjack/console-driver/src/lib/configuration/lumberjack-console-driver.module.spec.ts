@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { expectNgModuleToBeGuardedAgainstDirectImport, resolveDependency } from '@internal/test-util';
+import { expectNgModuleToBeGuardedAgainstDirectImport } from '@internal/test-util';
 import {
   lumberjackConfigToken,
   LumberjackLevel,
@@ -30,7 +30,7 @@ const createConsoleDriver = ({
     ],
   });
 
-  const [consoleDriver] = resolveDependency(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
+  const [consoleDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
 
   return consoleDriver;
 };
@@ -78,7 +78,7 @@ describe(LumberjackConsoleDriverModule.name, () => {
       const consoleDriver = createConsoleDriver();
 
       const actualConfig = consoleDriver.config;
-      const logConfig = resolveDependency(lumberjackConfigToken);
+      const logConfig = TestBed.inject(lumberjackConfigToken);
       const defaultLogDriverConfig: LumberjackLogDriverConfig = {
         levels: logConfig.levels,
         identifier: LumberjackConsoleDriver.driverIdentifier,

@@ -92,6 +92,9 @@ export class LumberjackHttpDriver<TPayload extends LumberjackLogPayload | void =
    *
    * Failed HTTP requests are retried according to the configured retry options.
    *
+   * When the last retry fails, the driver will throw a `LumberjackHttpDriverError`
+   * and the log being sent gets discarded.
+   *
    * @param formattedLog The log's text representation.
    * @param log The log.
    */
@@ -104,8 +107,7 @@ export class LumberjackHttpDriver<TPayload extends LumberjackLogPayload | void =
         this.http
           .post<void>(storeUrl, httpLog)
           .pipe(retryWithDelay(retryOptions.maxRetries, retryOptions.delayMs))
-          // HTTP requests complete after
-          // eslint-disable-next-line rxjs-angular/prefer-composition
+          // HTTP requests complete after the response is received, so there's no need to unsubscribe.
           .subscribe(() => {
             // No-op
           })

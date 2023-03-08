@@ -9,7 +9,6 @@ import {
   LumberjackModule,
 } from '@ngworker/lumberjack';
 
-import { resolveDependency } from '../angular/resolve-dependency';
 import { repeatSideEffect } from '../functions/repeat-side-effect';
 import { createDriverLog } from '../logs/driver-log-creators';
 
@@ -27,7 +26,7 @@ describe(ErrorThrowingDriver.name, () => {
       ],
     });
 
-    const [driver] = resolveDependency(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
+    const [driver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
 
     return {
       driver,

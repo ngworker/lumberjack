@@ -1,3 +1,5 @@
+import { TestBed } from '@angular/core/testing';
+
 import {
   LumberjackLevel,
   LumberjackLogDriverLog,
@@ -5,8 +7,6 @@ import {
   LumberjackLogPayload,
   LumberjackTimeService,
 } from '@ngworker/lumberjack';
-
-import { resolveDependency } from '../angular/resolve-dependency';
 
 export const createDriverLog = <TPayload extends LumberjackLogPayload | void = void>(
   formattedLog: string,
@@ -18,7 +18,7 @@ export const createDriverLog = <TPayload extends LumberjackLogPayload | void = v
   formattedLog,
   log: {
     scope,
-    createdAt: resolveDependency(LumberjackTimeService).getUnixEpochTicks(),
+    createdAt: TestBed.inject(LumberjackTimeService).getUnixEpochTicks(),
     level,
     message,
     payload,

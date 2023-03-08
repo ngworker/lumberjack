@@ -2,7 +2,7 @@ import { HttpClientTestingModule, HttpTestingController, TestRequest } from '@an
 import { TestBed } from '@angular/core/testing';
 import { VERSION } from '@angular/platform-browser';
 
-import { createCriticalDriverLog, createDriverLog, repeatSideEffect, resolveDependency } from '@internal/test-util';
+import { createCriticalDriverLog, createDriverLog, repeatSideEffect } from '@internal/test-util';
 import {
   LumberjackLevel,
   LumberjackLogDriver,
@@ -15,6 +15,7 @@ import {
 
 import { LumberjackHttpDriverModule } from '../configuration/lumberjack-http-driver.module';
 import { LumberjackHttpDriverOptions } from '../configuration/lumberjack-http-driver.options';
+import { LumberjackHttpDriverError } from '../errors/lumberjack-http-driver.error';
 import { LumberjackHttpLog } from '../logs/lumberjack-http.log';
 
 import { LumberjackHttpDriver } from './lumberjack-http.driver';
@@ -41,9 +42,11 @@ function expectRequest(
   expect(body).toEqual(expectedBody);
 }
 
-function expectRequestToBeAborted(httpTestingController: HttpTestingController, options: LumberjackHttpDriverOptions) {
-  const { cancelled } = httpTestingController.expectOne(options.storeUrl);
-  expect(cancelled).toBeTruthy();
+function expectRequestToBeDiscarded(
+  httpTestingController: HttpTestingController,
+  options: LumberjackHttpDriverOptions
+) {
+  httpTestingController.expectNone(options.storeUrl);
 }
 
 function expectFailingRequest(
@@ -89,10 +92,10 @@ describe(LumberjackHttpDriver.name, () => {
       imports: [LumberjackModule.forRoot(), LumberjackHttpDriverModule.withOptions(options), HttpClientTestingModule],
     });
 
-    [httpDriver] = resolveDependency(lumberjackLogDriverToken) as unknown as LumberjackLogDriver<HttpDriverPayload>[];
-    httpTestingController = resolveDependency(HttpTestingController);
+    [httpDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver<HttpDriverPayload>[];
+    httpTestingController = TestBed.inject(HttpTestingController);
 
-    jest.useFakeTimers('modern');
+    jest.useFakeTimers();
   });
 
   describe.each([
@@ -143,11 +146,14 @@ describe(LumberjackHttpDriver.name, () => {
     httpDriver.logCritical(expectedDriverLog);
     const { retryOptions } = options;
 
-    repeatSideEffect(retryOptions.maxRetries + 1, () =>
-      expectFailingRequest(httpTestingController, options, createHttpDriverLog(expectedDriverLog))
-    );
-
-    expectRequestToBeAborted(httpTestingController, options);
+    try {
+      repeatSideEffect(retryOptions.maxRetries + 1, () =>
+        expectFailingRequest(httpTestingController, options, createHttpDriverLog(expectedDriverLog))
+      );
+    } catch (error) {
+      expect(error).toEqual(new LumberjackHttpDriverError(`Failed after ${retryOptions.maxRetries} retries.`));
+      expectRequestToBeDiscarded(httpTestingController, options);
+    }
   });
 
   afterEach(() => {

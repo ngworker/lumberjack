@@ -17,7 +17,6 @@ import {
   ObjectDriverModule,
   ObjectPayload,
   ObjectService,
-  resolveDependency,
   SpyDriver,
   SpyDriverModule,
 } from '@internal/test-util';
@@ -88,16 +87,16 @@ const payloadInfo: PayloadFieldInfo = { payloadInfo: 'PayloadINFO' };
 const objectPayloadInfo: ObjectPayload = { isWorking: true };
 
 const logDebugMessage = () =>
-  resolveDependency(LumberjackService).log(
-    resolveDependency(LumberjackLogFactory).createDebugLog('').withScope('Test').build()
+  TestBed.inject(LumberjackService).log(
+    TestBed.inject(LumberjackLogFactory).createDebugLog('').withScope('Test').build()
   );
 const logDebugMessageWithPayloadField = () =>
-  resolveDependency<LumberjackService<PayloadFieldInfo>>(LumberjackService).log(
-    resolveDependency(LumberjackLogFactory).createDebugLog('').withScope('Test').withPayload(payloadInfo).build()
+  TestBed.inject<LumberjackService<PayloadFieldInfo>>(LumberjackService).log(
+    TestBed.inject(LumberjackLogFactory).createDebugLog('').withScope('Test').withPayload(payloadInfo).build()
   );
 const logDebugMessageWithObjectPayloadField = () =>
-  resolveDependency<LumberjackService<ObjectPayload>>(LumberjackService).log(
-    resolveDependency(LumberjackLogFactory).createDebugLog('').withScope('Test').withPayload(objectPayloadInfo).build()
+  TestBed.inject<LumberjackService<ObjectPayload>>(LumberjackService).log(
+    TestBed.inject(LumberjackLogFactory).createDebugLog('').withScope('Test').withPayload(objectPayloadInfo).build()
   );
 
 describe(LumberjackService.name, () => {
@@ -137,10 +136,10 @@ describe(LumberjackService.name, () => {
           imports: [LumberjackModule.forRoot(), SpyDriverModule.forRoot()],
           providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
         });
-        const fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
+        const fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
         fakeTime.setTime(fakeDate);
 
-        const [spyDriver] = resolveDependency(lumberjackLogDriverToken) as unknown as SpyDriver<PayloadFieldInfo>[];
+        const [spyDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as SpyDriver<PayloadFieldInfo>[];
 
         expect(logDebugMessageWithPayloadField).not.toThrow();
 
@@ -154,7 +153,7 @@ describe(LumberjackService.name, () => {
           imports: [LumberjackModule.forRoot(), ObjectDriverModule.forRoot()],
         });
 
-        const objectService = resolveDependency(ObjectService);
+        const objectService = TestBed.inject(ObjectService);
         const objectLogSpy = jest.spyOn(objectService, 'log');
 
         expect(logDebugMessageWithObjectPayloadField).not.toThrow();
@@ -193,9 +192,9 @@ describe(LumberjackService.name, () => {
           ],
           providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
         });
-        const fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
+        const fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
         fakeTime.setTime(fakeDate);
-        const [spyDriver, errorDriver] = resolveDependency(lumberjackLogDriverToken) as unknown as [
+        const [spyDriver, errorDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as [
           SpyDriver,
           ErrorThrowingDriver
         ];
@@ -230,9 +229,9 @@ describe(LumberjackService.name, () => {
           ],
           providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
         });
-        const fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
+        const fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
         fakeTime.setTime(fakeDate);
-        const [spyDriver, errorDriver, noopDriver] = resolveDependency(lumberjackLogDriverToken) as unknown as [
+        const [spyDriver, errorDriver, noopDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as [
           SpyDriver,
           ErrorThrowingDriver,
           NoopDriver
@@ -275,9 +274,9 @@ describe(LumberjackService.name, () => {
           ],
           providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
         });
-        const fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
+        const fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
         fakeTime.setTime(fakeDate);
-        const logDrivers = resolveDependency(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
+        const logDrivers = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
         const spyDriver = logDrivers[0] as SpyDriver;
 
         expect(logDebugMessage).not.toThrow();
@@ -305,9 +304,9 @@ describe(LumberjackService.name, () => {
           ],
           providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
         });
-        const fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
+        const fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
         fakeTime.setTime(fakeDate);
-        const logDrivers = resolveDependency(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
+        const logDrivers = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
         const spyDriver = logDrivers[1] as SpyDriver;
 
         expect(logDebugMessage).not.toThrow();
@@ -325,7 +324,7 @@ describe(LumberjackService.name, () => {
             ErrorThrowingDriverModule.forRoot({ logsBeforeThrowing: 1 }),
           ],
         });
-        const logDrivers = resolveDependency(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
+        const logDrivers = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
         const spyDriver = logDrivers[0] as SpyDriver;
         const errorDriver = logDrivers[1] as ErrorThrowingDriver;
         spyDriver.logDebug.mockImplementation(() => {
@@ -362,11 +361,11 @@ describe(LumberjackService.name, () => {
           ],
         });
 
-        lumberjack = resolveDependency(LumberjackService) as LumberjackService;
+        lumberjack = TestBed.inject(LumberjackService) as LumberjackService;
 
-        const [logDriver] = resolveDependency(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
+        const [logDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
         spyDriver = logDriver as SpyDriver;
-        logFactory = resolveDependency(LumberjackLogFactory);
+        logFactory = TestBed.inject(LumberjackLogFactory);
       });
 
       let logFactory: LumberjackLogFactory;
@@ -422,15 +421,15 @@ describe(LumberjackService.name, () => {
         ],
         providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
       });
-      const fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
+      const fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
       fakeTime.setTime(fakeDate);
 
-      lumberjack = resolveDependency(LumberjackService) as LumberjackService;
+      lumberjack = TestBed.inject(LumberjackService) as LumberjackService;
 
-      const [logDriver] = resolveDependency(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
+      const [logDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
       spyDriver = logDriver as SpyDriver;
 
-      logFactory = resolveDependency(LumberjackLogFactory);
+      logFactory = TestBed.inject(LumberjackLogFactory);
     });
 
     let logFactory: LumberjackLogFactory;
@@ -520,15 +519,15 @@ describe(LumberjackService.name, () => {
         ],
         providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }, verboseLoggingProvider],
       });
-      const fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
+      const fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
       fakeTime.setTime(fakeDate);
 
-      lumberjack = resolveDependency(LumberjackService) as LumberjackService;
+      lumberjack = TestBed.inject(LumberjackService) as LumberjackService;
 
-      const [logDriver] = resolveDependency(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
+      const [logDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
       spyDriver = logDriver as SpyDriver;
 
-      logFactory = resolveDependency(LumberjackLogFactory);
+      logFactory = TestBed.inject(LumberjackLogFactory);
     });
 
     let logFactory: LumberjackLogFactory;
@@ -589,14 +588,12 @@ describe(LumberjackService.name, () => {
           ],
           providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }, verboseLoggingProvider],
         });
-        const fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
+        const fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
         fakeTime.setTime(fakeDate);
 
-        lumberjack = resolveDependency(LumberjackService) as LumberjackService;
+        lumberjack = TestBed.inject(LumberjackService) as LumberjackService;
 
-        const [_spyDriver, _noopDriver] = resolveDependency(
-          lumberjackLogDriverToken
-        ) as unknown as LumberjackLogDriver[];
+        const [_spyDriver, _noopDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
         spyDriver = _spyDriver as SpyDriver;
         noopDriver = _noopDriver as jest.Mocked<NoopDriver>;
         jest.spyOn(noopDriver, 'logCritical');
@@ -605,7 +602,7 @@ describe(LumberjackService.name, () => {
         jest.spyOn(noopDriver, 'logInfo');
         jest.spyOn(noopDriver, 'logTrace');
         jest.spyOn(noopDriver, 'logWarning');
-        logFactory = resolveDependency(LumberjackLogFactory);
+        logFactory = TestBed.inject(LumberjackLogFactory);
       });
 
       beforeEach(() => {

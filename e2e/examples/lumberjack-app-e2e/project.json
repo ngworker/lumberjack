@@ -1,4 +1,5 @@
 {
+  "name": "examples-lumberjack-app-e2e",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "e2e/examples/lumberjack-app-e2e/src",
   "projectType": "application",
@@ -12,8 +13,9 @@
         }
       ],
       "options": {
-        "cypressConfig": "e2e/examples/lumberjack-app-e2e/cypress.json",
-        "devServerTarget": "examples-lumberjack-app:serve:development"
+        "cypressConfig": "e2e/examples/lumberjack-app-e2e/cypress.config.ts",
+        "devServerTarget": "examples-lumberjack-app:serve:development",
+        "testingType": "e2e"
       },
       "configurations": {
         "production": {

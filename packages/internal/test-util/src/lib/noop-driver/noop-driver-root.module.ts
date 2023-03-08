@@ -1,4 +1,4 @@
-import { inject, InjectFlags, NgModule } from '@angular/core';
+import { inject, NgModule } from '@angular/core';
 
 import { lumberjackLogDriverToken } from '@ngworker/lumberjack';
 
@@ -14,10 +14,7 @@ import { NoopDriver } from './noop.driver';
   ],
 })
 export class NoopDriverRootModule {
-  private readonly maybeNgModuleFromParentInjector = inject(
-    NoopDriverRootModule,
-    InjectFlags.SkipSelf | InjectFlags.Optional
-  );
+  private readonly maybeNgModuleFromParentInjector = inject(NoopDriverRootModule, { optional: true, skipSelf: true });
 
   constructor() {
     if (this.maybeNgModuleFromParentInjector) {

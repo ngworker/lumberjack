@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FakeTimeService, resolveDependency } from '@internal/test-util';
+import { FakeTimeService } from '@internal/test-util';
 
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
@@ -26,7 +26,7 @@ describe(LumberjackLogBuilder.name, () => {
       providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
     });
 
-    fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
+    fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
   });
 
   describe('Base builder usage', () => {

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { FakeTimeService, resolveDependency } from '@internal/test-util';
+import { FakeTimeService } from '@internal/test-util';
 
 import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
@@ -34,9 +34,9 @@ describe(ScopedLumberjackLogger.name, () => {
       imports: [LumberjackModule.forRoot()],
       providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
     });
-    logger = resolveDependency(TestLogger);
-    logFactory = resolveDependency(LumberjackLogFactory);
-    const lumberjack = resolveDependency(LumberjackService);
+    logger = TestBed.inject(TestLogger);
+    logFactory = TestBed.inject(LumberjackLogFactory);
+    const lumberjack = TestBed.inject(LumberjackService);
     lumberjackLogSpy = jest.spyOn(lumberjack, 'log').mockImplementation(() => {
       /* do nothing */
     });
