@@ -5,9 +5,7 @@ import { Injectable } from '@angular/core';
  *
  * Can be overridden for testing purposes.
  */
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class LumberjackTimeService {
   /**
    * Return the current date-time as Unix epoch ticks in milliseconds.

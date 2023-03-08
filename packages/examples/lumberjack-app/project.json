@@ -11,7 +11,7 @@
         "outputPath": "dist/packages/examples/lumberjack-app",
         "index": "packages/examples/lumberjack-app/src/index.html",
         "main": "packages/examples/lumberjack-app/src/main.ts",
-        "polyfills": "packages/examples/lumberjack-app/src/polyfills.ts",
+        "polyfills": ["zone.js"],
         "tsConfig": "packages/examples/lumberjack-app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": ["packages/examples/lumberjack-app/src/favicon.ico", "packages/examples/lumberjack-app/src/assets"],
@@ -30,12 +30,6 @@
               "type": "anyComponentStyle",
               "maximumWarning": "2kb",
               "maximumError": "4kb"
-            }
-          ],
-          "fileReplacements": [
-            {
-              "replace": "packages/examples/lumberjack-app/src/environments/environment.ts",
-              "with": "packages/examples/lumberjack-app/src/environments/environment.prod.ts"
             }
           ],
           "outputHashing": "all"
@@ -91,10 +85,11 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": ["coverage/packages/examples/lumberjack-app"],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "packages/examples/lumberjack-app/jest.config.ts",
-        "passWithNoTests": true
+        "passWithNoTests": true,
+        "reporters": ["default", "github-actions"]
       },
       "configurations": {
         "coverage": {
@@ -105,5 +100,6 @@
       }
     }
   },
-  "tags": ["scope:internal", "type:app"]
+  "tags": ["scope:internal", "type:app"],
+  "name": "examples-lumberjack-app"
 }

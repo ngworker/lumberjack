@@ -3,16 +3,13 @@
   "compilerOptions": {
     "outDir": "../../../dist/out-tsc",
     "types": [],
-    "target": "ES2020",
-    "module": "ES2020",
-    "lib": ["ES2020", "DOM"],
     "paths": {
       "@ngworker/lumberjack": ["dist/packages/ngworker/lumberjack"],
       "@ngworker/lumberjack/console-driver": ["dist/packages/ngworker/lumberjack/console-driver"],
       "@ngworker/lumberjack/http-driver": ["dist/packages/ngworker/lumberjack/http-driver"]
     }
   },
-  "files": ["src/main.ts", "src/polyfills.ts"],
+  "files": ["src/main.ts"],
   "include": ["src/**/*.d.ts"],
-  "exclude": ["**/*.test.ts", "**/*.spec.ts"]
+  "exclude": ["**/*.test.ts", "**/*.spec.ts", "jest.config.ts"]
 }

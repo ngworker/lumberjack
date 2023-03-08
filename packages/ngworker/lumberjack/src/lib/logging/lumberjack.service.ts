@@ -1,6 +1,5 @@
-import { inject, Injectable, InjectFlags } from '@angular/core';
+import { inject, Injectable } from '@angular/core';
 
-import { LumberjackRootModule } from '../configuration/lumberjack-root.module';
 import { formatLogDriverError } from '../formatting/format-log-driver-error';
 import { LumberjackLogFormatter } from '../formatting/lumberjack-log-formatter.service';
 import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
@@ -26,13 +25,13 @@ const noReportedLogDriverErrorIndex = -1;
  * base classes to set up predefined loggers unless you need a programmatic
  * API.
  */
-@Injectable({ providedIn: LumberjackRootModule })
+@Injectable()
 export class LumberjackService<TPayload extends LumberjackLogPayload | void = void> {
   /**
    * The registered log drivers.
    */
   private readonly drivers =
-    inject<LumberjackLogDriver<TPayload>[]>(lumberjackLogDriverToken, InjectFlags.Optional) ?? [];
+    inject<LumberjackLogDriver<TPayload>[]>(lumberjackLogDriverToken, { optional: true }) ?? [];
   private readonly driverLogger = inject<LumberjackLogDriverLogger<TPayload>>(LumberjackLogDriverLogger);
   private readonly logFormatter = inject<LumberjackLogFormatter<TPayload>>(LumberjackLogFormatter);
   private readonly time = inject(LumberjackTimeService);

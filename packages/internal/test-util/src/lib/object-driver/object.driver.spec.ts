@@ -10,8 +10,6 @@ import {
   LumberjackModule,
 } from '@ngworker/lumberjack';
 
-import { resolveDependency } from '../angular/resolve-dependency';
-
 import { ObjectDriverModule } from './object-driver.module';
 import { ObjectDriver } from './object.driver';
 import { ObjectPayload } from './object.payload';
@@ -26,8 +24,8 @@ describe(ObjectDriver.name, () => {
       imports: [LumberjackModule.forRoot(), ObjectDriverModule.forRoot()],
     });
 
-    [objectDriver] = resolveDependency(lumberjackLogDriverToken) as unknown as LumberjackLogDriver<ObjectPayload>[];
-    objectService = resolveDependency(ObjectService);
+    [objectDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver<ObjectPayload>[];
+    objectService = TestBed.inject(ObjectService);
     jest.spyOn(objectService, 'log');
   });
 

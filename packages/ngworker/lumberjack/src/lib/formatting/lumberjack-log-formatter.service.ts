@@ -10,9 +10,7 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
 import { lumberjackFormatLog } from './lumberjack-format-log';
 import { LumberjackLogFormatterResult } from './lumberjack-log-formatter-result';
 
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class LumberjackLogFormatter<TPayload extends LumberjackLogPayload | void = void> {
   private readonly config = inject<LumberjackConfig<TPayload>>(lumberjackConfigToken);
   private readonly time = inject(LumberjackTimeService);

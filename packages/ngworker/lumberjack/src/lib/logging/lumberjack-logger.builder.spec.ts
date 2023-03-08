@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FakeTimeService, resolveDependency } from '@internal/test-util';
+import { FakeTimeService } from '@internal/test-util';
 
 import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackLevel } from '../logs/lumberjack-level';
@@ -28,8 +28,8 @@ describe(LumberjackLoggerBuilder.name, () => {
       providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
     });
 
-    fakeTime = resolveDependency(LumberjackTimeService) as FakeTimeService;
-    lumberjackService = resolveDependency(LumberjackService) as LumberjackService;
+    fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
+    lumberjackService = TestBed.inject(LumberjackService) as LumberjackService;
     lumberjackLogSpy = jest.spyOn(lumberjackService, 'log').mockImplementation(() => {
       /* do nothing */
     });
@@ -45,11 +45,7 @@ describe(LumberjackLoggerBuilder.name, () => {
         const builder = new LumberjackLoggerBuilder(lumberjackService, fakeTime, level, testMessage);
         const logFunction = builder.build();
         logFunction();
-        const expectedLog = new LumberjackLogBuilder(
-          resolveDependency(LumberjackTimeService),
-          level,
-          testMessage
-        ).build();
+        const expectedLog = new LumberjackLogBuilder(TestBed.inject(LumberjackTimeService), level, testMessage).build();
 
         expect(lumberjackLogSpy).toHaveBeenCalledWith(expectedLog);
       })
@@ -62,7 +58,7 @@ describe(LumberjackLoggerBuilder.name, () => {
     const builder = new LumberjackLoggerBuilder(lumberjackService, fakeTime, level, testMessage);
     const logFunction = builder.withScope(scope).build();
     logFunction();
-    const expectedLog = new LumberjackLogBuilder(resolveDependency(LumberjackTimeService), level, testMessage)
+    const expectedLog = new LumberjackLogBuilder(TestBed.inject(LumberjackTimeService), level, testMessage)
       .withScope(scope)
       .build();
 
@@ -89,7 +85,7 @@ describe(LumberjackLoggerBuilder.name, () => {
       const logFunction = builder.withScope(scope).build();
       logFunction(payload);
       const expectedLog = new LumberjackLogBuilder<TestPayload>(
-        resolveDependency(LumberjackTimeService),
+        TestBed.inject(LumberjackTimeService),
         level,
         testMessage
       )
@@ -104,7 +100,7 @@ describe(LumberjackLoggerBuilder.name, () => {
       const logFunction = builder.withPayload(payload).build();
       logFunction();
       const expectedLog = new LumberjackLogBuilder<TestPayload>(
-        resolveDependency(LumberjackTimeService),
+        TestBed.inject(LumberjackTimeService),
         level,
         testMessage
       )
@@ -118,7 +114,7 @@ describe(LumberjackLoggerBuilder.name, () => {
       const logFunction = builder.withScope(scope).withPayload(payload).build();
       logFunction();
       const expectedLog = new LumberjackLogBuilder<TestPayload>(
-        resolveDependency(LumberjackTimeService),
+        TestBed.inject(LumberjackTimeService),
         level,
         testMessage
       )

@@ -9,7 +9,6 @@ import {
   LumberjackModule,
 } from '@ngworker/lumberjack';
 
-import { resolveDependency } from '../angular/resolve-dependency';
 import { createDriverLog } from '../logs/driver-log-creators';
 
 import { SpyDriverModule } from './spy-driver.module';
@@ -23,7 +22,7 @@ describe(SpyDriver.name, () => {
       imports: [LumberjackModule.forRoot(), SpyDriverModule.forRoot()],
     });
 
-    [spyDriver] = resolveDependency(lumberjackLogDriverToken) as unknown as SpyDriver[];
+    [spyDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as SpyDriver[];
   });
 
   describe.each([

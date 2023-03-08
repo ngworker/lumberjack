@@ -15,9 +15,7 @@ import { LumberjackLogBuilder } from './lumberjack-log.builder';
  * so that we don't have to new up log builders and pass `LumberjackTimeService`
  * to them.
  */
-@Injectable({
-  providedIn: 'root',
-})
+@Injectable()
 export class LumberjackLogFactory<TPayload extends LumberjackLogPayload | void = void> {
   private readonly time = inject(LumberjackTimeService);
 

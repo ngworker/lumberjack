@@ -1,6 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 
-import { resolveDependency } from '@internal/test-util';
 import { LumberjackLevel, LumberjackLogDriverConfig, lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
 
 import { lumberjackConsoleDriverConfigToken } from './lumberjack-console-driver-config.token';
@@ -25,7 +24,7 @@ describe('consoleDriverConfigToken', () => {
     });
 
     it('then that config is resolved', () => {
-      const actualDriverConfig = resolveDependency(lumberjackConsoleDriverConfigToken);
+      const actualDriverConfig = TestBed.inject(lumberjackConsoleDriverConfigToken);
 
       expect(actualDriverConfig).toStrictEqual(debugDriverConfig);
     });
