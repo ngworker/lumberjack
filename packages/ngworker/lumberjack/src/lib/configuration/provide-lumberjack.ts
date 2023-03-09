@@ -6,6 +6,7 @@ import { LumberjackLogFormatter } from '../formatting/lumberjack-log-formatter.s
 import { LumberjackLogDriverLogger } from '../log-drivers/lumberjack-log-driver-logger';
 import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
 import { LumberjackService } from '../logging/lumberjack.service';
+import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { defaultDevelopmentLevels } from './default-development-levels';
 import { defaultProductionLevels } from './default-production-levels';
@@ -66,5 +67,6 @@ export function provideLumberjack(options?: LumberjackOptions): Provider[] {
     LumberjackLogFormatter,
     LumberjackLogDriverLogger,
     LumberjackLogFactory,
+    LumberjackTimeService,
   ];
 }

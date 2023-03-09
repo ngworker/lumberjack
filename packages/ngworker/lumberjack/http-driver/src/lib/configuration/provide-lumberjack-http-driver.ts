@@ -1,4 +1,5 @@
-import { Provider } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
+import { EnvironmentProviders, Provider } from '@angular/core';
 
 import { LumberjackLogDriverConfig, lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
 
@@ -76,7 +77,6 @@ export function withOptions(options: LumberjackHttpDriverOptions): LumberjackHtt
  */
 export function provideLumberjackHttpDriver<Kind extends LumberjackHttpDriverConfigurationKind>(
   configuration: LumberjackHttpDriverConfiguration<Kind>
-): Provider[] {
-  // provide HTTPClient when Angular 15 is released.
-  return [lumberjackHttpDriverProvider, configuration.ɵproviders];
+): (Provider | EnvironmentProviders)[] {
+  return [provideHttpClient(), lumberjackHttpDriverProvider, configuration.ɵproviders];
 }

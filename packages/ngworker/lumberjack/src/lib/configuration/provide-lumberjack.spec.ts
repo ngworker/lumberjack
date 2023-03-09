@@ -1,7 +1,5 @@
 import { TestBed } from '@angular/core/testing';
 
-import { resolveDependency } from '@internal/test-util';
-
 import { isProductionEnvironmentToken } from '../environment/is-production-environment.token';
 import { lumberjackFormatLog } from '../formatting/lumberjack-format-log';
 import { LumberjackService } from '../logging/lumberjack.service';
@@ -27,7 +25,7 @@ describe(provideLumberjack.name, () => {
       providers: [provideLumberjack(expectedConfig)],
     });
 
-    const actualConfig = resolveDependency(lumberjackConfigToken);
+    const actualConfig = TestBed.inject(lumberjackConfigToken);
     expect(actualConfig).toEqual(expectedConfig);
   });
 
@@ -44,7 +42,7 @@ describe(provideLumberjack.name, () => {
       providers: [provideLumberjack(config), { provide: isProductionEnvironmentToken, useValue: false }],
     });
 
-    const actualConfig = resolveDependency(lumberjackConfigToken);
+    const actualConfig = TestBed.inject(lumberjackConfigToken);
     expect(actualConfig).toEqual(expectedConfig as LumberjackConfig);
   });
 
@@ -61,7 +59,7 @@ describe(provideLumberjack.name, () => {
       providers: [provideLumberjack(config), { provide: isProductionEnvironmentToken, useValue: true }],
     });
 
-    const actualConfig = resolveDependency(lumberjackConfigToken);
+    const actualConfig = TestBed.inject(lumberjackConfigToken);
     expect(actualConfig).toEqual(expectedConfig as LumberjackConfig);
   });
 
@@ -70,7 +68,7 @@ describe(provideLumberjack.name, () => {
       providers: [provideLumberjack(), { provide: isProductionEnvironmentToken, useValue: false }],
     });
 
-    const actualConfig = resolveDependency(lumberjackConfigToken);
+    const actualConfig = TestBed.inject(lumberjackConfigToken);
     expect(actualConfig).toEqual({
       levels: defaultDevelopmentLevels,
       format: expect.any(Function),
@@ -82,7 +80,7 @@ describe(provideLumberjack.name, () => {
       providers: [provideLumberjack(), { provide: isProductionEnvironmentToken, useValue: true }],
     });
 
-    const actualConfig = resolveDependency(lumberjackConfigToken);
+    const actualConfig = TestBed.inject(lumberjackConfigToken);
     expect(actualConfig).toEqual({
       format: lumberjackFormatLog,
       levels: defaultProductionLevels,
@@ -93,12 +91,12 @@ describe(provideLumberjack.name, () => {
     TestBed.configureTestingModule({
       providers: [provideLumberjack()],
     });
-    const logConfig = resolveDependency(lumberjackConfigToken);
+    const logConfig = TestBed.inject(lumberjackConfigToken);
     const defaultLogDriverConfig: Omit<LumberjackLogDriverConfig, 'identifier'> = {
       levels: logConfig.levels,
     };
 
-    const actualConfig = resolveDependency(lumberjackLogDriverConfigToken);
+    const actualConfig = TestBed.inject(lumberjackLogDriverConfigToken);
     expect(actualConfig).toEqual(defaultLogDriverConfig as LumberjackLogDriverConfig);
   });
 
@@ -106,7 +104,7 @@ describe(provideLumberjack.name, () => {
     TestBed.configureTestingModule({
       providers: [provideLumberjack()],
     });
-    const lumberjackService = resolveDependency(LumberjackService);
+    const lumberjackService = TestBed.inject(LumberjackService);
 
     expect(lumberjackService).toBeDefined();
   });

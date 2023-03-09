@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpClientModule } from '@angular/common/http';
 import { O } from 'ts-toolbelt';
 
 import {
@@ -9,7 +8,6 @@ import {
   lumberjackLogDriverToken,
   provideLumberjack,
 } from '@ngworker/lumberjack';
-import { resolveDependency } from '@internal/test-util';
 
 import { LumberjackHttpDriver } from '../log-drivers/lumberjack-http.driver';
 
@@ -53,11 +51,10 @@ const createHttpDriver = (
     config: LumberjackHttpDriverConfig;
     isLumberjackModuleProvidedFirst?: boolean;
   } = {
-    config: createHttpConfig([LumberjackLevel.Verbose], LumberjackHttpDriver.driverIdentifier),
-  }
+      config: createHttpConfig([LumberjackLevel.Verbose], LumberjackHttpDriver.driverIdentifier),
+    }
 ) => {
   TestBed.configureTestingModule({
-    imports: [HttpClientModule],
     providers: [
       isLumberjackModuleProvidedFirst ? provideLumberjack() : [],
       provideLumberjackHttpDriver(withConfig(config)),
@@ -65,7 +62,7 @@ const createHttpDriver = (
     ],
   });
 
-  const [httpDriver] = resolveDependency(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
+  const [httpDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
 
   return httpDriver;
 };
@@ -80,7 +77,6 @@ const createHttpDriverWithOptions = (
   } = { options: createHttpOptions() }
 ) => {
   TestBed.configureTestingModule({
-    imports: [HttpClientModule],
     providers: [
       isLumberjackModuleProvidedFirst ? provideLumberjack() : [],
       provideLumberjackHttpDriver(withOptions(options)),
@@ -88,7 +84,7 @@ const createHttpDriverWithOptions = (
     ],
   });
 
-  const [httpDriver] = resolveDependency(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
+  const [httpDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
 
   return httpDriver;
 };

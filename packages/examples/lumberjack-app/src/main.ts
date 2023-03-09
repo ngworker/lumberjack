@@ -1,4 +1,3 @@
-import { enableProdMode } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 
 import { LumberjackLog, LumberjackOptions, provideLumberjack } from '@ngworker/lumberjack';

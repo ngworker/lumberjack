@@ -22,46 +22,59 @@ The rest of the `LumberjackHttpDriver` is defined as follows
 
 ```typescript
 @Injectable()
-export class LumberjackHttpDriver implements LumberjackLogDriver {
-  constructor(
-    private http: HttpClient,
-    @Inject(lumberjackHttpDriverConfigToken) readonly config: LumberjackHttpDriverConfig,
-    private readonly ngZone: NgZone
-  ) {}
+export class LumberjackHttpDriver<TPayload extends LumberjackLogPayload | void = void>
+  implements LumberjackLogDriver<TPayload>, OnDestroy
+{
+  static readonly driverIdentifier = 'LumberjackHttpDriver';
 
-  logCritical({ formattedLog }: LumberjackLogDriverLog): void {
-    this.sendLog(formattedLog, LumberjackLevel.Critical);
+  private readonly http = inject(HttpClient);
+  private readonly ngZone = inject(NgZone);
+  private readonly subscriptions = new Subscription();
+
+  readonly config = inject(lumberjackHttpDriverConfigToken);
+
+  ngOnDestroy(): void {
+    this.subscriptions.unsubscribe();
   }
 
-  logDebug({ formattedLog }: LumberjackLogDriverLog): void {
-    this.sendLog(formattedLog, LumberjackLevel.Debug);
+  logCritical({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
+    this.sendLog(formattedLog, log);
   }
 
-  logError({ formattedLog }: LumberjackLogDriverLog): void {
-    this.sendLog(formattedLog, LumberjackLevel.Error);
+  logDebug({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
+    this.sendLog(formattedLog, log);
   }
 
-  logInfo({ formattedLog }: LumberjackLogDriverLog): void {
-    this.sendLog(formattedLog, LumberjackLevel.Info);
+  logError({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
+    this.sendLog(formattedLog, log);
   }
 
-  logTrace({ formattedLog }: LumberjackLogDriverLog): void {
-    this.sendLog(formattedLog, LumberjackLevel.Trace);
+  logInfo({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
+    this.sendLog(formattedLog, log);
   }
 
-  logWarning({ formattedLog }: LumberjackLogDriverLog): void {
-    this.sendLog(formattedLog, LumberjackLevel.Warning);
+  logTrace({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
+    this.sendLog(formattedLog, log);
   }
 
-  private sendLog(formattedLog: string, logLevel: LumberjackLogLevel): void {
+  logWarning({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
+    this.sendLog(formattedLog, log);
+  }
+
+  private sendLog(formattedLog: string, log: LumberjackLog<TPayload>): void {
     const { origin, retryOptions, storeUrl } = this.config;
-    const httpLog: LumberjackHttpLog = { formattedLog, level: logLevel, origin };
+    const httpLog: LumberjackHttpLog<TPayload> = { formattedLog, origin, log };
 
     this.ngZone.runOutsideAngular(() => {
-      this.http
-        .post<void>(storeUrl, httpLog)
-        .pipe(retryWithDelay(retryOptions.maxRetries, retryOptions.delayMs))
-        .subscribe();
+      this.subscriptions.add(
+        this.http
+          .post<void>(storeUrl, httpLog)
+          .pipe(retryWithDelay(retryOptions.maxRetries, retryOptions.delayMs))
+          // HTTP requests complete after the response is received, so there's no need to unsubscribe.
+          .subscribe(() => {
+            // No-op
+          })
+      );
     });
   }
 }
@@ -104,33 +117,27 @@ The `LumberjackHttpDriverModule` is very similar to the `LumberjackConsoleDriver
 @NgModule()
 export class LumberjackHttpDriverModule {
   /**
-   * Pass a full HTTP driver configuration.
+   * Configure and register the HTTP driver, including settings that log drivers
+   * have in common.
+   *
+   * @param config Settings used by the HTTP driver.
    */
   static forRoot(config: LumberjackHttpDriverConfig): ModuleWithProviders<LumberjackHttpDriverRootModule> {
     return {
       ngModule: LumberjackHttpDriverRootModule,
-      providers: [
-        {
-          provide: lumberjackHttpDriverConfigToken,
-          useValue: config,
-        },
-      ],
+      providers: [provideLumberjackHttpDriver(withConfig(config))],
     };
   }
 
   /**
-   * Pass options exclusive to the HTTP driver configuration, but fall back on
-   * the log driver config for common options.
+   * Configure and register the HTTP driver, but fall back on the default log
+   * driver settings for settings that log drivers have in common.
+   * @param options Settings used by the HTTP driver.
    */
   static withOptions(options: LumberjackHttpDriverOptions): ModuleWithProviders<LumberjackHttpDriverRootModule> {
     return {
       ngModule: LumberjackHttpDriverRootModule,
-      providers: [
-        {
-          provide: lumberjackHttpDriverConfigToken,
-          useValue: options,
-        },
-      ],
+      providers: [provideLumberjackHttpDriver(withOptions(options))],
     };
   }
 
@@ -140,53 +147,67 @@ export class LumberjackHttpDriverModule {
 }
 ```
 
-The `LumberjackHttpDriverRootModule` has more interesting behavior.
+The most interesting behavior exist on the `provideLumberjackHttpDriver` function
 
 ```typescript
-export function httpDriverFactory(
-  http: HttpClient,
-  logDriverConfig: LumberjackLogDriverConfig,
-  httpDriverConfig: LumberjackHttpDriverConfig,
-  ngZone: NgZone
-): LumberjackHttpDriver {
-  const config: LumberjackHttpDriverConfig = {
-    ...{ ...logDriverConfig, identifier: LumberjackHttpDriver.driverIdentifier },
-    ...httpDriverConfig,
-  };
+export type LumberjackHttpDriverConfigurationKind = 'options' | 'config';
+export type LumberjackHttpDriverConfiguration<Kind extends LumberjackHttpDriverConfigurationKind> = {
+  ɵkind: Kind;
+  ɵproviders: Provider[];
+};
 
-  return new LumberjackHttpDriver(http, config, ngZone);
+function makeLumberjackHttpConfiguration<Kind extends LumberjackHttpDriverConfigurationKind>(
+  kind: Kind,
+  providers: Provider[]
+): LumberjackHttpDriverConfiguration<Kind> {
+  return {
+    ɵkind: kind,
+    ɵproviders: providers,
+  };
 }
 
-@NgModule({
-  imports: [HttpClientModule],
-  providers: [
+export function withConfig(config: LumberjackHttpDriverConfig): LumberjackHttpDriverConfiguration<'config'> {
+  return makeLumberjackHttpConfiguration('config', [
     {
-      deps: [HttpClient, lumberjackLogDriverConfigToken, lumberjackHttpDriverConfigToken, NgZone],
-      multi: true,
-      provide: lumberjackLogDriverToken,
-      useFactory: httpDriverFactory,
+      provide: lumberjackHttpDriverConfigToken,
+      deps: [lumberjackLogDriverConfigToken],
+      useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackHttpDriverInternalConfig => ({
+        ...logDriverConfig,
+        identifier: LumberjackHttpDriver.driverIdentifier,
+        ...config,
+      }),
     },
-  ],
-})
-export class LumberjackHttpDriverRootModule {
-  constructor(
-    @Optional()
-    @SkipSelf()
-    @Inject(LumberjackHttpDriverRootModule)
-    private maybeNgModuleFromParentInjector: LumberjackHttpDriverRootModule = null as any
-  ) {
-    if (this.maybeNgModuleFromParentInjector) {
-      throw new Error(
-        'LumberjackHttpDriverModule.forRoot registered in multiple injectors. Only call it from your root injector such as in AppModule.'
-      );
-    }
-  }
+  ]);
+}
+
+export function withOptions(options: LumberjackHttpDriverOptions): LumberjackHttpDriverConfiguration<'options'> {
+  return makeLumberjackHttpConfiguration('options', [
+    {
+      provide: lumberjackHttpDriverConfigToken,
+      deps: [lumberjackLogDriverConfigToken],
+      useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackHttpDriverInternalConfig => ({
+        ...logDriverConfig,
+        identifier: LumberjackHttpDriver.driverIdentifier,
+        ...options,
+      }),
+    },
+  ]);
+}
+
+export function provideLumberjackHttpDriver<Kind extends LumberjackHttpDriverConfigurationKind>(
+  configuration: LumberjackHttpDriverConfiguration<Kind>
+): (Provider | EnvironmentProviders)[] {
+  return [provideHttpClient(), lumberjackHttpDriverProvider, configuration.ɵproviders];
 }
 ```
 
-We now have the `deps` property, needed to inject the dependencies. In this case the `HttpClient`, the `NgZone`, the `lumberjackLogDriverConfigToken` and the `lumberjackHttpDriverConfigToken`. These dependencies are used in the `httpDriverFactory` function. There, we merge `logDriverConfig` and `httpDriverConfig`and pass them to a new instance of `LumberjackHttpDriver`.
+This is our Moduless API, ready for everyone using Angular >v14.
 
-The usage is also very similar.
+This is where the heaviest configuration happens and it is used to boost the Module-full APIs
+
+The following is an example of how both API can be used
+
+Module-full:
 
 ```typescript
 @NgModule({
@@ -208,4 +229,14 @@ The usage is also very similar.
 export class AppModule {}
 ```
 
-Only this time we are passing our custom configuration object.
+Module-less:
+
+```typescript
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideLumberjack('Cypress' in window ? cypressLumberjackOptions : undefined),
+    provideLumberjackConsoleDriver(),
+    provideLumberjackHttpDriver(),
+  ],
+});
+```
