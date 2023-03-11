@@ -89,7 +89,7 @@ describe(LumberjackHttpDriver.name, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideLumberjack(), provideLumberjackHttpDriver(withOptions(options)), provideHttpClientTesting()]
+      providers: [provideLumberjack(), provideLumberjackHttpDriver(withOptions(options)), provideHttpClientTesting()],
     });
 
     [httpDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver<HttpDriverPayload>[];

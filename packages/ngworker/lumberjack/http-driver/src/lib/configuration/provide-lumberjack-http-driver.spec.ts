@@ -51,8 +51,8 @@ const createHttpDriver = (
     config: LumberjackHttpDriverConfig;
     isLumberjackModuleProvidedFirst?: boolean;
   } = {
-      config: createHttpConfig([LumberjackLevel.Verbose], LumberjackHttpDriver.driverIdentifier),
-    }
+    config: createHttpConfig([LumberjackLevel.Verbose], LumberjackHttpDriver.driverIdentifier),
+  }
 ) => {
   TestBed.configureTestingModule({
     providers: [
