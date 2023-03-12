@@ -8,7 +8,7 @@ import {
   LumberjackHttpDriverRootModule,
   provideLumberjackHttpDriver,
   withConfig,
-  withOptions
+  withOptions,
 } from './index';
 
 describe('Configuration API', () => {
