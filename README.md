@@ -24,7 +24,9 @@
 [![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=ngworker_lumberjack&metric=reliability_rating)](https://sonarcloud.io/dashboard?id=ngworker_lumberjack)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=ngworker_lumberjack&metric=sqale_rating)](https://sonarcloud.io/dashboard?id=ngworker_lumberjack)
 
-Lumberjack is a versatile Angular logging library, specifically designed to be extended and customized. It provides a few simple [log drivers](https://en.wikipedia.org/wiki/Log_driving) (logging mechanisms, transports, log drivers) out-of-the-box. It's easy to enable the built-in log drivers or create and use custom log drivers.
+Lumberjack is a versatile Angular logging library, specifically designed to be extended and customized. It provides a
+few simple [log drivers](https://en.wikipedia.org/wiki/Log_driving) (logging mechanisms, transports, log drivers)
+out-of-the-box. It's easy to enable the built-in log drivers or create and use custom log drivers.
 
 > For support, please refer to the `#lumberjack` channel in [the Angular Discord server](http://discord.gg/angular).
 
@@ -75,22 +77,35 @@ Refer to the following table to determine which version of Lumberjack is compati
 
 ## Usage
 
-> For a complete walkthrough video please visit [@ngworker/lumberjack v2 - Show & Tell BLS024](https://youtu.be/OV1ONtLAJnI)
+> For a complete walkthrough video please
+> visit [@ngworker/lumberjack v2 - Show & Tell BLS024](https://youtu.be/OV1ONtLAJnI)
 
 To register Lumberjack, add `LumberjackModule.forRoot()` to your root or core Angular module.
 
 ```ts
 // (...)
-import { LumberjackModule } from '@ngworker/lumberjack';
+import {LumberjackModule} from '@ngworker/lumberjack';
 
 @NgModule({
   imports: [
-      // (...)
+    // (...)
     LumberjackModule.forRoot(),
-      // (...)
+    // (...)
   ],
   // (...)
 })
+```
+
+Or if you prefer a prefer Module-less approach using the `provideLumberjack()`.
+
+```ts
+bootstrapApplication(AppComponent, {
+  providers: [
+    // (...)
+    provideLumberjack(),
+    // (...)
+  ],
+});
 ```
 
 You must also register the log driver modules for the log drivers that you want to enable.
@@ -120,11 +135,27 @@ import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driv
 export class AppModule {}
 ```
 
+Or using the Module-less version
+
+```ts
+bootstrapApplication(AppComponent, {
+  providers: [
+    // (...)
+    provideLumberjack(),
+    provideLumberjackConsoleDriver(),
+    provideLumberjackHttpDriver(withConfig({...})),
+    // (...)
+  ],
+});
+```
+
 </br>
 
 ### Using the `LumberjackService`
 
-For quick or simple use cases, you can use the `LumberjackService` directly by passing logs to its `log` method. However, we recommend implementing application-specific logger services instead. See the [_Best practices_](#best-practices) section.
+For quick or simple use cases, you can use the `LumberjackService` directly by passing logs to its `log` method.
+However, we recommend implementing application-specific logger services instead. See the [_Best
+practices_](#best-practices) section.
 
 First, inject the `LumberjackService` where you want to use it.
 
@@ -137,6 +168,7 @@ import { LumberjackService } from '@ngworker/lumberjack';
 })
 export class MyComponent implements OnInit {
   constructor(private lumberjack: LumberjackService) {}
+
   // (...)
 }
 ```
@@ -156,7 +188,8 @@ export class MyComponent implements OnInit {
 }
 ```
 
-Then we can start logging. However, you'll also want to inject `LumberjackTimeService` to maintain a high level of testability.
+Then we can start logging. However, you'll also want to inject `LumberjackTimeService` to maintain a high level of
+testability.
 
 ```ts
 // (...)
@@ -179,9 +212,9 @@ export class MyComponent implements OnInit {
 }
 ```
 
-### LumberjackModule
+### LumberjackModule and provideLumberjack
 
-Optionally, we can pass one or more options to `LumberjackModule.forRoot`.
+Optionally, we can pass one or more options to `LumberjackModule.forRoot` or to the `provideLumberjack` function.
 
 | Option   | Type                           | Optional? | Description                                                          |
 | -------- | ------------------------------ | --------- | -------------------------------------------------------------------- |
@@ -192,7 +225,8 @@ Optionally, we can pass one or more options to `LumberjackModule.forRoot`.
 
 ### Default options
 
-Lumberjack's configuration is flexible. We can provide a full configuration object, a partial option set, or no options at all.
+Lumberjack's configuration is flexible. We can provide a full configuration object, a partial option set, or no options
+at all.
 
 Lumberjack replaces omitted options with defaults.
 
@@ -208,7 +242,8 @@ Where `utcTimestampFor` is a function that converts Unix Epoch ticks to UTC 0 ho
 
 #### Default log levels
 
-When the `levels` setting is not configured, log levels are configured depending on whether our application runs in development mode or production mode.
+When the `levels` setting is not configured, log levels are configured depending on whether our application runs in
+development mode or production mode.
 
 By default, in development mode, **all** log levels are enabled.
 
@@ -223,7 +258,8 @@ By default, in production mode, the following log levels are enabled:
 
 ## Log drivers
 
-Earlier, we briefly introduced the term _log driver_. This section explains in depth how to use and configure them and how to create custom log drivers.
+Earlier, we briefly introduced the term _log driver_. This section explains in depth how to use and configure them and
+how to create custom log drivers.
 
 A log driver is the conduit used by the Lumberjack to output or persist application logs.
 
@@ -234,16 +270,23 @@ Every log driver implements the `LumberjackLogDriver` interface.
 ```ts
 export interface LumberjackLogDriver<TPayload extends LumberjackLogPayload | void = void> {
   readonly config: LumberjackLogDriverConfig;
+
   logCritical(driverLog: LumberjackLogDriverLog<TPayload>): void;
+
   logDebug(driverLog: LumberjackLogDriverLog<TPayload>): void;
+
   logError(driverLog: LumberjackLogDriverLog<TPayload>): void;
+
   logInfo(driverLog: LumberjackLogDriverLog<TPayload>): void;
+
   logTrace(driverLog: LumberjackLogDriverLog<TPayload>): void;
+
   logWarning(driverLog: LumberjackLogDriverLog<TPayload>): void;
 }
 ```
 
-The `LumberjackLogDriverLog` holds a formatted string representation of the `LumberjackLog` and the `LumberjackLog` itself.
+The `LumberjackLogDriverLog` holds a formatted string representation of the `LumberjackLog` and the `LumberjackLog`
+itself.
 
 ```ts
 export interface LumberjackLogDriverLog<TPayload extends LumberjackLogPayload | void = void> {
@@ -256,7 +299,8 @@ export interface LumberjackLogDriverLog<TPayload extends LumberjackLogPayload | 
 
 Log drivers should make it possible to configure the logging levels on a per driver basis.
 
-For example, we could use the default logging levels for the console driver, but only enable the critical and error levels for the HTTP driver as seen in the following example.
+For example, we could use the default logging levels for the console driver, but only enable the critical and error
+levels for the HTTP driver as seen in the following example.
 
 ```ts
 import { NgModule } from '@angular/core';
@@ -283,9 +327,38 @@ import { LumberjackHttpDriverModule } from '@ngworker/lumberjack/http-driver';
 export class AppModule {}
 ```
 
+Or use the Module-less version of the API
+
+```ts
+import { bootstrapApplication } from '@angular/platform-browser';
+
+import { LumberjackLevel, provideLumberjack } from '@ngworker/lumberjack';
+import { provideLumberjackConsoleDriver } from '@ngworker/lumberjack/console-driver';
+import { provideLumberjackHttpDriver, withConfig } from '@ngworker/lumberjack/http-driver';
+
+import { AppComponent } from './app/app.component';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideLumberjack(),
+    provideLumberjackConsoleDriver(),
+    provideLumberjackHttpDriver(
+      withConfig({
+        levels: [LumberjackLevel.Critical, LumberjackLevel.Error],
+        origin: 'ForestApp',
+        storeUrl: '/api/logs',
+        retryOptions: { maxRetries: 5, delayMs: 250 },
+      })
+    ),
+  ],
+});
+```
+
 ### Creating a custom log driver
 
-> Note, you can use the [ngworker/lumberjack-custom-driver](https://github.com/ngworker/lumberjack-custom-driver/generate) template Git repository to start a separate Lumberjack log driver workspace.
+> Note, you can use
+> the [ngworker/lumberjack-custom-driver](https://github.com/ngworker/lumberjack-custom-driver/generate) template Git
+> repository to start a separate Lumberjack log driver workspace.
 
 Let's create a simple log driver for the browser console.
 
@@ -326,7 +399,8 @@ export class ConsoleDriver implements LumberjackLogDriver {
 }
 ```
 
-In the above snippet, the config is injected and assigned to the public `config` property. Lumberjack uses this configuration to determine which logs the log driver should handle.
+In the above snippet, the config is injected and assigned to the public `config` property. Lumberjack uses this
+configuration to determine which logs the log driver should handle.
 
 #### Using a LumberjackLogPayload
 
@@ -411,31 +485,68 @@ export class ConsoleDriver implements LumberjackLogDriver<AnalyticsPayload> {
 }
 ```
 
-#### Creating a custom log driver module
+#### Creating a custom log driver module and provider functions
 
-A driver module provides configuration and other dependencies to a log driver. It also provides the log driver, making it available to Lumberjack.
+The provide functions provides configuration and other dependencies to a log driver. It also provides the log driver,
+making
+it available to Lumberjack.
+
+```ts
+import { Provider } from '@angular/core';
+
+import {
+  LumberjackLogDriverConfig,
+  lumberjackLogDriverConfigToken,
+  lumberjackLogDriverToken,
+} from '@ngworker/lumberjack';
+
+import { LumberjackConsoleDriver } from '../log-drivers/lumberjack-console.driver';
+
+import { lumberjackConsoleDriverConfigToken } from './lumberjack-console-driver-config.token';
+import { LumberjackConsoleDriverConfig } from './lumberjack-console-driver.config';
+
+export function provideLumberjackConsoleDriver(config: Partial<LumberjackConsoleDriverConfig> = {}): Provider[] {
+  return [
+    {
+      provide: lumberjackConsoleDriverConfigToken,
+      deps: [lumberjackLogDriverConfigToken],
+      useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackConsoleDriverConfig => ({
+        ...logDriverConfig,
+        identifier: LumberjackConsoleDriver.driverIdentifier,
+        ...config,
+      }),
+    },
+    {
+      provide: lumberjackLogDriverToken,
+      useClass: LumberjackConsoleDriver,
+      multi: true,
+    },
+  ];
+}
+```
+
+The driver module then acts as a wrapper for the log driver and the provide function.
 
 ```ts
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { LumberjackLogDriverConfig, lumberjackLogDriverToken } from '@ngworker/lumberjack';
 
-import { consoleDriverConfigToken } from './console-driver-config.token';
+import { LumberjackConsoleDriverRootModule } from './lumberjack-console-driver-root.module';
+import { LumberjackConsoleDriverConfig } from './lumberjack-console-driver.config';
+import { provideLumberjackConsoleDriver } from './lumberjack-console-driver.providers';
 
-@NgModule({
-  providers: [
-    {
-      provide: lumberjackLogDriverToken,
-      useClass: ConsoleDriver,
-      multi: true,
-    },
-  ],
-})
-export class ConsoleDriverModule {
-  static forRoot(config?: LumberjackLogDriverConfig): ModuleWithProviders<ConsoleDriverModule> {
+@NgModule()
+export class LumberjackConsoleDriverModule {
+  static forRoot(
+    config: Partial<LumberjackConsoleDriverConfig> = {}
+  ): ModuleWithProviders<LumberjackConsoleDriverRootModule> {
     return {
-      ngModule: ConsoleDriverModule,
-      providers: (config && [{ provide: consoleDriverConfigToken, useValue: config }]) || [],
+      ngModule: LumberjackConsoleDriverRootModule,
+      providers: [provideLumberjackConsoleDriver(config)],
     };
+  }
+
+  constructor() {
+    throw new Error('Do not import LumberjackConsoleDriverModule directly. Use LumberjackConsoleDriverModule.forRoot.');
   }
 }
 ```
@@ -453,15 +564,20 @@ export const consoleDriverConfigToken = new InjectionToken<LumberjackLogDriverCo
 });
 ```
 
-This is possible because the `ConsoleDriver` has the same configuration options as the `LumberjackLogDriverConfig`. We only have to include the driver identifier since it cannot be predefined.
+This is possible because the `ConsoleDriver` has the same configuration options as the `LumberjackLogDriverConfig`. We
+only have to include the driver identifier since it cannot be predefined.
 
-For adding custom settings, see [LumberjackHttpDriver](https://github.com/ngworker/lumberjack/blob/main/packages/ngworker/lumberjack/http-driver/src/lib/lumberjack-http-driver-root.module.ts).
+For adding custom settings,
+see [LumberjackHttpDriver](https://github.com/ngworker/lumberjack/blob/main/packages/ngworker/lumberjack/http-driver/src/lib/lumberjack-http-driver-root.module.ts).
 
-The most important thing about the `LumberjackConsoleDriverModule` is that it provides the `LumberjackConsoleDriver` using the `lumberjackLogDriverToken` with the `multi` flag on. This allows us to provide multiple log drivers for Lumberjack at the same time.
+The most important thing about the `LumberjackConsoleDriverModule` is that it provides the `LumberjackConsoleDriver`
+using the `lumberjackLogDriverToken` with the `multi` flag on. This allows us to provide multiple log drivers for
+Lumberjack at the same time.
 
 #### Using a custom log driver
 
-The last step is to import this module at the root module of our application, as seen in the first [_Usage_](#usage) section.
+The last step is to import this module at the root module of our application, as seen in the first [_Usage_](#usage)
+section.
 
 ```ts
 @NgModule({
@@ -475,30 +591,60 @@ The last step is to import this module at the root module of our application, as
 export class AppModule {}
 ```
 
+Or using the Module-less API.
+
+```typescript
+import { bootstrapApplication } from '@angular/platform-browser';
+
+import { LumberjackLog, LumberjackOptions, provideLumberjack } from '@ngworker/lumberjack';
+import { provideLumberjackConsoleDriver } from '@ngworker/lumberjack/console-driver';
+
+import { AppComponent } from './app/app.component';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideLumberjack(),
+    provideLumberjackConsoleDriver(),
+    // (...)
+  ],
+});
+```
+
 ### HTTP driver
 
-For a more advanced log driver implementation, see [LumberjackHttpDriver](https://github.com/ngworker/lumberjack/blob/main/packages/ngworker/lumberjack/http-driver/README.md)
+For a more advanced log driver implementation,
+see [LumberjackHttpDriver](https://github.com/ngworker/lumberjack/blob/main/packages/ngworker/lumberjack/http-driver/README.md)
 
 ## Community drivers
 
-> Note, you can use the [ngworker/lumberjack-custom-driver](https://github.com/ngworker/lumberjack-custom-driver/generate) template Git repository to start a separate Lumberjack log driver workspace.
+> Note, you can use
+> the [ngworker/lumberjack-custom-driver](https://github.com/ngworker/lumberjack-custom-driver/generate) template Git
+> repository to start a separate Lumberjack log driver workspace.
 
 If you want your driver listed here, open a PR and follow the same format.
 
-- [@ngworker/lumberjack-firestore-driver](https://github.com/marcinmilewicz/lumberjack-firestore-driver), community log driver using [Cloud Firestore](https://firebase.google.com/docs/firestore) as a log store.
-- [@ngworker/lumberjack-applicationinsights-driver](https://github.com/ngworker/lumberjack-applicationinsights-driver), community log driver using [Azure Application Insights](https://docs.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview) as a log store.
+- [@ngworker/lumberjack-firestore-driver](https://github.com/marcinmilewicz/lumberjack-firestore-driver), community log
+  driver using [Cloud Firestore](https://firebase.google.com/docs/firestore) as a log store.
+- [@ngworker/lumberjack-applicationinsights-driver](https://github.com/ngworker/lumberjack-applicationinsights-driver),
+  community log driver
+  using [Azure Application Insights](https://docs.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview) as
+  a log store.
 
-The ngworkers teams offers hosting of a community log driver in the [ngworker GitHub](https://github.com/ngworker) and [@ngworker NPM](https://www.npmjs.com/org/ngworker) organizations.
+The ngworkers teams offers hosting of a community log driver in the [ngworker GitHub](https://github.com/ngworker)
+and [@ngworker NPM](https://www.npmjs.com/org/ngworker) organizations.
 
 ## Best practices
 
-Every log can be represented as a combination of its level, creation time, message, scope and payload. Using inline logs with the `LumberjackService` can cause structure duplication and/or denormalization.
+Every log can be represented as a combination of its level, creation time, message, scope and payload. Using inline logs
+with the `LumberjackService` can cause structure duplication and/or denormalization.
 
 Continue reading to know more about the recommended best practices designed to tackle this issue.
 
 ### Loggers
 
-The `LumberjackLogger` service is an abstract class that wraps the `LumberjackService` to help us create structured logs and reduce boilerplate. At the same time, it provides testing capabilities since we can easily spy on logger methods and control timestamps by replacing the `LumberjackTimeService`.
+The `LumberjackLogger` service is an abstract class that wraps the `LumberjackService` to help us create structured logs
+and reduce boilerplate. At the same time, it provides testing capabilities since we can easily spy on logger methods and
+control timestamps by replacing the `LumberjackTimeService`.
 
 `LumberjackLogger` is used as the base class for any other logger that we need.
 
@@ -515,48 +661,49 @@ This is the abstract interface of `LumberjackLogger`:
  */
 @Injectable()
 export abstract class LumberjackLogger<TPayload extends LumberjackLogPayload | void = void> {
-  protected lumberjack: LumberjackService<TPayload>;
-  protected time: LumberjackTimeService;
+    protected lumberjack: LumberjackService<TPayload>;
+    protected time: LumberjackTimeService;
 
-  /**
-   * Create a logger builder for a critical log with the specified message.
-   */
-  protected createCriticalLogger(message: string): LumberjackLoggerBuilder<TPayload>;
+    /**
+     * Create a logger builder for a critical log with the specified message.
+     */
+    protected createCriticalLogger(message: string): LumberjackLoggerBuilder<TPayload>;
 
-  /**
-   * Create a logger builder for a debug log with the specified message.
-   */
-  protected createDebugLogger(message: string): LumberjackLoggerBuilder<TPayload>;
+    /**
+     * Create a logger builder for a debug log with the specified message.
+     */
+    protected createDebugLogger(message: string): LumberjackLoggerBuilder<TPayload>;
 
-  /**
-   * Create a logger builder for an error log with the specified message.
-   */
-  protected createErrorLogger(message: string): LumberjackLoggerBuilder<TPayload>;
+    /**
+     * Create a logger builder for an error log with the specified message.
+     */
+    protected createErrorLogger(message: string): LumberjackLoggerBuilder<TPayload>;
 
-  /**
-   * Create a logger builder for an info log with the specified message.
-   */
-  protected createInfoLogger(message: string): LumberjackLoggerBuilder<TPayload>;
+    /**
+     * Create a logger builder for an info log with the specified message.
+     */
+    protected createInfoLogger(message: string): LumberjackLoggerBuilder<TPayload>;
 
-  /**
-   * Create a logger builder for a trace log with the specified message.
-   */
-  protected createTraceLogger(message: string): LumberjackLoggerBuilder<TPayload>;
+    /**
+     * Create a logger builder for a trace log with the specified message.
+     */
+    protected createTraceLogger(message: string): LumberjackLoggerBuilder<TPayload>;
 
-  /**
-   * Create a logger builder for a warning log with the specified message.
-   */
-  protected createWarningLogger(message: string): LumberjackLoggerBuilder<TPayload>;
+    /**
+     * Create a logger builder for a warning log with the specified message.
+     */
+    protected createWarningLogger(message: string): LumberjackLoggerBuilder<TPayload>;
 
-  /**
-   * Create a logger builder for a log with the specified log level and message.
-   */
-  protected createLoggerBuilder(level: LumberjackLogLevel, message: string): LumberjackLoggerBuilder<TPayload>;
+    /**
+     * Create a logger builder for a log with the specified log level and message.
+     */
+    protected createLoggerBuilder(level: LumberjackLogLevel, message: string): LumberjackLoggerBuilder<TPayload>;
 ```
 
 By extending `LumberjackLogger`, we only have to worry about our pre-defined logs' message and scope.
 
-All logger factory methods are protected as it is recommended to create a custom logger per _scope_ rather than using logger factories directly in a consumer.
+All logger factory methods are protected as it is recommended to create a custom logger per _scope_ rather than using
+logger factories directly in a consumer.
 
 As an example, let's create a custom logger for our example application.
 
@@ -604,13 +751,16 @@ export class AppComponent implements OnInit {
 }
 ```
 
-The previous example logs _Hello, Forest!_ when the application is initialized, then logs _The forest is on fire!_ if a forest fire is detected.
+The previous example logs _Hello, Forest!_ when the application is initialized, then logs _The forest is on fire!_ if a
+forest fire is detected.
 
 #### Simplifying with ScopedLumberjackLogger
 
-An alternative to the `LumberjackLogger` interface, where we need to specify the lumberjack log scope manually, we could use the `ScopedLumberjackLogger`.
+An alternative to the `LumberjackLogger` interface, where we need to specify the lumberjack log scope manually, we could
+use the `ScopedLumberjackLogger`.
 
-The `ScopedLumberjackLogger` is a convenient Logger and an excellent example of how to create custom Loggers according to your situation.
+The `ScopedLumberjackLogger` is a convenient Logger and an excellent example of how to create custom Loggers according
+to your situation.
 
 ```ts
 /**
@@ -661,7 +811,8 @@ Notice that now every log written using the `AppLogger` will have the `'Forest A
 
 #### Using Loggers with a LumberjackLog payload
 
-As seen in the [Log drivers](#log-drivers) section, we can send extra info to our drivers using a `LumberjackLog#payload`.
+As seen in the [Log drivers](#log-drivers) section, we can send extra info to our drivers using
+a `LumberjackLog#payload`.
 
 The `LumberjackLogger` and `ScopedLumberjackLogger` provide a convenient interface for such a scenario.
 
@@ -708,11 +859,11 @@ The `LumberjackLogFactory` provides a robust way of creating logs. It's also use
 This is how we create logs manually:
 
 ```ts
-import { inject, Component, OnInit, VERSION } from '@angular/core';
+import {inject, Component, OnInit, VERSION} from '@angular/core';
 
-import { LumberjackLogFactory, LumberjackService } from '@ngworker/lumberjack';
+import {LumberjackLogFactory, LumberjackService} from '@ngworker/lumberjack';
 
-import { LogPayload } from './log-payload';
+import {LogPayload} from './log-payload';
 
 @Component({
   selector: 'ngworker-root',
@@ -720,10 +871,13 @@ import { LogPayload } from './log-payload';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  private readonly logFactory: inject<LumberjackLogFactory<LogPayload>>(LumberjackLogFactory);
+  private readonly logFactory: inject<LumberjackLogFactory<LogPayload>>
+(
+  LumberjackLogFactory
+);
   private readonly lumberjack = inject<LumberjackService<LogPayload>>(LumberjackService);
   private readonly payload: LogPayload = {
-  angularVersion: VERSION.full,
+    angularVersion: VERSION.full,
   };
   private readonly scope = 'Forest App';
 
@@ -776,4 +930,5 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
-This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification.
+Contributions of any kind welcome!
