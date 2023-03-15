@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { O } from 'ts-toolbelt';
+import { Object } from 'ts-toolbelt';
 
 import {
   LumberjackConfigLevels,
@@ -28,7 +28,7 @@ function createHttpOptions(
 }
 
 function createHttpConfig(levels: LumberjackConfigLevels, identifier?: string): LumberjackHttpDriverConfig {
-  const config: O.Writable<LumberjackHttpDriverConfig, 'identifier'> = {
+  const config: Object.Writable<LumberjackHttpDriverConfig, 'identifier'> = {
     levels,
     origin: 'TEST_MODULE',
     retryOptions: { maxRetries: 5, delayMs: 250 },
