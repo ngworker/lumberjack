@@ -51,11 +51,11 @@ jobs:
       # build: 2 tasks assigned at a time, 1 task per vCPU
       # e2e: 1 task assigned at a time, 1 task total
       parallel-commands-on-agents: |
-        yarn nx run-many --all --target=lint --configuration=report --parallel=2 --max-warnings=0
-        yarn nx run-many --all --target=test --configuration=coverage --parallel=1 --max-workers=2
-        yarn nx build actions-configure-sonarcloud-report-paths
-        yarn nx affected --target=build --parallel=2 --exclude=actions-configure-sonarcloud-report-paths
-        yarn nx affected --target=e2e --parallel=1
+        yarn nx run-many --all --target=lint --configuration=report --parallel=2 --max-warnings=0 --skip-nx-cache
+        yarn nx run-many --all --target=test --configuration=coverage --parallel=1 --max-workers=2 --skip-nx-cache
+        yarn nx build actions-configure-sonarcloud-report-paths --skip-nx-cache
+        yarn nx affected --target=build --parallel=2 --exclude=actions-configure-sonarcloud-report-paths --skip-nx-cache
+        yarn nx affected --target=e2e --parallel=1 --skip-nx-cache
       # Commands run sequentially on this DTE coordinator after parallel jobs
       # final-commands:
       artifacts-path: |
