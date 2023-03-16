@@ -8,7 +8,6 @@
     "build": "nx run-many --target=build --all",
     "ci": "yarn lint && yarn test && yarn build && yarn e2e",
     "clean": "rimraf dist coverage reports",
-    "configure-sonar-report-paths": "node tools/scripts/configure-sonar-report-paths.mjs",
     "delete-path-alias": "node tools/scripts/delete-path-alias.mjs",
     "e2e": "nx run-many --target=e2e --all --parallel=1",
     "format": "yarn nx format:write",
@@ -27,6 +26,10 @@
     "node": "18.12.1",
     "yarn": "1.22.19"
   },
+  "workspaces": [
+    "e2e/**",
+    "packages/**"
+  ],
   "dependencies": {
     "@angular/animations": "15.0.3",
     "@angular/common": "15.0.3",
@@ -58,7 +61,8 @@
     "@nrwl/eslint-plugin-nx": "15.3.0",
     "@nrwl/jest": "15.3.0",
     "@nrwl/linter": "15.3.0",
-    "@nrwl/nx-cloud": "15.0.2",
+    "@nrwl/node": "15.3.0",
+    "@nrwl/nx-cloud": "15.2.3",
     "@nrwl/workspace": "15.3.0",
     "@types/copy": "0.3.2",
     "@types/jest": "28.1.8",
