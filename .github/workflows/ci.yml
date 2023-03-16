@@ -40,11 +40,6 @@ jobs:
     with:
       # Must match dte_agents.number-of-agents
       number-of-agents: 4
-      # The --stop-agents-after parameter must match the task target listed last
-      # in the parallel-commands-on-agents command list
-      # The --agent-count parameter must match the number-of-agents parameter
-      init-commands: |
-        yarn nx-cloud start-ci-run --stop-agents-after="e2e" --agent-count=4
       # Commands run in parallel on this DTE coordinator
       parallel-commands: |
         yarn nx-cloud record -- yarn nx workspace-lint
