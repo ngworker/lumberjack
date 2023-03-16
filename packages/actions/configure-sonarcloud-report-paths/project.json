@@ -1,0 +1,73 @@
+{
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "name": "actions-configure-sonarcloud-report-paths",
+  "sourceRoot": "packages/actions/configure-sonarcloud-report-paths/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/node:webpack",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/actions/configure-sonarcloud-report-paths",
+        "main": "packages/actions/configure-sonarcloud-report-paths/src/main.ts",
+        "tsConfig": "packages/actions/configure-sonarcloud-report-paths/tsconfig.app.json",
+        "assets": ["packages/actions/configure-sonarcloud-report-paths/src/action.yml"]
+      },
+      "configurations": {
+        "production": {
+          "optimization": true,
+          "extractLicenses": true,
+          "inspect": false,
+          "fileReplacements": [
+            {
+              "replace": "packages/actions/configure-sonarcloud-report-paths/src/environments/environment.ts",
+              "with": "packages/actions/configure-sonarcloud-report-paths/src/environments/environment.prod.ts"
+            }
+          ]
+        }
+      }
+    },
+    "serve": {
+      "executor": "@nrwl/node:node",
+      "options": {
+        "buildTarget": "actions-configure-sonarcloud-report-paths:build"
+      },
+      "configurations": {
+        "production": {
+          "buildTarget": "actions-configure-sonarcloud-report-paths:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/actions/configure-sonarcloud-report-paths/**/*.ts"]
+      },
+      "configurations": {
+        "report": {
+          "format": "json",
+          "force": true,
+          "outputFile": "reports/packages/ngworker/lumberjack/lint/report.json"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["coverage/packages/actions/configure-sonarcloud-report-paths"],
+      "options": {
+        "jestConfig": "packages/actions/configure-sonarcloud-report-paths/jest.config.ts",
+        "passWithNoTests": true,
+        "reporters": ["default", "github-actions"]
+      },
+      "configurations": {
+        "coverage": {
+          "codeCoverage": true,
+          "ci": true,
+          "coverageReporters": ["lcovonly", "text-summary"]
+        }
+      }
+    }
+  },
+  "tags": ["type:action", "scope:internal"]
+}

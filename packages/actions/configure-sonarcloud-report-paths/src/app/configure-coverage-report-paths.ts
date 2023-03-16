@@ -1,5 +1,5 @@
-import replaceInFile from 'replace-in-file';
-import { listFilePaths } from './list-file-paths.js';
+import { replaceInFile } from 'replace-in-file';
+import { listFilePaths } from './list-file-paths';
 
 function listCoverageReports() {
   return listFilePaths('coverage/**/lcov.info');
@@ -8,11 +8,11 @@ function listCoverageReports() {
 export async function configureCoverageReportPaths(options) {
   const coverageReports = await listCoverageReports();
   const coverageReportsPattern = coverageReports.join(',');
-  const to = `sonar.javascript.lcov.reportPaths=${coverageReportsPattern}`;
+  const sonarConfigurationKey = 'sonar.javascript.lcov.reportPaths';
 
   await replaceInFile({
     files: options.sonarConfigurationPath,
-    from: 'sonar.javascript.lcov.reportPaths=<PLACEHOLDER>',
-    to,
+    from: `${sonarConfigurationKey}=<PLACEHOLDER>`,
+    to: `${sonarConfigurationKey}=${coverageReportsPattern}`,
   });
 }
