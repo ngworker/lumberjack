@@ -42,3 +42,6 @@ export * from './lib/type-checking/is-object';
 
 // Time
 export * from './lib/time/fake-time.service';
+
+// Types
+export * from './lib/types/writable';
