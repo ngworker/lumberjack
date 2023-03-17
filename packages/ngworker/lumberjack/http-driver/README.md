@@ -209,11 +209,11 @@ export function provideLumberjackHttpDriver<Kind extends LumberjackHttpDriverCon
 
 This is our Moduless API, ready for everyone using Angular >v14.
 
-This is where the heaviest configuration happens and it is used to boost the Module-full APIs
+This is where the heaviest configuration happens and it is used to boost the classic APIs
 
 The following is an example of how both API can be used
 
-Module-full:
+Classic:
 
 ```typescript
 @NgModule({
@@ -235,7 +235,7 @@ Module-full:
 export class AppModule {}
 ```
 
-Module-less:
+Standalone:
 
 ```typescript
 bootstrapApplication(AppComponent, {

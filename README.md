@@ -96,7 +96,7 @@ import {LumberjackModule} from '@ngworker/lumberjack';
 })
 ```
 
-Or if you prefer a prefer Module-less approach using the `provideLumberjack()`.
+Or if you prefer a prefer standalone approach using the `provideLumberjack()`.
 
 ```ts
 bootstrapApplication(AppComponent, {
@@ -135,7 +135,7 @@ import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driv
 export class AppModule {}
 ```
 
-Or using the Module-less version
+Or using the standalone version
 
 ```ts
 bootstrapApplication(AppComponent, {
@@ -327,7 +327,7 @@ import { LumberjackHttpDriverModule } from '@ngworker/lumberjack/http-driver';
 export class AppModule {}
 ```
 
-Or use the Module-less version of the API
+Or use the standalone version of the API
 
 ```ts
 import { bootstrapApplication } from '@angular/platform-browser';
@@ -591,7 +591,7 @@ section.
 export class AppModule {}
 ```
 
-Or using the Module-less API.
+Or using the standalone API.
 
 ```typescript
 import { bootstrapApplication } from '@angular/platform-browser';
