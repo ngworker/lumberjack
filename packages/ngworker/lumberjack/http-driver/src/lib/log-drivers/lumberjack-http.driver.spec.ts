@@ -14,7 +14,7 @@ import {
 } from '@ngworker/lumberjack';
 
 import { LumberjackHttpDriverOptions } from '../configuration/lumberjack-http-driver.options';
-import { provideLumberjackHttpDriver, withOptions } from '../configuration/provide-lumberjack-http-driver';
+import { provideLumberjackHttpDriver, withHttpOptions } from '../configuration/provide-lumberjack-http-driver';
 import { LumberjackHttpDriverError } from '../errors/lumberjack-http-driver.error';
 import { LumberjackHttpLog } from '../logs/lumberjack-http.log';
 
@@ -89,7 +89,11 @@ describe(LumberjackHttpDriver.name, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [provideLumberjack(), provideLumberjackHttpDriver(withOptions(options)), provideHttpClientTesting()],
+      providers: [
+        provideLumberjack(),
+        provideLumberjackHttpDriver(withHttpOptions(options)),
+        provideHttpClientTesting(),
+      ],
     });
 
     [httpDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver<HttpDriverPayload>[];

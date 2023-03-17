@@ -125,7 +125,7 @@ export class LumberjackHttpDriverModule {
   static forRoot(config: LumberjackHttpDriverConfig): ModuleWithProviders<LumberjackHttpDriverRootModule> {
     return {
       ngModule: LumberjackHttpDriverRootModule,
-      providers: [provideLumberjackHttpDriver(withConfig(config))],
+      providers: [provideLumberjackHttpDriver(withHttpConfig(config))],
     };
   }
 
@@ -152,52 +152,58 @@ The most interesting behavior exist on the `provideLumberjackHttpDriver` functio
 ```typescript
 export type LumberjackHttpDriverConfigurationKind = 'options' | 'config';
 export type LumberjackHttpDriverConfiguration<Kind extends LumberjackHttpDriverConfigurationKind> = {
-  ɵkind: Kind;
-  ɵproviders: Provider[];
+  kind: Kind;
+  providers: EnvironmentProviders;
 };
 
 function makeLumberjackHttpConfiguration<Kind extends LumberjackHttpDriverConfigurationKind>(
   kind: Kind,
-  providers: Provider[]
+  providers: EnvironmentProviders
 ): LumberjackHttpDriverConfiguration<Kind> {
   return {
-    ɵkind: kind,
-    ɵproviders: providers,
+    kind,
+    providers,
   };
 }
 
-export function withConfig(config: LumberjackHttpDriverConfig): LumberjackHttpDriverConfiguration<'config'> {
-  return makeLumberjackHttpConfiguration('config', [
-    {
-      provide: lumberjackHttpDriverConfigToken,
-      deps: [lumberjackLogDriverConfigToken],
-      useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackHttpDriverInternalConfig => ({
-        ...logDriverConfig,
-        identifier: LumberjackHttpDriver.driverIdentifier,
-        ...config,
-      }),
-    },
-  ]);
+export function withHttpConfig(config: LumberjackHttpDriverConfig): LumberjackHttpDriverConfiguration<'config'> {
+  return makeLumberjackHttpConfiguration(
+    'config',
+    makeEnvironmentProviders([
+      {
+        provide: lumberjackHttpDriverConfigToken,
+        deps: [lumberjackLogDriverConfigToken],
+        useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackHttpDriverInternalConfig => ({
+          ...logDriverConfig,
+          identifier: LumberjackHttpDriver.driverIdentifier,
+          ...config,
+        }),
+      },
+    ])
+  );
 }
 
-export function withOptions(options: LumberjackHttpDriverOptions): LumberjackHttpDriverConfiguration<'options'> {
-  return makeLumberjackHttpConfiguration('options', [
-    {
-      provide: lumberjackHttpDriverConfigToken,
-      deps: [lumberjackLogDriverConfigToken],
-      useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackHttpDriverInternalConfig => ({
-        ...logDriverConfig,
-        identifier: LumberjackHttpDriver.driverIdentifier,
-        ...options,
-      }),
-    },
-  ]);
+export function withHttpOptions(options: LumberjackHttpDriverOptions): LumberjackHttpDriverConfiguration<'options'> {
+  return makeLumberjackHttpConfiguration(
+    'options',
+    makeEnvironmentProviders([
+      {
+        provide: lumberjackHttpDriverConfigToken,
+        deps: [lumberjackLogDriverConfigToken],
+        useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackHttpDriverInternalConfig => ({
+          ...logDriverConfig,
+          identifier: LumberjackHttpDriver.driverIdentifier,
+          ...options,
+        }),
+      },
+    ])
+  );
 }
 
 export function provideLumberjackHttpDriver<Kind extends LumberjackHttpDriverConfigurationKind>(
   configuration: LumberjackHttpDriverConfiguration<Kind>
-): (Provider | EnvironmentProviders)[] {
-  return [provideHttpClient(), lumberjackHttpDriverProvider, configuration.ɵproviders];
+): EnvironmentProviders[] {
+  return [provideHttpClient(), lumberjackHttpDriverProvider, configuration.providers];
 }
 ```
 
@@ -233,10 +239,6 @@ Module-less:
 
 ```typescript
 bootstrapApplication(AppComponent, {
-  providers: [
-    provideLumberjack('Cypress' in window ? cypressLumberjackOptions : undefined),
-    provideLumberjackConsoleDriver(),
-    provideLumberjackHttpDriver(),
-  ],
+  providers: [provideLumberjack(), provideLumberjackConsoleDriver(), provideLumberjackHttpDriver(withHttpOptions({}))],
 });
 ```

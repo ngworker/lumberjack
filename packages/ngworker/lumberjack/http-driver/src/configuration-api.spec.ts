@@ -7,8 +7,8 @@ import {
   LumberjackHttpDriverRetryOptions,
   LumberjackHttpDriverRootModule,
   provideLumberjackHttpDriver,
-  withConfig,
-  withOptions,
+  withHttpConfig,
+  withHttpOptions,
 } from './index';
 
 describe('Configuration API', () => {
@@ -27,8 +27,8 @@ describe('Configuration API', () => {
 
     it('exposes provideLumberjackHttpDriver and its configurations', () => {
       const value: typeof provideLumberjackHttpDriver | undefined = undefined;
-      const config: typeof withConfig | undefined = undefined;
-      const options: typeof withOptions | undefined = undefined;
+      const config: typeof withHttpConfig | undefined = undefined;
+      const options: typeof withHttpOptions | undefined = undefined;
 
       expect(value).toBeUndefined();
       expect(config).toBeUndefined();

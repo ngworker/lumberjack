@@ -3,7 +3,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { LumberjackHttpDriverRootModule } from './lumberjack-http-driver-root.module';
 import { LumberjackHttpDriverConfig } from './lumberjack-http-driver.config';
 import { LumberjackHttpDriverOptions } from './lumberjack-http-driver.options';
-import { provideLumberjackHttpDriver, withConfig, withOptions } from './provide-lumberjack-http-driver';
+import { provideLumberjackHttpDriver, withHttpConfig, withHttpOptions } from './provide-lumberjack-http-driver';
 
 /**
  * The HTTP driver Angular module is used to configure and register the HTTP
@@ -24,7 +24,7 @@ export class LumberjackHttpDriverModule {
   static forRoot(config: LumberjackHttpDriverConfig): ModuleWithProviders<LumberjackHttpDriverRootModule> {
     return {
       ngModule: LumberjackHttpDriverRootModule,
-      providers: [provideLumberjackHttpDriver(withConfig(config))],
+      providers: [provideLumberjackHttpDriver(withHttpConfig(config))],
     };
   }
 
@@ -36,7 +36,7 @@ export class LumberjackHttpDriverModule {
   static withOptions(options: LumberjackHttpDriverOptions): ModuleWithProviders<LumberjackHttpDriverRootModule> {
     return {
       ngModule: LumberjackHttpDriverRootModule,
-      providers: [provideLumberjackHttpDriver(withOptions(options))],
+      providers: [provideLumberjackHttpDriver(withHttpOptions(options))],
     };
   }
 

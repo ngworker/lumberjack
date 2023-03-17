@@ -1,5 +1,5 @@
 import { provideHttpClient } from '@angular/common/http';
-import { EnvironmentProviders, Provider } from '@angular/core';
+import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
 
 import { LumberjackLogDriverConfig, lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
 
@@ -13,46 +13,52 @@ import { lumberjackHttpDriverProvider } from './lumberjack-http-driver.provider'
 
 export type LumberjackHttpDriverConfigurationKind = 'options' | 'config';
 export type LumberjackHttpDriverConfiguration<Kind extends LumberjackHttpDriverConfigurationKind> = {
-  ɵkind: Kind;
-  ɵproviders: Provider[];
+  kind: Kind;
+  providers: EnvironmentProviders;
 };
 
 function makeLumberjackHttpConfiguration<Kind extends LumberjackHttpDriverConfigurationKind>(
   kind: Kind,
-  providers: Provider[]
+  providers: EnvironmentProviders
 ): LumberjackHttpDriverConfiguration<Kind> {
   return {
-    ɵkind: kind,
-    ɵproviders: providers,
+    kind,
+    providers,
   };
 }
 
-export function withConfig(config: LumberjackHttpDriverConfig): LumberjackHttpDriverConfiguration<'config'> {
-  return makeLumberjackHttpConfiguration('config', [
-    {
-      provide: lumberjackHttpDriverConfigToken,
-      deps: [lumberjackLogDriverConfigToken],
-      useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackHttpDriverInternalConfig => ({
-        ...logDriverConfig,
-        identifier: LumberjackHttpDriver.driverIdentifier,
-        ...config,
-      }),
-    },
-  ]);
+export function withHttpConfig(config: LumberjackHttpDriverConfig): LumberjackHttpDriverConfiguration<'config'> {
+  return makeLumberjackHttpConfiguration(
+    'config',
+    makeEnvironmentProviders([
+      {
+        provide: lumberjackHttpDriverConfigToken,
+        deps: [lumberjackLogDriverConfigToken],
+        useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackHttpDriverInternalConfig => ({
+          ...logDriverConfig,
+          identifier: LumberjackHttpDriver.driverIdentifier,
+          ...config,
+        }),
+      },
+    ])
+  );
 }
 
-export function withOptions(options: LumberjackHttpDriverOptions): LumberjackHttpDriverConfiguration<'options'> {
-  return makeLumberjackHttpConfiguration('options', [
-    {
-      provide: lumberjackHttpDriverConfigToken,
-      deps: [lumberjackLogDriverConfigToken],
-      useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackHttpDriverInternalConfig => ({
-        ...logDriverConfig,
-        identifier: LumberjackHttpDriver.driverIdentifier,
-        ...options,
-      }),
-    },
-  ]);
+export function withHttpOptions(options: LumberjackHttpDriverOptions): LumberjackHttpDriverConfiguration<'options'> {
+  return makeLumberjackHttpConfiguration(
+    'options',
+    makeEnvironmentProviders([
+      {
+        provide: lumberjackHttpDriverConfigToken,
+        deps: [lumberjackLogDriverConfigToken],
+        useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackHttpDriverInternalConfig => ({
+          ...logDriverConfig,
+          identifier: LumberjackHttpDriver.driverIdentifier,
+          ...options,
+        }),
+      },
+    ])
+  );
 }
 
 /**
@@ -77,6 +83,6 @@ export function withOptions(options: LumberjackHttpDriverOptions): LumberjackHtt
  */
 export function provideLumberjackHttpDriver<Kind extends LumberjackHttpDriverConfigurationKind>(
   configuration: LumberjackHttpDriverConfiguration<Kind>
-): (Provider | EnvironmentProviders)[] {
-  return [provideHttpClient(), lumberjackHttpDriverProvider, configuration.ɵproviders];
+): EnvironmentProviders[] {
+  return [provideHttpClient(), lumberjackHttpDriverProvider, configuration.providers];
 }

@@ -10,8 +10,8 @@ export { LumberjackHttpDriverModule } from './lib/configuration/lumberjack-http-
 export { LumberjackHttpDriverOptions } from './lib/configuration/lumberjack-http-driver.options';
 export {
   provideLumberjackHttpDriver,
-  withConfig,
-  withOptions,
+  withHttpConfig,
+  withHttpOptions,
 } from './lib/configuration/provide-lumberjack-http-driver';
 
 // Errors

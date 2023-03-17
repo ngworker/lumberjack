@@ -12,7 +12,7 @@ import { Writable } from '@internal/test-util';
 import { LumberjackHttpDriver } from '../log-drivers/lumberjack-http.driver';
 
 import { LumberjackHttpDriverConfig } from './lumberjack-http-driver.config';
-import { provideLumberjackHttpDriver, withConfig, withOptions } from './provide-lumberjack-http-driver';
+import { provideLumberjackHttpDriver, withHttpConfig, withHttpOptions } from './provide-lumberjack-http-driver';
 import { LumberjackHttpDriverInternalConfig } from './lumberjack-http-driver-internal.config';
 import { LumberjackHttpDriverOptions } from './lumberjack-http-driver.options';
 
@@ -57,7 +57,7 @@ const createHttpDriver = (
   TestBed.configureTestingModule({
     providers: [
       isLumberjackModuleProvidedFirst ? provideLumberjack() : [],
-      provideLumberjackHttpDriver(withConfig(config)),
+      provideLumberjackHttpDriver(withHttpConfig(config)),
       isLumberjackModuleProvidedFirst ? [] : provideLumberjack(),
     ],
   });
@@ -79,7 +79,7 @@ const createHttpDriverWithOptions = (
   TestBed.configureTestingModule({
     providers: [
       isLumberjackModuleProvidedFirst ? provideLumberjack() : [],
-      provideLumberjackHttpDriver(withOptions(options)),
+      provideLumberjackHttpDriver(withHttpOptions(options)),
       isLumberjackModuleProvidedFirst ? [] : provideLumberjack(),
     ],
   });
@@ -96,7 +96,7 @@ describe(provideLumberjackHttpDriver.name, () => {
     expect(httpDriver).toBeInstanceOf(LumberjackHttpDriver);
   });
 
-  describe(withConfig.name, () => {
+  describe(withHttpConfig.name, () => {
     it('registers the specified log driver configuration WITH a specified identifier', () => {
       const expectedConfig = createHttpConfig([LumberjackLevel.Error], 'TestDriverIdentifier');
 
@@ -128,7 +128,7 @@ describe(provideLumberjackHttpDriver.name, () => {
     });
   });
 
-  describe(withOptions.name, () => {
+  describe(withHttpConfig.name, () => {
     it('registers the specified options', () => {
       const options = createHttpOptions();
 

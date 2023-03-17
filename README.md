@@ -143,7 +143,7 @@ bootstrapApplication(AppComponent, {
     // (...)
     provideLumberjack(),
     provideLumberjackConsoleDriver(),
-    provideLumberjackHttpDriver(withConfig({...})),
+    provideLumberjackHttpDriver(withHttpConfig({...})),
     // (...)
   ],
 });
@@ -334,7 +334,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
 
 import { LumberjackLevel, provideLumberjack } from '@ngworker/lumberjack';
 import { provideLumberjackConsoleDriver } from '@ngworker/lumberjack/console-driver';
-import { provideLumberjackHttpDriver, withConfig } from '@ngworker/lumberjack/http-driver';
+import { provideLumberjackHttpDriver, withHttpConfig } from '@ngworker/lumberjack/http-driver';
 
 import { AppComponent } from './app/app.component';
 
@@ -343,7 +343,7 @@ bootstrapApplication(AppComponent, {
     provideLumberjack(),
     provideLumberjackConsoleDriver(),
     provideLumberjackHttpDriver(
-      withConfig({
+      withHttpConfig({
         levels: [LumberjackLevel.Critical, LumberjackLevel.Error],
         origin: 'ForestApp',
         storeUrl: '/api/logs',
