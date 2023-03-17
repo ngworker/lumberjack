@@ -207,7 +207,7 @@ export function provideLumberjackHttpDriver<Kind extends LumberjackHttpDriverCon
 }
 ```
 
-This is our Moduless API, ready for everyone using Angular >v14.
+This is our Standalone API, ready for everyone using Angular >v14.
 
 This is where the heaviest configuration happens and it is used to boost the classic APIs
 
