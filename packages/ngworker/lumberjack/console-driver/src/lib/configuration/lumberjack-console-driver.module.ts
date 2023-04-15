@@ -2,7 +2,7 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 
 import { LumberjackConsoleDriverRootModule } from './lumberjack-console-driver-root.module';
 import { LumberjackConsoleDriverConfig } from './lumberjack-console-driver.config';
-import { provideLumberjackConsoleDriver } from './lumberjack-console-driver.providers';
+import { provideLumberjackConsoleDriver } from './provide-lumberjack-console-driver';
 
 /**
  * The console driver Angular module is used to configure and register the
