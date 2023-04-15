@@ -19,46 +19,40 @@ export type LumberjackHttpDriverConfiguration<Kind extends LumberjackHttpDriverC
 
 function makeLumberjackHttpConfiguration<Kind extends LumberjackHttpDriverConfigurationKind>(
   kind: Kind,
-  providers: EnvironmentProviders
+  providers: Provider[]
 ): LumberjackHttpDriverConfiguration<Kind> {
   return {
     kind,
-    providers,
+    providers: makeEnvironmentProviders(providers),
   };
 }
 
 export function withHttpConfig(config: LumberjackHttpDriverConfig): LumberjackHttpDriverConfiguration<'config'> {
-  return makeLumberjackHttpConfiguration(
-    'config',
-    makeEnvironmentProviders([
-      {
-        provide: lumberjackHttpDriverConfigToken,
-        deps: [lumberjackLogDriverConfigToken],
-        useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackHttpDriverInternalConfig => ({
-          ...logDriverConfig,
-          identifier: LumberjackHttpDriver.driverIdentifier,
-          ...config,
-        }),
-      },
-    ])
-  );
+  return makeLumberjackHttpConfiguration('config', [
+    {
+      provide: lumberjackHttpDriverConfigToken,
+      deps: [lumberjackLogDriverConfigToken],
+      useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackHttpDriverInternalConfig => ({
+        ...logDriverConfig,
+        identifier: LumberjackHttpDriver.driverIdentifier,
+        ...config,
+      }),
+    },
+  ]);
 }
 
 export function withHttpOptions(options: LumberjackHttpDriverOptions): LumberjackHttpDriverConfiguration<'options'> {
-  return makeLumberjackHttpConfiguration(
-    'options',
-    makeEnvironmentProviders([
-      {
-        provide: lumberjackHttpDriverConfigToken,
-        deps: [lumberjackLogDriverConfigToken],
-        useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackHttpDriverInternalConfig => ({
-          ...logDriverConfig,
-          identifier: LumberjackHttpDriver.driverIdentifier,
-          ...options,
-        }),
-      },
-    ])
-  );
+  return makeLumberjackHttpConfiguration('options', [
+    {
+      provide: lumberjackHttpDriverConfigToken,
+      deps: [lumberjackLogDriverConfigToken],
+      useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackHttpDriverInternalConfig => ({
+        ...logDriverConfig,
+        identifier: LumberjackHttpDriver.driverIdentifier,
+        ...options,
+      }),
+    },
+  ]);
 }
 
 /**
@@ -84,5 +78,5 @@ export function withHttpOptions(options: LumberjackHttpDriverOptions): Lumberjac
 export function provideLumberjackHttpDriver<Kind extends LumberjackHttpDriverConfigurationKind>(
   configuration: LumberjackHttpDriverConfiguration<Kind>
 ): EnvironmentProviders[] {
-  return [provideHttpClient(), lumberjackHttpDriverProvider, configuration.providers];
+return [provideHttpClient(), makeEnvironmentProviders([lumberjackHttpDriverProvider]), configuration.providers];
 }
