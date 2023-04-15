@@ -235,10 +235,39 @@ Classic:
 export class AppModule {}
 ```
 
-Standalone:
+or
 
 ```typescript
+@NgModule({
+  ...,
+  providers: [
+    ...,
+    provideLumberjack(), provideLumberjackConsoleDriver(), provideLumberjackHttpDriver(withHttpConfig({
+      levels: [LumberjackLevel.Error],
+      origin: 'ForestApp',
+      retryOptions: { maxRetries: 5, delayMs: 250 },
+      storeUrl: '/api/logs',
+    }))
+    ...
+  ],
+  ...
+})
+export class AppModule {}
+
+Standalone:
+
 bootstrapApplication(AppComponent, {
-  providers: [provideLumberjack(), provideLumberjackConsoleDriver(), provideLumberjackHttpDriver(withHttpOptions({}))],
+  providers: [
+    provideLumberjack(),
+    provideLumberjackConsoleDriver(),
+    provideLumberjackHttpDriver(
+      withHttpConfig({
+        levels: [LumberjackLevel.Error],
+        origin: 'ForestApp',
+        retryOptions: { maxRetries: 5, delayMs: 250 },
+        storeUrl: '/api/logs',
+      })
+    ),
+  ],
 });
 ```
