@@ -1,5 +1,5 @@
 import { provideHttpClient } from '@angular/common/http';
-import { EnvironmentProviders, makeEnvironmentProviders } from '@angular/core';
+import { EnvironmentProviders, makeEnvironmentProviders, Provider } from '@angular/core';
 
 import { LumberjackLogDriverConfig, lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
 
@@ -78,5 +78,5 @@ export function withHttpOptions(options: LumberjackHttpDriverOptions): Lumberjac
 export function provideLumberjackHttpDriver<Kind extends LumberjackHttpDriverConfigurationKind>(
   configuration: LumberjackHttpDriverConfiguration<Kind>
 ): EnvironmentProviders[] {
-return [provideHttpClient(), makeEnvironmentProviders([lumberjackHttpDriverProvider]), configuration.providers];
+  return [provideHttpClient(), makeEnvironmentProviders([lumberjackHttpDriverProvider]), configuration.providers];
 }
