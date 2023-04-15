@@ -12,7 +12,7 @@ import {
 import { LumberjackConsoleDriver } from '../log-drivers/lumberjack-console.driver';
 
 import { LumberjackConsoleDriverConfig } from './lumberjack-console-driver.config';
-import { provideLumberjackConsoleDriver } from './lumberjack-console-driver.providers';
+import { provideLumberjackConsoleDriver } from './provide-lumberjack-console-driver';
 
 const createConsoleDriver = ({
   config,
