@@ -11,6 +11,7 @@ import {
   LumberjackModule,
   LumberjackOptions,
   LumberjackRootModule,
+  provideLumberjack,
 } from './index';
 
 describe('Configuration API', () => {
@@ -51,6 +52,14 @@ describe('Configuration API', () => {
 
     it(`exposes ${LumberjackRootModule.name}`, () => {
       const sut = LumberjackRootModule;
+
+      expect(isClass(sut)).toBeTruthy();
+    });
+  });
+
+  describe('Provider functions', () => {
+    it(`exposes ${provideLumberjack.name}`, () => {
+      const sut = provideLumberjack;
 
       expect(isClass(sut)).toBeTruthy();
     });

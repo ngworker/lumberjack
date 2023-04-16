@@ -24,16 +24,6 @@ describe('Configuration API', () => {
 
       expect(value).toBeUndefined();
     });
-
-    it('exposes provideLumberjackHttpDriver and its configurations', () => {
-      const value: typeof provideLumberjackHttpDriver | undefined = undefined;
-      const config: typeof withHttpConfig | undefined = undefined;
-      const options: typeof withHttpOptions | undefined = undefined;
-
-      expect(value).toBeUndefined();
-      expect(config).toBeUndefined();
-      expect(options).toBeUndefined();
-    });
   });
 
   describe('Types', () => {
@@ -55,6 +45,18 @@ describe('Configuration API', () => {
       const sut = LumberjackHttpDriverRootModule;
 
       expect(isClass(sut)).toBeTruthy();
+    });
+  });
+
+  describe('Providers functions', () => {
+    it('exposes provideLumberjackHttpDriver and its configurations', () => {
+      const value: typeof provideLumberjackHttpDriver | undefined = undefined;
+      const config: typeof withHttpConfig | undefined = undefined;
+      const options: typeof withHttpOptions | undefined = undefined;
+
+      expect(value).toBeUndefined();
+      expect(config).toBeUndefined();
+      expect(options).toBeUndefined();
     });
   });
 });
