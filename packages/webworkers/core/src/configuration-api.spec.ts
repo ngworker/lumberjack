@@ -1,4 +1,11 @@
-import { LumberjackConfig, LumberjackFormatFunction, LumberjackLogDriverConfig, LumberjackOptions } from './index';
+import {
+  defaultDevelopmentLevels,
+  defaultProductionLevels,
+  LumberjackConfig,
+  LumberjackFormatFunction,
+  LumberjackLogDriverConfig,
+  LumberjackOptions,
+} from './index';
 
 describe('Configuration API', () => {
   describe('Interfaces', () => {
@@ -26,6 +33,16 @@ describe('Configuration API', () => {
       const value: LumberjackOptions | undefined = undefined;
 
       expect(value).toBeUndefined();
+    });
+  });
+
+  describe('Default configurations', () => {
+    it('exposes defaultDevelopmentLevels', () => {
+      expect(defaultDevelopmentLevels).toBeUndefined();
+    });
+
+    it('exposes defaultProductionLevels', () => {
+      expect(defaultProductionLevels).toBeUndefined();
     });
   });
 });

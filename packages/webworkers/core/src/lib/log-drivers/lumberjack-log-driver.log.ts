@@ -5,6 +5,13 @@ import { LumberjackLog, LumberjackLogPayload } from '@webworkers/lumberjack';
  * a log payload.
  */
 export interface LumberjackLogDriverLog<TPayload extends LumberjackLogPayload | void = void> {
+  describe('Dependency injection tokens', () => {
+    it('exposes lumberjackLogDriverToken', () => {
+      const sut = lumberjackLogDriverToken;
+
+      expect(sut).toBeInstanceOf(InjectionToken);
+    });
+  });
   /**
    * The text representation of the log.
    */

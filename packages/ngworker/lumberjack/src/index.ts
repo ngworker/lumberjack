@@ -18,3 +18,6 @@ export { LumberjackLogBuilder } from './lib/logging/lumberjack-log.builder';
 
 // Time
 export { LumberjackTimeService } from './lib/time/lumberjack-time.service';
+
+// Log Drivers
+export { lumberjackLogDriverToken } from './lib/log-drivers/lumberjack-log-driver.token';
