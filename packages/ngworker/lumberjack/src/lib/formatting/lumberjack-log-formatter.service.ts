@@ -1,10 +1,7 @@
 import { inject, Injectable } from '@angular/core';
+import { LumberjackConfig, LumberjackLevel, LumberjackLog, LumberjackLogPayload } from '@webworkers/lumberjack';
 
 import { lumberjackConfigToken } from '../configuration/lumberjack-config.token';
-import { LumberjackConfig } from '../configuration/lumberjack.config';
-import { LumberjackLevel } from '../logs/lumberjack-level';
-import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
-import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { lumberjackFormatLog } from './lumberjack-format-log';

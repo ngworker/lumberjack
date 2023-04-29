@@ -1,5 +1,6 @@
+import { LumberjackLogPayload } from '@webworkers/lumberjack';
+
 import { LumberjackLogDriverError } from '../log-drivers/lumberjack-log-driver-error';
-import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 
 /**
  * Create a text representation of the specified log driver error.

@@ -1,6 +1,5 @@
-import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
-import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
-import { LumberjackLog } from '../logs/lumberjack.log';
+import { LumberjackLog, LumberjackLogLevel, LumberjackLogPayload } from '@webworkers/lumberjack';
+
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 /**

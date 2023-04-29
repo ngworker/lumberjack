@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+import { LumberjackLog, LumberjackLogPayload } from '@webworkers/lumberjack';
 
 import { NoopDriver, NoopDriverModule } from '@internal/test-util';
 
@@ -7,8 +8,6 @@ import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
 import { LumberjackLogDriverError } from '../log-drivers/lumberjack-log-driver-error';
 import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
 import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
-import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
-import { LumberjackLog } from '../logs/lumberjack.log';
 
 import { formatLogDriverError } from './format-log-driver-error';
 import { lumberjackFormatLog } from './lumberjack-format-log';

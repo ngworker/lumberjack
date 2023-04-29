@@ -1,7 +1,5 @@
 import { Injectable } from '@angular/core';
-
-import { LumberjackLevel } from '../logs/lumberjack-level';
-import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
+import { LumberjackLevel, LumberjackLogPayload } from '@webworkers/lumberjack';
 
 import { criticalLogDriverLoggingStrategy } from './logging-strategies/critical-log-driver-logging-strategy';
 import { debugLogDriverLoggingStrategy } from './logging-strategies/debug-log-driver-logging-strategy';

@@ -1,8 +1,8 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
+import { LumberjackOptions } from '@webworkers/lumberjack';
 
 import { lumberjackOptionsToken } from './lumberjack-options.token';
 import { LumberjackRootModule } from './lumberjack-root.module';
-import { LumberjackOptions } from './lumberjack.options';
 
 /**
  * The Lumberjack Angular module is used to register necessary Lumberjack

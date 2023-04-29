@@ -1,5 +1,6 @@
 import { StaticProvider } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+import { LumberjackLevel, LumberjackLogDriverConfig, LumberjackLogPayload } from '@webworkers/lumberjack';
 
 import { NoopConsoleModule } from '@internal/console-driver/test-util';
 import {
@@ -23,13 +24,10 @@ import {
 import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
 
 import { lumberjackLogDriverConfigToken } from '../configuration/lumberjack-log-driver-config.token';
-import { LumberjackLogDriverConfig } from '../configuration/lumberjack-log-driver.config';
 import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
 import { LumberjackLogDriverLog } from '../log-drivers/lumberjack-log-driver.log';
 import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
-import { LumberjackLevel } from '../logs/lumberjack-level';
-import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { LumberjackLogFactory } from './lumberjack-log-factory';

@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+import { LumberjackLevel, LumberjackLog, LumberjackLogLevel, LumberjackLogPayload } from '@webworkers/lumberjack';
 
 import { formatLogDriverError } from '../formatting/format-log-driver-error';
 import { LumberjackLogFormatter } from '../formatting/lumberjack-log-formatter.service';
@@ -6,10 +7,6 @@ import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
 import { LumberjackLogDriverError } from '../log-drivers/lumberjack-log-driver-error';
 import { LumberjackLogDriverLogger } from '../log-drivers/lumberjack-log-driver-logger';
 import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
-import { LumberjackLevel } from '../logs/lumberjack-level';
-import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
-import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
-import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 const noReportedLogDriverErrorIndex = -1;
