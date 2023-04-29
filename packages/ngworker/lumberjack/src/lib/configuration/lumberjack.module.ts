@@ -1,4 +1,5 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
+import { LumberjackOptions } from '@webworkers/lumberjack';
 
 import { LumberjackRootModule } from './lumberjack-root.module';
 import { LumberjackOptions } from './lumberjack.options';

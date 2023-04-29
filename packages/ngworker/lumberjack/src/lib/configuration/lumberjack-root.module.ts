@@ -1,4 +1,11 @@
 import { inject, NgModule } from '@angular/core';
+import {
+  defaultDevelopmentLevels,
+  defaultProductionLevels,
+  LumberjackConfig,
+  LumberjackLogDriverConfig,
+  LumberjackOptions,
+} from '@webworkers/lumberjack';
 
 /**
  * Do not import directly. Use `LumberjackModule.forRoot`.

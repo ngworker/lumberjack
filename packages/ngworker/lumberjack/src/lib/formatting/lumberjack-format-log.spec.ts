@@ -1,11 +1,9 @@
 import { TestBed } from '@angular/core/testing';
+import { LumberjackLevel, LumberjackLog, LumberjackLogLevel } from '@webworkers/lumberjack';
 
 import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
 import { LumberjackLogBuilder } from '../logging/lumberjack-log.builder';
-import { LumberjackLevel } from '../logs/lumberjack-level';
-import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
-import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { lumberjackFormatLog } from './lumberjack-format-log';

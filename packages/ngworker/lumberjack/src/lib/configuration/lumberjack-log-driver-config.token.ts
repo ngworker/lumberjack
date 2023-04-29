@@ -1,6 +1,5 @@
 import { InjectionToken } from '@angular/core';
-
-import { LumberjackLogDriverConfig } from './lumberjack-log-driver.config';
+import { LumberjackLogDriverConfig } from '@webworkers/lumberjack';
 
 /**
  * The Lumberjack log driver configuration token is used internally by

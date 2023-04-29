@@ -1,21 +1,23 @@
 import { TestBed } from '@angular/core/testing';
+import {
+  defaultDevelopmentLevels,
+  defaultProductionLevels,
+  LumberjackConfig,
+  LumberjackLevel,
+  LumberjackLog,
+  LumberjackLogDriverConfig,
+  LumberjackOptions,
+} from '@webworkers/lumberjack';
 
 import { expectNgModuleToBeGuardedAgainstDirectImport } from '@internal/test-util';
 
 import { isProductionEnvironmentToken } from '../environment/is-production-environment.token';
 import { lumberjackFormatLog } from '../formatting/lumberjack-format-log';
 import { utcTimestampFor } from '../formatting/utc-timestamp-for';
-import { LumberjackLevel } from '../logs/lumberjack-level';
-import { LumberjackLog } from '../logs/lumberjack.log';
 
-import { defaultDevelopmentLevels } from './default-development-levels';
-import { defaultProductionLevels } from './default-production-levels';
 import { lumberjackConfigToken } from './lumberjack-config.token';
 import { lumberjackLogDriverConfigToken } from './lumberjack-log-driver-config.token';
-import { LumberjackLogDriverConfig } from './lumberjack-log-driver.config';
-import { LumberjackConfig } from './lumberjack.config';
 import { LumberjackModule } from './lumberjack.module';
-import { LumberjackOptions } from './lumberjack.options';
 
 describe(LumberjackModule.name, () => {
   it(`cannot be imported without using the ${LumberjackModule.forRoot.name} method`, () => {

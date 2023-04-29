@@ -1,5 +1,4 @@
-import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
-import { LumberjackLog } from '../logs/lumberjack.log';
+import { LumberjackLog, LumberjackLogPayload } from '@webworkers/lumberjack';
 
 /**
  * The data structure passed to a log driver by Lumberjack. Optionally supports
