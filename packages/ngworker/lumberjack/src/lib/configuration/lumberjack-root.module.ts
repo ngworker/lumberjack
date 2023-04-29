@@ -3,7 +3,9 @@ import {
   defaultDevelopmentLevels,
   defaultProductionLevels,
   LumberjackConfig,
+  lumberjackFormatLog,
   LumberjackLogDriverConfig,
+  LumberjackLogDriverLogger,
   LumberjackOptions,
 } from '@webworkers/lumberjack';
 

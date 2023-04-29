@@ -1,11 +1,15 @@
 import { inject, Injectable } from '@angular/core';
-import { LumberjackConfig, LumberjackLevel, LumberjackLog, LumberjackLogPayload } from '@webworkers/lumberjack';
+import {
+  LumberjackConfig,
+  lumberjackFormatLog,
+  LumberjackLevel,
+  LumberjackLog,
+  LumberjackLogFormatterResult,
+  LumberjackLogPayload,
+} from '@webworkers/lumberjack';
 
 import { lumberjackConfigToken } from '../configuration/lumberjack-config.token';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
-
-import { lumberjackFormatLog } from './lumberjack-format-log';
-import { LumberjackLogFormatterResult } from './lumberjack-log-formatter-result';
 
 @Injectable()
 export class LumberjackLogFormatter<TPayload extends LumberjackLogPayload | void = void> {
