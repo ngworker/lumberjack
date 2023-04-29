@@ -1,6 +1,4 @@
-import { InjectionToken } from '@angular/core';
-
-import { LumberjackLogDriver, LumberjackLogDriverLog, lumberjackLogDriverToken } from './index';
+import { LumberjackLogDriver, LumberjackLogDriverError, LumberjackLogDriverLog } from './index';
 
 describe('Log drivers API', () => {
   describe('Interfaces', () => {
@@ -9,19 +7,16 @@ describe('Log drivers API', () => {
 
       expect(value).toBeUndefined();
     });
-
     it('exposes LumberjackLogDriverLog', () => {
       const value: LumberjackLogDriverLog | undefined = undefined;
 
       expect(value).toBeUndefined();
     });
-  });
 
-  describe('Dependency injection tokens', () => {
-    it('exposes lumberjackLogDriverToken', () => {
-      const sut = lumberjackLogDriverToken;
+    it('exposes LumberjackLogDriverError', () => {
+      const value: LumberjackLogDriverError | undefined = undefined;
 
-      expect(sut).toBeInstanceOf(InjectionToken);
+      expect(value).toBeUndefined();
     });
   });
 });

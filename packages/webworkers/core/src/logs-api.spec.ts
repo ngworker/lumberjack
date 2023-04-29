@@ -1,5 +1,3 @@
-import { isObject } from '@internal/test-util';
-
 import {
   LumberjackConfigLevels,
   LumberjackLevel,
@@ -41,7 +39,7 @@ describe('Logs API', () => {
     it('exposes LumberjackLevel', () => {
       const sut = LumberjackLevel;
 
-      expect(isObject(sut)).toBeTruthy();
+      expect(sut).toBeDefined();
     });
   });
 });

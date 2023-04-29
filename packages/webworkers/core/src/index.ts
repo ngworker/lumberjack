@@ -20,8 +20,6 @@ export { LumberjackLogPayload } from './lib/logs/lumberjack-log-payload';
 // Log drivers
 export { LumberjackLogDriver } from './lib/log-drivers/lumberjack-log-driver';
 export { LumberjackLogDriverLog } from './lib/log-drivers/lumberjack-log-driver.log';
-export { lumberjackLogDriverToken } from './lib/log-drivers/lumberjack-log-driver.token';
-export { LumberjackLogDriverLogger } from './lib/log-drivers/lumberjack-log-driver-logger';
 export { LumberjackLogDriverError } from './lib/log-drivers/lumberjack-log-driver-error';
 
 // Formatting
