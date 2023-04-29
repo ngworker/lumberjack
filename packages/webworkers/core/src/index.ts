@@ -1,3 +1,7 @@
+/*
+ * Public API surface of @webworkers/lumberjack
+ */
+
 // Configuration
 export { LumberjackFormatFunction } from './lib/configuration/lumberjack-format-function';
 export { LumberjackConfig } from './lib/configuration/lumberjack.config';
@@ -12,3 +16,15 @@ export { LumberjackLevel } from './lib/logs/lumberjack-level';
 export { LumberjackLog } from './lib/logs/lumberjack.log';
 export { LumberjackLogLevel } from './lib/logs/lumberjack-log-level';
 export { LumberjackLogPayload } from './lib/logs/lumberjack-log-payload';
+
+// Log drivers
+export { LumberjackLogDriver } from './lib/log-drivers/lumberjack-log-driver';
+export { LumberjackLogDriverLog } from './lib/log-drivers/lumberjack-log-driver.log';
+export { lumberjackLogDriverToken } from './lib/log-drivers/lumberjack-log-driver.token';
+export { LumberjackLogDriverLogger } from './lib/log-drivers/lumberjack-log-driver-logger';
+export { LumberjackLogDriverError } from './lib/log-drivers/lumberjack-log-driver-error';
+
+// Formatting
+export { lumberjackFormatLog } from './lib/formatting/lumberjack-format-log';
+export { LumberjackLogFormatterResult } from './lib/formatting/lumberjack-log-formatter-result';
+export { formatLogDriverError } from './lib/formatting/format-log-driver-error';
