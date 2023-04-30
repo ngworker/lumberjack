@@ -1,4 +1,4 @@
-import { LumberjackLogDriverConfig } from '@webworkers/lumberjack';
+import { LumberjackLogDriverConfig } from '@webworker/lumberjack';
 
 /**
  * Settings used by the console driver.

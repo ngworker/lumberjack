@@ -6,7 +6,7 @@ import {
   LumberjackLogDriver,
   LumberjackLogDriverError,
   LumberjackLogPayload,
-} from '@webworkers/lumberjack';
+} from '@webworker/lumberjack';
 
 import { NoopDriver, NoopDriverModule } from '@internal/test-util';
 

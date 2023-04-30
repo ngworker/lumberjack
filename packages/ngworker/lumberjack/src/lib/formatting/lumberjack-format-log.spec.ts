@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { lumberjackFormatLog, LumberjackLevel, LumberjackLog, LumberjackLogLevel } from '@webworkers/lumberjack';
+import { lumberjackFormatLog, LumberjackLevel, LumberjackLog, LumberjackLogLevel } from '@webworker/lumberjack';
 
 import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';

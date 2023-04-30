@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { LumberjackConfig } from '@webworkers/lumberjack';
+import { LumberjackConfig } from '@webworker/lumberjack';
 
 /**
  * The Lumberjack configuration token is used internally by `LumberjackModule`

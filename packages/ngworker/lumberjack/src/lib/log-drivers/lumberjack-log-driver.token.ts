@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
-import { LumberjackLogDriver } from '@webworkers/lumberjack';
+import { LumberjackLogDriver } from '@webworker/lumberjack';
 
 /**
  * A multi-provider token which log drivers use to register with Lumberjack.

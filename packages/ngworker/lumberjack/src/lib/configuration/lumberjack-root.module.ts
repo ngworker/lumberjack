@@ -6,7 +6,7 @@ import {
   lumberjackFormatLog,
   LumberjackLogDriverConfig,
   LumberjackOptions,
-} from '@webworkers/lumberjack';
+} from '@webworker/lumberjack';
 
 import { isProductionEnvironmentToken } from '../environment/is-production-environment.token';
 import { LumberjackLogFormatter } from '../formatting/lumberjack-log-formatter.service';

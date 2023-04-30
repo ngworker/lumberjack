@@ -1,5 +1,5 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { LumberjackLogDriverConfig } from '@webworkers/lumberjack';
+import { LumberjackLogDriverConfig } from '@webworker/lumberjack';
 
 import { lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
 
