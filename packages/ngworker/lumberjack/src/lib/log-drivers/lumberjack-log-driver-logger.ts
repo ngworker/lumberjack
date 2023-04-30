@@ -1,15 +1,17 @@
-import { Injectable } from '@angular/core';
-import { LumberjackLevel, LumberjackLogPayload } from '@webworkers/lumberjack';
+import {
+  criticalLogDriverLoggingStrategy,
+  debugLogDriverLoggingStrategy,
+  errorLogDriverLoggingStrategy,
+  infoLogDriverLoggingStrategy,
+  LumberjackLevel,
+  LumberjackLogDriver,
+  LumberjackLogDriverLog,
+  LumberjackLogPayload,
+  traceLogDriverLoggingStrategy,
+  warningLogDriverLoggingStrategy,
+} from '@webworkers/lumberjack';
 
-import { criticalLogDriverLoggingStrategy } from './logging-strategies/critical-log-driver-logging-strategy';
-import { debugLogDriverLoggingStrategy } from './logging-strategies/debug-log-driver-logging-strategy';
-import { errorLogDriverLoggingStrategy } from './logging-strategies/error-log-driver-logging-strategy';
-import { infoLogDriverLoggingStrategy } from './logging-strategies/info-log-driver-logging-strategy';
-import { LumberjackLogDriverLoggingStrategy } from './logging-strategies/lumberjack-log-driver-logging-strategy';
-import { traceLogDriverLoggingStrategy } from './logging-strategies/trace-log-driver-logging-strategy';
-import { warningLogDriverLoggingStrategy } from './logging-strategies/warning-log-driver-logging-strategy';
-import { LumberjackLogDriver } from './lumberjack-log-driver';
-import { LumberjackLogDriverLog } from './lumberjack-log-driver.log';
+import { Injectable } from '@angular/core';
 
 /**
  * A context for a log driver logging strategy.

@@ -1,6 +1,6 @@
 {
   "name": "webworkers-core",
-  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/webworkers/core/src",
   "projectType": "library",
   "targets": {
@@ -8,6 +8,7 @@
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
+        "rootDit": ".",
         "outputPath": "dist/packages/webworkers/core",
         "main": "packages/webworkers/core/src/index.ts",
         "tsConfig": "packages/webworkers/core/tsconfig.lib.json",
@@ -38,5 +39,5 @@
     }
   },
   "implicitDependencies": ["!internal-test-util"],
-  "tags": ["type:core"]
+  "tags": ["type:core", "scope:public"]
 }
