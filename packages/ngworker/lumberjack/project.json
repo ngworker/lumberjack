@@ -9,6 +9,10 @@
         {
           "projects": "self",
           "target": "build-package"
+        },
+        {
+          "projects": "dependencies",
+          "target": "build"
         }
       ],
       "options": {

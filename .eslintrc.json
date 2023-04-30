@@ -86,7 +86,7 @@
             "group-ordering": [
               {
                 "name": "project root",
-                "match": "^@(?!(ngworker|internal)).*|^[a-zA-Z].*",
+                "match": "^@(?!(webworkers|ngworker|internal)).*|^[a-zA-Z].*",
                 "order": 20
               },
               {

@@ -1,4 +1,4 @@
-import { LumberjackLogDriverConfig } from '@ngworker/lumberjack';
+import { LumberjackLogDriverConfig } from '@webworkers/lumberjack';
 
 /**
  * Settings used by the console driver.
