@@ -1,0 +1,41 @@
+{
+  "name": "webworker-lumberjack",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/webworker/lumberjack/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/webworker/lumberjack",
+        "main": "packages/webworker/lumberjack/src/index.ts",
+        "tsConfig": "packages/webworker/lumberjack/tsconfig.lib.json",
+        "assets": ["packages/webworker/lumberjack/*.md"]
+      }
+    },
+    "publish": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node tools/scripts/publish.mjs webworker-lumberjack {args.ver} {args.tag}"
+      },
+      "dependsOn": ["build"]
+    },
+    "lint": {
+      "executor": "@nrwl/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/webworker/lumberjack/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nrwl/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/webworker/lumberjack/jest.config.ts",
+        "passWithNoTests": true
+      }
+    }
+  },
+  "tags": ["type:package", "scope:public"]
+}
