@@ -6,7 +6,7 @@ import {
   LumberjackLog,
   LumberjackLogFormatterResult,
   LumberjackLogPayload,
-} from '@webworkers/lumberjack';
+} from '@webworker/lumberjack';
 
 import { lumberjackConfigToken } from '../configuration/lumberjack-config.token';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';

@@ -6,7 +6,7 @@ import {
   lumberjackFormatLog,
   LumberjackLogDriverConfig,
   LumberjackOptions,
-} from '@webworkers/lumberjack';
+} from '@webworker/lumberjack';
 
 /**
  * Do not import directly. Use `LumberjackModule.forRoot`.

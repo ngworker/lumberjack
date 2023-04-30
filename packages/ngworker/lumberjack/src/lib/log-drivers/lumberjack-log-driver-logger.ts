@@ -9,7 +9,7 @@ import {
   LumberjackLogPayload,
   traceLogDriverLoggingStrategy,
   warningLogDriverLoggingStrategy,
-} from '@webworkers/lumberjack';
+} from '@webworker/lumberjack';
 
 import { Injectable } from '@angular/core';
 

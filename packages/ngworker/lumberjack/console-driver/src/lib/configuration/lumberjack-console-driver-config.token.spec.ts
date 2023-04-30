@@ -1,4 +1,4 @@
-import { LumberjackLevel, LumberjackLogDriverConfig } from '@webworkers/lumberjack';
+import { LumberjackLevel, LumberjackLogDriverConfig } from '@webworker/lumberjack';
 import { TestBed } from '@angular/core/testing';
 
 import { lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';

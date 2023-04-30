@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { LumberjackLevel } from '@webworkers/lumberjack';
+import { LumberjackLevel } from '@webworker/lumberjack';
 
 import { SpyDriver, SpyDriverModule } from '@internal/test-util';
 

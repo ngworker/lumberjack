@@ -1,5 +1,5 @@
 /*
- * Public API surface of @webworkers/lumberjack
+ * Public API surface of @webworker/lumberjack
  */
 
 // Configuration

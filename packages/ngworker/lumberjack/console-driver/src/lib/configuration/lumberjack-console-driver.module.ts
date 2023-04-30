@@ -1,5 +1,5 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { LumberjackLogDriverConfig } from '@webworkers/lumberjack';
+import { LumberjackLogDriverConfig } from '@webworker/lumberjack';
 
 import { LumberjackConsoleDriverRootModule } from './lumberjack-console-driver-root.module';
 import { LumberjackConsoleDriverConfig } from './lumberjack-console-driver.config';

@@ -7,7 +7,7 @@ import {
   LumberjackLog,
   LumberjackLogDriverConfig,
   LumberjackOptions,
-} from '@webworkers/lumberjack';
+} from '@webworker/lumberjack';
 
 import { expectNgModuleToBeGuardedAgainstDirectImport } from '@internal/test-util';
 

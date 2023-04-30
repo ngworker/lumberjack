@@ -7,7 +7,7 @@ import {
   LumberjackLogDriverError,
   LumberjackLogLevel,
   LumberjackLogPayload,
-} from '@webworkers/lumberjack';
+} from '@webworker/lumberjack';
 
 import { LumberjackLogFormatter } from '../formatting/lumberjack-log-formatter.service';
 import { LumberjackLogDriverLogger } from '../log-drivers/lumberjack-log-driver-logger';

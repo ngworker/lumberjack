@@ -6,7 +6,7 @@ import {
   LumberjackLogDriverConfig,
   LumberjackLogDriverLog,
   LumberjackLogPayload,
-} from '@webworkers/lumberjack';
+} from '@webworker/lumberjack';
 
 import { NoopConsoleModule } from '@internal/console-driver/test-util';
 import {
