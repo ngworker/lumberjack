@@ -21,8 +21,7 @@
       "@ngworker/lumberjack": ["packages/ngworker/lumberjack/src/index.ts"],
       "@ngworker/lumberjack/console-driver": ["packages/ngworker/lumberjack/console-driver/src/index.ts"],
       "@ngworker/lumberjack/http-driver": ["packages/ngworker/lumberjack/http-driver/src/index.ts"],
-      "@webworker/lumberjack": ["packages/webworker/lumberjack/src/index.ts"],
-      "@webworkers/lumberjack": ["packages/webworkers/core/src/index.ts"]
+      "@webworker/lumberjack": ["packages/webworker/lumberjack/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
