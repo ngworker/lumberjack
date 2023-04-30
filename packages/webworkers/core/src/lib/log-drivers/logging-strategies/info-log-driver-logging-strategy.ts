@@ -1,5 +1,4 @@
-import { LumberjackLogPayload } from '@webworkers/lumberjack';
-
+import { LumberjackLogPayload } from '../../logs/lumberjack-log-payload';
 import { LumberjackLogDriver } from '../lumberjack-log-driver';
 import { LumberjackLogDriverLog } from '../lumberjack-log-driver.log';
 

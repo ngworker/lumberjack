@@ -5,13 +5,13 @@ import {
   LumberjackLog,
   LumberjackLogDriver,
   LumberjackLogDriverError,
-  LumberjackLogDriverLogger,
-  lumberjackLogDriverToken,
   LumberjackLogLevel,
   LumberjackLogPayload,
 } from '@webworkers/lumberjack';
 
 import { LumberjackLogFormatter } from '../formatting/lumberjack-log-formatter.service';
+import { LumberjackLogDriverLogger } from '../log-drivers/lumberjack-log-driver-logger';
+import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 const noReportedLogDriverErrorIndex = -1;
