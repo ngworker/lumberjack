@@ -1,16 +1,18 @@
 import { TestBed } from '@angular/core/testing';
-import { LumberjackLog, LumberjackLogPayload } from '@webworkers/lumberjack';
+import {
+  formatLogDriverError,
+  lumberjackFormatLog,
+  LumberjackLog,
+  LumberjackLogDriver,
+  LumberjackLogDriverError,
+  LumberjackLogPayload,
+} from '@webworkers/lumberjack';
 
 import { NoopDriver, NoopDriverModule } from '@internal/test-util';
 
 import { LumberjackModule } from '../configuration/lumberjack.module';
-import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
-import { LumberjackLogDriverError } from '../log-drivers/lumberjack-log-driver-error';
 import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
 import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
-
-import { formatLogDriverError } from './format-log-driver-error';
-import { lumberjackFormatLog } from './lumberjack-format-log';
 
 describe(formatLogDriverError.name, () => {
   beforeEach(() => {

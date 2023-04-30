@@ -1,12 +1,10 @@
 import { TestBed } from '@angular/core/testing';
-import { LumberjackLevel, LumberjackLog, LumberjackLogLevel } from '@webworkers/lumberjack';
+import { lumberjackFormatLog, LumberjackLevel, LumberjackLog, LumberjackLogLevel } from '@webworkers/lumberjack';
 
 import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
 import { LumberjackLogBuilder } from '../logging/lumberjack-log.builder';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
-
-import { lumberjackFormatLog } from './lumberjack-format-log';
 
 function parseFormattedLog(formattedLog: string) {
   const formattedLogPattern = /^([a-z]+) ([0-9.:\-TZ]+) (\[(.+)\] )?(.*)$/;
