@@ -1,13 +1,12 @@
 import { TestBed } from '@angular/core/testing';
-import { LumberjackLevel } from '@webworker/lumberjack';
 
+import { LumberjackLevel, LumberjackLogDriverLog } from '@webworker/lumberjack';
 import { SpyDriver, SpyDriverModule } from '@internal/test-util';
 
 import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
 
 import { LumberjackLogDriverLogger } from './lumberjack-log-driver-logger';
-import { LumberjackLogDriverLog } from './lumberjack-log-driver.log';
 import { lumberjackLogDriverToken } from './lumberjack-log-driver.token';
 
 describe(LumberjackLogDriverLogger.name, () => {

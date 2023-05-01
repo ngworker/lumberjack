@@ -1,5 +1,6 @@
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackLog } from '../logs/lumberjack.log';
+
 import { utcTimestampFor } from './utc-timestamp-for';
 
 export function lumberjackFormatLog<TPayload extends LumberjackLogPayload | void = void>({

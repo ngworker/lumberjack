@@ -1,4 +1,4 @@
-import { LumberjackLogDriverConfig } from '@ngworker/lumberjack';
+import { LumberjackLogDriverConfig } from '@webworker/lumberjack';
 
 export interface ErrorThrowingDriverConfig extends LumberjackLogDriverConfig {
   /**

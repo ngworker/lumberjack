@@ -1,3 +1,5 @@
+import { Injectable } from '@angular/core';
+
 import {
   criticalLogDriverLoggingStrategy,
   debugLogDriverLoggingStrategy,
@@ -10,24 +12,18 @@ import {
   traceLogDriverLoggingStrategy,
   warningLogDriverLoggingStrategy,
 } from '@webworker/lumberjack';
-import { Injectable } from '@angular/core';
 
 /**
  * A context for a log driver logging strategy.
  */
 @Injectable()
 export class LumberjackLogDriverLogger<TPayload extends LumberjackLogPayload | void = void> {
-  /**
-   * A record of logging strategies for each log level.
-   */
-  readonly #loggingStrategies: Readonly<Record<LumberjackLogLevel, LumberjackLogDriverLoggingStrategy<TPayload>>> = {
-    [LumberjackLevel.Critical]: criticalLogDriverLoggingStrategy,
-    [LumberjackLevel.Debug]: debugLogDriverLoggingStrategy,
-    [LumberjackLevel.Error]: errorLogDriverLoggingStrategy,
-    [LumberjackLevel.Info]: infoLogDriverLoggingStrategy,
-    [LumberjackLevel.Trace]: traceLogDriverLoggingStrategy,
-    [LumberjackLevel.Warning]: warningLogDriverLoggingStrategy,
-  };
+  private readonly [LumberjackLevel.Critical] = criticalLogDriverLoggingStrategy;
+  private readonly [LumberjackLevel.Debug] = debugLogDriverLoggingStrategy;
+  private readonly [LumberjackLevel.Error] = errorLogDriverLoggingStrategy;
+  private readonly [LumberjackLevel.Info] = infoLogDriverLoggingStrategy;
+  private readonly [LumberjackLevel.Trace] = traceLogDriverLoggingStrategy;
+  private readonly [LumberjackLevel.Warning] = warningLogDriverLoggingStrategy;
 
   /**
    * Log the specified log to the log driver.
@@ -39,6 +35,6 @@ export class LumberjackLogDriverLogger<TPayload extends LumberjackLogPayload | v
    * @param driverLog A log driver log.
    */
   log(driver: LumberjackLogDriver<TPayload>, driverLog: LumberjackLogDriverLog<TPayload>): void {
-    this.#loggingStrategies[driverLog.log.level](driver, driverLog);
+    this[driverLog.log.level](driver, driverLog);
   }
 }

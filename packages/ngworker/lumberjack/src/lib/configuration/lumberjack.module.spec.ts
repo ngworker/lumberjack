@@ -1,19 +1,19 @@
 import { TestBed } from '@angular/core/testing';
+
+import { expectNgModuleToBeGuardedAgainstDirectImport } from '@internal/test-util';
 import {
   defaultDevelopmentLevels,
   defaultProductionLevels,
   LumberjackConfig,
+  lumberjackFormatLog,
   LumberjackLevel,
   LumberjackLog,
   LumberjackLogDriverConfig,
   LumberjackOptions,
+  utcTimestampFor,
 } from '@webworker/lumberjack';
 
-import { expectNgModuleToBeGuardedAgainstDirectImport } from '@internal/test-util';
-
 import { isProductionEnvironmentToken } from '../environment/is-production-environment.token';
-import { lumberjackFormatLog } from '../formatting/lumberjack-format-log';
-import { utcTimestampFor } from '../formatting/utc-timestamp-for';
 
 import { lumberjackConfigToken } from './lumberjack-config.token';
 import { lumberjackLogDriverConfigToken } from './lumberjack-log-driver-config.token';

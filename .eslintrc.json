@@ -87,12 +87,12 @@
             "group-ordering": [
               {
                 "name": "project root",
-                "match": "^@(?!(webworkers|ngworker|internal)).*|^[a-zA-Z].*",
+                "match": "^@(?!(webworker|ngworker|internal)).*|^[a-zA-Z].*",
                 "order": 20
               },
               {
                 "name": "internal imports",
-                "match": "^@(ngworker|internal).*",
+                "match": "^@(webworker|ngworker|internal).*",
                 "order": 30
               },
               { "name": "parent directories", "match": "^\\.\\.", "order": 40 },

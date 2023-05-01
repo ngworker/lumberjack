@@ -1,4 +1,5 @@
 import { InjectionToken } from '@angular/core';
+
 import { LumberjackLogDriverConfig } from '@webworker/lumberjack';
 
 export const lumberjackConsoleDriverConfigToken = new InjectionToken<LumberjackLogDriverConfig>(
