@@ -1,4 +1,5 @@
 import { inject, Injectable } from '@angular/core';
+
 import { LumberjackLogDriver, LumberjackLogDriverLog, LumberjackLogPayload } from '@webworker/lumberjack';
 
 import { lumberjackConsoleDriverConfigToken } from '../configuration/lumberjack-console-driver-config.token';
