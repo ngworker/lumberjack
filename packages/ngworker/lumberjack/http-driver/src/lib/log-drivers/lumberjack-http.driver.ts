@@ -2,7 +2,12 @@ import { HttpClient } from '@angular/common/http';
 import { inject, Injectable, NgZone, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 
-import { LumberjackLog, LumberjackLogDriver, LumberjackLogDriverLog, LumberjackLogPayload } from '@ngworker/lumberjack';
+import {
+  LumberjackLog,
+  LumberjackLogDriver,
+  LumberjackLogDriverLog,
+  LumberjackLogPayload,
+} from '@webworker/lumberjack';
 
 import { lumberjackHttpDriverConfigToken } from '../configuration/lumberjack-http-driver-config.token';
 import { LumberjackHttpLog } from '../logs/lumberjack-http.log';

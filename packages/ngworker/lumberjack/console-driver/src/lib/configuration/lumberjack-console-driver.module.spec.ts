@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
-import { LumberjackLevel, LumberjackLogDriver, LumberjackLogDriverConfig } from '@webworker/lumberjack';
 
 import { expectNgModuleToBeGuardedAgainstDirectImport } from '@internal/test-util';
 import { lumberjackConfigToken, lumberjackLogDriverToken, LumberjackModule } from '@ngworker/lumberjack';
+import { LumberjackLevel, LumberjackLogDriver, LumberjackLogDriverConfig } from '@webworker/lumberjack';
 
 import { LumberjackConsoleDriver } from '../log-drivers/lumberjack-console.driver';
 

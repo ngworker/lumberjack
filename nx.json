@@ -68,5 +68,10 @@
       "!{projectRoot}/.eslintrc.json"
     ],
     "projectSpecificFiles": []
+  },
+  "pluginsConfig": {
+    "@nx/js": {
+      "analyzeSourceFiles": true
+    }
   }
 }

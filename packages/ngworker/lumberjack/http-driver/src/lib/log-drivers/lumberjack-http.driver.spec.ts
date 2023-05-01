@@ -3,15 +3,14 @@ import { TestBed } from '@angular/core/testing';
 import { VERSION } from '@angular/platform-browser';
 
 import { createCriticalDriverLog, createDriverLog, repeatSideEffect } from '@internal/test-util';
+import { lumberjackLogDriverToken, LumberjackModule } from '@ngworker/lumberjack';
 import {
   LumberjackLevel,
   LumberjackLogDriver,
   LumberjackLogDriverLog,
-  lumberjackLogDriverToken,
   LumberjackLogLevel,
   LumberjackLogPayload,
-  LumberjackModule,
-} from '@ngworker/lumberjack';
+} from '@webworker/lumberjack';
 
 import { LumberjackHttpDriverModule } from '../configuration/lumberjack-http-driver.module';
 import { LumberjackHttpDriverOptions } from '../configuration/lumberjack-http-driver.options';
