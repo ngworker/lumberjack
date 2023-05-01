@@ -10,10 +10,6 @@
       "dependsOn": [
         {
           "target": "build-package"
-        },
-        {
-          "projects": "dependencies",
-          "target": "build"
         }
       ],
       "options": {
@@ -38,6 +34,12 @@
     },
     "build-package": {
       "executor": "@nx/angular:package",
+      "dependsOn": [
+        {
+          "projects": "dependencies",
+          "target": "build-package"
+        }
+      ],
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
         "project": "packages/ngworker/lumberjack/ng-package.json",
@@ -59,13 +61,19 @@
       "options": {
         "jestConfig": "packages/ngworker/lumberjack/jest.config.ts",
         "passWithNoTests": true,
-        "reporters": ["default", "github-actions"]
+        "reporters": [
+          "default",
+          "github-actions"
+        ]
       },
       "configurations": {
         "coverage": {
           "codeCoverage": true,
           "ci": true,
-          "coverageReporters": ["lcovonly", "text-summary"]
+          "coverageReporters": [
+            "lcovonly",
+            "text-summary"
+          ]
         }
       }
     },
@@ -118,8 +126,14 @@
       }
     }
   },
-  "tags": ["scope:public", "type:package"],
-  "implicitDependencies": ["!internal-console-driver-test-util", "!internal-test-util"],
+  "tags": [
+    "scope:public",
+    "type:package"
+  ],
+  "implicitDependencies": [
+    "!internal-console-driver-test-util",
+    "!internal-test-util"
+  ],
   "namedInputs": {
     "projectSpecificFiles": ["{workspaceRoot}/README.md"]
   }

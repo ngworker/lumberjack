@@ -12,7 +12,13 @@
     "default": {
       "runner": "nx-cloud",
       "options": {
-        "cacheableOperations": ["build", "build-package", "lint", "test", "e2e"],
+        "cacheableOperations": [
+          "build",
+          "build-package",
+          "lint",
+          "test",
+          "e2e"
+        ],
         "accessToken": "M2I0MTZlMmMtYmQ5ZC00ZDg1LWFjOTQtZjU5ZGFkYWM3YjM2fHJlYWQ="
       }
     }
@@ -41,16 +47,29 @@
           "dependencies": true
         }
       ],
-      "inputs": ["production", "^production"]
+      "inputs": [
+        "production",
+        "^production"
+      ]
     },
     "e2e": {
-      "inputs": ["default", "^production"]
+      "inputs": [
+        "default",
+        "^production"
+      ]
     },
     "test": {
-      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
+      "inputs": [
+        "default",
+        "^production",
+        "{workspaceRoot}/jest.preset.js"
+      ]
     },
     "lint": {
-      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
+      "inputs": [
+        "default",
+        "{workspaceRoot}/.eslintrc.json"
+      ]
     }
   },
   "workspaceLayout": {
@@ -58,7 +77,11 @@
     "libsDir": "packages"
   },
   "namedInputs": {
-    "default": ["{projectRoot}/**/*", "sharedGlobals", "projectSpecificFiles"],
+    "default": [
+      "{projectRoot}/**/*",
+      "sharedGlobals",
+      "projectSpecificFiles"
+    ],
     "sharedGlobals": [],
     "production": [
       "default",
