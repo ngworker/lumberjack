@@ -1,4 +1,5 @@
 import { InjectionToken } from '@angular/core';
+
 import { LumberjackLogDriver } from '@webworker/lumberjack';
 
 /**

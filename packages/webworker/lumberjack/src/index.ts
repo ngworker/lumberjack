@@ -16,6 +16,7 @@ export { LumberjackLevel } from './lib/logs/lumberjack-level';
 export { LumberjackLog } from './lib/logs/lumberjack.log';
 export { LumberjackLogLevel } from './lib/logs/lumberjack-log-level';
 export { LumberjackLogPayload } from './lib/logs/lumberjack-log-payload';
+export { utcTimestampFor } from './lib/formatting/utc-timestamp-for';
 
 // Log drivers
 export { LumberjackLogDriver } from './lib/log-drivers/lumberjack-log-driver';

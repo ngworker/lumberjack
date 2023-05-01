@@ -1,5 +1,6 @@
 import { StaticProvider } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
+
 import {
   LumberjackLevel,
   LumberjackLogDriver,
@@ -7,7 +8,6 @@ import {
   LumberjackLogDriverLog,
   LumberjackLogPayload,
 } from '@webworker/lumberjack';
-
 import { NoopConsoleModule } from '@internal/console-driver/test-util';
 import {
   createCriticalDriverLog,

@@ -1,4 +1,5 @@
 import { TestBed } from '@angular/core/testing';
+
 import {
   formatLogDriverError,
   lumberjackFormatLog,
@@ -7,7 +8,6 @@ import {
   LumberjackLogDriverError,
   LumberjackLogPayload,
 } from '@webworker/lumberjack';
-
 import { NoopDriver, NoopDriverModule } from '@internal/test-util';
 
 import { LumberjackModule } from '../configuration/lumberjack.module';
