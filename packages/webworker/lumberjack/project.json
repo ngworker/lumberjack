@@ -3,6 +3,7 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "packages/webworker/lumberjack/src",
   "projectType": "library",
+  "prefix": "webworker",
   "targets": {
     "build": {
       "executor": "@nrwl/js:tsc",
@@ -50,6 +51,9 @@
       }
     }
   },
+  "implicitDependencies": [
+    "!internal-test-util"
+  ],
   "tags": [
     "type:package",
     "scope:public"
