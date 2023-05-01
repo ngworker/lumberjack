@@ -34,12 +34,6 @@
     },
     "build-package": {
       "executor": "@nx/angular:package",
-      "dependsOn": [
-        {
-          "target": "build-package",
-          "dependencies": true
-        }
-      ],
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
         "project": "packages/ngworker/lumberjack/ng-package.json"
