@@ -1,3 +1,5 @@
+import { Injectable } from '@angular/core';
+
 import {
   criticalLogDriverLoggingStrategy,
   debugLogDriverLoggingStrategy,
@@ -10,7 +12,6 @@ import {
   traceLogDriverLoggingStrategy,
   warningLogDriverLoggingStrategy,
 } from '@webworker/lumberjack';
-import { Injectable } from '@angular/core';
 
 /**
  * A context for a log driver logging strategy.

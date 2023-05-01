@@ -1,6 +1,6 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
-import { LumberjackLogDriverConfig } from '@webworker/lumberjack';
 
+import { LumberjackLogDriverConfig } from '@webworker/lumberjack';
 import { lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
 
 import { noopDriverConfigToken } from './noop-driver-config.token';

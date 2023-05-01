@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
-import { LumberjackLevel, LumberjackLogDriver } from '@webworker/lumberjack';
 
+import { LumberjackLevel, LumberjackLogDriver } from '@webworker/lumberjack';
 import { SpyConsole, SpyConsoleModule } from '@internal/console-driver/test-util';
 import { lumberjackLogDriverToken, LumberjackLogFactory, LumberjackModule } from '@ngworker/lumberjack';
 
