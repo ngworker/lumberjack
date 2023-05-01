@@ -9,7 +9,6 @@
       "executor": "@nx/js:swc",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "rootDir": ".",
         "outputPath": "dist/packages/webworker/lumberjack",
         "main": "packages/webworker/lumberjack/src/index.ts",
         "tsConfig": "packages/webworker/lumberjack/tsconfig.lib.json",
