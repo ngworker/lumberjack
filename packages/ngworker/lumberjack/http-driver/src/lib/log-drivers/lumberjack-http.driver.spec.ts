@@ -3,11 +3,11 @@ import { TestBed } from '@angular/core/testing';
 import { VERSION } from '@angular/platform-browser';
 
 import { createCriticalDriverLog, createDriverLog, repeatSideEffect } from '@internal/test-util';
+import { lumberjackLogDriverToken, LumberjackModule } from '@ngworker/lumberjack';
 import {
   LumberjackLevel,
   LumberjackLogDriver,
   LumberjackLogDriverLog,
-  lumberjackLogDriverToken,
   LumberjackLogLevel,
   LumberjackLogPayload,
   provideLumberjack,

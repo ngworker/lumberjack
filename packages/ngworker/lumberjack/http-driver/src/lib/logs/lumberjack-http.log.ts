@@ -1,4 +1,4 @@
-import { LumberjackLog, LumberjackLogPayload } from '@ngworker/lumberjack';
+import { LumberjackLog, LumberjackLogPayload } from '@webworker/lumberjack';
 
 /**
  * The HTTP request sent to the configured log store.
