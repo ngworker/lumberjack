@@ -69,6 +69,8 @@
     "@nx-plus/docusaurus": "^15.0.0-rc.0",
     "@tsconfig/docusaurus": "^1.0.6",
     "@schematics/angular": "15.2.7",
+    "@swc/cli": "~0.1.55",
+    "@swc/core": "^1.2.173",
     "@types/copy": "0.3.2",
     "@types/jest": "28.1.8",
     "@types/node": "18.11.13",
