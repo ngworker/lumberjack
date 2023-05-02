@@ -24,7 +24,9 @@
       "options": {
         "command": "node tools/scripts/publish.mjs webworker-lumberjack {args.ver} {args.tag}"
       },
-      "dependsOn": ["build-package"]
+      "dependsOn": [
+        "build-package"
+      ]
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
