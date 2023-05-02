@@ -1,6 +1,5 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
-// eslint-disable-next-line @nx/enforce-module-boundaries
 import { lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
 import { LumberjackLogDriverConfig } from '@webworker/lumberjack';
 

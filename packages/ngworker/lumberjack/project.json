@@ -12,9 +12,7 @@
         }
       ],
       "options": {
-        "outputPath": [
-          "dist/packages/ngworker/lumberjack"
-        ],
+        "outputPath": ["dist/packages/ngworker/lumberjack"],
         "parallel": false
       },
       "configurations": {
@@ -34,7 +32,7 @@
       "defaultConfiguration": "production"
     },
     "build-package": {
-      "executor": "@nx/angular:package",
+      "executor": "@nrwl/angular:package",
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
         "project": "packages/ngworker/lumberjack/ng-package.json"
@@ -51,33 +49,23 @@
     },
     "test": {
       "executor": "@nrwl/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/{projectRoot}"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "packages/ngworker/lumberjack/jest.config.ts",
         "passWithNoTests": true,
-        "reporters": [
-          "default",
-          "github-actions"
-        ]
+        "reporters": ["default", "github-actions"]
       },
       "configurations": {
         "coverage": {
           "codeCoverage": true,
           "ci": true,
-          "coverageReporters": [
-            "lcovonly",
-            "text-summary"
-          ]
+          "coverageReporters": ["lcovonly", "text-summary"]
         }
       }
     },
     "lint": {
       "executor": "@nrwl/linter:eslint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
           "packages/ngworker/lumberjack/**/*.ts",
@@ -104,10 +92,7 @@
         "push": true,
         "preid": "beta",
         "syncVersions": false,
-        "postTargets": [
-          "ngworker-lumberjack:publish",
-          "ngworker-lumberjack:github"
-        ]
+        "postTargets": ["ngworker-lumberjack:publish", "ngworker-lumberjack:github"]
       }
     },
     "github": {
@@ -125,18 +110,10 @@
       }
     }
   },
-  "tags": [
-    "scope:public",
-    "type:package"
-  ],
-  "implicitDependencies": [
-    "!internal-console-driver-test-util",
-    "!internal-test-util"
-  ],
+  "tags": ["scope:public", "type:package"],
+  "implicitDependencies": ["!internal-console-driver-test-util", "!internal-test-util"],
   "namedInputs": {
-    "projectSpecificFiles": [
-      "{workspaceRoot}/README.md"
-    ]
+    "projectSpecificFiles": ["{workspaceRoot}/README.md"]
   },
   "name": "ngworker-lumberjack"
 }
