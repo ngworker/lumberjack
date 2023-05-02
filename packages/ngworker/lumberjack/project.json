@@ -1,6 +1,4 @@
 {
-  "name": "ngworker-lumberjack",
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "packages/ngworker/lumberjack/src",
   "prefix": "ngworker",
@@ -9,6 +7,7 @@
       "executor": "nx:run-commands",
       "dependsOn": [
         {
+          "projects": "self",
           "target": "build-package"
         }
       ],
@@ -50,24 +49,34 @@
       "defaultConfiguration": "production"
     },
     "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "executor": "@nrwl/jest:jest",
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "packages/ngworker/lumberjack/jest.config.ts",
         "passWithNoTests": true,
-        "reporters": ["default", "github-actions"]
+        "reporters": [
+          "default",
+          "github-actions"
+        ]
       },
       "configurations": {
         "coverage": {
           "codeCoverage": true,
           "ci": true,
-          "coverageReporters": ["lcovonly", "text-summary"]
+          "coverageReporters": [
+            "lcovonly",
+            "text-summary"
+          ]
         }
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
-      "outputs": ["{options.outputFile}"],
+      "executor": "@nrwl/linter:eslint",
+      "outputs": [
+        "{options.outputFile}"
+      ],
       "options": {
         "lintFilePatterns": [
           "packages/ngworker/lumberjack/**/*.ts",
@@ -114,9 +123,18 @@
       }
     }
   },
-  "tags": ["scope:public", "type:package"],
-  "implicitDependencies": ["!internal-console-driver-test-util", "!internal-test-util"],
+  "tags": [
+    "scope:public",
+    "type:package"
+  ],
+  "implicitDependencies": [
+    "!internal-console-driver-test-util",
+    "!internal-test-util"
+  ],
   "namedInputs": {
-    "projectSpecificFiles": ["{workspaceRoot}/README.md"]
-  }
+    "projectSpecificFiles": [
+      "{workspaceRoot}/README.md"
+    ]
+  },
+  "name": "ngworker-lumberjack"
 }

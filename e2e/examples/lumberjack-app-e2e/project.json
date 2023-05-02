@@ -5,11 +5,11 @@
   "projectType": "application",
   "targets": {
     "e2e": {
-      "executor": "@nx/cypress:cypress",
+      "executor": "@nrwl/cypress:cypress",
       "dependsOn": [
         {
-          "target": "build",
-          "dependencies": true
+          "projects": "dependencies",
+          "target": "build"
         }
       ],
       "options": {
@@ -24,7 +24,7 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["e2e/examples/lumberjack-app-e2e/**/*.{js,ts}"]
