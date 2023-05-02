@@ -1,5 +1,4 @@
 {
-  "name": "examples-lumberjack-app",
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "packages/examples/lumberjack-app/src",
@@ -50,8 +49,8 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "dependsOn": [
         {
-          "target": "build",
-          "dependencies": true
+          "projects": "dependencies",
+          "target": "build"
         }
       ],
       "configurations": {
@@ -71,7 +70,7 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/examples/lumberjack-app/**/*.ts", "packages/examples/lumberjack-app/**/*.html"]
@@ -85,7 +84,7 @@
       }
     },
     "test": {
-      "executor": "@nx/jest:jest",
+      "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "packages/examples/lumberjack-app/jest.config.ts",
@@ -101,5 +100,6 @@
       }
     }
   },
-  "tags": ["scope:internal", "type:app"]
+  "tags": ["scope:internal", "type:app"],
+  "name": "examples-lumberjack-app"
 }

@@ -1,12 +1,11 @@
 {
   "name": "internal-test-util",
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "packages/internal/test-util/src",
   "prefix": "ngworker",
   "targets": {
     "test": {
-      "executor": "@nx/jest:jest",
+      "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "packages/internal/test-util/jest.config.ts",
@@ -22,7 +21,7 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/internal/test-util/**/*.ts", "packages/internal/test-util/**/*.html"]

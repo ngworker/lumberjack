@@ -1,7 +1,7 @@
 {
   "root": true,
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nx", "etc", "rxjs", "rxjs-angular", "sonarjs", "ordered-imports"],
+  "plugins": ["@nrwl/nx", "etc", "rxjs", "rxjs-angular", "sonarjs", "ordered-imports"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": ["{e2e,packages}/**/tsconfig.*?.json", "e2e/**/*-e2e/tsconfig.json"]
@@ -11,7 +11,7 @@
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "excludedFiles": ["*.spec.ts"],
       "rules": {
-        "@nx/enforce-module-boundaries": [
+        "@nrwl/nx/enforce-module-boundaries": [
           "error",
           {
             "enforceBuildableLibDependency": true,
@@ -44,18 +44,18 @@
     },
     {
       "files": ["*.ts", "*.tsx"],
-      "extends": ["plugin:@nx/typescript"],
+      "extends": ["plugin:@nrwl/nx/typescript"],
       "rules": {}
     },
     {
       "files": ["*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"],
       "rules": {
-        "@nx/enforce-module-boundaries": "off"
+        "@nrwl/nx/enforce-module-boundaries": "off"
       }
     },
     {
       "files": ["*.js", "*.jsx"],
-      "extends": ["plugin:@nx/javascript"],
+      "extends": ["plugin:@nrwl/nx/javascript"],
       "rules": {}
     },
     {
