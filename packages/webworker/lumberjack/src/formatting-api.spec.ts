@@ -3,11 +3,11 @@ import { formatLogDriverError, lumberjackFormatLog, LumberjackLogFormatterResult
 describe('Formatting API', () => {
   describe('Interfaces', () => {
     it('exposes lumberjackFormatLog', () => {
-      expect(lumberjackFormatLog).toBeUndefined();
+      expect(lumberjackFormatLog).toBeDefined();
     });
 
     it('exposes formatLogDriverError', () => {
-      expect(formatLogDriverError).toBeUndefined();
+      expect(formatLogDriverError).toBeDefined();
     });
 
     it('exposes LumberjackLogFormatterResult', () => {

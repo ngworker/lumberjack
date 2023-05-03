@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 
-import { LumberjackLogDriver, LumberjackLogDriverLog } from '@ngworker/lumberjack';
+import { LumberjackLogDriver, LumberjackLogDriverLog } from '@webworker/lumberjack';
 
 import { objectDriverConfigToken } from './object-driver-config.token';
 import { ObjectPayload } from './object.payload';

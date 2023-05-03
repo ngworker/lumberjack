@@ -2,7 +2,7 @@
 // ⬆️ Maintain signature compatibility with LumberjackLogDriver
 import { inject, Injectable } from '@angular/core';
 
-import { LumberjackLogDriver, LumberjackLogDriverLog, LumberjackLogPayload } from '@ngworker/lumberjack';
+import { LumberjackLogDriver, LumberjackLogDriverLog, LumberjackLogPayload } from '@webworker/lumberjack';
 
 import { noopDriverConfigToken } from './noop-driver-config.token';
 

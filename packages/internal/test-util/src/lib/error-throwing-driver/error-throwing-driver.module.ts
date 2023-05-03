@@ -1,6 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import { LumberjackLogDriverConfig, lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
+import { lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
+import { LumberjackLogDriverConfig } from '@webworker/lumberjack';
 
 import { defaultErrorThrowingDriverConfig } from './default-error-throwing-driver-config';
 import { defaultErrorThrowingDriverOptions } from './default-error-throwing-driver-options';

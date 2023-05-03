@@ -1,13 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
+import { lumberjackLogDriverToken, LumberjackModule } from '@ngworker/lumberjack';
 import {
   LumberjackLevel,
   LumberjackLogDriver,
   LumberjackLogDriverLog,
-  lumberjackLogDriverToken,
   LumberjackLogLevel,
-  LumberjackModule,
-} from '@ngworker/lumberjack';
+} from '@webworker/lumberjack';
 
 import { repeatSideEffect } from '../functions/repeat-side-effect';
 import { createDriverLog } from '../logs/driver-log-creators';

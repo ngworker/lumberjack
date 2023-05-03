@@ -1,6 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import { LumberjackLogDriverConfig, lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
+import { lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
+import { LumberjackLogDriverConfig } from '@webworker/lumberjack';
 
 import { spyDriverConfigToken } from './spy-driver-config.token';
 import { SpyDriverRootModule } from './spy-driver-root.module';

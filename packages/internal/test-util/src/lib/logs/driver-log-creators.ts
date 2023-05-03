@@ -1,12 +1,12 @@
 import { TestBed } from '@angular/core/testing';
 
+import { LumberjackTimeService } from '@ngworker/lumberjack';
 import {
   LumberjackLevel,
   LumberjackLogDriverLog,
   LumberjackLogLevel,
   LumberjackLogPayload,
-  LumberjackTimeService,
-} from '@ngworker/lumberjack';
+} from '@webworker/lumberjack';
 
 export const createDriverLog = <TPayload extends LumberjackLogPayload | void = void>(
   formattedLog: string,

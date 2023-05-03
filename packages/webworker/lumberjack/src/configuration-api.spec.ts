@@ -38,11 +38,11 @@ describe('Configuration API', () => {
 
   describe('Default configurations', () => {
     it('exposes defaultDevelopmentLevels', () => {
-      expect(defaultDevelopmentLevels).toBeUndefined();
+      expect(defaultDevelopmentLevels).toBeDefined();
     });
 
     it('exposes defaultProductionLevels', () => {
-      expect(defaultProductionLevels).toBeUndefined();
+      expect(defaultProductionLevels).toBeDefined();
     });
   });
 });

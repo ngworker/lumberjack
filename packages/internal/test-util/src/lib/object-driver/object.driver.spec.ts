@@ -1,14 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
 import { createDriverLog } from '@internal/test-util';
+import { lumberjackLogDriverToken, LumberjackModule } from '@ngworker/lumberjack';
 import {
   LumberjackLevel,
   LumberjackLogDriver,
   LumberjackLogDriverLog,
-  lumberjackLogDriverToken,
   LumberjackLogLevel,
-  LumberjackModule,
-} from '@ngworker/lumberjack';
+} from '@webworker/lumberjack';
 
 import { ObjectDriverModule } from './object-driver.module';
 import { ObjectDriver } from './object.driver';
