@@ -6,7 +6,8 @@
     "paths": {
       "@ngworker/lumberjack": ["dist/packages/ngworker/lumberjack"],
       "@ngworker/lumberjack/console-driver": ["dist/packages/ngworker/lumberjack/console-driver"],
-      "@ngworker/lumberjack/http-driver": ["dist/packages/ngworker/lumberjack/http-driver"]
+      "@ngworker/lumberjack/http-driver": ["dist/packages/ngworker/lumberjack/http-driver"],
+      "@webworker/lumberjack": ["dist/packages/webworker/lumberjack"]
     }
   },
   "files": ["src/main.ts"],

@@ -1,8 +1,9 @@
 import { importProvidersFrom } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 
-import { LumberjackLog, LumberjackModule, LumberjackOptions } from '@ngworker/lumberjack';
+import { LumberjackModule } from '@ngworker/lumberjack';
 import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
+import { LumberjackLog, LumberjackOptions } from '@webworker/lumberjack';
 
 import { AppComponent } from './app/app.component';
 
