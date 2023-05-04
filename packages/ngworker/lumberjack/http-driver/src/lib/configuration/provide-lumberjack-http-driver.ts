@@ -55,7 +55,7 @@ export function withHttpOptions(options: LumberjackHttpDriverOptions): Lumberjac
   ]);
 }
 
-type HttpClientFeatures = Parameters<typeof provideHttpClient>;
+export type HttpClientFeatures = Parameters<typeof provideHttpClient>;
 
 /**
  * Returns the [dependency-injection providers](https://angular.io/guide/glossary#provider)

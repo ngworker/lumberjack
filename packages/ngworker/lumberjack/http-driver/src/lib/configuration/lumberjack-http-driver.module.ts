@@ -3,7 +3,12 @@ import { ModuleWithProviders, NgModule } from '@angular/core';
 import { LumberjackHttpDriverRootModule } from './lumberjack-http-driver-root.module';
 import { LumberjackHttpDriverConfig } from './lumberjack-http-driver.config';
 import { LumberjackHttpDriverOptions } from './lumberjack-http-driver.options';
-import { provideLumberjackHttpDriver, withHttpConfig, withHttpOptions } from './provide-lumberjack-http-driver';
+import {
+  HttpClientFeatures,
+  provideLumberjackHttpDriver,
+  withHttpConfig,
+  withHttpOptions,
+} from './provide-lumberjack-http-driver';
 
 /**
  * The HTTP driver Angular module is used to configure and register the HTTP
@@ -21,10 +26,13 @@ export class LumberjackHttpDriverModule {
    *
    * @param config Settings used by the HTTP driver.
    */
-  static forRoot(config: LumberjackHttpDriverConfig): ModuleWithProviders<LumberjackHttpDriverRootModule> {
+  static forRoot(
+    config: LumberjackHttpDriverConfig,
+    ...features: HttpClientFeatures
+  ): ModuleWithProviders<LumberjackHttpDriverRootModule> {
     return {
       ngModule: LumberjackHttpDriverRootModule,
-      providers: [provideLumberjackHttpDriver(withHttpConfig(config))],
+      providers: [provideLumberjackHttpDriver(withHttpConfig(config), ...features)],
     };
   }
 
@@ -33,10 +41,13 @@ export class LumberjackHttpDriverModule {
    * driver settings for settings that log drivers have in common.
    * @param options Settings used by the HTTP driver.
    */
-  static withOptions(options: LumberjackHttpDriverOptions): ModuleWithProviders<LumberjackHttpDriverRootModule> {
+  static withOptions(
+    options: LumberjackHttpDriverOptions,
+    ...features: HttpClientFeatures
+  ): ModuleWithProviders<LumberjackHttpDriverRootModule> {
     return {
       ngModule: LumberjackHttpDriverRootModule,
-      providers: [provideLumberjackHttpDriver(withHttpOptions(options))],
+      providers: [provideLumberjackHttpDriver(withHttpOptions(options), ...features)],
     };
   }
 
