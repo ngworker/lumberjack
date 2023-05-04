@@ -1,4 +1,4 @@
-import { provideHttpClient } from '@angular/common/http';
+import { HttpFeature, HttpFeatureKind, provideHttpClient } from '@angular/common/http';
 import { EnvironmentProviders, makeEnvironmentProviders, Provider } from '@angular/core';
 
 import { LumberjackLogDriverConfig, lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
@@ -55,6 +55,8 @@ export function withHttpOptions(options: LumberjackHttpDriverOptions): Lumberjac
   ]);
 }
 
+type HttpClientFeatures = Parameters<typeof provideHttpClient>;
+
 /**
  * Returns the [dependency-injection providers](https://angular.io/guide/glossary#provider)
  *
@@ -76,7 +78,12 @@ export function withHttpOptions(options: LumberjackHttpDriverOptions): Lumberjac
  * @publicApi
  */
 export function provideLumberjackHttpDriver<Kind extends LumberjackHttpDriverConfigurationKind>(
-  configuration: LumberjackHttpDriverConfiguration<Kind>
+  configuration: LumberjackHttpDriverConfiguration<Kind>,
+  ...features: HttpClientFeatures
 ): EnvironmentProviders[] {
-  return [provideHttpClient(), makeEnvironmentProviders([lumberjackHttpDriverProvider]), configuration.providers];
+  return [
+    provideHttpClient(...features),
+    makeEnvironmentProviders([lumberjackHttpDriverProvider]),
+    configuration.providers,
+  ];
 }
