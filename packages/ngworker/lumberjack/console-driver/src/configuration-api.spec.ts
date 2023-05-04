@@ -1,4 +1,4 @@
-import { isClass } from '@internal/test-util';
+import { isClass, isFunction } from '@internal/test-util';
 
 import {
   LumberjackConsoleDriverModule,
@@ -25,7 +25,7 @@ describe('Configuration API', () => {
     it(`exposes ${provideLumberjackConsoleDriver.name}`, () => {
       const sut = provideLumberjackConsoleDriver;
 
-      expect(isClass(sut)).toBeTruthy();
+      expect(isFunction(sut)).toBeTruthy();
     });
   });
 });
