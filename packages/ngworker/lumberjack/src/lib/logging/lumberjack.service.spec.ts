@@ -36,7 +36,7 @@ import { LumberjackLogFactory } from './lumberjack-log-factory';
 import { LumberjackService } from './lumberjack.service';
 
 class SpyDriverError extends Error {
-  constructor(message: string = 'SpyDriverError') {
+  constructor(message = 'SpyDriverError') {
     super(message);
     this.name = 'SpyDriverError';
 

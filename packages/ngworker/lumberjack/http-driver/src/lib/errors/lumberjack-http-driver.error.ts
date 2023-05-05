@@ -1,5 +1,5 @@
 export class LumberjackHttpDriverError extends Error {
-  constructor(message: string = 'LumberjackHttpDriverError') {
+  constructor(message = 'LumberjackHttpDriverError') {
     super(message);
     this.name = 'LumberjackHttpDriverError';
 
