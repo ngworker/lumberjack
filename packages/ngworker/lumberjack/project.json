@@ -1,4 +1,6 @@
 {
+  "name": "ngworker-lumberjack",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "packages/ngworker/lumberjack/src",
   "prefix": "ngworker",
@@ -7,7 +9,6 @@
       "executor": "nx:run-commands",
       "dependsOn": [
         {
-          "projects": "self",
           "target": "build-package"
         }
       ],
@@ -32,7 +33,7 @@
       "outputs": ["{workspaceRoot}/dist/packages/ngworker/lumberjack"]
     },
     "build-package": {
-      "executor": "@nrwl/angular:package",
+      "executor": "@nx/angular:package",
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
         "project": "packages/ngworker/lumberjack/ng-package.json",
@@ -49,7 +50,7 @@
       "defaultConfiguration": "production"
     },
     "test": {
-      "executor": "@nrwl/jest:jest",
+      "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "packages/ngworker/lumberjack/jest.config.ts",
@@ -65,7 +66,7 @@
       }
     },
     "lint": {
-      "executor": "@nrwl/linter:eslint",
+      "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
@@ -117,6 +118,5 @@
   "implicitDependencies": ["!internal-console-driver-test-util", "!internal-test-util"],
   "namedInputs": {
     "projectSpecificFiles": ["{workspaceRoot}/README.md"]
-  },
-  "name": "ngworker-lumberjack"
+  }
 }

@@ -117,7 +117,7 @@ Once that's completed we can create our application with the corresponding gener
 
 Finally we MUST revert the changes made to the `nx.json` file.
 
-In cases where the application generator creates a companion e2e project, we need to move it to the `e2e` folder. This is done using the `@nrwl/workspace:move` generator.
+In cases where the application generator creates a companion e2e project, we need to move it to the `e2e` folder. This is done using the `@nx/workspace:move` generator.
 
 ```bash
 nx generate move [<grouping-folder>/]<e2e-project-directory-name> --project-name=<e2e-project-name>
