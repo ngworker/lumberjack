@@ -111,7 +111,11 @@ The `sendLog` method has been optimized to run outside Angular's `NgZone`, avoid
 
 ### LumberjackHttpDriverModule
 
-The `LumberjackHttpDriverModule` is very similar to the `LumberjackConsoleDriverModule`, however now we have a static `withOptions` function that allows us to pass `LumberjackHttpDriverOptions` to fall back to the settings in `LumberjackLogDriverConfig`.
+The `LumberjackHttpDriverModule` is similar to the `LumberjackConsoleDriverModule`.
+
+Novelty appears with the static `withOptions` function that allows us to pass `LumberjackHttpDriverOptions` to fall back to the settings in `LumberjackLogDriverConfig`.
+
+Additionally, we can configure the underlaying `HttpClient` by passing any features it receives like interceptors.
 
 ```typescript
 @NgModule()
@@ -122,10 +126,13 @@ export class LumberjackHttpDriverModule {
    *
    * @param config Settings used by the HTTP driver.
    */
-  static forRoot(config: LumberjackHttpDriverConfig): ModuleWithProviders<LumberjackHttpDriverRootModule> {
+  static forRoot(
+    config: LumberjackHttpDriverConfig,
+    ...features: HttpClientFeatures
+  ): ModuleWithProviders<LumberjackHttpDriverRootModule> {
     return {
       ngModule: LumberjackHttpDriverRootModule,
-      providers: [provideLumberjackHttpDriver(withHttpConfig(config))],
+      providers: [provideLumberjackHttpDriver(withHttpConfig(config), ...features)],
     };
   }
 
@@ -134,10 +141,13 @@ export class LumberjackHttpDriverModule {
    * driver settings for settings that log drivers have in common.
    * @param options Settings used by the HTTP driver.
    */
-  static withOptions(options: LumberjackHttpDriverOptions): ModuleWithProviders<LumberjackHttpDriverRootModule> {
+  static withOptions(
+    options: LumberjackHttpDriverOptions,
+    ...features: HttpClientFeatures
+  ): ModuleWithProviders<LumberjackHttpDriverRootModule> {
     return {
       ngModule: LumberjackHttpDriverRootModule,
-      providers: [provideLumberjackHttpDriver(withOptions(options))],
+      providers: [provideLumberjackHttpDriver(withHttpOptions(options), ...features)],
     };
   }
 
@@ -158,52 +168,53 @@ export type LumberjackHttpDriverConfiguration<Kind extends LumberjackHttpDriverC
 
 function makeLumberjackHttpConfiguration<Kind extends LumberjackHttpDriverConfigurationKind>(
   kind: Kind,
-  providers: EnvironmentProviders
+  providers: Provider[]
 ): LumberjackHttpDriverConfiguration<Kind> {
   return {
     kind,
-    providers,
+    providers: makeEnvironmentProviders(providers),
   };
 }
 
 export function withHttpConfig(config: LumberjackHttpDriverConfig): LumberjackHttpDriverConfiguration<'config'> {
-  return makeLumberjackHttpConfiguration(
-    'config',
-    makeEnvironmentProviders([
-      {
-        provide: lumberjackHttpDriverConfigToken,
-        deps: [lumberjackLogDriverConfigToken],
-        useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackHttpDriverInternalConfig => ({
-          ...logDriverConfig,
-          identifier: LumberjackHttpDriver.driverIdentifier,
-          ...config,
-        }),
-      },
-    ])
-  );
+  return makeLumberjackHttpConfiguration('config', [
+    {
+      provide: lumberjackHttpDriverConfigToken,
+      deps: [lumberjackLogDriverConfigToken],
+      useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackHttpDriverInternalConfig => ({
+        ...logDriverConfig,
+        identifier: LumberjackHttpDriver.driverIdentifier,
+        ...config,
+      }),
+    },
+  ]);
 }
 
 export function withHttpOptions(options: LumberjackHttpDriverOptions): LumberjackHttpDriverConfiguration<'options'> {
-  return makeLumberjackHttpConfiguration(
-    'options',
-    makeEnvironmentProviders([
-      {
-        provide: lumberjackHttpDriverConfigToken,
-        deps: [lumberjackLogDriverConfigToken],
-        useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackHttpDriverInternalConfig => ({
-          ...logDriverConfig,
-          identifier: LumberjackHttpDriver.driverIdentifier,
-          ...options,
-        }),
-      },
-    ])
-  );
+  return makeLumberjackHttpConfiguration('options', [
+    {
+      provide: lumberjackHttpDriverConfigToken,
+      deps: [lumberjackLogDriverConfigToken],
+      useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackHttpDriverInternalConfig => ({
+        ...logDriverConfig,
+        identifier: LumberjackHttpDriver.driverIdentifier,
+        ...options,
+      }),
+    },
+  ]);
 }
 
+export type HttpClientFeatures = Parameters<typeof provideHttpClient>;
+
 export function provideLumberjackHttpDriver<Kind extends LumberjackHttpDriverConfigurationKind>(
-  configuration: LumberjackHttpDriverConfiguration<Kind>
+  configuration: LumberjackHttpDriverConfiguration<Kind>,
+  ...features: HttpClientFeatures
 ): EnvironmentProviders[] {
-  return [provideHttpClient(), lumberjackHttpDriverProvider, configuration.providers];
+  return [
+    provideHttpClient(...features),
+    makeEnvironmentProviders([lumberjackHttpDriverProvider]),
+    configuration.providers,
+  ];
 }
 ```
 
@@ -227,7 +238,15 @@ Classic:
       origin: 'ForestApp',
       retryOptions: { maxRetries: 5, delayMs: 250 },
       storeUrl: '/api/logs',
-    }),
+    },
+      withInterceptors([
+        (req, next) => {
+          const easy = inject(easyToken);
+          console.log('are interceptors working?', easy);
+          return next(req);
+        },
+      ])
+    ),
     ...
   ],
   ...
@@ -261,13 +280,17 @@ bootstrapApplication(AppComponent, {
     provideLumberjack(),
     provideLumberjackConsoleDriver(),
     provideLumberjackHttpDriver(
-      withHttpConfig({
-        levels: [LumberjackLevel.Error],
+      withHttpOptions({
         origin: 'ForestApp',
-        retryOptions: { maxRetries: 5, delayMs: 250 },
+        retryOptions: { maxRetries: 1, delayMs: 250 },
         storeUrl: '/api/logs',
-      })
+      }),
+      withInterceptors([
+        (req, next) => {
+          const easy = inject(easyToken);
+          console.log('are interceptors working?', easy);
+          return next(req);
+        },
+      ])
     ),
-  ],
-});
 ```
