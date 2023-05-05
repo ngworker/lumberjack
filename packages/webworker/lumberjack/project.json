@@ -5,7 +5,7 @@
   "projectType": "library",
   "prefix": "webworker",
   "targets": {
-    "build": {
+    "build-package": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],
       "options": {
