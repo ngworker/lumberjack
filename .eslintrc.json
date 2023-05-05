@@ -17,6 +17,7 @@
             "enforceBuildableLibDependency": true,
             "allowCircularSelfDependency": true,
             "allow": [],
+            "buildTargets": ["build", "build-package"],
             "depConstraints": [
               {
                 "sourceTag": "scope:public",
