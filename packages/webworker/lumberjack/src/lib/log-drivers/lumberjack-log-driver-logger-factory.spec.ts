@@ -1,4 +1,4 @@
-import { SpyDriver, spyDriverFactory } from '@internal/test-util';
+import { SpyDriver, spyDriverFactory } from '@internal/angular/test-util';
 import { LumberjackLogFactory } from '@ngworker/lumberjack';
 
 import { LumberjackLevel } from '../logs/lumberjack-level';

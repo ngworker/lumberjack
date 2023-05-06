@@ -2,7 +2,7 @@ import { HttpTestingController, provideHttpClientTesting, TestRequest } from '@a
 import { TestBed } from '@angular/core/testing';
 import { VERSION } from '@angular/platform-browser';
 
-import { createCriticalDriverLog, createDriverLog, repeatSideEffect } from '@internal/test-util';
+import { createCriticalDriverLog, createDriverLog, repeatSideEffect } from '@internal/angular/test-util';
 import { lumberjackLogDriverToken, LumberjackModule } from '@ngworker/lumberjack';
 import {
   LumberjackLevel,

@@ -1,4 +1,4 @@
-import { expectNgModuleToBeGuardedAgainstDuplicateRegistration } from '@internal/test-util';
+import { expectNgModuleToBeGuardedAgainstDuplicateRegistration } from '@internal/angular/test-util';
 
 import { LumberjackConsoleDriverRootModule } from './lumberjack-console-driver-root.module';
 

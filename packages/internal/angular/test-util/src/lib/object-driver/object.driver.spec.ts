@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { createDriverLog } from '@internal/test-util';
+import { createDriverLog } from '@internal/angular/test-util';
 import { lumberjackLogDriverToken, LumberjackModule } from '@ngworker/lumberjack';
 import {
   LumberjackLevel,

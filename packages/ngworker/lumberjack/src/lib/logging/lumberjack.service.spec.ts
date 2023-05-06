@@ -27,7 +27,7 @@ import {
   SpyDriver,
   spyDriverIdentifier,
   SpyDriverModule,
-} from '@internal/test-util';
+} from '@internal/angular/test-util';
 import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
 
 import { lumberjackLogDriverConfigToken } from '../configuration/lumberjack-log-driver-config.token';

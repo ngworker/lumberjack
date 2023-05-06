@@ -8,7 +8,7 @@ import {
   LumberjackLogDriverError,
   LumberjackLogPayload,
 } from '@webworker/lumberjack';
-import { NoopDriver, NoopDriverModule } from '@internal/test-util';
+import { NoopDriver, NoopDriverModule } from '@internal/angular/test-util';
 
 import { LumberjackModule } from '../configuration/lumberjack.module';
 import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';

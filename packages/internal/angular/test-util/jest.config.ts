@@ -1,10 +1,10 @@
 /* eslint-disable */
 export default {
-  displayName: 'internal-test-util',
-  preset: '../../../jest.preset.js',
+  displayName: 'internal-angular-test-util',
+  preset: '../../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {},
-  coverageDirectory: '../../../coverage/packages/internal/test-util',
+  coverageDirectory: '../../../../coverage/packages/internal/angular/test-util',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

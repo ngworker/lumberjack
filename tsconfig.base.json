@@ -16,8 +16,8 @@
     "useDefineForClassFields": true,
     "baseUrl": ".",
     "paths": {
-      "@internal/test-util": ["packages/internal/test-util/src/index.ts"],
       "@internal/angular/console-driver/test-util": ["packages/internal/angular/console-driver/test-util/src/index.ts"],
+      "@internal/angular/test-util": ["packages/internal/angular/test-util/src/index.ts"],
       "@ngworker/lumberjack": ["packages/ngworker/lumberjack/src/index.ts"],
       "@ngworker/lumberjack/console-driver": ["packages/ngworker/lumberjack/console-driver/src/index.ts"],
       "@ngworker/lumberjack/http-driver": ["packages/ngworker/lumberjack/http-driver/src/index.ts"],

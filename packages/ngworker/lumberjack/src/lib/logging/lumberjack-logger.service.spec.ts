@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
 import { LumberjackLog, LumberjackLogPayload } from '@webworker/lumberjack';
-import { FakeTimeService } from '@internal/test-util';
+import { FakeTimeService } from '@internal/angular/test-util';
 
 import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';

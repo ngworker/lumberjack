@@ -1,15 +1,15 @@
 {
-  "name": "internal-test-util",
-  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "name": "internal-angular-test-util",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
-  "sourceRoot": "packages/internal/test-util/src",
+  "sourceRoot": "packages/internal/angular/test-util/src",
   "prefix": "ngworker",
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "packages/internal/test-util/jest.config.ts",
+        "jestConfig": "packages/internal/angular/test-util/jest.config.ts",
         "passWithNoTests": true,
         "reporters": ["default", "github-actions"]
       },
@@ -25,13 +25,16 @@
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/internal/test-util/**/*.ts", "packages/internal/test-util/**/*.html"]
+        "lintFilePatterns": [
+          "packages/internal/angular/test-util/**/*.ts",
+          "packages/internal/angular/test-util/**/*.html"
+        ]
       },
       "configurations": {
         "report": {
           "format": "json",
           "force": true,
-          "outputFile": "reports/packages/internal/test-util/lint/report.json"
+          "outputFile": "reports/packages/internal/angular/test-util/lint/report.json"
         }
       }
     }

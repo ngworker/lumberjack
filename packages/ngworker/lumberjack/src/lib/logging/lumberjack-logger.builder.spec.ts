@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { FakeTimeService } from '@internal/test-util';
+import { FakeTimeService } from '@internal/angular/test-util';
 import { LumberjackLevel, LumberjackLog, LumberjackLogLevel, LumberjackLogPayload } from '@webworker/lumberjack';
 
 import { LumberjackModule } from '../configuration/lumberjack.module';

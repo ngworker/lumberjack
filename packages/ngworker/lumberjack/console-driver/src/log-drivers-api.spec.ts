@@ -1,4 +1,4 @@
-import { isClass } from '@internal/test-util';
+import { isClass } from '@internal/angular/test-util';
 
 import { LumberjackConsoleDriver } from './index';
 
