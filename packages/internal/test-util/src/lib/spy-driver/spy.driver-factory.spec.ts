@@ -11,9 +11,9 @@ import {
 import { createDriverLog } from '../logs/driver-log-creators';
 
 import { SpyDriverModule } from './spy-driver.module';
-import { SpyDriver } from './spy.driver';
+import { SpyDriver, spyDriverFactory } from './spy.driver-factory';
 
-describe(SpyDriver.name, () => {
+describe(spyDriverFactory.name, () => {
   let spyDriver: SpyDriver;
 
   beforeEach(() => {

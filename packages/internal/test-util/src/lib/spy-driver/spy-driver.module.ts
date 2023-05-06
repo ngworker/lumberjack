@@ -6,7 +6,7 @@ import { LumberjackLogDriverConfig } from '@webworker/lumberjack';
 import { spyDriverConfigToken } from './spy-driver-config.token';
 import { SpyDriverRootModule } from './spy-driver-root.module';
 import { SpyDriverConfig } from './spy-driver.config';
-import { SpyDriver } from './spy.driver';
+import { spyDriverIdentifier } from './spy.driver-factory';
 
 /**
  * Service module for `SpyDriver`.
@@ -23,7 +23,7 @@ export class SpyDriverModule {
           provide: spyDriverConfigToken,
           useFactory: (logDriverConfig: LumberjackLogDriverConfig): SpyDriverConfig => ({
             ...logDriverConfig,
-            identifier: SpyDriver.driverIdentifier,
+            identifier: spyDriverIdentifier,
             ...config,
           }),
           deps: [lumberjackLogDriverConfigToken],
