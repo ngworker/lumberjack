@@ -8,7 +8,7 @@ import {
   LumberjackLogDriverLog,
   LumberjackLogPayload,
 } from '@webworker/lumberjack';
-import { NoopConsoleModule } from '@internal/console-driver/test-util';
+import { NoopConsoleModule } from '@internal/angular/console-driver/test-util';
 import {
   createCriticalDriverLog,
   createDebugDriverLog,
