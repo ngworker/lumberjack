@@ -25,6 +25,7 @@ import {
   ObjectPayload,
   ObjectService,
   SpyDriver,
+  spyDriverIdentifier,
   SpyDriverModule,
 } from '@internal/test-util';
 import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
@@ -343,7 +344,7 @@ describe(LumberjackService.name, () => {
         );
         const [actualFirstErrorMessage] = consoleErrorSpy.mock.calls[0] as string[];
         expect(actualFirstErrorMessage).toMatch(
-          new RegExp(`^Could not log message ".*?" to ${SpyDriver.name}.\n Error: ".*?"$`)
+          new RegExp(`^Could not log message ".*?" to ${spyDriverIdentifier}.\n Error: ".*?"$`)
         );
       });
     });
@@ -581,7 +582,7 @@ describe(LumberjackService.name, () => {
             }),
             SpyDriverModule.forRoot({
               levels: [LumberjackLevel.Debug, LumberjackLevel.Info, LumberjackLevel.Trace],
-              identifier: SpyDriver.name,
+              identifier: spyDriverIdentifier,
             }),
             NoopDriverModule.forRoot({
               levels: [LumberjackLevel.Critical, LumberjackLevel.Error, LumberjackLevel.Warning],

@@ -1,60 +1,30 @@
-import { inject, Injectable } from '@angular/core';
-
-import {
-  formatLogDriverError,
-  LumberjackLevel,
-  LumberjackLog,
-  LumberjackLogDriver,
-  LumberjackLogDriverError,
-  lumberjackLogDriverLoggerFactory,
-  LumberjackLogLevel,
-  LumberjackLogPayload,
-} from '@webworker/lumberjack';
-
-import { LumberjackLogFormatter } from '../formatting/lumberjack-log-formatter.service';
-import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
-import { LumberjackTimeService } from '../time/lumberjack-time.service';
+import { formatLogDriverError } from '../formatting/format-log-driver-error';
+import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
+import { LumberjackLogDriverError } from '../log-drivers/lumberjack-log-driver-error';
+import { LumberjackLevel } from '../logs/lumberjack-level';
+import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
+import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
+import { LumberjackLog } from '../logs/lumberjack.log';
 
 const noReportedLogDriverErrorIndex = -1;
 
-/**
- * Service with programmatic API to pass logs to Lumberjack. Optionally
- * supports a log payload.
- *
- * Lumberjack passes the logs to the registered log drivers based on their
- * configurations.
- *
- * NOTE! Consider extending the `LumberjackLogger` or `ScopedLumberjackLogger`
- * base classes to set up predefined loggers unless you need a programmatic
- * API.
- */
-@Injectable()
-export class LumberjackService<TPayload extends LumberjackLogPayload | void = void> {
-  /**
-   * The registered log drivers.
-   */
-  readonly #drivers = inject<LumberjackLogDriver<TPayload>[]>(lumberjackLogDriverToken, { optional: true }) ?? [];
-  readonly #driverLogger = inject<LumberjackLogDriverLogger<TPayload>>(LumberjackLogDriverLogger);
-  readonly #logFormatter = inject<LumberjackLogFormatter<TPayload>>(LumberjackLogFormatter);
-  readonly #time = inject(LumberjackTimeService);
+interface LumberjackDependencies<TPayload extends LumberjackLogPayload | void> {
+  drivers: LumberjackLogDriver<TPayload>[];
+  logFormatter: (log: LumberjackLog<TPayload>) => { log: LumberjackLog<TPayload>; formattedLog: string };
+  driverLogger: (
+    driver: LumberjackLogDriver<TPayload>,
+    logPackage: { log: LumberjackLog<TPayload>; formattedLog: string }
+  ) => void;
+  getUnixEpochTicks: () => number;
+}
 
-  constructor() {
-    this.#drivers = Array.isArray(this.#drivers) ? this.#drivers : [this.#drivers];
-  }
-
-  /**
-   * Pass a log to Lumberjack which will be forwarded to the registered log
-   * drivers based on their configurations.
-   *
-   * NOTE! It's recommended to use `LumberjackLogBuilder` to create the log.
-   *
-   * @param lumberjackLog The Lumberjack log. Optionally supports a log payload.
-   */
-  log(lumberjackLog: LumberjackLog<TPayload>): void {
-    const { log, formattedLog } = this.#logFormatter.formatLog(lumberjackLog);
-
-    this.#logWithErrorHandling(log, formattedLog, this.#drivers);
-  }
+export function createLumberjack<TPayload extends LumberjackLogPayload | void = void>(
+  deps: LumberjackDependencies<TPayload>
+) {
+  const log = (lumberjackLog: LumberjackLog<TPayload>) => {
+    const { log, formattedLog } = deps.logFormatter(lumberjackLog);
+    logWithErrorHandling(log, formattedLog, deps.drivers);
+  };
 
   /**
    * Determine whether a log driver is configured to accept a log with the
@@ -63,7 +33,7 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
    * @param driver The configured log driver.
    * @param logLevel The log's log level.
    */
-  #canDriveLog(driver: LumberjackLogDriver<TPayload>, logLevel: LumberjackLogLevel): boolean {
+  function canDriveLog(driver: LumberjackLogDriver<TPayload>, logLevel: LumberjackLogLevel): boolean {
     const hasVerboseLogging = driver.config.levels.length === 1 && driver.config.levels[0] === LumberjackLevel.Verbose;
     const acceptsLogLevel = (driver.config.levels as LumberjackLogLevel[]).includes(logLevel);
 
@@ -75,9 +45,9 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
    *
    * @param driverError The reported log driver error.
    */
-  #createDriverErrorLog(driverError: LumberjackLogDriverError<TPayload>): LumberjackLog<TPayload> {
+  function createDriverErrorLog(driverError: LumberjackLogDriverError<TPayload>): LumberjackLog<TPayload> {
     return {
-      createdAt: this.#time.getUnixEpochTicks(),
+      createdAt: deps.getUnixEpochTicks(),
       level: LumberjackLevel.Error,
       message: formatLogDriverError(driverError),
       scope: 'LumberjackLogDriverError',
@@ -91,14 +61,14 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
    * @param stableDrivers The log drivers that haven't failed.
    * @param driverErrors The reported log driver errors.
    */
-  #handleDriverErrors(
+  function handleDriverErrors(
     stableDrivers: LumberjackLogDriver<TPayload>[],
     driverErrors: LumberjackLogDriverError<TPayload>[]
   ) {
     if (stableDrivers.length > 0) {
-      this.#logDriverErrorsToStableDrivers(driverErrors, stableDrivers);
+      logDriverErrorsToStableDrivers(driverErrors, stableDrivers);
     } else {
-      this.#outputUnhandledDriverErrors(driverErrors);
+      outputUnhandledDriverErrors(driverErrors);
     }
   }
 
@@ -114,7 +84,7 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
    * @param driverErrors The reported log driver errors.
    * @param driverErrorIndex Index of the reported driver error to handle.
    */
-  #logWithErrorHandling(
+  function logWithErrorHandling(
     log: LumberjackLog<TPayload>,
     formattedLog: string,
     drivers: LumberjackLogDriver<TPayload>[],
@@ -124,14 +94,14 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
     const stableDrivers: LumberjackLogDriver<TPayload>[] = [];
 
     drivers
-      .filter((driver) => this.#canDriveLog(driver, log.level))
+      .filter((driver) => canDriveLog(driver, log.level))
       .forEach((driver) => {
         try {
-          this.#driverLogger.log(driver, { formattedLog, log });
+          deps.driverLogger.log(driver, { formattedLog, log });
           stableDrivers.push(driver);
 
           if (driverErrorIndex !== noReportedLogDriverErrorIndex) {
-            this.#removeHandledError(driverErrorIndex, driverErrors);
+            removeHandledError(driverErrorIndex, driverErrors);
             driverErrorIndex = noReportedLogDriverErrorIndex;
           }
         } catch (error) {
@@ -139,7 +109,7 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
           driverErrors = [...driverErrors, caughtDriverError];
         }
       });
-    this.#handleDriverErrors(stableDrivers, driverErrors);
+    handleDriverErrors(stableDrivers, driverErrors);
   }
 
   /**
@@ -148,14 +118,14 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
    * @param driverErrors The reported log driver errors.
    * @param stableDrivers The log drivers that haven't failed.
    */
-  #logDriverErrorsToStableDrivers(
+  function logDriverErrorsToStableDrivers(
     driverErrors: LumberjackLogDriverError<TPayload>[],
     stableDrivers: LumberjackLogDriver<TPayload>[]
   ) {
     driverErrors.forEach((error, errorIndex) => {
-      const driverErrorLog = this.#createDriverErrorLog(error);
+      const driverErrorLog = createDriverErrorLog(error);
 
-      this.#logWithErrorHandling(driverErrorLog, driverErrorLog.message, stableDrivers, driverErrors, errorIndex);
+      logWithErrorHandling(driverErrorLog, driverErrorLog.message, stableDrivers, driverErrors, errorIndex);
     });
   }
 
@@ -164,7 +134,7 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
    *
    * @param driverError The reported log driver error.
    */
-  #outputDriverError(driverError: LumberjackLogDriverError<TPayload>): void {
+  function outputDriverError(driverError: LumberjackLogDriverError<TPayload>): void {
     const errorMessage = formatLogDriverError(driverError);
 
     console.error(errorMessage);
@@ -175,8 +145,8 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
    *
    * @param driverErrors The reported log driver errors.
    */
-  #outputUnhandledDriverErrors(driverErrors: LumberjackLogDriverError<TPayload>[]) {
-    driverErrors.forEach((error) => this.#outputDriverError(error));
+  function outputUnhandledDriverErrors(driverErrors: LumberjackLogDriverError<TPayload>[]) {
+    driverErrors.forEach((error) => outputDriverError(error));
   }
 
   /**
@@ -186,7 +156,11 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
    *   the specified log driver errors.
    * @param driverErrors The reported log driver errors.
    */
-  #removeHandledError(driverErrorIndex: number, driverErrors: LumberjackLogDriverError<TPayload>[]) {
+  function removeHandledError(driverErrorIndex: number, driverErrors: LumberjackLogDriverError<TPayload>[]) {
     driverErrors.splice(driverErrorIndex, 1);
   }
+
+  return {
+    log,
+  };
 }

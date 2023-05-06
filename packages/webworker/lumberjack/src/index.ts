@@ -22,12 +22,7 @@ export { utcTimestampFor } from './lib/formatting/utc-timestamp-for';
 export { LumberjackLogDriver } from './lib/log-drivers/lumberjack-log-driver';
 export { LumberjackLogDriverLog } from './lib/log-drivers/lumberjack-log-driver.log';
 export { LumberjackLogDriverError } from './lib/log-drivers/lumberjack-log-driver-error';
-export { infoLogDriverLoggingStrategy } from './lib/log-drivers/logging-strategies/info-log-driver-logging-strategy';
-export { debugLogDriverLoggingStrategy } from './lib/log-drivers/logging-strategies/debug-log-driver-logging-strategy';
-export { traceLogDriverLoggingStrategy } from './lib/log-drivers/logging-strategies/trace-log-driver-logging-strategy';
-export { warningLogDriverLoggingStrategy } from './lib/log-drivers/logging-strategies/warning-log-driver-logging-strategy';
-export { errorLogDriverLoggingStrategy } from './lib/log-drivers/logging-strategies/error-log-driver-logging-strategy';
-export { criticalLogDriverLoggingStrategy } from './lib/log-drivers/logging-strategies/critical-log-driver-logging-strategy';
+export { lumberjackLogDriverLoggerFactory } from './lib/log-drivers/lumberjack-log-driver-logger-factory';
 
 // Formatting
 export { lumberjackFormatLog } from './lib/formatting/lumberjack-format-log';

@@ -1,22 +1,15 @@
-import { TestBed } from '@angular/core/testing';
+import { SpyDriver, spyDriverFactory } from '@internal/test-util';
+import { LumberjackLogFactory } from '@ngworker/lumberjack';
 
-import { LumberjackLevel, LumberjackLogDriverLog } from '@webworker/lumberjack';
-import { SpyDriver, SpyDriverModule } from '@internal/test-util';
+import { LumberjackLevel } from '../logs/lumberjack-level';
 
-import { LumberjackModule } from '../configuration/lumberjack.module';
-import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
+import { LumberjackLogDriverLogger, lumberjackLogDriverLoggerFactory } from './lumberjack-log-driver-logger-factory';
+import { LumberjackLogDriverLog } from './lumberjack-log-driver.log';
 
-import { LumberjackLogDriverLogger } from './lumberjack-log-driver-logger';
-import { lumberjackLogDriverToken } from './lumberjack-log-driver.token';
-
-describe(LumberjackLogDriverLogger.name, () => {
+describe(lumberjackLogDriverLoggerFactory.name, () => {
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [LumberjackModule.forRoot(), SpyDriverModule.forRoot()],
-    });
-    [logDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as [SpyDriver];
-    logFactory = TestBed.inject(LumberjackLogFactory);
-    logger = TestBed.inject(LumberjackLogDriverLogger);
+    logDriver = spyDriverFactory({ levels: [LumberjackLevel.Verbose] });
+    logger = lumberjackLogDriverLoggerFactory();
   });
 
   let logDriver: SpyDriver;
