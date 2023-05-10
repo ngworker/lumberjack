@@ -38,6 +38,6 @@
       }
     }
   },
-  "implicitDependencies": ["!internal-test-util"],
+  "implicitDependencies": ["!internal-angular-test-util"],
   "tags": ["type:package", "scope:public"]
 }

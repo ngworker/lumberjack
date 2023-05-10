@@ -115,7 +115,7 @@
     }
   },
   "tags": ["scope:public", "type:package"],
-  "implicitDependencies": ["!internal-console-driver-test-util", "!internal-test-util"],
+  "implicitDependencies": ["!internal-angular-console-driver-test-util", "!internal-angular-test-util"],
   "namedInputs": {
     "projectSpecificFiles": ["{workspaceRoot}/README.md"]
   }
