@@ -28,3 +28,6 @@ export { lumberjackLogDriverLoggerFactory } from './lib/log-drivers/lumberjack-l
 export { lumberjackFormatLog } from './lib/formatting/lumberjack-format-log';
 export { LumberjackLogFormatterResult } from './lib/formatting/lumberjack-log-formatter-result';
 export { formatLogDriverError } from './lib/formatting/format-log-driver-error';
+
+// Logging
+export { createLumberjack } from './lib/logging/core';
