@@ -43,4 +43,4 @@ bootstrapApplication(AppComponent, {
       ])
     ),
   ],
-});
+}).catch((err: unknown) => console.error(err));

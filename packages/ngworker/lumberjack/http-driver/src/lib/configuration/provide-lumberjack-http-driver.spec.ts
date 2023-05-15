@@ -1,5 +1,5 @@
 import { TestBed } from '@angular/core/testing';
-import { HttpInterceptorFn, withInterceptors } from '@angular/common/http';
+import { HttpHandlerFn, HttpRequest, withInterceptors } from '@angular/common/http';
 
 import {
   LumberjackConfigLevels,
@@ -138,7 +138,7 @@ describe(provideLumberjackHttpDriver.name, () => {
     });
 
     it('registers the specified log driver configuration WITH HttpClient features', () => {
-      const testInterceptor = jest.fn((req: any, next: any) => next(req));
+      const testInterceptor = jest.fn((req: HttpRequest<unknown>, next: HttpHandlerFn) => next(req));
       const config = createHttpConfig([LumberjackLevel.Error]);
       const features: HttpClientFeatures = [withInterceptors([testInterceptor])];
       const httpDriver = createHttpDriver({ config, features });
