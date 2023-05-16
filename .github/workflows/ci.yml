@@ -48,7 +48,6 @@ jobs:
         yarn nx-cloud start-ci-run --stop-agents-after="e2e" --agent-count=4
       # Commands run in parallel on this DTE coordinator
       parallel-commands: |
-        yarn nx-cloud record -- yarn nx workspace-lint
         yarn nx-cloud record -- yarn nx format:check
       # Commands distributed between DTE agents
       # Distribution strategy for 2 vCPUs per hosted runner (GitHub Free):
