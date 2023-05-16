@@ -40,3 +40,6 @@ testem.log
 Thumbs.db
 
 .angular/
+
+# Nx
+migrations.json
