@@ -5,12 +5,12 @@
     "defaultBase": "main"
   },
   "cli": {
-    "defaultCollection": "@nrwl/angular",
+    "defaultCollection": "@nx/angular",
     "packageManager": "yarn"
   },
   "tasksRunnerOptions": {
     "default": {
-      "runner": "@nrwl/nx-cloud",
+      "runner": "nx-cloud",
       "options": {
         "cacheableOperations": ["build", "build-package", "lint", "test", "e2e"],
         "accessToken": "M2I0MTZlMmMtYmQ5ZC00ZDg1LWFjOTQtZjU5ZGFkYWM3YjM2fHJlYWQ="
@@ -18,17 +18,17 @@
     }
   },
   "generators": {
-    "@nrwl/angular:application": {
+    "@nx/angular:application": {
       "style": "scss",
       "linter": "eslint",
       "unitTestRunner": "jest",
       "e2eTestRunner": "cypress"
     },
-    "@nrwl/angular:library": {
+    "@nx/angular:library": {
       "linter": "eslint",
       "unitTestRunner": "jest"
     },
-    "@nrwl/angular:component": {
+    "@nx/angular:component": {
       "style": "scss"
     }
   },
@@ -37,8 +37,8 @@
     "build": {
       "dependsOn": [
         {
-          "projects": "dependencies",
-          "target": "build"
+          "target": "build",
+          "dependencies": true
         }
       ],
       "inputs": ["production", "^production"]
