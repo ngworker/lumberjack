@@ -97,7 +97,7 @@ export function createLumberjack<TPayload extends LumberjackLogPayload | void = 
       .filter((driver) => canDriveLog(driver, log.level))
       .forEach((driver) => {
         try {
-          deps.driverLogger.log(driver, { formattedLog, log });
+          deps.driverLogger(driver, { formattedLog, log });
           stableDrivers.push(driver);
 
           if (driverErrorIndex !== noReportedLogDriverErrorIndex) {

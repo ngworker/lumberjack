@@ -30,4 +30,6 @@ export { LumberjackLogFormatterResult } from './lib/formatting/lumberjack-log-fo
 export { formatLogDriverError } from './lib/formatting/format-log-driver-error';
 
 // Logging
-export { createLumberjack } from './lib/logging/core';
+export { createLumberjack } from './lib/logging/create-lumberjack';
+export { createLumberjackLogFactory } from './lib/logging/create-lumberjack-log-factory';
+export { LumberjackLogBuilder } from './lib/logging/lumberjack-log.builder';

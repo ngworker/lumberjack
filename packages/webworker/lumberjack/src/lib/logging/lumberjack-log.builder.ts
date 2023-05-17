@@ -1,6 +1,6 @@
-import { LumberjackLog, LumberjackLogLevel, LumberjackLogPayload } from '@webworker/lumberjack';
-
-import { LumberjackTimeService } from '../time/lumberjack-time.service';
+import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
+import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
+import { LumberjackLog } from '../logs/lumberjack.log';
 
 /**
  * The generic parameter of `LumberjackLogBuilder` is evaluated to this type
@@ -16,7 +16,7 @@ type InternalWithStaticPayload = '__LUMBERJACK_INTERNAL_WITH_STATIC_PAYLOAD__' &
 export class LumberjackLogBuilder<TPayload extends LumberjackLogPayload | void = void> {
   #payload?: TPayload;
   #scope?: string;
-  readonly #time: LumberjackTimeService;
+  readonly #getUnixEpochTicks: () => number;
   readonly #level: LumberjackLogLevel;
   readonly #message: string;
 
@@ -27,8 +27,8 @@ export class LumberjackLogBuilder<TPayload extends LumberjackLogPayload | void =
    * @param level The log level.
    * @param message The log message.
    */
-  constructor(time: LumberjackTimeService, level: LumberjackLogLevel, message: string) {
-    this.#time = time;
+  constructor(getUnixEpochTicks: () => number, level: LumberjackLogLevel, message: string) {
+    this.#getUnixEpochTicks = getUnixEpochTicks;
     this.#level = level;
     this.#message = message;
   }
@@ -45,7 +45,7 @@ export class LumberjackLogBuilder<TPayload extends LumberjackLogPayload | void =
       level: this.#level,
       message: this.#message,
       scope: this.#scope,
-      createdAt: this.#time.getUnixEpochTicks(),
+      createdAt: this.#getUnixEpochTicks(),
       payload: (payloadArg[0] ?? this.#payload) as Exclude<TPayload, InternalWithStaticPayload>,
     };
   }

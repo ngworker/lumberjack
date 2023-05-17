@@ -1,12 +1,11 @@
-import { TestBed } from '@angular/core/testing';
-
-import { LumberjackTimeService } from '@ngworker/lumberjack';
 import {
   LumberjackLevel,
   LumberjackLogDriverLog,
   LumberjackLogLevel,
   LumberjackLogPayload,
 } from '@webworker/lumberjack';
+
+import { createFakeTime } from '../time/create-fake-time';
 
 export const createDriverLog = <TPayload extends LumberjackLogPayload | void = void>(
   formattedLog: string,
@@ -18,7 +17,7 @@ export const createDriverLog = <TPayload extends LumberjackLogPayload | void = v
   formattedLog,
   log: {
     scope,
-    createdAt: TestBed.inject(LumberjackTimeService).getUnixEpochTicks(),
+    createdAt: createFakeTime().getUnixEpochTicks(),
     level,
     message,
     payload,

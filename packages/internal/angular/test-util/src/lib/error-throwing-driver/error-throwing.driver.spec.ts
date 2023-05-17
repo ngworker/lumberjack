@@ -7,9 +7,9 @@ import {
   LumberjackLogDriverLog,
   LumberjackLogLevel,
 } from '@webworker/lumberjack';
+import { createDriverLog } from '@internal/core/test-util';
 
 import { repeatSideEffect } from '../functions/repeat-side-effect';
-import { createDriverLog } from '../logs/driver-log-creators';
 
 import { ErrorThrowingDriverModule } from './error-throwing-driver.module';
 import { ErrorThrowingDriver } from './error-throwing.driver';

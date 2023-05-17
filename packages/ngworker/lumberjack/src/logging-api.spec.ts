@@ -1,15 +1,9 @@
-import { isClass } from '@internal/angular/test-util';
+import { isClass } from '@internal/core/test-util';
 
-import { LumberjackLogFactory, LumberjackLogger, LumberjackService, ScopedLumberjackLogger } from './index';
+import { LumberjackLogger, LumberjackService, ScopedLumberjackLogger } from './index';
 
 describe('Logging API', () => {
   describe('Services', () => {
-    it(`exposes ${LumberjackLogFactory.name}`, () => {
-      const sut = LumberjackLogFactory;
-
-      expect(isClass(sut)).toBeTruthy();
-    });
-
     it(`exposes ${LumberjackLogger.name}`, () => {
       const sut = LumberjackLogger;
 
