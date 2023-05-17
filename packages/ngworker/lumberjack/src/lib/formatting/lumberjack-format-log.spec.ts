@@ -11,7 +11,6 @@ import {
 import { createFakeTime } from '@internal/core/test-util';
 
 import { LumberjackModule } from '../configuration/lumberjack.module';
-import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 function parseFormattedLog(formattedLog: string) {
   const formattedLogPattern = /^([a-z]+) ([0-9.:\-TZ]+) (\[(.+)\] )?(.*)$/;

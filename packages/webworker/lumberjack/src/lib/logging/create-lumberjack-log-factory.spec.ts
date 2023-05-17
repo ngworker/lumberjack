@@ -3,7 +3,7 @@ import { createFakeTime } from '@internal/core/test-util';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 
-import { createLumberjackLogFactory, LumberjackLogFactory } from './create-lumberjack-log-factory';
+import { createLumberjackLogFactory } from './create-lumberjack-log-factory';
 import { LumberjackLogBuilder } from './lumberjack-log.builder';
 
 describe(createLumberjackLogFactory.name, () => {
