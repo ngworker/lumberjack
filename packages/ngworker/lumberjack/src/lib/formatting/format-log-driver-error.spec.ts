@@ -1,33 +1,35 @@
 import { TestBed } from '@angular/core/testing';
 
+import { NoopDriver, NoopDriverModule } from '@internal/angular/test-util';
+import { createFakeTime } from '@internal/core/test-util';
 import {
+  createLumberjackLogFactory,
   formatLogDriverError,
   lumberjackFormatLog,
   LumberjackLog,
   LumberjackLogDriver,
   LumberjackLogDriverError,
+  LumberjackLogFactory,
   LumberjackLogPayload,
 } from '@webworker/lumberjack';
-import { NoopDriver, NoopDriverModule } from '@internal/angular/test-util';
 
 import { LumberjackModule } from '../configuration/lumberjack.module';
 import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
-import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
 
 describe(formatLogDriverError.name, () => {
+  const logFactory = createLumberjackLogFactory({ getUnixEpochTicks: createFakeTime().getUnixEpochTicks });
+
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [LumberjackModule.forRoot(), NoopDriverModule.forRoot()],
     });
     const [_logDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
     logDriver = _logDriver;
-    logFactory = TestBed.inject(LumberjackLogFactory);
   });
 
   const errorMessage = 'Test error message';
   const testMessage = 'Test info';
   let logDriver: NoopDriver;
-  let logFactory: LumberjackLogFactory;
 
   describe('Error message', () => {
     beforeEach(() => {

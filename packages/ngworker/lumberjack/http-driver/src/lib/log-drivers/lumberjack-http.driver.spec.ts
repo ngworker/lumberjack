@@ -2,7 +2,8 @@ import { HttpTestingController, provideHttpClientTesting, TestRequest } from '@a
 import { TestBed } from '@angular/core/testing';
 import { VERSION } from '@angular/platform-browser';
 
-import { createCriticalDriverLog, createDriverLog, repeatSideEffect } from '@internal/angular/test-util';
+import { repeatSideEffect } from '@internal/angular/test-util';
+import { createCriticalDriverLog, createDriverLog, createFakeTime } from '@internal/core/test-util';
 import { lumberjackLogDriverToken, LumberjackModule } from '@ngworker/lumberjack';
 import {
   LumberjackLevel,
@@ -86,6 +87,7 @@ describe(LumberjackHttpDriver.name, () => {
     retryOptions: { maxRetries: 5, delayMs: 250 },
     storeUrl: 'api/json',
   };
+  const fakeTime = createFakeTime();
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -113,7 +115,14 @@ describe(LumberjackHttpDriver.name, () => {
     'logs to a web API using the %s log level',
     (logLevel, logMethod) => {
       it('sends the driver log to the configured URL', () => {
-        const expectedDriverLog = createDriverLog<HttpDriverPayload>(logLevel, logLevel, '', 'Test', analyticsPayload);
+        const expectedDriverLog = createDriverLog<HttpDriverPayload>(
+          fakeTime.getUnixEpochTicks,
+          logLevel,
+          logLevel,
+          '',
+          'Test',
+          analyticsPayload
+        );
 
         logMethod(httpDriver).call(httpDriver, expectedDriverLog);
 
@@ -124,6 +133,7 @@ describe(LumberjackHttpDriver.name, () => {
 
   it('retries after two failures and then succeeds', () => {
     const expectedDriverLog = createCriticalDriverLog<HttpDriverPayload>(
+      fakeTime.getUnixEpochTicks,
       LumberjackLevel.Critical,
       '',
       'Test',
@@ -141,6 +151,7 @@ describe(LumberjackHttpDriver.name, () => {
 
   it('retries the specified number of times after failures and then stops retrying', () => {
     const expectedDriverLog = createCriticalDriverLog<HttpDriverPayload>(
+      fakeTime.getUnixEpochTicks,
       LumberjackLevel.Critical,
       '',
       'Test',

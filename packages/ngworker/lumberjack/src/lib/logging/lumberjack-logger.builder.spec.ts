@@ -1,12 +1,17 @@
 import { TestBed } from '@angular/core/testing';
 
 import { FakeTimeService } from '@internal/angular/test-util';
-import { LumberjackLevel, LumberjackLog, LumberjackLogLevel, LumberjackLogPayload } from '@webworker/lumberjack';
+import {
+  LumberjackLevel,
+  LumberjackLog,
+  LumberjackLogBuilder,
+  LumberjackLogLevel,
+  LumberjackLogPayload,
+} from '@webworker/lumberjack';
 
 import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
-import { LumberjackLogBuilder } from './lumberjack-log.builder';
 import { LumberjackLoggerBuilder } from './lumberjack-logger.builder';
 import { LumberjackService } from './lumberjack.service';
 
@@ -42,7 +47,11 @@ describe(LumberjackLoggerBuilder.name, () => {
         const builder = new LumberjackLoggerBuilder(lumberjackService, fakeTime, level, testMessage);
         const logFunction = builder.build();
         logFunction();
-        const expectedLog = new LumberjackLogBuilder(TestBed.inject(LumberjackTimeService), level, testMessage).build();
+        const expectedLog = new LumberjackLogBuilder(
+          fakeTime.getUnixEpochTicks.bind(fakeTime),
+          level,
+          testMessage
+        ).build();
 
         expect(lumberjackLogSpy).toHaveBeenCalledWith(expectedLog);
       })
@@ -55,7 +64,7 @@ describe(LumberjackLoggerBuilder.name, () => {
     const builder = new LumberjackLoggerBuilder(lumberjackService, fakeTime, level, testMessage);
     const logFunction = builder.withScope(scope).build();
     logFunction();
-    const expectedLog = new LumberjackLogBuilder(TestBed.inject(LumberjackTimeService), level, testMessage)
+    const expectedLog = new LumberjackLogBuilder(fakeTime.getUnixEpochTicks.bind(fakeTime), level, testMessage)
       .withScope(scope)
       .build();
 
@@ -82,7 +91,7 @@ describe(LumberjackLoggerBuilder.name, () => {
       const logFunction = builder.withScope(scope).build();
       logFunction(payload);
       const expectedLog = new LumberjackLogBuilder<TestPayload>(
-        TestBed.inject(LumberjackTimeService),
+        fakeTime.getUnixEpochTicks.bind(fakeTime),
         level,
         testMessage
       )
@@ -97,7 +106,7 @@ describe(LumberjackLoggerBuilder.name, () => {
       const logFunction = builder.withPayload(payload).build();
       logFunction();
       const expectedLog = new LumberjackLogBuilder<TestPayload>(
-        TestBed.inject(LumberjackTimeService),
+        fakeTime.getUnixEpochTicks.bind(fakeTime),
         level,
         testMessage
       )
@@ -111,7 +120,7 @@ describe(LumberjackLoggerBuilder.name, () => {
       const logFunction = builder.withScope(scope).withPayload(payload).build();
       logFunction();
       const expectedLog = new LumberjackLogBuilder<TestPayload>(
-        TestBed.inject(LumberjackTimeService),
+        fakeTime.getUnixEpochTicks.bind(fakeTime),
         level,
         testMessage
       )

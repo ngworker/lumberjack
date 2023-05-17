@@ -1,26 +1,18 @@
-import { TestBed } from '@angular/core/testing';
+import { createFakeTime } from '@internal/core/test-util';
 
-import { LumberjackLevel, LumberjackLogPayload } from '@webworker/lumberjack';
-import { FakeTimeService } from '@internal/angular/test-util';
+import { LumberjackLevel } from '../logs/lumberjack-level';
+import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 
-import { LumberjackTimeService } from '../time/lumberjack-time.service';
-
-import { LumberjackLogFactory } from './lumberjack-log-factory';
+import { createLumberjackLogFactory, LumberjackLogFactory } from './create-lumberjack-log-factory';
 import { LumberjackLogBuilder } from './lumberjack-log.builder';
 
-describe(LumberjackLogFactory.name, () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }, LumberjackLogFactory],
-    });
-
-    fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
-    logFactory = TestBed.inject(LumberjackLogFactory);
-  });
+describe(createLumberjackLogFactory.name, () => {
+  const fakeTime = createFakeTime();
 
   const testMessage = 'Test message';
-  let fakeTime: FakeTimeService;
-  let logFactory: LumberjackLogFactory;
+  const logFactory = createLumberjackLogFactory({
+    getUnixEpochTicks: fakeTime.getUnixEpochTicks,
+  });
 
   describe('Log levels', () => {
     it('creates a critical log', () => {
@@ -80,11 +72,9 @@ describe(LumberjackLogFactory.name, () => {
       readonly test: boolean;
     }
 
-    beforeEach(() => {
-      logFactoryWithPayload = TestBed.inject(LumberjackLogFactory);
+    const logFactoryWithPayload = createLumberjackLogFactory<TestPayload>({
+      getUnixEpochTicks: fakeTime.getUnixEpochTicks,
     });
-
-    let logFactoryWithPayload: LumberjackLogFactory<TestPayload>;
 
     it('creates a log with a static payload', () => {
       const log = logFactoryWithPayload.createErrorLog(testMessage).withPayload({ test: true }).build();

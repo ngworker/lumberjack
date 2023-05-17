@@ -1,9 +1,5 @@
-import { TestBed } from '@angular/core/testing';
-
 import { LumberjackLevel, LumberjackLog, LumberjackLogLevel, LumberjackLogPayload } from '@webworker/lumberjack';
-import { FakeTimeService } from '@internal/angular/test-util';
-
-import { LumberjackTimeService } from '../time/lumberjack-time.service';
+import { createFakeTime } from '@internal/core/test-util';
 
 import { LumberjackLogBuilder } from './lumberjack-log.builder';
 
@@ -16,20 +12,12 @@ const lumberjackLogLevels: LumberjackLogLevel[] = [LumberjackLevel.Critical, Lum
 describe(LumberjackLogBuilder.name, () => {
   const testMessage = 'Test Message';
 
-  let fakeTime: FakeTimeService;
-
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
-    });
-
-    fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
-  });
+  const fakeTime = createFakeTime();
 
   describe('Base builder usage', () => {
     lumberjackLogLevels.forEach((level) =>
       it(`creates a LumberjackLog with a ${level} level log`, () => {
-        const builder = new LumberjackLogBuilder(fakeTime, level, testMessage);
+        const builder = new LumberjackLogBuilder(fakeTime.getUnixEpochTicks, level, testMessage);
         const actualLog = builder.build();
         const expectedLog: LumberjackLog = {
           level,
@@ -47,7 +35,7 @@ describe(LumberjackLogBuilder.name, () => {
   it('creates a log with the specified scope', () => {
     const level = LumberjackLevel.Critical;
     const scope = 'Test Scope';
-    const actualLog = new LumberjackLogBuilder(fakeTime, level, testMessage).withScope(scope).build();
+    const actualLog = new LumberjackLogBuilder(fakeTime.getUnixEpochTicks, level, testMessage).withScope(scope).build();
 
     const expectedLog: LumberjackLog = {
       level,
@@ -68,7 +56,7 @@ describe(LumberjackLogBuilder.name, () => {
     };
     let builder: LumberjackLogBuilder<TestPayload>;
     beforeEach(() => {
-      builder = new LumberjackLogBuilder<TestPayload>(fakeTime, level, testMessage);
+      builder = new LumberjackLogBuilder<TestPayload>(fakeTime.getUnixEpochTicks, level, testMessage);
     });
 
     it('logs the specified payload', () => {

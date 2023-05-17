@@ -7,7 +7,7 @@ import {
   LumberjackLogDriverLog,
   LumberjackLogLevel,
 } from '@webworker/lumberjack';
-import { createDriverLog } from '@internal/core/test-util';
+import { createDriverLog, createFakeTime } from '@internal/core/test-util';
 
 import { repeatSideEffect } from '../functions/repeat-side-effect';
 
@@ -26,9 +26,11 @@ describe(ErrorThrowingDriver.name, () => {
     });
 
     const [driver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
+    const fakeTime = createFakeTime();
 
     return {
       driver,
+      fakeTime,
     };
   }
 
@@ -43,8 +45,14 @@ describe(ErrorThrowingDriver.name, () => {
     `implements a spy when using the %s log level`,
     (logLevel, logMethod) => {
       it('throws an error on first log when the default log driver configuration is used', () => {
-        const { driver } = setup();
-        const driverLog = createDriverLog(logLevel, logLevel, '', 'ErrorThrowingDriverDefaultTest');
+        const { driver, fakeTime } = setup();
+        const driverLog = createDriverLog(
+          fakeTime.getUnixEpochTicks,
+          logLevel,
+          logLevel,
+          '',
+          'ErrorThrowingDriverDefaultTest'
+        );
 
         expect(() => logMethod(driver).call(driver, driverLog)).toThrowError();
       });
@@ -53,8 +61,14 @@ describe(ErrorThrowingDriver.name, () => {
         'when the driver is configured to throw an error after %i logs',
         (logsBeforeThrowing) => {
           it('throws an error', () => {
-            const { driver } = setup(logsBeforeThrowing);
-            const driverLog = createDriverLog(logLevel, logLevel, '', 'ErrorThrowingDriverOptionsTest');
+            const { driver, fakeTime } = setup(logsBeforeThrowing);
+            const driverLog = createDriverLog(
+              fakeTime.getUnixEpochTicks,
+              logLevel,
+              logLevel,
+              '',
+              'ErrorThrowingDriverOptionsTest'
+            );
             const act = () => logMethod(driver).call(driver, driverLog);
             repeatSideEffect(logsBeforeThrowing, act);
 

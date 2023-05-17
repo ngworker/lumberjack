@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { createDriverLog } from '@internal/core/test-util';
+import { createDriverLog, createFakeTime } from '@internal/core/test-util';
 import { lumberjackLogDriverToken, LumberjackModule } from '@ngworker/lumberjack';
 import {
   LumberjackLevel,
@@ -17,6 +17,7 @@ import { ObjectService } from './object.service';
 describe(ObjectDriver.name, () => {
   let objectDriver: LumberjackLogDriver<ObjectPayload>;
   let objectService: ObjectService;
+  const fakeTime = createFakeTime();
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -39,7 +40,14 @@ describe(ObjectDriver.name, () => {
     `delegates to ${ObjectService.name} when using the %s log level`,
     (logLevel, logMethod, expectedPayload) => {
       it(`forwards the log payload to the ${ObjectService.prototype.log.name} method`, () => {
-        const driverLog = createDriverLog<ObjectPayload>(logLevel, logLevel, '', 'ObjectDriverTest', expectedPayload);
+        const driverLog = createDriverLog<ObjectPayload>(
+          fakeTime.getUnixEpochTicks,
+          logLevel,
+          logLevel,
+          '',
+          'ObjectDriverTest',
+          expectedPayload
+        );
 
         logMethod(objectDriver).call(objectDriver, driverLog);
 

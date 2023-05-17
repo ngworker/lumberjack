@@ -1,4 +1,4 @@
-import { isClass } from '@internal/angular/test-util';
+import { isClass } from '@internal/core/test-util';
 
 import { LumberjackTimeService } from './index';
 

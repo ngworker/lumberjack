@@ -1,10 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 
-import { lumberjackFormatLog, LumberjackLevel, LumberjackLog, LumberjackLogLevel } from '@webworker/lumberjack';
+import {
+  createLumberjackLogFactory,
+  lumberjackFormatLog,
+  LumberjackLevel,
+  LumberjackLog,
+  LumberjackLogBuilder,
+  LumberjackLogLevel,
+} from '@webworker/lumberjack';
+import { createFakeTime } from '@internal/core/test-util';
 
 import { LumberjackModule } from '../configuration/lumberjack.module';
-import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
-import { LumberjackLogBuilder } from '../logging/lumberjack-log.builder';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 function parseFormattedLog(formattedLog: string) {
@@ -28,11 +34,11 @@ describe(lumberjackFormatLog.name, () => {
     TestBed.configureTestingModule({
       imports: [LumberjackModule.forRoot()],
     });
-
-    logFactory = TestBed.inject(LumberjackLogFactory);
   });
 
-  let logFactory: LumberjackLogFactory;
+  const fakeTime = createFakeTime();
+
+  const logFactory = createLumberjackLogFactory({ getUnixEpochTicks: fakeTime.getUnixEpochTicks });
 
   describe('Log level', () => {
     const logLevels: LumberjackLogLevel[] = [
@@ -46,7 +52,7 @@ describe(lumberjackFormatLog.name, () => {
 
     logLevels.forEach((expectedLevel) => {
       it(`prefixes the message with log level "${expectedLevel}"`, () => {
-        const log = new LumberjackLogBuilder(TestBed.inject(LumberjackTimeService), expectedLevel, 'Log level test')
+        const log = new LumberjackLogBuilder(fakeTime.getUnixEpochTicks, expectedLevel, 'Log level test')
           .withScope('Log level')
           .build();
 

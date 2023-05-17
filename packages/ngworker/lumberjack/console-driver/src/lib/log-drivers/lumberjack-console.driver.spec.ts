@@ -1,8 +1,9 @@
 import { TestBed } from '@angular/core/testing';
 
-import { LumberjackLevel, LumberjackLogDriver } from '@webworker/lumberjack';
 import { SpyConsole, SpyConsoleModule } from '@internal/angular/console-driver/test-util';
-import { lumberjackLogDriverToken, LumberjackLogFactory, LumberjackModule } from '@ngworker/lumberjack';
+import { createFakeTime } from '@internal/core/test-util';
+import { lumberjackLogDriverToken, LumberjackModule } from '@ngworker/lumberjack';
+import { createLumberjackLogFactory, LumberjackLevel, LumberjackLogDriver } from '@webworker/lumberjack';
 
 import { LumberjackConsoleDriverModule } from '../configuration/lumberjack-console-driver.module';
 import { lumberjackConsoleToken } from '../console/lumberjack-console.token';
@@ -10,6 +11,7 @@ import { lumberjackConsoleToken } from '../console/lumberjack-console.token';
 import { LumberjackConsoleDriver } from './lumberjack-console.driver';
 
 describe(LumberjackConsoleDriver.name, () => {
+  const logFactory = createLumberjackLogFactory({ getUnixEpochTicks: createFakeTime().getUnixEpochTicks });
   beforeEach(() => {
     TestBed.configureTestingModule({
       imports: [
@@ -24,12 +26,10 @@ describe(LumberjackConsoleDriver.name, () => {
 
     const [_driver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
     driver = _driver as LumberjackConsoleDriver;
-    logFactory = TestBed.inject(LumberjackLogFactory);
     spyLogger = TestBed.inject(lumberjackConsoleToken) as SpyConsole;
   });
 
   let driver: LumberjackConsoleDriver;
-  let logFactory: LumberjackLogFactory;
   let spyLogger: SpyConsole;
 
   it("logs the critical level to the console's error channel", () => {

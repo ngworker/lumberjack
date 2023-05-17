@@ -1,16 +1,16 @@
 import { TestBed } from '@angular/core/testing';
 
-import { LumberjackLevel, LumberjackLog, LumberjackOptions } from '@webworker/lumberjack';
 import { FakeTimeService } from '@internal/angular/test-util';
+import { createFakeTime } from '@internal/core/test-util';
+import { createLumberjackLogFactory, LumberjackLevel, LumberjackLog, LumberjackOptions } from '@webworker/lumberjack';
 
 import { LumberjackModule } from '../configuration/lumberjack.module';
-import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { LumberjackLogFormatter } from './lumberjack-log-formatter.service';
 
 function createFormattingErrorLog(formattingErrorMessage: string, log: LumberjackLog): LumberjackLog {
-  const logFactory = TestBed.inject(LumberjackLogFactory);
+  const logFactory = createLumberjackLogFactory({ getUnixEpochTicks: createFakeTime().getUnixEpochTicks });
 
   return logFactory
     .createErrorLog(`Could not format message "${log.message}". Error: "${formattingErrorMessage}"`)
@@ -29,7 +29,7 @@ describe(LumberjackLogFormatter.name, () => {
 
     const service = TestBed.inject(LumberjackLogFormatter);
     const fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
-    const logFactory = TestBed.inject(LumberjackLogFactory);
+    const logFactory = createLumberjackLogFactory({ getUnixEpochTicks: createFakeTime().getUnixEpochTicks });
 
     return {
       fakeTime,

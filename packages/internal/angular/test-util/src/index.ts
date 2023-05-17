@@ -16,9 +16,6 @@ export * from './lib/error-throwing-driver/error-throwing.driver';
 // Functions
 export * from './lib/functions/repeat-side-effect';
 
-// Logs
-export * from './lib/logs';
-
 // No-op driver
 export * from './lib/noop-driver/noop-driver.module';
 export * from './lib/noop-driver/noop-driver-root.module';

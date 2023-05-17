@@ -1,13 +1,17 @@
 import { Injectable } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { LumberjackLog, LumberjackLogPayload } from '@webworker/lumberjack';
 import { FakeTimeService } from '@internal/angular/test-util';
+import {
+  createLumberjackLogFactory,
+  LumberjackLog,
+  LumberjackLogFactory,
+  LumberjackLogPayload,
+} from '@webworker/lumberjack';
 
 import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
-import { LumberjackLogFactory } from './lumberjack-log-factory';
 import { LumberjackLogger } from './lumberjack-logger.service';
 import { LumberjackService } from './lumberjack.service';
 
@@ -32,14 +36,16 @@ describe(LumberjackLogger.name, () => {
       providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
     });
     const lumberjack = TestBed.inject(LumberjackService);
+    timeService = TestBed.inject(LumberjackTimeService) as FakeTimeService;
+    logFactory = createLumberjackLogFactory({ getUnixEpochTicks: timeService.getUnixEpochTicks.bind(timeService) });
     lumberjackLogSpy = jest.spyOn(lumberjack, 'log').mockImplementation(() => {
       /* do nothing */
     });
 
     logger = TestBed.inject(TestLogger);
-    logFactory = TestBed.inject(LumberjackLogFactory);
   });
 
+  let timeService: FakeTimeService;
   let logFactory: LumberjackLogFactory;
   let logger: TestLogger;
   let lumberjackLogSpy: jest.SpyInstance<void, [LumberjackLog<void | LumberjackLogPayload>]>;

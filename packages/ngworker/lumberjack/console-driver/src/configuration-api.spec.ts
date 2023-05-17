@@ -1,4 +1,4 @@
-import { isClass, isFunction } from '@internal/test-util';
+import { isClass } from '@internal/core/test-util';
 
 import {
   LumberjackConsoleDriverModule,
