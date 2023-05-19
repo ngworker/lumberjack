@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
 
-import { ObjectPayload } from './object.payload';
+import { createObjectLogger, ObjectLogger } from '@internal/core/test-util';
 
 @Injectable({ providedIn: 'root' })
-export class ObjectService {
-  log(object?: ObjectPayload): boolean {
-    return object?.isWorking ?? false;
-  }
+export class ObjectService implements ObjectLogger {
+  log = createObjectLogger().log;
 }

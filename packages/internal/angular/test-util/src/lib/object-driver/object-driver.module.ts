@@ -1,12 +1,11 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
+import { ObjectDriverConfig, objectDriverIdentifier } from '@internal/core/test-util';
 import { lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
 import { LumberjackLogDriverConfig } from '@webworker/lumberjack';
 
 import { objectDriverConfigToken } from './object-driver-config.token';
 import { ObjectDriverRootModule } from './object-driver-root.module';
-import { ObjectDriverConfig } from './object-driver.config';
-import { ObjectDriver } from './object.driver';
 
 /**
  * Service module for `ObjectDriver`.
@@ -24,7 +23,7 @@ export class ObjectDriverModule {
           deps: [lumberjackLogDriverConfigToken],
           useFactory: (logDriverConfig: LumberjackLogDriverConfig): ObjectDriverConfig => ({
             ...logDriverConfig,
-            identifier: ObjectDriver.driverIdentifier,
+            identifier: objectDriverIdentifier,
             ...config,
           }),
         },

@@ -1,16 +1,12 @@
-import { TestBed } from '@angular/core/testing';
-
-import {
-  createLumberjackLogFactory,
-  lumberjackFormatLog,
-  LumberjackLevel,
-  LumberjackLog,
-  LumberjackLogBuilder,
-  LumberjackLogLevel,
-} from '@webworker/lumberjack';
 import { createFakeTime } from '@internal/core/test-util';
 
-import { LumberjackModule } from '../configuration/lumberjack.module';
+import { createLumberjackLogFactory } from '../logging/create-lumberjack-log-factory';
+import { LumberjackLogBuilder } from '../logging/lumberjack-log.builder';
+import { LumberjackLevel } from '../logs/lumberjack-level';
+import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
+import { LumberjackLog } from '../logs/lumberjack.log';
+
+import { lumberjackFormatLog } from './lumberjack-format-log';
 
 function parseFormattedLog(formattedLog: string) {
   const formattedLogPattern = /^([a-z]+) ([0-9.:\-TZ]+) (\[(.+)\] )?(.*)$/;
@@ -29,12 +25,6 @@ function parseFormattedLog(formattedLog: string) {
 }
 
 describe(lumberjackFormatLog.name, () => {
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [LumberjackModule.forRoot()],
-    });
-  });
-
   const fakeTime = createFakeTime();
 
   const logFactory = createLumberjackLogFactory({ getUnixEpochTicks: fakeTime.getUnixEpochTicks });
