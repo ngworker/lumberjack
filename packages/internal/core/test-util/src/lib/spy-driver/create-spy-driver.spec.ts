@@ -8,14 +8,14 @@ import {
 import { createDriverLog } from '../logs';
 import { createFakeTime } from '../time/create-fake-time';
 
-import { SpyDriver, spyDriverFactory } from './spy.driver-factory';
+import { createSpyDriver, SpyDriver } from './create-spy-driver';
 
-describe(spyDriverFactory.name, () => {
+describe(createSpyDriver.name, () => {
   let spyDriver: SpyDriver;
   const fakeTime = createFakeTime();
 
   beforeEach(() => {
-    spyDriver = spyDriverFactory({ levels: [LumberjackLevel.Verbose] });
+    spyDriver = createSpyDriver({ levels: [LumberjackLevel.Verbose] });
   });
 
   describe.each([

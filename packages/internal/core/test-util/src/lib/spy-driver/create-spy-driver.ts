@@ -7,7 +7,7 @@ export const spyDriverIdentifier = 'SpyDriver';
 export type SpyDriver<TPayload extends LumberjackLogPayload | void = void> = LumberjackLogDriver<TPayload> &
   jest.Mocked<LumberjackLogDriver<TPayload>> & { reset: () => void };
 
-export function spyDriverFactory<TPayload extends LumberjackLogPayload | void = void>(
+export function createSpyDriver<TPayload extends LumberjackLogPayload | void = void>(
   config: SpyDriverConfig
 ): SpyDriver<TPayload> {
   const logCritical = jest.fn();
