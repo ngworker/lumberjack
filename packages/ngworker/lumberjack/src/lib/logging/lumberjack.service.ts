@@ -2,13 +2,14 @@ import { inject, Injectable } from '@angular/core';
 
 import {
   createLumberjack,
+  Lumberjack,
   LumberjackLog,
   LumberjackLogDriver,
   lumberjackLogDriverLoggerFactory,
   LumberjackLogPayload,
 } from '@webworker/lumberjack';
 
-import { LumberjackLogFormatter } from '../formatting/lumberjack-log-formatter.service';
+import { LumberjackLogFormatterService } from '../formatting/lumberjack-log-formatter.service';
 import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
@@ -24,7 +25,7 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
  * API.
  */
 @Injectable()
-export class LumberjackService<TPayload extends LumberjackLogPayload | void = void> {
+export class LumberjackService<TPayload extends LumberjackLogPayload | void = void> implements Lumberjack<TPayload> {
   /**
    * The registered log drivers.
    */

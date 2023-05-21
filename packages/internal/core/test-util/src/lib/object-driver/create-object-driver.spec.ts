@@ -30,7 +30,7 @@ describe(createObjectDriver.name, () => {
   ] as ReadonlyArray<[LumberjackLogLevel, (driver: ObjectDriver) => (driverLog: LumberjackLogDriverLog<ObjectPayload>) => void, ObjectPayload | undefined]>)(
     `delegates to ${createObjectLogger.name} when using the %s log level`,
     (logLevel, logMethod, expectedPayload) => {
-      it(`forwards the log payload to the ${objectLogger.log.name} method`, () => {
+      it(`forwards the log payload to the ObjectLogger->log method`, () => {
         const driverLog = createDriverLog<ObjectPayload>(
           fakeTime.getUnixEpochTicks,
           logLevel,

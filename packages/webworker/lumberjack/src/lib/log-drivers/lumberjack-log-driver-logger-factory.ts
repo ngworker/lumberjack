@@ -16,7 +16,9 @@ type LogDriverLoggingStrategy<TPayload extends LumberjackLogPayload | void = voi
   (driver: LumberjackLogDriver<TPayload>, driverLog: LumberjackLogDriverLog<TPayload>) => void
 >;
 
-export type LumberjackLogDriverLogger = ReturnType<typeof lumberjackLogDriverLoggerFactory>;
+export type LumberjackLogDriverLogger<TPayload extends LumberjackLogPayload | void = void> = ReturnType<
+  typeof lumberjackLogDriverLoggerFactory<TPayload>
+>;
 
 export function lumberjackLogDriverLoggerFactory<TPayload extends LumberjackLogPayload | void = void>() {
   const logDriverLoggingStrategy: LogDriverLoggingStrategy<TPayload> = {

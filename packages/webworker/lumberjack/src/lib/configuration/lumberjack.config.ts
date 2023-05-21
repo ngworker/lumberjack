@@ -1,7 +1,6 @@
+import { LumberjackFormatFunction } from '../formatting/lumberjack-format-function';
 import { LumberjackConfigLevels } from '../logs/lumberjack-config-levels';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
-
-import { LumberjackFormatFunction } from './lumberjack-format-function';
 
 /**
  * Settings used internally by various Lumberjack services.

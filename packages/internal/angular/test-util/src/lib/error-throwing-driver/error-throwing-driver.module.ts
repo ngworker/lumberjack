@@ -1,14 +1,16 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
+import {
+  defaultErrorThrowingDriverConfig,
+  defaultErrorThrowingDriverOptions,
+  ErrorThrowingDriverConfig,
+  ErrorThrowingDriverOptions,
+} from '@internal/core/test-util';
 import { lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
 import { LumberjackLogDriverConfig } from '@webworker/lumberjack';
 
-import { defaultErrorThrowingDriverConfig } from './default-error-throwing-driver-config';
-import { defaultErrorThrowingDriverOptions } from './default-error-throwing-driver-options';
 import { errorThrowingDriverConfigToken } from './error-throwing-driver-config.token';
 import { ErrorThrowingDriverRootModule } from './error-throwing-driver-root.module';
-import { ErrorThrowingDriverConfig } from './error-throwing-driver.config';
-import { ErrorThrowingDriverOptions } from './error-throwing-driver.options';
 
 /**
  * Service module for `ErrorThrowingDriver`.

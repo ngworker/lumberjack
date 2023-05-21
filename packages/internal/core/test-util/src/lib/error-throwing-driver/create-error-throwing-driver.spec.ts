@@ -1,31 +1,25 @@
-import { TestBed } from '@angular/core/testing';
-
-import { lumberjackLogDriverToken, LumberjackModule } from '@ngworker/lumberjack';
 import {
   LumberjackLevel,
   LumberjackLogDriver,
   LumberjackLogDriverLog,
   LumberjackLogLevel,
 } from '@webworker/lumberjack';
-import { createDriverLog, createFakeTime } from '@internal/core/test-util';
 
+import { createDriverLog } from '../logs';
+import { createFakeTime } from '../time/create-fake-time';
 import { repeatSideEffect } from '../functions/repeat-side-effect';
 
-import { ErrorThrowingDriverModule } from './error-throwing-driver.module';
-import { ErrorThrowingDriver } from './error-throwing.driver';
+import { createErrorThrowingDriver, errorThrowingDriverIdentifier } from './create-error-throwing-driver';
+import { defaultErrorThrowingDriverOptions } from './default-error-throwing-driver-options';
 
-describe(ErrorThrowingDriver.name, () => {
+describe(createErrorThrowingDriver.name, () => {
   function setup(logsBeforeThrowing?: number) {
-    TestBed.configureTestingModule({
-      imports: [
-        LumberjackModule.forRoot(),
-        logsBeforeThrowing
-          ? ErrorThrowingDriverModule.withOptions({ logsBeforeThrowing })
-          : ErrorThrowingDriverModule.forRoot(),
-      ],
+    const driver = createErrorThrowingDriver({
+      logsBeforeThrowing: logsBeforeThrowing ?? defaultErrorThrowingDriverOptions.logsBeforeThrowing,
+      levels: [LumberjackLevel.Verbose],
+      identifier: errorThrowingDriverIdentifier,
     });
 
-    const [driver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
     const fakeTime = createFakeTime();
 
     return {

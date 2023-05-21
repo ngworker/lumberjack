@@ -1,4 +1,4 @@
-import { createFakeTime, spyDriverFactory } from '@internal/core/test-util';
+import { createFakeTime, createSpyDriver } from '@internal/core/test-util';
 
 import { LumberjackLogDriverError } from '../log-drivers/lumberjack-log-driver-error';
 import { createLumberjackLogFactory, LumberjackLogFactory } from '../logging/create-lumberjack-log-factory';
@@ -14,7 +14,7 @@ describe(formatLogDriverError.name, () => {
   const logFactory = createLumberjackLogFactory({ getUnixEpochTicks: createFakeTime().getUnixEpochTicks });
   const errorMessage = 'Test error message';
   const testMessage = 'Test info';
-  const logDriver = spyDriverFactory({ levels: [LumberjackLevel.Verbose] });
+  const logDriver = createSpyDriver({ levels: [LumberjackLevel.Verbose] });
 
   describe('Error message', () => {
     beforeEach(() => {

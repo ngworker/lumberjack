@@ -1,6 +1,8 @@
+import { LumberjackLogFormatter } from '../formatting/create-lumberjack-log-formatter';
 import { formatLogDriverError } from '../formatting/format-log-driver-error';
 import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
 import { LumberjackLogDriverError } from '../log-drivers/lumberjack-log-driver-error';
+import { LumberjackLogDriverLogger } from '../log-drivers/lumberjack-log-driver-logger-factory';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
@@ -10,19 +12,20 @@ const noReportedLogDriverErrorIndex = -1;
 
 interface LumberjackDependencies<TPayload extends LumberjackLogPayload | void> {
   drivers: LumberjackLogDriver<TPayload>[];
-  logFormatter: (log: LumberjackLog<TPayload>) => { log: LumberjackLog<TPayload>; formattedLog: string };
-  driverLogger: (
-    driver: LumberjackLogDriver<TPayload>,
-    logPackage: { log: LumberjackLog<TPayload>; formattedLog: string }
-  ) => void;
+  logFormatter: LumberjackLogFormatter<TPayload>;
+  logDriverLogger: LumberjackLogDriverLogger<TPayload>;
   getUnixEpochTicks: () => number;
 }
+
+export type Lumberjack<TPayload extends LumberjackLogPayload | void = void> = ReturnType<
+  typeof createLumberjack<TPayload>
+>;
 
 export function createLumberjack<TPayload extends LumberjackLogPayload | void = void>(
   deps: LumberjackDependencies<TPayload>
 ) {
   const log = (lumberjackLog: LumberjackLog<TPayload>) => {
-    const { log, formattedLog } = deps.logFormatter(lumberjackLog);
+    const { log, formattedLog } = deps.logFormatter.formatLog(lumberjackLog);
     logWithErrorHandling(log, formattedLog, deps.drivers);
   };
 
@@ -97,7 +100,7 @@ export function createLumberjack<TPayload extends LumberjackLogPayload | void = 
       .filter((driver) => canDriveLog(driver, log.level))
       .forEach((driver) => {
         try {
-          deps.driverLogger(driver, { formattedLog, log });
+          deps.logDriverLogger.log(driver, { formattedLog, log });
           stableDrivers.push(driver);
 
           if (driverErrorIndex !== noReportedLogDriverErrorIndex) {

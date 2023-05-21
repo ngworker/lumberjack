@@ -1,4 +1,7 @@
+import { isFunction } from '@internal/core/test-util';
+
 import {
+  configFactory,
   defaultDevelopmentLevels,
   defaultProductionLevels,
   LumberjackConfig,
@@ -39,6 +42,17 @@ describe('Configuration API', () => {
   describe('Default configurations', () => {
     it('exposes defaultDevelopmentLevels', () => {
       expect(defaultDevelopmentLevels).toBeDefined();
+    });
+
+    it('exposes defaultProductionLevels', () => {
+      expect(defaultProductionLevels).toBeDefined();
+    });
+  });
+
+  describe('Factory Functions', () => {
+    it('exposes configFactory', () => {
+      const sut = configFactory;
+      expect(isFunction(sut)).toBeTruthy();
     });
 
     it('exposes defaultProductionLevels', () => {

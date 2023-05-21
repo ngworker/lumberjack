@@ -1,13 +1,12 @@
-import { TestBed } from '@angular/core/testing';
-
-import { FakeTimeService } from '@internal/angular/test-util';
 import { createFakeTime } from '@internal/core/test-util';
-import { createLumberjackLogFactory, LumberjackLevel, LumberjackLog, LumberjackOptions } from '@webworker/lumberjack';
 
-import { LumberjackModule } from '../configuration/lumberjack.module';
-import { LumberjackTimeService } from '../time/lumberjack-time.service';
+import { configFactory } from '../configuration/config-factory';
+import { LumberjackOptions } from '../configuration/lumberjack.options';
+import { createLumberjackLogFactory } from '../logging/create-lumberjack-log-factory';
+import { LumberjackLevel } from '../logs/lumberjack-level';
+import { LumberjackLog } from '../logs/lumberjack.log';
 
-import { LumberjackLogFormatterService } from './lumberjack-log-formatter.service';
+import { createLumberjackLogFormatter } from './create-lumberjack-log-formatter';
 
 function createFormattingErrorLog(formattingErrorMessage: string, log: LumberjackLog): LumberjackLog {
   const logFactory = createLumberjackLogFactory({ getUnixEpochTicks: createFakeTime().getUnixEpochTicks });
@@ -20,21 +19,19 @@ function createFormattingErrorLog(formattingErrorMessage: string, log: Lumberjac
 
 const logFormattingErrorScope = 'LumberjackLogFormattingError';
 
-describe(LumberjackLogFormatterService.name, () => {
+describe(createLumberjackLogFactory.name, () => {
   function setup(options?: LumberjackOptions) {
-    TestBed.configureTestingModule({
-      imports: [LumberjackModule.forRoot(options)],
-      providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
+    const fakeTime = createFakeTime();
+    const logFactory = createLumberjackLogFactory({ getUnixEpochTicks: fakeTime.getUnixEpochTicks });
+    const formatter = createLumberjackLogFormatter({
+      getUnixEpochTicks: fakeTime.getUnixEpochTicks,
+      config: configFactory(false, options),
     });
-
-    const service = TestBed.inject(LumberjackLogFormatterService);
-    const fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
-    const logFactory = createLumberjackLogFactory({ getUnixEpochTicks: createFakeTime().getUnixEpochTicks });
 
     return {
       fakeTime,
       logFactory,
-      service,
+      service: formatter,
     };
   }
 

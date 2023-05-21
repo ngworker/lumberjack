@@ -1,4 +1,11 @@
-import { formatLogDriverError, lumberjackFormatLog, LumberjackLogFormatterResult } from './index';
+import { isFunction } from '@internal/core/test-util';
+
+import {
+  createLumberjackLogFormatter,
+  formatLogDriverError,
+  lumberjackFormatLog,
+  LumberjackLogFormatterResult,
+} from './index';
 
 describe('Formatting API', () => {
   describe('Interfaces', () => {
@@ -8,6 +15,12 @@ describe('Formatting API', () => {
 
     it('exposes formatLogDriverError', () => {
       expect(formatLogDriverError).toBeDefined();
+    });
+
+    it('exposes LumberjackLogFormatter', () => {
+      const sut = createLumberjackLogFormatter;
+
+      expect(isFunction(sut)).toBeTruthy();
     });
 
     it('exposes LumberjackLogFormatterResult', () => {
