@@ -1,12 +1,8 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import { LumberjackLogDriverConfig, lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
-
-import { LumberjackConsoleDriver } from '../log-drivers/lumberjack-console.driver';
-
-import { lumberjackConsoleDriverConfigToken } from './lumberjack-console-driver-config.token';
 import { LumberjackConsoleDriverRootModule } from './lumberjack-console-driver-root.module';
 import { LumberjackConsoleDriverConfig } from './lumberjack-console-driver.config';
+import { provideLumberjackConsoleDriver } from './provide-lumberjack-console-driver';
 
 /**
  * The console driver Angular module is used to configure and register the
@@ -27,17 +23,7 @@ export class LumberjackConsoleDriverModule {
   ): ModuleWithProviders<LumberjackConsoleDriverRootModule> {
     return {
       ngModule: LumberjackConsoleDriverRootModule,
-      providers: [
-        {
-          provide: lumberjackConsoleDriverConfigToken,
-          deps: [lumberjackLogDriverConfigToken],
-          useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackConsoleDriverConfig => ({
-            ...logDriverConfig,
-            identifier: LumberjackConsoleDriver.driverIdentifier,
-            ...config,
-          }),
-        },
-      ],
+      providers: [provideLumberjackConsoleDriver(config)],
     };
   }
 

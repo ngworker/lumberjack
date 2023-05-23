@@ -1,8 +1,10 @@
-import { importProvidersFrom } from '@angular/core';
+import { withInterceptors } from '@angular/common/http';
+import { inject, InjectionToken } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 
-import { LumberjackLog, LumberjackModule, LumberjackOptions } from '@ngworker/lumberjack';
-import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
+import { LumberjackLog, LumberjackOptions, provideLumberjack } from '@ngworker/lumberjack';
+import { provideLumberjackConsoleDriver } from '@ngworker/lumberjack/console-driver';
+import { provideLumberjackHttpDriver, withHttpOptions } from '@ngworker/lumberjack/http-driver';
 
 import { AppComponent } from './app/app.component';
 
@@ -16,11 +18,29 @@ const cypressLumberjackOptions: LumberjackOptions = {
   },
 };
 
+const easyToken = new InjectionToken('easy-provider');
+
 bootstrapApplication(AppComponent, {
   providers: [
-    importProvidersFrom([
-      LumberjackModule.forRoot('Cypress' in window ? cypressLumberjackOptions : undefined),
-      LumberjackConsoleDriverModule.forRoot(),
-    ]),
+    {
+      provide: easyToken,
+      useValue: 'provider-easy',
+    },
+    provideLumberjack('Cypress' in window ? cypressLumberjackOptions : undefined),
+    provideLumberjackConsoleDriver(),
+    provideLumberjackHttpDriver(
+      withHttpOptions({
+        origin: 'ForestApp',
+        retryOptions: { maxRetries: 1, delayMs: 250 },
+        storeUrl: '/api/logs',
+      }),
+      withInterceptors([
+        (req, next) => {
+          const easy = inject(easyToken);
+          console.log('are interceptors working?', easy);
+          return next(req);
+        },
+      ])
+    ),
   ],
-});
+}).catch((err: unknown) => console.error(err));
