@@ -10,7 +10,7 @@ import { NoopConsole } from './noop-console.service';
       deps: [[new Optional(), new SkipSelf(), NoopConsole]],
       provide: lumberjackConsoleToken,
       useFactory: (maybeExistingInstance: NoopConsole | null): NoopConsole =>
-        maybeExistingInstance || new NoopConsole(),
+        maybeExistingInstance ?? new NoopConsole(),
     },
   ],
 })

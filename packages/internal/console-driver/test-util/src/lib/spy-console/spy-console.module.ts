@@ -9,7 +9,7 @@ import { SpyConsole } from './spy-console.service';
     {
       deps: [[new Optional(), new SkipSelf(), SpyConsole]],
       provide: lumberjackConsoleToken,
-      useFactory: (maybeExistingInstance: SpyConsole | null): SpyConsole => maybeExistingInstance || new SpyConsole(),
+      useFactory: (maybeExistingInstance: SpyConsole | null): SpyConsole => maybeExistingInstance ?? new SpyConsole(),
     },
   ],
 })
