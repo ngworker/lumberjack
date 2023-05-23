@@ -62,7 +62,7 @@ export class LumberjackLogBuilder<TPayload extends LumberjackLogPayload | void =
   /**
    * Add a scope to the log.
    */
-  withScope(scope: string): LumberjackLogBuilder<TPayload> {
+  withScope(scope: string): this {
     this.scope = scope;
 
     return this;
