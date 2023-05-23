@@ -8,6 +8,12 @@ export { LumberjackHttpDriverRootModule } from './lib/configuration/lumberjack-h
 export { LumberjackHttpDriverConfig } from './lib/configuration/lumberjack-http-driver.config';
 export { LumberjackHttpDriverModule } from './lib/configuration/lumberjack-http-driver.module';
 export { LumberjackHttpDriverOptions } from './lib/configuration/lumberjack-http-driver.options';
+export {
+  provideLumberjackHttpDriver,
+  withHttpConfig,
+  withHttpOptions,
+} from './lib/configuration/provide-lumberjack-http-driver';
+
 // Errors
 export { LumberjackHttpDriverError } from './lib/errors/lumberjack-http-driver.error';
 // Log drivers

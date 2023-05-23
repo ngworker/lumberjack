@@ -39,6 +39,10 @@ export * from './lib/object-driver/object.payload';
 // Type checking
 export * from './lib/type-checking/is-class';
 export * from './lib/type-checking/is-object';
+export * from './lib/type-checking/is-function';
 
 // Time
 export * from './lib/time/fake-time.service';
+
+// Types
+export * from './lib/types/writable';

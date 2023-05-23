@@ -1,6 +1,6 @@
 import { InjectionToken } from '@angular/core';
 
-import { isClass } from '@internal/test-util';
+import { isClass, isFunction } from '@internal/test-util';
 
 import {
   LumberjackConfig,
@@ -11,6 +11,7 @@ import {
   LumberjackModule,
   LumberjackOptions,
   LumberjackRootModule,
+  provideLumberjack,
 } from './index';
 
 describe('Configuration API', () => {
@@ -53,6 +54,14 @@ describe('Configuration API', () => {
       const sut = LumberjackRootModule;
 
       expect(isClass(sut)).toBeTruthy();
+    });
+  });
+
+  describe('Provider functions', () => {
+    it(`exposes ${provideLumberjack.name}`, () => {
+      const sut = provideLumberjack;
+
+      expect(isFunction(sut)).toBeTruthy();
     });
   });
 

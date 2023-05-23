@@ -60,7 +60,7 @@
       "rules": {}
     },
     {
-      "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
+      "files": ["*.ts", "*.tsx", "*.js", "*.jsx", "*.spec.ts", "*.spec.tsx", "*.spec.js", "*.spec.jsx"],
       "extends": [
         "plugin:etc/recommended",
         "plugin:rxjs/recommended",

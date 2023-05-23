@@ -1,6 +1,10 @@
-import { isClass } from '@internal/test-util';
+import { isClass, isFunction } from '@internal/test-util';
 
-import { LumberjackConsoleDriverModule, LumberjackConsoleDriverRootModule } from './index';
+import {
+  LumberjackConsoleDriverModule,
+  LumberjackConsoleDriverRootModule,
+  provideLumberjackConsoleDriver,
+} from './index';
 
 describe('Configuration API', () => {
   describe('Angular modules', () => {
@@ -14,6 +18,14 @@ describe('Configuration API', () => {
       const sut = LumberjackConsoleDriverRootModule;
 
       expect(isClass(sut)).toBeTruthy();
+    });
+  });
+
+  describe('Provider functions', () => {
+    it(`exposes ${provideLumberjackConsoleDriver.name}`, () => {
+      const sut = provideLumberjackConsoleDriver;
+
+      expect(isFunction(sut)).toBeTruthy();
     });
   });
 });
