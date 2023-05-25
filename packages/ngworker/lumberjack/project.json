@@ -39,7 +39,12 @@
         "project": "packages/ngworker/lumberjack/ng-package.json",
         "updateBuildableProjectDepsInPackageJson": false
       },
-      "dependsOn": [{ "target": "build-package", "dependencies": true }],
+      "dependsOn": [
+        {
+          "target": "build-package",
+          "dependencies": true
+        }
+      ],
       "configurations": {
         "production": {
           "tsConfig": "packages/ngworker/lumberjack/tsconfig.lib.prod.json"
