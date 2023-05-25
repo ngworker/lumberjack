@@ -44,7 +44,7 @@ export class LumberjackLogBuilder<TPayload extends LumberjackLogPayload | void =
       message: this.message,
       scope: this.scope,
       createdAt: this.time.getUnixEpochTicks(),
-      payload: (payloadArg[0] || this.payload) as Exclude<TPayload, InternalWithStaticPayload>,
+      payload: (payloadArg[0] ?? this.payload) as Exclude<TPayload, InternalWithStaticPayload>,
     };
   }
 
