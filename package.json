@@ -74,7 +74,6 @@
     "eslint-plugin-etc": "2.0.2",
     "eslint-plugin-ordered-imports": "0.6.0",
     "eslint-plugin-rxjs": "5.0.2",
-    "eslint-plugin-rxjs-angular": "2.0.0",
     "eslint-plugin-sonarjs": "0.17.0",
     "glob": "8.0.3",
     "husky": "8.0.2",

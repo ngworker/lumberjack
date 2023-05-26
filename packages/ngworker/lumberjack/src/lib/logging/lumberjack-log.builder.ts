@@ -15,8 +15,11 @@ type InternalWithStaticPayload = '__LUMBERJACK_INTERNAL_WITH_STATIC_PAYLOAD__' &
  * Use this to create a log before passing it to `LumberjackService`.
  */
 export class LumberjackLogBuilder<TPayload extends LumberjackLogPayload | void = void> {
-  private payload?: TPayload;
-  private scope?: string;
+  #payload?: TPayload;
+  #scope?: string;
+  readonly #time: LumberjackTimeService;
+  readonly #level: LumberjackLogLevel;
+  readonly #message: string;
 
   /**
    * Create a log builder with the specified log level and message.
@@ -25,11 +28,11 @@ export class LumberjackLogBuilder<TPayload extends LumberjackLogPayload | void =
    * @param level The log level.
    * @param message The log message.
    */
-  constructor(
-    private readonly time: LumberjackTimeService,
-    private readonly level: LumberjackLogLevel,
-    private readonly message: string
-  ) {}
+  constructor(time: LumberjackTimeService, level: LumberjackLogLevel, message: string) {
+    this.#time = time;
+    this.#level = level;
+    this.#message = message;
+  }
 
   /**
    * Create a log with the specified properties and timestamp it.
@@ -40,11 +43,11 @@ export class LumberjackLogBuilder<TPayload extends LumberjackLogPayload | void =
     ...payloadArg: Extract<TPayload, InternalWithStaticPayload> extends never ? [TPayload] : [never?]
   ): LumberjackLog<Exclude<TPayload, InternalWithStaticPayload>> {
     return {
-      level: this.level,
-      message: this.message,
-      scope: this.scope,
-      createdAt: this.time.getUnixEpochTicks(),
-      payload: (payloadArg[0] ?? this.payload) as Exclude<TPayload, InternalWithStaticPayload>,
+      level: this.#level,
+      message: this.#message,
+      scope: this.#scope,
+      createdAt: this.#time.getUnixEpochTicks(),
+      payload: (payloadArg[0] || this.#payload) as Exclude<TPayload, InternalWithStaticPayload>,
     };
   }
 
@@ -54,7 +57,7 @@ export class LumberjackLogBuilder<TPayload extends LumberjackLogPayload | void =
   withPayload(
     ...payloadArg: TPayload extends void ? [never?] : [TPayload]
   ): LumberjackLogBuilder<InternalWithStaticPayload | TPayload> {
-    this.payload = payloadArg[0] as TPayload;
+    this.#payload = payloadArg[0] as TPayload;
 
     return this as LumberjackLogBuilder<InternalWithStaticPayload | TPayload>;
   }
@@ -63,7 +66,7 @@ export class LumberjackLogBuilder<TPayload extends LumberjackLogPayload | void =
    * Add a scope to the log.
    */
   withScope(scope: string): LumberjackLogBuilder<TPayload> {
-    this.scope = scope;
+    this.#scope = scope;
 
     return this;
   }

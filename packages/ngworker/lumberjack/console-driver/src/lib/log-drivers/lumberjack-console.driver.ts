@@ -17,7 +17,7 @@ export class LumberjackConsoleDriver<TPayload extends LumberjackLogPayload | voi
 {
   static readonly driverIdentifier = 'LumberjackConsoleDriver';
 
-  private readonly console = inject(lumberjackConsoleToken);
+  readonly #console = inject(lumberjackConsoleToken);
 
   readonly config = inject(lumberjackConsoleDriverConfigToken);
 
@@ -27,7 +27,7 @@ export class LumberjackConsoleDriver<TPayload extends LumberjackLogPayload | voi
    * @param param0 The log and its text representation.
    */
   logCritical({ formattedLog, log: { payload } }: LumberjackLogDriverLog<TPayload>): void {
-    this.console.error(formattedLog, payload);
+    this.#console.error(formattedLog, payload);
   }
 
   /**
@@ -36,7 +36,7 @@ export class LumberjackConsoleDriver<TPayload extends LumberjackLogPayload | voi
    * @param param0 The log and its text representation.
    */
   logDebug({ formattedLog, log: { payload } }: LumberjackLogDriverLog<TPayload>): void {
-    this.console.debug(formattedLog, payload);
+    this.#console.debug(formattedLog, payload);
   }
 
   /**
@@ -45,7 +45,7 @@ export class LumberjackConsoleDriver<TPayload extends LumberjackLogPayload | voi
    * @param param0 The log and its text representation.
    */
   logError({ formattedLog, log: { payload } }: LumberjackLogDriverLog<TPayload>): void {
-    this.console.error(formattedLog, payload);
+    this.#console.error(formattedLog, payload);
   }
 
   /**
@@ -54,7 +54,7 @@ export class LumberjackConsoleDriver<TPayload extends LumberjackLogPayload | voi
    * @param param0 The log and its text representation.
    */
   logInfo({ formattedLog, log: { payload } }: LumberjackLogDriverLog<TPayload>): void {
-    this.console.info(formattedLog, payload);
+    this.#console.info(formattedLog, payload);
   }
 
   /**
@@ -63,7 +63,7 @@ export class LumberjackConsoleDriver<TPayload extends LumberjackLogPayload | voi
    * @param param0 The log and its text representation.
    */
   logTrace({ formattedLog, log: { payload } }: LumberjackLogDriverLog<TPayload>): void {
-    this.console.trace(formattedLog, payload);
+    this.#console.trace(formattedLog, payload);
   }
 
   /**
@@ -72,6 +72,6 @@ export class LumberjackConsoleDriver<TPayload extends LumberjackLogPayload | voi
    * @param param0 The log and its text representation.
    */
   logWarning({ formattedLog, log: { payload } }: LumberjackLogDriverLog<TPayload>): void {
-    this.console.warn(formattedLog, payload);
+    this.#console.warn(formattedLog, payload);
   }
 }

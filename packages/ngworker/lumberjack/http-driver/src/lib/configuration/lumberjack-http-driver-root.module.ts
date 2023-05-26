@@ -5,13 +5,13 @@ import { inject, NgModule } from '@angular/core';
  */
 @NgModule()
 export class LumberjackHttpDriverRootModule {
-  private readonly maybeNgModuleFromParentInjector = inject(LumberjackHttpDriverRootModule, {
+  readonly #maybeNgModuleFromParentInjector = inject(LumberjackHttpDriverRootModule, {
     optional: true,
     skipSelf: true,
   });
 
   constructor() {
-    if (this.maybeNgModuleFromParentInjector) {
+    if (this.#maybeNgModuleFromParentInjector) {
       throw new Error(
         'LumberjackHttpDriverModule.forRoot registered in multiple injectors. Only call it from your root injector such as in AppModule.'
       );

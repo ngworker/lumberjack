@@ -5990,7 +5990,7 @@ eslint-config-prettier@8.1.0:
   resolved "https://registry.yarnpkg.com/eslint-config-prettier/-/eslint-config-prettier-8.1.0.tgz#4ef1eaf97afe5176e6a75ddfb57c335121abc5a6"
   integrity sha512-oKMhGv3ihGbCIimCAjqkdzx2Q+jthoqnXSP+d86M9tptwugycmTFdVR4IpLgq2c4SHifbwO90z2fQ8/Aio73yw==
 
-eslint-etc@^5.0.0, eslint-etc@^5.1.0:
+eslint-etc@^5.1.0:
   version "5.2.1"
   resolved "https://registry.yarnpkg.com/eslint-etc/-/eslint-etc-5.2.1.tgz#43e2554a347677ebb6386c915f374918f2efcb87"
   integrity sha512-lFJBSiIURdqQKq9xJhvSJFyPA+VeTh5xvk24e8pxVL7bwLBtGF60C/KRkLTMrvCZ6DA3kbPuYhLWY0TZMlqTsg==
@@ -6022,17 +6022,6 @@ eslint-plugin-ordered-imports@0.6.0:
   version "0.6.0"
   resolved "https://registry.yarnpkg.com/eslint-plugin-ordered-imports/-/eslint-plugin-ordered-imports-0.6.0.tgz#027a5deecfe918c451ee2d705a44cd61be2273e5"
   integrity sha512-jTzJw7ZbXFwmY1FNrPQRs9nUU17hpHnkN92tYsdBETFP9imNxAGz9TCmCc4Cz4CAyJrCBdlpMCHVRiZ1eGa7og==
-
-eslint-plugin-rxjs-angular@2.0.0:
-  version "2.0.0"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-rxjs-angular/-/eslint-plugin-rxjs-angular-2.0.0.tgz#32bc31500ba4ad797d9f14137943b6d81a1476ef"
-  integrity sha512-MalcYcEHOK2NT+avWSI1PsUilwGx6cprMQdw9jJRlCTkIvsUvCGFD1eTqQKVImwkK8+te732v9VsP/XcXlKZqA==
-  dependencies:
-    "@typescript-eslint/experimental-utils" "^5.0.0"
-    common-tags "^1.8.0"
-    eslint-etc "^5.0.0"
-    requireindex "~1.2.0"
-    tslib "^2.0.0"
 
 eslint-plugin-rxjs@5.0.2:
   version "5.0.2"

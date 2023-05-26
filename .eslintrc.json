@@ -1,7 +1,7 @@
 {
   "root": true,
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nx", "etc", "rxjs", "rxjs-angular", "sonarjs", "ordered-imports"],
+  "plugins": ["@nx", "etc", "rxjs", "sonarjs", "ordered-imports"],
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
     "project": ["{e2e,packages}/**/tsconfig.*?.json", "e2e/**/*-e2e/tsconfig.json"]
@@ -100,15 +100,6 @@
               { "name": "third-party", "match": ".*", "order": 10 }
             ]
           }
-        ]
-      }
-    },
-    {
-      "files": ["*.ts"],
-      "rules": {
-        "rxjs-angular/prefer-composition": [
-          "error",
-          { "checkDecorators": ["Component", "Directive", "Injectable", "NgModule", "Pipe"] }
         ]
       }
     }

@@ -14,10 +14,10 @@ import { ObjectDriver } from './object.driver';
   ],
 })
 export class ObjectDriverRootModule {
-  private readonly maybeNgModuleFromParentInjector = inject(ObjectDriverRootModule, { optional: true, skipSelf: true });
+  readonly #maybeNgModuleFromParentInjector = inject(ObjectDriverRootModule, { optional: true, skipSelf: true });
 
   constructor() {
-    if (this.maybeNgModuleFromParentInjector) {
+    if (this.#maybeNgModuleFromParentInjector) {
       throw new Error(
         'ObjectDriverModule.forRoot registered in multiple injectors. Only call it from your root injector such as in AppModule.'
       );

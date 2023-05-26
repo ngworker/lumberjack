@@ -17,12 +17,14 @@ import { LumberjackLogDriverLog } from './lumberjack-log-driver.log';
  */
 @Injectable()
 export class LumberjackLogDriverLogger<TPayload extends LumberjackLogPayload | void = void> {
-  private readonly [LumberjackLevel.Critical] = criticalLogDriverLoggingStrategy;
-  private readonly [LumberjackLevel.Debug] = debugLogDriverLoggingStrategy;
-  private readonly [LumberjackLevel.Error] = errorLogDriverLoggingStrategy;
-  private readonly [LumberjackLevel.Info] = infoLogDriverLoggingStrategy;
-  private readonly [LumberjackLevel.Trace] = traceLogDriverLoggingStrategy;
-  private readonly [LumberjackLevel.Warning] = warningLogDriverLoggingStrategy;
+  #driverLogStrategyMap = {
+    [LumberjackLevel.Debug]: debugLogDriverLoggingStrategy,
+    [LumberjackLevel.Critical]: criticalLogDriverLoggingStrategy,
+    [LumberjackLevel.Error]: errorLogDriverLoggingStrategy,
+    [LumberjackLevel.Info]: infoLogDriverLoggingStrategy,
+    [LumberjackLevel.Trace]: traceLogDriverLoggingStrategy,
+    [LumberjackLevel.Warning]: warningLogDriverLoggingStrategy,
+  };
 
   /**
    * Log the specified log to the log driver.
@@ -34,6 +36,6 @@ export class LumberjackLogDriverLogger<TPayload extends LumberjackLogPayload | v
    * @param driverLog A log driver log.
    */
   log(driver: LumberjackLogDriver<TPayload>, driverLog: LumberjackLogDriverLog<TPayload>): void {
-    this[driverLog.log.level](driver, driverLog);
+    this.#driverLogStrategyMap[driverLog.log.level](driver, driverLog);
   }
 }
