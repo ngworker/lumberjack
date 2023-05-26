@@ -27,47 +27,47 @@ export class LumberjackHttpDriver<TPayload extends LumberjackLogPayload | void =
 {
   static readonly driverIdentifier = 'LumberjackHttpDriver';
 
-  private readonly http = inject(HttpClient);
-  private readonly ngZone = inject(NgZone);
-  private readonly subscriptions = new Subscription();
+  readonly #http = inject(HttpClient);
+  readonly #ngZone = inject(NgZone);
+  readonly #subscriptions = new Subscription();
 
   readonly config = inject(lumberjackHttpDriverConfigToken);
 
   ngOnDestroy(): void {
-    this.subscriptions.unsubscribe();
+    this.#subscriptions.unsubscribe();
   }
 
   logCritical({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
-    this.sendLog(formattedLog, log);
+    this.#sendLog(formattedLog, log);
   }
 
   logDebug({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
-    this.sendLog(formattedLog, log);
+    this.#sendLog(formattedLog, log);
   }
 
   logError({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
-    this.sendLog(formattedLog, log);
+    this.#sendLog(formattedLog, log);
   }
 
   logInfo({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
-    this.sendLog(formattedLog, log);
+    this.#sendLog(formattedLog, log);
   }
 
   logTrace({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
-    this.sendLog(formattedLog, log);
+    this.#sendLog(formattedLog, log);
   }
 
   logWarning({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
-    this.sendLog(formattedLog, log);
+    this.#sendLog(formattedLog, log);
   }
 
-  private sendLog(formattedLog: string, log: LumberjackLog<TPayload>): void {
+  private #sendLog(formattedLog: string, log: LumberjackLog<TPayload>): void {
     const { origin, retryOptions, storeUrl } = this.config;
     const httpLog: LumberjackHttpLog<TPayload> = { formattedLog, origin, log };
 
     this.ngZone.runOutsideAngular(() => {
-      this.subscriptions.add(
-        this.http
+      this.#subscriptions.add(
+        this.#http
           .post<void>(storeUrl, httpLog)
           .pipe(retryWithDelay(retryOptions.maxRetries, retryOptions.delayMs))
           // HTTP requests complete after the response is received, so there's no need to unsubscribe.
