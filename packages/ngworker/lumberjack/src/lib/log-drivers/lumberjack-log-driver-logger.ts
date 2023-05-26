@@ -17,7 +17,7 @@ import { LumberjackLogDriverLog } from './lumberjack-log-driver.log';
  */
 @Injectable()
 export class LumberjackLogDriverLogger<TPayload extends LumberjackLogPayload | void = void> {
-  #driverLogStrategyMap = {
+  readonly #driverLogStrategyMap = {
     [LumberjackLevel.Debug]: debugLogDriverLoggingStrategy,
     [LumberjackLevel.Critical]: criticalLogDriverLoggingStrategy,
     [LumberjackLevel.Error]: errorLogDriverLoggingStrategy,

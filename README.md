@@ -167,7 +167,7 @@ import { LumberjackService } from '@ngworker/lumberjack';
   // (...)
 })
 export class MyComponent implements OnInit {
-  constructor(#lumberjack: LumberjackService) {}
+  readonly #lumberjack = inject(LumberjackService);
 
   // (...)
 }
@@ -834,7 +834,7 @@ export interface LogPayload extends LumberjackLogPayload {
   providedIn: 'root',
 })
 export class AppLogger extends ScopedLumberjackLogger<LogPayload> {
-  readonly #payload: LogPayload = {
+  static readonly #payload: LogPayload = {
     angularVersion: VERSION.full,
   };
 
