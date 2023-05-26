@@ -17,14 +17,14 @@ import { LumberjackLogDriverLog } from './lumberjack-log-driver.log';
  */
 @Injectable()
 export class LumberjackLogDriverLogger<TPayload extends LumberjackLogPayload | void = void> {
-  readonly #driverLogStrategyMap = {
+  readonly #driverLogStrategyMap = Object.freeze({
     [LumberjackLevel.Debug]: debugLogDriverLoggingStrategy,
     [LumberjackLevel.Critical]: criticalLogDriverLoggingStrategy,
     [LumberjackLevel.Error]: errorLogDriverLoggingStrategy,
     [LumberjackLevel.Info]: infoLogDriverLoggingStrategy,
     [LumberjackLevel.Trace]: traceLogDriverLoggingStrategy,
     [LumberjackLevel.Warning]: warningLogDriverLoggingStrategy,
-  };
+  });
 
   /**
    * Log the specified log to the log driver.
