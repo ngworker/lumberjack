@@ -842,7 +842,7 @@ export class AppLogger extends ScopedLumberjackLogger<LogPayload> {
 
   forestOnFire = this.createCriticalLogger('The forest is on fire!').build();
 
-  helloForest = this.createInfoLogger('Hello, Forest!').withPayload(AppLogger.payload).build();
+  helloForest = this.createInfoLogger('Hello, Forest!').withPayload(AppLogger.#payload).build();
 }
 ```
 
