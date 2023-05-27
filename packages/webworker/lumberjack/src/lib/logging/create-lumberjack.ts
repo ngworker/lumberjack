@@ -14,6 +14,7 @@ interface LumberjackDependencies<TPayload extends LumberjackLogPayload | void> {
   drivers: LumberjackLogDriver<TPayload>[];
   logFormatter: LumberjackLogFormatter<TPayload>;
   logDriverLogger: LumberjackLogDriverLogger<TPayload>;
+  // TODO: this should be optional and it should use the () => new Date().valueOf() or something  like that
   getUnixEpochTicks: () => number;
 }
 
