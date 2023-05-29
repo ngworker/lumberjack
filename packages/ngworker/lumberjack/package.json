@@ -2,7 +2,7 @@
   "name": "@ngworker/lumberjack",
   "version": "14.0.0",
   "description": "Lumberjack is a versatile Angular logging library, specifically designed to be extended and customized",
-  "homepage": "https://github.com/ngworker/lumberjack#readme",
+  "homepage": "https://ngworker.github.io/ngworker/lumberjack/",
   "license": "MIT",
   "repository": {
     "type": "git",
