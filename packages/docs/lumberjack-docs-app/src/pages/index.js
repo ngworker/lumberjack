@@ -9,26 +9,25 @@ import styles from './styles.module.css';
 const features = [
   {
     title: 'Easy to use',
-    imageUrl: 'img/logo.svg',
+    imageUrl: 'img/easy-to-use.webp',
     description: <>Lumberjack is ruled by the principle of making the simple easy and the complex possible</>,
   },
   {
     title: 'Extensible',
-    imageUrl: 'img/logo.svg',
+    imageUrl: 'img/extensible.webp',
     description: (
       <>
-        Being powered by a Plugin Architecture, allows anyone to create its own drivers and make Lumberjac fit their
-        needs
+        Being powered by a Plugin Architecture allows anyone to create its drivers and make Lumberjack fit their needs.
       </>
     ),
   },
   {
     title: 'Configurable',
-    imageUrl: 'img/logo.svg',
+    imageUrl: 'img/configurable.webp',
     description: (
       <>
-        Custom Plugins is not the only way to customize Lumberjack. It is possible to modify almost every aspect of how
-        your logs will be processed, from the format function to the log levels allowed.
+        Custom Plugins are not the only way to customize Lumberjack. It is possible to modify almost every aspect of
+        your logs' processing, from the format function to the log levels allowed.
       </>
     ),
   },
