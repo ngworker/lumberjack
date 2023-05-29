@@ -1,4 +1,6 @@
-import { LumberjackLogDriverLoggingStrategy } from './lumberjack-log-driver-logging-strategy';
+import { LumberjackLogPayload } from '../../logs/lumberjack-log-payload';
+import { LumberjackLogDriver } from '../lumberjack-log-driver';
+import { LumberjackLogDriverLog } from '../lumberjack-log-driver.log';
 
 /**
  * Debug logging strategy for a log driver.
@@ -6,6 +8,9 @@ import { LumberjackLogDriverLoggingStrategy } from './lumberjack-log-driver-logg
  * @param driver The log driver.
  * @param driverLog A debug log driver log.
  */
-export const debugLogDriverLoggingStrategy: LumberjackLogDriverLoggingStrategy = (driver, driverLog) => {
+export function debugLogDriverLoggingStrategy<TPayload extends LumberjackLogPayload | void = void>(
+  driver: LumberjackLogDriver<TPayload>,
+  driverLog: LumberjackLogDriverLog<TPayload>
+): void {
   driver.logDebug(driverLog);
-};
+}
