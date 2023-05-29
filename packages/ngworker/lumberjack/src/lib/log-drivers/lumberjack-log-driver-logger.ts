@@ -22,7 +22,7 @@ export class LumberjackLogDriverLogger<TPayload extends LumberjackLogPayload | v
   /**
    * A record of logging strategies for each log level.
    */
-  readonly #loggingStrategies: Readonly<Record<LumberjackLogLevel, LumberjackLogDriverLoggingStrategy>> = {
+  readonly #loggingStrategies: Readonly<Record<LumberjackLogLevel, LumberjackLogDriverLoggingStrategy<TPayload>>> = {
     [LumberjackLevel.Critical]: criticalLogDriverLoggingStrategy,
     [LumberjackLevel.Debug]: debugLogDriverLoggingStrategy,
     [LumberjackLevel.Error]: errorLogDriverLoggingStrategy,
