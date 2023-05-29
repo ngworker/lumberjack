@@ -33,7 +33,7 @@ module.exports = {
         // TODO: Enable blog when we have content
         // { to: '/blog', label: 'Blog', position: 'left' },
         {
-          href: 'https://github.com/facebook/docusaurus',
+          href: 'https://github.com/ngworker/lumberjack',
           label: 'GitHub',
           position: 'right',
         },

@@ -17,6 +17,14 @@
   }
 }
 
+.heroTitle {
+  color: white;
+}
+
+.readMore:not(:hover) {
+  color: white !important;
+}
+
 .buttons {
   display: flex;
   align-items: center;
