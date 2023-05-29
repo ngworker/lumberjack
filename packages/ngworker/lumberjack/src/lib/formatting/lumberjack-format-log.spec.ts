@@ -14,7 +14,7 @@ function parseFormattedLog(formattedLog: string) {
   const formattedLogPattern = /^([a-z]+) ([0-9.:\-TZ]+) (\[(.+)\] )?(.*)$/;
 
   const [, level, timestamp, taggedScopeWithEndingSpace = '', scope = '', message] =
-    formattedLogPattern.exec(formattedLog) || [];
+    formattedLogPattern.exec(formattedLog) ?? [];
   const taggedScope = taggedScopeWithEndingSpace ? taggedScopeWithEndingSpace.slice(0, -1) : '';
 
   return {
