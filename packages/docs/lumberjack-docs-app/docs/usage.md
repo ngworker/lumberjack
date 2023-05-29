@@ -3,22 +3,35 @@ sidebar_position: 3
 title: Usage
 ---
 
-> For a complete walkthrough video please visit [@ngworker/lumberjack v2 - Show & Tell BLS024](https://youtu.be/OV1ONtLAJnI)
+> For a complete walkthrough video please
+> visit [@ngworker/lumberjack v2 - Show & Tell BLS024](https://youtu.be/OV1ONtLAJnI)
 
 To register Lumberjack, add `LumberjackModule.forRoot()` to your root or core Angular module.
 
 ```ts
 // (...)
-import { LumberjackModule } from '@ngworker/lumberjack';
+import {LumberjackModule} from '@ngworker/lumberjack';
 
 @NgModule({
   imports: [
-      // (...)
+    // (...)
     LumberjackModule.forRoot(),
-      // (...)
+    // (...)
   ],
   // (...)
 })
+```
+
+Or if you prefer a prefer standalone approach using the `provideLumberjack()`.
+
+```ts
+bootstrapApplication(AppComponent, {
+  providers: [
+    // (...)
+    provideLumberjack(),
+    // (...)
+  ],
+});
 ```
 
 You must also register the log driver modules for the log drivers that you want to enable.
@@ -48,9 +61,25 @@ import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driv
 export class AppModule {}
 ```
 
+Or using the standalone version
+
+```ts
+bootstrapApplication(AppComponent, {
+  providers: [
+    // (...)
+    provideLumberjack(),
+    provideLumberjackConsoleDriver(),
+    provideLumberjackHttpDriver(withHttpConfig({...})),
+    // (...)
+  ],
+});
+```
+
 ### Using the `LumberjackService`
 
-For quick or simple use cases, you can use the `LumberjackService` directly by passing logs to its `log` method. However, we recommend implementing application-specific logger services instead. See the [_Best practices_](#best-practices) section.
+For quick or simple use cases, you can use the `LumberjackService` directly by passing logs to its `log` method.
+However, we recommend implementing application-specific logger services instead. See the [_Best
+practices_](./best-practices) section.
 
 First, inject the `LumberjackService` where you want to use it.
 
@@ -63,11 +92,28 @@ import { LumberjackService } from '@ngworker/lumberjack';
 })
 export class MyComponent implements OnInit {
   constructor(private lumberjack: LumberjackService) {}
+
   // (...)
 }
 ```
 
-Then we can start logging. However, you'll also want to inject `LumberjackTimeService` to maintain a high level of testability.
+or using the `inject` function
+
+```ts
+import { inject, Component } from '@angular/core';
+import { LumberjackService } from '@ngworker/lumberjack';
+
+@Component({
+  // (...)
+})
+export class MyComponent implements OnInit {
+  private readonly lumberjack = inject(LumberjackService);
+  // (...)
+}
+```
+
+Then we can start logging. However, you'll also want to inject `LumberjackTimeService` to maintain a high level of
+testability.
 
 ```ts
 // (...)
@@ -75,7 +121,8 @@ import { LumberjackService, LumberjackTimeService } from '@ngworker/lumberjack';
 
 // (...)
 export class MyComponent implements OnInit {
-  constructor(private lumberjack: LumberjackService, private time: LumberjackTimeService) {}
+  private readonly lumberjack = inject(LumberjackService);
+  private readonly time = inject(LumberjackTimeService);
 
   // (...)
   ngOnInit(): void {
@@ -89,9 +136,9 @@ export class MyComponent implements OnInit {
 }
 ```
 
-### LumberjackModule
+### LumberjackModule and provideLumberjack
 
-Optionally, we can pass one or more options to `LumberjackModule.forRoot`.
+Optionally, we can pass one or more options to `LumberjackModule.forRoot` or to the `provideLumberjack` function.
 
 | Option   | Type                           | Optional? | Description                                                          |
 | -------- | ------------------------------ | --------- | -------------------------------------------------------------------- |
@@ -100,7 +147,8 @@ Optionally, we can pass one or more options to `LumberjackModule.forRoot`.
 
 ### Default options
 
-Lumberjack's configuration is flexible. We can provide a full configuration object, a partial option set, or no options at all.
+Lumberjack's configuration is flexible. We can provide a full configuration object, a partial option set, or no options
+at all.
 
 Lumberjack replaces omitted options with defaults.
 
@@ -116,7 +164,8 @@ Where `utcTimestampFor` is a function that converts Unix Epoch ticks to UTC 0 ho
 
 #### Default log levels
 
-When the `levels` setting is not configured, log levels are configured depending on whether our application runs in development mode or production mode.
+When the `levels` setting is not configured, log levels are configured depending on whether our application runs in
+development mode or production mode.
 
 By default, in development mode, **all** log levels are enabled.
 

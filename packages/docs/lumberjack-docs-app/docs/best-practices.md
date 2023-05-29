@@ -3,13 +3,16 @@ sidebar_position: 6
 title: Best practices
 ---
 
-Every log can be represented as a combination of its level, creation time, message, scope and payload. Using inline logs with the `LumberjackService` can cause structure duplication and/or denormalization.
+Every log can be represented as a combination of its level, creation time, message, scope and payload. Using inline logs
+with the `LumberjackService` can cause structure duplication and/or denormalization.
 
 Continue reading to know more about the recommended best practices designed to tackle this issue.
 
 ### Loggers
 
-The `LumberjackLogger` service is an abstract class that wraps the `LumberjackService` to help us create structured logs and reduce boilerplate. At the same time, it provides testing capabilities since we can easily spy on logger methods and control timestamps by replacing the `LumberjackTimeService`.
+The `LumberjackLogger` service is an abstract class that wraps the `LumberjackService` to help us create structured logs
+and reduce boilerplate. At the same time, it provides testing capabilities since we can easily spy on logger methods and
+control timestamps by replacing the `LumberjackTimeService`.
 
 `LumberjackLogger` is used as the base class for any other logger that we need.
 
@@ -26,48 +29,49 @@ This is the abstract interface of `LumberjackLogger`:
  */
 @Injectable()
 export abstract class LumberjackLogger<TPayload extends LumberjackLogPayload | void = void> {
-  protected lumberjack: LumberjackService<TPayload>;
-  protected time: LumberjackTimeService;
+    protected lumberjack: LumberjackService<TPayload>;
+    protected time: LumberjackTimeService;
 
-  /**
-   * Create a logger builder for a critical log with the specified message.
-   */
-  protected createCriticalLogger(message: string): LumberjackLoggerBuilder<TPayload>;
+    /**
+     * Create a logger builder for a critical log with the specified message.
+     */
+    protected createCriticalLogger(message: string): LumberjackLoggerBuilder<TPayload>;
 
-  /**
-   * Create a logger builder for a debug log with the specified message.
-   */
-  protected createDebugLogger(message: string): LumberjackLoggerBuilder<TPayload>;
+    /**
+     * Create a logger builder for a debug log with the specified message.
+     */
+    protected createDebugLogger(message: string): LumberjackLoggerBuilder<TPayload>;
 
-  /**
-   * Create a logger builder for an error log with the specified message.
-   */
-  protected createErrorLogger(message: string): LumberjackLoggerBuilder<TPayload>;
+    /**
+     * Create a logger builder for an error log with the specified message.
+     */
+    protected createErrorLogger(message: string): LumberjackLoggerBuilder<TPayload>;
 
-  /**
-   * Create a logger builder for an info log with the specified message.
-   */
-  protected createInfoLogger(message: string): LumberjackLoggerBuilder<TPayload>;
+    /**
+     * Create a logger builder for an info log with the specified message.
+     */
+    protected createInfoLogger(message: string): LumberjackLoggerBuilder<TPayload>;
 
-  /**
-   * Create a logger builder for a trace log with the specified message.
-   */
-  protected createTraceLogger(message: string): LumberjackLoggerBuilder<TPayload>;
+    /**
+     * Create a logger builder for a trace log with the specified message.
+     */
+    protected createTraceLogger(message: string): LumberjackLoggerBuilder<TPayload>;
 
-  /**
-   * Create a logger builder for a warning log with the specified message.
-   */
-  protected createWarningLogger(message: string): LumberjackLoggerBuilder<TPayload>;
+    /**
+     * Create a logger builder for a warning log with the specified message.
+     */
+    protected createWarningLogger(message: string): LumberjackLoggerBuilder<TPayload>;
 
-  /**
-   * Create a logger builder for a log with the specified log level and message.
-   */
-  protected createLoggerBuilder(level: LumberjackLogLevel, message: string): LumberjackLoggerBuilder<TPayload>;
+    /**
+     * Create a logger builder for a log with the specified log level and message.
+     */
+    protected createLoggerBuilder(level: LumberjackLogLevel, message: string): LumberjackLoggerBuilder<TPayload>;
 ```
 
 By extending `LumberjackLogger`, we only have to worry about our pre-defined logs' message and scope.
 
-All logger factory methods are protected as it is recommended to create a custom logger per _scope_ rather than using logger factories directly in a consumer.
+All logger factory methods are protected as it is recommended to create a custom logger per _scope_ rather than using
+logger factories directly in a consumer.
 
 As an example, let's create a custom logger for our example application.
 
@@ -93,7 +97,7 @@ export class AppLogger extends LumberjackLogger {
 Now that we have defined our first Lumberjack logger let's use it to log logs from our application.
 
 ```ts
-import { Component, OnInit } from '@angular/core';
+import { inject, Component, OnInit } from '@angular/core';
 import { LumberjackLogger } from '@ngworker/lumberjack';
 
 import { AppLogger } from './app.logger';
@@ -104,7 +108,8 @@ import { ForestService } from './forest.service';
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
-  constructor(private logger: AppLogger, private forest: ForestService) {}
+  private readonly logger = inject(AppLogger);
+  private readonly forest = inject(ForestService);
 
   ngOnInit(): void {
     this.logger.helloForest();
@@ -114,13 +119,16 @@ export class AppComponent implements OnInit {
 }
 ```
 
-The previous example logs _Hello, Forest!_ when the application is initialized, then logs _The forest is on fire!_ if a forest fire is detected.
+The previous example logs _Hello, Forest!_ when the application is initialized, then logs _The forest is on fire!_ if a
+forest fire is detected.
 
 #### Simplifying with ScopedLumberjackLogger
 
-An alternative to the `LumberjackLogger` interface, where we need to specify the lumberjack log scope manually, we could use the `ScopedLumberjackLogger`.
+An alternative to the `LumberjackLogger` interface, where we need to specify the lumberjack log scope manually, we could
+use the `ScopedLumberjackLogger`.
 
-The `ScopedLumberjackLogger` is a convenient Logger and an excellent example of how to create custom Loggers according to your situation.
+The `ScopedLumberjackLogger` is a convenient Logger and an excellent example of how to create custom Loggers according
+to your situation.
 
 ```ts
 /**
@@ -171,7 +179,8 @@ Notice that now every log written using the `AppLogger` will have the `'Forest A
 
 #### Using Loggers with a LumberjackLog payload
 
-As seen in the [Log drivers](#log-drivers) section, we can send extra info to our drivers using a `LumberjackLog#payload`.
+As seen in the [Log drivers](./log-drivers/) section, we can send extra info to our drivers using
+a `LumberjackLog#payload`.
 
 The `LumberjackLogger` and `ScopedLumberjackLogger` provide a convenient interface for such a scenario.
 
@@ -193,7 +202,7 @@ export interface LogPayload extends LumberjackLogPayload {
   providedIn: 'root',
 })
 export class AppLogger extends ScopedLumberjackLogger<LogPayload> {
-  private static payload: LogPayload = {
+  private static readonly payload: LogPayload = {
     angularVersion: VERSION.full,
   };
 
@@ -218,11 +227,11 @@ The `LumberjackLogFactory` provides a robust way of creating logs. It's also use
 This is how we create logs manually:
 
 ```ts
-import { Component, OnInit, VERSION } from '@angular/core';
+import {inject, Component, OnInit, VERSION} from '@angular/core';
 
-import { LumberjackLogFactory, LumberjackService } from '@ngworker/lumberjack';
+import {LumberjackLogFactory, LumberjackService} from '@ngworker/lumberjack';
 
-import { LogPayload } from './log-payload';
+import {LogPayload} from './log-payload';
 
 @Component({
   selector: 'ngworker-root',
@@ -230,24 +239,13 @@ import { LogPayload } from './log-payload';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  private payload: LogPayload = {
+  private readonly logFactory: inject<LumberjackLogFactory<LogPayload>>
+(
+  LumberjackLogFactory
+);
+  private readonly lumberjack = inject<LumberjackService<LogPayload>>(LumberjackService);
+  private readonly payload: LogPayload = {
     angularVersion: VERSION.full,
   };
-  private scope = 'Forest App';
-
-  constructor(
-    private lumberjack: LumberjackService<LogPayload>,
-    private logFactory: LumberjackLogFactory<LogPayload>
-  ) {}
-
-  ngOnInit(): void {
-    const helloForest = this.logFactory
-      .createInfoLog('Hello, Forest!')
-      .withScope(this.scope)
-      .withPayload(this.payload)
-      .build();
-
-    this.lumberjack.log(helloForest);
-  }
-}
+  private readonly scope = 'Forest Ap
 ```
