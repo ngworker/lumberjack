@@ -3,6 +3,9 @@ const title = 'Lumberjack';
 const organizationName = 'ngworker';
 const projectName = 'lumberjack';
 
+const lightCodeTheme = require('prism-react-renderer/themes/github');
+const darkCodeTheme = require('prism-react-renderer/themes/dracula');
+
 module.exports = {
   title,
   tagline: 'Chop and cut Angular logs like a professional lumberjack',
@@ -27,6 +30,7 @@ module.exports = {
           label: 'Docs',
           position: 'left',
         },
+        { to: '/blog', label: 'Blog', position: 'left' },
         {
           href: 'https://github.com/facebook/docusaurus',
           label: 'GitHub',
@@ -70,6 +74,10 @@ module.exports = {
           title: 'Community',
           items: [
             {
+              label: 'Discord',
+              href: 'https://discord.gg/UDUa8MA6Ef',
+            },
+            {
               label: 'Stack Overflow',
               href: 'https://stackoverflow.com/questions/tagged/lumberjack',
             },
@@ -79,8 +87,12 @@ module.exports = {
           title: 'More',
           items: [
             {
+              label: 'Blog',
+              to: '/blog',
+            },
+            {
               label: 'GitHub',
-              href: 'https://github.com/facebook/docusaurus',
+              href: 'https://github.com/ngworker/lumberjack',
             },
           ],
         },
@@ -96,11 +108,19 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl: `https://github.com/${organizationName}/${projectName}/edit/main/packages/docs/lumberjack-docs-app`,
         },
-        blog: false,
+        blog: {
+          blogTitle: 'Lumberjack blog!',
+          blogDescription: 'The Lumberjack blog contains all the news and knwoledge bits about Lumberjack',
+          postsPerPage: 15,
+        },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },
       },
     ],
   ],
+  prism: {
+    theme: lightCodeTheme,
+    darkTheme: darkCodeTheme,
+  },
 };
