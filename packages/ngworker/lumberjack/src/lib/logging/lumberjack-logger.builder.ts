@@ -22,7 +22,7 @@ export class LumberjackLoggerBuilder<TPayload extends LumberjackLogPayload | voi
         message: this.message,
         scope: this.scope,
         createdAt: this.time.getUnixEpochTicks(),
-        payload: (payloadArg[0] as TPayload) || this.payload,
+        payload: (payloadArg[0] as TPayload) ?? this.payload,
       });
     };
   }
