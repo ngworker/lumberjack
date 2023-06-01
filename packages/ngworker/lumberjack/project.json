@@ -13,7 +13,6 @@
         }
       ],
       "options": {
-        "outputPath": ["dist/packages/ngworker/lumberjack"],
         "parallel": false
       },
       "configurations": {
@@ -30,7 +29,8 @@
           ]
         }
       },
-      "defaultConfiguration": "production"
+      "defaultConfiguration": "production",
+      "outputs": ["{workspaceRoot}/dist/packages/ngworker/lumberjack"]
     },
     "build-package": {
       "executor": "@nx/angular:package",
