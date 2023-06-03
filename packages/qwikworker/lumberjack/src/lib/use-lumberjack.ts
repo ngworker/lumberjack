@@ -5,7 +5,6 @@ import {
   createLumberjack,
   createLumberjackLogFormatter,
   Lumberjack,
-  LumberjackLevel,
   lumberjackLogDriverLoggerFactory,
   LumberjackLogPayload,
 } from '@webworker/lumberjack';
