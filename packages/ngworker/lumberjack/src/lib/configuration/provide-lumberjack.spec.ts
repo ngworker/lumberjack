@@ -1,17 +1,20 @@
 import { TestBed } from '@angular/core/testing';
 
-import { isProductionEnvironmentToken } from '../environment/is-production-environment.token';
-import { lumberjackFormatLog } from '../formatting/lumberjack-format-log';
-import { LumberjackService } from '../logging/lumberjack.service';
-import { LumberjackLevel } from '../logs/lumberjack-level';
+import {
+  defaultDevelopmentLevels,
+  defaultProductionLevels,
+  LumberjackConfig,
+  lumberjackFormatLog,
+  LumberjackLevel,
+  LumberjackLogDriverConfig,
+  LumberjackOptions,
+} from '@webworker/lumberjack';
 
-import { defaultDevelopmentLevels } from './default-development-levels';
-import { defaultProductionLevels } from './default-production-levels';
+import { isProductionEnvironmentToken } from '../environment/is-production-environment.token';
+import { LumberjackService } from '../logging/lumberjack.service';
+
 import { lumberjackConfigToken } from './lumberjack-config.token';
 import { lumberjackLogDriverConfigToken } from './lumberjack-log-driver-config.token';
-import { LumberjackLogDriverConfig } from './lumberjack-log-driver.config';
-import { LumberjackConfig } from './lumberjack.config';
-import { LumberjackOptions } from './lumberjack.options';
 import { provideLumberjack } from './provide-lumberjack';
 
 describe(provideLumberjack.name, () => {

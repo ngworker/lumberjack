@@ -1,6 +1,6 @@
 import { InjectionToken } from '@angular/core';
 
-import { isClass } from '@internal/core/test-util';
+import { isClass, isFunction } from '@internal/core/test-util';
 
 import {
   lumberjackConfigToken,

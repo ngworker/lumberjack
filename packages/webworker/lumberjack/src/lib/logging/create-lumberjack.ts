@@ -14,7 +14,6 @@ interface LumberjackDependencies<TPayload extends LumberjackLogPayload | void> {
   drivers: LumberjackLogDriver<TPayload>[];
   logFormatter: LumberjackLogFormatter<TPayload>;
   logDriverLogger: LumberjackLogDriverLogger<TPayload>;
-  // TODO: this should be optional and it should use the () => new Date().valueOf() or something  like that
   getUnixEpochTicks: () => number;
 }
 
@@ -22,12 +21,15 @@ export type Lumberjack<TPayload extends LumberjackLogPayload | void = void> = Re
   typeof createLumberjack<TPayload>
 >;
 
-export function createLumberjack<TPayload extends LumberjackLogPayload | void = void>(
-  deps: LumberjackDependencies<TPayload>
-) {
+export function createLumberjack<TPayload extends LumberjackLogPayload | void = void>({
+  drivers,
+  logFormatter,
+  logDriverLogger,
+  getUnixEpochTicks = () => new Date().valueOf(),
+}: LumberjackDependencies<TPayload>) {
   const log = (lumberjackLog: LumberjackLog<TPayload>) => {
-    const { log, formattedLog } = deps.logFormatter.formatLog(lumberjackLog);
-    logWithErrorHandling(log, formattedLog, deps.drivers);
+    const { log, formattedLog } = logFormatter.formatLog(lumberjackLog);
+    logWithErrorHandling(log, formattedLog, drivers);
   };
 
   /**
@@ -51,7 +53,7 @@ export function createLumberjack<TPayload extends LumberjackLogPayload | void = 
    */
   function createDriverErrorLog(driverError: LumberjackLogDriverError<TPayload>): LumberjackLog<TPayload> {
     return {
-      createdAt: deps.getUnixEpochTicks(),
+      createdAt: getUnixEpochTicks(),
       level: LumberjackLevel.Error,
       message: formatLogDriverError(driverError),
       scope: 'LumberjackLogDriverError',
@@ -101,7 +103,7 @@ export function createLumberjack<TPayload extends LumberjackLogPayload | void = 
       .filter((driver) => canDriveLog(driver, log.level))
       .forEach((driver) => {
         try {
-          deps.logDriverLogger.log(driver, { formattedLog, log });
+          logDriverLogger.log(driver, { formattedLog, log });
           stableDrivers.push(driver);
 
           if (driverErrorIndex !== noReportedLogDriverErrorIndex) {

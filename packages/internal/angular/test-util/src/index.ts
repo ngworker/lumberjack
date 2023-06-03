@@ -23,13 +23,5 @@ export * from './lib/object-driver/object-driver.module';
 export * from './lib/object-driver/object-driver-root.module';
 export * from './lib/object-driver/object.service';
 
-// Type checking
-export * from './lib/type-checking/is-class';
-export * from './lib/type-checking/is-object';
-export * from './lib/type-checking/is-function';
-
 // Time
 export * from './lib/time/fake-time.service';
-
-// Types
-export * from './lib/types/writable';

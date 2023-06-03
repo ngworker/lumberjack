@@ -2,17 +2,15 @@ import { HttpTestingController, provideHttpClientTesting, TestRequest } from '@a
 import { TestBed } from '@angular/core/testing';
 import { VERSION } from '@angular/platform-browser';
 
-import { repeatSideEffect } from '@internal/core/test-util';
-import { createCriticalDriverLog, createDriverLog, createFakeTime } from '@internal/core/test-util';
-import { lumberjackLogDriverToken, LumberjackModule } from '@ngworker/lumberjack';
+import { createCriticalDriverLog, createDriverLog, createFakeTime, repeatSideEffect } from '@internal/core/test-util';
+import { lumberjackLogDriverToken, provideLumberjack } from '@ngworker/lumberjack';
 import {
   LumberjackLevel,
   LumberjackLogDriver,
   LumberjackLogDriverLog,
   LumberjackLogLevel,
   LumberjackLogPayload,
-  provideLumberjack,
-} from '@ngworker/lumberjack';
+} from '@webworker/lumberjack';
 
 import { LumberjackHttpDriverOptions } from '../configuration/lumberjack-http-driver.options';
 import { provideLumberjackHttpDriver, withHttpOptions } from '../configuration/provide-lumberjack-http-driver';

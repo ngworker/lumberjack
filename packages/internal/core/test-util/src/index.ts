@@ -1,7 +1,6 @@
 // Spy driver
 export * from './lib/spy-driver/create-spy-driver';
 export * from './lib/spy-driver/spy-driver.config';
-
 // Noop driver
 export * from './lib/noop-driver/create-noop-driver';
 export * from './lib/noop-driver/noop-driver.config';
@@ -23,6 +22,9 @@ export * from './lib/error-throwing-driver/create-error-throwing-driver';
 export * from './lib/type-checking/is-class';
 export * from './lib/type-checking/is-object';
 export * from './lib/type-checking/is-function';
+
+// Types
+export * from './lib/types/writable';
 
 // Time
 export * from './lib/time/create-fake-time';

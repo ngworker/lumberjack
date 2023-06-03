@@ -61,7 +61,7 @@ export class LumberjackHttpDriver<TPayload extends LumberjackLogPayload | void =
     this.#sendLog(formattedLog, log);
   }
 
-  private #sendLog(formattedLog: string, log: LumberjackLog<TPayload>): void {
+  #sendLog(formattedLog: string, log: LumberjackLog<TPayload>): void {
     const { origin, retryOptions, storeUrl } = this.config;
     const httpLog: LumberjackHttpLog<TPayload> = { formattedLog, origin, log };
 
@@ -267,30 +267,6 @@ or
       retryOptions: { maxRetries: 5, delayMs: 250 },
       storeUrl: '/api/logs',
     }))
-    ...
-  ],
-  ...
-})
-export class AppModule {}
 
-Standalone:
-
-bootstrapApplication(AppComponent, {
-  providers: [
-    provideLumberjack(),
-    provideLumberjackConsoleDriver(),
-    provideLumberjackHttpDriver(
-      withHttpOptions({
-        origin: 'ForestApp',
-        retryOptions: { maxRetries: 1, delayMs: 250 },
-        storeUrl: '/api/logs',
-      }),
-      withInterceptors([
-        (req, next) => {
-          const easy = inject(easyToken);
-          console.log('are interceptors working?', easy);
-          return next(req);
-        },
-      ])
-    ),
+`
 ```

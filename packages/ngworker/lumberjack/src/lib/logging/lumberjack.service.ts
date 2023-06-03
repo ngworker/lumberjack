@@ -30,15 +30,15 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
    * The registered log drivers.
    */
   readonly #drivers = inject<LumberjackLogDriver<TPayload>[]>(lumberjackLogDriverToken, { optional: true }) ?? [];
-  readonly #driverLogger = inject<LumberjackLogDriverLogger<TPayload>>(LumberjackLogDriverLogger);
-  readonly #logFormatter = inject<LumberjackLogFormatter<TPayload>>(LumberjackLogFormatter);
+  readonly #driverLogger = lumberjackLogDriverLoggerFactory<TPayload>();
+  readonly #logFormatter = inject<LumberjackLogFormatterService<TPayload>>(LumberjackLogFormatterService);
   readonly #time = inject(LumberjackTimeService);
 
   readonly #lumberjack = createLumberjack<TPayload>({
-    logFormatter: this.#logFormatter.formatLog.bind(this.logFormatter),
-    driverLogger: this.#driverLogger.log.bind(this.driverLogger),
+    logFormatter: this.#logFormatter,
+    logDriverLogger: this.#driverLogger,
     drivers: this.#drivers,
-    getUnixEpochTicks: this.#time.getUnixEpochTicks.bind(this.time),
+    getUnixEpochTicks: this.#time.getUnixEpochTicks.bind(this.#time),
   });
 
   /**

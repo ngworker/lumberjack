@@ -21,7 +21,7 @@ export class LumberjackLogFormatterService<TPayload extends LumberjackLogPayload
 
   readonly #lumberjackLogFormatter = createLumberjackLogFormatter<TPayload>({
     config: this.#config,
-    getUnixEpochTicks: this.#time.getUnixEpochTicks.bind(this.time),
+    getUnixEpochTicks: this.#time.getUnixEpochTicks.bind(this.#time),
   });
 
   formatLog(log: LumberjackLog<TPayload>): LumberjackLogFormatterResult<TPayload> {

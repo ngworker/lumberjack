@@ -1,7 +1,5 @@
 import { inject, NgModule } from '@angular/core';
 
-import { configFactory, LumberjackConfig, LumberjackLogDriverConfig } from '@webworker/lumberjack';
-
 /**
  * Do not import directly. Use `LumberjackModule.forRoot`.
  */

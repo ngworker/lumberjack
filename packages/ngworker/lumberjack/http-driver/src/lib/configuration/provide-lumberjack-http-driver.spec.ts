@@ -1,26 +1,21 @@
-import { TestBed } from '@angular/core/testing';
 import { HttpHandlerFn, HttpRequest, withInterceptors } from '@angular/common/http';
+import { TestBed } from '@angular/core/testing';
 
-import {
-  LumberjackConfigLevels,
-  LumberjackLevel,
-  LumberjackLogDriver,
-  lumberjackLogDriverToken,
-  provideLumberjack,
-} from '@ngworker/lumberjack';
-import { createDriverLog, Writable } from '@internal/test-util';
+import { createDriverLog, createFakeTime, Writable } from '@internal/core/test-util';
+import { lumberjackLogDriverToken, provideLumberjack } from '@ngworker/lumberjack';
+import { LumberjackConfigLevels, LumberjackLevel, LumberjackLogDriver } from '@webworker/lumberjack';
 
 import { LumberjackHttpDriver } from '../log-drivers/lumberjack-http.driver';
 
+import { LumberjackHttpDriverInternalConfig } from './lumberjack-http-driver-internal.config';
 import { LumberjackHttpDriverConfig } from './lumberjack-http-driver.config';
+import { LumberjackHttpDriverOptions } from './lumberjack-http-driver.options';
 import {
   HttpClientFeatures,
   provideLumberjackHttpDriver,
   withHttpConfig,
   withHttpOptions,
 } from './provide-lumberjack-http-driver';
-import { LumberjackHttpDriverInternalConfig } from './lumberjack-http-driver-internal.config';
-import { LumberjackHttpDriverOptions } from './lumberjack-http-driver.options';
 
 function createHttpOptions(
   extraOptions: { levels?: LumberjackConfigLevels; identifier?: string } = {}
@@ -99,6 +94,8 @@ const createHttpDriverWithOptions = (
   return httpDriver;
 };
 
+const fakeTime = createFakeTime();
+
 describe(provideLumberjackHttpDriver.name, () => {
   it('provides the HTTP driver', () => {
     const httpDriver = createHttpDriver();
@@ -142,7 +139,13 @@ describe(provideLumberjackHttpDriver.name, () => {
       const config = createHttpConfig([LumberjackLevel.Error]);
       const features: HttpClientFeatures = [withInterceptors([testInterceptor])];
       const httpDriver = createHttpDriver({ config, features });
-      const log = createDriverLog(LumberjackLevel.Info, LumberjackLevel.Info, '', 'Test Log');
+      const log = createDriverLog(
+        fakeTime.getUnixEpochTicks.bind(fakeTime),
+        LumberjackLevel.Info,
+        LumberjackLevel.Info,
+        '',
+        'Test Log'
+      );
 
       httpDriver.logInfo(log);
 
@@ -229,7 +232,13 @@ describe(provideLumberjackHttpDriver.name, () => {
       const options = createHttpOptions({ levels: customLevels });
 
       const httpDriver = createHttpDriverWithOptions({ options, features });
-      const log = createDriverLog(LumberjackLevel.Info, LumberjackLevel.Info, '', 'Test Log');
+      const log = createDriverLog(
+        fakeTime.getUnixEpochTicks.bind(fakeTime),
+        LumberjackLevel.Info,
+        LumberjackLevel.Info,
+        '',
+        'Test Log'
+      );
 
       httpDriver.logInfo(log);
 

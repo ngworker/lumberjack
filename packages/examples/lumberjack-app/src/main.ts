@@ -2,9 +2,10 @@ import { withInterceptors } from '@angular/common/http';
 import { inject, InjectionToken } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 
-import { LumberjackLog, LumberjackOptions, provideLumberjack } from '@ngworker/lumberjack';
+import { provideLumberjack } from '@ngworker/lumberjack';
 import { provideLumberjackConsoleDriver } from '@ngworker/lumberjack/console-driver';
 import { provideLumberjackHttpDriver, withHttpOptions } from '@ngworker/lumberjack/http-driver';
+import { LumberjackLog, LumberjackOptions } from '@webworker/lumberjack';
 
 import { AppComponent } from './app/app.component';
 
