@@ -38,6 +38,18 @@
               {
                 "sourceTag": "type:e2e",
                 "onlyDependOnLibsWithTags": ["type:app"]
+              },
+              {
+                "sourceTag": "technology:angular",
+                "onlyDependOnLibsWithTags": ["technology:angular", "technology:javascript"]
+              },
+              {
+                "sourceTag": "technology:qwik",
+                "onlyDependOnLibsWithTags": ["technology:qwik", "technology:javascript"]
+              },
+              {
+                "sourceTag": "technology:javascript",
+                "onlyDependOnLibsWithTags": ["technology:javascript"]
               }
             ]
           }
@@ -88,12 +100,12 @@
             "group-ordering": [
               {
                 "name": "project root",
-                "match": "^@(?!(webworker|ngworker|internal)).*|^[a-zA-Z].*",
+                "match": "^@(?!(webworker|ngworker|qwikworker|solidworker|reactworker|internal)).*|^[a-zA-Z].*",
                 "order": 20
               },
               {
                 "name": "internal imports",
-                "match": "^@(webworker|ngworker|internal).*",
+                "match": "^@(webworker|ngworker|qwikworker|solidworker|reactworker|internal).*",
                 "order": 30
               },
               { "name": "parent directories", "match": "^\\.\\.", "order": 40 },
