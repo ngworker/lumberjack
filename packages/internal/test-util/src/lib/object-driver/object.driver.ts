@@ -15,31 +15,31 @@ import { ObjectService } from './object.service';
 export class ObjectDriver implements LumberjackLogDriver<ObjectPayload> {
   static readonly driverIdentifier = 'ObjectDriver';
 
-  private readonly objectService = inject(ObjectService);
+  readonly #objectService = inject(ObjectService);
 
   readonly config = inject(objectDriverConfigToken);
 
   logCritical({ log }: LumberjackLogDriverLog<ObjectPayload>): void {
-    this.objectService.log(log.payload);
+    this.#objectService.log(log.payload);
   }
 
   logDebug({ log }: LumberjackLogDriverLog<ObjectPayload>): void {
-    this.objectService.log(log.payload);
+    this.#objectService.log(log.payload);
   }
 
   logError({ log }: LumberjackLogDriverLog<ObjectPayload>): void {
-    this.objectService.log(log.payload);
+    this.#objectService.log(log.payload);
   }
 
   logInfo({ log }: LumberjackLogDriverLog<ObjectPayload>): void {
-    this.objectService.log(log.payload);
+    this.#objectService.log(log.payload);
   }
 
   logTrace({ log }: LumberjackLogDriverLog<ObjectPayload>): void {
-    this.objectService.log(log.payload);
+    this.#objectService.log(log.payload);
   }
 
   logWarning({ log }: LumberjackLogDriverLog<ObjectPayload>): void {
-    this.objectService.log(log.payload);
+    this.#objectService.log(log.payload);
   }
 }

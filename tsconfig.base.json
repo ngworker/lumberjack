@@ -13,6 +13,7 @@
     "lib": ["es2017", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
+    "useDefineForClassFields": true,
     "baseUrl": ".",
     "paths": {
       "@internal/console-driver/test-util": ["packages/internal/console-driver/test-util/src/index.ts"],

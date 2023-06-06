@@ -4,12 +4,12 @@ import { LumberjackTimeService } from '@ngworker/lumberjack';
 
 @Injectable()
 export class FakeTimeService extends LumberjackTimeService {
-  private now = new Date();
+  #now = new Date();
 
   override getUnixEpochTicks(): number {
-    return this.now.valueOf();
+    return this.#now.valueOf();
   }
   setTime(fakeNow: Date): void {
-    this.now = fakeNow;
+    this.#now = fakeNow;
   }
 }
