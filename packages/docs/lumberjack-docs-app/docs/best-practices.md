@@ -108,13 +108,13 @@ import { ForestService } from './forest.service';
   templateUrl: './app.component.html',
 })
 export class AppComponent implements OnInit {
-  private readonly logger = inject(AppLogger);
-  private readonly forest = inject(ForestService);
+  readonly #logger = inject(AppLogger);
+  readonly #forest = inject(ForestService);
 
   ngOnInit(): void {
-    this.logger.helloForest();
+    this.#logger.helloForest();
 
-    this.forest.fire$.subscribe(() => this.logger.forestOnFire());
+    this.#forest.fire$.subscribe(() => this.#logger.forestOnFire());
   }
 }
 ```
@@ -202,7 +202,7 @@ export interface LogPayload extends LumberjackLogPayload {
   providedIn: 'root',
 })
 export class AppLogger extends ScopedLumberjackLogger<LogPayload> {
-  private static readonly payload: LogPayload = {
+  static readonly #payload: LogPayload = {
     angularVersion: VERSION.full,
   };
 
@@ -210,7 +210,7 @@ export class AppLogger extends ScopedLumberjackLogger<LogPayload> {
 
   forestOnFire = this.createCriticalLogger('The forest is on fire!').build();
 
-  helloForest = this.createInfoLogger('Hello, Forest!').withPayload(AppLogger.payload).build();
+  helloForest = this.createInfoLogger('Hello, Forest!').withPayload(AppLogger.#payload).build();
 }
 ```
 
@@ -239,13 +239,16 @@ import {LogPayload} from './log-payload';
   styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit {
-  private readonly logFactory: inject<LumberjackLogFactory<LogPayload>>
+  readonly #logFactory: inject<LumberjackLogFactory<LogPayload>>
 (
   LumberjackLogFactory
 );
-  private readonly lumberjack = inject<LumberjackService<LogPayload>>(LumberjackService);
-  private readonly payload: LogPayload = {
+  readonly #lumberjack = inject<LumberjackService<LogPayload>>(LumberjackService);
+  readonly #payload: LogPayload = {
     angularVersion: VERSION.full,
   };
-  private readonly scope = 'Forest Ap
+  readonly #scope = 'Forest App';
+
+  ngOnInit(): void {
+    const helloFore
 ```

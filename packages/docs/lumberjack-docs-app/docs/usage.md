@@ -91,7 +91,7 @@ import { LumberjackService } from '@ngworker/lumberjack';
   // (...)
 })
 export class MyComponent implements OnInit {
-  constructor(private lumberjack: LumberjackService) {}
+  readonly #lumberjack = inject(LumberjackService);
 
   // (...)
 }
@@ -107,7 +107,7 @@ import { LumberjackService } from '@ngworker/lumberjack';
   // (...)
 })
 export class MyComponent implements OnInit {
-  private readonly lumberjack = inject(LumberjackService);
+  readonly #lumberjack = inject(LumberjackService);
   // (...)
 }
 ```
@@ -121,16 +121,16 @@ import { LumberjackService, LumberjackTimeService } from '@ngworker/lumberjack';
 
 // (...)
 export class MyComponent implements OnInit {
-  private readonly lumberjack = inject(LumberjackService);
-  private readonly time = inject(LumberjackTimeService);
+  readonly #lumberjack = inject(LumberjackService);
+  readonly #time = inject(LumberjackTimeService);
 
   // (...)
   ngOnInit(): void {
-    this.lumberjack.log({
+    this.#lumberjack.log({
       level: LumberjackLevel.Info,
       message: 'Hello, World!',
       scope: 'MyComponent',
-      createdAt: this.time.getUnixEpochTicks(),
+      createdAt: this.#time.getUnixEpochTicks(),
     });
   }
 }
