@@ -5,24 +5,33 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
 import { LumberjackService } from './lumberjack.service';
 
 export class LumberjackLoggerBuilder<TPayload extends LumberjackLogPayload | void = void> {
-  private scope?: string;
-  private payload?: TPayload;
+  #scope?: string;
+  #payload?: TPayload;
+  readonly #lumberjack: LumberjackService<TPayload>;
+  readonly #time: LumberjackTimeService;
+  readonly #level: LumberjackLogLevel;
+  readonly #message: string;
 
   constructor(
-    private readonly lumberjack: LumberjackService<TPayload>,
-    private readonly time: LumberjackTimeService,
-    private readonly level: LumberjackLogLevel,
-    private readonly message: string
-  ) {}
+    lumberjack: LumberjackService<TPayload>,
+    time: LumberjackTimeService,
+    level: LumberjackLogLevel,
+    message: string
+  ) {
+    this.#lumberjack = lumberjack;
+    this.#time = time;
+    this.#level = level;
+    this.#message = message;
+  }
 
   build(): (...payloadArg: TPayload extends void ? [never?] : [TPayload]) => void {
     return (...payloadArg: TPayload extends void ? [never?] : [TPayload]) => {
-      this.lumberjack.log({
-        level: this.level,
-        message: this.message,
-        scope: this.scope,
-        createdAt: this.time.getUnixEpochTicks(),
-        payload: (payloadArg[0] as TPayload) ?? this.payload,
+      this.#lumberjack.log({
+        level: this.#level,
+        message: this.#message,
+        scope: this.#scope,
+        createdAt: this.#time.getUnixEpochTicks(),
+        payload: (payloadArg[0] as TPayload) ?? this.#payload,
       });
     };
   }
@@ -31,7 +40,7 @@ export class LumberjackLoggerBuilder<TPayload extends LumberjackLogPayload | voi
    * Add a scope to the `LumberjackLog`
    */
   withScope(scope: string): LumberjackLoggerBuilder<TPayload> {
-    this.scope = scope;
+    this.#scope = scope;
 
     return this;
   }
@@ -40,7 +49,7 @@ export class LumberjackLoggerBuilder<TPayload extends LumberjackLogPayload | voi
    * Add payload with custom data to the `LumberjackLog`
    */
   withPayload(...payloadArg: TPayload extends void ? [never?] : [TPayload]): LumberjackLoggerBuilder {
-    this.payload = payloadArg[0] as TPayload;
+    this.#payload = payloadArg[0] as TPayload;
 
     return this as unknown as LumberjackLoggerBuilder;
   }

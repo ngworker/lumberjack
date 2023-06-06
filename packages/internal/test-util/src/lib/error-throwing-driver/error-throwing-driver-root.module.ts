@@ -14,13 +14,13 @@ import { ErrorThrowingDriver } from './error-throwing.driver';
   ],
 })
 export class ErrorThrowingDriverRootModule {
-  private readonly maybeNgModuleFromParentInjector = inject(ErrorThrowingDriverRootModule, {
+  readonly #maybeNgModuleFromParentInjector = inject(ErrorThrowingDriverRootModule, {
     optional: true,
     skipSelf: true,
   });
 
   constructor() {
-    if (this.maybeNgModuleFromParentInjector) {
+    if (this.#maybeNgModuleFromParentInjector) {
       throw new Error(
         'ErrorThrowingDriverModule.forRoot registered in multiple injectors. Only call it from your root injector such as in AppModule.'
       );
