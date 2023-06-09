@@ -8,7 +8,7 @@ export { LumberjackLogDriverConfig } from './lib/configuration/lumberjack-log-dr
 export { LumberjackOptions } from './lib/configuration/lumberjack.options';
 export { defaultDevelopmentLevels } from './lib/configuration/default-development-levels';
 export { defaultProductionLevels } from './lib/configuration/default-production-levels';
-export { configFactory } from './lib/configuration/config-factory';
+export { createLumberjackConfig } from './lib/configuration/config-factory';
 
 // Logs
 export { LumberjackConfigLevels } from './lib/logs/lumberjack-config-levels';

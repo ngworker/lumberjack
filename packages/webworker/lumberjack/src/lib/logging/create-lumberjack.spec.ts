@@ -20,7 +20,7 @@ import {
   spyDriverIdentifier,
 } from '@internal/core/test-util';
 
-import { configFactory } from '../configuration/config-factory';
+import { createLumberjackConfig } from '../configuration/config-factory';
 import { LumberjackLogDriverConfig } from '../configuration/lumberjack-log-driver.config';
 import { LumberjackOptions } from '../configuration/lumberjack.options';
 import { createLumberjackLogFormatter } from '../formatting/create-lumberjack-log-formatter';
@@ -100,7 +100,7 @@ function createTestLumberjack<TPayload extends LumberjackLogPayload | void>(
     getUnixEpochTicks: createFakeTime().getUnixEpochTicks,
     logFormatter: createLumberjackLogFormatter<TPayload>({
       getUnixEpochTicks: fakeTime.getUnixEpochTicks,
-      config: configFactory(false, options),
+      config: createLumberjackConfig(false, options),
     }),
   });
 }

@@ -1,6 +1,6 @@
 import { createFakeTime } from '@internal/core/test-util';
 
-import { configFactory } from '../configuration/config-factory';
+import { createLumberjackConfig } from '../configuration/config-factory';
 import { LumberjackOptions } from '../configuration/lumberjack.options';
 import { createLumberjackLogFactory } from '../logging/create-lumberjack-log-factory';
 import { LumberjackLevel } from '../logs/lumberjack-level';
@@ -25,7 +25,7 @@ describe(createLumberjackLogFactory.name, () => {
     const logFactory = createLumberjackLogFactory({ getUnixEpochTicks: fakeTime.getUnixEpochTicks });
     const formatter = createLumberjackLogFormatter({
       getUnixEpochTicks: fakeTime.getUnixEpochTicks,
-      config: configFactory(false, options),
+      config: createLumberjackConfig(false, options),
     });
 
     return {

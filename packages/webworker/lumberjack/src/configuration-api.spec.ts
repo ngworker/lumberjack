@@ -1,7 +1,7 @@
 import { isFunction } from '@internal/core/test-util';
 
 import {
-  configFactory,
+  createLumberjackConfig,
   defaultDevelopmentLevels,
   defaultProductionLevels,
   LumberjackConfig,
@@ -50,8 +50,8 @@ describe('Configuration API', () => {
   });
 
   describe('Factory Functions', () => {
-    it('exposes configFactory', () => {
-      const sut = configFactory;
+    it('exposes createLumberjackConfig', () => {
+      const sut = createLumberjackConfig;
       expect(isFunction(sut)).toBeTruthy();
     });
 

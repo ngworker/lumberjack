@@ -1,8 +1,8 @@
 import { ContextId, createContextId, Signal, useContext, useContextProvider, useSignal } from '@builder.io/qwik';
 
 import {
-  configFactory,
   createLumberjack,
+  createLumberjackConfig,
   createLumberjackLogFormatter,
   Lumberjack,
   lumberjackLogDriverLoggerFactory,
@@ -21,7 +21,7 @@ export function useLumberjackProvider<TPayload extends LumberjackLogPayload | vo
     drivers: [],
     getUnixEpochTicks,
     logDriverLogger: lumberjackLogDriverLoggerFactory(),
-    logFormatter: createLumberjackLogFormatter({ config: configFactory(false), getUnixEpochTicks }),
+    logFormatter: createLumberjackLogFormatter({ config: createLumberjackConfig(false), getUnixEpochTicks }),
   });
 
   const lumberjackSignal = useSignal<Lumberjack<TPayload>>(lumberjack);

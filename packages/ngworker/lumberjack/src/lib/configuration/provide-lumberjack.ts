@@ -1,10 +1,8 @@
 import { Provider } from '@angular/core';
 
 import {
-  defaultDevelopmentLevels,
-  defaultProductionLevels,
+  createLumberjackConfig,
   LumberjackConfig,
-  lumberjackFormatLog,
   LumberjackLogDriverConfig,
   LumberjackOptions,
 } from '@webworker/lumberjack';
@@ -18,15 +16,9 @@ import { lumberjackConfigToken } from './lumberjack-config.token';
 import { lumberjackLogDriverConfigToken } from './lumberjack-log-driver-config.token';
 import { lumberjackOptionsToken } from './lumberjack-options.token';
 
-export function configFactory(isProductionEnvironment: boolean, options: LumberjackOptions = {}): LumberjackConfig {
-  return {
-    format: lumberjackFormatLog,
-    levels: isProductionEnvironment ? defaultProductionLevels : defaultDevelopmentLevels,
-    ...options,
-  };
-}
-
-export function logDriverConfigFactory({ levels }: LumberjackConfig): Omit<LumberjackLogDriverConfig, 'identifier'> {
+export function createLumberjackLogDriverConfig({
+  levels,
+}: LumberjackConfig): Omit<LumberjackLogDriverConfig, 'identifier'> {
   return {
     levels,
   };
@@ -57,12 +49,12 @@ export function provideLumberjack(options?: LumberjackOptions): Provider[] {
     {
       deps: [isProductionEnvironmentToken],
       provide: lumberjackConfigToken,
-      useFactory: (isProductionEnvironment: boolean) => configFactory(isProductionEnvironment, options),
+      useFactory: (isProductionEnvironment: boolean) => createLumberjackConfig(isProductionEnvironment, options),
     },
     {
       deps: [lumberjackConfigToken],
       provide: lumberjackLogDriverConfigToken,
-      useFactory: logDriverConfigFactory,
+      useFactory: createLumberjackLogDriverConfig,
     },
     { provide: LumberjackService, useClass: LumberjackService },
     LumberjackLogFormatterService,

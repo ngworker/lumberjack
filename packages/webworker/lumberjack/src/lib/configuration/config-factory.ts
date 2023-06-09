@@ -6,7 +6,7 @@ import { defaultProductionLevels } from './default-production-levels';
 import { LumberjackConfig } from './lumberjack.config';
 import { LumberjackOptions } from './lumberjack.options';
 
-export function configFactory<TPayload extends LumberjackLogPayload | void = void>(
+export function createLumberjackConfig<TPayload extends LumberjackLogPayload | void = void>(
   isProductionEnvironment: boolean,
   options: LumberjackOptions = {}
 ): LumberjackConfig<TPayload> {
