@@ -3,9 +3,9 @@ import { ContextId, createContextId, Signal, useContext, useContextProvider, use
 import {
   createLumberjack,
   createLumberjackConfig,
+  createLumberjackLogDriverLogger,
   createLumberjackLogFormatter,
   Lumberjack,
-  lumberjackLogDriverLoggerFactory,
   LumberjackLogPayload,
 } from '@webworker/lumberjack';
 
@@ -20,7 +20,7 @@ export function useLumberjackProvider<TPayload extends LumberjackLogPayload | vo
   const lumberjack = createLumberjack<TPayload>({
     drivers: [],
     getUnixEpochTicks,
-    logDriverLogger: lumberjackLogDriverLoggerFactory(),
+    logDriverLogger: createLumberjackLogDriverLogger(),
     logFormatter: createLumberjackLogFormatter({ config: createLumberjackConfig(false), getUnixEpochTicks }),
   });
 

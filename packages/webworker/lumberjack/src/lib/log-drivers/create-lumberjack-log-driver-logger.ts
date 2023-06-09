@@ -17,10 +17,10 @@ type LogDriverLoggingStrategy<TPayload extends LumberjackLogPayload | void = voi
 >;
 
 export type LumberjackLogDriverLogger<TPayload extends LumberjackLogPayload | void = void> = ReturnType<
-  typeof lumberjackLogDriverLoggerFactory<TPayload>
+  typeof createLumberjackLogDriverLogger<TPayload>
 >;
 
-export function lumberjackLogDriverLoggerFactory<TPayload extends LumberjackLogPayload | void = void>() {
+export function createLumberjackLogDriverLogger<TPayload extends LumberjackLogPayload | void = void>() {
   const logDriverLoggingStrategy: LogDriverLoggingStrategy<TPayload> = {
     [LumberjackLevel.Critical]: criticalLogDriverLoggingStrategy,
     [LumberjackLevel.Debug]: debugLogDriverLoggingStrategy,

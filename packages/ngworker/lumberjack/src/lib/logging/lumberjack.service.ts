@@ -2,10 +2,10 @@ import { inject, Injectable } from '@angular/core';
 
 import {
   createLumberjack,
+  createLumberjackLogDriverLogger,
   Lumberjack,
   LumberjackLog,
   LumberjackLogDriver,
-  lumberjackLogDriverLoggerFactory,
   LumberjackLogPayload,
 } from '@webworker/lumberjack';
 
@@ -30,7 +30,7 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
    * The registered log drivers.
    */
   readonly #drivers = inject<LumberjackLogDriver<TPayload>[]>(lumberjackLogDriverToken, { optional: true }) ?? [];
-  readonly #driverLogger = lumberjackLogDriverLoggerFactory<TPayload>();
+  readonly #driverLogger = createLumberjackLogDriverLogger<TPayload>();
   readonly #logFormatter = inject<LumberjackLogFormatterService<TPayload>>(LumberjackLogFormatterService);
   readonly #time = inject(LumberjackTimeService);
 

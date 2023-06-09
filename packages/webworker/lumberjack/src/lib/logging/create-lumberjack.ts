@@ -2,7 +2,7 @@ import { LumberjackLogFormatter } from '../formatting/create-lumberjack-log-form
 import { formatLogDriverError } from '../formatting/format-log-driver-error';
 import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
 import { LumberjackLogDriverError } from '../log-drivers/lumberjack-log-driver-error';
-import { LumberjackLogDriverLogger } from '../log-drivers/lumberjack-log-driver-logger-factory';
+import { LumberjackLogDriverLogger } from '../log-drivers/create-lumberjack-log-driver-logger';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';

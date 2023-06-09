@@ -1,6 +1,6 @@
 import { createFakeTime } from '@internal/core/test-util';
 
-import { createLumberjackConfig } from '../configuration/config-factory';
+import { createLumberjackConfig } from '../configuration/create-lumberjack-config';
 import { LumberjackOptions } from '../configuration/lumberjack.options';
 import { createLumberjackLogFactory } from '../logging/create-lumberjack-log-factory';
 import { LumberjackLevel } from '../logs/lumberjack-level';

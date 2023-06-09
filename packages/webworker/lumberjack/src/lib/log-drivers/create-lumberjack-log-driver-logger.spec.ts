@@ -3,15 +3,15 @@ import { createFakeTime, createSpyDriver, SpyDriver } from '@internal/core/test-
 import { createLumberjackLogFactory, LumberjackLogFactory } from '../logging/create-lumberjack-log-factory';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 
-import { LumberjackLogDriverLogger, lumberjackLogDriverLoggerFactory } from './lumberjack-log-driver-logger-factory';
+import { createLumberjackLogDriverLogger, LumberjackLogDriverLogger } from './create-lumberjack-log-driver-logger';
 import { LumberjackLogDriverLog } from './lumberjack-log-driver.log';
 
-describe(lumberjackLogDriverLoggerFactory.name, () => {
+describe(createLumberjackLogDriverLogger.name, () => {
   const { getUnixEpochTicks } = createFakeTime();
 
   beforeEach(() => {
     logDriver = createSpyDriver({ levels: [LumberjackLevel.Verbose] });
-    logger = lumberjackLogDriverLoggerFactory();
+    logger = createLumberjackLogDriverLogger();
     logFactory = createLumberjackLogFactory({ getUnixEpochTicks });
   });
 

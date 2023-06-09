@@ -20,12 +20,12 @@ import {
   spyDriverIdentifier,
 } from '@internal/core/test-util';
 
-import { createLumberjackConfig } from '../configuration/config-factory';
+import { createLumberjackConfig } from '../configuration/create-lumberjack-config';
 import { LumberjackLogDriverConfig } from '../configuration/lumberjack-log-driver.config';
 import { LumberjackOptions } from '../configuration/lumberjack.options';
 import { createLumberjackLogFormatter } from '../formatting/create-lumberjack-log-formatter';
 import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
-import { lumberjackLogDriverLoggerFactory } from '../log-drivers/lumberjack-log-driver-logger-factory';
+import { createLumberjackLogDriverLogger } from '../log-drivers/create-lumberjack-log-driver-logger';
 import { LumberjackLogDriverLog } from '../log-drivers/lumberjack-log-driver.log';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
@@ -96,7 +96,7 @@ function createTestLumberjack<TPayload extends LumberjackLogPayload | void>(
 ): Lumberjack<TPayload> {
   return createLumberjack({
     drivers,
-    logDriverLogger: lumberjackLogDriverLoggerFactory(),
+    logDriverLogger: createLumberjackLogDriverLogger(),
     getUnixEpochTicks: createFakeTime().getUnixEpochTicks,
     logFormatter: createLumberjackLogFormatter<TPayload>({
       getUnixEpochTicks: fakeTime.getUnixEpochTicks,
