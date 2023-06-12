@@ -43,3 +43,7 @@ Thumbs.db
 
 # Nx
 migrations.json
+
+# Generated Docusaurus files
+.docusaurus/
+.cache-loader/
