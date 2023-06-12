@@ -1,6 +1,21 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
+
+## [15.0.0](///compare/v14.0.0...v15.0.0) (2023-06-12)
+
+
+### Features
+
+* 139 use provide and with factory functions ([#144](undefined/undefined/undefined/issues/144)) 8e11027, closes #139
+* migrate to nx (15.3.0) and angular 15 ([#147](undefined/undefined/undefined/issues/147)) b69d069
+
+
+### Bug Fixes
+
+* priotize github deploy 9df215b
+* sonar cloud smells ([#155](undefined/undefined/undefined/issues/155)) ec17277
+* sonar smells ([#157](undefined/undefined/undefined/issues/157)) fd2fe80
 
 ## [14.0.0](https://github.com/ngworker/lumberjack/compare/v2.0.3...v14.0.0) (2022-10-26)
 
