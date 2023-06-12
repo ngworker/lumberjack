@@ -26,5 +26,5 @@
       }
     }
   },
-  "tags": ["scope:internal", "type:package"]
+  "tags": ["technology:javascript", "scope:internal", "type:package"]
 }

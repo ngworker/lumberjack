@@ -1,0 +1,76 @@
+{
+  "name": "examples-lumberjack-qwik-app",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "sourceRoot": "packages/examples/lumberjack-qwik-app/src",
+  "targets": {
+    "build": {
+      "executor": "qwik-nx:build",
+      "options": {
+        "runSequence": ["examples-lumberjack-qwik-app:build.client", "examples-lumberjack-qwik-app:build.ssr"],
+        "outputPath": "dist/packages/examples/lumberjack-qwik-app"
+      },
+      "configurations": {
+        "preview": {}
+      }
+    },
+    "build.client": {
+      "executor": "@nx/vite:build",
+      "options": {
+        "outputPath": "dist/packages/examples/lumberjack-qwik-app",
+        "configFile": "packages/examples/lumberjack-qwik-app/vite.config.ts"
+      }
+    },
+    "build.ssr": {
+      "executor": "@nx/vite:build",
+      "defaultConfiguration": "preview",
+      "options": {
+        "outputPath": "dist/packages/examples/lumberjack-qwik-app"
+      },
+      "configurations": {
+        "preview": {
+          "ssr": "src/entry.preview.tsx",
+          "mode": "production"
+        }
+      }
+    },
+    "preview": {
+      "executor": "@nx/vite:preview-server",
+      "options": {
+        "buildTarget": "examples-lumberjack-qwik-app:build",
+        "port": 4300
+      }
+    },
+    "test": {
+      "executor": "@nx/vite:test",
+      "outputs": ["../../../coverage/packages/examples/lumberjack-qwik-app"],
+      "options": {
+        "passWithNoTests": true,
+        "reportsDirectory": "../../../coverage/packages/examples/lumberjack-qwik-app"
+      }
+    },
+    "serve": {
+      "executor": "@nx/vite:dev-server",
+      "options": {
+        "buildTarget": "examples-lumberjack-qwik-app:build.client",
+        "mode": "ssr",
+        "port": 4200
+      }
+    },
+    "serve.debug": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "node --inspect-brk ../../../node_modules/vite/bin/vite.js --mode ssr --force",
+        "cwd": "packages/examples/lumberjack-qwik-app"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/examples/lumberjack-qwik-app/**/*.{ts,tsx,js,jsx}"]
+      }
+    }
+  },
+  "tags": ["technology:qwik", "type:application", "technology:qwik"]
+}

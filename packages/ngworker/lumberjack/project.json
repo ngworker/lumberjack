@@ -120,7 +120,7 @@
       }
     }
   },
-  "tags": ["scope:public", "type:package"],
+  "tags": ["technology:angular", "scope:public", "type:package"],
   "implicitDependencies": ["!internal-angular-console-driver-test-util", "!internal-angular-test-util"],
   "namedInputs": {
     "projectSpecificFiles": ["{workspaceRoot}/README.md"]

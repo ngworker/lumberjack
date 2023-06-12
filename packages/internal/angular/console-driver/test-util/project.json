@@ -39,5 +39,5 @@
       }
     }
   },
-  "tags": ["scope:internal", "type:test-util"]
+  "tags": ["technology:angular", "scope:internal", "type:test-util"]
 }
