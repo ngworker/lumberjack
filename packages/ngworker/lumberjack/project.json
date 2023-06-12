@@ -90,10 +90,12 @@
       "options": {
         "preset": "conventional",
         "tagPrefix": "v",
+        "noVerify": true,
         "push": true,
         "preid": "beta",
         "syncVersions": false,
-        "postTargets": ["ngworker-lumberjack:publish", "ngworker-lumberjack:github"]
+        "postTargets": ["ngworker-lumberjack:publish", "ngworker-lumberjack:github"],
+        "commitMessageFormat": "release(${projectName}): 🎸 cut release to ${version}"
       }
     },
     "github": {
