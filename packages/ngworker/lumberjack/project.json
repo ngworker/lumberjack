@@ -94,8 +94,8 @@
         "push": true,
         "preid": "beta",
         "syncVersions": false,
-        "postTargets": ["ngworker-lumberjack:publish", "ngworker-lumberjack:github"],
-        "commitMessageFormat": "release(${projectName}): 🎸 cut release to ${version}"
+        "commitMessageFormat": "release(${projectName}): 🎸 cut release to ${version}",
+        "postTargets": ["ngworker-lumberjack:github", "ngworker-lumberjack:publish"]
       }
     },
     "github": {
@@ -109,7 +109,8 @@
       "executor": "ngx-deploy-npm:deploy",
       "options": {
         "access": "public",
-        "tag": "next"
+        "tag": "next",
+        "distFolderPath": "dist/packages/ngworker/lumberjack"
       }
     }
   },
