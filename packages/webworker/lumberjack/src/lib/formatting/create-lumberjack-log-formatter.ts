@@ -41,7 +41,7 @@ export function createLumberjackLogFormatter<TPayload extends LumberjackLogPaylo
   }
 
   function createFormattingErrorLog(formatError: unknown, log: LumberjackLog<TPayload>): LumberjackLog<TPayload> {
-    const formattingErrorMessage = (formatError as Error).message || String(formatError);
+    const formattingErrorMessage = (formatError as Error).message ?? String(formatError);
 
     return {
       scope: 'LumberjackLogFormattingError',
