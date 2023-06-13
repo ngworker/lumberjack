@@ -48,6 +48,14 @@
                 "onlyDependOnLibsWithTags": ["technology:qwik", "technology:javascript"]
               },
               {
+                "sourceTag": "technology:solid",
+                "onlyDependOnLibsWithTags": ["technology:solid", "technology:javascript"]
+              },
+              {
+                "sourceTag": "technology:react",
+                "onlyDependOnLibsWithTags": ["technology:react", "technology:javascript"]
+              },
+              {
                 "sourceTag": "technology:javascript",
                 "onlyDependOnLibsWithTags": ["technology:javascript"]
               }
