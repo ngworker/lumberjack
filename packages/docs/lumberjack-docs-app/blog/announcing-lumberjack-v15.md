@@ -16,9 +16,9 @@ image: https://pub-2294738bc2c249ff8040505bf960c018.r2.dev/logo.svg
 hide_table_of_contents: false
 ---
 
-We are happy to announce that we've released @ngworker/lumberjack version 15. The team has been working on a group of updates that aim to improve the Lumberjack experience. Enough small talk; let's dive into what's new!
+The Lumberjack team is happy to announce `@ngworker/lumberjack` version 15. This release contains a collection of updates aiming to improve the Lumberjack experience and prepare us for the future. Enough small talk; let's dive into what's new!
 
-**TL;DR** - Lumberjack version 15 introduces the following updates: internal upgrades like using the latest type-safe `inject` function or migrating into EcmaScript private fields. Updates to Angular version 15, Nx version 16.3, and Node 18. The most significant announcements are that we've added support for standalone Angular applications; now, you can conveniently include Lumberjack in the `bootstrap application` function and configure Lumberjack drivers as needed. The cherry on top, we launched our docs website, where you are reading this blog post.
+**TL;DR** - Lumberjack version 15 introduces the following updates: internal upgrades like using the latest type-safe `inject` function or migrating into EcmaScript private fields. Updates to Angular version 15, Nx version 16.3, and Node 18. The most significant announcements are that we've added support for standalone Angular applications; now, you can conveniently include Lumberjack in the `bootstrap application` function and configure Lumberjack drivers as needed. And, the cherry on top, we launched our docs website, where you are reading this blog post.
 
 ## Better Type Safety
 
@@ -26,7 +26,7 @@ We've introduced the newest type-safe `inject` function to Lumberjack's source c
 
 ## Keeping up to date
 
-We are all excited about everything that's happening in the JavaScript world. That's why we will continue putting efforts into keeping Lumberjack up to date with the latest version of Angular and any other tool that's part of the Lumberjack suite.
+We are all excited about everything that's happening in the JavaScript world. That's why we will continue putting efforts into keeping Lumberjack up to date with the latest version of Angular and the rest of tools that are part of the Lumberjack ecosystem.
 
 This time, we have updated to Angular version 15, Nx version 16.3, and Node 18. Please note this will introduce breaking changes.
 
