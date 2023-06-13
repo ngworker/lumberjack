@@ -131,6 +131,7 @@ A project must have the following dimensions.
 
 - Scope
 - Type
+- Technology
 
 ### Scope
 
@@ -151,3 +152,15 @@ The following are valid project types in this workspace.
 | `e2e`       | An end-to-end testing project.                            |
 | `package`   | A publishable library project released as an npm package. |
 | `test-util` | A library project containing internal test utilities.     |
+
+### Technology
+
+The following are valid project types in this workspace.
+
+| Technology   | Description                                       |
+| ------------ | ------------------------------------------------- |
+| `javascript` | A project that is framework agnostic.             |
+| `angular`    | A project that is based on the Angular framework. |
+| `qwik`       | A project that is based on the Qwik framework.    |
+| `solid`      | A project that is based on the SolidJS framework. |
+| `react`      | A project that is based on the React framework.   |
