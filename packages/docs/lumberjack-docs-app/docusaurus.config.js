@@ -30,8 +30,7 @@ module.exports = {
           label: 'Docs',
           position: 'left',
         },
-        // TODO: Enable blog when we have content
-        // { to: '/blog', label: 'Blog', position: 'left' },
+        { to: '/blog', label: 'Blog', position: 'left' },
         {
           href: 'https://github.com/ngworker/lumberjack',
           label: 'GitHub',
@@ -87,11 +86,10 @@ module.exports = {
         {
           title: 'More',
           items: [
-            // TODO: Enable blog when we have content
-            // {
-            //   label: 'Blog',
-            //   to: '/blog',
-            // },
+            {
+              label: 'Blog',
+              to: '/blog',
+            },
             {
               label: 'GitHub',
               href: 'https://github.com/ngworker/lumberjack',
@@ -110,12 +108,11 @@ module.exports = {
           sidebarPath: require.resolve('./sidebars.js'),
           editUrl: `https://github.com/${organizationName}/${projectName}/edit/main/packages/docs/lumberjack-docs-app`,
         },
-        // TODO: Enable blog when we have content
-        // blog: {
-        //   blogTitle: 'Lumberjack blog!',
-        //   blogDescription: 'The Lumberjack blog contains all the news and knwoledge bits about Lumberjack',
-        //   postsPerPage: 15,
-        // },
+        blog: {
+          blogTitle: 'Lumberjack blog!',
+          blogDescription: 'The Lumberjack blog contains all the news and knwoledge bits about Lumberjack',
+          postsPerPage: 15,
+        },
         theme: {
           customCss: require.resolve('./src/css/custom.css'),
         },

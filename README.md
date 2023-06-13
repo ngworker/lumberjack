@@ -53,7 +53,7 @@ Lumberjack is published as the `@ngworker/lumberjack` package.
 
 ## Documentation
 
-Get access to the full [documentation](https://github.com/ngworker/lumberjack.git)
+Get access to the full [documentation](https://ngworker.github.io/lumberjack/)
 
 ## Wallaby.js
 
