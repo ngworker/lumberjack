@@ -137,8 +137,18 @@
       "contributions": [
         "code"
       ]
+    },
+    {
+      "login": "ajitzero",
+      "name": "Ajit Panigrahi",
+      "avatar_url": "https://avatars.githubusercontent.com/u/19947758?v=4",
+      "profile": "https://bento.me/ajit",
+      "contributions": [
+        "doc"
+      ]
     }
   ],
   "contributorsPerLine": 7,
-  "skipCi": true
+  "skipCi": true,
+  "commitType": "docs"
 }
