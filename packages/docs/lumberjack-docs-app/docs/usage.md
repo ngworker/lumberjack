@@ -91,7 +91,7 @@ import { LumberjackService } from '@ngworker/lumberjack';
   // (...)
 })
 export class MyComponent implements OnInit {
-  readonly #lumberjack = inject(LumberjackService);
+  constructor(private readonly lumberjack: LumberjackService) {}
 
   // (...)
 }
