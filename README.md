@@ -30,7 +30,7 @@ Lumberjack is a versatile Angular logging library, specifically designed to be e
 few simple [log drivers](https://en.wikipedia.org/wiki/Log_driving) (logging mechanisms, transports, log drivers)
 out-of-the-box. It's easy to enable the built-in log drivers or create and use custom log drivers.
 
-> For support, please refer to the `#lumberjack` channel in [the NgWorker Discord server](https://discord.gg/UDUa8MA6Ef).
+> For support, please refer to the `#lumberjack` channel in [the NgWorkers Discord server](https://discord.gg/UDUa8MA6Ef).
 
 ## Features
 
