@@ -4,7 +4,9 @@
  <img width="40%" height="40%" src="https://pub-2294738bc2c249ff8040505bf960c018.r2.dev/logo.svg">
 </p>
 
-[Logo by Felipe Zambrano](http://instagram.com/octopez)
+<a style="font-size:11px;" href="http://instagram.com/octopez">
+Logo by Felipe Zambrano
+</a>
 
 <br />
 
@@ -28,7 +30,7 @@ Lumberjack is a versatile Angular logging library, specifically designed to be e
 few simple [log drivers](https://en.wikipedia.org/wiki/Log_driving) (logging mechanisms, transports, log drivers)
 out-of-the-box. It's easy to enable the built-in log drivers or create and use custom log drivers.
 
-> For support, please refer to the `#lumberjack` channel in [the Angular Discord server](http://discord.gg/angular).
+> For support, please refer to the `#lumberjack` channel in [the NgWorkers Discord server](https://discord.gg/UDUa8MA6Ef).
 
 ## Features
 
