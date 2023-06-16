@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [15.0.1](///compare/v15.0.0...v15.0.1) (2023-06-16)
+
+
+### Bug Fixes
+
+* format issues ([#161](undefined/undefined/undefined/issues/161)) 15a230f
+
 ## [15.0.0](///compare/v14.0.0...v15.0.0) (2023-06-12)
 
 ### Features
