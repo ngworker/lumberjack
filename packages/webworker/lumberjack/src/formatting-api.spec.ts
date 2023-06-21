@@ -1,20 +1,11 @@
 import { isFunction } from '@internal/core/test-util';
 
-import {
-  createLumberjackLogFormatter,
-  formatLogDriverError,
-  lumberjackFormatLog,
-  LumberjackLogFormatterResult,
-} from './index';
+import { createLumberjackLogFormatter, lumberjackFormatLog, LumberjackLogFormatterResult } from './index';
 
 describe('Formatting API', () => {
   describe('Interfaces', () => {
     it('exposes lumberjackFormatLog', () => {
       expect(lumberjackFormatLog).toBeDefined();
-    });
-
-    it('exposes formatLogDriverError', () => {
-      expect(formatLogDriverError).toBeDefined();
     });
 
     it('exposes LumberjackLogFormatter', () => {

@@ -1,4 +1,4 @@
-import { LumberjackLogDriver, LumberjackLogDriverError, LumberjackLogDriverLog } from './index';
+import { LumberjackLogDriver, LumberjackLogDriverLog } from './index';
 
 describe('Log drivers API', () => {
   describe('Interfaces', () => {
@@ -9,12 +9,6 @@ describe('Log drivers API', () => {
     });
     it('exposes LumberjackLogDriverLog', () => {
       const value: LumberjackLogDriverLog | undefined = undefined;
-
-      expect(value).toBeUndefined();
-    });
-
-    it('exposes LumberjackLogDriverError', () => {
-      const value: LumberjackLogDriverError | undefined = undefined;
 
       expect(value).toBeUndefined();
     });
