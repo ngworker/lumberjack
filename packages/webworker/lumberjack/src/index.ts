@@ -24,9 +24,6 @@ export { LumberjackLogDriverLog } from './lib/log-drivers/lumberjack-log-driver.
 // Formatting
 export { LumberjackFormatFunction } from './lib/formatting/lumberjack-format-function';
 export { lumberjackFormatLog } from './lib/formatting/lumberjack-format-log';
-export { LumberjackLogFormatterResult } from './lib/formatting/lumberjack-log-formatter-result';
-export { createLumberjackLogFormatter } from './lib/formatting/create-lumberjack-log-formatter';
-export { LumberjackLogFormatter } from './lib/formatting/lumberjack-log-formatter';
 export { utcTimestampFor } from './lib/formatting/utc-timestamp-for';
 
 // Logging

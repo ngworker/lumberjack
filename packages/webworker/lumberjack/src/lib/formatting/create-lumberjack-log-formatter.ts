@@ -1,10 +1,11 @@
-import { LumberjackLog, LumberjackLogFormatterResult } from '@webworker/lumberjack';
+import { LumberjackLog } from '@webworker/lumberjack';
 
 import { LumberjackConfig } from '../configuration/lumberjack.config';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 
 import { lumberjackFormatLog } from './lumberjack-format-log';
+import { LumberjackLogFormatterResult } from './lumberjack-log-formatter-result';
 
 interface LumberjackLogFormatterDependencies<TPayload extends LumberjackLogPayload | void> {
   readonly config: LumberjackConfig<TPayload>;

@@ -8,7 +8,6 @@ import {
 } from '@webworker/lumberjack';
 
 import { isProductionEnvironmentToken } from '../environment/is-production-environment.token';
-import { LumberjackLogFormatterService } from '../formatting/lumberjack-log-formatter.service';
 import { LumberjackService } from '../logging/lumberjack.service';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
@@ -57,7 +56,6 @@ export function provideLumberjack(options?: LumberjackOptions): Provider[] {
       useFactory: createLumberjackLogDriverConfig,
     },
     { provide: LumberjackService, useClass: LumberjackService },
-    LumberjackLogFormatterService,
     LumberjackTimeService,
   ];
 }
