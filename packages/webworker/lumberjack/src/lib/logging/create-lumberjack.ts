@@ -16,10 +16,24 @@ interface LumberjackDependencies<TPayload extends LumberjackLogPayload | void> {
   getUnixEpochTicks: () => number;
 }
 
-export type Lumberjack<TPayload extends LumberjackLogPayload | void = void> = ReturnType<
-  typeof createLumberjack<TPayload>
->;
-
+/**
+ * Factory function that creates a Lumberjack core system object.
+ *
+ * @example
+ * const drivers = [new ConsoleDriver(), new HttpDriver()];
+ * const logFormatter = createLumberjackLogFormatter(deps);
+ *
+ * const lumberjack = createLumberjack({ drivers, logFormatter });
+ *
+ * const log = {
+ *   scope: 'Application',
+ *   createdAt: getUnixEpochTicks(),
+ *   level: 'ERROR',
+ *   message: 'An unexpected error occurred',
+ * };
+ *
+ * lumberjack.log(log);
+ */
 export function createLumberjack<TPayload extends LumberjackLogPayload | void = void>({
   drivers,
   logFormatter,

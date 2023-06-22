@@ -11,6 +11,21 @@ interface LumberjackLogFormatterDependencies<TPayload extends LumberjackLogPaylo
   readonly getUnixEpochTicks: () => number;
 }
 
+/**
+ * Factory function that creates a Lumberjack log formatter function.
+ *
+ * @example
+ * const formatter = createLumberjackLogFormatter(deps);
+ *
+ * const log = {
+ *   scope: 'Application',
+ *   createdAt: getUnixEpochTicks(),
+ *   level: 'ERROR',
+ *   message: 'An unexpected error occurred',
+ * };
+ *
+ * console.log(formatter.formatLog(log));
+ */
 export function createLumberjackLogFormatter<TPayload extends LumberjackLogPayload | void = void>(
   deps: LumberjackLogFormatterDependencies<TPayload>
 ) {
