@@ -1,6 +1,7 @@
 import { createFakeTime, createSpyDriver, SpyDriver } from '@internal/core/test-util';
 
-import { createLumberjackLogFactory, LumberjackLogFactory } from '../logging/create-lumberjack-log-factory';
+import { createLumberjackLogFactory } from '../logging/create-lumberjack-log-factory';
+import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 
 import { createLumberjackLogDriverLogger } from './create-lumberjack-log-driver-logger';

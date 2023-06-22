@@ -29,5 +29,6 @@ export { utcTimestampFor } from './lib/formatting/utc-timestamp-for';
 // Logging
 export { createLumberjack } from './lib/logging/create-lumberjack';
 export { Lumberjack } from './lib/logging/lumberjack';
-export { createLumberjackLogFactory, LumberjackLogFactory } from './lib/logging/create-lumberjack-log-factory';
+export { createLumberjackLogFactory } from './lib/logging/create-lumberjack-log-factory';
+export { LumberjackLogFactory } from './lib/logging/lumberjack-log-factory';
 export { LumberjackLogBuilder } from './lib/logging/lumberjack-log.builder';
