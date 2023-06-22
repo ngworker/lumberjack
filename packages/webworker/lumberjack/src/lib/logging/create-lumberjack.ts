@@ -1,5 +1,5 @@
-import { LumberjackLogFormatter } from '../formatting/create-lumberjack-log-formatter';
 import { formatLogDriverError } from '../formatting/format-log-driver-error';
+import { LumberjackLogFormatter } from '../formatting/lumberjack-log-formatter';
 import { createLumberjackLogDriverLogger } from '../log-drivers/create-lumberjack-log-driver-logger';
 import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
 import { LumberjackLogDriverError } from '../log-drivers/lumberjack-log-driver-error';

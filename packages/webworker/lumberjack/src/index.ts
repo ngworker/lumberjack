@@ -26,7 +26,8 @@ export { LumberjackLogDriverLog } from './lib/log-drivers/lumberjack-log-driver.
 export { LumberjackFormatFunction } from './lib/formatting/lumberjack-format-function';
 export { lumberjackFormatLog } from './lib/formatting/lumberjack-format-log';
 export { LumberjackLogFormatterResult } from './lib/formatting/lumberjack-log-formatter-result';
-export { createLumberjackLogFormatter, LumberjackLogFormatter } from './lib/formatting/create-lumberjack-log-formatter';
+export { createLumberjackLogFormatter } from './lib/formatting/create-lumberjack-log-formatter';
+export { LumberjackLogFormatter } from './lib/formatting/lumberjack-log-formatter';
 
 // Logging
 export { createLumberjack, Lumberjack } from './lib/logging/create-lumberjack';

@@ -11,10 +11,6 @@ interface LumberjackLogFormatterDependencies<TPayload extends LumberjackLogPaylo
   readonly getUnixEpochTicks: () => number;
 }
 
-export type LumberjackLogFormatter<TPayload extends LumberjackLogPayload | void = void> = ReturnType<
-  typeof createLumberjackLogFormatter<TPayload>
->;
-
 export function createLumberjackLogFormatter<TPayload extends LumberjackLogPayload | void = void>(
   deps: LumberjackLogFormatterDependencies<TPayload>
 ) {
