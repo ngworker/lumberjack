@@ -29,8 +29,9 @@ import { LumberjackLogDriverLog } from '../log-drivers/lumberjack-log-driver.log
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 
-import { createLumberjack, Lumberjack } from './create-lumberjack';
+import { createLumberjack } from './create-lumberjack';
 import { createLumberjackLogFactory } from './create-lumberjack-log-factory';
+import { Lumberjack } from './lumberjack';
 
 class SpyDriverError extends Error {
   constructor(message = 'SpyDriverError') {
