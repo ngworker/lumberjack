@@ -25,7 +25,6 @@ import { LumberjackLogDriverConfig } from '../configuration/lumberjack-log-drive
 import { LumberjackOptions } from '../configuration/lumberjack.options';
 import { createLumberjackLogFormatter } from '../formatting/create-lumberjack-log-formatter';
 import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
-import { createLumberjackLogDriverLogger } from '../log-drivers/create-lumberjack-log-driver-logger';
 import { LumberjackLogDriverLog } from '../log-drivers/lumberjack-log-driver.log';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
@@ -96,7 +95,6 @@ function createTestLumberjack<TPayload extends LumberjackLogPayload | void>(
 ): Lumberjack<TPayload> {
   return createLumberjack({
     drivers,
-    logDriverLogger: createLumberjackLogDriverLogger(),
     getUnixEpochTicks: createFakeTime().getUnixEpochTicks,
     logFormatter: createLumberjackLogFormatter<TPayload>({
       getUnixEpochTicks: fakeTime.getUnixEpochTicks,

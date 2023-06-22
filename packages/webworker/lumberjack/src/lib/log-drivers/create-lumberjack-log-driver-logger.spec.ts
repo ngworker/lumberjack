@@ -3,8 +3,9 @@ import { createFakeTime, createSpyDriver, SpyDriver } from '@internal/core/test-
 import { createLumberjackLogFactory, LumberjackLogFactory } from '../logging/create-lumberjack-log-factory';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 
-import { createLumberjackLogDriverLogger, LumberjackLogDriverLogger } from './create-lumberjack-log-driver-logger';
+import { createLumberjackLogDriverLogger } from './create-lumberjack-log-driver-logger';
 import { LumberjackLogDriverLog } from './lumberjack-log-driver.log';
+import { LumberjackLogDriverLogger } from './lumberjack-log-driver-logger';
 
 describe(createLumberjackLogDriverLogger.name, () => {
   const { getUnixEpochTicks } = createFakeTime();

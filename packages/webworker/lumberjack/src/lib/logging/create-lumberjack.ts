@@ -1,8 +1,8 @@
 import { LumberjackLogFormatter } from '../formatting/create-lumberjack-log-formatter';
 import { formatLogDriverError } from '../formatting/format-log-driver-error';
+import { createLumberjackLogDriverLogger } from '../log-drivers/create-lumberjack-log-driver-logger';
 import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
 import { LumberjackLogDriverError } from '../log-drivers/lumberjack-log-driver-error';
-import { LumberjackLogDriverLogger } from '../log-drivers/create-lumberjack-log-driver-logger';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
@@ -13,7 +13,6 @@ const noReportedLogDriverErrorIndex = -1;
 interface LumberjackDependencies<TPayload extends LumberjackLogPayload | void> {
   drivers: LumberjackLogDriver<TPayload>[];
   logFormatter: LumberjackLogFormatter<TPayload>;
-  logDriverLogger: LumberjackLogDriverLogger<TPayload>;
   getUnixEpochTicks: () => number;
 }
 
@@ -24,9 +23,9 @@ export type Lumberjack<TPayload extends LumberjackLogPayload | void = void> = Re
 export function createLumberjack<TPayload extends LumberjackLogPayload | void = void>({
   drivers,
   logFormatter,
-  logDriverLogger,
   getUnixEpochTicks = () => new Date().valueOf(),
 }: LumberjackDependencies<TPayload>) {
+  const logDriverLogger = createLumberjackLogDriverLogger<TPayload>();
   const log = (lumberjackLog: LumberjackLog<TPayload>) => {
     const { log, formattedLog } = logFormatter.formatLog(lumberjackLog);
     logWithErrorHandling(log, formattedLog, drivers);

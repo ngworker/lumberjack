@@ -1,7 +1,7 @@
 import { LumberjackLevel } from '../logs/lumberjack-level';
-import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 
+import { LogDriverLoggingStrategy } from './log-driver-logging-strategy';
 import { criticalLogDriverLoggingStrategy } from './logging-strategies/critical-log-driver-logging-strategy';
 import { debugLogDriverLoggingStrategy } from './logging-strategies/debug-log-driver-logging-strategy';
 import { errorLogDriverLoggingStrategy } from './logging-strategies/error-log-driver-logging-strategy';
@@ -10,15 +10,6 @@ import { traceLogDriverLoggingStrategy } from './logging-strategies/trace-log-dr
 import { warningLogDriverLoggingStrategy } from './logging-strategies/warning-log-driver-logging-strategy';
 import { LumberjackLogDriver } from './lumberjack-log-driver';
 import { LumberjackLogDriverLog } from './lumberjack-log-driver.log';
-
-type LogDriverLoggingStrategy<TPayload extends LumberjackLogPayload | void = void> = Record<
-  LumberjackLogLevel,
-  (driver: LumberjackLogDriver<TPayload>, driverLog: LumberjackLogDriverLog<TPayload>) => void
->;
-
-export type LumberjackLogDriverLogger<TPayload extends LumberjackLogPayload | void = void> = ReturnType<
-  typeof createLumberjackLogDriverLogger<TPayload>
->;
 
 export function createLumberjackLogDriverLogger<TPayload extends LumberjackLogPayload | void = void>() {
   const logDriverLoggingStrategy: LogDriverLoggingStrategy<TPayload> = {
