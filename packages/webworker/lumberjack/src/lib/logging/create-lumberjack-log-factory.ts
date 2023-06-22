@@ -7,10 +7,15 @@ interface LumberjackLogFactoryDependencies {
   getUnixEpochTicks: () => number;
 }
 
-export type LumberjackLogFactory<TPayload extends LumberjackLogPayload | void = void> = ReturnType<
-  typeof createLumberjackLogFactory<TPayload>
->;
-
+/**
+ * Factory function to create a set of functions for building Lumberjack logs with different levels.
+ *
+ * @example
+ * const logFactory = createLumberjackLogFactory({ getUnixEpochTicks: () => Date.now() });
+ *
+ * const infoLog = logFactory.createInfoLog("Some informational message").build();
+ * const debugLog = logFactory.createDebugLog("Some debug message").build();
+ */
 export function createLumberjackLogFactory<TPayload extends LumberjackLogPayload | void = void>(
   deps: LumberjackLogFactoryDependencies
 ) {
