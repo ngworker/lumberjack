@@ -14,7 +14,7 @@ const noReportedLogDriverErrorIndex = -1;
 interface LumberjackDependencies<TPayload extends LumberjackLogPayload | void> {
   drivers: LumberjackLogDriver<TPayload>[];
   readonly config: LumberjackConfig<TPayload>;
-  getUnixEpochTicks: () => number;
+  getUnixEpochTicks?: () => number;
 }
 
 /**

@@ -27,7 +27,11 @@ export class LumberjackLogBuilder<TPayload extends LumberjackLogPayload | void =
    * @param level The log level.
    * @param message The log message.
    */
-  constructor(getUnixEpochTicks: () => number, level: LumberjackLogLevel, message: string) {
+  constructor(
+    level: LumberjackLogLevel,
+    message: string,
+    getUnixEpochTicks: () => number = () => new Date().valueOf()
+  ) {
     this.#getUnixEpochTicks = getUnixEpochTicks;
     this.#level = level;
     this.#message = message;
