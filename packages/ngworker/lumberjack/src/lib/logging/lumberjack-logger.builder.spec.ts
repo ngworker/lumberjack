@@ -48,9 +48,9 @@ describe(LumberjackLoggerBuilder.name, () => {
         const logFunction = builder.build();
         logFunction();
         const expectedLog = new LumberjackLogBuilder(
-          fakeTime.getUnixEpochTicks.bind(fakeTime),
           level,
-          testMessage
+          testMessage,
+          fakeTime.getUnixEpochTicks.bind(fakeTime)
         ).build();
 
         expect(lumberjackLogSpy).toHaveBeenCalledWith(expectedLog);
@@ -64,7 +64,7 @@ describe(LumberjackLoggerBuilder.name, () => {
     const builder = new LumberjackLoggerBuilder(lumberjackService, fakeTime, level, testMessage);
     const logFunction = builder.withScope(scope).build();
     logFunction();
-    const expectedLog = new LumberjackLogBuilder(fakeTime.getUnixEpochTicks.bind(fakeTime), level, testMessage)
+    const expectedLog = new LumberjackLogBuilder(level, testMessage, fakeTime.getUnixEpochTicks.bind(fakeTime))
       .withScope(scope)
       .build();
 
@@ -91,9 +91,9 @@ describe(LumberjackLoggerBuilder.name, () => {
       const logFunction = builder.withScope(scope).build();
       logFunction(payload);
       const expectedLog = new LumberjackLogBuilder<TestPayload>(
-        fakeTime.getUnixEpochTicks.bind(fakeTime),
         level,
-        testMessage
+        testMessage,
+        fakeTime.getUnixEpochTicks.bind(fakeTime)
       )
         .withScope(scope)
         .withPayload(payload)
@@ -106,9 +106,9 @@ describe(LumberjackLoggerBuilder.name, () => {
       const logFunction = builder.withPayload(payload).build();
       logFunction();
       const expectedLog = new LumberjackLogBuilder<TestPayload>(
-        fakeTime.getUnixEpochTicks.bind(fakeTime),
         level,
-        testMessage
+        testMessage,
+        fakeTime.getUnixEpochTicks.bind(fakeTime)
       )
         .withPayload(payload)
         .build();
@@ -120,9 +120,9 @@ describe(LumberjackLoggerBuilder.name, () => {
       const logFunction = builder.withScope(scope).withPayload(payload).build();
       logFunction();
       const expectedLog = new LumberjackLogBuilder<TestPayload>(
-        fakeTime.getUnixEpochTicks.bind(fakeTime),
         level,
-        testMessage
+        testMessage,
+        fakeTime.getUnixEpochTicks.bind(fakeTime)
       )
         .withScope(scope)
         .withPayload(payload)

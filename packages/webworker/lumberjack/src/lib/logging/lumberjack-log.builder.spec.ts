@@ -17,7 +17,7 @@ describe(LumberjackLogBuilder.name, () => {
   describe('Base builder usage', () => {
     lumberjackLogLevels.forEach((level) =>
       it(`creates a LumberjackLog with a ${level} level log`, () => {
-        const builder = new LumberjackLogBuilder(fakeTime.getUnixEpochTicks, level, testMessage);
+        const builder = new LumberjackLogBuilder(level, testMessage, fakeTime.getUnixEpochTicks);
         const actualLog = builder.build();
         const expectedLog: LumberjackLog = {
           level,
@@ -35,7 +35,7 @@ describe(LumberjackLogBuilder.name, () => {
   it('creates a log with the specified scope', () => {
     const level = LumberjackLevel.Critical;
     const scope = 'Test Scope';
-    const actualLog = new LumberjackLogBuilder(fakeTime.getUnixEpochTicks, level, testMessage).withScope(scope).build();
+    const actualLog = new LumberjackLogBuilder(level, testMessage, fakeTime.getUnixEpochTicks).withScope(scope).build();
 
     const expectedLog: LumberjackLog = {
       level,
@@ -56,7 +56,7 @@ describe(LumberjackLogBuilder.name, () => {
     };
     let builder: LumberjackLogBuilder<TestPayload>;
     beforeEach(() => {
-      builder = new LumberjackLogBuilder<TestPayload>(fakeTime.getUnixEpochTicks, level, testMessage);
+      builder = new LumberjackLogBuilder<TestPayload>(level, testMessage, fakeTime.getUnixEpochTicks);
     });
 
     it('logs the specified payload', () => {

@@ -8,8 +8,12 @@ import { LumberjackLog } from '../logs/lumberjack.log';
 
 import { createLumberjackLogFormatter } from './create-lumberjack-log-formatter';
 
-function createFormattingErrorLog(formattingErrorMessage: string, log: LumberjackLog): LumberjackLog {
-  const logFactory = createLumberjackLogFactory({ getUnixEpochTicks: createFakeTime().getUnixEpochTicks });
+function createFormattingErrorLog(
+  formattingErrorMessage: string,
+  log: LumberjackLog,
+  getUnixEpochTicks: () => number
+): LumberjackLog {
+  const logFactory = createLumberjackLogFactory({ getUnixEpochTicks: getUnixEpochTicks });
 
   return logFactory
     .createErrorLog(`Could not format message "${log.message}". Error: "${formattingErrorMessage}"`)
@@ -47,13 +51,13 @@ describe(createLumberjackLogFactory.name, () => {
 
     it('returns an error log when formatting fails', () => {
       const formatterErrorMessage = 'TestFormatter';
-      const { logFactory, service } = setup({
+      const { logFactory, service, fakeTime } = setup({
         format: () => {
           throw new Error(formatterErrorMessage);
         },
       });
       const debugLog = logFactory.createDebugLog('Test debug message').build();
-      const expectedLog = createFormattingErrorLog(formatterErrorMessage, debugLog);
+      const expectedLog = createFormattingErrorLog(formatterErrorMessage, debugLog, fakeTime.getUnixEpochTicks);
 
       const { log: actualLog } = service.formatLog(debugLog);
 
@@ -85,7 +89,11 @@ describe(createLumberjackLogFactory.name, () => {
         fakeTime.setTime(new Date(nowTimestamp));
 
         const criticalLog = logFactory.createCriticalLog('Critical test').build();
-        const formattingErrorLog = createFormattingErrorLog(formatterErrorMessage, criticalLog);
+        const formattingErrorLog = createFormattingErrorLog(
+          formatterErrorMessage,
+          criticalLog,
+          fakeTime.getUnixEpochTicks
+        );
 
         const { formattedLog: actualFormattedLog } = service.formatLog(criticalLog);
 
@@ -105,7 +113,11 @@ describe(createLumberjackLogFactory.name, () => {
         fakeTime.setTime(new Date(nowTimestamp));
 
         const criticalLog = logFactory.createCriticalLog('Critical test').build();
-        const formattingErrorLog = createFormattingErrorLog(formatterErrorMessage, criticalLog);
+        const formattingErrorLog = createFormattingErrorLog(
+          formatterErrorMessage,
+          criticalLog,
+          fakeTime.getUnixEpochTicks
+        );
 
         const { formattedLog: actualFormattedLog } = service.formatLog(criticalLog);
 

@@ -41,7 +41,7 @@ describe(lumberjackFormatLog.name, () => {
 
     logLevels.forEach((expectedLevel) => {
       it(`prefixes the message with log level "${expectedLevel}"`, () => {
-        const log = new LumberjackLogBuilder(fakeTime.getUnixEpochTicks, expectedLevel, 'Log level test')
+        const log = new LumberjackLogBuilder(expectedLevel, 'Log level test', fakeTime.getUnixEpochTicks)
           .withScope('Log level')
           .build();
 
