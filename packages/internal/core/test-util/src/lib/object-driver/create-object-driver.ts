@@ -1,4 +1,4 @@
-import { LumberjackLogDriver, LumberjackLogDriverLog } from '@webworker/lumberjack';
+import { LumberjackLogDriver, LumberjackLogDriverLog } from '@lumberjackjs/core';
 
 import { ObjectDriverConfig } from './object-driver.config';
 import { ObjectLogger } from './object-logger';

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { LumberjackConsole } from '@ngworker/lumberjack/console-driver';
+import { LumberjackConsole } from '@lumberjackjs/angular/console-driver';
 
 /**
  * Spy console logger.

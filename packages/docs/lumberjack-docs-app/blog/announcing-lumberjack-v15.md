@@ -4,11 +4,11 @@ description: Lumberjack v15 is here, and we are happy to share everything that's
 slug: announcing-lumberjack-v15
 authors:
   - name: Nacho Vazquez
-    title: NgWorker and core maintainer of Lumberjack
+    title: Core maintainer of Lumberjack
     url: https://github.com/NachoVazquez
     image_url: https://github.com/NachoVazquez.png
   - name: Lars Gyrup Brink Nielsen
-    title: NgWorker and core maintainer of Lumberjack
+    title: Core maintainer of Lumberjack
     url: https://github.com/LayZeeDK
     image_url: https://github.com/LayZeeDK.png
 tags: [announcement, lumberjack, v15]

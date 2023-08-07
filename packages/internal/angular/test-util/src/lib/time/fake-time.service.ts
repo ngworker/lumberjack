@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
-import { LumberjackTimeService } from '@ngworker/lumberjack';
+import { LumberjackTimeService } from '@lumberjackjs/angular';
 
 @Injectable()
 export class FakeTimeService extends LumberjackTimeService {

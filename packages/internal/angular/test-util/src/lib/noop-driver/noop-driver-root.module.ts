@@ -1,7 +1,7 @@
 import { inject, NgModule } from '@angular/core';
 
 import { createNoopDriver, NoopDriverConfig } from '@internal/core/test-util';
-import { lumberjackLogDriverToken } from '@ngworker/lumberjack';
+import { lumberjackLogDriverToken } from '@lumberjackjs/angular';
 
 import { noopDriverConfigToken } from './noop-driver-config.token';
 

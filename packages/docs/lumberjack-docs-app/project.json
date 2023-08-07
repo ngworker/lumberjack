@@ -3,7 +3,7 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "packages/docs/lumberjack-docs-app/src",
-  "prefix": "ngworker",
+  "prefix": "lumberjackjs",
   "targets": {
     "build": {
       "executor": "@nx-plus/docusaurus:browser",

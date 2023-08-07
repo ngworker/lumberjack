@@ -1,4 +1,4 @@
-import { LumberjackLogPayload } from '@webworker/lumberjack';
+import { LumberjackLogPayload } from '@lumberjackjs/core';
 
 export interface ObjectPayload extends LumberjackLogPayload {
   readonly isWorking: boolean;

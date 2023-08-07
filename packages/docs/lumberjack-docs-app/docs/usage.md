@@ -4,13 +4,13 @@ title: Usage
 ---
 
 > For a complete walkthrough video please
-> visit [@ngworker/lumberjack v2 - Show & Tell BLS024](https://youtu.be/OV1ONtLAJnI)
+> visit [@lumberjackjs/angular v2 - Show & Tell BLS024](https://youtu.be/OV1ONtLAJnI)
 
 To register Lumberjack, add `LumberjackModule.forRoot()` to your root or core Angular module.
 
 ```ts
 // (...)
-import {LumberjackModule} from '@ngworker/lumberjack';
+import {LumberjackModule} from '@lumberjackjs/angular';
 
 @NgModule({
   imports: [
@@ -40,9 +40,9 @@ If you want to add the `LumberjackHttpDriver` and the `LumberjackConsoleDriver`,
 
 ```ts
 // (...)
-import { LumberjackModule } from '@ngworker/lumberjack';
-import { LumberjackHttpDriverModule } from '@ngworker/lumberjack/http-driver';
-import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
+import { LumberjackModule } from '@lumberjackjs/angular';
+import { LumberjackHttpDriverModule } from '@lumberjackjs/angular/http-driver';
+import { LumberjackConsoleDriverModule } from '@lumberjackjs/angular/console-driver';
 
 @NgModule({
   imports: [
@@ -85,7 +85,7 @@ First, inject the `LumberjackService` where you want to use it.
 
 ```ts
 import { Component } from '@angular/core';
-import { LumberjackService } from '@ngworker/lumberjack';
+import { LumberjackService } from '@lumberjackjs/angular';
 
 @Component({
   // (...)
@@ -101,7 +101,7 @@ or using the `inject` function
 
 ```ts
 import { inject, Component } from '@angular/core';
-import { LumberjackService } from '@ngworker/lumberjack';
+import { LumberjackService } from '@lumberjackjs/angular';
 
 @Component({
   // (...)
@@ -117,7 +117,7 @@ testability.
 
 ```ts
 // (...)
-import { LumberjackService, LumberjackTimeService } from '@ngworker/lumberjack';
+import { LumberjackService, LumberjackTimeService } from '@lumberjackjs/angular';
 
 // (...)
 export class MyComponent implements OnInit {

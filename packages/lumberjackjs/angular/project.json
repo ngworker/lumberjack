@@ -1,0 +1,128 @@
+{
+  "name": "lumberjackjs-angular",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "library",
+  "sourceRoot": "packages/lumberjackjs/angular/src",
+  "prefix": "lumberjackjs",
+  "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "dependsOn": [
+        {
+          "target": "build-package"
+        }
+      ],
+      "options": {
+        "parallel": false
+      },
+      "configurations": {
+        "production": {
+          "commands": [
+            "nx run lumberjackjs-angular:build-package:production",
+            "yarn copy README.md dist/packages/lumberjackjs/angular"
+          ]
+        },
+        "development": {
+          "commands": [
+            "nx run lumberjackjs-angular:build-package:development",
+            "yarn copy README.md dist/packages/lumberjackjs/angular"
+          ]
+        }
+      },
+      "defaultConfiguration": "production",
+      "outputs": ["{workspaceRoot}/dist/packages/lumberjackjs/angular"]
+    },
+    "build-package": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "packages/ngworker/lumberjack/ng-package.json",
+        "updateBuildableProjectDepsInPackageJson": false
+      },
+      "dependsOn": [
+        {
+          "target": "build-package",
+          "dependencies": true
+        }
+      ],
+      "configurations": {
+        "production": {
+          "tsConfig": "packages/lumberjackjs/angular/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "packages/lumberjackjs/angular/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/lumberjackjs/angular/jest.config.ts",
+        "passWithNoTests": true,
+        "reporters": ["default", "github-actions"]
+      },
+      "configurations": {
+        "coverage": {
+          "codeCoverage": true,
+          "ci": true,
+          "coverageReporters": ["lcovonly", "text-summary"]
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "packages/lumberjackjs/angular/**/*.ts",
+          "packages/lumberjackjs/angular/**/*.html",
+          "packages/lumberjackjs/angular/http-driver/**/*.ts",
+          "packages/lumberjackjs/angular/http-driver/**/*.html",
+          "packages/lumberjackjs/angular/console-driver/**/*.ts",
+          "packages/lumberjackjs/angular/console-driver/**/*.html"
+        ]
+      },
+      "configurations": {
+        "report": {
+          "format": "json",
+          "force": true,
+          "outputFile": "reports/packages/lumberjackjs/angular/lint/report.json"
+        }
+      }
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "preset": "conventional",
+        "tagPrefix": "v",
+        "noVerify": true,
+        "push": true,
+        "preid": "beta",
+        "syncVersions": false,
+        "commitMessageFormat": "release(${projectName}): 🎸 cut release to ${version}",
+        "postTargets": ["lumberjackjs-angular:github", "lumberjackjs-angular:publish"]
+      }
+    },
+    "github": {
+      "executor": "@jscutlery/semver:github",
+      "options": {
+        "tag": "${tag}",
+        "notes": "${notes}"
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public",
+        "distFolderPath": "dist/packages/ngworker/lumberjack"
+      }
+    }
+  },
+  "tags": ["technology:angular", "scope:public", "type:package"],
+  "implicitDependencies": ["!internal-angular-console-driver-test-util", "!internal-angular-test-util"],
+  "namedInputs": {
+    "projectSpecificFiles": ["{workspaceRoot}/README.md"]
+  }
+}

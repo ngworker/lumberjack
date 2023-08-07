@@ -1,4 +1,4 @@
-import { LumberjackLevel } from '@webworker/lumberjack';
+import { LumberjackLevel } from '@lumberjackjs/core';
 
 import { errorThrowingDriverIdentifier } from './create-error-throwing-driver';
 import { defaultErrorThrowingDriverOptions } from './default-error-throwing-driver-options';

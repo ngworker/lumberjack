@@ -3,7 +3,7 @@
 // ⬆️ Maintain signature compatibility with LumberjackConsole
 import { Injectable } from '@angular/core';
 
-import { LumberjackConsole } from '@ngworker/lumberjack/console-driver';
+import { LumberjackConsole } from '@lumberjackjs/angular/console-driver';
 
 /**
  * No-op console logger.

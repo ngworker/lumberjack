@@ -45,13 +45,13 @@ out-of-the-box. It's easy to enable the built-in log drivers or create and use c
 
 ## Installation
 
-Lumberjack is published as the `@ngworker/lumberjack` package.
+Lumberjack is published as the `@lumberjackjs/angular` package.
 
-| Toolchain | Command                            |
-| --------- | ---------------------------------- |
-| NPM CLI   | `npm install @ngworker/lumberjack` |
-| PNPM CLI  | `pnpm add @ngworker/lumberjack`    |
-| Yarn CLI  | `yarn add @ngworker/lumberjack`    |
+| Toolchain | Command                             |
+| --------- | ----------------------------------- |
+| NPM CLI   | `npm install @lumberjackjs/angular` |
+| PNPM CLI  | `pnpm add @lumberjackjs/angular`    |
+| Yarn CLI  | `yarn add @lumberjackjs/angular`    |
 
 ## Documentation
 

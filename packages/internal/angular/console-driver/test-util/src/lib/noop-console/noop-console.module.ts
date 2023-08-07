@@ -1,6 +1,6 @@
 import { NgModule, Optional, SkipSelf } from '@angular/core';
 
-import { lumberjackConsoleToken } from '@ngworker/lumberjack/console-driver';
+import { lumberjackConsoleToken } from '@lumberjackjs/angular/console-driver';
 
 import { NoopConsole } from './noop-console.service';
 

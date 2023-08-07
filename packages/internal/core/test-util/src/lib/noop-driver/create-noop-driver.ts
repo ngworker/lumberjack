@@ -5,7 +5,7 @@ import {
   LumberjackLogDriverConfig,
   LumberjackLogDriverLog,
   LumberjackLogPayload,
-} from '@webworker/lumberjack';
+} from '@lumberjackjs/core';
 
 import { NoopDriverConfig } from './noop-driver.config';
 

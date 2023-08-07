@@ -1,6 +1,6 @@
 import { Injectable, VERSION } from '@angular/core';
 
-import { ScopedLumberjackLogger } from '@ngworker/lumberjack';
+import { ScopedLumberjackLogger } from '@lumberjackjs/angular';
 
 import { AppPayload } from './app-payload';
 

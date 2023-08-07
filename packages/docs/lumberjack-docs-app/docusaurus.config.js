@@ -97,7 +97,7 @@ module.exports = {
           ],
         },
       ],
-      copyright: `© ${new Date().getFullYear()} ngworkers. Licensed under the MIT license.`,
+      copyright: `© ${new Date().getFullYear()} lumberjackjs. Licensed under the MIT license.`,
     },
   },
   presets: [

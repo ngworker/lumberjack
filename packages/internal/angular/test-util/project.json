@@ -3,7 +3,7 @@
   "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "library",
   "sourceRoot": "packages/internal/angular/test-util/src",
-  "prefix": "ngworker",
+  "prefix": "lumberjackjs",
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",

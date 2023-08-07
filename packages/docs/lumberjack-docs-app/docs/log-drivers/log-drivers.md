@@ -50,9 +50,9 @@ levels for the HTTP driver as seen in the following example.
 
 ```ts
 import { NgModule } from '@angular/core';
-import { LumberjackLevel, LumberjackModule } from '@ngworker/lumberjack';
-import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
-import { LumberjackHttpDriverModule } from '@ngworker/lumberjack/http-driver';
+import { LumberjackLevel, LumberjackModule } from '@lumberjackjs/angular';
+import { LumberjackConsoleDriverModule } from '@lumberjackjs/angular/console-driver';
+import { LumberjackHttpDriverModule } from '@lumberjackjs/angular/http-driver';
 
 @NgModule({
   imports: [
@@ -78,9 +78,9 @@ Or use the standalone version of the API
 ```ts
 import { bootstrapApplication } from '@angular/platform-browser';
 
-import { LumberjackLevel, provideLumberjack } from '@ngworker/lumberjack';
-import { provideLumberjackConsoleDriver } from '@ngworker/lumberjack/console-driver';
-import { provideLumberjackHttpDriver, withHttpConfig } from '@ngworker/lumberjack/http-driver';
+import { LumberjackLevel, provideLumberjack } from '@lumberjackjs/angular';
+import { provideLumberjackConsoleDriver } from '@lumberjackjs/angular/console-driver';
+import { provideLumberjackHttpDriver, withHttpConfig } from '@lumberjackjs/angular/http-driver';
 
 import { AppComponent } from './app/app.component';
 
@@ -107,7 +107,7 @@ Let's create a simple log driver for the browser console.
 ```ts
 import { inject, Injectable } from '@angular/core';
 
-import { LumberjackLogDriver, LumberjackLogDriverConfig, LumberjackLogDriverLog } from '@ngworker/lumberjack';
+import { LumberjackLogDriver, LumberjackLogDriverConfig, LumberjackLogDriverLog } from '@lumberjackjs/angular';
 
 import { consoleDriverConfigToken } from './console-driver-config.token';
 
@@ -189,7 +189,7 @@ import {
   LumberjackLogDriverConfig,
   LumberjackLogDriverLog,
   LumberjackLogPayload,
-} from '@ngworker/lumberjack';
+} from '@lumberjackjs/angular';
 
 import { consoleDriverConfigToken } from './console-driver-config.token';
 
@@ -240,7 +240,7 @@ import {
   LumberjackLogDriverConfig,
   lumberjackLogDriverConfigToken,
   lumberjackLogDriverToken,
-} from '@ngworker/lumberjack';
+} from '@lumberjackjs/angular';
 
 import { LumberjackConsoleDriver } from '../log-drivers/lumberjack-console.driver';
 
@@ -299,7 +299,7 @@ If no configuration is passed, then the root `LogDriverConfig` is used.
 
 ```ts
 import { InjectionToken } from '@angular/core';
-import { LumberjackLogDriverConfig, lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
+import { LumberjackLogDriverConfig, lumberjackLogDriverConfigToken } from '@lumberjackjs/angular';
 
 export const consoleDriverConfigToken = new InjectionToken<LumberjackLogDriverConfig>('__CONSOLE_DRIVER_CONFIG__', {
   factory: () => inject({ ...lumberjackLogDriverConfigToken, identifier: 'ConsoleDriver' }),
@@ -310,7 +310,7 @@ This is possible because the `ConsoleDriver` has the same configuration options 
 only have to include the driver identifier since it cannot be predefined.
 
 For adding custom settings,
-see [LumberjackHttpDriver](https://github.com/ngworker/lumberjack/blob/main/packages/ngworker/lumberjack/http-driver/src/lib/configuration/lumberjack-http-driver-root.module.ts).
+see [LumberjackHttpDriver](https://github.com/ngworker/lumberjack/blob/main/packages/lumberjackjs/angular/http-driver/src/lib/configuration/lumberjack-http-driver-root.module.ts).
 
 The most important thing about the `LumberjackConsoleDriverModule` is that it provides the `LumberjackConsoleDriver`
 using the `lumberjackLogDriverToken` with the `multi` flag on. This allows us to provide multiple log drivers for
@@ -338,8 +338,8 @@ Or using the standalone API.
 ```typescript
 import { bootstrapApplication } from '@angular/platform-browser';
 
-import { LumberjackLog, LumberjackOptions, provideLumberjack } from '@ngworker/lumberjack';
-import { provideLumberjackConsoleDriver } from '@ngworker/lumberjack/console-driver';
+import { LumberjackLog, LumberjackOptions, provideLumberjack } from '@lumberjackjs/angular';
+import { provideLumberjackConsoleDriver } from '@lumberjackjs/angular/console-driver';
 
 import { AppComponent } from './app/app.component';
 

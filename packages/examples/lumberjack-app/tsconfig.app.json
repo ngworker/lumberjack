@@ -4,10 +4,10 @@
     "outDir": "../../../dist/out-tsc",
     "types": [],
     "paths": {
-      "@ngworker/lumberjack": ["dist/packages/ngworker/lumberjack"],
-      "@ngworker/lumberjack/console-driver": ["dist/packages/ngworker/lumberjack/console-driver"],
-      "@ngworker/lumberjack/http-driver": ["dist/packages/ngworker/lumberjack/http-driver"],
-      "@webworker/lumberjack": ["dist/packages/webworker/lumberjack"]
+      "@lumberjackjs/angular": ["dist/packages/lumberjackjs/angular"],
+      "@lumberjackjs/angular/console-driver": ["dist/packages/lumberjackjs/angular/console-driver"],
+      "@lumberjackjs/angular/http-driver": ["dist/packages/lumberjackjs/angular/http-driver"],
+      "@lumberjackjs/core": ["dist/packages/lumberjackjs/core"]
     }
   },
   "files": ["src/main.ts"],

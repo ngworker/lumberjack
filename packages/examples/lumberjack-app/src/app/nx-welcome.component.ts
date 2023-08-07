@@ -4,7 +4,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 
 @Component({
   standalone: true,
-  selector: 'ngworker-nx-welcome',
+  selector: 'lumberjackjs-nx-welcome',
   template: `
     <!--
      * * * * * * * * * * * * * * * * * * * * * * * * * * * *

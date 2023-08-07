@@ -6,8 +6,8 @@ import {
   ErrorThrowingDriverConfig,
   ErrorThrowingDriverOptions,
 } from '@internal/core/test-util';
-import { lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
-import { LumberjackLogDriverConfig } from '@webworker/lumberjack';
+import { lumberjackLogDriverConfigToken } from '@lumberjackjs/angular';
+import { LumberjackLogDriverConfig } from '@lumberjackjs/core';
 
 import { errorThrowingDriverConfigToken } from './error-throwing-driver-config.token';
 import { ErrorThrowingDriverRootModule } from './error-throwing-driver-root.module';

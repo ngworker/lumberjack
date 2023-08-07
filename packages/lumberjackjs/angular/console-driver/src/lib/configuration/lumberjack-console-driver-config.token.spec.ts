@@ -1,0 +1,33 @@
+import { TestBed } from '@angular/core/testing';
+
+import { LumberjackLevel, LumberjackLogDriverConfig } from '@lumberjackjs/core';
+import { lumberjackLogDriverConfigToken } from '@lumberjackjs/angular';
+
+import { lumberjackConsoleDriverConfigToken } from './lumberjack-console-driver-config.token';
+
+const debugDriverConfig: LumberjackLogDriverConfig = {
+  levels: [LumberjackLevel.Debug],
+  identifier: 'TestConsoleDriver',
+};
+const verboseDriverConfig: Partial<LumberjackLogDriverConfig> = {
+  levels: [LumberjackLevel.Verbose],
+};
+
+describe('consoleDriverConfigToken', () => {
+  describe('given a provided console log driver config', () => {
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        providers: [
+          { provide: lumberjackLogDriverConfigToken, useValue: verboseDriverConfig },
+          { provide: lumberjackConsoleDriverConfigToken, useValue: debugDriverConfig },
+        ],
+      });
+    });
+
+    it('then that config is resolved', () => {
+      const actualDriverConfig = TestBed.inject(lumberjackConsoleDriverConfigToken);
+
+      expect(actualDriverConfig).toStrictEqual(debugDriverConfig);
+    });
+  });
+});

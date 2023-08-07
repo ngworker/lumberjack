@@ -78,7 +78,7 @@ As an example, let's create a custom logger for our example application.
 ```ts
 import { Injectable } from '@angular/core';
 
-import { LumberjackLogger, LumberjackService, LumberjackTimeService } from '@ngworker/lumberjack';
+import { LumberjackLogger, LumberjackService, LumberjackTimeService } from '@lumberjackjs/angular';
 
 @Injectable({
   providedIn: 'root',
@@ -98,7 +98,7 @@ Now that we have defined our first Lumberjack logger let's use it to log logs fr
 
 ```ts
 import { inject, Component, OnInit } from '@angular/core';
-import { LumberjackLogger } from '@ngworker/lumberjack';
+import { LumberjackLogger } from '@lumberjackjs/angular';
 
 import { AppLogger } from './app.logger';
 import { ForestService } from './forest.service';
@@ -161,7 +161,7 @@ The resulting `AppLogger` after refactoring to using the `ScopedLumberjackLogger
 ```ts
 import { Injectable } from '@angular/core';
 
-import { LumberjackService, LumberjackTimeService, ScopedLumberjackLogger } from '@ngworker/lumberjack';
+import { LumberjackService, LumberjackTimeService, ScopedLumberjackLogger } from '@lumberjackjs/angular';
 
 @Injectable({
   providedIn: 'root',
@@ -192,7 +192,7 @@ import {
   LumberjackService,
   LumberjackTimeService,
   ScopedLumberjackLogger,
-} from '@ngworker/lumberjack';
+} from '@lumberjackjs/angular';
 
 export interface LogPayload extends LumberjackLogPayload {
   readonly angularVersion: string;
@@ -229,12 +229,12 @@ This is how we create logs manually:
 ```ts
 import {inject, Component, OnInit, VERSION} from '@angular/core';
 
-import {LumberjackLogFactory, LumberjackService} from '@ngworker/lumberjack';
+import {LumberjackLogFactory, LumberjackService} from '@lumberjackjs/angular';
 
 import {LogPayload} from './log-payload';
 
 @Component({
-  selector: 'ngworker-root',
+  selector: 'lumberjackjs-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss'],
 })

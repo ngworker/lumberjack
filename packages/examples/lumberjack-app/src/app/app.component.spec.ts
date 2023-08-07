@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { LumberjackModule } from '@ngworker/lumberjack';
+import { LumberjackModule } from '@lumberjackjs/angular';
 
 import { AppComponent } from './app.component';
 

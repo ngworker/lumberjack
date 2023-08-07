@@ -1,4 +1,4 @@
-import { LumberjackLogDriverConfig } from '@webworker/lumberjack';
+import { LumberjackLogDriverConfig } from '@lumberjackjs/core';
 
 export interface ErrorThrowingDriverConfig extends LumberjackLogDriverConfig {
   /**

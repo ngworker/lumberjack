@@ -1,0 +1,79 @@
+{
+  "name": "lumberjackjs-core",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "packages/lumberjackjs/core/src",
+  "projectType": "library",
+  "prefix": "lumberjackjs",
+  "targets": {
+    "build-package": {
+      "executor": "@nrwl/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/packages/lumberjackjs/core",
+        "main": "packages/lumberjackjs/core/src/index.ts",
+        "tsConfig": "packages/lumberjackjs/core/tsconfig.lib.json",
+        "assets": ["packages/lumberjackjs/core/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["packages/lumberjackjs/core/**/*.ts"]
+      },
+      "configurations": {
+        "report": {
+          "format": "json",
+          "force": true,
+          "outputFile": "reports/packages/lumberjackjs/core/lint/report.json"
+        }
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "packages/lumberjackjs/core/jest.config.ts",
+        "passWithNoTests": true,
+        "reporters": ["default", "github-actions"]
+      },
+      "configurations": {
+        "coverage": {
+          "codeCoverage": true,
+          "ci": true,
+          "coverageReporters": ["lcovonly", "text-summary"]
+        }
+      }
+    },
+    "version": {
+      "executor": "@jscutlery/semver:version",
+      "options": {
+        "preset": "conventional",
+        "tagPrefix": "v",
+        "noVerify": true,
+        "push": true,
+        "preid": "beta",
+        "syncVersions": false,
+        "commitMessageFormat": "release(${projectName}): 🎸 cut release to ${version}",
+        "postTargets": ["lumberjackjs-core:github", "lumberjackjs-core:publish"]
+      }
+    },
+    "github": {
+      "executor": "@jscutlery/semver:github",
+      "options": {
+        "tag": "${tag}",
+        "notes": "${notes}"
+      }
+    },
+    "publish": {
+      "executor": "ngx-deploy-npm:deploy",
+      "options": {
+        "access": "public",
+        "tag": "next",
+        "distFolderPath": "dist/packages/lumberjackjs/core"
+      }
+    }
+  },
+  "implicitDependencies": ["!internal-angular-test-util", "!internal-core-test-util"],
+  "tags": ["type:package", "scope:public", "technology:javascript"]
+}

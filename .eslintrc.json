@@ -108,12 +108,12 @@
             "group-ordering": [
               {
                 "name": "project root",
-                "match": "^@(?!(webworker|ngworker|qwikworker|solidworker|reactworker|internal)).*|^[a-zA-Z].*",
+                "match": "^@(?!(lumberjackjs|internal)).*|^[a-zA-Z].*",
                 "order": 20
               },
               {
                 "name": "internal imports",
-                "match": "^@(webworker|ngworker|qwikworker|solidworker|reactworker|internal).*",
+                "match": "^@(lumberjackjs|internal).*",
                 "order": 30
               },
               { "name": "parent directories", "match": "^\\.\\.", "order": 40 },

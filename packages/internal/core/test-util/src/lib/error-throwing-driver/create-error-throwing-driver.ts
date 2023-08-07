@@ -1,4 +1,4 @@
-import { LumberjackLogDriver, LumberjackLogDriverLog } from '@webworker/lumberjack';
+import { LumberjackLogDriver, LumberjackLogDriverLog } from '@lumberjackjs/core';
 
 import { ErrorThrowingDriverConfig } from './error-throwing-driver.config';
 
