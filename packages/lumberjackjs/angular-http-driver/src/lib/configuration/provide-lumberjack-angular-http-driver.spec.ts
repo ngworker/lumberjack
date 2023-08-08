@@ -1,15 +1,21 @@
+import { HttpHandlerFn, HttpRequest, withInterceptors } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 
-import { expectNgModuleToBeGuardedAgainstDirectImport } from '@internal/angular/test-util';
-import { lumberjackLogDriverToken, LumberjackModule } from '@lumberjackjs/angular';
+import { createDriverLog, createFakeTime, Writable } from '@internal/core/test-util';
+import { lumberjackLogDriverToken, provideLumberjack } from '@lumberjackjs/angular';
 import { LumberjackConfigLevels, LumberjackLevel, LumberjackLogDriver } from '@lumberjackjs/core';
 
 import { LumberjackAngularHttpDriver } from '../log-drivers/lumberjack-http.driver';
 
-import { LumberjackAngularHttpDriverInternalConfig } from './lumberjack-http-driver-internal.config';
-import { LumberjackAngularHttpDriverConfig } from './lumberjack-http-driver.config';
-import { LumberjackAngularHttpDriverModule } from './lumberjack-http-driver.module';
-import { LumberjackAngularHttpDriverOptions } from './lumberjack-http-driver.options';
+import { LumberjackAngularHttpDriverInternalConfig } from './lumberjack-angular-http-driver-internal.config';
+import { LumberjackAngularHttpDriverConfig } from './lumberjack-angular-http-driver.config';
+import { LumberjackAngularHttpDriverOptions } from './lumberjack-angular-http-driver.options';
+import {
+  HttpClientFeatures,
+  provideLumberjackAngularHttpDriver,
+  withHttpConfig,
+  withHttpOptions,
+} from './provide-lumberjack-angular-http-driver';
 
 function createHttpOptions(
   extraOptions: { levels?: LumberjackConfigLevels; identifier?: string } = {}
@@ -23,7 +29,7 @@ function createHttpOptions(
 }
 
 function createHttpConfig(levels: LumberjackConfigLevels, identifier?: string): LumberjackAngularHttpDriverConfig {
-  const config = {
+  const config: Writable<LumberjackAngularHttpDriverConfig> = {
     levels,
     origin: 'TEST_MODULE',
     retryOptions: { maxRetries: 5, delayMs: 250 },
@@ -41,19 +47,21 @@ function createHttpConfig(levels: LumberjackConfigLevels, identifier?: string): 
 const createHttpDriver = (
   {
     config,
-    isLumberjackModuleImportedFirst = true,
+    isLumberjackModuleProvidedFirst = true,
+    features = [],
   }: {
     config: LumberjackAngularHttpDriverConfig;
-    isLumberjackModuleImportedFirst?: boolean;
+    isLumberjackModuleProvidedFirst?: boolean;
+    features?: HttpClientFeatures;
   } = {
     config: createHttpConfig([LumberjackLevel.Verbose], LumberjackAngularHttpDriver.driverIdentifier),
   }
 ) => {
   TestBed.configureTestingModule({
-    imports: [
-      isLumberjackModuleImportedFirst ? LumberjackModule.forRoot() : [],
-      LumberjackAngularHttpDriverModule.forRoot(config),
-      isLumberjackModuleImportedFirst ? [] : LumberjackModule.forRoot(),
+    providers: [
+      isLumberjackModuleProvidedFirst ? provideLumberjack() : [],
+      provideLumberjackAngularHttpDriver(withHttpConfig(config), ...features),
+      isLumberjackModuleProvidedFirst ? [] : provideLumberjack(),
     ],
   });
 
@@ -64,18 +72,20 @@ const createHttpDriver = (
 
 const createHttpDriverWithOptions = (
   {
-    isLumberjackModuleImportedFirst = true,
+    isLumberjackModuleProvidedFirst = true,
     options,
+    features = [],
   }: {
-    isLumberjackModuleImportedFirst?: boolean;
+    isLumberjackModuleProvidedFirst?: boolean;
     options: LumberjackAngularHttpDriverOptions;
+    features?: HttpClientFeatures;
   } = { options: createHttpOptions() }
 ) => {
   TestBed.configureTestingModule({
-    imports: [
-      isLumberjackModuleImportedFirst ? LumberjackModule.forRoot() : [],
-      LumberjackAngularHttpDriverModule.withOptions(options),
-      isLumberjackModuleImportedFirst ? [] : LumberjackModule.forRoot(),
+    providers: [
+      isLumberjackModuleProvidedFirst ? provideLumberjack() : [],
+      provideLumberjackAngularHttpDriver(withHttpOptions(options), ...features),
+      isLumberjackModuleProvidedFirst ? [] : provideLumberjack(),
     ],
   });
 
@@ -84,18 +94,16 @@ const createHttpDriverWithOptions = (
   return httpDriver;
 };
 
-describe(LumberjackAngularHttpDriverModule.name, () => {
-  it(`cannot be imported without using the ${LumberjackAngularHttpDriverModule.forRoot.name} method`, () => {
-    expectNgModuleToBeGuardedAgainstDirectImport(LumberjackAngularHttpDriverModule);
+const fakeTime = createFakeTime();
+
+describe(provideLumberjackAngularHttpDriver.name, () => {
+  it('provides the HTTP driver', () => {
+    const httpDriver = createHttpDriver();
+
+    expect(httpDriver).toBeInstanceOf(LumberjackAngularHttpDriver);
   });
 
-  describe(LumberjackAngularHttpDriverModule.forRoot.name, () => {
-    it('provides the HTTP driver', () => {
-      const httpDriver = createHttpDriver();
-
-      expect(httpDriver).toBeInstanceOf(LumberjackAngularHttpDriver);
-    });
-
+  describe(withHttpConfig.name, () => {
     it('registers the specified log driver configuration WITH a specified identifier', () => {
       const expectedConfig = createHttpConfig([LumberjackLevel.Error], 'TestDriverIdentifier');
 
@@ -119,21 +127,33 @@ describe(LumberjackAngularHttpDriverModule.name, () => {
 
       const httpDriver = createHttpDriver({
         config: expectedConfig,
-        isLumberjackModuleImportedFirst: false,
+        isLumberjackModuleProvidedFirst: false,
       });
 
       const actualConfig = httpDriver.config;
       expect(actualConfig).toEqual(expectedConfig as LumberjackAngularHttpDriverInternalConfig);
     });
+
+    it('registers the specified log driver configuration WITH HttpClient features', () => {
+      const testInterceptor = jest.fn((req: HttpRequest<unknown>, next: HttpHandlerFn) => next(req));
+      const config = createHttpConfig([LumberjackLevel.Error]);
+      const features: HttpClientFeatures = [withInterceptors([testInterceptor])];
+      const httpDriver = createHttpDriver({ config, features });
+      const log = createDriverLog(
+        fakeTime.getUnixEpochTicks.bind(fakeTime),
+        LumberjackLevel.Info,
+        LumberjackLevel.Info,
+        '',
+        'Test Log'
+      );
+
+      httpDriver.logInfo(log);
+
+      expect(testInterceptor).toHaveBeenCalled();
+    });
   });
 
-  describe(LumberjackAngularHttpDriverModule.withOptions.name, () => {
-    it('provides the HTTP driver', () => {
-      const httpDriver = createHttpDriverWithOptions();
-
-      expect(httpDriver).toBeInstanceOf(LumberjackAngularHttpDriver);
-    });
-
+  describe(withHttpOptions.name, () => {
     it('registers the specified options', () => {
       const options = createHttpOptions();
 
@@ -193,7 +213,7 @@ describe(LumberjackAngularHttpDriverModule.name, () => {
 
       const httpDriver = createHttpDriverWithOptions({
         options,
-        isLumberjackModuleImportedFirst: false,
+        isLumberjackModuleProvidedFirst: false,
       });
 
       const actualConfig = httpDriver.config;
@@ -203,6 +223,26 @@ describe(LumberjackAngularHttpDriverModule.name, () => {
         identifier: LumberjackAngularHttpDriver.driverIdentifier,
       };
       expect(actualConfig).toEqual(expectedConfig);
+    });
+
+    it('does register the specified log driver options WITH HttpClient features', () => {
+      const testInterceptor = jest.fn((req, next) => next(req));
+      const features: HttpClientFeatures = [withInterceptors([testInterceptor])];
+      const customLevels: LumberjackConfigLevels = [LumberjackLevel.Critical];
+      const options = createHttpOptions({ levels: customLevels });
+
+      const httpDriver = createHttpDriverWithOptions({ options, features });
+      const log = createDriverLog(
+        fakeTime.getUnixEpochTicks.bind(fakeTime),
+        LumberjackLevel.Info,
+        LumberjackLevel.Info,
+        '',
+        'Test Log'
+      );
+
+      httpDriver.logInfo(log);
+
+      expect(testInterceptor).toHaveBeenCalled();
     });
   });
 });

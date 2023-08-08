@@ -1,14 +1,14 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import { LumberjackAngularHttpDriverRootModule } from './lumberjack-http-driver-root.module';
-import { LumberjackAngularHttpDriverConfig } from './lumberjack-http-driver.config';
-import { LumberjackAngularHttpDriverOptions } from './lumberjack-http-driver.options';
+import { LumberjackAngularHttpDriverRootModule } from './lumberjack-angular-http-driver-root.module';
+import { LumberjackAngularHttpDriverConfig } from './lumberjack-angular-http-driver.config';
+import { LumberjackAngularHttpDriverOptions } from './lumberjack-angular-http-driver.options';
 import {
   HttpClientFeatures,
   provideLumberjackAngularHttpDriver,
   withHttpConfig,
   withHttpOptions,
-} from './provide-lumberjack-http-driver';
+} from './provide-lumberjack-angular-http-driver';
 
 /**
  * The HTTP driver Angular module is used to configure and register the HTTP

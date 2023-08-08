@@ -1,6 +1,6 @@
 import { catchError, MonoTypeOperatorFunction, pipe, retry, throwError } from 'rxjs';
 
-import { LumberjackAngularHttpDriverError } from '../errors/lumberjack-http-driver.error';
+import { LumberjackAngularHttpDriverError } from '../errors/lumberjack-angular-http-driver.error';
 
 export const retryWithDelay = <T>(maxRetries: number, delayMs: number): MonoTypeOperatorFunction<T> =>
   pipe(

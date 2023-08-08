@@ -1,6 +1,6 @@
 import { LumberjackLogDriverConfig } from '@lumberjackjs/core';
 
-import { LumberjackAngularHttpDriverRetryOptions } from './lumberjack-http-driver-retry.options';
+import { LumberjackAngularHttpDriverRetryOptions } from './lumberjack-angular-http-driver-retry.options';
 
 /**
  * Settings used by the HTTP driver.

@@ -6,11 +6,11 @@ import { LumberjackLogDriverConfig } from '@lumberjackjs/core';
 
 import { LumberjackAngularHttpDriver } from '../log-drivers/lumberjack-http.driver';
 
-import { LumberjackAngularHttpDriverConfigToken } from './lumberjack-http-driver-config.token';
-import { LumberjackAngularHttpDriverInternalConfig } from './lumberjack-http-driver-internal.config';
-import { LumberjackAngularHttpDriverConfig } from './lumberjack-http-driver.config';
-import { LumberjackAngularHttpDriverOptions } from './lumberjack-http-driver.options';
-import { LumberjackAngularHttpDriverProvider } from './lumberjack-http-driver.provider';
+import { LumberjackAngularHttpDriverConfigToken } from './lumberjack-angular-http-driver-config.token';
+import { LumberjackAngularHttpDriverInternalConfig } from './lumberjack-angular-http-driver-internal.config';
+import { LumberjackAngularHttpDriverConfig } from './lumberjack-angular-http-driver.config';
+import { LumberjackAngularHttpDriverOptions } from './lumberjack-angular-http-driver.options';
+import { LumberjackAngularHttpDriverProvider } from './lumberjack-angular-http-driver.provider';
 
 export type LumberjackAngularHttpDriverConfigurationKind = 'options' | 'config';
 export type LumberjackAngularHttpDriverConfiguration<Kind extends LumberjackAngularHttpDriverConfigurationKind> = {

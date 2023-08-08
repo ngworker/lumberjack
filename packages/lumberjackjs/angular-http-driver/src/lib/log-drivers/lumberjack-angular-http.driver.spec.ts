@@ -12,9 +12,9 @@ import {
   LumberjackLogPayload,
 } from '@lumberjackjs/core';
 
-import { LumberjackAngularHttpDriverOptions } from '../configuration/lumberjack-http-driver.options';
-import { provideLumberjackAngularHttpDriver, withHttpOptions } from '../configuration/provide-lumberjack-http-driver';
-import { LumberjackAngularHttpDriverError } from '../errors/lumberjack-http-driver.error';
+import { LumberjackAngularHttpDriverOptions } from '../configuration/lumberjack-angular-http-driver.options';
+import { provideLumberjackAngularHttpDriver, withHttpOptions } from '../configuration/provide-lumberjack-angular-http-driver';
+import { LumberjackAngularHttpDriverError } from '../errors/lumberjack-angular-http-driver.error';
 import { LumberjackHttpLog } from '../logs/lumberjack-http.log';
 
 import { LumberjackAngularHttpDriver } from './lumberjack-http.driver';

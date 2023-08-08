@@ -1,4 +1,4 @@
-import { LumberjackAngularHttpDriverInternalConfig } from './lumberjack-http-driver-internal.config';
+import { LumberjackAngularHttpDriverInternalConfig } from './lumberjack-angular-http-driver-internal.config';
 
 /**
  * Settings used by the HTTP driver.

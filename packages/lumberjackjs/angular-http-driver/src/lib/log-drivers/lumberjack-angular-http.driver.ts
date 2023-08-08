@@ -4,7 +4,7 @@ import { Subscription } from 'rxjs';
 
 import { LumberjackLog, LumberjackLogDriver, LumberjackLogDriverLog, LumberjackLogPayload } from '@lumberjackjs/core';
 
-import { LumberjackAngularHttpDriverConfigToken } from '../configuration/lumberjack-http-driver-config.token';
+import { LumberjackAngularHttpDriverConfigToken } from '../configuration/lumberjack-angular-http-driver-config.token';
 import { LumberjackHttpLog } from '../logs/lumberjack-http.log';
 import { retryWithDelay } from '../operators/retry-with-delay.operator';
 

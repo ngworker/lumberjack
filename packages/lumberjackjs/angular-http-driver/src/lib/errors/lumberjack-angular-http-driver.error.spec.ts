@@ -1,4 +1,4 @@
-import { LumberjackAngularHttpDriverError } from './lumberjack-http-driver.error';
+import { LumberjackAngularHttpDriverError } from './lumberjack-angular-http-driver.error';
 
 describe(LumberjackAngularHttpDriverError.name, () => {
   it('has the default error message "LumberjackAngularHttpDriverError"', () => {
