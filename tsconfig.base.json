@@ -20,6 +20,7 @@
       "@internal/angular/test-util": ["packages/internal/angular/test-util/src/index.ts"],
       "@internal/core/test-util": ["packages/internal/core/test-util/src/index.ts"],
       "@lumberjackjs/angular": ["packages/lumberjackjs/angular/src/index.ts"],
+      "@lumberjackjs/angular-http-driver": ["packages/lumberjackjs/angular-http-driver/src/index.ts"],
       "@lumberjackjs/angular/console-driver": ["packages/lumberjackjs/angular/console-driver/src/index.ts"],
       "@lumberjackjs/angular/http-driver": ["packages/lumberjackjs/angular/http-driver/src/index.ts"],
       "@lumberjackjs/core": ["packages/lumberjackjs/core/src/index.ts"]

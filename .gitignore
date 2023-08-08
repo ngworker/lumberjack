@@ -47,3 +47,5 @@ migrations.json
 # Generated Docusaurus files
 .docusaurus/
 .cache-loader/
+
+.angular

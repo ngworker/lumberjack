@@ -36,12 +36,12 @@ bootstrapApplication(AppComponent, {
 
 You must also register the log driver modules for the log drivers that you want to enable.
 
-If you want to add the `LumberjackHttpDriver` and the `LumberjackConsoleDriver`, add the following code
+If you want to add the `LumberjackAngularHttpDriver` and the `LumberjackConsoleDriver`, add the following code
 
 ```ts
 // (...)
 import { LumberjackModule } from '@lumberjackjs/angular';
-import { LumberjackHttpDriverModule } from '@lumberjackjs/angular/http-driver';
+import { LumberjackAngularHttpDriverModule } from '@lumberjackjs/angular/http-driver';
 import { LumberjackConsoleDriverModule } from '@lumberjackjs/angular/console-driver';
 
 @NgModule({
@@ -49,7 +49,7 @@ import { LumberjackConsoleDriverModule } from '@lumberjackjs/angular/console-dri
     // (...)
     LumberjackModule.forRoot(),
     LumberjackConsoleDriverModule.forRoot(),
-    LumberjackHttpDriverModule.withOptions({
+    LumberjackAngularHttpDriverModule.withOptions({
       origin: '<app-name>',
       storeUrl: '/api/logs',
       retryOptions: { maxRetries: 5, delayMs: 250 },
@@ -69,7 +69,7 @@ bootstrapApplication(AppComponent, {
     // (...)
     provideLumberjack(),
     provideLumberjackConsoleDriver(),
-    provideLumberjackHttpDriver(withHttpConfig({...})),
+    provideLumberjackAngularHttpDriver(withHttpConfig({...})),
     // (...)
   ],
 });

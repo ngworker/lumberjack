@@ -1,0 +1,49 @@
+{
+  "name": "@lumberjackjs/angular-http-driver",
+  "version": "0.0.1",
+  "description": "LumberjackAngularHttpDriver is a Lumberjack Driver for Angular used to send Lumberjack logs through HTTP. It is optimized for Angular by running outside of ngZone.",
+  "homepage": "https://lumberjackjs.github.io/",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lumberjackjs/lumberjack.git",
+    "directory": "packages/lumberjackjs/angular-http-driver"
+  },
+  "keywords": [
+    "angular",
+    "angular2",
+    "lumberjack",
+    "logging",
+    "plugin",
+    "http"
+  ],
+  "contributors": [
+    {
+      "name": "Nacho Vazquez",
+      "email": "nacho.vazquez.dev@gmail.com",
+      "url": "https://github.com/NachoVazquez"
+    },
+    {
+      "email": "larsbrinknielsen@gmail.com",
+      "name": "Lars Gyrup Brink Nielsen",
+      "url": "https://github.com/LayZeeDK"
+    },
+    {
+      "email": "santosh.yadav198613@gmail.com",
+      "name": "Santosh Yadav",
+      "url": "https://github.com/santoshyadavdev"
+    }
+  ],
+  "bugs": {
+    "url": "https://github.com/lumberjackjs/lumberjack/issues?q=is:issue+is:open+"
+  },
+  "peerDependencies": {
+    "@angular/common": "^15.2.0",
+    "@angular/core": "^15.2.0",
+    "rxjs": "~7.5.0"
+  },
+  "dependencies": {
+    "tslib": "^2.4.1"
+  },
+  "sideEffects": false
+}

@@ -58,7 +58,7 @@ bootstrapApplication(AppComponent, {
     // (…)
     provideLumberjack(),
     provideLumberjackConsoleDriver(),
-    provideLumberjackHttpDriver(withHttpConfig({…})),
+    provideLumberjackAngularHttpDriver(withHttpConfig({…})),
     // (…)
   ],
 });
@@ -89,7 +89,7 @@ We can use the `withHttpOptions.`
 bootstrapApplication(AppComponent, {
   providers: [
     provideLumberjack(),
-    provideLumberjackHttpDriver(
+    provideLumberjackAngularHttpDriver(
       withHttpOptions({
         origin: 'ForestApp',
         retryOptions: { maxRetries: 1, delayMs: 250 },
@@ -104,7 +104,7 @@ Or the `withHttpConfig`
 bootstrapApplication(AppComponent, {
   providers: [
     provideLumberjack(),
-    provideLumberjackHttpDriver(
+    provideLumberjackAngularHttpDriver(
       withHttpConfig({
         levels: [LumberjackLevel.Error],
         origin: 'ForestApp',
@@ -114,13 +114,13 @@ bootstrapApplication(AppComponent, {
     ),
 ```
 
-The big novelty is that now, we can also configure the underlying `HttpClient` using the second argument of the `provideLumberjackHttpDriver` function.
+The big novelty is that now, we can also configure the underlying `HttpClient` using the second argument of the `provideLumberjackAngularHttpDriver` function.
 
 ```ts
 bootstrapApplication(AppComponent, {
   providers: [
     provideLumberjack(),
-    provideLumberjackHttpDriver(
+    provideLumberjackAngularHttpDriver(
       withHttpConfig({
         levels: [LumberjackLevel.Error],
         origin: 'ForestApp',

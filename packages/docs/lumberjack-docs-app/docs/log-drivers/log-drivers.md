@@ -9,7 +9,7 @@ how to create custom log drivers.
 
 A log driver is the conduit used by the Lumberjack to output or persist application logs.
 
-Lumberjack offers basic log drivers out-of-the-box, namely the `LumberjackConsoleDriver` and the `LumberjackHttpDriver`.
+Lumberjack offers basic log drivers out-of-the-box, namely the `LumberjackConsoleDriver` and the `LumberjackAngularHttpDriver`.
 
 Every log driver implements the `LumberjackLogDriver` interface.
 
@@ -52,7 +52,7 @@ levels for the HTTP driver as seen in the following example.
 import { NgModule } from '@angular/core';
 import { LumberjackLevel, LumberjackModule } from '@lumberjackjs/angular';
 import { LumberjackConsoleDriverModule } from '@lumberjackjs/angular/console-driver';
-import { LumberjackHttpDriverModule } from '@lumberjackjs/angular/http-driver';
+import { LumberjackAngularHttpDriverModule } from '@lumberjackjs/angular/http-driver';
 
 @NgModule({
   imports: [
@@ -60,7 +60,7 @@ import { LumberjackHttpDriverModule } from '@lumberjackjs/angular/http-driver';
       levels: [LumberjackLevel.Verbose],
     }),
     LumberjackConsoleDriverModule.forRoot(),
-    LumberjackHttpDriverModule.forRoot({
+    LumberjackAngularHttpDriverModule.forRoot({
       levels: [LumberjackLevel.Critical, LumberjackLevel.Error],
       origin: 'ForestApp',
       storeUrl: '/api/logs',
@@ -80,7 +80,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
 
 import { LumberjackLevel, provideLumberjack } from '@lumberjackjs/angular';
 import { provideLumberjackConsoleDriver } from '@lumberjackjs/angular/console-driver';
-import { provideLumberjackHttpDriver, withHttpConfig } from '@lumberjackjs/angular/http-driver';
+import { provideLumberjackAngularHttpDriver, withHttpConfig } from '@lumberjackjs/angular/http-driver';
 
 import { AppComponent } from './app/app.component';
 
@@ -88,7 +88,7 @@ bootstrapApplication(AppComponent, {
   providers: [
     provideLumberjack(),
     provideLumberjackConsoleDriver(),
-    provideLumberjackHttpDriver(
+    provideLumberjackAngularHttpDriver(
       withHttpConfig({
         levels: [LumberjackLevel.Critical, LumberjackLevel.Error],
         origin: 'ForestApp',
@@ -310,7 +310,7 @@ This is possible because the `ConsoleDriver` has the same configuration options 
 only have to include the driver identifier since it cannot be predefined.
 
 For adding custom settings,
-see [LumberjackHttpDriver](https://github.com/ngworker/lumberjack/blob/main/packages/lumberjackjs/angular/http-driver/src/lib/configuration/lumberjack-http-driver-root.module.ts).
+see [LumberjackAngularHttpDriver](https://github.com/ngworker/lumberjack/blob/main/packages/lumberjackjs/angular/http-driver/src/lib/configuration/lumberjack-http-driver-root.module.ts).
 
 The most important thing about the `LumberjackConsoleDriverModule` is that it provides the `LumberjackConsoleDriver`
 using the `lumberjackLogDriverToken` with the `multi` flag on. This allows us to provide multiple log drivers for
@@ -355,4 +355,4 @@ bootstrapApplication(AppComponent, {
 ### HTTP driver
 
 For a more advanced log driver implementation,
-see [LumberjackHttpDriver](./http-driver)
+see [LumberjackAngularHttpDriver](./http-driver)

@@ -1,9 +1,3 @@
----
-sidebar_position: 1
-title: Http driver
-slug: '/log-drivers/http-driver'
----
-
 # LumberjackAngularHttpDriver
 
 This log driver is used to send an HTTP request to a configured log store server.
@@ -67,7 +61,7 @@ export class LumberjackAngularHttpDriver<TPayload extends LumberjackLogPayload |
     this.#sendLog(formattedLog, log);
   }
 
-  private #sendLog(formattedLog: string, log: LumberjackLog<TPayload>): void {
+  #sendLog(formattedLog: string, log: LumberjackLog<TPayload>): void {
     const { origin, retryOptions, storeUrl } = this.config;
     const httpLog: LumberjackHttpLog<TPayload> = { formattedLog, origin, log };
 
@@ -117,8 +111,6 @@ The `sendLog` method has been optimized to run outside Angular's `NgZone`, avoid
 
 ### LumberjackAngularHttpDriverModule
 
-The `LumberjackAngularHttpDriverModule` is similar to the `LumberjackConsoleDriverModule`.
-
 Novelty appears with the static `withOptions` function that allows us to pass `LumberjackAngularHttpDriverOptions` to fall back to the settings in `LumberjackLogDriverConfig`.
 
 Additionally, we can configure the underlaying `HttpClient` by passing any features it receives like interceptors.
@@ -158,7 +150,9 @@ export class LumberjackAngularHttpDriverModule {
   }
 
   constructor() {
-    throw new Error('Do not import LumberjackAngularHttpDriverModule directly. Use LumberjackAngularHttpDriverModule.forRoot.');
+    throw new Error(
+      'Do not import LumberjackAngularHttpDriverModule directly. Use LumberjackAngularHttpDriverModule.forRoot.'
+    );
   }
 }
 ```
@@ -182,7 +176,9 @@ function makeLumberjackHttpConfiguration<Kind extends LumberjackAngularHttpDrive
   };
 }
 
-export function withHttpConfig(config: LumberjackAngularHttpDriverConfig): LumberjackAngularHttpDriverConfiguration<'config'> {
+export function withHttpConfig(
+  config: LumberjackAngularHttpDriverConfig
+): LumberjackAngularHttpDriverConfiguration<'config'> {
   return makeLumberjackHttpConfiguration('config', [
     {
       provide: LumberjackAngularHttpDriverConfigToken,
@@ -196,7 +192,9 @@ export function withHttpConfig(config: LumberjackAngularHttpDriverConfig): Lumbe
   ]);
 }
 
-export function withHttpOptions(options: LumberjackAngularHttpDriverOptions): LumberjackAngularHttpDriverConfiguration<'options'> {
+export function withHttpOptions(
+  options: LumberjackAngularHttpDriverOptions
+): LumberjackAngularHttpDriverConfiguration<'options'> {
   return makeLumberjackHttpConfiguration('options', [
     {
       provide: LumberjackAngularHttpDriverConfigToken,
@@ -238,7 +236,6 @@ Classic:
   imports: [
     ...,
     LumberjackModule.forRoot(),
-    LumberjackConsoleDriverModule.forRoot(),
     LumberjackAngularHttpDriverModule.forRoot({
       levels: [LumberjackLevel.Error],
       origin: 'ForestApp',
@@ -267,36 +264,6 @@ or
   ...,
   providers: [
     ...,
-    provideLumberjack(), provideLumberjackConsoleDriver(), provideLumberjackAngularHttpDriver(withHttpConfig({
-      levels: [LumberjackLevel.Error],
-      origin: 'ForestApp',
-      retryOptions: { maxRetries: 5, delayMs: 250 },
-      storeUrl: '/api/logs',
-    }))
-    ...
-  ],
-  ...
-})
-export class AppModule {}
-
-Standalone:
-
-bootstrapApplication(AppComponent, {
-  providers: [
-    provideLumberjack(),
-    provideLumberjackConsoleDriver(),
-    provideLumberjackAngularHttpDriver(
-      withHttpOptions({
-        origin: 'ForestApp',
-        retryOptions: { maxRetries: 1, delayMs: 250 },
-        storeUrl: '/api/logs',
-      }),
-      withInterceptors([
-        (req, next) => {
-          const easy = inject(easyToken);
-          console.log('are interceptors working?', easy);
-          return next(req);
-        },
-      ])
-    ),
+    provideLumberjack(), provideLumberjackAngularHttpDriver(withHttpConfig({
+      levels: [LumberjackLeve
 ```
