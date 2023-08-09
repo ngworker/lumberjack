@@ -1,5 +1,6 @@
 // Spy driver
 export * from './lib/spy-driver/create-spy-driver';
+export * from './lib/spy-driver/spy.driver';
 export * from './lib/spy-driver/spy-driver.config';
 // Noop driver
 export * from './lib/noop-driver/create-noop-driver';

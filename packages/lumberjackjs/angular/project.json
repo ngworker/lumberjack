@@ -18,13 +18,13 @@
       "configurations": {
         "production": {
           "commands": [
-            "nx run ngworker-lumberjack:build-package:production",
+            "nx run lumberjackjs-angular:build-package:production",
             "yarn copy README.md dist/packages/lumberjackjs/angular"
           ]
         },
         "development": {
           "commands": [
-            "nx run ngworker-lumberjack:build-package:development",
+            "nx run lumberjackjs-angular:build-package:development",
             "yarn copy README.md dist/packages/lumberjackjs/angular"
           ]
         }
@@ -102,7 +102,7 @@
         "preid": "beta",
         "syncVersions": false,
         "commitMessageFormat": "release(${projectName}): 🎸 cut release to ${version}",
-        "postTargets": ["ngworker-lumberjack:github", "ngworker-lumberjack:publish"]
+        "postTargets": ["lumberjackjs-angular:github", "lumberjackjs-angular:publish"]
       }
     },
     "github": {
