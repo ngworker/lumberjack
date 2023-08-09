@@ -7,7 +7,7 @@
       "@lumberjackjs/angular": ["dist/packages/lumberjackjs/angular"],
       "@lumberjackjs/angular-http-driver": ["dist/packages/lumberjackjs/angular-http-driver"],
       "@lumberjackjs/core": ["dist/packages/lumberjackjs/core"],
-      "@lumberjackjs/core/console-driver": ["dist/packages/lumberjackjs/core/console-driver"]
+      "@lumberjackjs/core/console-driver": ["dist/packages/lumberjackjs/core/console-driver/src"]
     }
   },
   "files": ["src/main.ts"],

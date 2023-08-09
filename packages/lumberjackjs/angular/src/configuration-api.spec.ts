@@ -8,6 +8,7 @@ import {
   LumberjackModule,
   LumberjackRootModule,
   provideLumberjack,
+  provideLumberjackCustomDrivers,
 } from './index';
 
 describe('Configuration API', () => {
@@ -28,6 +29,12 @@ describe('Configuration API', () => {
   describe('Provider functions', () => {
     it(`exposes ${provideLumberjack.name}`, () => {
       const sut = provideLumberjack;
+
+      expect(isFunction(sut)).toBeTruthy();
+    });
+
+    it(`exposes ${provideLumberjackCustomDrivers.name}`, () => {
+      const sut = provideLumberjackCustomDrivers;
 
       expect(isFunction(sut)).toBeTruthy();
     });

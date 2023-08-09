@@ -3,8 +3,9 @@ import { inject, InjectionToken } from '@angular/core';
 import { bootstrapApplication } from '@angular/platform-browser';
 
 import { provideLumberjackAngularHttpDriver, withHttpOptions } from '@lumberjackjs/angular-http-driver';
-import { provideLumberjack } from '@lumberjackjs/angular';
-import { LumberjackLog, LumberjackOptions } from '@lumberjackjs/core';
+import { provideLumberjack, provideLumberjackCustomDrivers } from '@lumberjackjs/angular';
+import { LumberjackLevel, LumberjackLog, LumberjackOptions } from '@lumberjackjs/core';
+import { LumberjackConsoleDriver } from '@lumberjackjs/core/console-driver';
 
 import { AppComponent } from './app/app.component';
 
@@ -20,6 +21,8 @@ const cypressLumberjackOptions: LumberjackOptions = {
 
 const easyToken = new InjectionToken('easy-provider');
 
+const consoleDriver = new LumberjackConsoleDriver({ levels: [LumberjackLevel.Verbose] });
+
 bootstrapApplication(AppComponent, {
   providers: [
     {
@@ -27,6 +30,7 @@ bootstrapApplication(AppComponent, {
       useValue: 'provider-easy',
     },
     provideLumberjack('Cypress' in window ? cypressLumberjackOptions : undefined),
+    provideLumberjackCustomDrivers(consoleDriver),
     provideLumberjackAngularHttpDriver(
       withHttpOptions({
         origin: 'ForestApp',
