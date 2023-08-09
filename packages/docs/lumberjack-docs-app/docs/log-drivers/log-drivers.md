@@ -310,7 +310,7 @@ This is possible because the `ConsoleDriver` has the same configuration options 
 only have to include the driver identifier since it cannot be predefined.
 
 For adding custom settings,
-see [LumberjackAngularHttpDriver](https://github.com/ngworker/lumberjack/blob/main/packages/lumberjackjs/angular/http-driver/src/lib/configuration/lumberjack-http-driver-root.module.ts).
+see [LumberjackAngularHttpDriver](https://github.com/ngworker/lumberjack/blob/main/packages/lumberjackjs/angular-http-driver/src/lib/configuration/lumberjack-angular-http-driver-root.module.ts).
 
 The most important thing about the `LumberjackConsoleDriverModule` is that it provides the `LumberjackConsoleDriver`
 using the `lumberjackLogDriverToken` with the `multi` flag on. This allows us to provide multiple log drivers for

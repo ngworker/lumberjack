@@ -4,7 +4,7 @@ import { expectNgModuleToBeGuardedAgainstDirectImport } from '@internal/angular/
 import { lumberjackLogDriverToken, LumberjackModule } from '@lumberjackjs/angular';
 import { LumberjackConfigLevels, LumberjackLevel, LumberjackLogDriver } from '@lumberjackjs/core';
 
-import { LumberjackAngularHttpDriver } from '../log-drivers/lumberjack-http.driver';
+import { LumberjackAngularHttpDriver } from '../log-drivers/lumberjack-angular-http.driver';
 
 import { LumberjackAngularHttpDriverInternalConfig } from './lumberjack-angular-http-driver-internal.config';
 import { LumberjackAngularHttpDriverConfig } from './lumberjack-angular-http-driver.config';

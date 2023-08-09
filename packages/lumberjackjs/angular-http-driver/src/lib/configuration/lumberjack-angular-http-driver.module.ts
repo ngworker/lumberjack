@@ -52,6 +52,8 @@ export class LumberjackAngularHttpDriverModule {
   }
 
   constructor() {
-    throw new Error('Do not import LumberjackAngularHttpDriverModule directly. Use LumberjackAngularHttpDriverModule.forRoot.');
+    throw new Error(
+      'Do not import LumberjackAngularHttpDriverModule directly. Use LumberjackAngularHttpDriverModule.forRoot.'
+    );
   }
 }

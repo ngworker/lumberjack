@@ -31,7 +31,7 @@ export class LumberjackAngularHttpDriver<TPayload extends LumberjackLogPayload |
   readonly #ngZone = inject(NgZone);
   readonly #subscriptions = new Subscription();
 
-  readonly config = inject(LumberjackAngularHttpDriverConfigToken);
+  readonly config = inject(lumberjackHttpDriverConfigToken);
 
   ngOnDestroy(): void {
     this.#subscriptions.unsubscribe();
@@ -181,7 +181,7 @@ export function withHttpConfig(
 ): LumberjackAngularHttpDriverConfiguration<'config'> {
   return makeLumberjackHttpConfiguration('config', [
     {
-      provide: LumberjackAngularHttpDriverConfigToken,
+      provide: lumberjackHttpDriverConfigToken,
       deps: [lumberjackLogDriverConfigToken],
       useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackAngularHttpDriverInternalConfig => ({
         ...logDriverConfig,
@@ -197,7 +197,7 @@ export function withHttpOptions(
 ): LumberjackAngularHttpDriverConfiguration<'options'> {
   return makeLumberjackHttpConfiguration('options', [
     {
-      provide: LumberjackAngularHttpDriverConfigToken,
+      provide: lumberjackHttpDriverConfigToken,
       deps: [lumberjackLogDriverConfigToken],
       useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackAngularHttpDriverInternalConfig => ({
         ...logDriverConfig,
@@ -216,7 +216,7 @@ export function provideLumberjackAngularHttpDriver<Kind extends LumberjackAngula
 ): EnvironmentProviders[] {
   return [
     provideHttpClient(...features),
-    makeEnvironmentProviders([LumberjackAngularHttpDriverProvider]),
+    makeEnvironmentProviders([lumberjackHttpDriverProvider]),
     configuration.providers,
   ];
 }

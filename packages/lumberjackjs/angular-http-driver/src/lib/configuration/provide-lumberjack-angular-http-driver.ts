@@ -4,7 +4,7 @@ import { EnvironmentProviders, makeEnvironmentProviders, Provider } from '@angul
 import { lumberjackLogDriverConfigToken } from '@lumberjackjs/angular';
 import { LumberjackLogDriverConfig } from '@lumberjackjs/core';
 
-import { LumberjackAngularHttpDriver } from '../log-drivers/lumberjack-http.driver';
+import { LumberjackAngularHttpDriver } from '../log-drivers/lumberjack-angular-http.driver';
 
 import { LumberjackAngularHttpDriverConfigToken } from './lumberjack-angular-http-driver-config.token';
 import { LumberjackAngularHttpDriverInternalConfig } from './lumberjack-angular-http-driver-internal.config';
@@ -28,7 +28,9 @@ function makeLumberjackHttpConfiguration<Kind extends LumberjackAngularHttpDrive
   };
 }
 
-export function withHttpConfig(config: LumberjackAngularHttpDriverConfig): LumberjackAngularHttpDriverConfiguration<'config'> {
+export function withHttpConfig(
+  config: LumberjackAngularHttpDriverConfig
+): LumberjackAngularHttpDriverConfiguration<'config'> {
   return makeLumberjackHttpConfiguration('config', [
     {
       provide: LumberjackAngularHttpDriverConfigToken,
@@ -42,7 +44,9 @@ export function withHttpConfig(config: LumberjackAngularHttpDriverConfig): Lumbe
   ]);
 }
 
-export function withHttpOptions(options: LumberjackAngularHttpDriverOptions): LumberjackAngularHttpDriverConfiguration<'options'> {
+export function withHttpOptions(
+  options: LumberjackAngularHttpDriverOptions
+): LumberjackAngularHttpDriverConfiguration<'options'> {
   return makeLumberjackHttpConfiguration('options', [
     {
       provide: LumberjackAngularHttpDriverConfigToken,

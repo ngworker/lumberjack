@@ -158,7 +158,9 @@ export class LumberjackAngularHttpDriverModule {
   }
 
   constructor() {
-    throw new Error('Do not import LumberjackAngularHttpDriverModule directly. Use LumberjackAngularHttpDriverModule.forRoot.');
+    throw new Error(
+      'Do not import LumberjackAngularHttpDriverModule directly. Use LumberjackAngularHttpDriverModule.forRoot.'
+    );
   }
 }
 ```
@@ -182,7 +184,9 @@ function makeLumberjackHttpConfiguration<Kind extends LumberjackAngularHttpDrive
   };
 }
 
-export function withHttpConfig(config: LumberjackAngularHttpDriverConfig): LumberjackAngularHttpDriverConfiguration<'config'> {
+export function withHttpConfig(
+  config: LumberjackAngularHttpDriverConfig
+): LumberjackAngularHttpDriverConfiguration<'config'> {
   return makeLumberjackHttpConfiguration('config', [
     {
       provide: LumberjackAngularHttpDriverConfigToken,
@@ -196,7 +200,9 @@ export function withHttpConfig(config: LumberjackAngularHttpDriverConfig): Lumbe
   ]);
 }
 
-export function withHttpOptions(options: LumberjackAngularHttpDriverOptions): LumberjackAngularHttpDriverConfiguration<'options'> {
+export function withHttpOptions(
+  options: LumberjackAngularHttpDriverOptions
+): LumberjackAngularHttpDriverConfiguration<'options'> {
   return makeLumberjackHttpConfiguration('options', [
     {
       provide: LumberjackAngularHttpDriverConfigToken,

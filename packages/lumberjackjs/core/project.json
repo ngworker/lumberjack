@@ -11,6 +11,7 @@
       "options": {
         "outputPath": "dist/packages/lumberjackjs/core",
         "main": "packages/lumberjackjs/core/src/index.ts",
+        "additionalEntryPoints": ["packages/lumberjackjs/core/console-driver/src/index.ts"],
         "tsConfig": "packages/lumberjackjs/core/tsconfig.lib.json",
         "assets": ["packages/lumberjackjs/core/*.md"]
       }
@@ -19,7 +20,7 @@
       "executor": "@nx/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["packages/lumberjackjs/core/**/*.ts"]
+        "lintFilePatterns": ["packages/lumberjackjs/core/**/*.ts", "packages/lumberjackjs/core/console-driver/**/*.ts"]
       },
       "configurations": {
         "report": {
@@ -74,6 +75,6 @@
       }
     }
   },
-  "implicitDependencies": ["!internal-angular-test-util", "!internal-core-test-util"],
+  "implicitDependencies": ["!internal-core-test-util"],
   "tags": ["type:package", "scope:public", "technology:javascript"]
 }

@@ -1,11 +1,9 @@
-import { LumberjackLogDriver, LumberjackLogDriverConfig, LumberjackLogPayload } from '@lumberjackjs/core';
+import { LumberjackLogDriverConfig, LumberjackLogPayload } from '@lumberjackjs/core';
 
 import { SpyDriverConfig } from './spy-driver.config';
+import { SpyDriver } from './spy.driver';
 
 export const spyDriverIdentifier = 'SpyDriver';
-
-export type SpyDriver<TPayload extends LumberjackLogPayload | void = void> = LumberjackLogDriver<TPayload> &
-  jest.Mocked<LumberjackLogDriver<TPayload>> & { reset: () => void };
 
 export function createSpyDriver<TPayload extends LumberjackLogPayload | void = void>(
   config: SpyDriverConfig

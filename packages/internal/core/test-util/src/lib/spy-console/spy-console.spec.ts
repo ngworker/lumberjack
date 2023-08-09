@@ -1,4 +1,4 @@
-import { SpyConsole } from './spy-console.service';
+import { SpyConsole } from './spy-console';
 
 let spy: SpyConsole;
 describe(SpyConsole.name, () => {

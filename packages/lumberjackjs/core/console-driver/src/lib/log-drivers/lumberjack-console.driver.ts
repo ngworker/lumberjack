@@ -1,9 +1,12 @@
-import { inject, Injectable } from '@angular/core';
+import {
+  LumberjackLogDriver,
+  LumberjackLogDriverConfig,
+  LumberjackLogDriverLog,
+  LumberjackLogPayload,
+} from '@lumberjackjs/core';
 
-import { LumberjackLogDriver, LumberjackLogDriverLog, LumberjackLogPayload } from '@lumberjackjs/core';
-
-import { lumberjackConsoleDriverConfigToken } from '../configuration/lumberjack-console-driver-config.token';
-import { lumberjackConsoleToken } from '../console/lumberjack-console.token';
+import type { LumberjackConsoleDriverConfig } from '../configuration/lumberjack-console-driver.config';
+import { LumberjackConsole } from '../console/lumberjack-console';
 
 /**
  * The console driver outputs logs to the browser console.
@@ -11,15 +14,18 @@ import { lumberjackConsoleToken } from '../console/lumberjack-console.token';
  * It forwards the formatted log and the optional log payload to the relevant
  * method of the browser console API.
  */
-@Injectable()
 export class LumberjackConsoleDriver<TPayload extends LumberjackLogPayload | void = void>
   implements LumberjackLogDriver<TPayload>
 {
   static readonly driverIdentifier = 'LumberjackConsoleDriver';
 
-  readonly #console = inject(lumberjackConsoleToken);
+  readonly #console: LumberjackConsole;
+  readonly config: LumberjackLogDriverConfig;
 
-  readonly config = inject(lumberjackConsoleDriverConfigToken);
+  constructor(config: LumberjackConsoleDriverConfig, lumberjackConsole: LumberjackConsole = console) {
+    this.#console = lumberjackConsole;
+    this.config = { identifier: LumberjackConsoleDriver.driverIdentifier, ...config };
+  }
 
   /**
    * Output console error.

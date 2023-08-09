@@ -5,7 +5,7 @@ import { Subscription } from 'rxjs';
 import { LumberjackLog, LumberjackLogDriver, LumberjackLogDriverLog, LumberjackLogPayload } from '@lumberjackjs/core';
 
 import { LumberjackAngularHttpDriverConfigToken } from '../configuration/lumberjack-angular-http-driver-config.token';
-import { LumberjackHttpLog } from '../logs/lumberjack-http.log';
+import { LumberjackAngularHttpLog } from '../logs/lumberjack-angular-http.log';
 import { retryWithDelay } from '../operators/retry-with-delay.operator';
 
 /**
@@ -100,7 +100,7 @@ export class LumberjackAngularHttpDriver<TPayload extends LumberjackLogPayload |
    */
   #sendLog(formattedLog: string, log: LumberjackLog<TPayload>): void {
     const { origin, retryOptions, storeUrl } = this.config;
-    const httpLog: LumberjackHttpLog<TPayload> = { formattedLog, origin, log };
+    const httpLog: LumberjackAngularHttpLog<TPayload> = { formattedLog, origin, log };
 
     this.#ngZone.runOutsideAngular(() => {
       this.#subscriptions.add(

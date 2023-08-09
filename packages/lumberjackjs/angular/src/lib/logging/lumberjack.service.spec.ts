@@ -1,7 +1,6 @@
 import { StaticProvider } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { NoopConsoleModule } from '@internal/angular/console-driver/test-util';
 import {
   ErrorThrowingDriverModule,
   FakeTimeService,
@@ -26,7 +25,6 @@ import {
   SpyDriver,
   spyDriverIdentifier,
 } from '@internal/core/test-util';
-import { LumberjackConsoleDriverModule } from '@lumberjackjs/angular/console-driver';
 import {
   createLumberjackLogFactory,
   LumberjackLevel,
@@ -135,12 +133,7 @@ describe(LumberjackService.name, () => {
 
     it('accepts logs when multiple log drivers are registered', () => {
       TestBed.configureTestingModule({
-        imports: [
-          LumberjackModule.forRoot(),
-          NoopDriverModule.forRoot(),
-          LumberjackConsoleDriverModule.forRoot(),
-          NoopConsoleModule,
-        ],
+        imports: [LumberjackModule.forRoot(), NoopDriverModule.forRoot(), SpyDriverModule.forRoot()],
       });
 
       expect(logDebugMessage).not.toThrow();

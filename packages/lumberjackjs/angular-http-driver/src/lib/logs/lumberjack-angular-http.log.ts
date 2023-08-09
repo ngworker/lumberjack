@@ -3,7 +3,7 @@ import { LumberjackLog, LumberjackLogPayload } from '@lumberjackjs/core';
 /**
  * The HTTP request sent to the configured log store.
  */
-export interface LumberjackHttpLog<TPayload extends LumberjackLogPayload | void = void> {
+export interface LumberjackAngularHttpLog<TPayload extends LumberjackLogPayload | void = void> {
   /**
    * The text representation of the log.
    */

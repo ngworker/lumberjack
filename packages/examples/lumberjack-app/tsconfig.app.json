@@ -5,9 +5,9 @@
     "types": [],
     "paths": {
       "@lumberjackjs/angular": ["dist/packages/lumberjackjs/angular"],
-      "@lumberjackjs/angular/console-driver": ["dist/packages/lumberjackjs/angular/console-driver"],
-      "@lumberjackjs/angular/http-driver": ["dist/packages/lumberjackjs/angular/http-driver"],
-      "@lumberjackjs/core": ["dist/packages/lumberjackjs/core"]
+      "@lumberjackjs/angular-http-driver": ["dist/packages/lumberjackjs/angular-http-driver"],
+      "@lumberjackjs/core": ["dist/packages/lumberjackjs/core"],
+      "@lumberjackjs/core/console-driver": ["dist/packages/lumberjackjs/core/console-driver"]
     }
   },
   "files": ["src/main.ts"],

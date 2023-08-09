@@ -5,5 +5,8 @@ import { LumberjackAngularHttpDriverInternalConfig } from './lumberjack-angular-
 /**
  * Settings exclusive to the HTTP driver.
  */
-export type LumberjackAngularHttpDriverOptions = Omit<LumberjackAngularHttpDriverInternalConfig, keyof LumberjackLogDriverConfig> &
+export type LumberjackAngularHttpDriverOptions = Omit<
+  LumberjackAngularHttpDriverInternalConfig,
+  keyof LumberjackLogDriverConfig
+> &
   Partial<LumberjackLogDriverConfig>;

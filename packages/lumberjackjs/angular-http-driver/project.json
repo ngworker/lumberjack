@@ -71,11 +71,7 @@
       "options": {
         "lintFilePatterns": [
           "packages/lumberjackjs/angular-http-driver/**/*.ts",
-          "packages/lumberjackjs/angular-http-driver/**/*.html",
-          "packages/lumberjackjs/angular-http-driver/http-driver/**/*.ts",
-          "packages/lumberjackjs/angular-http-driver/http-driver/**/*.html",
-          "packages/lumberjackjs/angular-http-driver/console-driver/**/*.ts",
-          "packages/lumberjackjs/angular-http-driver/console-driver/**/*.html"
+          "packages/lumberjackjs/angular-http-driver/**/*.html"
         ]
       },
       "configurations": {

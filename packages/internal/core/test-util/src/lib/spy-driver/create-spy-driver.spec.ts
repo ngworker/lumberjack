@@ -3,7 +3,8 @@ import { LumberjackLevel, LumberjackLogDriver, LumberjackLogDriverLog, Lumberjac
 import { createDriverLog } from '../logs';
 import { createFakeTime } from '../time/create-fake-time';
 
-import { createSpyDriver, SpyDriver } from './create-spy-driver';
+import { createSpyDriver } from './create-spy-driver';
+import { SpyDriver } from './spy.driver';
 
 describe(createSpyDriver.name, () => {
   let spyDriver: SpyDriver;

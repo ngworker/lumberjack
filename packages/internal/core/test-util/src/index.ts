@@ -34,3 +34,9 @@ export * from './lib/logs';
 
 // Functions
 export * from './lib/functions/repeat-side-effect';
+
+// Noop Console
+export * from './lib/noop-console/noop-console';
+
+// Spy Console
+export * from './lib/spy-console/spy-console';

@@ -13,11 +13,14 @@ import {
 } from '@lumberjackjs/core';
 
 import { LumberjackAngularHttpDriverOptions } from '../configuration/lumberjack-angular-http-driver.options';
-import { provideLumberjackAngularHttpDriver, withHttpOptions } from '../configuration/provide-lumberjack-angular-http-driver';
+import {
+  provideLumberjackAngularHttpDriver,
+  withHttpOptions,
+} from '../configuration/provide-lumberjack-angular-http-driver';
 import { LumberjackAngularHttpDriverError } from '../errors/lumberjack-angular-http-driver.error';
-import { LumberjackHttpLog } from '../logs/lumberjack-http.log';
+import { LumberjackAngularHttpLog } from '../logs/lumberjack-angular-http.log';
 
-import { LumberjackAngularHttpDriver } from './lumberjack-http.driver';
+import { LumberjackAngularHttpDriver } from './lumberjack-angular-http.driver';
 
 interface HttpDriverPayload extends LumberjackLogPayload {
   analytics: { [key: string]: unknown };
@@ -32,7 +35,7 @@ const analyticsPayload: HttpDriverPayload = {
 function expectRequest(
   httpTestingController: HttpTestingController,
   { storeUrl }: LumberjackAngularHttpDriverOptions,
-  expectedBody: LumberjackHttpLog<HttpDriverPayload>
+  expectedBody: LumberjackAngularHttpLog<HttpDriverPayload>
 ) {
   const {
     request: { body, method },
@@ -51,7 +54,7 @@ function expectRequestToBeDiscarded(
 function expectFailingRequest(
   httpTestingController: HttpTestingController,
   { retryOptions, storeUrl }: LumberjackAngularHttpDriverOptions,
-  expectedBody: LumberjackHttpLog<HttpDriverPayload>
+  expectedBody: LumberjackAngularHttpLog<HttpDriverPayload>
 ) {
   const req = httpTestingController.expectOne(storeUrl);
   const {
@@ -73,7 +76,7 @@ function respondWith503ServiceUnavailable(request: TestRequest) {
 function createHttpDriverLog(
   { log, formattedLog }: LumberjackLogDriverLog<HttpDriverPayload>,
   origin = 'TEST_MODULE'
-): LumberjackHttpLog<HttpDriverPayload> {
+): LumberjackAngularHttpLog<HttpDriverPayload> {
   return { formattedLog, log, origin };
 }
 

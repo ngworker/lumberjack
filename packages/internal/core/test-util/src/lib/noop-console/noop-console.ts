@@ -1,16 +1,12 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
-// ⬆️ Maintain signature compatibility with LumberjackConsole
-import { Injectable } from '@angular/core';
-
-import { LumberjackConsole } from '@lumberjackjs/angular/console-driver';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { LumberjackConsole } from '@lumberjackjs/core/console-driver';
 
 /**
  * No-op console logger.
  *
  * Every method is a no-op.
  */
-@Injectable()
 export class NoopConsole implements LumberjackConsole {
   debug(...data: any[]): void;
   debug(message?: any, ...optionalParams: any[]): void;
