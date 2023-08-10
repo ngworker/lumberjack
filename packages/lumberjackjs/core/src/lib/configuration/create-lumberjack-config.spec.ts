@@ -1,7 +1,7 @@
 import { createFakeTime } from '@internal/core/test-util';
 
 import { lumberjackFormatLog } from '../formatting/lumberjack-format-log';
-import { createLumberjackLogFactory } from '../logging/create-lumberjack-log-factory';
+import { createDebugLogBuilder } from '../logging/create-lumberjack-log-builder-functions/create-debug-log-builder';
 import { LumberjackLog } from '../logs/lumberjack.log';
 
 import { createLumberjackConfig } from './create-lumberjack-config';
@@ -17,13 +17,12 @@ describe(createLumberjackConfig.name, () => {
   let mockDebugLog: LumberjackLog;
 
   const fakeTime = createFakeTime();
-  const logFactory = createLumberjackLogFactory({ getUnixEpochTicks: fakeTime.getUnixEpochTicks });
 
   beforeEach(() => {
     mockOptions = {
       format: () => fakeFormattedMessage,
     };
-    mockDebugLog = logFactory.createDebugLog('fake-message').build();
+    mockDebugLog = createDebugLogBuilder(fakeTime.getUnixEpochTicks.bind(fakeTime))('fake-message').build();
   });
 
   test('should create a development environment configuration when isProductionEnvironment is false', () => {

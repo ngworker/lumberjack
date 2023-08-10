@@ -5,55 +5,55 @@ import { LumberjackLevel, LumberjackLogBuilder, LumberjackLogPayload } from '@lu
 
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
-import { LumberjackLogFactoryService } from './lumberjack-log-factory.service';
+import { LumberjackLogBuilderFactoryService } from './lumberjack-log-factory.service';
 
-describe(LumberjackLogFactoryService.name, () => {
+describe(LumberjackLogBuilderFactoryService.name, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }, LumberjackLogFactoryService],
+      providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }, LumberjackLogBuilderFactoryService],
     });
 
     fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
-    logFactory = TestBed.inject(LumberjackLogFactoryService);
+    logBuilderFactory = TestBed.inject(LumberjackLogBuilderFactoryService);
   });
 
   const testMessage = 'Test message';
   let fakeTime: FakeTimeService;
-  let logFactory: LumberjackLogFactoryService;
+  let logBuilderFactory: LumberjackLogBuilderFactoryService;
 
   describe('Log levels', () => {
     it('creates a critical log', () => {
-      const log = logFactory.createCriticalLog(testMessage).build();
+      const log = logBuilderFactory.createCriticalLog(testMessage).build();
 
       expect(log.level).toBe(LumberjackLevel.Critical);
     });
 
     it('creates a debug log', () => {
-      const log = logFactory.createDebugLog(testMessage).build();
+      const log = logBuilderFactory.createDebugLog(testMessage).build();
 
       expect(log.level).toBe(LumberjackLevel.Debug);
     });
 
     it('creates a error log', () => {
-      const log = logFactory.createErrorLog(testMessage).build();
+      const log = logBuilderFactory.createErrorLog(testMessage).build();
 
       expect(log.level).toBe(LumberjackLevel.Error);
     });
 
     it('creates a info log', () => {
-      const log = logFactory.createInfoLog(testMessage).build();
+      const log = logBuilderFactory.createInfoLog(testMessage).build();
 
       expect(log.level).toBe(LumberjackLevel.Info);
     });
 
     it('creates a trace log', () => {
-      const log = logFactory.createTraceLog(testMessage).build();
+      const log = logBuilderFactory.createTraceLog(testMessage).build();
 
       expect(log.level).toBe(LumberjackLevel.Trace);
     });
 
     it('creates a warning log', () => {
-      const log = logFactory.createWarningLog(testMessage).build();
+      const log = logBuilderFactory.createWarningLog(testMessage).build();
 
       expect(log.level).toBe(LumberjackLevel.Warning);
     });
@@ -62,13 +62,13 @@ describe(LumberjackLogFactoryService.name, () => {
   describe('Scope', () => {
     it('creates a log with a scope', () => {
       const testScope = 'Test scope';
-      const log = logFactory.createCriticalLog(testMessage).withScope(testScope).build();
+      const log = logBuilderFactory.createCriticalLog(testMessage).withScope(testScope).build();
 
       expect(log.scope).toBe(testScope);
     });
 
     it('creates a log without a scope', () => {
-      const log = logFactory.createDebugLog(testMessage).build();
+      const log = logBuilderFactory.createDebugLog(testMessage).build();
 
       expect(log.scope).toBeUndefined();
     });
@@ -80,10 +80,10 @@ describe(LumberjackLogFactoryService.name, () => {
     }
 
     beforeEach(() => {
-      logFactoryWithPayload = TestBed.inject(LumberjackLogFactoryService);
+      logFactoryWithPayload = TestBed.inject(LumberjackLogBuilderFactoryService);
     });
 
-    let logFactoryWithPayload: LumberjackLogFactoryService<TestPayload>;
+    let logFactoryWithPayload: LumberjackLogBuilderFactoryService<TestPayload>;
 
     it('creates a log with a static payload', () => {
       const log = logFactoryWithPayload.createErrorLog(testMessage).withPayload({ test: true }).build();
@@ -98,7 +98,7 @@ describe(LumberjackLogFactoryService.name, () => {
     });
 
     it('creates a log without a payload', () => {
-      const log = logFactory.createTraceLog(testMessage).build();
+      const log = logBuilderFactory.createTraceLog(testMessage).build();
 
       expect(log.payload).toBeUndefined();
     });
@@ -112,17 +112,17 @@ describe(LumberjackLogFactoryService.name, () => {
     const fakeNow = new Date('2021-01-21T21:21:21Z');
 
     it('timestamps the log with the current date and time', () => {
-      const log = logFactory.createTraceLog(testMessage).build();
+      const log = logBuilderFactory.createTraceLog(testMessage).build();
 
       expect(new Date(log.createdAt)).toEqual(fakeNow);
     });
 
     it('timestamps the log with the current date and time', () => {
-      const firstLog = logFactory.createWarningLog(testMessage).build();
+      const firstLog = logBuilderFactory.createWarningLog(testMessage).build();
       const fakeLater = new Date('2021-01-23T23:23:23Z');
       fakeTime.setTime(fakeLater);
 
-      const secondLog = logFactory.createCriticalLog(testMessage).build();
+      const secondLog = logBuilderFactory.createCriticalLog(testMessage).build();
 
       expect(new Date(firstLog.createdAt)).toEqual(fakeNow);
       expect(new Date(secondLog.createdAt)).toEqual(fakeLater);
@@ -131,14 +131,14 @@ describe(LumberjackLogFactoryService.name, () => {
 
   describe('Log message', () => {
     it('creates a log with a message', () => {
-      const log = logFactory.createCriticalLog(testMessage).build();
+      const log = logBuilderFactory.createCriticalLog(testMessage).build();
 
       expect(log.message).toBe(testMessage);
     });
 
     it('creates a log with another message', () => {
       const otherMessage = 'Woodpecker';
-      const log = logFactory.createCriticalLog(otherMessage).build();
+      const log = logBuilderFactory.createCriticalLog(otherMessage).build();
 
       expect(log.message).toBe(otherMessage);
     });
@@ -146,7 +146,7 @@ describe(LumberjackLogFactoryService.name, () => {
 
   describe('Log builder factories', () => {
     it('creats a log builder with the critical log level', () => {
-      const logBuilder = logFactory.createCriticalLog(testMessage);
+      const logBuilder = logBuilderFactory.createCriticalLog(testMessage);
       const log = logBuilder.build();
 
       expect(logBuilder).toBeInstanceOf(LumberjackLogBuilder);
@@ -154,7 +154,7 @@ describe(LumberjackLogFactoryService.name, () => {
     });
 
     it('creats a log builder with the debug log level', () => {
-      const logBuilder = logFactory.createDebugLog(testMessage);
+      const logBuilder = logBuilderFactory.createDebugLog(testMessage);
       const log = logBuilder.build();
 
       expect(logBuilder).toBeInstanceOf(LumberjackLogBuilder);
@@ -162,7 +162,7 @@ describe(LumberjackLogFactoryService.name, () => {
     });
 
     it('creats a log builder with the error log level', () => {
-      const logBuilder = logFactory.createErrorLog(testMessage);
+      const logBuilder = logBuilderFactory.createErrorLog(testMessage);
       const log = logBuilder.build();
 
       expect(logBuilder).toBeInstanceOf(LumberjackLogBuilder);
@@ -170,7 +170,7 @@ describe(LumberjackLogFactoryService.name, () => {
     });
 
     it('creats a log builder with the info log level', () => {
-      const logBuilder = logFactory.createInfoLog(testMessage);
+      const logBuilder = logBuilderFactory.createInfoLog(testMessage);
       const log = logBuilder.build();
 
       expect(logBuilder).toBeInstanceOf(LumberjackLogBuilder);
@@ -178,7 +178,7 @@ describe(LumberjackLogFactoryService.name, () => {
     });
 
     it('creats a log builder with the trace log level', () => {
-      const logBuilder = logFactory.createTraceLog(testMessage);
+      const logBuilder = logBuilderFactory.createTraceLog(testMessage);
       const log = logBuilder.build();
 
       expect(logBuilder).toBeInstanceOf(LumberjackLogBuilder);
@@ -186,7 +186,7 @@ describe(LumberjackLogFactoryService.name, () => {
     });
 
     it('creats a log builder with the warning log level', () => {
-      const logBuilder = logFactory.createWarningLog(testMessage);
+      const logBuilder = logBuilderFactory.createWarningLog(testMessage);
       const log = logBuilder.build();
 
       expect(logBuilder).toBeInstanceOf(LumberjackLogBuilder);

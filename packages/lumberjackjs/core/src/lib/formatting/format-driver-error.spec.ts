@@ -1,25 +1,24 @@
 import { createFakeTime, createSpyDriver } from '@internal/core/test-util';
 
 import { LumberjackDriverError } from '../drivers/lumberjack-driver-error';
-import { createLumberjackLogFactory } from '../logging/create-lumberjack-log-factory';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackDriver } from '../drivers/lumberjack-driver';
-import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
+import { createInfoLogBuilder } from '../logging/create-lumberjack-log-builder-functions/create-info-log-builder';
 
 import { formatDriverError } from './format-driver-error';
 import { lumberjackFormatLog } from './lumberjack-format-log';
 
 describe(formatDriverError.name, () => {
-  const logFactory = createLumberjackLogFactory({ getUnixEpochTicks: createFakeTime().getUnixEpochTicks });
+  const getUnixEpochTicks = createFakeTime().getUnixEpochTicks;
   const errorMessage = 'Test error message';
   const testMessage = 'Test info';
   const driver = createSpyDriver({ levels: [LumberjackLevel.Verbose] });
 
   describe('Error message', () => {
     beforeEach(() => {
-      log = logFactory.createInfoLog(testMessage).build();
+      log = createInfoLogBuilder(getUnixEpochTicks)(testMessage).build();
     });
 
     let log: LumberjackLog;
@@ -59,8 +58,7 @@ describe(formatDriverError.name, () => {
       const payload: TestPayload = {
         test: true,
       };
-      const logFactoryWithPayload = logFactory as unknown as LumberjackLogFactory<TestPayload>;
-      const log = logFactoryWithPayload.createInfoLog(testMessage).withPayload(payload).build();
+      const log = createInfoLogBuilder<TestPayload>(getUnixEpochTicks)(testMessage).withPayload(payload).build();
       const driverError: LumberjackDriverError<TestPayload> = {
         error: new Error(errorMessage),
         formattedLog: lumberjackFormatLog(log),
@@ -74,7 +72,7 @@ describe(formatDriverError.name, () => {
     });
 
     it('does not mention payload when the log has no payload', () => {
-      const log = logFactory.createInfoLog(testMessage).build();
+      const log = createInfoLogBuilder(getUnixEpochTicks)(testMessage).build();
       const driverError: LumberjackDriverError = {
         error: new Error(errorMessage),
         formattedLog: lumberjackFormatLog(log),

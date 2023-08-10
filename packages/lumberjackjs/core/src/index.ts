@@ -25,6 +25,10 @@ export { LumberjackFormatFunction } from './lib/formatting/lumberjack-format-fun
 // Logging
 export { createLumberjack } from './lib/logging/create-lumberjack';
 export { Lumberjack } from './lib/logging/lumberjack';
-export { createLumberjackLogFactory } from './lib/logging/create-lumberjack-log-factory';
-export { LumberjackLogFactory } from './lib/logging/lumberjack-log-factory';
+export { createErrorLogBuilder } from './lib/logging/create-lumberjack-log-builder-functions/create-error-log-builder';
+export { createCriticalLogBuilder } from './lib/logging/create-lumberjack-log-builder-functions/create-critical-log-builder';
+export { createInfoLogBuilder } from './lib/logging/create-lumberjack-log-builder-functions/create-info-log-builder';
+export { createTraceLogBuilder } from './lib/logging/create-lumberjack-log-builder-functions/create-trace-log-builder';
+export { createWarningLogBuilder } from './lib/logging/create-lumberjack-log-builder-functions/create-warning-log-builder';
+export { createDebugLogBuilder } from './lib/logging/create-lumberjack-log-builder-functions/create-debug-log-builder';
 export { LumberjackLogBuilder } from './lib/logging/lumberjack-log.builder';

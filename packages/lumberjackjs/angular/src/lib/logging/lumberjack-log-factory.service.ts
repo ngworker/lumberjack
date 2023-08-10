@@ -1,6 +1,14 @@
 import { inject, Injectable } from '@angular/core';
 
-import { createLumberjackLogFactory, LumberjackLogFactory, LumberjackLogPayload } from '@lumberjackjs/core';
+import {
+  createCriticalLogBuilder,
+  createDebugLogBuilder,
+  createErrorLogBuilder,
+  createInfoLogBuilder,
+  createTraceLogBuilder,
+  createWarningLogBuilder,
+  LumberjackLogPayload,
+} from '@lumberjackjs/core';
 
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
@@ -14,36 +22,32 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
  * to them.
  */
 @Injectable()
-export class LumberjackLogFactoryService<TPayload extends LumberjackLogPayload | void = void>
-  implements LumberjackLogFactory<TPayload>
-{
+export class LumberjackLogBuilderFactoryService<TPayload extends LumberjackLogPayload | void = void> {
   readonly #time = inject(LumberjackTimeService);
-  readonly #factory = createLumberjackLogFactory<TPayload>({
-    getUnixEpochTicks: this.#time.getUnixEpochTicks.bind(this.#time),
-  });
+  readonly #getUnixEpochTicks = this.#time.getUnixEpochTicks.bind(this.#time);
 
   /**
    * Create a log builder for a critical log with the specified message.
    */
-  createCriticalLog = this.#factory.createCriticalLog;
+  createCriticalLog = createCriticalLogBuilder<TPayload>(this.#getUnixEpochTicks);
   /**
    * Create a log builder for a debug log with the specified message.
    */
-  createDebugLog = this.#factory.createDebugLog;
+  createDebugLog = createDebugLogBuilder<TPayload>(this.#getUnixEpochTicks);
   /**
    * Create a log builder for an error log with the specified message.
    */
-  createErrorLog = this.#factory.createErrorLog;
+  createErrorLog = createErrorLogBuilder<TPayload>(this.#getUnixEpochTicks);
   /**
    * Create a log builder for an info log with the specified message.
    */
-  createInfoLog = this.#factory.createInfoLog;
+  createInfoLog = createInfoLogBuilder<TPayload>(this.#getUnixEpochTicks);
   /**
    * Create a log builder for a trace log with the specified message.
    */
-  createTraceLog = this.#factory.createTraceLog;
+  createTraceLog = createTraceLogBuilder<TPayload>(this.#getUnixEpochTicks);
   /**
    * Create a log builder for a warning log with the specified message.
    */
-  createWarningLog = this.#factory.createWarningLog;
+  createWarningLog = createWarningLogBuilder<TPayload>(this.#getUnixEpochTicks);
 }

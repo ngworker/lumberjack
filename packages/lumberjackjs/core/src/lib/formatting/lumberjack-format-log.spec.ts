@@ -1,6 +1,6 @@
 import { createFakeTime } from '@internal/core/test-util';
 
-import { createLumberjackLogFactory } from '../logging/create-lumberjack-log-factory';
+import { createDebugLogBuilder } from '../logging/create-lumberjack-log-builder-functions/create-debug-log-builder';
 import { LumberjackLogBuilder } from '../logging/lumberjack-log.builder';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
@@ -27,7 +27,7 @@ function parseFormattedLog(formattedLog: string) {
 describe(lumberjackFormatLog.name, () => {
   const fakeTime = createFakeTime();
 
-  const logFactory = createLumberjackLogFactory({ getUnixEpochTicks: fakeTime.getUnixEpochTicks });
+  const getUnixEpochTicks = fakeTime.getUnixEpochTicks;
 
   describe('Log level', () => {
     const logLevels: LumberjackLogLevel[] = [
@@ -82,7 +82,7 @@ describe(lumberjackFormatLog.name, () => {
 
     scopes.forEach((expectedScope) => {
       it('tags the specified scope', () => {
-        const log = logFactory.createDebugLog('').withScope(expectedScope).build();
+        const log = createDebugLogBuilder(getUnixEpochTicks)('').withScope(expectedScope).build();
 
         const formattedLog = lumberjackFormatLog(log);
 
@@ -93,7 +93,7 @@ describe(lumberjackFormatLog.name, () => {
     });
 
     it('does not add a tag without a scope', () => {
-      const log = logFactory.createDebugLog('Scope test').build();
+      const log = createDebugLogBuilder(getUnixEpochTicks)('Scope test').build();
 
       const formattedLog = lumberjackFormatLog(log);
 
@@ -108,7 +108,7 @@ describe(lumberjackFormatLog.name, () => {
 
     messages.forEach((expectedMessage) => {
       it(`places the message at the end with a scope`, () => {
-        const log = logFactory.createDebugLog(expectedMessage).withScope('Message').build();
+        const log = createDebugLogBuilder(getUnixEpochTicks)(expectedMessage).withScope('Message').build();
 
         const formattedLog = lumberjackFormatLog(log);
 
@@ -117,7 +117,7 @@ describe(lumberjackFormatLog.name, () => {
       });
 
       it(`places the message at the end without a scope`, () => {
-        const log = logFactory.createDebugLog(expectedMessage).build();
+        const log = createDebugLogBuilder(getUnixEpochTicks)(expectedMessage).build();
 
         const formattedLog = lumberjackFormatLog(log);
 

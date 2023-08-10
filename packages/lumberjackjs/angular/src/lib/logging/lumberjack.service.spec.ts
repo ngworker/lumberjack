@@ -26,7 +26,12 @@ import {
   spyDriverIdentifier,
 } from '@internal/core/test-util';
 import {
-  createLumberjackLogFactory,
+  createCriticalLogBuilder,
+  createDebugLogBuilder,
+  createErrorLogBuilder,
+  createInfoLogBuilder,
+  createTraceLogBuilder,
+  createWarningLogBuilder,
   LumberjackDriver,
   LumberjackDriverConfig,
   LumberjackDriverLog,
@@ -94,23 +99,17 @@ interface PayloadFieldInfo extends LumberjackLogPayload {
 
 const payloadInfo: PayloadFieldInfo = { payloadInfo: 'PayloadINFO' };
 const objectPayloadInfo: ObjectPayload = { isWorking: true };
-const logFactory = createLumberjackLogFactory({ getUnixEpochTicks: fakeTime.getUnixEpochTicks.bind(fakeTime) });
-const logFactoryWithPayload = createLumberjackLogFactory<PayloadFieldInfo>({
-  getUnixEpochTicks: fakeTime.getUnixEpochTicks.bind(fakeTime),
-});
-const logFactoryWithObjectPayload = createLumberjackLogFactory<ObjectPayload>({
-  getUnixEpochTicks: fakeTime.getUnixEpochTicks.bind(fakeTime),
-});
+const getUnixEpochTicks = fakeTime.getUnixEpochTicks.bind(fakeTime);
 
 const logDebugMessage = () =>
-  TestBed.inject(LumberjackService).log(logFactory.createDebugLog('').withScope('Test').build());
+  TestBed.inject(LumberjackService).log(createDebugLogBuilder(getUnixEpochTicks)('').withScope('Test').build());
 const logDebugMessageWithPayloadField = () =>
   TestBed.inject<LumberjackService<PayloadFieldInfo>>(LumberjackService).log(
-    logFactoryWithPayload.createDebugLog('').withScope('Test').withPayload(payloadInfo).build()
+    createDebugLogBuilder<PayloadFieldInfo>(getUnixEpochTicks)('').withScope('Test').withPayload(payloadInfo).build()
   );
 const logDebugMessageWithObjectPayloadField = () =>
   TestBed.inject<LumberjackService<ObjectPayload>>(LumberjackService).log(
-    logFactoryWithObjectPayload.createDebugLog('').withScope('Test').withPayload(objectPayloadInfo).build()
+    createDebugLogBuilder<ObjectPayload>(getUnixEpochTicks)('').withScope('Test').withPayload(objectPayloadInfo).build()
   );
 
 describe(LumberjackService.name, () => {
@@ -398,37 +397,37 @@ describe(LumberjackService.name, () => {
       let spyDriver: SpyDriver;
 
       it('logs an error to a driver', () => {
-        lumberjack.log(logFactory.createCriticalLog('').build());
+        lumberjack.log(createCriticalLogBuilder(getUnixEpochTicks)('').build());
 
         expect(spyDriver.logError).toHaveBeenCalledTimes(1);
       });
 
       it('does not log a critical error to a driver', () => {
-        lumberjack.log(logFactory.createCriticalLog('').build());
+        lumberjack.log(createCriticalLogBuilder(getUnixEpochTicks)('').build());
 
         expect(spyDriver.logCritical).not.toHaveBeenCalled();
       });
 
       it('does not log a debug message to a driver', () => {
-        lumberjack.log(logFactory.createDebugLog('').build());
+        lumberjack.log(createDebugLogBuilder(getUnixEpochTicks)('').build());
 
         expect(spyDriver.logDebug).not.toHaveBeenCalled();
       });
 
       it('does not log an info message to a driver', () => {
-        lumberjack.log(logFactory.createInfoLog('').build());
+        lumberjack.log(createInfoLogBuilder(getUnixEpochTicks)('').build());
 
         expect(spyDriver.logInfo).not.toHaveBeenCalled();
       });
 
       it('does not log a trace to a driver', () => {
-        lumberjack.log(logFactory.createTraceLog('').build());
+        lumberjack.log(createTraceLogBuilder(getUnixEpochTicks)('').build());
 
         expect(spyDriver.logTrace).not.toHaveBeenCalled();
       });
 
       it('does not log a warning to a driver', () => {
-        lumberjack.log(logFactory.createWarningLog('').build());
+        lumberjack.log(createWarningLogBuilder(getUnixEpochTicks)('').build());
 
         expect(spyDriver.logWarning).not.toHaveBeenCalled();
       });
@@ -459,7 +458,7 @@ describe(LumberjackService.name, () => {
     let spyDriver: SpyDriver;
 
     it('logs a critical error to a driver', () => {
-      lumberjack.log(logFactory.createCriticalLog('').withScope('Test').build());
+      lumberjack.log(createCriticalLogBuilder(getUnixEpochTicks)('').withScope('Test').build());
 
       expect(spyDriver.logCritical).toHaveBeenCalledTimes(1);
       expect(spyDriver.logCritical).toHaveBeenCalledWith(
@@ -468,7 +467,7 @@ describe(LumberjackService.name, () => {
     });
 
     it('logs a debug message to a driver', () => {
-      lumberjack.log(logFactory.createDebugLog('').withScope('Test').build());
+      lumberjack.log(createDebugLogBuilder(getUnixEpochTicks)('').withScope('Test').build());
 
       expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
       expect(spyDriver.logDebug).toHaveBeenCalledWith(
@@ -477,7 +476,7 @@ describe(LumberjackService.name, () => {
     });
 
     it('logs an error message to a driver', () => {
-      lumberjack.log(logFactory.createErrorLog('').withScope('Test').build());
+      lumberjack.log(createErrorLogBuilder(getUnixEpochTicks)('').withScope('Test').build());
 
       expect(spyDriver.logError).toHaveBeenCalledTimes(1);
       expect(spyDriver.logError).toHaveBeenCalledWith(
@@ -486,7 +485,7 @@ describe(LumberjackService.name, () => {
     });
 
     it('logs an info message to a driver', () => {
-      lumberjack.log(logFactory.createInfoLog('').withScope('Test').build());
+      lumberjack.log(createInfoLogBuilder(getUnixEpochTicks)('').withScope('Test').build());
 
       expect(spyDriver.logInfo).toHaveBeenCalledTimes(1);
       expect(spyDriver.logInfo).toHaveBeenCalledWith(
@@ -495,7 +494,7 @@ describe(LumberjackService.name, () => {
     });
 
     it('logs a trace to a driver', () => {
-      lumberjack.log(logFactory.createTraceLog('').withScope('Test').build());
+      lumberjack.log(createTraceLogBuilder(getUnixEpochTicks)('').withScope('Test').build());
 
       expect(spyDriver.logTrace).toHaveBeenCalledTimes(1);
       expect(spyDriver.logTrace).toHaveBeenCalledWith(
@@ -504,7 +503,7 @@ describe(LumberjackService.name, () => {
     });
 
     it('logs a warning to a driver', () => {
-      lumberjack.log(logFactory.createWarningLog('').withScope('Test').build());
+      lumberjack.log(createWarningLogBuilder(getUnixEpochTicks)('').withScope('Test').build());
 
       expect(spyDriver.logWarning).toHaveBeenCalledTimes(1);
       expect(spyDriver.logWarning).toHaveBeenCalledWith(
@@ -569,7 +568,7 @@ describe(LumberjackService.name, () => {
       const scope = 'Verbose';
 
       it('debug logs are logged', () => {
-        lumberjack.log(logFactory.createDebugLog('').withScope(scope).build());
+        lumberjack.log(createDebugLogBuilder(getUnixEpochTicks)('').withScope(scope).build());
 
         expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
         expect(spyDriver.logDebug).toHaveBeenCalledWith(
@@ -578,7 +577,7 @@ describe(LumberjackService.name, () => {
       });
 
       it('errors are logged', () => {
-        lumberjack.log(logFactory.createErrorLog('').withScope(scope).build());
+        lumberjack.log(createErrorLogBuilder(getUnixEpochTicks)('').withScope(scope).build());
 
         expect(spyDriver.logError).toHaveBeenCalledTimes(1);
         expect(spyDriver.logError).toHaveBeenCalledWith(
@@ -587,7 +586,7 @@ describe(LumberjackService.name, () => {
       });
 
       it('info is logged', () => {
-        lumberjack.log(logFactory.createInfoLog('').withScope(scope).build());
+        lumberjack.log(createInfoLogBuilder(getUnixEpochTicks)('').withScope(scope).build());
 
         expect(spyDriver.logInfo).toHaveBeenCalledTimes(1);
         expect(spyDriver.logInfo).toHaveBeenCalledWith(
@@ -596,7 +595,7 @@ describe(LumberjackService.name, () => {
       });
 
       it('warnings are logged', () => {
-        lumberjack.log(logFactory.createWarningLog('').withScope(scope).build());
+        lumberjack.log(createWarningLogBuilder(getUnixEpochTicks)('').withScope(scope).build());
 
         expect(spyDriver.logWarning).toHaveBeenCalledTimes(1);
         expect(spyDriver.logWarning).toHaveBeenCalledWith(
@@ -642,12 +641,12 @@ describe(LumberjackService.name, () => {
       });
 
       beforeEach(() => {
-        lumberjack.log(logFactory.createCriticalLog('').withScope('Test').build());
-        lumberjack.log(logFactory.createDebugLog('').withScope('Test').build());
-        lumberjack.log(logFactory.createErrorLog('').withScope('Test').build());
-        lumberjack.log(logFactory.createInfoLog('').withScope('Test').build());
-        lumberjack.log(logFactory.createTraceLog('').withScope('Test').build());
-        lumberjack.log(logFactory.createWarningLog('').withScope('Test').build());
+        lumberjack.log(createCriticalLogBuilder(getUnixEpochTicks)('').withScope('Test').build());
+        lumberjack.log(createDebugLogBuilder(getUnixEpochTicks)('').withScope('Test').build());
+        lumberjack.log(createErrorLogBuilder(getUnixEpochTicks)('').withScope('Test').build());
+        lumberjack.log(createInfoLogBuilder(getUnixEpochTicks)('').withScope('Test').build());
+        lumberjack.log(createTraceLogBuilder(getUnixEpochTicks)('').withScope('Test').build());
+        lumberjack.log(createWarningLogBuilder(getUnixEpochTicks)('').withScope('Test').build());
       });
 
       let lumberjack: LumberjackService;

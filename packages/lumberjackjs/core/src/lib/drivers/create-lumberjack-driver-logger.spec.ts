@@ -1,8 +1,12 @@
 import { createFakeTime, createSpyDriver, SpyDriver } from '@internal/core/test-util';
 
-import { createLumberjackLogFactory } from '../logging/create-lumberjack-log-factory';
-import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
 import { LumberjackLevel } from '../logs/lumberjack-level';
+import { createCriticalLogBuilder } from '../logging/create-lumberjack-log-builder-functions/create-critical-log-builder';
+import { createDebugLogBuilder } from '../logging/create-lumberjack-log-builder-functions/create-debug-log-builder';
+import { createErrorLogBuilder } from '../logging/create-lumberjack-log-builder-functions/create-error-log-builder';
+import { createInfoLogBuilder } from '../logging/create-lumberjack-log-builder-functions/create-info-log-builder';
+import { createTraceLogBuilder } from '../logging/create-lumberjack-log-builder-functions/create-trace-log-builder';
+import { createWarningLogBuilder } from '../logging/create-lumberjack-log-builder-functions/create-warning-log-builder';
 
 import { createLumberjackDriverLogger } from './create-lumberjack-driver-logger';
 import { LumberjackDriverLog } from './lumberjack-driver.log';
@@ -14,17 +18,15 @@ describe(createLumberjackDriverLogger.name, () => {
   beforeEach(() => {
     driver = createSpyDriver({ levels: [LumberjackLevel.Verbose] });
     logger = createLumberjackDriverLogger();
-    logFactory = createLumberjackLogFactory({ getUnixEpochTicks });
   });
 
   let driver: SpyDriver;
-  let logFactory: LumberjackLogFactory;
   let logger: LumberjackDriverLogger;
 
   it('logs a critical driver log', () => {
     const driverLog: LumberjackDriverLog = {
       formattedLog: LumberjackLevel.Critical,
-      log: logFactory.createCriticalLog(LumberjackLevel.Critical).build(),
+      log: createCriticalLogBuilder(getUnixEpochTicks)(LumberjackLevel.Critical).build(),
     };
 
     logger.log(driver, driverLog);
@@ -35,7 +37,7 @@ describe(createLumberjackDriverLogger.name, () => {
   it('logs a debug driver log', () => {
     const driverLog: LumberjackDriverLog = {
       formattedLog: LumberjackLevel.Debug,
-      log: logFactory.createDebugLog(LumberjackLevel.Debug).build(),
+      log: createDebugLogBuilder(getUnixEpochTicks)(LumberjackLevel.Debug).build(),
     };
 
     logger.log(driver, driverLog);
@@ -46,7 +48,7 @@ describe(createLumberjackDriverLogger.name, () => {
   it('logs an error driver log', () => {
     const driverLog: LumberjackDriverLog = {
       formattedLog: LumberjackLevel.Error,
-      log: logFactory.createErrorLog(LumberjackLevel.Error).build(),
+      log: createErrorLogBuilder(getUnixEpochTicks)(LumberjackLevel.Error).build(),
     };
 
     logger.log(driver, driverLog);
@@ -57,7 +59,7 @@ describe(createLumberjackDriverLogger.name, () => {
   it('logs an info driver log', () => {
     const driverLog: LumberjackDriverLog = {
       formattedLog: LumberjackLevel.Info,
-      log: logFactory.createInfoLog(LumberjackLevel.Info).build(),
+      log: createInfoLogBuilder(getUnixEpochTicks)(LumberjackLevel.Info).build(),
     };
 
     logger.log(driver, driverLog);
@@ -68,7 +70,7 @@ describe(createLumberjackDriverLogger.name, () => {
   it('logs a trace driver log', () => {
     const driverLog: LumberjackDriverLog = {
       formattedLog: LumberjackLevel.Trace,
-      log: logFactory.createTraceLog(LumberjackLevel.Trace).build(),
+      log: createTraceLogBuilder(getUnixEpochTicks)(LumberjackLevel.Trace).build(),
     };
 
     logger.log(driver, driverLog);
@@ -79,7 +81,7 @@ describe(createLumberjackDriverLogger.name, () => {
   it('logs a warning driver log', () => {
     const driverLog: LumberjackDriverLog = {
       formattedLog: LumberjackLevel.Warning,
-      log: logFactory.createWarningLog(LumberjackLevel.Warning).build(),
+      log: createWarningLogBuilder(getUnixEpochTicks)(LumberjackLevel.Warning).build(),
     };
 
     logger.log(driver, driverLog);
