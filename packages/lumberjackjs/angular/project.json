@@ -17,16 +17,10 @@
       },
       "configurations": {
         "production": {
-          "commands": [
-            "nx run lumberjackjs-angular:build-package:production",
-            "yarn copy README.md dist/packages/lumberjackjs/angular"
-          ]
+          "command": "yarn copy README.md dist/packages/lumberjackjs/angular"
         },
         "development": {
-          "commands": [
-            "nx run lumberjackjs-angular:build-package:development",
-            "yarn copy README.md dist/packages/lumberjackjs/angular"
-          ]
+          "command": "yarn copy README.md dist/packages/lumberjackjs/angular"
         }
       },
       "defaultConfiguration": "production",

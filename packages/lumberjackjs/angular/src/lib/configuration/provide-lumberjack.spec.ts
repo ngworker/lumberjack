@@ -4,9 +4,9 @@ import {
   defaultDevelopmentLevels,
   defaultProductionLevels,
   LumberjackConfig,
+  LumberjackDriverConfig,
   lumberjackFormatLog,
   LumberjackLevel,
-  LumberjackDriverConfig,
   LumberjackOptions,
 } from '@lumberjackjs/core';
 

@@ -27,10 +27,10 @@ import {
 } from '@internal/core/test-util';
 import {
   createLumberjackLogFactory,
-  LumberjackLevel,
   LumberjackDriver,
   LumberjackDriverConfig,
   LumberjackDriverLog,
+  LumberjackLevel,
   LumberjackLogPayload,
 } from '@lumberjackjs/core';
 

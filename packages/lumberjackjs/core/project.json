@@ -5,6 +5,27 @@
   "projectType": "library",
   "prefix": "lumberjackjs",
   "targets": {
+    "build": {
+      "executor": "nx:run-commands",
+      "dependsOn": [
+        {
+          "target": "build-package"
+        }
+      ],
+      "options": {
+        "parallel": false
+      },
+      "configurations": {
+        "production": {
+          "command": "yarn copy README.md dist/packages/lumberjackjs/core"
+        },
+        "development": {
+          "commands": "yarn copy README.md dist/packages/lumberjackjs/core"
+        }
+      },
+      "defaultConfiguration": "production",
+      "outputs": ["{workspaceRoot}/dist/packages/lumberjackjs/core"]
+    },
     "build-package": {
       "executor": "@nrwl/js:tsc",
       "outputs": ["{options.outputPath}"],

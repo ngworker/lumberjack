@@ -1,4 +1,4 @@
-import { LumberjackLevel, LumberjackDriverLog, LumberjackLogLevel, LumberjackLogPayload } from '@lumberjackjs/core';
+import { LumberjackDriverLog, LumberjackLevel, LumberjackLogLevel, LumberjackLogPayload } from '@lumberjackjs/core';
 
 export const createDriverLog = <TPayload extends LumberjackLogPayload | void = void>(
   getUnixEpochTicks: () => number,

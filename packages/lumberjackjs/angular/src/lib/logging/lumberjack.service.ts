@@ -4,8 +4,8 @@ import {
   createLumberjack,
   Lumberjack,
   LumberjackConfig,
-  LumberjackLog,
   LumberjackDriver,
+  LumberjackLog,
   LumberjackLogPayload,
 } from '@lumberjackjs/core';
 

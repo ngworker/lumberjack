@@ -5,10 +5,10 @@ import {
   defaultDevelopmentLevels,
   defaultProductionLevels,
   LumberjackConfig,
+  LumberjackDriverConfig,
   lumberjackFormatLog,
   LumberjackLevel,
   LumberjackLog,
-  LumberjackDriverConfig,
   LumberjackOptions,
   utcTimestampFor,
 } from '@lumberjackjs/core';

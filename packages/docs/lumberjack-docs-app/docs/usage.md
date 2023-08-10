@@ -140,9 +140,9 @@ export class MyComponent implements OnInit {
 
 Optionally, we can pass one or more options to `LumberjackModule.forRoot` or to the `provideLumberjack` function.
 
-| Option   | Type                           | Optional? | Description                                                          |
-| -------- | ------------------------------ | --------- | -------------------------------------------------------------------- |
-| `format` | (log: LumberjackLog) => string | Yes       | Pass a custom formatter to transform a log into a log message.       |
+| Option   | Type                           | Optional? | Description                                                      |
+| -------- | ------------------------------ | --------- | ---------------------------------------------------------------- |
+| `format` | (log: LumberjackLog) => string | Yes       | Pass a custom formatter to transform a log into a log message.   |
 | `levels` | `LumberjackConfigLevels`       | Yes       | The root log levels defining the default log levels for drivers. |
 
 ### Default options

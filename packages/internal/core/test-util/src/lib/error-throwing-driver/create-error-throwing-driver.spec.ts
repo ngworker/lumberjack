@@ -1,4 +1,4 @@
-import { LumberjackLevel, LumberjackDriver, LumberjackDriverLog, LumberjackLogLevel } from '@lumberjackjs/core';
+import { LumberjackDriver, LumberjackDriverLog, LumberjackLevel, LumberjackLogLevel } from '@lumberjackjs/core';
 
 import { createDriverLog } from '../logs';
 import { createFakeTime } from '../time/create-fake-time';

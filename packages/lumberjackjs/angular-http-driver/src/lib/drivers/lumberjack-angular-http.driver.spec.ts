@@ -5,9 +5,9 @@ import { VERSION } from '@angular/platform-browser';
 import { createCriticalDriverLog, createDriverLog, createFakeTime, repeatSideEffect } from '@internal/core/test-util';
 import { lumberjackDriverToken, provideLumberjack } from '@lumberjackjs/angular';
 import {
-  LumberjackLevel,
   LumberjackDriver,
   LumberjackDriverLog,
+  LumberjackLevel,
   LumberjackLogLevel,
   LumberjackLogPayload,
 } from '@lumberjackjs/core';

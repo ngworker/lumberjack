@@ -15,9 +15,7 @@ import { lumberjackConfigToken } from './lumberjack-config.token';
 import { lumberjackDriverConfigToken } from './lumberjack-driver-config.token';
 import { lumberjackOptionsToken } from './lumberjack-options.token';
 
-export function createLumberjackDriverConfig({
-  levels,
-}: LumberjackConfig): Omit<LumberjackDriverConfig, 'identifier'> {
+export function createLumberjackDriverConfig({ levels }: LumberjackConfig): Omit<LumberjackDriverConfig, 'identifier'> {
   return {
     levels,
   };

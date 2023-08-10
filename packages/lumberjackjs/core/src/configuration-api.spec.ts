@@ -5,8 +5,8 @@ import {
   defaultDevelopmentLevels,
   defaultProductionLevels,
   LumberjackConfig,
-  LumberjackFormatFunction,
   LumberjackDriverConfig,
+  LumberjackFormatFunction,
   LumberjackOptions,
 } from './index';
 

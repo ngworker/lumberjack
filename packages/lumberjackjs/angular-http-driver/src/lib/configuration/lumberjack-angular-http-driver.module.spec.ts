@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { expectNgModuleToBeGuardedAgainstDirectImport } from '@internal/angular/test-util';
 import { lumberjackDriverToken, LumberjackModule } from '@lumberjackjs/angular';
-import { LumberjackConfigLevels, LumberjackLevel, LumberjackDriver } from '@lumberjackjs/core';
+import { LumberjackConfigLevels, LumberjackDriver, LumberjackLevel } from '@lumberjackjs/core';
 
 import { LumberjackAngularHttpDriver } from '../drivers/lumberjack-angular-http.driver';
 

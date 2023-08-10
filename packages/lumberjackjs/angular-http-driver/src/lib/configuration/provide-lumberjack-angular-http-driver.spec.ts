@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { createDriverLog, createFakeTime, Writable } from '@internal/core/test-util';
 import { lumberjackDriverToken, provideLumberjack } from '@lumberjackjs/angular';
-import { LumberjackConfigLevels, LumberjackLevel, LumberjackDriver } from '@lumberjackjs/core';
+import { LumberjackConfigLevels, LumberjackDriver, LumberjackLevel } from '@lumberjackjs/core';
 
 import { LumberjackAngularHttpDriver } from '../drivers/lumberjack-angular-http.driver';
 

@@ -9,3 +9,5 @@
 
 # Generated files
 packages/**/CHANGELOG.md
+
+**/CHANGELOG.md
