@@ -2,8 +2,6 @@ import { isFunction } from '@internal/core/test-util';
 
 import {
   createLumberjackConfig,
-  defaultDevelopmentLevels,
-  defaultProductionLevels,
   LumberjackConfig,
   LumberjackDriverConfig,
   LumberjackFormatFunction,
@@ -39,24 +37,10 @@ describe('Configuration API', () => {
     });
   });
 
-  describe('Default configurations', () => {
-    it('exposes defaultDevelopmentLevels', () => {
-      expect(defaultDevelopmentLevels).toBeDefined();
-    });
-
-    it('exposes defaultProductionLevels', () => {
-      expect(defaultProductionLevels).toBeDefined();
-    });
-  });
-
   describe('Factory Functions', () => {
     it('exposes createLumberjackConfig', () => {
       const sut = createLumberjackConfig;
       expect(isFunction(sut)).toBeTruthy();
-    });
-
-    it('exposes defaultProductionLevels', () => {
-      expect(defaultProductionLevels).toBeDefined();
     });
   });
 });

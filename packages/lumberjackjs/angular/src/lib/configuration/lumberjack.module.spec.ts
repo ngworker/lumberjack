@@ -1,16 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
 import { expectNgModuleToBeGuardedAgainstDirectImport } from '@internal/angular/test-util';
+import { defaultDevelopmentLevels, defaultProductionLevels, utcTimestampFor } from '@internal/core/test-util';
 import {
-  defaultDevelopmentLevels,
-  defaultProductionLevels,
   LumberjackConfig,
   LumberjackDriverConfig,
-  lumberjackFormatLog,
   LumberjackLevel,
   LumberjackLog,
   LumberjackOptions,
-  utcTimestampFor,
 } from '@lumberjackjs/core';
 
 import { isProductionEnvironmentToken } from '../environment/is-production-environment.token';
@@ -82,10 +79,7 @@ describe(LumberjackModule.name, () => {
       });
 
       const actualConfig = TestBed.inject(lumberjackConfigToken);
-      expect(actualConfig).toEqual({
-        levels: defaultDevelopmentLevels,
-        format: expect.any(Function),
-      });
+      expect(actualConfig.levels).toEqual(defaultDevelopmentLevels);
     });
 
     it('provides a default Lumberjack configuration in production mode', () => {
@@ -95,10 +89,7 @@ describe(LumberjackModule.name, () => {
       });
 
       const actualConfig = TestBed.inject(lumberjackConfigToken);
-      expect(actualConfig).toEqual({
-        format: lumberjackFormatLog,
-        levels: defaultProductionLevels,
-      });
+      expect(actualConfig.levels).toEqual(defaultProductionLevels);
     });
 
     it('provides a default driver configuration', () => {

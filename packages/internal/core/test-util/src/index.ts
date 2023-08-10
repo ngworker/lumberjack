@@ -35,9 +35,14 @@ export * from './lib/logs';
 
 // Functions
 export * from './lib/functions/repeat-side-effect';
+export * from './lib/functions/utc-timestamp-for';
 
 // Noop Console
 export * from './lib/noop-console/noop-console';
 
 // Spy Console
 export * from './lib/spy-console/spy-console';
+
+// Default Levels
+export * from './lib/default-levels/default-production-levels';
+export * from './lib/default-levels/default-development-levels';

@@ -6,8 +6,6 @@
 export { LumberjackConfig } from './lib/configuration/lumberjack.config';
 export { LumberjackDriverConfig } from './lib/configuration/lumberjack-driver.config';
 export { LumberjackOptions } from './lib/configuration/lumberjack.options';
-export { defaultDevelopmentLevels } from './lib/configuration/default-development-levels';
-export { defaultProductionLevels } from './lib/configuration/default-production-levels';
 export { createLumberjackConfig } from './lib/configuration/create-lumberjack-config';
 
 // Logs
@@ -23,8 +21,6 @@ export { LumberjackDriverLog } from './lib/drivers/lumberjack-driver.log';
 
 // Formatting
 export { LumberjackFormatFunction } from './lib/formatting/lumberjack-format-function';
-export { lumberjackFormatLog } from './lib/formatting/lumberjack-format-log';
-export { utcTimestampFor } from './lib/formatting/utc-timestamp-for';
 
 // Logging
 export { createLumberjack } from './lib/logging/create-lumberjack';
