@@ -6,7 +6,7 @@ import {
   defaultProductionLevels,
   LumberjackConfig,
   LumberjackFormatFunction,
-  LumberjackLogDriverConfig,
+  LumberjackDriverConfig,
   LumberjackOptions,
 } from './index';
 
@@ -18,8 +18,8 @@ describe('Configuration API', () => {
       expect(value).toBeUndefined();
     });
 
-    it('exposes LumberjackLogDriverConfig', () => {
-      const value: LumberjackLogDriverConfig | undefined = undefined;
+    it('exposes LumberjackDriverConfig', () => {
+      const value: LumberjackDriverConfig | undefined = undefined;
 
       expect(value).toBeUndefined();
     });

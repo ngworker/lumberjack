@@ -1,4 +1,4 @@
-import { LumberjackLogDriverConfig, LumberjackLogPayload } from '@lumberjackjs/core';
+import { LumberjackDriverConfig, LumberjackLogPayload } from '@lumberjackjs/core';
 
 import { SpyDriverConfig } from './spy-driver.config';
 import { SpyDriver } from './spy.driver';
@@ -25,7 +25,7 @@ export function createSpyDriver<TPayload extends LumberjackLogPayload | void = v
   }
 
   return {
-    config: config as LumberjackLogDriverConfig,
+    config: config as LumberjackDriverConfig,
     logCritical,
     logDebug,
     logError,

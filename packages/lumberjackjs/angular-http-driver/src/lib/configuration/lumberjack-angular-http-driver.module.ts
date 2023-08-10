@@ -21,7 +21,7 @@ import {
 @NgModule()
 export class LumberjackAngularHttpDriverModule {
   /**
-   * Configure and register the HTTP driver, including settings that log drivers
+   * Configure and register the HTTP driver, including settings that drivers
    * have in common.
    *
    * @param config Settings used by the HTTP driver.
@@ -38,7 +38,7 @@ export class LumberjackAngularHttpDriverModule {
 
   /**
    * Configure and register the HTTP driver, but fall back on the default log
-   * driver settings for settings that log drivers have in common.
+   * driver settings for settings that drivers have in common.
    * @param options Settings used by the HTTP driver.
    */
   static withOptions(

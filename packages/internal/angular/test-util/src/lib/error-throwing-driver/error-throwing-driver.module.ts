@@ -6,8 +6,8 @@ import {
   ErrorThrowingDriverConfig,
   ErrorThrowingDriverOptions,
 } from '@internal/core/test-util';
-import { lumberjackLogDriverConfigToken } from '@lumberjackjs/angular';
-import { LumberjackLogDriverConfig } from '@lumberjackjs/core';
+import { lumberjackDriverConfigToken } from '@lumberjackjs/angular';
+import { LumberjackDriverConfig } from '@lumberjackjs/core';
 
 import { errorThrowingDriverConfigToken } from './error-throwing-driver-config.token';
 import { ErrorThrowingDriverRootModule } from './error-throwing-driver-root.module';
@@ -30,11 +30,11 @@ export class ErrorThrowingDriverModule {
       providers: [
         {
           provide: errorThrowingDriverConfigToken,
-          useFactory: (logDriverConfig: LumberjackLogDriverConfig): ErrorThrowingDriverConfig => ({
-            ...logDriverConfig,
+          useFactory: (driverConfig: LumberjackDriverConfig): ErrorThrowingDriverConfig => ({
+            ...driverConfig,
             ...fullConfig,
           }),
-          deps: [lumberjackLogDriverConfigToken],
+          deps: [lumberjackDriverConfigToken],
         },
       ],
     };
@@ -53,11 +53,11 @@ export class ErrorThrowingDriverModule {
       providers: [
         {
           provide: errorThrowingDriverConfigToken,
-          useFactory: (logDriverConfig: LumberjackLogDriverConfig): ErrorThrowingDriverConfig => ({
-            ...logDriverConfig,
+          useFactory: (driverConfig: LumberjackDriverConfig): ErrorThrowingDriverConfig => ({
+            ...driverConfig,
             ...allOptions,
           }),
-          deps: [lumberjackLogDriverConfigToken],
+          deps: [lumberjackDriverConfigToken],
         },
       ],
     };

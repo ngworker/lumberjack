@@ -1,11 +1,11 @@
 import { Provider } from '@angular/core';
 
-import { lumberjackLogDriverToken } from '@lumberjackjs/angular';
+import { lumberjackDriverToken } from '@lumberjackjs/angular';
 
-import { LumberjackAngularHttpDriver } from '../log-drivers/lumberjack-angular-http.driver';
+import { LumberjackAngularHttpDriver } from '../drivers/lumberjack-angular-http.driver';
 
 export const LumberjackAngularHttpDriverProvider: Provider = {
-  provide: lumberjackLogDriverToken,
+  provide: lumberjackDriverToken,
   useClass: LumberjackAngularHttpDriver,
   multi: true,
 };

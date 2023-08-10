@@ -179,7 +179,7 @@ Notice that now every log written using the `AppLogger` will have the `'Forest A
 
 #### Using Loggers with a LumberjackLog payload
 
-As seen in the [Log drivers](./log-drivers/) section, we can send extra info to our drivers using
+As seen in the [Drivers](./drivers/) section, we can send extra info to our drivers using
 a `LumberjackLog#payload`.
 
 The `LumberjackLogger` and `ScopedLumberjackLogger` provide a convenient interface for such a scenario.

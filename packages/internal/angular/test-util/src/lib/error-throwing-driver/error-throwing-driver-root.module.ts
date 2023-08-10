@@ -1,14 +1,14 @@
 import { inject, NgModule } from '@angular/core';
 
 import { createErrorThrowingDriver } from '@internal/core/test-util';
-import { lumberjackLogDriverToken } from '@lumberjackjs/angular';
+import { lumberjackDriverToken } from '@lumberjackjs/angular';
 
 import { errorThrowingDriverConfigToken } from './error-throwing-driver-config.token';
 
 @NgModule({
   providers: [
     {
-      provide: lumberjackLogDriverToken,
+      provide: lumberjackDriverToken,
       useFactory: createErrorThrowingDriver,
       multi: true,
       deps: [errorThrowingDriverConfigToken],

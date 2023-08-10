@@ -1,4 +1,4 @@
-import { LumberjackLogDriver, LumberjackLogDriverLog } from '@lumberjackjs/core';
+import { LumberjackDriver, LumberjackDriverLog } from '@lumberjackjs/core';
 
 import { ObjectDriverConfig } from './object-driver.config';
 import { ObjectLogger } from './object-logger';
@@ -6,30 +6,30 @@ import { ObjectPayload } from './object.payload';
 
 export const objectDriverIdentifier = 'ObjectDriver';
 
-export type ObjectDriver = Omit<LumberjackLogDriver<ObjectPayload>, 'config'> & { config: ObjectDriverConfig };
+export type ObjectDriver = Omit<LumberjackDriver<ObjectPayload>, 'config'> & { config: ObjectDriverConfig };
 
 export function createObjectDriver(config: ObjectDriverConfig, objectLogger: ObjectLogger): ObjectDriver {
-  function logCritical({ log }: LumberjackLogDriverLog<ObjectPayload>): void {
+  function logCritical({ log }: LumberjackDriverLog<ObjectPayload>): void {
     objectLogger.log(log.payload);
   }
 
-  function logDebug({ log }: LumberjackLogDriverLog<ObjectPayload>): void {
+  function logDebug({ log }: LumberjackDriverLog<ObjectPayload>): void {
     objectLogger.log(log.payload);
   }
 
-  function logError({ log }: LumberjackLogDriverLog<ObjectPayload>): void {
+  function logError({ log }: LumberjackDriverLog<ObjectPayload>): void {
     objectLogger.log(log.payload);
   }
 
-  function logInfo({ log }: LumberjackLogDriverLog<ObjectPayload>): void {
+  function logInfo({ log }: LumberjackDriverLog<ObjectPayload>): void {
     objectLogger.log(log.payload);
   }
 
-  function logTrace({ log }: LumberjackLogDriverLog<ObjectPayload>): void {
+  function logTrace({ log }: LumberjackDriverLog<ObjectPayload>): void {
     objectLogger.log(log.payload);
   }
 
-  function logWarning({ log }: LumberjackLogDriverLog<ObjectPayload>): void {
+  function logWarning({ log }: LumberjackDriverLog<ObjectPayload>): void {
     objectLogger.log(log.payload);
   }
 

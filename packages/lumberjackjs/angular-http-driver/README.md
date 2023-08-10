@@ -1,12 +1,12 @@
 # LumberjackAngularHttpDriver
 
-This log driver is used to send an HTTP request to a configured log store server.
+This driver is used to send an HTTP request to a configured log store server.
 
-Take this implementation as an advanced example of a log driver implementation. Some of the decisions made are not compatible with every existing log store.
+Take this implementation as an advanced example of a driver implementation. Some of the decisions made are not compatible with every existing log store.
 
 ## Implementation
 
-The following are complementary interfaces for the log driver implementation.
+The following are complementary interfaces for the driver implementation.
 
 ```typescript
 interface LumberjackHttpLog {
@@ -23,7 +23,7 @@ The rest of the `LumberjackAngularHttpDriver` is defined as follows
 ```typescript
 @Injectable()
 export class LumberjackAngularHttpDriver<TPayload extends LumberjackLogPayload | void = void>
-  implements LumberjackLogDriver<TPayload>, OnDestroy
+  implements LumberjackDriver<TPayload>, OnDestroy
 {
   static readonly driverIdentifier = 'LumberjackAngularHttpDriver';
 
@@ -37,27 +37,27 @@ export class LumberjackAngularHttpDriver<TPayload extends LumberjackLogPayload |
     this.#subscriptions.unsubscribe();
   }
 
-  logCritical({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
+  logCritical({ formattedLog, log }: LumberjackDriverLog<TPayload>): void {
     this.#sendLog(formattedLog, log);
   }
 
-  logDebug({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
+  logDebug({ formattedLog, log }: LumberjackDriverLog<TPayload>): void {
     this.#sendLog(formattedLog, log);
   }
 
-  logError({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
+  logError({ formattedLog, log }: LumberjackDriverLog<TPayload>): void {
     this.#sendLog(formattedLog, log);
   }
 
-  logInfo({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
+  logInfo({ formattedLog, log }: LumberjackDriverLog<TPayload>): void {
     this.#sendLog(formattedLog, log);
   }
 
-  logTrace({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
+  logTrace({ formattedLog, log }: LumberjackDriverLog<TPayload>): void {
     this.#sendLog(formattedLog, log);
   }
 
-  logWarning({ formattedLog, log }: LumberjackLogDriverLog<TPayload>): void {
+  logWarning({ formattedLog, log }: LumberjackDriverLog<TPayload>): void {
     this.#sendLog(formattedLog, log);
   }
 
@@ -80,10 +80,10 @@ export class LumberjackAngularHttpDriver<TPayload extends LumberjackLogPayload |
 }
 ```
 
-The HTTP log driver receives an `HttpClient`, an `NgZone` for optimizations purpose, and a custom configuration object that extends the `LumberjackLogDriverConfig`.
+The HTTP driver receives an `HttpClient`, an `NgZone` for optimizations purpose, and a custom configuration object that extends the `LumberjackDriverConfig`.
 
 ```typescript
-export interface LumberjackAngularHttpDriverConfig extends LumberjackLogDriverConfig {
+export interface LumberjackAngularHttpDriverConfig extends LumberjackDriverConfig {
   /**
    * The identifier of the app which emitted the log.
    * This is used to organize logs on the log store.
@@ -111,7 +111,7 @@ The `sendLog` method has been optimized to run outside Angular's `NgZone`, avoid
 
 ### LumberjackAngularHttpDriverModule
 
-Novelty appears with the static `withOptions` function that allows us to pass `LumberjackAngularHttpDriverOptions` to fall back to the settings in `LumberjackLogDriverConfig`.
+Novelty appears with the static `withOptions` function that allows us to pass `LumberjackAngularHttpDriverOptions` to fall back to the settings in `LumberjackDriverConfig`.
 
 Additionally, we can configure the underlaying `HttpClient` by passing any features it receives like interceptors.
 
@@ -119,7 +119,7 @@ Additionally, we can configure the underlaying `HttpClient` by passing any featu
 @NgModule()
 export class LumberjackAngularHttpDriverModule {
   /**
-   * Configure and register the HTTP driver, including settings that log drivers
+   * Configure and register the HTTP driver, including settings that drivers
    * have in common.
    *
    * @param config Settings used by the HTTP driver.
@@ -136,7 +136,7 @@ export class LumberjackAngularHttpDriverModule {
 
   /**
    * Configure and register the HTTP driver, but fall back on the default log
-   * driver settings for settings that log drivers have in common.
+   * driver settings for settings that drivers have in common.
    * @param options Settings used by the HTTP driver.
    */
   static withOptions(
@@ -182,9 +182,9 @@ export function withHttpConfig(
   return makeLumberjackHttpConfiguration('config', [
     {
       provide: lumberjackHttpDriverConfigToken,
-      deps: [lumberjackLogDriverConfigToken],
-      useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackAngularHttpDriverInternalConfig => ({
-        ...logDriverConfig,
+      deps: [lumberjackDriverConfigToken],
+      useFactory: (driverConfig: LumberjackDriverConfig): LumberjackAngularHttpDriverInternalConfig => ({
+        ...driverConfig,
         identifier: LumberjackAngularHttpDriver.driverIdentifier,
         ...config,
       }),
@@ -198,9 +198,9 @@ export function withHttpOptions(
   return makeLumberjackHttpConfiguration('options', [
     {
       provide: lumberjackHttpDriverConfigToken,
-      deps: [lumberjackLogDriverConfigToken],
-      useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackAngularHttpDriverInternalConfig => ({
-        ...logDriverConfig,
+      deps: [lumberjackDriverConfigToken],
+      useFactory: (driverConfig: LumberjackDriverConfig): LumberjackAngularHttpDriverInternalConfig => ({
+        ...driverConfig,
         identifier: LumberjackAngularHttpDriver.driverIdentifier,
         ...options,
       }),

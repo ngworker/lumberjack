@@ -57,8 +57,8 @@ module.exports = {
               to: 'docs/usage',
             },
             {
-              label: 'Log drivers',
-              to: 'docs/log-drivers',
+              label: 'Drivers',
+              to: 'docs/drivers',
             },
             {
               label: 'Community drivers',

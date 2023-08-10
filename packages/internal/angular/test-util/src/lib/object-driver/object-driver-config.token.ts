@@ -1,5 +1,5 @@
 import { InjectionToken } from '@angular/core';
 
-import { LumberjackLogDriverConfig } from '@lumberjackjs/core';
+import { LumberjackDriverConfig } from '@lumberjackjs/core';
 
-export const objectDriverConfigToken = new InjectionToken<LumberjackLogDriverConfig>('__OBJECT_DRIVER_CONFIG__');
+export const objectDriverConfigToken = new InjectionToken<LumberjackDriverConfig>('__OBJECT_DRIVER_CONFIG__');

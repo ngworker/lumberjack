@@ -1,6 +1,6 @@
 import { VERSION } from '@angular/core';
 
-describe('Console log driver', () => {
+describe('Console driver', () => {
   function visit() {
     cy.visit('/', {
       onBeforeLoad(win): void {

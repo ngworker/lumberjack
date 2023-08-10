@@ -8,7 +8,7 @@ import {
   lumberjackFormatLog,
   LumberjackLevel,
   LumberjackLog,
-  LumberjackLogDriverConfig,
+  LumberjackDriverConfig,
   LumberjackOptions,
   utcTimestampFor,
 } from '@lumberjackjs/core';
@@ -16,7 +16,7 @@ import {
 import { isProductionEnvironmentToken } from '../environment/is-production-environment.token';
 
 import { lumberjackConfigToken } from './lumberjack-config.token';
-import { lumberjackLogDriverConfigToken } from './lumberjack-log-driver-config.token';
+import { lumberjackDriverConfigToken } from './lumberjack-driver-config.token';
 import { LumberjackModule } from './lumberjack.module';
 
 describe(LumberjackModule.name, () => {
@@ -101,17 +101,17 @@ describe(LumberjackModule.name, () => {
       });
     });
 
-    it('provides a default log driver configuration', () => {
+    it('provides a default driver configuration', () => {
       TestBed.configureTestingModule({
         imports: [LumberjackModule.forRoot()],
       });
       const logConfig = TestBed.inject(lumberjackConfigToken);
-      const defaultLogDriverConfig: Omit<LumberjackLogDriverConfig, 'identifier'> = {
+      const defaultDriverConfig: Omit<LumberjackDriverConfig, 'identifier'> = {
         levels: logConfig.levels,
       };
 
-      const actualConfig = TestBed.inject(lumberjackLogDriverConfigToken);
-      expect(actualConfig).toEqual(defaultLogDriverConfig as LumberjackLogDriverConfig);
+      const actualConfig = TestBed.inject(lumberjackDriverConfigToken);
+      expect(actualConfig).toEqual(defaultDriverConfig as LumberjackDriverConfig);
     });
 
     describe('Default format function', () => {

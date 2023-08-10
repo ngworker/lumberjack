@@ -1,4 +1,4 @@
-import { LumberjackLevel, LumberjackLogDriverLog, LumberjackLogLevel } from '@lumberjackjs/core';
+import { LumberjackLevel, LumberjackDriverLog, LumberjackLogLevel } from '@lumberjackjs/core';
 
 import { createDriverLog } from '../logs';
 import { createFakeTime } from '../time/create-fake-time';
@@ -27,7 +27,7 @@ describe(createObjectDriver.name, () => {
     [LumberjackLevel.Info, (driver) => driver.logInfo, { isWorking: true }],
     [LumberjackLevel.Trace, (driver) => driver.logTrace, { isWorking: false }],
     [LumberjackLevel.Warning, (driver) => driver.logWarning, undefined],
-  ] as ReadonlyArray<[LumberjackLogLevel, (driver: ObjectDriver) => (driverLog: LumberjackLogDriverLog<ObjectPayload>) => void, ObjectPayload | undefined]>)(
+  ] as ReadonlyArray<[LumberjackLogLevel, (driver: ObjectDriver) => (driverLog: LumberjackDriverLog<ObjectPayload>) => void, ObjectPayload | undefined]>)(
     `delegates to ${createObjectLogger.name} when using the %s log level`,
     (logLevel, logMethod, expectedPayload) => {
       it(`forwards the log payload to the ObjectLogger->log method`, () => {

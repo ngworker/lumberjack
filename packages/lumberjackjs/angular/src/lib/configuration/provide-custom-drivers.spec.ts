@@ -4,7 +4,7 @@ import { createNoopDriver } from '@internal/core/test-util';
 import { LumberjackLevel } from '@lumberjackjs/core';
 import { LumberjackConsoleDriver } from '@lumberjackjs/core/console-driver';
 
-import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
+import { lumberjackDriverToken } from '../drivers/lumberjack-driver.token';
 
 import { provideLumberjackCustomDrivers } from './provide-custom-drivers';
 
@@ -16,7 +16,7 @@ describe(provideLumberjackCustomDrivers.name, () => {
     TestBed.configureTestingModule({
       providers: [provideLumberjackCustomDrivers(consoleDriver)],
     });
-    const customDriver = TestBed.inject(lumberjackLogDriverToken);
+    const customDriver = TestBed.inject(lumberjackDriverToken);
 
     expect(customDriver).toBeDefined();
     expect(customDriver).toEqual([consoleDriver]);
@@ -26,7 +26,7 @@ describe(provideLumberjackCustomDrivers.name, () => {
     TestBed.configureTestingModule({
       providers: [provideLumberjackCustomDrivers([consoleDriver, noopDriver])],
     });
-    const customDrivers = TestBed.inject(lumberjackLogDriverToken);
+    const customDrivers = TestBed.inject(lumberjackDriverToken);
 
     expect(customDrivers).toBeDefined();
     expect(customDrivers.length).toBe(2);

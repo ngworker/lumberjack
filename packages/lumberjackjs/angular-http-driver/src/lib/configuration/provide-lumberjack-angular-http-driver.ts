@@ -1,10 +1,10 @@
 import { provideHttpClient } from '@angular/common/http';
 import { EnvironmentProviders, makeEnvironmentProviders, Provider } from '@angular/core';
 
-import { lumberjackLogDriverConfigToken } from '@lumberjackjs/angular';
-import { LumberjackLogDriverConfig } from '@lumberjackjs/core';
+import { lumberjackDriverConfigToken } from '@lumberjackjs/angular';
+import { LumberjackDriverConfig } from '@lumberjackjs/core';
 
-import { LumberjackAngularHttpDriver } from '../log-drivers/lumberjack-angular-http.driver';
+import { LumberjackAngularHttpDriver } from '../drivers/lumberjack-angular-http.driver';
 
 import { LumberjackAngularHttpDriverConfigToken } from './lumberjack-angular-http-driver-config.token';
 import { LumberjackAngularHttpDriverInternalConfig } from './lumberjack-angular-http-driver-internal.config';
@@ -34,9 +34,9 @@ export function withHttpConfig(
   return makeLumberjackHttpConfiguration('config', [
     {
       provide: LumberjackAngularHttpDriverConfigToken,
-      deps: [lumberjackLogDriverConfigToken],
-      useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackAngularHttpDriverInternalConfig => ({
-        ...logDriverConfig,
+      deps: [lumberjackDriverConfigToken],
+      useFactory: (driverConfig: LumberjackDriverConfig): LumberjackAngularHttpDriverInternalConfig => ({
+        ...driverConfig,
         identifier: LumberjackAngularHttpDriver.driverIdentifier,
         ...config,
       }),
@@ -50,9 +50,9 @@ export function withHttpOptions(
   return makeLumberjackHttpConfiguration('options', [
     {
       provide: LumberjackAngularHttpDriverConfigToken,
-      deps: [lumberjackLogDriverConfigToken],
-      useFactory: (logDriverConfig: LumberjackLogDriverConfig): LumberjackAngularHttpDriverInternalConfig => ({
-        ...logDriverConfig,
+      deps: [lumberjackDriverConfigToken],
+      useFactory: (driverConfig: LumberjackDriverConfig): LumberjackAngularHttpDriverInternalConfig => ({
+        ...driverConfig,
         identifier: LumberjackAngularHttpDriver.driverIdentifier,
         ...options,
       }),

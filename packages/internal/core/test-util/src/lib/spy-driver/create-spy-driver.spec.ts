@@ -1,4 +1,4 @@
-import { LumberjackLevel, LumberjackLogDriver, LumberjackLogDriverLog, LumberjackLogLevel } from '@lumberjackjs/core';
+import { LumberjackLevel, LumberjackDriver, LumberjackDriverLog, LumberjackLogLevel } from '@lumberjackjs/core';
 
 import { createDriverLog } from '../logs';
 import { createFakeTime } from '../time/create-fake-time';
@@ -21,12 +21,12 @@ describe(createSpyDriver.name, () => {
     [LumberjackLevel.Info, (driver) => driver.logInfo],
     [LumberjackLevel.Trace, (driver) => driver.logTrace],
     [LumberjackLevel.Warning, (driver) => driver.logWarning],
-  ] as ReadonlyArray<[LumberjackLogLevel, (driver: LumberjackLogDriver<void>) => (driverLog: LumberjackLogDriverLog<void>) => void]>)(
+  ] as ReadonlyArray<[LumberjackLogLevel, (driver: LumberjackDriver<void>) => (driverLog: LumberjackDriverLog<void>) => void]>)(
     `implements a spy when using the %s log level`,
     (logLevel, logMethod) => {
       it('records calls', () => {
         const driverLog = createDriverLog<void>(fakeTime.getUnixEpochTicks, logLevel, logLevel, '', 'SpyDriverTest');
-        const logSpy = logMethod(spyDriver) as jest.Mock<void, [LumberjackLogDriverLog<void>]>;
+        const logSpy = logMethod(spyDriver) as jest.Mock<void, [LumberjackDriverLog<void>]>;
 
         logSpy.call(spyDriver, driverLog);
 
@@ -36,7 +36,7 @@ describe(createSpyDriver.name, () => {
 
       it('resets the spy', () => {
         const driverLog = createDriverLog<void>(fakeTime.getUnixEpochTicks, logLevel, logLevel, '', 'SpyDriverTest');
-        const logSpy = logMethod(spyDriver) as jest.Mock<void, [LumberjackLogDriverLog<void>]>;
+        const logSpy = logMethod(spyDriver) as jest.Mock<void, [LumberjackDriverLog<void>]>;
         logSpy.call(spyDriver, driverLog);
 
         spyDriver.reset();

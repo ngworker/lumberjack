@@ -1,4 +1,4 @@
-import { LumberjackLogDriverConfig } from '@lumberjackjs/core';
+import { LumberjackDriverConfig } from '@lumberjackjs/core';
 
 import { LumberjackAngularHttpDriverInternalConfig } from './lumberjack-angular-http-driver-internal.config';
 
@@ -7,6 +7,6 @@ import { LumberjackAngularHttpDriverInternalConfig } from './lumberjack-angular-
  */
 export type LumberjackAngularHttpDriverOptions = Omit<
   LumberjackAngularHttpDriverInternalConfig,
-  keyof LumberjackLogDriverConfig
+  keyof LumberjackDriverConfig
 > &
-  Partial<LumberjackLogDriverConfig>;
+  Partial<LumberjackDriverConfig>;

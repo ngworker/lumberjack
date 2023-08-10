@@ -1,47 +1,47 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-// ⬆️ Maintain signature compatibility with LumberjackLogDriver
+// ⬆️ Maintain signature compatibility with LumberjackDriver
 import {
-  LumberjackLogDriver,
-  LumberjackLogDriverConfig,
-  LumberjackLogDriverLog,
+  LumberjackDriver,
+  LumberjackDriverConfig,
+  LumberjackDriverLog,
   LumberjackLogPayload,
 } from '@lumberjackjs/core';
 
 import { NoopDriverConfig } from './noop-driver.config';
 
-export type NoopDriver<TPayload extends LumberjackLogPayload | void = void> = LumberjackLogDriver<TPayload>;
+export type NoopDriver<TPayload extends LumberjackLogPayload | void = void> = LumberjackDriver<TPayload>;
 
 export const noopDriverIdentifier = 'NoopDriver';
 
 export function createNoopDriver<TPayload extends LumberjackLogPayload | void = void>(
   config: NoopDriverConfig
 ): NoopDriver<TPayload> {
-  function logCritical(_driverLog: LumberjackLogDriverLog<TPayload>): void {
+  function logCritical(_driverLog: LumberjackDriverLog<TPayload>): void {
     // intentionally a no-op
   }
 
-  function logDebug(_driverLog: LumberjackLogDriverLog<TPayload>): void {
+  function logDebug(_driverLog: LumberjackDriverLog<TPayload>): void {
     // intentionally a no-op
   }
 
-  function logError(_driverLog: LumberjackLogDriverLog<TPayload>): void {
+  function logError(_driverLog: LumberjackDriverLog<TPayload>): void {
     // intentionally a no-op
   }
 
-  function logInfo(_driverLog: LumberjackLogDriverLog<TPayload>): void {
+  function logInfo(_driverLog: LumberjackDriverLog<TPayload>): void {
     // intentionally a no-op
   }
 
-  function logTrace(_driverLog: LumberjackLogDriverLog<TPayload>): void {
+  function logTrace(_driverLog: LumberjackDriverLog<TPayload>): void {
     // intentionally a no-op
   }
 
-  function logWarning(_driverLog: LumberjackLogDriverLog<TPayload>): void {
+  function logWarning(_driverLog: LumberjackDriverLog<TPayload>): void {
     // intentionally a no-op
   }
 
   return {
-    config: config as LumberjackLogDriverConfig,
+    config: config as LumberjackDriverConfig,
     logCritical,
     logDebug,
     logError,

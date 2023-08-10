@@ -34,7 +34,7 @@ bootstrapApplication(AppComponent, {
 });
 ```
 
-You must also register the log driver modules for the log drivers that you want to enable.
+You must also register the driver modules for the drivers that you want to enable.
 
 If you want to add the `LumberjackAngularHttpDriver` and the `LumberjackConsoleDriver`, add the following code
 
@@ -143,7 +143,7 @@ Optionally, we can pass one or more options to `LumberjackModule.forRoot` or to 
 | Option   | Type                           | Optional? | Description                                                          |
 | -------- | ------------------------------ | --------- | -------------------------------------------------------------------- |
 | `format` | (log: LumberjackLog) => string | Yes       | Pass a custom formatter to transform a log into a log message.       |
-| `levels` | `LumberjackConfigLevels`       | Yes       | The root log levels defining the default log levels for log drivers. |
+| `levels` | `LumberjackConfigLevels`       | Yes       | The root log levels defining the default log levels for drivers. |
 
 ### Default options
 

@@ -1,4 +1,4 @@
-import { LumberjackLevel, LumberjackLogDriver, LumberjackLogDriverLog, LumberjackLogLevel } from '@lumberjackjs/core';
+import { LumberjackLevel, LumberjackDriver, LumberjackDriverLog, LumberjackLogLevel } from '@lumberjackjs/core';
 
 import { createDriverLog } from '../logs';
 import { createFakeTime } from '../time/create-fake-time';
@@ -30,10 +30,10 @@ describe(createErrorThrowingDriver.name, () => {
     [LumberjackLevel.Info, (driver) => driver.logInfo],
     [LumberjackLevel.Trace, (driver) => driver.logTrace],
     [LumberjackLevel.Warning, (driver) => driver.logWarning],
-  ] as ReadonlyArray<[LumberjackLogLevel, (driver: LumberjackLogDriver) => (driverLog: LumberjackLogDriverLog) => void]>)(
+  ] as ReadonlyArray<[LumberjackLogLevel, (driver: LumberjackDriver) => (driverLog: LumberjackDriverLog) => void]>)(
     `implements a spy when using the %s log level`,
     (logLevel, logMethod) => {
-      it('throws an error on first log when the default log driver configuration is used', () => {
+      it('throws an error on first log when the default driver configuration is used', () => {
         const { driver, fakeTime } = setup();
         const driverLog = createDriverLog(
           fakeTime.getUnixEpochTicks,

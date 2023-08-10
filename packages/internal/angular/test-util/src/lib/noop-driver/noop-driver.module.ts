@@ -1,7 +1,7 @@
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
-import { LumberjackLogDriverConfig } from '@lumberjackjs/core';
-import { lumberjackLogDriverConfigToken } from '@lumberjackjs/angular';
+import { LumberjackDriverConfig } from '@lumberjackjs/core';
+import { lumberjackDriverConfigToken } from '@lumberjackjs/angular';
 import { NoopDriverConfig, noopDriverIdentifier } from '@internal/core/test-util';
 
 import { noopDriverConfigToken } from './noop-driver-config.token';
@@ -19,12 +19,12 @@ export class NoopDriverModule {
       providers: [
         {
           provide: noopDriverConfigToken,
-          useFactory: (logDriverConfig: LumberjackLogDriverConfig): NoopDriverConfig => ({
-            ...logDriverConfig,
+          useFactory: (driverConfig: LumberjackDriverConfig): NoopDriverConfig => ({
+            ...driverConfig,
             identifier: noopDriverIdentifier,
             ...config,
           }),
-          deps: [lumberjackLogDriverConfigToken],
+          deps: [lumberjackDriverConfigToken],
         },
       ],
       ngModule: NoopDriverRootModule,

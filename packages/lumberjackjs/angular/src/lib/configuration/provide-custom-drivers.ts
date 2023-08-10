@@ -1,8 +1,8 @@
 import { Provider } from '@angular/core';
 
-import { LumberjackLogDriver } from '@lumberjackjs/core';
+import { LumberjackDriver } from '@lumberjackjs/core';
 
-import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
+import { lumberjackDriverToken } from '../drivers/lumberjack-driver.token';
 
 /**
  * Returns the [dependency-injection providers](https://angular.io/guide/glossary#provider)
@@ -24,15 +24,15 @@ import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.t
  *
  * @publicApi
  */
-export function provideLumberjackCustomDrivers<Driver extends LumberjackLogDriver>(driver: Driver): Provider[];
-export function provideLumberjackCustomDrivers<Driver extends LumberjackLogDriver>(drivers: Driver[]): Provider[];
+export function provideLumberjackCustomDrivers<Driver extends LumberjackDriver>(driver: Driver): Provider[];
+export function provideLumberjackCustomDrivers<Driver extends LumberjackDriver>(drivers: Driver[]): Provider[];
 
-export function provideLumberjackCustomDrivers<Driver extends LumberjackLogDriver>(
+export function provideLumberjackCustomDrivers<Driver extends LumberjackDriver>(
   drivers: Driver | Driver[]
 ): Provider[] {
   if (Array.isArray(drivers)) {
     return drivers.map((driver) => ({
-      provide: lumberjackLogDriverToken,
+      provide: lumberjackDriverToken,
       useValue: driver,
       multi: true,
     }));
@@ -40,7 +40,7 @@ export function provideLumberjackCustomDrivers<Driver extends LumberjackLogDrive
 
   return [
     {
-      provide: lumberjackLogDriverToken,
+      provide: lumberjackDriverToken,
       useValue: drivers,
       multi: true,
     },

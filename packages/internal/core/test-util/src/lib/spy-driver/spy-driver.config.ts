@@ -1,4 +1,4 @@
-import { LumberjackLogDriverConfig } from '@lumberjackjs/core';
+import { LumberjackDriverConfig } from '@lumberjackjs/core';
 
-export type SpyDriverConfig = Omit<LumberjackLogDriverConfig, 'identifier'> &
-  Partial<Pick<LumberjackLogDriverConfig, 'identifier'>>;
+export type SpyDriverConfig = Omit<LumberjackDriverConfig, 'identifier'> &
+  Partial<Pick<LumberjackDriverConfig, 'identifier'>>;

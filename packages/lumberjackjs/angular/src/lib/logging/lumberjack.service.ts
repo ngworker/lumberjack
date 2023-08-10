@@ -5,19 +5,19 @@ import {
   Lumberjack,
   LumberjackConfig,
   LumberjackLog,
-  LumberjackLogDriver,
+  LumberjackDriver,
   LumberjackLogPayload,
 } from '@lumberjackjs/core';
 
 import { lumberjackConfigToken } from '../configuration/lumberjack-config.token';
-import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
+import { lumberjackDriverToken } from '../drivers/lumberjack-driver.token';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 /**
  * Service with programmatic API to pass logs to Lumberjack. Optionally
  * supports a log payload.
  *
- * Lumberjack passes the logs to the registered log drivers based on their
+ * Lumberjack passes the logs to the registered drivers based on their
  * configurations.
  *
  * NOTE! Consider extending the `LumberjackLogger` or `ScopedLumberjackLogger`
@@ -27,9 +27,9 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
 @Injectable()
 export class LumberjackService<TPayload extends LumberjackLogPayload | void = void> implements Lumberjack<TPayload> {
   /**
-   * The registered log drivers.
+   * The registered drivers.
    */
-  readonly #drivers = inject<LumberjackLogDriver<TPayload>[]>(lumberjackLogDriverToken, { optional: true }) ?? [];
+  readonly #drivers = inject<LumberjackDriver<TPayload>[]>(lumberjackDriverToken, { optional: true }) ?? [];
   readonly #time = inject(LumberjackTimeService);
   readonly #config = inject<LumberjackConfig<TPayload>>(lumberjackConfigToken);
 

@@ -1,7 +1,7 @@
 import { inject, NgModule } from '@angular/core';
 
 import { createObjectDriver, ObjectDriverConfig, ObjectLogger } from '@internal/core/test-util';
-import { lumberjackLogDriverToken } from '@lumberjackjs/angular';
+import { lumberjackDriverToken } from '@lumberjackjs/angular';
 
 import { objectDriverConfigToken } from './object-driver-config.token';
 import { ObjectService } from './object.service';
@@ -9,7 +9,7 @@ import { ObjectService } from './object.service';
 @NgModule({
   providers: [
     {
-      provide: lumberjackLogDriverToken,
+      provide: lumberjackDriverToken,
       useFactory: (config: ObjectDriverConfig, objectService: ObjectLogger) =>
         createObjectDriver(config, objectService),
       multi: true,

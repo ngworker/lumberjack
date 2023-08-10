@@ -8,5 +8,5 @@ export { LumberjackConsoleDriverConfig } from './lib/configuration/lumberjack-co
 // Console
 export { LumberjackConsole } from './lib/console/lumberjack-console';
 
-// Log drivers
-export { LumberjackConsoleDriver } from './lib/log-drivers/lumberjack-console.driver';
+// Drivers
+export { LumberjackConsoleDriver } from './lib/drivers/lumberjack-console.driver';

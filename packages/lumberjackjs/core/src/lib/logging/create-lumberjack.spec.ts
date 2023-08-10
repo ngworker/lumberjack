@@ -21,10 +21,10 @@ import {
 } from '@internal/core/test-util';
 
 import { createLumberjackConfig } from '../configuration/create-lumberjack-config';
-import { LumberjackLogDriverConfig } from '../configuration/lumberjack-log-driver.config';
+import { LumberjackDriverConfig } from '../configuration/lumberjack-driver.config';
 import { LumberjackOptions } from '../configuration/lumberjack.options';
-import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
-import { LumberjackLogDriverLog } from '../log-drivers/lumberjack-log-driver.log';
+import { LumberjackDriver } from '../drivers/lumberjack-driver';
+import { LumberjackDriverLog } from '../drivers/lumberjack-driver.log';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 
@@ -46,10 +46,10 @@ class SpyDriverError extends Error {
   }
 }
 
-const noLogsConfig: Omit<LumberjackLogDriverConfig, 'identifier'> = {
+const noLogsConfig: Omit<LumberjackDriverConfig, 'identifier'> = {
   levels: [],
 };
-const allLogsConfig: Omit<LumberjackLogDriverConfig, 'identifier'> = {
+const allLogsConfig: Omit<LumberjackDriverConfig, 'identifier'> = {
   levels: [
     LumberjackLevel.Critical,
     LumberjackLevel.Debug,
@@ -59,7 +59,7 @@ const allLogsConfig: Omit<LumberjackLogDriverConfig, 'identifier'> = {
     LumberjackLevel.Warning,
   ],
 };
-const verboseLoggingConfig: Omit<LumberjackLogDriverConfig, 'identifier'> = {
+const verboseLoggingConfig: Omit<LumberjackDriverConfig, 'identifier'> = {
   levels: [LumberjackLevel.Verbose],
 };
 const fakeDate = new Date('2020-02-02T02:02:02.000Z');
@@ -90,7 +90,7 @@ const logDebugMessageWithObjectPayloadField = (lumberjack: Lumberjack<ObjectPayl
   );
 
 function createTestLumberjack<TPayload extends LumberjackLogPayload | void>(
-  drivers: LumberjackLogDriver<TPayload>[],
+  drivers: LumberjackDriver<TPayload>[],
   options?: LumberjackOptions
 ): Lumberjack<TPayload> {
   return createLumberjack({
@@ -103,17 +103,17 @@ function createTestLumberjack<TPayload extends LumberjackLogPayload | void>(
 describe(createLumberjack.name, () => {
   const lumberjack = createTestLumberjack([]);
 
-  describe('Log drivers', () => {
-    it('accepts logs when no log drivers are registered', () => {
+  describe('Drivers', () => {
+    it('accepts logs when no drivers are registered', () => {
       expect(() => logDebugMessage(lumberjack)).not.toThrow();
     });
 
-    it('accepts logs when a single log driver is registered', () => {
+    it('accepts logs when a single driver is registered', () => {
       const lumberjack = createTestLumberjack([createNoopDriver(verboseLoggingConfig)]);
       expect(() => logDebugMessage(lumberjack)).not.toThrow();
     });
 
-    it('accepts logs when multiple log drivers are registered', () => {
+    it('accepts logs when multiple drivers are registered', () => {
       const lumberjack = createTestLumberjack([
         createNoopDriver(verboseLoggingConfig),
         createSpyDriver(verboseLoggingConfig),
@@ -143,7 +143,7 @@ describe(createLumberjack.name, () => {
       it('uses the payload as part of driver logic', () => {
         const objectLogger = createObjectLogger();
         const lumberjack = createTestLumberjack<ObjectPayload>([
-          createObjectDriver(verboseLoggingConfig, objectLogger) as LumberjackLogDriver<ObjectPayload>,
+          createObjectDriver(verboseLoggingConfig, objectLogger) as LumberjackDriver<ObjectPayload>,
         ]);
 
         const objectLogSpy = jest.spyOn(objectLogger, 'log');
@@ -154,7 +154,7 @@ describe(createLumberjack.name, () => {
       });
     });
 
-    describe('Error-throwing log drivers', () => {
+    describe('Error-throwing drivers', () => {
       beforeEach(() => {
         consoleErrorSpy = jest.spyOn(console, 'error').mockImplementation(() => {
           /* do nothing */
@@ -163,13 +163,13 @@ describe(createLumberjack.name, () => {
 
       let consoleErrorSpy: jest.SpyInstance<void, unknown[]>;
 
-      it('outputs an error when a single log driver is registered', () => {
+      it('outputs an error when a single driver is registered', () => {
         const lumberjack = createTestLumberjack([
           createErrorThrowingDriver({
             logsBeforeThrowing: defaultErrorThrowingDriverOptions.logsBeforeThrowing,
             levels: [LumberjackLevel.Verbose],
             identifier: errorThrowingDriverIdentifier,
-          }) as LumberjackLogDriver,
+          }) as LumberjackDriver,
         ]);
 
         expect(() => logDebugMessage(lumberjack)).not.toThrow();
@@ -182,7 +182,7 @@ describe(createLumberjack.name, () => {
           logsBeforeThrowing: 1,
           levels: [LumberjackLevel.Verbose],
           identifier: errorThrowingDriverIdentifier,
-        }) as LumberjackLogDriver;
+        }) as LumberjackDriver;
         const spyDriver = createSpyDriver(verboseLoggingConfig);
 
         const lumberjack = createTestLumberjack([errorDriver, spyDriver], { format: ({ level }) => level });
@@ -217,7 +217,7 @@ describe(createLumberjack.name, () => {
           logsBeforeThrowing: 2,
           levels: [LumberjackLevel.Verbose],
           identifier: errorThrowingDriverIdentifier,
-        }) as LumberjackLogDriver;
+        }) as LumberjackDriver;
         const spyDriver = createSpyDriver(verboseLoggingConfig);
 
         const lumberjack = createTestLumberjack([errorDriver, noopDriver, spyDriver], { format: ({ level }) => level });
@@ -258,7 +258,7 @@ describe(createLumberjack.name, () => {
           logsBeforeThrowing: 0,
           levels: [LumberjackLevel.Verbose],
           identifier: errorThrowingDriverIdentifier,
-        }) as LumberjackLogDriver;
+        }) as LumberjackDriver;
         const spyDriver = createSpyDriver(verboseLoggingConfig);
 
         const lumberjack = createTestLumberjack([errorDriver, spyDriver], { format: ({ level }) => level });
@@ -273,19 +273,19 @@ describe(createLumberjack.name, () => {
         );
         const [actualLastErrorMessage] = spyDriver.logError.mock.calls[
           spyDriver.logError.mock.calls.length - 1
-        ] as LumberjackLogDriverLog[];
+        ] as LumberjackDriverLog[];
         expect(actualLastErrorMessage.formattedLog).toMatch(
           new RegExp(`^Could not log message ".*?" to ${errorThrowingDriverIdentifier}.\n Error: ".*?"`)
         );
         expect(consoleErrorSpy).not.toHaveBeenCalled();
       });
 
-      it('accepts logs when multiple log drivers are registered', () => {
+      it('accepts logs when multiple drivers are registered', () => {
         const errorDriver = createErrorThrowingDriver({
           logsBeforeThrowing: 0,
           levels: [LumberjackLevel.Verbose],
           identifier: errorThrowingDriverIdentifier,
-        }) as LumberjackLogDriver;
+        }) as LumberjackDriver;
         const spyDriver = createSpyDriver(verboseLoggingConfig);
 
         const lumberjack = createTestLumberjack([errorDriver, spyDriver], { format: ({ level }) => level });
@@ -301,12 +301,12 @@ describe(createLumberjack.name, () => {
         expect(consoleErrorSpy).not.toHaveBeenCalled();
       });
 
-      it('outputs an error mentioning the log and log driver name recursively', () => {
+      it('outputs an error mentioning the log and driver name recursively', () => {
         const errorDriver = createErrorThrowingDriver({
           logsBeforeThrowing: 1,
           levels: [LumberjackLevel.Verbose],
           identifier: errorThrowingDriverIdentifier,
-        }) as LumberjackLogDriver;
+        }) as LumberjackDriver;
         const spyDriver = createSpyDriver({ ...verboseLoggingConfig, identifier: spyDriverIdentifier });
 
         const lumberjack = createTestLumberjack([errorDriver, spyDriver], { format: ({ level }) => level });
@@ -346,37 +346,37 @@ describe(createLumberjack.name, () => {
       let lumberjack: Lumberjack;
       let spyDriver: SpyDriver;
 
-      it('logs an error to a log driver', () => {
+      it('logs an error to a driver', () => {
         lumberjack.log(logFactory.createCriticalLog('').build());
 
         expect(spyDriver.logError).toHaveBeenCalledTimes(1);
       });
 
-      it('does not log a critical error to a log driver', () => {
+      it('does not log a critical error to a driver', () => {
         lumberjack.log(logFactory.createCriticalLog('').build());
 
         expect(spyDriver.logCritical).not.toHaveBeenCalled();
       });
 
-      it('does not log a debug message to a log driver', () => {
+      it('does not log a debug message to a driver', () => {
         lumberjack.log(logFactory.createDebugLog('').build());
 
         expect(spyDriver.logDebug).not.toHaveBeenCalled();
       });
 
-      it('does not log an info message to a log driver', () => {
+      it('does not log an info message to a driver', () => {
         lumberjack.log(logFactory.createInfoLog('').build());
 
         expect(spyDriver.logInfo).not.toHaveBeenCalled();
       });
 
-      it('does not log a trace to a log driver', () => {
+      it('does not log a trace to a driver', () => {
         lumberjack.log(logFactory.createTraceLog('').build());
 
         expect(spyDriver.logTrace).not.toHaveBeenCalled();
       });
 
-      it('does not log a warning to a log driver', () => {
+      it('does not log a warning to a driver', () => {
         lumberjack.log(logFactory.createWarningLog('').build());
 
         expect(spyDriver.logWarning).not.toHaveBeenCalled();
@@ -397,7 +397,7 @@ describe(createLumberjack.name, () => {
     let lumberjack: Lumberjack;
     let spyDriver: SpyDriver;
 
-    it('logs a critical error to a log driver', () => {
+    it('logs a critical error to a driver', () => {
       lumberjack.log(logFactory.createCriticalLog('').withScope('Test').build());
 
       expect(spyDriver.logCritical).toHaveBeenCalledTimes(1);
@@ -406,7 +406,7 @@ describe(createLumberjack.name, () => {
       );
     });
 
-    it('logs a debug message to a log driver', () => {
+    it('logs a debug message to a driver', () => {
       lumberjack.log(logFactory.createDebugLog('').withScope('Test').build());
 
       expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
@@ -415,7 +415,7 @@ describe(createLumberjack.name, () => {
       );
     });
 
-    it('logs an error message to a log driver', () => {
+    it('logs an error message to a driver', () => {
       lumberjack.log(logFactory.createErrorLog('').withScope('Test').build());
 
       expect(spyDriver.logError).toHaveBeenCalledTimes(1);
@@ -424,7 +424,7 @@ describe(createLumberjack.name, () => {
       );
     });
 
-    it('logs an info message to a log driver', () => {
+    it('logs an info message to a driver', () => {
       lumberjack.log(logFactory.createInfoLog('').withScope('Test').build());
 
       expect(spyDriver.logInfo).toHaveBeenCalledTimes(1);
@@ -433,7 +433,7 @@ describe(createLumberjack.name, () => {
       );
     });
 
-    it('logs a trace to a log driver', () => {
+    it('logs a trace to a driver', () => {
       lumberjack.log(logFactory.createTraceLog('').withScope('Test').build());
 
       expect(spyDriver.logTrace).toHaveBeenCalledTimes(1);
@@ -442,7 +442,7 @@ describe(createLumberjack.name, () => {
       );
     });
 
-    it('logs a warning to a log driver', () => {
+    it('logs a warning to a driver', () => {
       lumberjack.log(logFactory.createWarningLog('').withScope('Test').build());
 
       expect(spyDriver.logWarning).toHaveBeenCalledTimes(1);
@@ -465,7 +465,7 @@ describe(createLumberjack.name, () => {
       expect(() => logDebugMessage(lumberjack)).not.toThrow();
     });
 
-    it('accepts logs when all log levels are enabled and a log driver is registered', () => {
+    it('accepts logs when all log levels are enabled and a driver is registered', () => {
       const noopDriver = createNoopDriver(allLogsConfig);
       const lumberjack = createTestLumberjack([noopDriver]);
 
@@ -528,7 +528,7 @@ describe(createLumberjack.name, () => {
     });
   });
 
-  describe('Multiple log drivers', () => {
+  describe('Multiple drivers', () => {
     describe('given drivers with different log levels', () => {
       beforeEach(() => {
         spyDriver = createSpyDriver({
@@ -583,15 +583,15 @@ describe(createLumberjack.name, () => {
         );
 
         expect(noopDriver.logCritical).toHaveBeenCalledTimes(1);
-        expect((noopDriver as LumberjackLogDriver).logCritical).toHaveBeenCalledWith(
+        expect((noopDriver as LumberjackDriver).logCritical).toHaveBeenCalledWith(
           createCriticalDriverLog(fakeTime.getUnixEpochTicks.bind(fakeTime), LumberjackLevel.Critical)
         );
         expect(noopDriver.logError).toHaveBeenCalledTimes(1);
-        expect((noopDriver as LumberjackLogDriver).logError).toHaveBeenCalledWith(
+        expect((noopDriver as LumberjackDriver).logError).toHaveBeenCalledWith(
           createErrorDriverLog(fakeTime.getUnixEpochTicks.bind(fakeTime), LumberjackLevel.Error)
         );
         expect(noopDriver.logWarning).toHaveBeenCalledTimes(1);
-        expect((noopDriver as LumberjackLogDriver).logWarning).toHaveBeenCalledWith(
+        expect((noopDriver as LumberjackDriver).logWarning).toHaveBeenCalledWith(
           createWarningDriverLog(fakeTime.getUnixEpochTicks.bind(fakeTime), LumberjackLevel.Warning)
         );
       });

@@ -1,10 +1,10 @@
 import { TestBed } from '@angular/core/testing';
 
 import { expectNgModuleToBeGuardedAgainstDirectImport } from '@internal/angular/test-util';
-import { lumberjackLogDriverToken, LumberjackModule } from '@lumberjackjs/angular';
-import { LumberjackConfigLevels, LumberjackLevel, LumberjackLogDriver } from '@lumberjackjs/core';
+import { lumberjackDriverToken, LumberjackModule } from '@lumberjackjs/angular';
+import { LumberjackConfigLevels, LumberjackLevel, LumberjackDriver } from '@lumberjackjs/core';
 
-import { LumberjackAngularHttpDriver } from '../log-drivers/lumberjack-angular-http.driver';
+import { LumberjackAngularHttpDriver } from '../drivers/lumberjack-angular-http.driver';
 
 import { LumberjackAngularHttpDriverInternalConfig } from './lumberjack-angular-http-driver-internal.config';
 import { LumberjackAngularHttpDriverConfig } from './lumberjack-angular-http-driver.config';
@@ -57,7 +57,7 @@ const createHttpDriver = (
     ],
   });
 
-  const [httpDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
+  const [httpDriver] = TestBed.inject(lumberjackDriverToken) as unknown as LumberjackDriver[];
 
   return httpDriver;
 };
@@ -79,7 +79,7 @@ const createHttpDriverWithOptions = (
     ],
   });
 
-  const [httpDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
+  const [httpDriver] = TestBed.inject(lumberjackDriverToken) as unknown as LumberjackDriver[];
 
   return httpDriver;
 };
@@ -96,7 +96,7 @@ describe(LumberjackAngularHttpDriverModule.name, () => {
       expect(httpDriver).toBeInstanceOf(LumberjackAngularHttpDriver);
     });
 
-    it('registers the specified log driver configuration WITH a specified identifier', () => {
+    it('registers the specified driver configuration WITH a specified identifier', () => {
       const expectedConfig = createHttpConfig([LumberjackLevel.Error], 'TestDriverIdentifier');
 
       const httpDriver = createHttpDriver({ config: expectedConfig });
@@ -105,7 +105,7 @@ describe(LumberjackAngularHttpDriverModule.name, () => {
       expect(actualConfig).toEqual(expectedConfig as LumberjackAngularHttpDriverInternalConfig);
     });
 
-    it('registers the specified log driver configuration WITHOUT a specified identifier', () => {
+    it('registers the specified driver configuration WITHOUT a specified identifier', () => {
       const config = createHttpConfig([LumberjackLevel.Error]);
       const expectedConfig = { ...config, identifier: LumberjackAngularHttpDriver.driverIdentifier };
       const httpDriver = createHttpDriver({ config });
@@ -114,7 +114,7 @@ describe(LumberjackAngularHttpDriverModule.name, () => {
       expect(actualConfig).toEqual(expectedConfig as LumberjackAngularHttpDriverInternalConfig);
     });
 
-    it('does register the specified log driver configuration when the lumberjack module is imported after the http driver module', () => {
+    it('does register the specified driver configuration when the lumberjack module is imported after the http driver module', () => {
       const expectedConfig = createHttpConfig([LumberjackLevel.Debug], 'TestDriverIdentifier');
 
       const httpDriver = createHttpDriver({
@@ -178,7 +178,7 @@ describe(LumberjackAngularHttpDriverModule.name, () => {
       expect(actualConfig).toEqual(expectedConfig);
     });
 
-    it('gets default options from the log driver config', () => {
+    it('gets default options from the driver config', () => {
       const options = createHttpOptions();
 
       const httpDriver = createHttpDriverWithOptions({ options });
@@ -188,7 +188,7 @@ describe(LumberjackAngularHttpDriverModule.name, () => {
       expect(identifier).toEqual(LumberjackAngularHttpDriver.driverIdentifier);
     });
 
-    it('does register the specified log driver configuration when the lumberjack module is imported after the http driver module', () => {
+    it('does register the specified driver configuration when the lumberjack module is imported after the http driver module', () => {
       const options = createHttpOptions();
 
       const httpDriver = createHttpDriverWithOptions({

@@ -1,4 +1,4 @@
-import { LumberjackLogDriver, LumberjackLogDriverLog } from '@lumberjackjs/core';
+import { LumberjackDriver, LumberjackDriverLog } from '@lumberjackjs/core';
 
 import { ErrorThrowingDriverConfig } from './error-throwing-driver.config';
 
@@ -7,34 +7,34 @@ export type ErrorThrowingDriver = ReturnType<typeof createErrorThrowingDriver>;
 export const errorThrowingDriverIdentifier = 'ErrorThrowingDriver';
 
 /**
- * Error-throwing log driver.
+ * Error-throwing driver.
  *
  * Every logging method throws an error after the configured number of logs.
  */
-export function createErrorThrowingDriver(config: ErrorThrowingDriverConfig): LumberjackLogDriver {
+export function createErrorThrowingDriver(config: ErrorThrowingDriverConfig): LumberjackDriver {
   let logCount = 0;
 
-  function logCritical({ formattedLog }: LumberjackLogDriverLog): void {
+  function logCritical({ formattedLog }: LumberjackDriverLog): void {
     log(formattedLog);
   }
 
-  function logDebug({ formattedLog }: LumberjackLogDriverLog): void {
+  function logDebug({ formattedLog }: LumberjackDriverLog): void {
     log(formattedLog);
   }
 
-  function logError({ formattedLog }: LumberjackLogDriverLog): void {
+  function logError({ formattedLog }: LumberjackDriverLog): void {
     log(formattedLog);
   }
 
-  function logInfo({ formattedLog }: LumberjackLogDriverLog): void {
+  function logInfo({ formattedLog }: LumberjackDriverLog): void {
     log(formattedLog);
   }
 
-  function logTrace({ formattedLog }: LumberjackLogDriverLog): void {
+  function logTrace({ formattedLog }: LumberjackDriverLog): void {
     log(formattedLog);
   }
 
-  function logWarning({ formattedLog }: LumberjackLogDriverLog): void {
+  function logWarning({ formattedLog }: LumberjackDriverLog): void {
     log(formattedLog);
   }
 

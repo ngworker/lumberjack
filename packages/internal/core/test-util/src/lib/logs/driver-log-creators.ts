@@ -1,4 +1,4 @@
-import { LumberjackLevel, LumberjackLogDriverLog, LumberjackLogLevel, LumberjackLogPayload } from '@lumberjackjs/core';
+import { LumberjackLevel, LumberjackDriverLog, LumberjackLogLevel, LumberjackLogPayload } from '@lumberjackjs/core';
 
 export const createDriverLog = <TPayload extends LumberjackLogPayload | void = void>(
   getUnixEpochTicks: () => number,
@@ -7,7 +7,7 @@ export const createDriverLog = <TPayload extends LumberjackLogPayload | void = v
   message = '',
   scope = 'Test',
   payload?: TPayload
-): LumberjackLogDriverLog<TPayload> => ({
+): LumberjackDriverLog<TPayload> => ({
   formattedLog,
   log: {
     scope,
@@ -24,7 +24,7 @@ export const createCriticalDriverLog = <TPayload extends LumberjackLogPayload | 
   message?: string,
   scope?: string,
   payload?: TPayload
-): LumberjackLogDriverLog<TPayload> =>
+): LumberjackDriverLog<TPayload> =>
   createDriverLog(getUnixEpochTicks, formattedLog, LumberjackLevel.Critical, message, scope, payload);
 
 export const createDebugDriverLog = <TPayload extends LumberjackLogPayload | void = void>(
@@ -33,7 +33,7 @@ export const createDebugDriverLog = <TPayload extends LumberjackLogPayload | voi
   message?: string,
   scope?: string,
   payload?: TPayload
-): LumberjackLogDriverLog<TPayload> =>
+): LumberjackDriverLog<TPayload> =>
   createDriverLog(getUnixEpochTicks, formattedLog, LumberjackLevel.Debug, message, scope, payload);
 
 export const createErrorDriverLog = <TPayload extends LumberjackLogPayload | void = void>(
@@ -42,7 +42,7 @@ export const createErrorDriverLog = <TPayload extends LumberjackLogPayload | voi
   message?: string,
   scope?: string,
   payload?: TPayload
-): LumberjackLogDriverLog<TPayload> =>
+): LumberjackDriverLog<TPayload> =>
   createDriverLog(getUnixEpochTicks, formattedLog, LumberjackLevel.Error, message, scope, payload);
 
 export const createInfoDriverLog = <TPayload extends LumberjackLogPayload | void = void>(
@@ -51,7 +51,7 @@ export const createInfoDriverLog = <TPayload extends LumberjackLogPayload | void
   message?: string,
   scope?: string,
   payload?: TPayload
-): LumberjackLogDriverLog<TPayload> =>
+): LumberjackDriverLog<TPayload> =>
   createDriverLog(getUnixEpochTicks, formattedLog, LumberjackLevel.Info, message, scope, payload);
 
 export const createTraceDriverLog = <TPayload extends LumberjackLogPayload | void = void>(
@@ -60,7 +60,7 @@ export const createTraceDriverLog = <TPayload extends LumberjackLogPayload | voi
   message?: string,
   scope?: string,
   payload?: TPayload
-): LumberjackLogDriverLog<TPayload> =>
+): LumberjackDriverLog<TPayload> =>
   createDriverLog(getUnixEpochTicks, formattedLog, LumberjackLevel.Trace, message, scope, payload);
 
 export const createWarningDriverLog = <TPayload extends LumberjackLogPayload | void = void>(
@@ -69,5 +69,5 @@ export const createWarningDriverLog = <TPayload extends LumberjackLogPayload | v
   message?: string,
   scope?: string,
   payload?: TPayload
-): LumberjackLogDriverLog<TPayload> =>
+): LumberjackDriverLog<TPayload> =>
   createDriverLog(getUnixEpochTicks, formattedLog, LumberjackLevel.Warning, message, scope, payload);

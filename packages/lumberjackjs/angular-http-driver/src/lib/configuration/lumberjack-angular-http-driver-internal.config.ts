@@ -1,11 +1,11 @@
-import { LumberjackLogDriverConfig } from '@lumberjackjs/core';
+import { LumberjackDriverConfig } from '@lumberjackjs/core';
 
 import { LumberjackAngularHttpDriverRetryOptions } from './lumberjack-angular-http-driver-retry.options';
 
 /**
  * Settings used by the HTTP driver.
  */
-export interface LumberjackAngularHttpDriverInternalConfig extends LumberjackLogDriverConfig {
+export interface LumberjackAngularHttpDriverInternalConfig extends LumberjackDriverConfig {
   /**
    * The identifier of the application that emitted the log.
    *

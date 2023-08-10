@@ -1,7 +1,7 @@
-import { LumberjackLogDriverConfig } from '@lumberjackjs/core';
+import { LumberjackDriverConfig } from '@lumberjackjs/core';
 
 /**
  * Settings used by the console driver.
  */
-export type LumberjackConsoleDriverConfig = Omit<LumberjackLogDriverConfig, 'identifier'> &
-  Partial<Pick<LumberjackLogDriverConfig, 'identifier'>>;
+export type LumberjackConsoleDriverConfig = Omit<LumberjackDriverConfig, 'identifier'> &
+  Partial<Pick<LumberjackDriverConfig, 'identifier'>>;

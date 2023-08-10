@@ -16,7 +16,7 @@ export {
 
 // Errors
 export { LumberjackAngularHttpDriverError } from './lib/errors/lumberjack-angular-http-driver.error';
-// Log drivers
-export { LumberjackAngularHttpDriver } from './lib/log-drivers/lumberjack-angular-http.driver';
+// Drivers
+export { LumberjackAngularHttpDriver } from './lib/drivers/lumberjack-angular-http.driver';
 // Logs
 export { LumberjackAngularHttpLog } from './lib/logs/lumberjack-angular-http.log';

@@ -21,7 +21,7 @@ export interface LumberjackLog<TPayload extends LumberjackLogPayload | void = vo
   /**
    * Optional payload with custom properties.
    *
-   * NOTE! Make sure that these properties are supported by your log drivers.
+   * NOTE! Make sure that these properties are supported by your drivers.
    */
   readonly payload?: TPayload;
   /**

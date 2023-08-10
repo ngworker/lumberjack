@@ -3,7 +3,7 @@ import { Provider } from '@angular/core';
 import {
   createLumberjackConfig,
   LumberjackConfig,
-  LumberjackLogDriverConfig,
+  LumberjackDriverConfig,
   LumberjackOptions,
 } from '@lumberjackjs/core';
 
@@ -12,12 +12,12 @@ import { LumberjackService } from '../logging/lumberjack.service';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { lumberjackConfigToken } from './lumberjack-config.token';
-import { lumberjackLogDriverConfigToken } from './lumberjack-log-driver-config.token';
+import { lumberjackDriverConfigToken } from './lumberjack-driver-config.token';
 import { lumberjackOptionsToken } from './lumberjack-options.token';
 
-export function createLumberjackLogDriverConfig({
+export function createLumberjackDriverConfig({
   levels,
-}: LumberjackConfig): Omit<LumberjackLogDriverConfig, 'identifier'> {
+}: LumberjackConfig): Omit<LumberjackDriverConfig, 'identifier'> {
   return {
     levels,
   };
@@ -25,7 +25,7 @@ export function createLumberjackLogDriverConfig({
 
 /**
  * Returns the [dependency-injection providers](https://angular.io/guide/glossary#provider)
- * for the `LumberjackOptions`, `LumberjackConfig` and `LumberjackLogDriverConfig`.
+ * for the `LumberjackOptions`, `LumberjackConfig` and `LumberjackDriverConfig`.
  *
  * @usageNotes
  *
@@ -52,8 +52,8 @@ export function provideLumberjack(options?: LumberjackOptions): Provider[] {
     },
     {
       deps: [lumberjackConfigToken],
-      provide: lumberjackLogDriverConfigToken,
-      useFactory: createLumberjackLogDriverConfig,
+      provide: lumberjackDriverConfigToken,
+      useFactory: createLumberjackDriverConfig,
     },
     { provide: LumberjackService, useClass: LumberjackService },
     LumberjackTimeService,

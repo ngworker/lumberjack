@@ -134,7 +134,7 @@ This file was generated using [@jscutlery/semver](https://github.com/jscutlery/s
 - 🐛 make log signature not to support promise or observable ([#10](https://github.com/ngworker/lumberjack/issues/10)) ([06b6fa1](https://github.com/ngworker/lumberjack/commit/06b6fa1670c0eb935fc19da251551ef200a81514))
 - 🐛 subscribe to http driver observables ([#13](https://github.com/ngworker/lumberjack/issues/13)) ([aecb807](https://github.com/ngworker/lumberjack/commit/aecb807d20fce25b3a44bc0b6395007a87ff1de7))
 - add Critical and Trace to LumberjackLogger ([#47](https://github.com/ngworker/lumberjack/issues/47)) ([96c6634](https://github.com/ngworker/lumberjack/commit/96c6634834803a0b802bf913f9e7aad8129b9a5f))
-- handle error-throwing log drivers ([#44](https://github.com/ngworker/lumberjack/issues/44)) ([6164c37](https://github.com/ngworker/lumberjack/commit/6164c3781bf4c5f4be25d88782d362d9a53705bc))
+- handle error-throwing drivers ([#44](https://github.com/ngworker/lumberjack/issues/44)) ([6164c37](https://github.com/ngworker/lumberjack/commit/6164c3781bf4c5f4be25d88782d362d9a53705bc))
 - send log wagon from all log methods ([#7](https://github.com/ngworker/lumberjack/issues/7)) ([083bce9](https://github.com/ngworker/lumberjack/commit/083bce9212e3607b9623d100a433d268d79418e6))
 - use valid default config in ConsoleDriverModule.forRoot ([#11](https://github.com/ngworker/lumberjack/issues/11)) ([57965e2](https://github.com/ngworker/lumberjack/commit/57965e2b85b41bfafca33c1b56f33d307ce84ffa))
 
