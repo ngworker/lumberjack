@@ -40,7 +40,9 @@
   "peerDependencies": {
     "@angular/common": "^15.2.0",
     "@angular/core": "^15.2.0",
-    "rxjs": "~7.5.0"
+    "rxjs": "~7.5.0",
+    "@lumberjackjs/core": "0.0.1",
+    "@lumberjackjs/angular": "15.0.1"
   },
   "dependencies": {
     "tslib": "^2.4.1"

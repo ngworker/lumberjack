@@ -1,5 +1,5 @@
 {
-  "name": "@ngworker/lumberjack",
+  "name": "@lumberjackjs/angular",
   "version": "15.0.5",
   "description": "Lumberjack is a versatile Angular logging library, specifically designed to be extended and customized",
   "homepage": "https://ngworker.github.io/ngworker/lumberjack/",
@@ -37,6 +37,7 @@
     "url": "https://github.com/lumberjackjs/angular/issues?q=is:issue+is:open+"
   },
   "peerDependencies": {
+    "@lumberjackjs/core": "0.0.1",
     "@angular/core": "^15.0.1",
     "@angular/common": "^15.0.1",
     "rxjs": ">= 7.5.0 < 8.0.0"
