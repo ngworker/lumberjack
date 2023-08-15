@@ -164,3 +164,4 @@ The following are valid project types in this workspace.
 | `qwik`       | A project that is based on the Qwik framework.    |
 | `solid`      | A project that is based on the SolidJS framework. |
 | `react`      | A project that is based on the React framework.   |
+| `nest`       | A project that is based on the NestJS framework.  |
