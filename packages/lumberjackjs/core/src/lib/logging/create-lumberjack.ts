@@ -43,9 +43,9 @@ export function createLumberjack<TPayload extends LumberjackLogPayload | void = 
   getUnixEpochTicks = () => new Date().valueOf(),
 }: LumberjackDependencies<TPayload>): Lumberjack<TPayload> {
   const driverLogger = createLumberjackDriverLogger<TPayload>();
-  const logFormatter = createLumberjackLogFormatter({ config, getUnixEpochTicks });
+  const formatLog = createLumberjackLogFormatter({ config, getUnixEpochTicks });
   const log = (lumberjackLog: LumberjackLog<TPayload>) => {
-    const { log, formattedLog } = logFormatter.formatLog(lumberjackLog);
+    const { log, formattedLog } = formatLog(lumberjackLog);
     logWithErrorHandling(log, formattedLog, drivers);
   };
 

@@ -17,7 +17,7 @@ interface LumberjackLogFormatterDependencies<TPayload extends LumberjackLogPaylo
  * Factory function that creates a Lumberjack log formatter function.
  *
  * @example
- * const formatter = createLumberjackLogFormatter(deps);
+ * const formatLog = createLumberjackLogFormatter(deps);
  *
  * const log = {
  *   scope: 'Application',
@@ -26,7 +26,7 @@ interface LumberjackLogFormatterDependencies<TPayload extends LumberjackLogPaylo
  *   message: 'An unexpected error occurred',
  * };
  *
- * console.log(formatter.formatLog(log));
+ * console.log(formatLog(log));
  */
 export function createLumberjackLogFormatter<TPayload extends LumberjackLogPayload | void = void>(
   deps: LumberjackLogFormatterDependencies<TPayload>
@@ -78,7 +78,5 @@ export function createLumberjackLogFormatter<TPayload extends LumberjackLogPaylo
     return errorMessage;
   }
 
-  return {
-    formatLog,
-  };
+  return formatLog;
 }
