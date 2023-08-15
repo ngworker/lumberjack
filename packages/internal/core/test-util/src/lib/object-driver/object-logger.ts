@@ -1,8 +1,10 @@
 import { ObjectPayload } from './object.payload';
 
-export type ObjectLogger = ReturnType<typeof createObjectLogger>;
+export type ObjectLogger = {
+  log: (object?: ObjectPayload) => boolean;
+};
 
-export function createObjectLogger() {
+export function createObjectLogger(): ObjectLogger {
   function log(object?: ObjectPayload): boolean {
     return object?.isWorking ?? false;
   }

@@ -9,6 +9,8 @@ import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackLog } from '../logs/lumberjack.log';
 
+import { Lumberjack } from './lumberjack';
+
 const noReportedDriverErrorIndex = -1;
 
 interface LumberjackDependencies<TPayload extends LumberjackLogPayload | void> {
@@ -39,7 +41,7 @@ export function createLumberjack<TPayload extends LumberjackLogPayload | void = 
   drivers,
   config,
   getUnixEpochTicks = () => new Date().valueOf(),
-}: LumberjackDependencies<TPayload>) {
+}: LumberjackDependencies<TPayload>): Lumberjack<TPayload> {
   const driverLogger = createLumberjackDriverLogger<TPayload>();
   const logFormatter = createLumberjackLogFormatter({ config, getUnixEpochTicks });
   const log = (lumberjackLog: LumberjackLog<TPayload>) => {

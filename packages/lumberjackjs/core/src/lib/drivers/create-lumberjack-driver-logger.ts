@@ -9,9 +9,12 @@ import { infoDriverLoggingStrategy } from './logging-strategies/info-driver-logg
 import { traceDriverLoggingStrategy } from './logging-strategies/trace-driver-logging-strategy';
 import { warningDriverLoggingStrategy } from './logging-strategies/warning-driver-logging-strategy';
 import { LumberjackDriver } from './lumberjack-driver';
+import { LumberjackDriverLogger } from './lumberjack-driver-logger';
 import { LumberjackDriverLog } from './lumberjack-driver.log';
 
-export function createLumberjackDriverLogger<TPayload extends LumberjackLogPayload | void = void>() {
+export function createLumberjackDriverLogger<
+  TPayload extends LumberjackLogPayload | void = void
+>(): LumberjackDriverLogger<TPayload> {
   const driverLoggingStrategy: DriverLoggingStrategy<TPayload> = {
     [LumberjackLevel.Critical]: criticalDriverLoggingStrategy,
     [LumberjackLevel.Debug]: debugDriverLoggingStrategy,

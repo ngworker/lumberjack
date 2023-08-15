@@ -1,7 +1,8 @@
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 
-import { createLumberjackDriverLogger } from './create-lumberjack-driver-logger';
+import { LumberjackDriver } from './lumberjack-driver';
+import { LumberjackDriverLog } from './lumberjack-driver.log';
 
-export type LumberjackDriverLogger<TPayload extends LumberjackLogPayload | void = void> = ReturnType<
-  typeof createLumberjackDriverLogger<TPayload>
->;
+export type LumberjackDriverLogger<TPayload extends LumberjackLogPayload | void = void> = {
+  log: (driver: LumberjackDriver<TPayload>, driverLog: LumberjackDriverLog<TPayload>) => void;
+};

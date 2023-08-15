@@ -1,7 +1,6 @@
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
+import { LumberjackLog } from '../logs/lumberjack.log';
 
-import { createLumberjack } from './create-lumberjack';
-
-export type Lumberjack<TPayload extends LumberjackLogPayload | void = void> = ReturnType<
-  typeof createLumberjack<TPayload>
->;
+export type Lumberjack<TPayload extends LumberjackLogPayload | void = void> = {
+  log: (lumberjackLog: LumberjackLog<TPayload>) => void;
+};

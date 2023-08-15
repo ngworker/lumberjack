@@ -2,7 +2,7 @@ import { LumberjackDriver, LumberjackDriverLog } from '@lumberjackjs/core';
 
 import { ErrorThrowingDriverConfig } from './error-throwing-driver.config';
 
-export type ErrorThrowingDriver = ReturnType<typeof createErrorThrowingDriver>;
+export type ErrorThrowingDriver = LumberjackDriver;
 
 export const errorThrowingDriverIdentifier = 'ErrorThrowingDriver';
 
@@ -11,7 +11,7 @@ export const errorThrowingDriverIdentifier = 'ErrorThrowingDriver';
  *
  * Every logging method throws an error after the configured number of logs.
  */
-export function createErrorThrowingDriver(config: ErrorThrowingDriverConfig): LumberjackDriver {
+export function createErrorThrowingDriver(config: ErrorThrowingDriverConfig): ErrorThrowingDriver {
   let logCount = 0;
 
   function logCritical({ formattedLog }: LumberjackDriverLog): void {

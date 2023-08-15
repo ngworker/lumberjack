@@ -5,6 +5,7 @@ import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 
 import { lumberjackFormatLog } from './lumberjack-format-log';
+import { LumberjackLogFormatter } from './lumberjack-log-formatter';
 import { LumberjackLogFormatterResult } from './lumberjack-log-formatter-result';
 
 interface LumberjackLogFormatterDependencies<TPayload extends LumberjackLogPayload | void> {
@@ -29,7 +30,7 @@ interface LumberjackLogFormatterDependencies<TPayload extends LumberjackLogPaylo
  */
 export function createLumberjackLogFormatter<TPayload extends LumberjackLogPayload | void = void>(
   deps: LumberjackLogFormatterDependencies<TPayload>
-) {
+): LumberjackLogFormatter<TPayload> {
   function formatLog(log: LumberjackLog<TPayload>): LumberjackLogFormatterResult<TPayload> {
     const { format } = deps.config;
     let result: LumberjackLogFormatterResult<TPayload>;

@@ -1,7 +1,8 @@
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
+import { LumberjackLog } from '../logs/lumberjack.log';
 
-import { createLumberjackLogFormatter } from './create-lumberjack-log-formatter';
+import { LumberjackLogFormatterResult } from './lumberjack-log-formatter-result';
 
-export type LumberjackLogFormatter<TPayload extends LumberjackLogPayload | void = void> = ReturnType<
-  typeof createLumberjackLogFormatter<TPayload>
->;
+export type LumberjackLogFormatter<TPayload extends LumberjackLogPayload | void = void> = {
+  formatLog: (log: LumberjackLog<TPayload>) => LumberjackLogFormatterResult<TPayload>;
+};
