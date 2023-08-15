@@ -6,7 +6,7 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { LumberjackLoggerBuilder } from './lumberjack-logger.builder';
 import { LumberjackLogger } from './lumberjack-logger.service';
-import { LumberjackService } from './lumberjack.service';
+import { LumberjackOrchestrator } from './lumberjack-orchestrator.service';
 
 /**
  * A scoped logger holds methods that log a predefined log sharing a scope.
@@ -21,7 +21,7 @@ import { LumberjackService } from './lumberjack.service';
 export abstract class ScopedLumberjackLogger<
   TPayload extends LumberjackLogPayload | void = void
 > extends LumberjackLogger<TPayload> {
-  protected override readonly lumberjack = inject<LumberjackService<TPayload>>(LumberjackService);
+  protected override readonly lumberjack = inject<LumberjackOrchestrator<TPayload>>(LumberjackOrchestrator);
   protected override readonly time = inject(LumberjackTimeService);
 
   abstract readonly scope: string;

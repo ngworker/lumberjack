@@ -8,7 +8,7 @@ import {
 } from '@lumberjackjs/core';
 
 import { isProductionEnvironmentToken } from '../environment/is-production-environment.token';
-import { LumberjackService } from '../logging/lumberjack.service';
+import { LumberjackOrchestrator } from '../logging/lumberjack-orchestrator.service';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { lumberjackConfigToken } from './lumberjack-config.token';
@@ -53,7 +53,7 @@ export function provideLumberjack(options?: LumberjackOptions): Provider[] {
       provide: lumberjackDriverConfigToken,
       useFactory: createLumberjackDriverConfig,
     },
-    { provide: LumberjackService, useClass: LumberjackService },
+    { provide: LumberjackOrchestrator, useClass: LumberjackOrchestrator },
     LumberjackTimeService,
   ];
 }

@@ -15,7 +15,7 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
 /**
  * Factory for a log builder with the specified log level and message.
  *
- * Use this to create a log before passing it to `LumberjackService`.
+ * Use this to create a log before passing it to `LumberjackOrchestrator`.
  *
  * Wraps `LumberjackLogBuilder`, supports dependency injection, and allows reuse
  * so that we don't have to new up log builders and pass `LumberjackTimeService`

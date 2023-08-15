@@ -5,7 +5,7 @@ import { LumberjackLevel, LumberjackLogLevel, LumberjackLogPayload } from '@lumb
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { LumberjackLoggerBuilder } from './lumberjack-logger.builder';
-import { LumberjackService } from './lumberjack.service';
+import { LumberjackOrchestrator } from './lumberjack-orchestrator.service';
 
 /**
  * A logger holds methods that log a predefined log.
@@ -17,7 +17,7 @@ import { LumberjackService } from './lumberjack.service';
  */
 @Injectable()
 export abstract class LumberjackLogger<TPayload extends LumberjackLogPayload | void = void> {
-  protected readonly lumberjack = inject<LumberjackService<TPayload>>(LumberjackService);
+  protected readonly lumberjack = inject<LumberjackOrchestrator<TPayload>>(LumberjackOrchestrator);
   protected readonly time = inject(LumberjackTimeService);
 
   /**

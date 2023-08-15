@@ -25,7 +25,7 @@ import { LumberjackTimeService } from '../time/lumberjack-time.service';
  * API.
  */
 @Injectable()
-export class LumberjackService<TPayload extends LumberjackLogPayload | void = void> implements Lumberjack<TPayload> {
+export class LumberjackOrchestrator<TPayload extends LumberjackLogPayload | void = void> implements Lumberjack<TPayload> {
   /**
    * The registered drivers.
    */

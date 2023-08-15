@@ -4,7 +4,7 @@ import { defaultDevelopmentLevels, defaultProductionLevels } from '@internal/cor
 import { LumberjackConfig, LumberjackDriverConfig, LumberjackLevel, LumberjackOptions } from '@lumberjackjs/core';
 
 import { isProductionEnvironmentToken } from '../environment/is-production-environment.token';
-import { LumberjackService } from '../logging/lumberjack.service';
+import { LumberjackOrchestrator } from '../logging/lumberjack-orchestrator.service';
 
 import { lumberjackConfigToken } from './lumberjack-config.token';
 import { lumberjackDriverConfigToken } from './lumberjack-driver-config.token';
@@ -90,12 +90,12 @@ describe(provideLumberjack.name, () => {
     expect(actualConfig).toEqual(defaultDriverConfig as LumberjackDriverConfig);
   });
 
-  it('provides the LumberjackService', () => {
+  it('provides the LumberjackOrchestrator', () => {
     TestBed.configureTestingModule({
       providers: [provideLumberjack()],
     });
-    const lumberjackService = TestBed.inject(LumberjackService);
+    const lumberjackOrchestrator = TestBed.inject(LumberjackOrchestrator);
 
-    expect(lumberjackService).toBeDefined();
+    expect(lumberjackOrchestrator).toBeDefined();
   });
 });

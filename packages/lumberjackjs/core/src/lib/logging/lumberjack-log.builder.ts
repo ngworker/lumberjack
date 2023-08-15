@@ -11,7 +11,7 @@ type InternalWithStaticPayload = '__LUMBERJACK_INTERNAL_WITH_STATIC_PAYLOAD__' &
 /**
  * Builder for a log with the specified log level and message.
  *
- * Use this to create a log before passing it to `LumberjackService`.
+ * Use this to create a log before passing it to `LumberjackOrchestrator`.
  */
 export class LumberjackLogBuilder<TPayload extends LumberjackLogPayload | void = void> {
   #payload?: TPayload;

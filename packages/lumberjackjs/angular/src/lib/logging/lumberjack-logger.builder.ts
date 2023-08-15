@@ -2,18 +2,18 @@ import { LumberjackLogLevel, LumberjackLogPayload } from '@lumberjackjs/core';
 
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
-import { LumberjackService } from './lumberjack.service';
+import { LumberjackOrchestrator } from './lumberjack-orchestrator.service';
 
 export class LumberjackLoggerBuilder<TPayload extends LumberjackLogPayload | void = void> {
   #scope?: string;
   #payload?: TPayload;
-  readonly #lumberjack: LumberjackService<TPayload>;
+  readonly #lumberjack: LumberjackOrchestrator<TPayload>;
   readonly #time: LumberjackTimeService;
   readonly #level: LumberjackLogLevel;
   readonly #message: string;
 
   constructor(
-    lumberjack: LumberjackService<TPayload>,
+    lumberjack: LumberjackOrchestrator<TPayload>,
     time: LumberjackTimeService,
     level: LumberjackLogLevel,
     message: string

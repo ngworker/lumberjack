@@ -14,7 +14,7 @@ export { provideLumberjackCustomDrivers } from './lib/configuration/provide-cust
 export { LumberjackLogger } from './lib/logging/lumberjack-logger.service';
 export { ScopedLumberjackLogger } from './lib/logging/scoped-lumberjack-logger.service';
 export { LumberjackLogBuilderFactoryService } from './lib/logging/lumberjack-log-factory.service';
-export { LumberjackService } from './lib/logging/lumberjack.service';
+export { LumberjackOrchestrator } from './lib/logging/lumberjack-orchestrator.service';
 
 // Time
 export { LumberjackTimeService } from './lib/time/lumberjack-time.service';

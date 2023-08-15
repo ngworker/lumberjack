@@ -44,7 +44,7 @@ import { LumberjackModule } from '../configuration/lumberjack.module';
 import { lumberjackDriverToken } from '../drivers/lumberjack-driver.token';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
-import { LumberjackService } from './lumberjack.service';
+import { LumberjackOrchestrator } from './lumberjack-orchestrator.service';
 
 class SpyDriverError extends Error {
   constructor(message = 'SpyDriverError') {
@@ -102,17 +102,17 @@ const objectPayloadInfo: ObjectPayload = { isWorking: true };
 const getUnixEpochTicks = fakeTime.getUnixEpochTicks.bind(fakeTime);
 
 const logDebugMessage = () =>
-  TestBed.inject(LumberjackService).log(createDebugLogBuilder(getUnixEpochTicks)('').withScope('Test').build());
+  TestBed.inject(LumberjackOrchestrator).log(createDebugLogBuilder(getUnixEpochTicks)('').withScope('Test').build());
 const logDebugMessageWithPayloadField = () =>
-  TestBed.inject<LumberjackService<PayloadFieldInfo>>(LumberjackService).log(
+  TestBed.inject<LumberjackOrchestrator<PayloadFieldInfo>>(LumberjackOrchestrator).log(
     createDebugLogBuilder<PayloadFieldInfo>(getUnixEpochTicks)('').withScope('Test').withPayload(payloadInfo).build()
   );
 const logDebugMessageWithObjectPayloadField = () =>
-  TestBed.inject<LumberjackService<ObjectPayload>>(LumberjackService).log(
+  TestBed.inject<LumberjackOrchestrator<ObjectPayload>>(LumberjackOrchestrator).log(
     createDebugLogBuilder<ObjectPayload>(getUnixEpochTicks)('').withScope('Test').withPayload(objectPayloadInfo).build()
   );
 
-describe(LumberjackService.name, () => {
+describe(LumberjackOrchestrator.name, () => {
   describe('Drivers', () => {
     it('accepts logs when no drivers are registered', () => {
       TestBed.configureTestingModule({
@@ -387,13 +387,13 @@ describe(LumberjackService.name, () => {
           ],
         });
 
-        lumberjack = TestBed.inject(LumberjackService) as LumberjackService;
+        lumberjack = TestBed.inject(LumberjackOrchestrator) as LumberjackOrchestrator;
 
         const [driver] = TestBed.inject(lumberjackDriverToken) as unknown as LumberjackDriver[];
         spyDriver = driver as SpyDriver;
       });
 
-      let lumberjack: LumberjackService;
+      let lumberjack: LumberjackOrchestrator;
       let spyDriver: SpyDriver;
 
       it('logs an error to a driver', () => {
@@ -448,13 +448,13 @@ describe(LumberjackService.name, () => {
       const fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
       fakeTime.setTime(fakeDate);
 
-      lumberjack = TestBed.inject(LumberjackService) as LumberjackService;
+      lumberjack = TestBed.inject(LumberjackOrchestrator) as LumberjackOrchestrator;
 
       const [driver] = TestBed.inject(lumberjackDriverToken) as unknown as LumberjackDriver[];
       spyDriver = driver as SpyDriver;
     });
 
-    let lumberjack: LumberjackService;
+    let lumberjack: LumberjackOrchestrator;
     let spyDriver: SpyDriver;
 
     it('logs a critical error to a driver', () => {
@@ -555,13 +555,13 @@ describe(LumberjackService.name, () => {
       const fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
       fakeTime.setTime(fakeDate);
 
-      lumberjack = TestBed.inject(LumberjackService) as LumberjackService;
+      lumberjack = TestBed.inject(LumberjackOrchestrator) as LumberjackOrchestrator;
 
       const [driver] = TestBed.inject(lumberjackDriverToken) as unknown as LumberjackDriver[];
       spyDriver = driver as SpyDriver;
     });
 
-    let lumberjack: LumberjackService;
+    let lumberjack: LumberjackOrchestrator;
     let spyDriver: SpyDriver;
 
     describe('when a driver is registered', () => {
@@ -627,7 +627,7 @@ describe(LumberjackService.name, () => {
         const fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
         fakeTime.setTime(fakeDate);
 
-        lumberjack = TestBed.inject(LumberjackService) as LumberjackService;
+        lumberjack = TestBed.inject(LumberjackOrchestrator) as LumberjackOrchestrator;
 
         const [_spyDriver, _noopDriver] = TestBed.inject(lumberjackDriverToken) as unknown as LumberjackDriver[];
         spyDriver = _spyDriver as SpyDriver;
@@ -649,7 +649,7 @@ describe(LumberjackService.name, () => {
         lumberjack.log(createWarningLogBuilder(getUnixEpochTicks)('').withScope('Test').build());
       });
 
-      let lumberjack: LumberjackService;
+      let lumberjack: LumberjackOrchestrator;
       let noopDriver: jest.Mocked<NoopDriver>;
       let spyDriver: SpyDriver;
 

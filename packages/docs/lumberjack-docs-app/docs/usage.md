@@ -75,23 +75,23 @@ bootstrapApplication(AppComponent, {
 });
 ```
 
-### Using the `LumberjackService`
+### Using the `LumberjackOrchestrator`
 
-For quick or simple use cases, you can use the `LumberjackService` directly by passing logs to its `log` method.
+For quick or simple use cases, you can use the `LumberjackOrchestrator` directly by passing logs to its `log` method.
 However, we recommend implementing application-specific logger services instead. See the [_Best
 practices_](./best-practices) section.
 
-First, inject the `LumberjackService` where you want to use it.
+First, inject the `LumberjackOrchestrator` where you want to use it.
 
 ```ts
 import { Component } from '@angular/core';
-import { LumberjackService } from '@lumberjackjs/angular';
+import { LumberjackOrchestrator } from '@lumberjackjs/angular';
 
 @Component({
   // (...)
 })
 export class MyComponent implements OnInit {
-  constructor(private readonly lumberjack: LumberjackService) {}
+  constructor(private readonly lumberjack: LumberjackOrchestrator) {}
 
   // (...)
 }
@@ -101,13 +101,13 @@ or using the `inject` function
 
 ```ts
 import { inject, Component } from '@angular/core';
-import { LumberjackService } from '@lumberjackjs/angular';
+import { LumberjackOrchestrator } from '@lumberjackjs/angular';
 
 @Component({
   // (...)
 })
 export class MyComponent implements OnInit {
-  readonly #lumberjack = inject(LumberjackService);
+  readonly #lumberjack = inject(LumberjackOrchestrator);
   // (...)
 }
 ```
@@ -117,11 +117,11 @@ testability.
 
 ```ts
 // (...)
-import { LumberjackService, LumberjackTimeService } from '@lumberjackjs/angular';
+import { LumberjackOrchestrator, LumberjackTimeService } from '@lumberjackjs/angular';
 
 // (...)
 export class MyComponent implements OnInit {
-  readonly #lumberjack = inject(LumberjackService);
+  readonly #lumberjack = inject(LumberjackOrchestrator);
   readonly #time = inject(LumberjackTimeService);
 
   // (...)

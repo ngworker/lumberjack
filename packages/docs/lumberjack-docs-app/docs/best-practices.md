@@ -4,13 +4,13 @@ title: Best practices
 ---
 
 Every log can be represented as a combination of its level, creation time, message, scope and payload. Using inline logs
-with the `LumberjackService` can cause structure duplication and/or denormalization.
+with the `LumberjackOrchestrator` can cause structure duplication and/or denormalization.
 
 Continue reading to know more about the recommended best practices designed to tackle this issue.
 
 ### Loggers
 
-The `LumberjackLogger` service is an abstract class that wraps the `LumberjackService` to help us create structured logs
+The `LumberjackLogger` service is an abstract class that wraps the `LumberjackOrchestrator` to help us create structured logs
 and reduce boilerplate. At the same time, it provides testing capabilities since we can easily spy on logger methods and
 control timestamps by replacing the `LumberjackTimeService`.
 
@@ -29,7 +29,7 @@ This is the abstract interface of `LumberjackLogger`:
  */
 @Injectable()
 export abstract class LumberjackLogger<TPayload extends LumberjackLogPayload | void = void> {
-    protected lumberjack: LumberjackService<TPayload>;
+    protected lumberjack: LumberjackOrchestrator<TPayload>;
     protected time: LumberjackTimeService;
 
     /**
@@ -78,7 +78,7 @@ As an example, let's create a custom logger for our example application.
 ```ts
 import { Injectable } from '@angular/core';
 
-import { LumberjackLogger, LumberjackService, LumberjackTimeService } from '@lumberjackjs/angular';
+import { LumberjackLogger, LumberjackOrchestrator, LumberjackTimeService } from '@lumberjackjs/angular';
 
 @Injectable({
   providedIn: 'root',
@@ -161,7 +161,7 @@ The resulting `AppLogger` after refactoring to using the `ScopedLumberjackLogger
 ```ts
 import { Injectable } from '@angular/core';
 
-import { LumberjackService, LumberjackTimeService, ScopedLumberjackLogger } from '@lumberjackjs/angular';
+import { LumberjackOrchestrator, LumberjackTimeService, ScopedLumberjackLogger } from '@lumberjackjs/angular';
 
 @Injectable({
   providedIn: 'root',
@@ -189,7 +189,7 @@ import { Injectable, VERSION } from '@angular/core';
 
 import {
   LumberjackLogPayload,
-  LumberjackService,
+  LumberjackOrchestrator,
   LumberjackTimeService,
   ScopedLumberjackLogger,
 } from '@lumberjackjs/angular';
@@ -220,7 +220,7 @@ The `AppLogger` usage remains the same using a `LumberjackLogger` or `ScopedLumb
 
 Lumberjack's recommended way of creating logs is by using a `LumberjackLogger`.
 
-However, there are some times that we want to create logs manually and pass them to the `LumberjackService`.
+However, there are some times that we want to create logs manually and pass them to the `LumberjackOrchestrator`.
 
 The `LumberjackLogFactory` provides a robust way of creating logs. It's also useful for creating logs in unit tests.
 
@@ -229,7 +229,7 @@ This is how we create logs manually:
 ```ts
 import {inject, Component, OnInit, VERSION} from '@angular/core';
 
-import {LumberjackLogFactory, LumberjackService} from '@lumberjackjs/angular';
+import {LumberjackLogFactory, LumberjackOrchestrator} from '@lumberjackjs/angular';
 
 import {LogPayload} from './log-payload';
 
@@ -243,7 +243,7 @@ export class AppComponent implements OnInit {
 (
   LumberjackLogFactory
 );
-  readonly #lumberjack = inject<LumberjackService<LogPayload>>(LumberjackService);
+  readonly #lumberjack = inject<LumberjackOrchestrator<LogPayload>>(LumberjackOrchestrator);
   readonly #payload: LogPayload = {
     angularVersion: VERSION.full,
   };

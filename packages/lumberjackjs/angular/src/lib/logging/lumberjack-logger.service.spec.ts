@@ -17,7 +17,7 @@ import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
 import { LumberjackLogger } from './lumberjack-logger.service';
-import { LumberjackService } from './lumberjack.service';
+import { LumberjackOrchestrator } from './lumberjack-orchestrator.service';
 
 @Injectable({
   providedIn: 'root',
@@ -39,7 +39,7 @@ describe(LumberjackLogger.name, () => {
       imports: [LumberjackModule.forRoot()],
       providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
     });
-    const lumberjack = TestBed.inject(LumberjackService);
+    const lumberjack = TestBed.inject(LumberjackOrchestrator);
     timeService = TestBed.inject(LumberjackTimeService) as FakeTimeService;
     getUnixEpochTicks = timeService.getUnixEpochTicks.bind(timeService);
     lumberjackLogSpy = jest.spyOn(lumberjack, 'log').mockImplementation(() => {
