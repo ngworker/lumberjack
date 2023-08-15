@@ -20,7 +20,7 @@ interface LumberjackDependencies<TPayload extends LumberjackLogPayload | void> {
 }
 
 /**
- * Factory function that creates a Lumberjack core system object.
+ * Create a Lumberjack orchestrator object.
  *
  * @example
  * const drivers = [new ConsoleDriver(), new HttpDriver()];

@@ -14,7 +14,7 @@ interface LumberjackLogFormatterDependencies<TPayload extends LumberjackLogPaylo
 }
 
 /**
- * Factory function that creates a Lumberjack log formatter function.
+ * Create a Lumberjack log formatter function.
  *
  * @example
  * const formatLog = createLumberjackLogFormatter(deps);
