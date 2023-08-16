@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [15.0.4](https://github.com/ngworker/lumberjack/compare/v15.0.3...v15.0.4) (2023-08-16)
+
+
+### Bug Fixes
+
+* make rxjs version dynamic to support newest versions of Angular ([#175](https://github.com/ngworker/lumberjack/issues/175)) ([177a7e3](https://github.com/ngworker/lumberjack/commit/177a7e3278356192d71b67938259433f54c0543f))
+
 ## [15.0.3](https://github.com/ngworker/lumberjack/compare/v15.0.2...v15.0.3) (2023-08-16)
 
 
