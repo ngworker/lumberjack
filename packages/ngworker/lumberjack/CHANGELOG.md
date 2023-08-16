@@ -2,6 +2,14 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [15.0.2](https://github.com/ngworker/lumberjack/compare/v15.0.1...v15.0.2) (2023-08-16)
+
+
+### Bug Fixes
+
+* add support for version 16 of Angular ([#171](https://github.com/ngworker/lumberjack/issues/171)) ([1b71853](https://github.com/ngworker/lumberjack/commit/1b718535b72196a845f4601c089ce5e318229b59)), closes [#170](https://github.com/ngworker/lumberjack/issues/170)
+* pushing the tags and commits is necessary ([#173](https://github.com/ngworker/lumberjack/issues/173)) ([8ad9046](https://github.com/ngworker/lumberjack/commit/8ad904686b246d7cd02d47a100f7216393940981))
+
 ## [15.0.1](///compare/v15.0.0...v15.0.1) (2023-06-16)
 
 
