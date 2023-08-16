@@ -86,12 +86,13 @@
       }
     },
     "version": {
+      "dependsOn": ["build"],
       "executor": "@jscutlery/semver:version",
       "options": {
         "preset": "conventional",
         "tagPrefix": "v",
         "noVerify": true,
-        "push": false,
+        "push": true,
         "preid": "beta",
         "syncVersions": false,
         "commitMessageFormat": "release(${projectName}): 🎸 cut release to ${version}",
@@ -109,7 +110,6 @@
       "executor": "ngx-deploy-npm:deploy",
       "options": {
         "access": "public",
-        "tag": "next",
         "distFolderPath": "dist/packages/ngworker/lumberjack"
       }
     }
