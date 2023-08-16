@@ -35,16 +35,28 @@ jobs:
           fetch-depth: 0
       - name: Setup
         uses: ./.github/actions/setup
-
-      # Set ups the git user for the Changelog commit
-      - name: Setup git user to "🤖 NgWorker Bot"
-        shell: bash
-        run: git config user.email "-" && git config user.name "🤖 NgWorker Bot"
+        with:
+          git_bot_token: ${{ secrets.GIT_BOT_TOKEN }}
 
       - name: Release @ngworker/lumberjack
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.GH_TOKEN }}
         # Generates the changelog commit and tags and pushes them to Github.
         # Use two post actions to Create a release in Github and for Publishing the package to NPM
+        shell: bash
         run: npx nx version ngworker-lumberjack --releaseAs=${{ github.event.inputs.release_as }}
+
+      # Needed if we want to automize multiple releases with the affected commands.
+      - name: Tag last-release
+        shell: bash
+        run: git tag -f last-release
+
+      - name: Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GH_TOKEN }}
+          branch: ${{ github.ref }}
+          force: true
+          tags: true

@@ -91,7 +91,7 @@
         "preset": "conventional",
         "tagPrefix": "v",
         "noVerify": true,
-        "push": true,
+        "push": false,
         "preid": "beta",
         "syncVersions": false,
         "commitMessageFormat": "release(${projectName}): 🎸 cut release to ${version}",
