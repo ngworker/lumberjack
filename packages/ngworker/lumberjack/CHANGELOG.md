@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [15.0.3](https://github.com/ngworker/lumberjack/compare/v15.0.2...v15.0.3) (2023-08-16)
+
+
+### Bug Fixes
+
+* manually set @angular/platform-browser as optional peerDependency ([#174](https://github.com/ngworker/lumberjack/issues/174)) ([3c9b3b1](https://github.com/ngworker/lumberjack/commit/3c9b3b10f42ff22e5933005b1a028bc1d903ddfe)), closes [#170](https://github.com/ngworker/lumberjack/issues/170)
+
 ## [15.0.2](https://github.com/ngworker/lumberjack/compare/v15.0.1...v15.0.2) (2023-08-16)
 
 
