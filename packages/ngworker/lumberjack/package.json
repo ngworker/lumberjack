@@ -37,8 +37,8 @@
     "url": "https://github.com/ngworker/lumberjack/issues?q=is:issue+is:open+"
   },
   "peerDependencies": {
-    "@angular/core": "^15.0.1",
-    "@angular/common": "^15.0.1",
+    "@angular/core": ">= 15.0.1",
+    "@angular/common": ">= 15.0.1",
     "rxjs": "~7.5.0"
   },
   "peerDependenciesMeta": {
