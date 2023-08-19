@@ -39,14 +39,10 @@
   "peerDependencies": {
     "@angular/core": "^15.0.1",
     "@angular/common": "^15.0.1",
-    "@angular/platform-browser": "^15.0.1",
     "rxjs": ">= 7.5.0 < 8.0.0"
   },
   "peerDependenciesMeta": {
     "@angular/common": {
-      "optional": true
-    },
-    "@angular/platform-browser": {
       "optional": true
     },
     "rxjs": {
