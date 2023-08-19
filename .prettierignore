@@ -5,3 +5,6 @@
 /reports
 /.angular/
 .docusaurus/
+
+# Generated files
+packages/**/CHANGELOG.md
