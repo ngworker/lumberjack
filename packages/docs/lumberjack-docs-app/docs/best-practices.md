@@ -250,5 +250,13 @@ export class AppComponent implements OnInit {
   readonly #scope = 'Forest App';
 
   ngOnInit(): void {
-    const helloFore
+    const helloForest = this.#logFactory
+      .createInfoLog('Hello, Forest!')
+      .withScope(this.scope)
+      .withPayload(this.payload)
+      .build();
+
+    this.#lumberjack.log(helloForest);
+  }
+}
 ```
