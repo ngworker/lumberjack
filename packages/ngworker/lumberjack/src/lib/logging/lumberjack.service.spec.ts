@@ -652,4 +652,88 @@ describe(LumberjackService.name, () => {
       });
     });
   });
+
+  describe('Extended methods', () => {
+    beforeEach(() => {
+      TestBed.configureTestingModule({
+        imports: [
+          LumberjackModule.forRoot({
+            format: ({ level }) => level,
+          }),
+          SpyDriverModule.forRoot(),
+        ],
+        providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
+      });
+      const fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
+      fakeTime.setTime(fakeDate);
+
+      lumberjack = TestBed.inject(LumberjackService) as LumberjackService;
+
+      const [logDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
+      spyDriver = logDriver as SpyDriver;
+    });
+
+    let lumberjack: LumberjackService;
+    let spyDriver: SpyDriver;
+
+    it('correctly forwards the critical log', () => {
+      const payload = undefined;
+      lumberjack.logCritical('', payload, 'scope');
+
+      expect(spyDriver.logCritical).toHaveBeenCalledTimes(1);
+      expect(spyDriver.logCritical).toHaveBeenCalledWith(
+        createCriticalDriverLog(LumberjackLevel.Critical, payload, 'scope')
+      );
+    });
+
+    it('correctly forwards the error log', () => {
+      const payload = undefined;
+      lumberjack.logError('', payload, 'scope');
+
+      expect(spyDriver.logError).toHaveBeenCalledTimes(1);
+      expect(spyDriver.logError).toHaveBeenCalledWith(createErrorDriverLog(LumberjackLevel.Error, payload, 'scope'));
+    });
+
+    it('correctly forwards the warning log', () => {
+      const payload = undefined;
+      lumberjack.logWarning('', payload, 'scope');
+
+      expect(spyDriver.logWarning).toHaveBeenCalledTimes(1);
+      expect(spyDriver.logWarning).toHaveBeenCalledWith(
+        createWarningDriverLog(LumberjackLevel.Warning, payload, 'scope')
+      );
+    });
+
+    it('correctly forwards the info log', () => {
+      const payload = undefined;
+      lumberjack.logInfo('', payload, 'scope');
+
+      expect(spyDriver.logInfo).toHaveBeenCalledTimes(1);
+      expect(spyDriver.logInfo).toHaveBeenCalledWith(createInfoDriverLog(LumberjackLevel.Info, payload, 'scope'));
+    });
+
+    it('correctly forwards the debug log', () => {
+      const payload = undefined;
+      lumberjack.logInfo('', payload, 'scope');
+
+      expect(spyDriver.logInfo).toHaveBeenCalledTimes(1);
+      expect(spyDriver.logInfo).toHaveBeenCalledWith(createInfoDriverLog(LumberjackLevel.Info, payload, 'scope'));
+    });
+
+    it('correctly forwards the debug log', () => {
+      const payload = undefined;
+      lumberjack.logDebug('', payload, 'scope');
+
+      expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
+      expect(spyDriver.logDebug).toHaveBeenCalledWith(createDebugDriverLog(LumberjackLevel.Debug, payload, 'scope'));
+    });
+
+    it('correctly forwards the trace log', () => {
+      const payload = undefined;
+      lumberjack.logTrace('', payload, 'scope');
+
+      expect(spyDriver.logTrace).toHaveBeenCalledTimes(1);
+      expect(spyDriver.logTrace).toHaveBeenCalledWith(createTraceDriverLog(LumberjackLevel.Trace, payload, 'scope'));
+    });
+  });
 });
