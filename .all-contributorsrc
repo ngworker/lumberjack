@@ -146,6 +146,18 @@
       "contributions": [
         "doc"
       ]
+    },
+    {
+      "login": "pBouillon",
+      "name": "Pierre Bouillon",
+      "avatar_url": "https://avatars.githubusercontent.com/u/22640284?v=4",
+      "profile": "https://pbouillon.github.io",
+      "contributions": [
+        "ideas",
+        "test",
+        "doc",
+        "code"
+      ]
     }
   ],
   "contributorsPerLine": 7,
