@@ -9,7 +9,7 @@ how to create custom drivers.
 
 A driver is the conduit used by the Lumberjack to output or persist application logs.
 
-Lumberjack offers basic drivers out-of-the-box, namely the `LumberjackConsoleDriver` and the `LumberjackAngularHttpDriver`.
+Lumberjack offers a basic driver out-of-the-box, namely the `LumberjackAngularHttpDriver`.
 
 Every driver implements the `LumberjackDriver` interface.
 
@@ -51,15 +51,13 @@ levels for the HTTP driver as seen in the following example.
 ```ts
 import { NgModule } from '@angular/core';
 import { LumberjackLevel, LumberjackModule } from '@lumberjackjs/angular';
-import { LumberjackConsoleDriverModule } from '@lumberjackjs/angular/console-driver';
-import { LumberjackAngularHttpDriverModule } from '@lumberjackjs/angular/http-driver';
+import { LumberjackAngularHttpDriverModule } from '@lumberjackjs/angular-http-driver';
 
 @NgModule({
   imports: [
     LumberjackModule.forRoot({
       levels: [LumberjackLevel.Verbose],
     }),
-    LumberjackConsoleDriverModule.forRoot(),
     LumberjackAngularHttpDriverModule.forRoot({
       levels: [LumberjackLevel.Critical, LumberjackLevel.Error],
       origin: 'ForestApp',
@@ -80,7 +78,7 @@ import { bootstrapApplication } from '@angular/platform-browser';
 
 import { LumberjackLevel, provideLumberjack } from '@lumberjackjs/angular';
 import { provideLumberjackConsoleDriver } from '@lumberjackjs/angular/console-driver';
-import { provideLumberjackAngularHttpDriver, withHttpConfig } from '@lumberjackjs/angular/http-driver';
+import { provideLumberjackAngularHttpDriver, withHttpConfig } from '@lumberjackjs/angular-http-driver';
 
 import { AppComponent } from './app/app.component';
 
@@ -107,12 +105,12 @@ Let's create a simple driver for the browser console.
 ```ts
 import { inject, Injectable } from '@angular/core';
 
-import { LumberjackDriver, LumberjackDriverConfig, LumberjackDriverLog } from '@lumberjackjs/angular';
+import { LumberjackDriver, LumberjackDriverConfig, LumberjackDriverLog } from '@lumberjackjs/core';
 
 import { consoleDriverConfigToken } from './console-driver-config.token';
 
 @Injectable()
-export class ConsoleDriver implements LumberjackDriver {
+export class AngularConsoleDriver implements LumberjackDriver {
   readonly config = inject(consoleDriverConfigToken);
 
   logCritical({ formattedLog }: LumberjackDriverLog): void {
@@ -189,7 +187,7 @@ import {
   LumberjackDriverConfig,
   LumberjackDriverLog,
   LumberjackLogPayload,
-} from '@lumberjackjs/angular';
+} from '@lumberjackjs/core';
 
 import { consoleDriverConfigToken } from './console-driver-config.token';
 
@@ -263,7 +261,7 @@ export function provideLumberjackConsoleDriver(config: Partial<LumberjackConsole
 }
 ```
 
-The driver module then acts as a wrapper for the driver and the provide function.
+The driver module then acts as a wrapper for the log driver and the provide function.
 
 ```ts
 import { ModuleWithProviders, NgModule } from '@angular/core';
@@ -273,5 +271,82 @@ import { LumberjackConsoleDriverConfig } from './lumberjack-console-driver.confi
 import { provideLumberjackConsoleDriver } from './lumberjack-console-driver.providers';
 
 @NgModule()
-export class Lumberj
+export class LumberjackConsoleDriverModule {
+  static forRoot(
+    config: Partial<LumberjackConsoleDriverConfig> = {}
+  ): ModuleWithProviders<LumberjackConsoleDriverRootModule> {
+    return {
+      ngModule: LumberjackConsoleDriverRootModule,
+      providers: [provideLumberjackConsoleDriver(config)],
+    };
+  }
+
+  constructor() {
+    throw new Error('Do not import LumberjackConsoleDriverModule directly. Use LumberjackConsoleDriverModule.forRoot.');
+  }
+}
 ```
+
+The static `forRoot()` method provides the `consoleDriverConfigToken`.
+
+If no configuration is passed, then the root `LogDriverConfig` is used.
+
+```ts
+import { InjectionToken } from '@angular/core';
+import { LumberjackLogDriverConfig, lumberjackLogDriverConfigToken } from '@lumberjackjs/angular';
+
+export const consoleDriverConfigToken = new InjectionToken<LumberjackLogDriverConfig>('__CONSOLE_DRIVER_CONFIG__', {
+  factory: () => inject({ ...lumberjackLogDriverConfigToken, identifier: 'ConsoleDriver' }),
+});
+```
+
+This is possible because the `ConsoleDriver` has the same configuration options as the `LumberjackLogDriverConfig`. We
+only have to include the driver identifier since it cannot be predefined.
+
+For adding custom settings,
+see [LumberjackAngularHttpDriver](https://github.com/ngworker/lumberjack/blob/main/packages/lumberjackjs/angular-http-driver/src/lib/configuration/lumberjack-angular-http-driver-root.module.ts).
+
+The most important thing about the `LumberjackConsoleDriverModule` is that it provides the `LumberjackConsoleDriver`
+using the `lumberjackLogDriverToken` with the `multi` flag on. This allows us to provide multiple log drivers for
+Lumberjack at the same time.
+
+#### Using a custom log driver
+
+The last step is to import this module at the root module of our application, as seen in the first [_Usage_](../usage)
+section.
+
+```ts
+@NgModule({
+  imports: [
+    LumberjackModule.forRoot(),
+    ConsoleDriverModule.forRoot(),
+    // (...)
+  ],
+  // (...)
+})
+export class AppModule {}
+```
+
+Or using the standalone API.
+
+```typescript
+import { bootstrapApplication } from '@angular/platform-browser';
+
+import { LumberjackLog, LumberjackOptions, provideLumberjack } from '@lumberjackjs/angular';
+import { provideLumberjackConsoleDriver } from '@lumberjackjs/angular/console-driver';
+
+import { AppComponent } from './app/app.component';
+
+bootstrapApplication(AppComponent, {
+  providers: [
+    provideLumberjack(),
+    provideLumberjackConsoleDriver(),
+    // (...)
+  ],
+});
+```
+
+### HTTP driver
+
+For a more advanced log driver implementation,
+see [LumberjackAngularHttpDriver](./http-driver)
