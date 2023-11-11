@@ -30,7 +30,7 @@
       "executor": "@nx/angular:package",
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
-        "project": "packages/ngworker/lumberjack/ng-package.json",
+        "project": "packages/lumberjackjs/angular/ng-package.json",
         "updateBuildableProjectDepsInPackageJson": false
       },
       "dependsOn": [
@@ -110,7 +110,7 @@
       "executor": "ngx-deploy-npm:deploy",
       "options": {
         "access": "public",
-        "distFolderPath": "dist/packages/ngworker/lumberjack"
+        "distFolderPath": "dist/packages/lumberjackjs/angular"
       }
     }
   },
