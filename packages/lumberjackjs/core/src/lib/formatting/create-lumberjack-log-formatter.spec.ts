@@ -28,30 +28,30 @@ const logFormattingErrorScope = 'LumberjackLogFormattingError';
 describe(createLumberjackLogFormatter.name, () => {
   function setup(options?: LumberjackOptions) {
     const fakeTime = createFakeTime();
-    const formatter = createLumberjackLogFormatter({
+    const formatLog = createLumberjackLogFormatter({
       getUnixEpochTicks: fakeTime.getUnixEpochTicks,
       config: createLumberjackConfig(false, options),
     });
 
     return {
       fakeTime,
-      service: formatter,
+      formatLog,
     };
   }
 
   describe('Log', () => {
     it('returns the same log when formatting succeeds', () => {
-      const { service, fakeTime } = setup();
+      const { formatLog, fakeTime } = setup();
       const expectedLog = createErrorLogBuilder(fakeTime.getUnixEpochTicks)('').build();
 
-      const { log: actualLog } = service.formatLog(expectedLog);
+      const { log: actualLog } = formatLog(expectedLog);
 
       expect(actualLog).toBe(expectedLog);
     });
 
     it('returns an error log when formatting fails', () => {
       const formatterErrorMessage = 'TestFormatter';
-      const { service, fakeTime } = setup({
+      const { formatLog, fakeTime } = setup({
         format: () => {
           throw new Error(formatterErrorMessage);
         },
@@ -59,7 +59,7 @@ describe(createLumberjackLogFormatter.name, () => {
       const debugLog = createDebugLogBuilder(fakeTime.getUnixEpochTicks)('Test debug message').build();
       const expectedLog = createFormattingErrorLog(formatterErrorMessage, debugLog, fakeTime.getUnixEpochTicks);
 
-      const { log: actualLog } = service.formatLog(debugLog);
+      const { log: actualLog } = formatLog(debugLog);
 
       expect(actualLog).toEqual(expectedLog);
     });
@@ -67,12 +67,12 @@ describe(createLumberjackLogFormatter.name, () => {
 
   describe('Formatted message', () => {
     it('returns the formatted log when formatting succeeds', () => {
-      const { fakeTime, service } = setup({
+      const { fakeTime, formatLog } = setup({
         format: ({ level }) => level,
       });
       const warning = createWarningLogBuilder(fakeTime.getUnixEpochTicks)('').build();
 
-      const { formattedLog: actualFormattedLog } = service.formatLog(warning);
+      const { formattedLog: actualFormattedLog } = formatLog(warning);
 
       expect(actualFormattedLog).toBe(LumberjackLevel.Warning);
     });
@@ -80,7 +80,7 @@ describe(createLumberjackLogFormatter.name, () => {
     describe('Error message', () => {
       it('returns a format error when formatting fails because of an Error', () => {
         const formatterErrorMessage = 'TestFormatter';
-        const { fakeTime, service } = setup({
+        const { fakeTime, formatLog } = setup({
           format: () => {
             throw new Error(formatterErrorMessage);
           },
@@ -95,7 +95,7 @@ describe(createLumberjackLogFormatter.name, () => {
           fakeTime.getUnixEpochTicks
         );
 
-        const { formattedLog: actualFormattedLog } = service.formatLog(criticalLog);
+        const { formattedLog: actualFormattedLog } = formatLog(criticalLog);
 
         expect(actualFormattedLog).toBe(
           `${formattingErrorLog.level} ${nowTimestamp} [${logFormattingErrorScope}] ${formattingErrorLog.message}`
@@ -104,7 +104,7 @@ describe(createLumberjackLogFormatter.name, () => {
 
       it('returns a format error when formatting fails with a string error message', () => {
         const formatterErrorMessage = 'TestFormatter';
-        const { fakeTime, service } = setup({
+        const { fakeTime, formatLog } = setup({
           format: () => {
             throw formatterErrorMessage;
           },
@@ -119,7 +119,7 @@ describe(createLumberjackLogFormatter.name, () => {
           fakeTime.getUnixEpochTicks
         );
 
-        const { formattedLog: actualFormattedLog } = service.formatLog(criticalLog);
+        const { formattedLog: actualFormattedLog } = formatLog(criticalLog);
 
         expect(actualFormattedLog).toBe(
           `${formattingErrorLog.level} ${nowTimestamp} [${logFormattingErrorScope}] ${formattingErrorLog.message}`
