@@ -3,8 +3,8 @@ import { LumberjackLogPayload } from '../../logs/lumberjack-log-payload';
 import { LumberjackLogBuilder } from '../lumberjack-log.builder';
 
 function createWarningLogBuilderUncarried<TPayload extends LumberjackLogPayload | void = void>(
-  getUnixEpochTicks: () => number,
-  message: string
+  message: string,
+  getUnixEpochTicks?: () => number
 ): LumberjackLogBuilder<TPayload> {
   return new LumberjackLogBuilder(LumberjackLevel.Warning, message, getUnixEpochTicks);
 }
@@ -13,7 +13,7 @@ function createWarningLogBuilderUncarried<TPayload extends LumberjackLogPayload 
  * Create a log builder for an warning log with the specified message.
  */
 export function createWarningLogBuilder<TPayload extends LumberjackLogPayload | void = void>(
-  getUnixEpochTicks: () => number
+  getUnixEpochTicks?: () => number
 ) {
-  return (message: string) => createWarningLogBuilderUncarried<TPayload>(getUnixEpochTicks, message);
+  return (message: string) => createWarningLogBuilderUncarried<TPayload>(message, getUnixEpochTicks);
 }

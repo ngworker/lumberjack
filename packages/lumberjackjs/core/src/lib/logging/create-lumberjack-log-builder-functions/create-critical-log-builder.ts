@@ -3,8 +3,8 @@ import { LumberjackLogPayload } from '../../logs/lumberjack-log-payload';
 import { LumberjackLogBuilder } from '../lumberjack-log.builder';
 
 function createCriticalLogBuilderUncarried<TPayload extends LumberjackLogPayload | void = void>(
-  getUnixEpochTicks: () => number,
-  message: string
+  message: string,
+  getUnixEpochTicks?: () => number
 ): LumberjackLogBuilder<TPayload> {
   return new LumberjackLogBuilder(LumberjackLevel.Critical, message, getUnixEpochTicks);
 }
@@ -13,7 +13,7 @@ function createCriticalLogBuilderUncarried<TPayload extends LumberjackLogPayload
  * Create a log builder for an critical log with the specified message.
  */
 export function createCriticalLogBuilder<TPayload extends LumberjackLogPayload | void = void>(
-  getUnixEpochTicks: () => number
+  getUnixEpochTicks?: () => number
 ) {
-  return (message: string) => createCriticalLogBuilderUncarried<TPayload>(getUnixEpochTicks, message);
+  return (message: string) => createCriticalLogBuilderUncarried<TPayload>(message, getUnixEpochTicks);
 }
