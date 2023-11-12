@@ -9,7 +9,7 @@ import { LumberjackLogFormatter } from './lumberjack-log-formatter';
 import { LumberjackLogFormatterResult } from './lumberjack-log-formatter-result';
 
 interface LumberjackLogFormatterDependencies<TPayload extends LumberjackLogPayload | void> {
-  readonly config: Required<LumberjackConfig<TPayload>>;
+  readonly config: LumberjackConfig<TPayload>;
   readonly getUnixEpochTicks: () => number;
 }
 
