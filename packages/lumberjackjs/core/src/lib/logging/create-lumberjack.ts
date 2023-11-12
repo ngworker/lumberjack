@@ -8,6 +8,7 @@ import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackLog } from '../logs/lumberjack.log';
+import { lumberjackFormatLog } from '../formatting/lumberjack-format-log';
 
 import { Lumberjack } from './lumberjack';
 
@@ -43,7 +44,8 @@ export function createLumberjack<TPayload extends LumberjackLogPayload | void = 
   getUnixEpochTicks = () => new Date().valueOf(),
 }: LumberjackDependencies<TPayload>): Lumberjack<TPayload> {
   const driverLogger = createLumberjackDriverLogger<TPayload>();
-  const formatLog = createLumberjackLogFormatter({ config, getUnixEpochTicks });
+  const configWithDefaults = applyConfigDefaults(config);
+  const formatLog = createLumberjackLogFormatter({ config: configWithDefaults, getUnixEpochTicks });
   const log = (lumberjackLog: LumberjackLog<TPayload>) => {
     const { log, formattedLog } = formatLog(lumberjackLog);
     logWithErrorHandling(log, formattedLog, drivers);
@@ -181,6 +183,21 @@ export function createLumberjack<TPayload extends LumberjackLogPayload | void = 
    */
   function removeHandledError(driverErrorIndex: number, driverErrors: LumberjackDriverError<TPayload>[]) {
     driverErrors.splice(driverErrorIndex, 1);
+  }
+
+  /**
+   * Applies the default values to the Lumbejack configuration.
+   *
+   * @param config The Lumbejack configuration to apply the defaults to.
+   *   the specified driver errors.
+   */
+  function applyConfigDefaults<TPayload extends LumberjackLogPayload | void = void>(
+    config: LumberjackConfig<TPayload>
+  ): Required<LumberjackConfig<TPayload>> {
+    return {
+      levels: config.levels,
+      format: config.format ?? lumberjackFormatLog,
+    };
   }
 
   return {

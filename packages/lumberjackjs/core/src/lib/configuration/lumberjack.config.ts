@@ -8,9 +8,9 @@ import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 export interface LumberjackConfig<TPayload extends LumberjackLogPayload | void = void> {
   /**
    * The Lumberjack format function used to generate the text representation of
-   * a log.
+   * a log. If not provided, the default format function is used.
    */
-  readonly format: LumberjackFormatFunction<TPayload>;
+  readonly format?: LumberjackFormatFunction<TPayload>;
   /**
    * The default log level filter.
    */
