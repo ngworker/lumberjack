@@ -20,11 +20,11 @@
   "engines": {
     "node": "18.12.1",
     "npm": "Use the Yarn Classic (1.x) CLI instead of npm",
-    "yarn": "1.22.19"
+    "yarn": "1.22.21"
   },
   "volta": {
     "node": "18.12.1",
-    "yarn": "1.22.19"
+    "yarn": "1.22.21"
   },
   "dependencies": {
     "@angular/animations": "15.0.3",
