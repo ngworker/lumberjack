@@ -112,7 +112,7 @@ jobs:
       - name: Build docs
         run: yarn nx build docs-lumberjack-docs-app
       - name: Set up GitHub Pages
-        uses: actions/configure-pages@v2
+        uses: actions/configure-pages@v4
       - name: Upload docs to GitHub Pages
         uses: actions/upload-pages-artifact@v1
         with:
