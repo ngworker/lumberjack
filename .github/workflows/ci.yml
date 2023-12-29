@@ -114,7 +114,7 @@ jobs:
       - name: Set up GitHub Pages
         uses: actions/configure-pages@v4
       - name: Upload docs to GitHub Pages
-        uses: actions/upload-pages-artifact@v1
+        uses: actions/upload-pages-artifact@v3
         with:
           path: dist/packages/docs/lumberjack-docs-app/
       - name: Deploy docs to GitHub Pages
