@@ -18,7 +18,7 @@ runs:
 
     # Needed for nx affected command, it set the BASE and HEAD env variables
     - name: Derive appropriate SHAs for base and head for `nx affected` commands
-      uses: nrwl/nx-set-shas@v3
+      uses: nrwl/nx-set-shas@v4
 
     # Set ups the git user for the Changelog commit
     - name: Setup git user to "🤖 NgWorker Bot"
