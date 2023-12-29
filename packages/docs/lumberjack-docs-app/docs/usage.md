@@ -136,6 +136,26 @@ export class MyComponent implements OnInit {
 }
 ```
 
+Alternatively, you can also use the shorthand version:
+
+```ts
+// (...)
+import { LumberjackService, LumberjackTimeService } from '@ngworker/lumberjack';
+
+// (...)
+export class MyComponent implements OnInit {
+  readonly #lumberjack = inject(LumberjackService);
+  readonly #time = inject(LumberjackTimeService);
+
+  // (...)
+  ngOnInit(): void {
+    this.#lumberjack.logInfo('Hello, World!');
+  }
+}
+```
+
+> Each log level has its associated shorthand version: `LumberjackLevel.Info` is `logInfo`, `LumberjackLevel.Debug` is `logDebug`, etc.
+
 ### LumberjackModule and provideLumberjack
 
 Optionally, we can pass one or more options to `LumberjackModule.forRoot` or to the `provideLumberjack` function.

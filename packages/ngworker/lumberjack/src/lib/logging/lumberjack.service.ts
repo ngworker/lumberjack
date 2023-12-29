@@ -54,6 +54,114 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
   }
 
   /**
+   * Pass a critical log to Lumberjack which will be forwarded to the registered
+   * log drivers based on their configurations.
+   *
+   * @param message Log message, for example describing an event that happened.
+   * @param payload An optional payload to add to the log.
+   * @param scope An optional scope to add to the {@link LumberjackLog}.
+   */
+  logCritical(message: string, payload?: TPayload, scope?: string): void {
+    this.log({
+      createdAt: this.#time.getUnixEpochTicks(),
+      level: LumberjackLevel.Critical,
+      message,
+      payload,
+      scope,
+    });
+  }
+
+  /**
+   * Pass an error log to Lumberjack which will be forwarded to the registered
+   * log drivers based on their configurations.
+   *
+   * @param message Log message, for example describing an event that happened.
+   * @param payload An optional payload to add to the log.
+   * @param scope An optional scope to add to the {@link LumberjackLog}.
+   */
+  logError(message: string, payload?: TPayload, scope?: string): void {
+    this.log({
+      createdAt: this.#time.getUnixEpochTicks(),
+      level: LumberjackLevel.Error,
+      message,
+      payload,
+      scope,
+    });
+  }
+
+  /**
+   * Pass a warning log to Lumberjack which will be forwarded to the registered
+   * log drivers based on their configurations.
+   *
+   * @param message Log message, for example describing an event that happened.
+   * @param payload An optional payload to add to the log.
+   * @param scope An optional scope to add to the {@link LumberjackLog}.
+   */
+  logWarning(message: string, payload?: TPayload, scope?: string): void {
+    this.log({
+      createdAt: this.#time.getUnixEpochTicks(),
+      level: LumberjackLevel.Warning,
+      message,
+      payload,
+      scope,
+    });
+  }
+
+  /**
+   * Pass an info log to Lumberjack which will be forwarded to the registered
+   * log drivers based on their configurations.
+   *
+   * @param message Log message, for example describing an event that happened.
+   * @param payload An optional payload to add to the log.
+   * @param scope An optional scope to add to the {@link LumberjackLog}.
+   */
+  logInfo(message: string, payload?: TPayload, scope?: string): void {
+    this.log({
+      createdAt: this.#time.getUnixEpochTicks(),
+      level: LumberjackLevel.Info,
+      message,
+      payload,
+      scope,
+    });
+  }
+
+  /**
+   * Pass a debug log to Lumberjack which will be forwarded to the registered
+   * log drivers based on their configurations.
+   *
+   * @param message Log message, for example describing an event that happened.
+   * @param payload An optional payload to add to the log.
+   * @param scope An optional scope to add to the {@link LumberjackLog}.
+   */
+  logDebug(message: string, payload?: TPayload, scope?: string): void {
+    this.log({
+      createdAt: this.#time.getUnixEpochTicks(),
+      level: LumberjackLevel.Debug,
+      message,
+      payload,
+      scope,
+    });
+  }
+
+  /**
+   * Pass a trace log to Lumberjack which will be forwarded to the registered
+   * log drivers based on their configurations.
+   *
+   * @param message Log message, for example describing an event that happened.
+   * @param payload An optional payload to add to the log.
+   * @param scope An optional scope to add to the {@link LumberjackLog}.
+   */
+  logTrace(message: string, payload?: TPayload, scope?: string): void {
+    this.log({
+      createdAt: this.#time.getUnixEpochTicks(),
+      level: LumberjackLevel.Trace,
+      message,
+      payload,
+      scope,
+    });
+  }
+
+  /**
    * Determine whether a log driver is configured to accept a log with the
    * specified log level.
    *
