@@ -5,6 +5,7 @@ import Layout from '@theme/Layout';
 import clsx from 'clsx';
 import React from 'react';
 import styles from './styles.module.css';
+import PropTypes from 'prop-types';
 
 const features = [
   {
@@ -47,6 +48,12 @@ function Feature({ imageUrl, title, description }) {
     </div>
   );
 }
+
+Feature.propTypes = {
+  imageUrl: PropTypes.string,
+  title: PropTypes.string,
+  description: PropTypes.node,
+};
 
 function Home() {
   const context = useDocusaurusContext();
