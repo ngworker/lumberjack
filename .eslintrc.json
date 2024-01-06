@@ -95,9 +95,21 @@
                 "match": "^@(ngworker|internal).*",
                 "order": 30
               },
-              { "name": "parent directories", "match": "^\\.\\.", "order": 40 },
-              { "name": "current directory", "match": "^\\.", "order": 50 },
-              { "name": "third-party", "match": ".*", "order": 10 }
+              {
+                "name": "parent directories",
+                "match": "^\\.\\.",
+                "order": 40
+              },
+              {
+                "name": "current directory",
+                "match": "^\\.",
+                "order": 50
+              },
+              {
+                "name": "third-party",
+                "match": ".*",
+                "order": 10
+              }
             ]
           }
         ]
