@@ -1,7 +1,7 @@
 import { StaticProvider } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 
-import { NoopConsoleModule } from '@internal/console-driver/test-util';
+import { provideNoopConsole } from '@internal/console-driver/test-util';
 import {
   createCriticalDriverLog,
   createDebugDriverLog,
@@ -119,12 +119,8 @@ describe(LumberjackService.name, () => {
 
     it('accepts logs when multiple log drivers are registered', () => {
       TestBed.configureTestingModule({
-        imports: [
-          LumberjackModule.forRoot(),
-          NoopDriverModule.forRoot(),
-          LumberjackConsoleDriverModule.forRoot(),
-          NoopConsoleModule,
-        ],
+        imports: [LumberjackModule.forRoot(), NoopDriverModule.forRoot(), LumberjackConsoleDriverModule.forRoot()],
+        providers: [provideNoopConsole()],
       });
 
       expect(logDebugMessage).not.toThrow();

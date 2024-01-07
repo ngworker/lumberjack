@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SpyConsole, SpyConsoleModule } from '@internal/console-driver/test-util';
+import { provideSpyConsole, SpyConsole } from '@internal/console-driver/test-util';
 import {
   LumberjackLevel,
   LumberjackLogDriver,
@@ -23,8 +23,8 @@ describe(LumberjackConsoleDriver.name, () => {
           levels: [LumberjackLevel.Verbose],
           identifier: LumberjackConsoleDriver.driverIdentifier,
         }),
-        SpyConsoleModule,
       ],
+      providers: [provideSpyConsole()],
     });
 
     const [_driver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
