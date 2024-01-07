@@ -13,17 +13,13 @@ import { repeatSideEffect } from '../functions/repeat-side-effect';
 import { createDriverLog } from '../logs/driver-log-creators';
 
 import { ErrorThrowingDriver } from './error-throwing.driver';
-import { provideErrorThrowingDriver, withErrorThrowingOptions } from './provide-error-throwing-driver';
+import { provideErrorThrowingDriver } from './provide-error-throwing-driver';
 
 describe(ErrorThrowingDriver.name, () => {
   function setup(logsBeforeThrowing?: number) {
     TestBed.configureTestingModule({
       imports: [LumberjackModule.forRoot()],
-      providers: [
-        provideErrorThrowingDriver(
-          logsBeforeThrowing != null ? withErrorThrowingOptions({ logsBeforeThrowing }) : withErrorThrowingOptions()
-        ),
-      ],
+      providers: [provideErrorThrowingDriver(logsBeforeThrowing != null ? { logsBeforeThrowing } : undefined)],
     });
 
     const [driver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
