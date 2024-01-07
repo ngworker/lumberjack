@@ -18,7 +18,8 @@ import {
  * `LumberjackHttpDriverModule.forRoot` or
  * `LumberjackHttpDriverModule.withOptions`.
  *
- * @deprecated Use standalone provider function `provideLumberjackHttpDriver` instead.
+ * @deprecated Use standalone provider function `provideLumberjackHttpDriver` instead. NgModules will be removed in Lumberjack 18.
+ *
  */
 @NgModule()
 export class LumberjackHttpDriverModule {

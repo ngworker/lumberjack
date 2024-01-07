@@ -48,6 +48,8 @@ Log drivers should make it possible to configure the logging levels on a per dri
 For example, we could use the default logging levels for the console driver, but only enable the critical and error
 levels for the HTTP driver as seen in the following example.
 
+> Note: Lumberjack NgModules are deprecated and will be removed in version 18. Use the Standalone API, provider functions, instead.
+
 ```ts
 import { NgModule } from '@angular/core';
 import { LumberjackLevel, LumberjackModule } from '@ngworker/lumberjack';
@@ -269,6 +271,8 @@ export function provideLumberjackConsoleDriver(config: Partial<LumberjackConsole
 
 The driver module then acts as a wrapper for the log driver and the provide function.
 
+> Note: Lumberjack NgModules are deprecated and will be removed in version 18. Use the Standalone API, provider functions, instead.
+
 ```ts
 import { ModuleWithProviders, NgModule } from '@angular/core';
 
@@ -320,6 +324,8 @@ Lumberjack at the same time.
 
 The last step is to import this module at the root module of our application, as seen in the first [_Usage_](../usage)
 section.
+
+> Note: Lumberjack NgModules are deprecated and will be removed in version 18. Use the Standalone API, provider functions, instead.
 
 ```ts
 @NgModule({

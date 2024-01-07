@@ -11,7 +11,7 @@ import { provideLumberjackConsoleDriver } from './provide-lumberjack-console-dri
  * NOTE! Do not import `LumberjackConsoleDriverModule` directly. Use
  * `LumberjackConsoleDriverModule.forRoot`.
  *
- * @deprecated Use standalone provider function `provideLumberjackConsoleDriver` instead.
+ * @deprecated Use standalone provider function `provideLumberjackConsoleDriver` instead. NgModules will be removed in Lumberjack 18.
  */
 @NgModule()
 export class LumberjackConsoleDriverModule {

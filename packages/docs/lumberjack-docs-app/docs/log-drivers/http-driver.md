@@ -117,6 +117,8 @@ The `sendLog` method has been optimized to run outside Angular's `NgZone`, avoid
 
 ### LumberjackHttpDriverModule
 
+> Note: Lumberjack NgModules are deprecated and will be removed in version 18. Use the Standalone API, provider functions, instead.
+
 The `LumberjackHttpDriverModule` is similar to the `LumberjackConsoleDriverModule`.
 
 Novelty appears with the static `withOptions` function that allows us to pass `LumberjackHttpDriverOptions` to fall back to the settings in `LumberjackLogDriverConfig`.
@@ -231,6 +233,8 @@ This is where the heaviest configuration happens and it is used to boost the cla
 The following is an example of how both API can be used
 
 Classic:
+
+> Note: Lumberjack NgModules are deprecated and will be removed in version 18. Use the Standalone API, provider functions, instead.
 
 ```typescript
 @NgModule({
