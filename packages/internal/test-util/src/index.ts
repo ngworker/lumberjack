@@ -22,8 +22,7 @@ export * from './lib/noop-driver/provide-noop-driver';
 export * from './lib/noop-driver/noop.driver';
 
 // Spy driver
-export * from './lib/spy-driver/spy-driver.module';
-export * from './lib/spy-driver/spy-driver-root.module';
+export * from './lib/spy-driver/provide-spy-driver';
 export * from './lib/spy-driver/spy.driver';
 
 // Object driver

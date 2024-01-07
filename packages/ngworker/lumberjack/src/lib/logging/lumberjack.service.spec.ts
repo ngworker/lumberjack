@@ -17,14 +17,13 @@ import {
   provideErrorThrowingDriver,
   provideNoopDriver,
   provideObjectDriver,
+  provideSpyDriver,
   SpyDriver,
-  SpyDriverModule,
 } from '@internal/test-util';
 import { provideLumberjackConsoleDriver } from '@ngworker/lumberjack/console-driver';
 
 import { lumberjackLogDriverConfigToken } from '../configuration/lumberjack-log-driver-config.token';
 import { LumberjackLogDriverConfig } from '../configuration/lumberjack-log-driver.config';
-import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
 import { LumberjackLogDriverLog } from '../log-drivers/lumberjack-log-driver.log';
 import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
@@ -104,7 +103,7 @@ describe(LumberjackService.name, () => {
   describe('Log drivers', () => {
     it('accepts logs when no log drivers are registered', () => {
       TestBed.configureTestingModule({
-        imports: [LumberjackModule.forRoot()],
+        providers: [provideLumberjack()],
       });
 
       expect(logDebugMessage).not.toThrow();
@@ -112,8 +111,7 @@ describe(LumberjackService.name, () => {
 
     it('accepts logs when a single log driver is registered', () => {
       TestBed.configureTestingModule({
-        imports: [LumberjackModule.forRoot()],
-        providers: [provideNoopDriver()],
+        providers: [provideLumberjack(), provideNoopDriver()],
       });
 
       expect(logDebugMessage).not.toThrow();
@@ -121,8 +119,7 @@ describe(LumberjackService.name, () => {
 
     it('accepts logs when multiple log drivers are registered', () => {
       TestBed.configureTestingModule({
-        imports: [LumberjackModule.forRoot()],
-        providers: [provideNoopConsole(), provideNoopDriver(), provideLumberjackConsoleDriver()],
+        providers: [provideLumberjack(), provideNoopConsole(), provideNoopDriver(), provideLumberjackConsoleDriver()],
       });
 
       expect(logDebugMessage).not.toThrow();
@@ -131,8 +128,11 @@ describe(LumberjackService.name, () => {
     describe('Drivers with custom lumberjack logs', () => {
       it('receives the payload parameter in the provided driver', () => {
         TestBed.configureTestingModule({
-          imports: [LumberjackModule.forRoot(), SpyDriverModule.forRoot()],
-          providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
+          providers: [
+            provideLumberjack(),
+            { provide: LumberjackTimeService, useClass: FakeTimeService },
+            provideSpyDriver(),
+          ],
         });
         const fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
         fakeTime.setTime(fakeDate);
@@ -148,8 +148,7 @@ describe(LumberjackService.name, () => {
 
       it('uses the payload as part of driver logic', () => {
         TestBed.configureTestingModule({
-          imports: [LumberjackModule.forRoot()],
-          providers: [provideObjectDriver()],
+          providers: [provideLumberjack(), provideObjectDriver()],
         });
 
         const objectService = TestBed.inject(ObjectService);
@@ -182,14 +181,12 @@ describe(LumberjackService.name, () => {
 
       it('outputs errors when multiple drivers are registered and last green driver fails while logging errors', () => {
         TestBed.configureTestingModule({
-          imports: [
-            LumberjackModule.forRoot({
+          providers: [
+            provideLumberjack({
               format: ({ level }) => level,
             }),
-            SpyDriverModule.forRoot(),
-          ],
-          providers: [
             { provide: LumberjackTimeService, useClass: FakeTimeService },
+            provideSpyDriver(),
             provideErrorThrowingDriver({ logsBeforeThrowing: 1 }),
           ],
         });
@@ -221,13 +218,11 @@ describe(LumberjackService.name, () => {
 
       it('outputs only unprocessed driver errors', () => {
         TestBed.configureTestingModule({
-          imports: [
-            LumberjackModule.forRoot({
+          providers: [
+            provideLumberjack({
               format: ({ level }) => level,
             }),
-            SpyDriverModule.forRoot(),
-          ],
-          providers: [
+            provideSpyDriver(),
             { provide: LumberjackTimeService, useClass: FakeTimeService },
             provideNoopDriver(),
             provideErrorThrowingDriver({ logsBeforeThrowing: 2 }),
@@ -269,13 +264,14 @@ describe(LumberjackService.name, () => {
 
       it('logs an error message to stable drivers when a driver fails', () => {
         TestBed.configureTestingModule({
-          imports: [
-            LumberjackModule.forRoot({
+          providers: [
+            provideLumberjack({
               format: ({ level }) => level,
             }),
-            SpyDriverModule.forRoot(),
+            provideSpyDriver(),
+            { provide: LumberjackTimeService, useClass: FakeTimeService },
+            provideErrorThrowingDriver(),
           ],
-          providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }, provideErrorThrowingDriver()],
         });
         const fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
         fakeTime.setTime(fakeDate);
@@ -298,13 +294,14 @@ describe(LumberjackService.name, () => {
 
       it('accepts logs when multiple log drivers are registered', () => {
         TestBed.configureTestingModule({
-          imports: [
-            LumberjackModule.forRoot({
+          providers: [
+            provideLumberjack({
               format: ({ level }) => level,
             }),
-            SpyDriverModule.forRoot(),
+            provideSpyDriver(),
+            { provide: LumberjackTimeService, useClass: FakeTimeService },
+            provideErrorThrowingDriver(),
           ],
-          providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }, provideErrorThrowingDriver()],
         });
         const fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
         fakeTime.setTime(fakeDate);
@@ -320,8 +317,7 @@ describe(LumberjackService.name, () => {
 
       it('outputs an error mentioning the log and log driver name recursively', () => {
         TestBed.configureTestingModule({
-          imports: [LumberjackModule.forRoot(), SpyDriverModule.forRoot()],
-          providers: [provideErrorThrowingDriver({ logsBeforeThrowing: 1 })],
+          providers: [provideLumberjack(), provideSpyDriver(), provideErrorThrowingDriver({ logsBeforeThrowing: 1 })],
         });
         const logDrivers = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
         const spyDriver = logDrivers[0] as SpyDriver;
@@ -350,13 +346,13 @@ describe(LumberjackService.name, () => {
     describe('Error-throwing formatter', () => {
       beforeEach(() => {
         TestBed.configureTestingModule({
-          imports: [
-            LumberjackModule.forRoot({
+          providers: [
+            provideLumberjack({
               format: () => {
                 throw new Error('Test format error');
               },
             }),
-            SpyDriverModule.forRoot(),
+            provideSpyDriver(),
           ],
         });
 
@@ -412,13 +408,13 @@ describe(LumberjackService.name, () => {
   describe('Log types', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [
-          LumberjackModule.forRoot({
+        providers: [
+          provideLumberjack({
             format: ({ level }) => level,
           }),
-          SpyDriverModule.forRoot(),
+          provideSpyDriver(),
+          { provide: LumberjackTimeService, useClass: FakeTimeService },
         ],
-        providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
       });
       const fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
       fakeTime.setTime(fakeDate);
@@ -481,8 +477,7 @@ describe(LumberjackService.name, () => {
   describe('Log levels', () => {
     it('accepts logs when no log levels are enabled', () => {
       TestBed.configureTestingModule({
-        imports: [LumberjackModule.forRoot()],
-        providers: [noLogsProvider],
+        providers: [provideLumberjack(), noLogsProvider],
       });
 
       expect(logDebugMessage).not.toThrow();
@@ -490,8 +485,7 @@ describe(LumberjackService.name, () => {
 
     it('accepts logs when all log levels are enabled', () => {
       TestBed.configureTestingModule({
-        imports: [LumberjackModule.forRoot()],
-        providers: [allLogsProvider],
+        providers: [provideLumberjack(), allLogsProvider],
       });
 
       expect(logDebugMessage).not.toThrow();
@@ -499,8 +493,7 @@ describe(LumberjackService.name, () => {
 
     it('accepts logs when all log levels are enabled and a log driver is registered', () => {
       TestBed.configureTestingModule({
-        imports: [LumberjackModule.forRoot()],
-        providers: [allLogsProvider, provideNoopDriver()],
+        providers: [provideLumberjack(), allLogsProvider, provideNoopDriver()],
       });
 
       expect(logDebugMessage).not.toThrow();
@@ -510,13 +503,14 @@ describe(LumberjackService.name, () => {
   describe('Verbose logging', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [
-          LumberjackModule.forRoot({
+        providers: [
+          provideLumberjack({
             format: ({ level }) => level,
           }),
-          SpyDriverModule.forRoot(),
+          provideSpyDriver(),
+          { provide: LumberjackTimeService, useClass: FakeTimeService },
+          verboseLoggingProvider,
         ],
-        providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }, verboseLoggingProvider],
       });
       const fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
       fakeTime.setTime(fakeDate);
@@ -572,16 +566,14 @@ describe(LumberjackService.name, () => {
     describe('given drivers with different log levels', () => {
       beforeEach(() => {
         TestBed.configureTestingModule({
-          imports: [
-            LumberjackModule.forRoot({
+          providers: [
+            provideLumberjack({
               format: ({ level }) => level,
             }),
-            SpyDriverModule.forRoot({
+            provideSpyDriver({
               levels: [LumberjackLevel.Debug, LumberjackLevel.Info, LumberjackLevel.Trace],
               identifier: SpyDriver.name,
             }),
-          ],
-          providers: [
             { provide: LumberjackTimeService, useClass: FakeTimeService },
             verboseLoggingProvider,
             provideNoopDriver({
@@ -658,13 +650,13 @@ describe(LumberjackService.name, () => {
   describe('Extended methods', () => {
     beforeEach(() => {
       TestBed.configureTestingModule({
-        imports: [
-          LumberjackModule.forRoot({
+        providers: [
+          provideLumberjack({
             format: ({ level }) => level,
           }),
-          SpyDriverModule.forRoot(),
+          { provide: LumberjackTimeService, useClass: FakeTimeService },
+          provideSpyDriver(),
         ],
-        providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
       });
       const fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;
       fakeTime.setTime(fakeDate);
