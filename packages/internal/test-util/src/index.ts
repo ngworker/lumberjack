@@ -27,8 +27,7 @@ export * from './lib/spy-driver/spy-driver-root.module';
 export * from './lib/spy-driver/spy.driver';
 
 // Object driver
-export * from './lib/object-driver/object-driver.module';
-export * from './lib/object-driver/object-driver-root.module';
+export * from './lib/object-driver/provide-object-driver';
 export * from './lib/object-driver/object.driver';
 export * from './lib/object-driver/object.service';
 export * from './lib/object-driver/object.payload';

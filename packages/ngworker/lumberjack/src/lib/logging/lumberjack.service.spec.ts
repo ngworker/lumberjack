@@ -12,15 +12,15 @@ import {
   ErrorThrowingDriver,
   FakeTimeService,
   NoopDriver,
-  ObjectDriverModule,
   ObjectPayload,
   ObjectService,
   provideErrorThrowingDriver,
   provideNoopDriver,
+  provideObjectDriver,
   SpyDriver,
   SpyDriverModule,
 } from '@internal/test-util';
-import { LumberjackConsoleDriverModule, provideLumberjackConsoleDriver } from '@ngworker/lumberjack/console-driver';
+import { provideLumberjackConsoleDriver } from '@ngworker/lumberjack/console-driver';
 
 import { lumberjackLogDriverConfigToken } from '../configuration/lumberjack-log-driver-config.token';
 import { LumberjackLogDriverConfig } from '../configuration/lumberjack-log-driver.config';
@@ -148,7 +148,8 @@ describe(LumberjackService.name, () => {
 
       it('uses the payload as part of driver logic', () => {
         TestBed.configureTestingModule({
-          imports: [LumberjackModule.forRoot(), ObjectDriverModule.forRoot()],
+          imports: [LumberjackModule.forRoot()],
+          providers: [provideObjectDriver()],
         });
 
         const objectService = TestBed.inject(ObjectService);
