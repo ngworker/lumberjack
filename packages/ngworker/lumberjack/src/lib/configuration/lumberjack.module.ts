@@ -10,6 +10,8 @@ import { provideLumberjack } from './provide-lumberjack';
  *
  * NOTE! Do not import `LumberjackModule` directly. Use
  * `LumberjackModule.forRoot`.
+ *
+ * @deprecated Use standalone provider function `provideLumberjack` instead.
  */
 @NgModule()
 export class LumberjackModule {

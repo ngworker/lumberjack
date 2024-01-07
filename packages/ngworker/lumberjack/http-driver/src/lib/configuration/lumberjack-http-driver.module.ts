@@ -17,6 +17,8 @@ import {
  * NOTE! Do not import `LumberjackHttpDriverModule` directly. Use
  * `LumberjackHttpDriverModule.forRoot` or
  * `LumberjackHttpDriverModule.withOptions`.
+ *
+ * @deprecated Use standalone provider function `provideLumberjackHttpDriver` instead.
  */
 @NgModule()
 export class LumberjackHttpDriverModule {

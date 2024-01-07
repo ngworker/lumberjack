@@ -2,6 +2,7 @@ import { inject, NgModule } from '@angular/core';
 
 /**
  * Do not import directly. Use `LumberjackHttpDriverModule.forRoot`.
+ * @deprecated Use standalone provider function `provideLumberjackHttpDriver` instead.
  */
 @NgModule()
 export class LumberjackHttpDriverRootModule {
