@@ -12,17 +12,17 @@ import {
 import { repeatSideEffect } from '../functions/repeat-side-effect';
 import { createDriverLog } from '../logs/driver-log-creators';
 
-import { ErrorThrowingDriverModule } from './error-throwing-driver.module';
 import { ErrorThrowingDriver } from './error-throwing.driver';
+import { provideErrorThrowingDriver, withErrorThrowingOptions } from './provide-error-throwing-driver';
 
 describe(ErrorThrowingDriver.name, () => {
   function setup(logsBeforeThrowing?: number) {
     TestBed.configureTestingModule({
-      imports: [
-        LumberjackModule.forRoot(),
-        logsBeforeThrowing
-          ? ErrorThrowingDriverModule.withOptions({ logsBeforeThrowing })
-          : ErrorThrowingDriverModule.forRoot(),
+      imports: [LumberjackModule.forRoot()],
+      providers: [
+        provideErrorThrowingDriver(
+          logsBeforeThrowing != null ? withErrorThrowingOptions({ logsBeforeThrowing }) : withErrorThrowingOptions()
+        ),
       ],
     });
 

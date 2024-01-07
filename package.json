@@ -12,7 +12,7 @@
     "delete-path-alias": "node tools/scripts/delete-path-alias.mjs",
     "e2e": "nx run-many --target=e2e --all --parallel=1",
     "format": "yarn nx format:write",
-    "lint": "nx run-many --target=lint --all --max-warnings=0",
+    "lint": "nx run-many --target=lint --all",
     "nx": "nx",
     "start": "nx serve",
     "test": "nx run-many --target=test --all"

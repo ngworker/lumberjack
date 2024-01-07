@@ -8,10 +8,9 @@ export * from './lib/angular/expect-ng-module-to-be-guarded-against-duplicate-re
 
 // Error-throwing driver
 export * from './lib/error-throwing-driver/error-throwing-driver.config';
-export * from './lib/error-throwing-driver/error-throwing-driver.module';
 export * from './lib/error-throwing-driver/error-throwing-driver.options';
-export * from './lib/error-throwing-driver/error-throwing-driver-root.module';
 export * from './lib/error-throwing-driver/error-throwing.driver';
+export * from './lib/error-throwing-driver/provide-error-throwing-driver';
 
 // Functions
 export * from './lib/functions/repeat-side-effect';
