@@ -18,8 +18,7 @@ export * from './lib/functions/repeat-side-effect';
 export * from './lib/logs';
 
 // No-op driver
-export * from './lib/noop-driver/noop-driver.module';
-export * from './lib/noop-driver/noop-driver-root.module';
+export * from './lib/noop-driver/provide-noop-driver';
 export * from './lib/noop-driver/noop.driver';
 
 // Spy driver
