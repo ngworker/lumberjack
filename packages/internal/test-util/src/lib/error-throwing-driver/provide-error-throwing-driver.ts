@@ -31,6 +31,6 @@ export function provideErrorThrowingDriver(config: Partial<ErrorThrowingDriverCo
       }),
       deps: [lumberjackLogDriverConfigToken],
     },
-    errorThrowingDriverProvider
+    errorThrowingDriverProvider,
   ];
 }
