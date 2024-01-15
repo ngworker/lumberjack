@@ -8,6 +8,8 @@ title: Usage
 
 To register Lumberjack, add `LumberjackModule.forRoot()` to your root or core Angular module.
 
+> Note: Lumberjack NgModules are deprecated and will be removed in version 18. Use the Standalone API, provider functions, instead.
+
 ```ts
 // (...)
 import {LumberjackModule} from '@ngworker/lumberjack';
@@ -37,6 +39,8 @@ bootstrapApplication(AppComponent, {
 You must also register the log driver modules for the log drivers that you want to enable.
 
 If you want to add the `LumberjackHttpDriver` and the `LumberjackConsoleDriver`, add the following code
+
+> Note: Lumberjack NgModules are deprecated and will be removed in version 18. Use the Standalone API, provider functions, instead.
 
 ```ts
 // (...)
