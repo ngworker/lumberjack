@@ -91,9 +91,7 @@ The idea is to merge the two projects eventually and have a single library that 
 
 ## Community
 
-We are proud and thrilled to have the great [Pierre Bouillon](https://pbouillon.github.io) contributing to our project.
-
-We are grateful because we know how busy he is writing his new book (we are all waiting for it).
+We are proud and thrilled to have [Pierre Bouillon](https://pbouillon.github.io) contributing to our project.
 
 ## DEV
 
