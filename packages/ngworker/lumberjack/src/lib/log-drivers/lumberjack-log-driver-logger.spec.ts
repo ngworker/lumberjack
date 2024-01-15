@@ -1,8 +1,8 @@
 import { TestBed } from '@angular/core/testing';
 
-import { SpyDriver, SpyDriverModule } from '@internal/test-util';
+import { provideSpyDriver, SpyDriver } from '@internal/test-util';
 
-import { LumberjackModule } from '../configuration/lumberjack.module';
+import { provideLumberjack } from '../configuration/provide-lumberjack';
 import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
 import { LumberjackLevel } from '../logs/lumberjack-level';
 
@@ -13,7 +13,7 @@ import { lumberjackLogDriverToken } from './lumberjack-log-driver.token';
 describe(LumberjackLogDriverLogger.name, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [LumberjackModule.forRoot(), SpyDriverModule.forRoot()],
+      providers: [provideLumberjack(), provideSpyDriver()],
     });
     [logDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as [SpyDriver];
     logFactory = TestBed.inject(LumberjackLogFactory);

@@ -2,6 +2,8 @@ import { inject, NgModule } from '@angular/core';
 
 /**
  * Do not import directly. Use `LumberjackModule.forRoot`.
+ *
+ * @deprecated Use standalone provider function `provideLumberjack` instead. NgModules will be removed in Lumberjack 18.
  */
 @NgModule()
 export class LumberjackRootModule {

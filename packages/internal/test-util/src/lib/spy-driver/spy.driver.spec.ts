@@ -6,12 +6,12 @@ import {
   LumberjackLogDriverLog,
   lumberjackLogDriverToken,
   LumberjackLogLevel,
-  LumberjackModule,
+  provideLumberjack,
 } from '@ngworker/lumberjack';
 
 import { createDriverLog } from '../logs/driver-log-creators';
 
-import { SpyDriverModule } from './spy-driver.module';
+import { provideSpyDriver } from './provide-spy-driver';
 import { SpyDriver } from './spy.driver';
 
 describe(SpyDriver.name, () => {
@@ -19,7 +19,7 @@ describe(SpyDriver.name, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [LumberjackModule.forRoot(), SpyDriverModule.forRoot()],
+      providers: [provideLumberjack(), provideSpyDriver()],
     });
 
     [spyDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as SpyDriver[];

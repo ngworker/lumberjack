@@ -70,6 +70,7 @@
       "rules": {
         "etc/no-commented-out-code": "error",
         "etc/no-const-enum": "error",
+        "etc/no-deprecated": "off",
         "@typescript-eslint/prefer-readonly": "error",
         "sonarjs/cognitive-complexity": ["error", 8],
         "ordered-imports/ordered-imports": [

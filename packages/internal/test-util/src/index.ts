@@ -8,10 +8,8 @@ export * from './lib/angular/expect-ng-module-to-be-guarded-against-duplicate-re
 
 // Error-throwing driver
 export * from './lib/error-throwing-driver/error-throwing-driver.config';
-export * from './lib/error-throwing-driver/error-throwing-driver.module';
-export * from './lib/error-throwing-driver/error-throwing-driver.options';
-export * from './lib/error-throwing-driver/error-throwing-driver-root.module';
 export * from './lib/error-throwing-driver/error-throwing.driver';
+export * from './lib/error-throwing-driver/provide-error-throwing-driver';
 
 // Functions
 export * from './lib/functions/repeat-side-effect';
@@ -20,18 +18,15 @@ export * from './lib/functions/repeat-side-effect';
 export * from './lib/logs';
 
 // No-op driver
-export * from './lib/noop-driver/noop-driver.module';
-export * from './lib/noop-driver/noop-driver-root.module';
+export * from './lib/noop-driver/provide-noop-driver';
 export * from './lib/noop-driver/noop.driver';
 
 // Spy driver
-export * from './lib/spy-driver/spy-driver.module';
-export * from './lib/spy-driver/spy-driver-root.module';
+export * from './lib/spy-driver/provide-spy-driver';
 export * from './lib/spy-driver/spy.driver';
 
 // Object driver
-export * from './lib/object-driver/object-driver.module';
-export * from './lib/object-driver/object-driver-root.module';
+export * from './lib/object-driver/provide-object-driver';
 export * from './lib/object-driver/object.driver';
 export * from './lib/object-driver/object.service';
 export * from './lib/object-driver/object.payload';

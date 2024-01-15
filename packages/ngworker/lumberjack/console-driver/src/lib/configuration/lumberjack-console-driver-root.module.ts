@@ -2,6 +2,7 @@ import { inject, NgModule } from '@angular/core';
 
 /**
  * Do not import directly. Use `LumberjackConsoleDriverModule.forRoot`.
+ * @deprecated Use standalone provider function `provideLumberjackConsoleDriver` instead. NgModules will be removed in Lumberjack 18.
  */
 @NgModule()
 export class LumberjackConsoleDriverRootModule {
