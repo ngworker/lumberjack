@@ -2,6 +2,18 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [16.0.0](https://github.com/ngworker/lumberjack/compare/v15.0.5...v16.0.0) (2024-01-20)
+
+
+### ⚠ BREAKING CHANGES
+
+* deprecate ng modules (#196)
+
+### Features
+
+* add log level-scoped methods to `LumberjackService` ([#186](https://github.com/ngworker/lumberjack/issues/186)) ([d446427](https://github.com/ngworker/lumberjack/commit/d446427c094f4b75a0d0a4759bd7b554ddf46fc6)), closes [#140](https://github.com/ngworker/lumberjack/issues/140) [#181](https://github.com/ngworker/lumberjack/issues/181)
+* deprecate ng modules ([#196](https://github.com/ngworker/lumberjack/issues/196)) ([882638d](https://github.com/ngworker/lumberjack/commit/882638d638377264ebbec5f8616f873cc4f346f8)), closes [#190](https://github.com/ngworker/lumberjack/issues/190)
+
 ## [15.0.5](https://github.com/ngworker/lumberjack/compare/v15.0.4...v15.0.5) (2023-08-19)
 
 
