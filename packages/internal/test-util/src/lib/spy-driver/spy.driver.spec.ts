@@ -1,6 +1,7 @@
 import { TestBed } from '@angular/core/testing';
 
 import {
+  LogLevel,
   LumberjackLevel,
   LumberjackLogDriver,
   LumberjackLogDriverLog,
@@ -38,7 +39,7 @@ describe(SpyDriver.name, () => {
     ['info', (driver) => driver.logInfo],
     ['trace', (driver) => driver.logTrace],
     ['warn', (driver) => driver.logWarning],
-  ] as ReadonlyArray<[LumberjackLogLevel, (driver: LumberjackLogDriver<void>) => (driverLog: LumberjackLogDriverLog<void>) => void]>)(
+  ] as ReadonlyArray<[LumberjackLogLevel | LogLevel, (driver: LumberjackLogDriver<void>) => (driverLog: LumberjackLogDriverLog<void>) => void]>)(
     `implements a spy when using the %s log level`,
     (logLevel, logMethod) => {
       it('records calls', () => {
