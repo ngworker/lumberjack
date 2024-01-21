@@ -234,7 +234,7 @@ Classic:
     LumberjackModule.forRoot(),
     LumberjackConsoleDriverModule.forRoot(),
     LumberjackHttpDriverModule.forRoot({
-      levels: [LumberjackLevel.Error],
+      levels: ['error'],
       origin: 'ForestApp',
       retryOptions: { maxRetries: 5, delayMs: 250 },
       storeUrl: '/api/logs',
@@ -262,7 +262,7 @@ or
   providers: [
     ...,
     provideLumberjack(), provideLumberjackConsoleDriver(), provideLumberjackHttpDriver(withHttpConfig({
-      levels: [LumberjackLevel.Error],
+      levels: ['error'],
       origin: 'ForestApp',
       retryOptions: { maxRetries: 5, delayMs: 250 },
       storeUrl: '/api/logs',

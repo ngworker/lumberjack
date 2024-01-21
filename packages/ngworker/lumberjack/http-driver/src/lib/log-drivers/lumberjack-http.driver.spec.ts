@@ -4,6 +4,7 @@ import { VERSION } from '@angular/platform-browser';
 
 import { createCriticalDriverLog, createDriverLog, repeatSideEffect } from '@internal/test-util';
 import {
+  LogLevel,
   LumberjackLevel,
   LumberjackLogDriver,
   LumberjackLogDriverLog,
@@ -109,7 +110,13 @@ describe(LumberjackHttpDriver.name, () => {
     [LumberjackLevel.Info, (driver) => driver.logInfo],
     [LumberjackLevel.Trace, (driver) => driver.logTrace],
     [LumberjackLevel.Warning, (driver) => driver.logWarning],
-  ] as ReadonlyArray<[LumberjackLogLevel, (driver: LumberjackLogDriver<HttpDriverPayload>) => (driverLog: LumberjackLogDriverLog<HttpDriverPayload>) => void]>)(
+    ['critical', (driver) => driver.logCritical],
+    ['debug', (driver) => driver.logDebug],
+    ['error', (driver) => driver.logError],
+    ['info', (driver) => driver.logInfo],
+    ['trace', (driver) => driver.logTrace],
+    ['warn', (driver) => driver.logWarning],
+  ] as ReadonlyArray<[LumberjackLogLevel | LogLevel, (driver: LumberjackLogDriver<HttpDriverPayload>) => (driverLog: LumberjackLogDriverLog<HttpDriverPayload>) => void]>)(
     'logs to a web API using the %s log level',
     (logLevel, logMethod) => {
       it('sends the driver log to the configured URL', () => {
@@ -123,12 +130,7 @@ describe(LumberjackHttpDriver.name, () => {
   );
 
   it('retries after two failures and then succeeds', () => {
-    const expectedDriverLog = createCriticalDriverLog<HttpDriverPayload>(
-      LumberjackLevel.Critical,
-      '',
-      'Test',
-      analyticsPayload
-    );
+    const expectedDriverLog = createCriticalDriverLog<HttpDriverPayload>('critical', '', 'Test', analyticsPayload);
 
     httpDriver.logCritical(expectedDriverLog);
 
@@ -140,12 +142,7 @@ describe(LumberjackHttpDriver.name, () => {
   });
 
   it('retries the specified number of times after failures and then stops retrying', () => {
-    const expectedDriverLog = createCriticalDriverLog<HttpDriverPayload>(
-      LumberjackLevel.Critical,
-      '',
-      'Test',
-      analyticsPayload
-    );
+    const expectedDriverLog = createCriticalDriverLog<HttpDriverPayload>('critical', '', 'Test', analyticsPayload);
 
     httpDriver.logCritical(expectedDriverLog);
     const { retryOptions } = options;

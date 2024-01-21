@@ -1,7 +1,7 @@
 import { inject, Injectable } from '@angular/core';
 
 import { LumberjackLevel } from '../logs/lumberjack-level';
-import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
+import { LogLevel, LumberjackLogLevel } from '../logs/lumberjack-log-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
@@ -25,35 +25,35 @@ export abstract class LumberjackLogger<TPayload extends LumberjackLogPayload | v
    * Create a logger builder for a critical log with the specified message.
    */
   protected createCriticalLogger(message: string): LumberjackLoggerBuilder<TPayload> {
-    return this.createLoggerBuilder(LumberjackLevel.Critical, message);
+    return this.createLoggerBuilder('critical', message);
   }
 
   /**
    * Create a logger builder for a debug log with the specified message.
    */
   protected createDebugLogger(message: string): LumberjackLoggerBuilder<TPayload> {
-    return this.createLoggerBuilder(LumberjackLevel.Debug, message);
+    return this.createLoggerBuilder('debug', message);
   }
 
   /**
    * Create a logger builder for an error log with the specified message.
    */
   protected createErrorLogger(message: string): LumberjackLoggerBuilder<TPayload> {
-    return this.createLoggerBuilder(LumberjackLevel.Error, message);
+    return this.createLoggerBuilder('error', message);
   }
 
   /**
    * Create a logger builder for an info log with the specified message.
    */
   protected createInfoLogger(message: string): LumberjackLoggerBuilder<TPayload> {
-    return this.createLoggerBuilder(LumberjackLevel.Info, message);
+    return this.createLoggerBuilder('info', message);
   }
 
   /**
    * Create a logger builder for a trace log with the specified message.
    */
   protected createTraceLogger(message: string): LumberjackLoggerBuilder<TPayload> {
-    return this.createLoggerBuilder(LumberjackLevel.Trace, message);
+    return this.createLoggerBuilder('trace', message);
   }
 
   /**
@@ -66,7 +66,10 @@ export abstract class LumberjackLogger<TPayload extends LumberjackLogPayload | v
   /**
    * Create a logger builder for a log with the specified log level and message.
    */
-  protected createLoggerBuilder(level: LumberjackLogLevel, message: string): LumberjackLoggerBuilder<TPayload> {
+  protected createLoggerBuilder(
+    level: LumberjackLogLevel | LogLevel,
+    message: string
+  ): LumberjackLoggerBuilder<TPayload> {
     return new LumberjackLoggerBuilder<TPayload>(this.lumberjack, this.time, level, message);
   }
 }
