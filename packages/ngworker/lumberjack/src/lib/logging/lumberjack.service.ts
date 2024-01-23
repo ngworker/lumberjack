@@ -6,8 +6,7 @@ import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
 import { LumberjackLogDriverError } from '../log-drivers/lumberjack-log-driver-error';
 import { LumberjackLogDriverLogger } from '../log-drivers/lumberjack-log-driver-logger';
 import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
-import { LumberjackLevel } from '../logs/lumberjack-level';
-import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
+import { LogLevel, LumberjackLogLevel } from '../logs/lumberjack-log-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
@@ -64,7 +63,7 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
   logCritical(message: string, payload?: TPayload, scope?: string): void {
     this.log({
       createdAt: this.#time.getUnixEpochTicks(),
-      level: LumberjackLevel.Critical,
+      level: 'critical',
       message,
       payload,
       scope,
@@ -82,7 +81,7 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
   logError(message: string, payload?: TPayload, scope?: string): void {
     this.log({
       createdAt: this.#time.getUnixEpochTicks(),
-      level: LumberjackLevel.Error,
+      level: 'error',
       message,
       payload,
       scope,
@@ -100,7 +99,7 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
   logWarning(message: string, payload?: TPayload, scope?: string): void {
     this.log({
       createdAt: this.#time.getUnixEpochTicks(),
-      level: LumberjackLevel.Warning,
+      level: 'warn',
       message,
       payload,
       scope,
@@ -118,7 +117,7 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
   logInfo(message: string, payload?: TPayload, scope?: string): void {
     this.log({
       createdAt: this.#time.getUnixEpochTicks(),
-      level: LumberjackLevel.Info,
+      level: 'info',
       message,
       payload,
       scope,
@@ -136,7 +135,7 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
   logDebug(message: string, payload?: TPayload, scope?: string): void {
     this.log({
       createdAt: this.#time.getUnixEpochTicks(),
-      level: LumberjackLevel.Debug,
+      level: 'debug',
       message,
       payload,
       scope,
@@ -154,7 +153,7 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
   logTrace(message: string, payload?: TPayload, scope?: string): void {
     this.log({
       createdAt: this.#time.getUnixEpochTicks(),
-      level: LumberjackLevel.Trace,
+      level: 'trace',
       message,
       payload,
       scope,
@@ -168,9 +167,9 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
    * @param driver The configured log driver.
    * @param logLevel The log's log level.
    */
-  #canDriveLog(driver: LumberjackLogDriver<TPayload>, logLevel: LumberjackLogLevel): boolean {
-    const hasVerboseLogging = driver.config.levels.length === 1 && driver.config.levels[0] === LumberjackLevel.Verbose;
-    const acceptsLogLevel = (driver.config.levels as LumberjackLogLevel[]).includes(logLevel);
+  #canDriveLog(driver: LumberjackLogDriver<TPayload>, logLevel: LumberjackLogLevel | LogLevel): boolean {
+    const hasVerboseLogging = driver.config.levels.length === 1 && driver.config.levels[0] === 'verbose';
+    const acceptsLogLevel = (driver.config.levels as (LumberjackLogLevel | LogLevel)[]).includes(logLevel);
 
     return hasVerboseLogging || acceptsLogLevel;
   }
@@ -183,7 +182,7 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
   #createDriverErrorLog(driverError: LumberjackLogDriverError<TPayload>): LumberjackLog<TPayload> {
     return {
       createdAt: this.#time.getUnixEpochTicks(),
-      level: LumberjackLevel.Error,
+      level: 'error',
       message: formatLogDriverError(driverError),
       scope: 'LumberjackLogDriverError',
     };

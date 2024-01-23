@@ -4,7 +4,7 @@ import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
 import { LumberjackLogBuilder } from '../logging/lumberjack-log.builder';
 import { LumberjackLevel } from '../logs/lumberjack-level';
-import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
+import { LogLevel, LumberjackLogLevel } from '../logs/lumberjack-log-level';
 import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
@@ -38,13 +38,19 @@ describe(lumberjackFormatLog.name, () => {
   let logFactory: LumberjackLogFactory;
 
   describe('Log level', () => {
-    const logLevels: LumberjackLogLevel[] = [
+    const logLevels: (LumberjackLogLevel | LogLevel)[] = [
       LumberjackLevel.Critical,
       LumberjackLevel.Debug,
       LumberjackLevel.Error,
       LumberjackLevel.Info,
       LumberjackLevel.Trace,
       LumberjackLevel.Warning,
+      'critical',
+      'debug',
+      'error',
+      'info',
+      'trace',
+      'warn',
     ];
 
     logLevels.forEach((expectedLevel) => {

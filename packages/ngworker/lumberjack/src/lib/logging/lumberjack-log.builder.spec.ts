@@ -3,7 +3,7 @@ import { TestBed } from '@angular/core/testing';
 import { FakeTimeService } from '@internal/test-util';
 
 import { LumberjackLevel } from '../logs/lumberjack-level';
-import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
+import { LogLevel, LumberjackLogLevel } from '../logs/lumberjack-log-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
@@ -14,7 +14,12 @@ interface TestPayload extends LumberjackLogPayload {
   testProperty: string;
 }
 
-const lumberjackLogLevels: LumberjackLogLevel[] = [LumberjackLevel.Critical, LumberjackLevel.Error];
+const lumberjackLogLevels: (LumberjackLogLevel | LogLevel)[] = [
+  LumberjackLevel.Critical,
+  LumberjackLevel.Error,
+  'critical',
+  'error',
+];
 
 describe(LumberjackLogBuilder.name, () => {
   const testMessage = 'Test Message';
@@ -48,7 +53,7 @@ describe(LumberjackLogBuilder.name, () => {
   });
 
   it('creates a log with the specified scope', () => {
-    const level = LumberjackLevel.Critical;
+    const level = 'critical';
     const scope = 'Test Scope';
     const actualLog = new LumberjackLogBuilder(fakeTime, level, testMessage).withScope(scope).build();
 
@@ -64,7 +69,7 @@ describe(LumberjackLogBuilder.name, () => {
   });
 
   describe('using Payload', () => {
-    const level = LumberjackLevel.Critical;
+    const level = 'critical';
     const scope = 'Test Scope';
     const payload: TestPayload = {
       testProperty: 'TEST_PROPERTY',

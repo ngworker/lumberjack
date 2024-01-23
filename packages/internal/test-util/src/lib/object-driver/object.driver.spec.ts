@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { createDriverLog, provideObjectDriver } from '@internal/test-util';
 import {
+  LogLevel,
   LumberjackLevel,
   LumberjackLogDriver,
   LumberjackLogDriverLog,
@@ -36,7 +37,13 @@ describe(ObjectDriver.name, () => {
     [LumberjackLevel.Info, (driver) => driver.logInfo, { isWorking: true }],
     [LumberjackLevel.Trace, (driver) => driver.logTrace, { isWorking: false }],
     [LumberjackLevel.Warning, (driver) => driver.logWarning, undefined],
-  ] as ReadonlyArray<[LumberjackLogLevel, (driver: LumberjackLogDriver<ObjectPayload>) => (driverLog: LumberjackLogDriverLog<ObjectPayload>) => void, ObjectPayload | undefined]>)(
+    ['critical', (driver) => driver.logCritical, { isWorking: true }],
+    ['debug', (driver) => driver.logDebug, { isWorking: false }],
+    ['error', (driver) => driver.logError, undefined],
+    ['info', (driver) => driver.logInfo, { isWorking: true }],
+    ['trace', (driver) => driver.logTrace, { isWorking: false }],
+    ['warn', (driver) => driver.logWarning, undefined],
+  ] as ReadonlyArray<[LumberjackLogLevel | LogLevel, (driver: LumberjackLogDriver<ObjectPayload>) => (driverLog: LumberjackLogDriverLog<ObjectPayload>) => void, ObjectPayload | undefined]>)(
     `delegates to ${ObjectService.name} when using the %s log level`,
     (logLevel, logMethod, expectedPayload) => {
       it(`forwards the log payload to the ${ObjectService.prototype.log.name} method`, () => {

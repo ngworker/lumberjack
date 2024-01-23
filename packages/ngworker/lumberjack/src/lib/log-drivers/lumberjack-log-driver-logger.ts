@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 
-import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 
@@ -23,12 +22,12 @@ export class LumberjackLogDriverLogger<TPayload extends LumberjackLogPayload | v
    * A record of logging strategies for each log level.
    */
   readonly #loggingStrategies: Readonly<Record<LumberjackLogLevel, LumberjackLogDriverLoggingStrategy<TPayload>>> = {
-    [LumberjackLevel.Critical]: criticalLogDriverLoggingStrategy,
-    [LumberjackLevel.Debug]: debugLogDriverLoggingStrategy,
-    [LumberjackLevel.Error]: errorLogDriverLoggingStrategy,
-    [LumberjackLevel.Info]: infoLogDriverLoggingStrategy,
-    [LumberjackLevel.Trace]: traceLogDriverLoggingStrategy,
-    [LumberjackLevel.Warning]: warningLogDriverLoggingStrategy,
+    ['critical']: criticalLogDriverLoggingStrategy,
+    ['debug']: debugLogDriverLoggingStrategy,
+    ['error']: errorLogDriverLoggingStrategy,
+    ['info']: infoLogDriverLoggingStrategy,
+    ['trace']: traceLogDriverLoggingStrategy,
+    ['warn']: warningLogDriverLoggingStrategy,
   };
 
   /**

@@ -26,10 +26,10 @@ export { LumberjackLogFactory } from './lib/logging/lumberjack-log-factory';
 export { LumberjackLogBuilder } from './lib/logging/lumberjack-log.builder';
 
 // Logs
-export { LumberjackConfigLevels } from './lib/logs/lumberjack-config-levels';
-export { LumberjackLevel } from './lib/logs/lumberjack-level';
+export { LumberjackConfigLevels, ConfigLevels } from './lib/logs/lumberjack-config-levels';
+export { LumberjackLevel, Level } from './lib/logs/lumberjack-level';
 export { LumberjackLog } from './lib/logs/lumberjack.log';
-export { LumberjackLogLevel } from './lib/logs/lumberjack-log-level';
+export { LumberjackLogLevel, LogLevel } from './lib/logs/lumberjack-log-level';
 export { LumberjackLogPayload } from './lib/logs/lumberjack-log-payload';
 
 // Time

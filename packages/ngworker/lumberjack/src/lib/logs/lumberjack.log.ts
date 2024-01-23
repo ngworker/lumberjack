@@ -1,4 +1,4 @@
-import { LumberjackLogLevel } from './lumberjack-log-level';
+import { LogLevel, LumberjackLogLevel } from './lumberjack-log-level';
 import { LumberjackLogPayload } from './lumberjack-log-payload';
 
 /**
@@ -12,7 +12,7 @@ export interface LumberjackLog<TPayload extends LumberjackLogPayload | void = vo
   /**
    * Level of severity.
    */
-  readonly level: LumberjackLogLevel;
+  readonly level: LumberjackLogLevel | LogLevel;
 
   /**
    * Log message, for example describing an event that happened.

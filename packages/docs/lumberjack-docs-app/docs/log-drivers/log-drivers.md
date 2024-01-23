@@ -52,18 +52,18 @@ levels for the HTTP driver as seen in the following example.
 
 ```ts
 import { NgModule } from '@angular/core';
-import { LumberjackLevel, LumberjackModule } from '@ngworker/lumberjack';
+import { Level as LumberjackLevel, LumberjackModule } from '@ngworker/lumberjack';
 import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
 import { LumberjackHttpDriverModule } from '@ngworker/lumberjack/http-driver';
 
 @NgModule({
   imports: [
     LumberjackModule.forRoot({
-      levels: [LumberjackLevel.Verbose],
+      levels: ['verbose'],
     }),
     LumberjackConsoleDriverModule.forRoot(),
     LumberjackHttpDriverModule.forRoot({
-      levels: [LumberjackLevel.Critical, LumberjackLevel.Error],
+      levels: ['critical', 'error'],
       origin: 'ForestApp',
       storeUrl: '/api/logs',
       retryOptions: { maxRetries: 5, delayMs: 250 },
@@ -80,7 +80,7 @@ Or use the standalone version of the API
 ```ts
 import { bootstrapApplication } from '@angular/platform-browser';
 
-import { LumberjackLevel, provideLumberjack } from '@ngworker/lumberjack';
+import { Level as LumberjackLevel, provideLumberjack } from '@ngworker/lumberjack';
 import { provideLumberjackConsoleDriver } from '@ngworker/lumberjack/console-driver';
 import { provideLumberjackHttpDriver, withHttpConfig } from '@ngworker/lumberjack/http-driver';
 
@@ -92,7 +92,7 @@ bootstrapApplication(AppComponent, {
     provideLumberjackConsoleDriver(),
     provideLumberjackHttpDriver(
       withHttpConfig({
-        levels: [LumberjackLevel.Critical, LumberjackLevel.Error],
+        levels: ['critical', 'error'],
         origin: 'ForestApp',
         storeUrl: '/api/logs',
         retryOptions: { maxRetries: 5, delayMs: 250 },
