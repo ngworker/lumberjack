@@ -90,7 +90,7 @@
     "jest-environment-jsdom": "29.4.3",
     "jest-preset-angular": "13.1.1",
     "ng-packagr": "16.2.3",
-    "ngx-deploy-npm": "6.0.0",
+    "ngx-deploy-npm": "8.0.0",
     "nx": "16.7.0",
     "nx-cloud": "16.5.2",
     "postcss": "8.4.18",
