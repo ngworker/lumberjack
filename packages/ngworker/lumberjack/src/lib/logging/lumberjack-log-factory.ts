@@ -1,6 +1,5 @@
 import { inject, Injectable } from '@angular/core';
 
-import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
@@ -23,41 +22,41 @@ export class LumberjackLogFactory<TPayload extends LumberjackLogPayload | void =
    * Create a log builder for a critical log with the specified message.
    */
   createCriticalLog(message: string): LumberjackLogBuilder<TPayload> {
-    return new LumberjackLogBuilder(this.#time, LumberjackLevel.Critical, message);
+    return new LumberjackLogBuilder(this.#time, 'critical', message);
   }
 
   /**
    * Create a log builder for a debug log with the specified message.
    */
   createDebugLog(message: string): LumberjackLogBuilder<TPayload> {
-    return new LumberjackLogBuilder(this.#time, LumberjackLevel.Debug, message);
+    return new LumberjackLogBuilder(this.#time, 'debug', message);
   }
 
   /**
    * Create a log builder for an error log with the specified message.
    */
   createErrorLog(message: string): LumberjackLogBuilder<TPayload> {
-    return new LumberjackLogBuilder(this.#time, LumberjackLevel.Error, message);
+    return new LumberjackLogBuilder(this.#time, 'error', message);
   }
 
   /**
    * Create a log builder for an info log with the specified message.
    */
   createInfoLog(message: string): LumberjackLogBuilder<TPayload> {
-    return new LumberjackLogBuilder(this.#time, LumberjackLevel.Info, message);
+    return new LumberjackLogBuilder(this.#time, 'info', message);
   }
 
   /**
    * Create a log builder for a trace log with the specified message.
    */
   createTraceLog(message: string): LumberjackLogBuilder<TPayload> {
-    return new LumberjackLogBuilder(this.#time, LumberjackLevel.Trace, message);
+    return new LumberjackLogBuilder(this.#time, 'trace', message);
   }
 
   /**
    * Create a log builder for a warning log with the specified message.
    */
   createWarningLog(message: string): LumberjackLogBuilder<TPayload> {
-    return new LumberjackLogBuilder(this.#time, LumberjackLevel.Warning, message);
+    return new LumberjackLogBuilder(this.#time, 'warn', message);
   }
 }

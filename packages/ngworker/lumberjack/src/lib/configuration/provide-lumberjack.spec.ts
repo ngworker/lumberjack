@@ -3,7 +3,6 @@ import { TestBed } from '@angular/core/testing';
 import { isProductionEnvironmentToken } from '../environment/is-production-environment.token';
 import { lumberjackFormatLog } from '../formatting/lumberjack-format-log';
 import { LumberjackService } from '../logging/lumberjack.service';
-import { LumberjackLevel } from '../logs/lumberjack-level';
 
 import { defaultDevelopmentLevels } from './default-development-levels';
 import { defaultProductionLevels } from './default-production-levels';
@@ -18,7 +17,7 @@ describe(provideLumberjack.name, () => {
   it('accepts a Lumberjack configuration', () => {
     const expectedConfig: LumberjackConfig = {
       format: ({ message }) => message,
-      levels: [LumberjackLevel.Debug],
+      levels: ['debug'],
     };
 
     TestBed.configureTestingModule({

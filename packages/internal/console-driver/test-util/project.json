@@ -10,7 +10,6 @@
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "packages/internal/console-driver/test-util/jest.config.ts",
-        "passWithNoTests": true,
         "reporters": ["default", "github-actions"]
       },
       "configurations": {
@@ -22,14 +21,8 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": [
-          "packages/internal/console-driver/test-util/**/*.ts",
-          "packages/internal/console-driver/test-util/**/*.html"
-        ]
-      },
       "configurations": {
         "report": {
           "format": "json",

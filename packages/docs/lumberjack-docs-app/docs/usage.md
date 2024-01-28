@@ -131,7 +131,7 @@ export class MyComponent implements OnInit {
   // (...)
   ngOnInit(): void {
     this.#lumberjack.log({
-      level: LumberjackLevel.Info,
+      level: 'info',
       message: 'Hello, World!',
       scope: 'MyComponent',
       createdAt: this.#time.getUnixEpochTicks(),
@@ -158,7 +158,7 @@ export class MyComponent implements OnInit {
 }
 ```
 
-> Each log level has its associated shorthand version: `LumberjackLevel.Info` is `logInfo`, `LumberjackLevel.Debug` is `logDebug`, etc.
+> Each log level has its associated shorthand version: `'info'` is `logInfo`, `'debug'` is `logDebug`, etc.
 
 ### LumberjackModule and provideLumberjack
 

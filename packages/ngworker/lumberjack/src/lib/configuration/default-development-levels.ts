@@ -1,4 +1,3 @@
-import { LumberjackConfigLevels } from '../logs/lumberjack-config-levels';
-import { LumberjackLevel } from '../logs/lumberjack-level';
+import { ConfigLevels, LumberjackConfigLevels } from '../logs/lumberjack-config-levels';
 
-export const defaultDevelopmentLevels: LumberjackConfigLevels = [LumberjackLevel.Verbose];
+export const defaultDevelopmentLevels: LumberjackConfigLevels | ConfigLevels = ['verbose'];

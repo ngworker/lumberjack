@@ -1,4 +1,4 @@
-import { LumberjackConfigLevels } from '../logs/lumberjack-config-levels';
+import { ConfigLevels, LumberjackConfigLevels } from '../logs/lumberjack-config-levels';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 
 import { LumberjackFormatFunction } from './lumberjack-format-function';
@@ -15,5 +15,5 @@ export interface LumberjackConfig<TPayload extends LumberjackLogPayload | void =
   /**
    * The default log level filter.
    */
-  readonly levels: LumberjackConfigLevels;
+  readonly levels: LumberjackConfigLevels | ConfigLevels;
 }

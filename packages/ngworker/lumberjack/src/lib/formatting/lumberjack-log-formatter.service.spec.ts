@@ -5,7 +5,6 @@ import { FakeTimeService } from '@internal/test-util';
 import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackOptions } from '../configuration/lumberjack.options';
 import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
-import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
@@ -75,7 +74,7 @@ describe(LumberjackLogFormatter.name, () => {
 
       const { formattedLog: actualFormattedLog } = service.formatLog(warning);
 
-      expect(actualFormattedLog).toBe(LumberjackLevel.Warning);
+      expect(actualFormattedLog).toBe('warn');
     });
 
     describe('Error message', () => {

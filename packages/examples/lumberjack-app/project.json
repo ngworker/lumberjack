@@ -56,10 +56,10 @@
       ],
       "configurations": {
         "production": {
-          "browserTarget": "examples-lumberjack-app:build:production"
+          "buildTarget": "examples-lumberjack-app:build:production"
         },
         "development": {
-          "browserTarget": "examples-lumberjack-app:build:development"
+          "buildTarget": "examples-lumberjack-app:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -67,15 +67,12 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "examples-lumberjack-app:build"
+        "buildTarget": "examples-lumberjack-app:build"
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["packages/examples/lumberjack-app/**/*.ts", "packages/examples/lumberjack-app/**/*.html"]
-      },
       "configurations": {
         "report": {
           "format": "json",
@@ -89,7 +86,6 @@
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "packages/examples/lumberjack-app/jest.config.ts",
-        "passWithNoTests": true,
         "reporters": ["default", "github-actions"]
       },
       "configurations": {

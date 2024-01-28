@@ -2,7 +2,6 @@ import { inject, Injectable } from '@angular/core';
 
 import { lumberjackConfigToken } from '../configuration/lumberjack-config.token';
 import { LumberjackConfig } from '../configuration/lumberjack.config';
-import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
@@ -43,7 +42,7 @@ export class LumberjackLogFormatter<TPayload extends LumberjackLogPayload | void
     return {
       scope: 'LumberjackLogFormattingError',
       createdAt: this.#time.getUnixEpochTicks(),
-      level: LumberjackLevel.Error,
+      level: 'error',
       message: `Could not format message "${log.message}". Error: "${formattingErrorMessage}"`,
       payload: undefined,
     };

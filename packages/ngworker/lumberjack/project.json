@@ -36,8 +36,7 @@
       "executor": "@nx/angular:package",
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
-        "project": "packages/ngworker/lumberjack/ng-package.json",
-        "updateBuildableProjectDepsInPackageJson": false
+        "project": "packages/ngworker/lumberjack/ng-package.json"
       },
       "configurations": {
         "production": {
@@ -54,7 +53,6 @@
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "packages/ngworker/lumberjack/jest.config.ts",
-        "passWithNoTests": true,
         "reporters": ["default", "github-actions"]
       },
       "configurations": {
@@ -66,18 +64,8 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": [
-          "packages/ngworker/lumberjack/**/*.ts",
-          "packages/ngworker/lumberjack/**/*.html",
-          "packages/ngworker/lumberjack/http-driver/**/*.ts",
-          "packages/ngworker/lumberjack/http-driver/**/*.html",
-          "packages/ngworker/lumberjack/console-driver/**/*.ts",
-          "packages/ngworker/lumberjack/console-driver/**/*.html"
-        ]
-      },
       "configurations": {
         "report": {
           "format": "json",
