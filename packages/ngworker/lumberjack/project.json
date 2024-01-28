@@ -67,16 +67,6 @@
     "lint": {
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": [
-          "packages/ngworker/lumberjack/**/*.ts",
-          "packages/ngworker/lumberjack/**/*.html",
-          "packages/ngworker/lumberjack/http-driver/**/*.ts",
-          "packages/ngworker/lumberjack/http-driver/**/*.html",
-          "packages/ngworker/lumberjack/console-driver/**/*.ts",
-          "packages/ngworker/lumberjack/console-driver/**/*.html"
-        ]
-      },
       "configurations": {
         "report": {
           "format": "json",

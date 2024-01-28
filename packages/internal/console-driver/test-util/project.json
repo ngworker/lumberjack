@@ -23,12 +23,6 @@
     "lint": {
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": [
-          "packages/internal/console-driver/test-util/**/*.ts",
-          "packages/internal/console-driver/test-util/**/*.html"
-        ]
-      },
       "configurations": {
         "report": {
           "format": "json",

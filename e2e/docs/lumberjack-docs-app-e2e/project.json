@@ -26,9 +26,6 @@
     "lint": {
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["e2e/docs/lumberjack-docs-app-e2e/**/*.{js,ts}"]
-      },
       "configurations": {
         "report": {
           "format": "json",
