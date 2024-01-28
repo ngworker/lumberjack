@@ -169,7 +169,7 @@ describe(provideLumberjackHttpDriver.name, () => {
     });
 
     it('registers the specified options with custom levels', () => {
-      const customLevels: LumberjackConfigLevels = ['critical'];
+      const customLevels: ConfigLevels = ['critical'];
       const options = createHttpOptions({ levels: customLevels });
 
       const httpDriver = createHttpDriverWithOptions({ options });

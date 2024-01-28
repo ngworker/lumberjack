@@ -36,8 +36,7 @@
       "executor": "@nx/angular:package",
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
-        "project": "packages/ngworker/lumberjack/ng-package.json",
-        "updateBuildableProjectDepsInPackageJson": false
+        "project": "packages/ngworker/lumberjack/ng-package.json"
       },
       "configurations": {
         "production": {
