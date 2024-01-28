@@ -4,17 +4,7 @@
     "defaultBase": "main"
   },
   "cli": {
-    "defaultCollection": "@nx/angular",
     "packageManager": "yarn"
-  },
-  "tasksRunnerOptions": {
-    "default": {
-      "runner": "nx-cloud",
-      "options": {
-        "cacheableOperations": ["build", "build-package", "lint", "test", "e2e"],
-        "accessToken": "M2I0MTZlMmMtYmQ5ZC00ZDg1LWFjOTQtZjU5ZGFkYWM3YjM2fHJlYWQ="
-      }
-    }
   },
   "generators": {
     "@nx/angular:application": {
@@ -40,16 +30,23 @@
           "dependencies": true
         }
       ],
-      "inputs": ["production", "^production"]
+      "inputs": ["production", "^production"],
+      "cache": true
     },
     "e2e": {
-      "inputs": ["default", "^production"]
+      "inputs": ["default", "^production"],
+      "cache": true
     },
     "test": {
-      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"]
+      "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
+      "cache": true
     },
     "lint": {
-      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"]
+      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
+      "cache": true
+    },
+    "build-package": {
+      "cache": true
     }
   },
   "workspaceLayout": {
@@ -68,5 +65,6 @@
       "!{projectRoot}/src/test-setup.[jt]s"
     ],
     "projectSpecificFiles": []
-  }
+  },
+  "nxCloudAccessToken": "M2I0MTZlMmMtYmQ5ZC00ZDg1LWFjOTQtZjU5ZGFkYWM3YjM2fHJlYWQ="
 }

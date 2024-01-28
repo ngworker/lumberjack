@@ -71,7 +71,7 @@
       }
     },
     "lint": {
-      "executor": "@nx/linter:eslint",
+      "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": ["packages/examples/lumberjack-app/**/*.ts", "packages/examples/lumberjack-app/**/*.html"]
