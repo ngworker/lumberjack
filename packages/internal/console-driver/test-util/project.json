@@ -10,7 +10,6 @@
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
         "jestConfig": "packages/internal/console-driver/test-util/jest.config.ts",
-        "passWithNoTests": true,
         "reporters": ["default", "github-actions"]
       },
       "configurations": {
