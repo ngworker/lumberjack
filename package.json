@@ -4,7 +4,6 @@
   "license": "MIT",
   "private": true,
   "scripts": {
-    "postinstall": "node ./decorate-angular-cli.js",
     "build": "nx run-many --target=build --all",
     "ci": "yarn lint && yarn test && yarn build && yarn e2e",
     "clean": "rimraf dist coverage reports",
