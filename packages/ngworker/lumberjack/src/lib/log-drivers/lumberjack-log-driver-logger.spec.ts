@@ -4,7 +4,6 @@ import { provideSpyDriver, SpyDriver } from '@internal/test-util';
 
 import { provideLumberjack } from '../configuration/provide-lumberjack';
 import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
-import { LumberjackLevel } from '../logs/lumberjack-level';
 
 import { LumberjackLogDriverLogger } from './lumberjack-log-driver-logger';
 import { LumberjackLogDriverLog } from './lumberjack-log-driver.log';
@@ -26,8 +25,8 @@ describe(LumberjackLogDriverLogger.name, () => {
 
   it('logs a critical log driver log', () => {
     const logDriverLog: LumberjackLogDriverLog = {
-      formattedLog: LumberjackLevel.Critical,
-      log: logFactory.createCriticalLog(LumberjackLevel.Critical).build(),
+      formattedLog: 'critical',
+      log: logFactory.createCriticalLog('critical').build(),
     };
 
     logger.log(logDriver, logDriverLog);
@@ -37,8 +36,8 @@ describe(LumberjackLogDriverLogger.name, () => {
 
   it('logs a debug log driver log', () => {
     const logDriverLog: LumberjackLogDriverLog = {
-      formattedLog: LumberjackLevel.Debug,
-      log: logFactory.createDebugLog(LumberjackLevel.Debug).build(),
+      formattedLog: 'debug',
+      log: logFactory.createDebugLog('debug').build(),
     };
 
     logger.log(logDriver, logDriverLog);
@@ -48,8 +47,8 @@ describe(LumberjackLogDriverLogger.name, () => {
 
   it('logs an error log driver log', () => {
     const logDriverLog: LumberjackLogDriverLog = {
-      formattedLog: LumberjackLevel.Error,
-      log: logFactory.createErrorLog(LumberjackLevel.Error).build(),
+      formattedLog: 'error',
+      log: logFactory.createErrorLog('error').build(),
     };
 
     logger.log(logDriver, logDriverLog);
@@ -59,8 +58,8 @@ describe(LumberjackLogDriverLogger.name, () => {
 
   it('logs an info log driver log', () => {
     const logDriverLog: LumberjackLogDriverLog = {
-      formattedLog: LumberjackLevel.Info,
-      log: logFactory.createInfoLog(LumberjackLevel.Info).build(),
+      formattedLog: 'info',
+      log: logFactory.createInfoLog('info').build(),
     };
 
     logger.log(logDriver, logDriverLog);
@@ -70,8 +69,8 @@ describe(LumberjackLogDriverLogger.name, () => {
 
   it('logs a trace log driver log', () => {
     const logDriverLog: LumberjackLogDriverLog = {
-      formattedLog: LumberjackLevel.Trace,
-      log: logFactory.createTraceLog(LumberjackLevel.Trace).build(),
+      formattedLog: 'trace',
+      log: logFactory.createTraceLog('trace').build(),
     };
 
     logger.log(logDriver, logDriverLog);
@@ -81,8 +80,8 @@ describe(LumberjackLogDriverLogger.name, () => {
 
   it('logs a warning log driver log', () => {
     const logDriverLog: LumberjackLogDriverLog = {
-      formattedLog: LumberjackLevel.Warning,
-      log: logFactory.createWarningLog(LumberjackLevel.Warning).build(),
+      formattedLog: 'warn',
+      log: logFactory.createWarningLog('warn').build(),
     };
 
     logger.log(logDriver, logDriverLog);

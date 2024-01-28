@@ -1,15 +1,15 @@
 import { TestBed } from '@angular/core/testing';
 
-import { LumberjackLevel, LumberjackLogDriverConfig, lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
+import { LumberjackLogDriverConfig, lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
 
 import { lumberjackConsoleDriverConfigToken } from './lumberjack-console-driver-config.token';
 
 const debugDriverConfig: LumberjackLogDriverConfig = {
-  levels: [LumberjackLevel.Debug],
+  levels: ['debug'],
   identifier: 'TestConsoleDriver',
 };
 const verboseDriverConfig: Partial<LumberjackLogDriverConfig> = {
-  levels: [LumberjackLevel.Verbose],
+  levels: ['verbose'],
 };
 
 describe('consoleDriverConfigToken', () => {

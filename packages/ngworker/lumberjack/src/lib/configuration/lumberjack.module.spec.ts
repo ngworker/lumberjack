@@ -5,7 +5,6 @@ import { expectNgModuleToBeGuardedAgainstDirectImport } from '@internal/test-uti
 import { isProductionEnvironmentToken } from '../environment/is-production-environment.token';
 import { lumberjackFormatLog } from '../formatting/lumberjack-format-log';
 import { utcTimestampFor } from '../formatting/utc-timestamp-for';
-import { LumberjackLevel } from '../logs/lumberjack-level';
 import { LumberjackLog } from '../logs/lumberjack.log';
 
 import { defaultDevelopmentLevels } from './default-development-levels';
@@ -26,7 +25,7 @@ describe(LumberjackModule.name, () => {
     it('accepts a Lumberjack configuration', () => {
       const expectedConfig: LumberjackConfig = {
         format: ({ message }) => message,
-        levels: [LumberjackLevel.Debug],
+        levels: ['debug'],
       };
 
       TestBed.configureTestingModule({
@@ -126,7 +125,7 @@ describe(LumberjackModule.name, () => {
         const logWithScope: LumberjackLog = {
           scope: 'TestSuite',
           createdAt: fakeTicks,
-          level: LumberjackLevel.Critical,
+          level: 'critical',
           message: 'Test Message',
         };
 
@@ -142,7 +141,7 @@ describe(LumberjackModule.name, () => {
       it('formats a log with no scope', () => {
         const logWithoutScope: LumberjackLog = {
           createdAt: fakeTicks,
-          level: LumberjackLevel.Critical,
+          level: 'critical',
           message: 'Test Message',
         };
 

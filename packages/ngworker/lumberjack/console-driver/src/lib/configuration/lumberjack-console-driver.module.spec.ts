@@ -3,7 +3,6 @@ import { TestBed } from '@angular/core/testing';
 import { expectNgModuleToBeGuardedAgainstDirectImport } from '@internal/test-util';
 import {
   lumberjackConfigToken,
-  LumberjackLevel,
   LumberjackLogDriver,
   LumberjackLogDriverConfig,
   lumberjackLogDriverToken,
@@ -49,7 +48,7 @@ describe(LumberjackConsoleDriverModule.name, () => {
 
     it('registers the specified log driver configuration given the specified identifier', () => {
       const expectedConfig: LumberjackLogDriverConfig = {
-        levels: [LumberjackLevel.Error],
+        levels: ['error'],
         identifier: 'TestDriverIdentifier',
       };
 
@@ -61,7 +60,7 @@ describe(LumberjackConsoleDriverModule.name, () => {
 
     it('registers the specified log driver configuration given no identifier', () => {
       const config: LumberjackConsoleDriverConfig = {
-        levels: [LumberjackLevel.Error],
+        levels: ['error'],
       };
       const expectedConfig: LumberjackLogDriverConfig = {
         ...config,
@@ -88,7 +87,7 @@ describe(LumberjackConsoleDriverModule.name, () => {
 
     it('registers the specified log driver configuration when the Lumberjack module is imported after the console driver module', () => {
       const expectedConfig: LumberjackLogDriverConfig = {
-        levels: [LumberjackLevel.Debug],
+        levels: ['debug'],
         identifier: 'TestConsoleDriver',
       };
 
