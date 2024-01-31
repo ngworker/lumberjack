@@ -2,6 +2,28 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [17.0.0](https://github.com/ngworker/lumberjack/compare/v16.0.0...v17.0.0) (2024-01-31)
+
+
+### ⚠ BREAKING CHANGES
+
+* upgrade to angular 17 and nx 17.2 (#203)
+* add support for string literals and deprecate enums (#199)
+
+### Features
+
+* add support for string literals and deprecate enums ([#199](https://github.com/ngworker/lumberjack/issues/199)) ([e4016fc](https://github.com/ngworker/lumberjack/commit/e4016fcdeb6a05e0d211fbc2b2ef99a6e958a8ce)), closes [#192](https://github.com/ngworker/lumberjack/issues/192)
+
+
+### Bug Fixes
+
+* lumberjack, angular peer dependency versions ([#202](https://github.com/ngworker/lumberjack/issues/202)) ([52ebcb7](https://github.com/ngworker/lumberjack/commit/52ebcb725819818b70b131f49a9faaf4acbbf74f))
+
+
+### Miscellaneous Chores
+
+* upgrade to angular 17 and nx 17.2 ([#203](https://github.com/ngworker/lumberjack/issues/203)) ([6d75549](https://github.com/ngworker/lumberjack/commit/6d75549f35bf10205f092bc3f4de6f62a97d475e))
+
 ## [16.0.0](https://github.com/ngworker/lumberjack/compare/v15.0.5...v16.0.0) (2024-01-20)
 
 
