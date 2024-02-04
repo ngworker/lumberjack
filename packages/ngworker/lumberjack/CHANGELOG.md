@@ -2,6 +2,13 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [17.0.1](https://github.com/ngworker/lumberjack/compare/v17.0.0...v17.0.1) (2024-02-04)
+
+
+### Bug Fixes
+
+* release workflow ([#205](https://github.com/ngworker/lumberjack/issues/205)) ([8253fdb](https://github.com/ngworker/lumberjack/commit/8253fdb4e9e41a3bbf10cf9cfd0183ae17cb2f3d))
+
 ## [17.0.0](https://github.com/ngworker/lumberjack/compare/v16.0.0...v17.0.0) (2024-01-31)
 
 
