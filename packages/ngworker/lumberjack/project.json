@@ -84,7 +84,7 @@
         "preid": "beta",
         "syncVersions": false,
         "commitMessageFormat": "release(${projectName}): 🎸 cut release to ${version}",
-        "postTargets": ["ngworker-lumberjack:build", "ngworker-lumberjack:github", "ngworker-lumberjack:publish"]
+        "postTargets": ["ngworker-lumberjack:github", "ngworker-lumberjack:publish"]
       }
     },
     "github": {
@@ -99,8 +99,7 @@
       "options": {
         "access": "public",
         "distFolderPath": "dist/packages/ngworker/lumberjack"
-      },
-      "dependsOn": ["build"]
+      }
     }
   },
   "tags": ["scope:public", "type:package"],

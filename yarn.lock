@@ -12793,10 +12793,10 @@ ng-packagr@17.0.3:
     esbuild "^0.19.0"
     rollup "^4.5.0"
 
-ngx-deploy-npm@8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/ngx-deploy-npm/-/ngx-deploy-npm-8.0.0.tgz#8f0c72e36db443df950a043677b030500d4c117d"
-  integrity sha512-/sjvCYXp7fDc45uYsRwxCfJGZh82n2e7B3eazlS4jx6rE1DOvRtlbJIqptHL486iIDd63yCAQOXqeFqGvgGtRw==
+ngx-deploy-npm@6.0.0:
+  version "6.0.0"
+  resolved "https://registry.yarnpkg.com/ngx-deploy-npm/-/ngx-deploy-npm-6.0.0.tgz#860675a7f08efd9058ed2be62ce031ab2c7ae9c2"
+  integrity sha512-gfj4ZIAguZ4JJF/WOIGYktwi1BKtHRYz1TUJV4a5qBwRaBunSu1/oW9K+sApwGfegMtrblDjMoLl10OZWgqx+A==
 
 nice-napi@^1.0.2:
   version "1.0.2"
