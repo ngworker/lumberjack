@@ -58,7 +58,7 @@
     "@commitlint/cli": "17.3.0",
     "@commitlint/config-conventional": "17.3.0",
     "@docusaurus/module-type-aliases": "2.4.1",
-    "@jscutlery/semver": "4.2.0",
+    "@jscutlery/semver": "3.0.0",
     "@nx/angular": "17.2.0",
     "@nx/cypress": "17.2.0",
     "@nx/devkit": "17.2.0",
