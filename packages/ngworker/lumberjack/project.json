@@ -75,6 +75,7 @@
       }
     },
     "version": {
+      "dependsOn": ["build"],
       "executor": "@jscutlery/semver:version",
       "options": {
         "preset": "conventional",
@@ -84,7 +85,7 @@
         "preid": "beta",
         "syncVersions": false,
         "commitMessageFormat": "release(${projectName}): 🎸 cut release to ${version}",
-        "postTargets": ["ngworker-lumberjack:build", "ngworker-lumberjack:github", "ngworker-lumberjack:publish"]
+        "postTargets": ["ngworker-lumberjack:github", "ngworker-lumberjack:publish"]
       }
     },
     "github": {
