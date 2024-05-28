@@ -45,10 +45,10 @@ jobs:
       # in the parallel-commands-on-agents command list
       # The --agent-count parameter must match the number-of-agents parameter
       init-commands: |
-        yarn nx-cloud start-ci-run --stop-agents-after="e2e" --agent-count=4
+        pnpm exec nx-cloud start-ci-run --stop-agents-after="e2e" --agent-count=4
       # Commands run in parallel on this DTE coordinator
       parallel-commands: |
-        yarn nx-cloud record -- yarn nx format:check
+        pnpm exec nx-cloud record -- yarn nx format:check
       # Commands distributed between DTE agents
       # Distribution strategy for 2 vCPUs per hosted runner (GitHub Free):
       # lint: 2 tasks assigned at a time, 1 task per vCPU
@@ -56,10 +56,10 @@ jobs:
       # build: 2 tasks assigned at a time, 1 task per vCPU
       # e2e: 1 task assigned at a time, 1 task total
       parallel-commands-on-agents: |
-        yarn nx run-many --all --target=lint --configuration=report --parallel=2 --max-warnings=0
-        yarn nx run-many --all --target=test --configuration=coverage --parallel=1 --max-workers=2
-        yarn nx affected --target=build --parallel=2
-        yarn nx affected --target=e2e --parallel=1
+        pnpm exec nx run-many --all --target=lint --configuration=report --parallel=2 --max-warnings=0
+        pnpm exec nx run-many --all --target=test --configuration=coverage --parallel=1 --max-workers=2
+        pnpm exec nx affected --target=build --parallel=2
+        pnpm exec nx affected --target=e2e --parallel=1
       # Commands run sequentially on this DTE coordinator after parallel jobs
       # final-commands: |
 
@@ -110,7 +110,7 @@ jobs:
         uses: ./.github/actions/setup
       # Uses the cache generated in the distributed step
       - name: Build docs
-        run: yarn nx build docs-lumberjack-docs-app
+        run: pnpm exec nx build docs-lumberjack-docs-app
       - name: Set up GitHub Pages
         uses: actions/configure-pages@v4
       - name: Upload docs to GitHub Pages
@@ -138,13 +138,13 @@ jobs:
         uses: ./.github/actions/setup
       # Uses the cache generated in the distributed step (Needed for the sonar eslint reports).
       - name: Lint with reports
-        run: yarn nx run-many --all --target=lint --configuration=report --parallel=2 --max-warnings=0
+        run: pnpm exec nx run-many --all --target=lint --configuration=report --parallel=2 --max-warnings=0
         # Uses the cache generated in the distributed step (Needed for the sonar jest coverage reports).
       - name: Tests with coverage
-        run: yarn nx run-many --all --target=test --configuration=coverage --parallel=1 --max-workers=2
+        run: pnpm exec nx run-many --all --target=test --configuration=coverage --parallel=1 --max-workers=2
 
       - name: Configure Sonar report paths
-        run: yarn configure-sonar-report-paths
+        run: pnpm exec configure-sonar-report-paths
 
       - name: SonarCloud Scan
         uses: sonarsource/sonarcloud-github-action@v2.1.1

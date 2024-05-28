@@ -46,7 +46,7 @@ jobs:
         # Generates the changelog commit and tags and pushes them to Github.
         # Use two post actions to Create a release in Github and for Publishing the package to NPM
         shell: bash
-        run: npx nx version ngworker-lumberjack --releaseAs=${{ github.event.inputs.release_as }}
+        run: pnpm exec nx version ngworker-lumberjack --releaseAs=${{ github.event.inputs.release_as }}
 
       # Needed if we want to automize multiple releases with the affected commands.
       - name: Tag last-release
