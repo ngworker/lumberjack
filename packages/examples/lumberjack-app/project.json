@@ -4,6 +4,7 @@
   "projectType": "application",
   "sourceRoot": "packages/examples/lumberjack-app/src",
   "prefix": "ngworker",
+  "tags": ["scope:internal", "type:app"],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
@@ -72,7 +73,6 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
       "configurations": {
         "report": {
           "format": "json",
@@ -96,6 +96,5 @@
         }
       }
     }
-  },
-  "tags": ["scope:internal", "type:app"]
+  }
 }

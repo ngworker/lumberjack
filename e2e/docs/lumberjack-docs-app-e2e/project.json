@@ -3,6 +3,8 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "e2e/docs/lumberjack-docs-app-e2e/src",
   "projectType": "application",
+  "tags": [],
+  "implicitDependencies": ["docs-lumberjack-docs-app"],
   "targets": {
     "e2e": {
       "executor": "@nx/cypress:cypress",
@@ -25,7 +27,6 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
       "configurations": {
         "report": {
           "format": "json",
@@ -34,7 +35,5 @@
         }
       }
     }
-  },
-  "tags": [],
-  "implicitDependencies": ["docs-lumberjack-docs-app"]
+  }
 }
