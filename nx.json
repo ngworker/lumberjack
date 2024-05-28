@@ -1,7 +1,7 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
   "cli": {
-    "packageManager": "yarn"
+    "packageManager": "pnpm"
   },
   "generators": {
     "@nx/angular:application": {

@@ -24,13 +24,13 @@
         "production": {
           "commands": [
             "nx run ngworker-lumberjack:build-package:production",
-            "yarn copy README.md dist/packages/ngworker/lumberjack"
+            "pnpm exec copy README.md dist/packages/ngworker/lumberjack"
           ]
         },
         "development": {
           "commands": [
             "nx run ngworker-lumberjack:build-package:development",
-            "yarn copy README.md dist/packages/ngworker/lumberjack"
+            "pnpm exec copy README.md dist/packages/ngworker/lumberjack"
           ]
         }
       },
