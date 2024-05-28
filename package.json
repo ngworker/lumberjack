@@ -19,11 +19,11 @@
   "engines": {
     "node": "18.19.0",
     "npm": "Use the Yarn Classic (1.x) CLI instead of npm",
-    "yarn": "1.22.21"
+    "yarn": "1.22.22"
   },
   "volta": {
     "node": "18.19.0",
-    "yarn": "1.22.21"
+    "yarn": "1.22.22"
   },
   "dependencies": {
     "@angular/animations": "17.0.9",
@@ -58,7 +58,7 @@
     "@commitlint/cli": "17.3.0",
     "@commitlint/config-conventional": "17.3.0",
     "@docusaurus/module-type-aliases": "2.4.1",
-    "@jscutlery/semver": "4.2.0",
+    "@jscutlery/semver": "^5.2.0",
     "@nx/angular": "17.2.0",
     "@nx/cypress": "17.2.0",
     "@nx/devkit": "17.2.0",
@@ -88,7 +88,7 @@
     "jest-environment-jsdom": "29.4.3",
     "jest-preset-angular": "13.1.6",
     "ng-packagr": "17.0.3",
-    "ngx-deploy-npm": "8.0.0",
+    "ngx-deploy-npm": "^7.1.0",
     "nx": "17.2.0",
     "postcss": "8.4.18",
     "postcss-import": "14.1.0",
