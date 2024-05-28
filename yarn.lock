@@ -4128,10 +4128,10 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@jscutlery/semver@4.2.0":
-  version "4.2.0"
-  resolved "https://registry.yarnpkg.com/@jscutlery/semver/-/semver-4.2.0.tgz#72b4e4ec6201d34b2984a2e2ee01df89930f4ff7"
-  integrity sha512-XaExVbzoIQ5D7k9JOfdqi4IJ2CRNPyiSQu730jbcNtl+D3Ra5qOsg3HVgRtp4BoiMFNLoPsQJMiB8LeAADMfwA==
+"@jscutlery/semver@^5.2.0":
+  version "5.2.2"
+  resolved "https://registry.yarnpkg.com/@jscutlery/semver/-/semver-5.2.2.tgz#5e1eec2554e38d449c2de4a6c5a41abeb3bc9d7f"
+  integrity sha512-lhklWnwa5X4N6aiBLbybdsZ37agtxa0EBRdXmjOFA+LzViVR6QIYZpk+/X/XLw/TB6z1rLrmFp/MakmNyaJiYg==
   dependencies:
     chalk "4.1.2"
     conventional-changelog "^5.1.0"
@@ -12750,10 +12750,10 @@ ng-packagr@17.0.3:
     esbuild "^0.19.0"
     rollup "^4.5.0"
 
-ngx-deploy-npm@8.0.0:
-  version "8.0.0"
-  resolved "https://registry.yarnpkg.com/ngx-deploy-npm/-/ngx-deploy-npm-8.0.0.tgz#8f0c72e36db443df950a043677b030500d4c117d"
-  integrity sha512-/sjvCYXp7fDc45uYsRwxCfJGZh82n2e7B3eazlS4jx6rE1DOvRtlbJIqptHL486iIDd63yCAQOXqeFqGvgGtRw==
+ngx-deploy-npm@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/ngx-deploy-npm/-/ngx-deploy-npm-7.1.0.tgz#a3eb9f40f892cd5a9ce4a27abcc72520fde9d0dc"
+  integrity sha512-zUv/C9giRVrhmOu3dIG3tjjN+1/bOV5xQzPGgXBZL74M5dgZo+/Dui1JxrVCZH9m8QogR4Zg+0Xq6FeXo2xKrg==
 
 nice-napi@^1.0.2:
   version "1.0.2"
