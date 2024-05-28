@@ -10,3 +10,4 @@
 packages/**/CHANGELOG.md
 
 /.nx/cache
+.angular
