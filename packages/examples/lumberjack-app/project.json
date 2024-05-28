@@ -20,7 +20,7 @@
         "assets": [
           {
             "glob": "**/*",
-            "input": "packages/examples/lumberjack-app"
+            "input": "packages/examples/lumberjack-app/public"
           }
         ],
         "scripts": []
@@ -43,9 +43,7 @@
         },
         "development": {
           "optimization": false,
-          "vendorChunk": true,
           "extractLicenses": false,
-          "namedChunks": true,
           "sourceMap": true
         }
       },
