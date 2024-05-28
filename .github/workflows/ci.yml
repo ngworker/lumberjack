@@ -24,69 +24,26 @@ env:
   NODE_OPTIONS: --max-old-space-size=6144
 
 jobs:
-  # We're using Nx Cloud for Distributed Task Execution
-  # Reference: https://nx.dev/using-nx/dte
-  #
-  # The coordinator outputs the combination of task outputs from the agents,
-  # both terminal and file outputs
-  dte_coordinator:
-    name: DTE Coordinator
-    uses: nrwl/ci/.github/workflows/nx-cloud-main.yml@v0.14
-    secrets:
-      NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
-    permissions:
-      contents: read
-      actions: read
-    with:
-      main-branch-name: main
-      # Must match dte_agents.number-of-agents
-      number-of-agents: 4
-      # The --stop-agents-after parameter must match the task target listed last
-      # in the parallel-commands-on-agents command list
-      # The --agent-count parameter must match the number-of-agents parameter
-      init-commands: |
-        pnpm exec nx-cloud start-ci-run --stop-agents-after="e2e" --agent-count=4
-      # Commands run in parallel on this DTE coordinator
-      parallel-commands: |
-        pnpm exec nx-cloud record -- yarn nx format:check
-      # Commands distributed between DTE agents
-      # Distribution strategy for 2 vCPUs per hosted runner (GitHub Free):
-      # lint: 2 tasks assigned at a time, 1 task per vCPU
-      # test: 1 task assigned at a time with 2 parallel processes, 1 process per vCPU
-      # build: 2 tasks assigned at a time, 1 task per vCPU
-      # e2e: 1 task assigned at a time, 1 task total
-      parallel-commands-on-agents: |
-        pnpm exec nx run-many --all --target=lint --configuration=report --parallel=2 --max-warnings=0
-        pnpm exec nx run-many --all --target=test --configuration=coverage --parallel=1 --max-workers=2
-        pnpm exec nx affected --target=build --parallel=2
-        pnpm exec nx affected --target=e2e --parallel=1
-      # Commands run sequentially on this DTE coordinator after parallel jobs
-      # final-commands: |
+  main:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
 
-  # We're using Nx Cloud for Distributed Task Execution
-  # Reference: https://nx.dev/using-nx/dte
-  #
-  # Agents receive tasks to execute in bulk whenever they are ready or have
-  # finished their previous tasks
-  dte_agents:
-    name: DTE Agents
-    uses: nrwl/ci/.github/workflows/nx-cloud-agents.yml@v0.14
-    secrets:
-      NX_CLOUD_ACCESS_TOKEN: ${{ secrets.NX_CLOUD_ACCESS_TOKEN }}
-    permissions:
-      contents: read
-      actions: read
-    with:
-      # The Free GitHub plan has a limit of 20 concurrent jobs on Ubuntu images
-      # Reference: https://docs.github.com/en/actions/learn-github-actions/usage-limits-billing-and-administration
-      # If we need to, we can optimize for 2 simultaneous workflow runs:
-      # 2 x 1 main job   =  2 concurrent jobs
-      # 2 x 9 agent jobs = 18 concurrent jobs
-      # Total            = 20 concurrent jobs
-      #
-      # However, we don't have many projects or targets in this workspace, so we
-      # lower the number of agents to reduce spent compute time.
-      number-of-agents: 4
+      # Connect your workspace on nx.app and uncomment this to enable task distribution.
+      # The "--stop-agents-after" is optional, but allows idle agents to shut down once the "build" targets have been requested
+      # - run: npx nx-cloud start-ci-run --distribute-on="5 linux-medium-js" --stop-agents-after="build"
+
+      - name: Setup
+        uses: ./.github/actions/setup
+        with:
+          git_bot_token: ${{ secrets.GIT_BOT_TOKEN }}
+
+      - uses: nrwl/nx-set-shas@v4
+
+      - run: pnpm exec nx-cloud record -- nx format:check
+      - run: pnpm exec nx affected -t lint test build e2e
 
   deploy-docs:
     name: '[Merge] Deploy docs to GitHub Pages'
