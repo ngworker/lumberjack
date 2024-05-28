@@ -18,12 +18,13 @@
   },
   "engines": {
     "node": "18.19.1",
-    "npm": "Use the Yarn Classic (1.x) CLI instead of npm",
-    "yarn": "1.22.22"
+    "npm": "Use PNPM CLI instead of npm",
+    "yarn": "Use PNPM CLI instead of yarn",
+    "pnpm": "8.15.8"
   },
   "volta": {
     "node": "18.19.1",
-    "yarn": "1.22.22"
+    "pnpm": "8.15.8"
   },
   "dependencies": {
     "@angular/animations": "18.0.0",
