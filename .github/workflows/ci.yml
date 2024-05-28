@@ -6,6 +6,10 @@ on:
       - main
   pull_request: {}
 
+permissions:
+  actions: read
+  contents: read
+
 concurrency:
   # Group concurrency on workflow, then:
   # - Is merge run? Group on branch name (`refs/heads/main`)
@@ -35,10 +39,15 @@ jobs:
       # The "--stop-agents-after" is optional, but allows idle agents to shut down once the "build" targets have been requested
       # - run: npx nx-cloud start-ci-run --distribute-on="5 linux-medium-js" --stop-agents-after="build"
 
-      - name: Setup
-        uses: ./.github/actions/setup
+      - uses: pnpm/action-setup@v2
         with:
-          git_bot_token: ${{ secrets.GIT_BOT_TOKEN }}
+          version: 8
+      # Cache node_modules
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+      - run: pnpm install --frozen-lockfile
 
       - uses: nrwl/nx-set-shas@v4
 
