@@ -5,9 +5,6 @@ const title = 'Lumberjack';
 const organizationName = 'ngworker';
 const projectName = 'lumberjack';
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
-
 const config: Config = {
   title,
   tagline: 'Chop and cut Angular logs like a professional lumberjack',
@@ -122,3 +119,5 @@ const config: Config = {
     ],
   ],
 };
+
+export default config;

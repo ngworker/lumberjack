@@ -6,15 +6,21 @@
   "prefix": "ngworker",
   "targets": {
     "build": {
-      "executor": "@nx-plus/docusaurus:browser",
+      "command": "docusaurus build && rm -rf ../../../dist/packages/docs/lumberjack-docs-app/* && cp -R build/* ../../../dist/packages/docs/lumberjack-docs-app/",
       "options": {
-        "outputPath": "dist/packages/docs/lumberjack-docs-app"
+        "cwd": "packages/docs/lumberjack-docs-app"
       }
     },
     "serve": {
-      "executor": "@nx-plus/docusaurus:dev-server",
+      "command": "docusaurus serve",
       "options": {
-        "port": 3000
+        "cwd": "packages/docs/lumberjack-docs-app"
+      }
+    },
+    "start": {
+      "command": "docusaurus start",
+      "options": {
+        "cwd": "packages/docs/lumberjack-docs-app"
       }
     }
   },
