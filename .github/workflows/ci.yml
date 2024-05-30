@@ -47,8 +47,6 @@ jobs:
         with:
           node-version: 20
           cache: 'pnpm'
-          cache-dependency-path: |
-            /home/runner/.cache/Cypress
       - run: pnpm install --frozen-lockfile
       - uses: nrwl/nx-set-shas@v4
 
