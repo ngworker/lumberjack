@@ -4,6 +4,7 @@
   "projectType": "library",
   "sourceRoot": "packages/internal/test-util/src",
   "prefix": "ngworker",
+  "tags": ["scope:internal", "type:test-util"],
   "targets": {
     "test": {
       "executor": "@nx/jest:jest",
@@ -22,7 +23,6 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
       "configurations": {
         "report": {
           "format": "json",
@@ -31,6 +31,5 @@
         }
       }
     }
-  },
-  "tags": ["scope:internal", "type:test-util"]
+  }
 }

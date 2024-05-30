@@ -4,6 +4,11 @@
   "projectType": "library",
   "sourceRoot": "packages/ngworker/lumberjack/src",
   "prefix": "ngworker",
+  "tags": ["scope:public", "type:package"],
+  "implicitDependencies": ["!internal-console-driver-test-util", "!internal-test-util"],
+  "namedInputs": {
+    "projectSpecificFiles": ["{workspaceRoot}/README.md"]
+  },
   "targets": {
     "build": {
       "executor": "nx:run-commands",
@@ -19,13 +24,13 @@
         "production": {
           "commands": [
             "nx run ngworker-lumberjack:build-package:production",
-            "yarn copy README.md dist/packages/ngworker/lumberjack"
+            "pnpm exec copy README.md dist/packages/ngworker/lumberjack"
           ]
         },
         "development": {
           "commands": [
             "nx run ngworker-lumberjack:build-package:development",
-            "yarn copy README.md dist/packages/ngworker/lumberjack"
+            "pnpm exec copy README.md dist/packages/ngworker/lumberjack"
           ]
         }
       },
@@ -65,7 +70,6 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
       "configurations": {
         "report": {
           "format": "json",
@@ -103,10 +107,5 @@
       },
       "dependsOn": ["build"]
     }
-  },
-  "tags": ["scope:public", "type:package"],
-  "implicitDependencies": ["!internal-console-driver-test-util", "!internal-test-util"],
-  "namedInputs": {
-    "projectSpecificFiles": ["{workspaceRoot}/README.md"]
   }
 }

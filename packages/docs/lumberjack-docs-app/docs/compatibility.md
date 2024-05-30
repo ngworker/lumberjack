@@ -7,6 +7,7 @@ Refer to the following table to determine which version of Lumberjack is compati
 
 | Angular version | Lumberjack version |
 | --------------- | ------------------ |
+| 18.x            | 18.x               |
 | 17.x            | 17.x               |
 | 16.x            | 16.x               |
 | 15.x            | 15.x               |

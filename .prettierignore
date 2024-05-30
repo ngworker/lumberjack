@@ -5,8 +5,10 @@
 /reports
 /.angular/
 .docusaurus/
+build
 
 # Generated files
 packages/**/CHANGELOG.md
 
 /.nx/cache
+.angular
