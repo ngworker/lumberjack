@@ -5,35 +5,5 @@
   "projectType": "application",
   "tags": [],
   "implicitDependencies": ["docs-lumberjack-docs-app"],
-  "targets": {
-    "e2e": {
-      "executor": "@nx/cypress:cypress",
-      "dependsOn": [
-        {
-          "target": "build",
-          "dependencies": true
-        }
-      ],
-      "options": {
-        "cypressConfig": "e2e/docs/lumberjack-docs-app-e2e/cypress.config.ts",
-        "devServerTarget": "docs-lumberjack-docs-app:serve:development",
-        "testingType": "e2e"
-      },
-      "configurations": {
-        "production": {
-          "devServerTarget": "docs-lumberjack-docs-app:serve:production"
-        }
-      }
-    },
-    "lint": {
-      "executor": "@nx/eslint:lint",
-      "configurations": {
-        "report": {
-          "format": "json",
-          "force": true,
-          "outputFile": "reports/e2e/docs/lumberjack-docs-app-e2e/lint/report.json"
-        }
-      }
-    }
-  }
+  "targets": {}
 }
