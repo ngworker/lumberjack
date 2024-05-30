@@ -6,8 +6,15 @@
   "prefix": "ngworker",
   "targets": {
     "build": {
-      "command": "docusaurus build && rm -rf ../../../dist/packages/docs/lumberjack-docs-app/* && cp -R build/* ../../../dist/packages/docs/lumberjack-docs-app/",
+      "executor": "nx:run-commands",
       "options": {
+        "commands": [
+          "mkdir -p ../../../dist/packages/docs/lumberjack-docs-app",
+          "docusaurus build",
+          "rm -rf ../../../dist/packages/docs/lumberjack-docs-app/*",
+          "cp -R build/* ../../../dist/packages/docs/lumberjack-docs-app/"
+        ],
+        "parallel": false,
         "cwd": "packages/docs/lumberjack-docs-app"
       }
     },
