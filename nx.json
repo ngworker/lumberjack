@@ -34,6 +34,10 @@
       "inputs": ["default", "^production"],
       "cache": true
     },
+    "start": {
+      "dependsOn": ["^build"],
+      "inputs": ["production", "^production"]
+    },
     "build-package": {
       "cache": true
     },

@@ -93,7 +93,7 @@ jobs:
           pnpm exec cypress verify
           pnpm exec cypress info
           pnpm exec nx-cloud record -- nx format:check
-          pnpm exec nx affected -t lint test build e2e
+          pnpm exec nx affected -t lint test build e2e-ci
 
   deploy-docs:
     name: '[Merge] Deploy docs to GitHub Pages'
