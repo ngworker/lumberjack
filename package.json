@@ -17,13 +17,13 @@
     "test": "nx run-many --target=test --all"
   },
   "engines": {
-    "node": "18.19.1",
+    "node": "20",
     "npm": "Use PNPM CLI instead of npm",
     "yarn": "Use PNPM CLI instead of yarn",
     "pnpm": "9.5.0"
   },
   "volta": {
-    "node": "18.19.1",
+    "node": "20",
     "pnpm": "9.5.0"
   },
   "dependencies": {
