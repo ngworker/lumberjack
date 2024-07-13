@@ -34,6 +34,10 @@
       "inputs": ["default", "^production"],
       "cache": true
     },
+    "e2e-ci": {
+      "inputs": ["default", "^production"],
+      "cache": true
+    },
     "start": {
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]

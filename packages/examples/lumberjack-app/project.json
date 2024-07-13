@@ -94,9 +94,9 @@
     "serve-static": {
       "executor": "@nx/web:file-server",
       "options": {
-        "buildTarget": "test:build",
+        "buildTarget": "build:production",
         "port": 4200,
-        "staticFilePath": "dist/examples/test/browser",
+        "staticFilePath": "dist/packages/examples/lumberjack-app/browser",
         "spa": true
       }
     }

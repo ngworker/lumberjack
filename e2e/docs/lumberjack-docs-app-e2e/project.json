@@ -3,7 +3,7 @@
   "$schema": "../../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "e2e/docs/lumberjack-docs-app-e2e/src",
   "projectType": "application",
-  "tags": [],
+  "tags": ["scope:internal", "type:e2e"],
   "implicitDependencies": ["docs-lumberjack-docs-app"],
   "targets": {}
 }
