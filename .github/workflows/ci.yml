@@ -92,8 +92,12 @@ jobs:
           pnpm exec cypress cache list
           pnpm exec cypress verify
           pnpm exec cypress info
+
+      - name: Run NX Commands
+        run: |
           pnpm exec nx-cloud record -- nx format:check
-          pnpm exec nx affected -t lint test build e2e-ci
+          pnpm exec nx affected -t lint test build
+          pnpm exec nx e2e-ci --parallel=1
 
   deploy-docs:
     name: '[Merge] Deploy docs to GitHub Pages'
