@@ -9,12 +9,12 @@
     "clean": "rimraf dist coverage reports",
     "configure-sonar-report-paths": "node tools/scripts/configure-sonar-report-paths.mjs",
     "delete-path-alias": "node tools/scripts/delete-path-alias.mjs",
-    "e2e": "nx run-many --target=e2e --all --parallel=1",
+    "e2e": "nx run-many --target=e2e-ci --parallel=1",
     "format": "pnpm run nx format:write",
-    "lint": "nx run-many --target=lint --all --max-warnings=0",
+    "lint": "nx run-many --target=lint --max-warnings=0",
     "nx": "nx",
     "start": "nx serve",
-    "test": "nx run-many --target=test --all"
+    "test": "nx run-many --target=test"
   },
   "engines": {
     "node": "20",
