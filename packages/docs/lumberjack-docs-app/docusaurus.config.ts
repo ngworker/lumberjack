@@ -1,12 +1,11 @@
+import type { Config } from '@docusaurus/types';
+
 const title = 'Lumberjack';
 
 const organizationName = 'ngworker';
 const projectName = 'lumberjack';
 
-const lightCodeTheme = require('prism-react-renderer/themes/github');
-const darkCodeTheme = require('prism-react-renderer/themes/dracula');
-
-module.exports = {
+const config: Config = {
   title,
   tagline: 'Chop and cut Angular logs like a professional lumberjack',
   url: `https://${organizationName}.github.io`,
@@ -120,3 +119,5 @@ module.exports = {
     ],
   ],
 };
+
+export default config;

@@ -49,3 +49,5 @@ migrations.json
 .cache-loader/
 
 .nx/cache
+.nx/workspace-data
+.angular

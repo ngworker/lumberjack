@@ -4,19 +4,25 @@
   "projectType": "application",
   "sourceRoot": "packages/examples/lumberjack-app/src",
   "prefix": "ngworker",
+  "tags": ["scope:internal", "type:app"],
   "targets": {
     "build": {
-      "executor": "@angular-devkit/build-angular:browser",
+      "executor": "@angular-devkit/build-angular:application",
       "outputs": ["{options.outputPath}"],
       "options": {
         "outputPath": "dist/packages/examples/lumberjack-app",
         "index": "packages/examples/lumberjack-app/src/index.html",
-        "main": "packages/examples/lumberjack-app/src/main.ts",
+        "browser": "packages/examples/lumberjack-app/src/main.ts",
         "polyfills": ["zone.js"],
         "tsConfig": "packages/examples/lumberjack-app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
-        "assets": ["packages/examples/lumberjack-app/src/favicon.ico", "packages/examples/lumberjack-app/src/assets"],
         "styles": ["packages/examples/lumberjack-app/src/styles.scss"],
+        "assets": [
+          {
+            "glob": "**/*",
+            "input": "packages/examples/lumberjack-app/public"
+          }
+        ],
         "scripts": []
       },
       "configurations": {
@@ -36,12 +42,9 @@
           "outputHashing": "all"
         },
         "development": {
-          "buildOptimizer": false,
           "optimization": false,
-          "vendorChunk": true,
           "extractLicenses": false,
-          "sourceMap": true,
-          "namedChunks": true
+          "sourceMap": true
         }
       },
       "defaultConfiguration": "production"
@@ -71,15 +74,7 @@
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "configurations": {
-        "report": {
-          "format": "json",
-          "force": true,
-          "outputFile": "reports/packages/examples/lumberjack-app/lint/report.json"
-        }
-      }
+      "executor": "@nx/eslint:lint"
     },
     "test": {
       "executor": "@nx/jest:jest",
@@ -95,7 +90,15 @@
           "coverageReporters": ["lcovonly", "text-summary"]
         }
       }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "build:production",
+        "port": 4200,
+        "staticFilePath": "dist/packages/examples/lumberjack-app/browser",
+        "spa": true
+      }
     }
-  },
-  "tags": ["scope:internal", "type:app"]
+  }
 }

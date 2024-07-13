@@ -29,18 +29,17 @@ runs:
       id: node_version
       shell: bash
       run: echo "node_version=$(cat .nvmrc)" >> $GITHUB_OUTPUT
+
+    - uses: pnpm/action-setup@v2
+      with:
+        version: 9
+
     - name: Use Node.js
       uses: actions/setup-node@v4
       with:
-        cache: yarn
         node-version: ${{ steps.node_version.outputs.node_version }}
-        # This doesn't just set the registry url, but also sets
-        # the right configuration in .npmrc that reads NPM token
-        # from NPM_AUTH_TOKEN environment variable.
-        # It actually creates a .npmrc in a temporary folder
-        # and sets the NPM_CONFIG_USERCONFIG environment variable.
-        registry-url: https://registry.npmjs.org
+        cache: 'pnpm'
 
     - name: Install dependencies
       shell: bash
-      run: yarn install --immutable --immutable-cache
+      run: pnpm install
