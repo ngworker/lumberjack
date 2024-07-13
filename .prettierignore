@@ -12,3 +12,5 @@ packages/**/CHANGELOG.md
 
 /.nx/cache
 .angular
+
+/.nx/workspace-data
