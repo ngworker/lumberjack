@@ -63,8 +63,7 @@ jobs:
 
   deploy-docs:
     name: '[Merge] Deploy docs to GitHub Pages'
-    needs: main
-    if: github.event_name == 'push' && github.ref_name == 'main'
+    needs: release
     runs-on: ubuntu-latest
     permissions:
       contents: read
