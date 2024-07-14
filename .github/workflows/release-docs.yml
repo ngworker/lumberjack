@@ -1,4 +1,4 @@
-name: Release NPM packages
+name: Release Docs
 
 env:
   NODE_OPTIONS: --max-old-space-size=6144
