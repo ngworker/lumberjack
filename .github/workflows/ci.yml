@@ -99,39 +99,6 @@ jobs:
           pnpm exec nx affected -t lint test build
           pnpm exec nx affected -t e2e-ci --parallel=1
 
-  deploy-docs:
-    name: '[Merge] Deploy docs to GitHub Pages'
-    needs: main
-    if: github.event_name == 'push' && github.ref_name == 'main'
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      actions: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    steps:
-      - name: Check out the source code
-        uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
-      - name: Setup
-        uses: ./.github/actions/setup
-      # Uses the cache generated in the distributed step
-      - name: Build docs
-        run: pnpm exec nx build docs-lumberjack-docs-app
-      - name: Set up GitHub Pages
-        uses: actions/nonfigure-pages@v4
-      - name: Upload docs to GitHub Pages
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist/packages/docs/lumberjack-docs-app/
-      - name: Deploy docs to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
   sonarcloud:
     name: SonarCloud
     needs: main
