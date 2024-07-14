@@ -7,7 +7,7 @@ authors:
     title: NgWorker and core maintainer of Lumberjack
     url: https://github.com/NachoVazquez
     image_url: https://github.com/NachoVazquez.png
-tags: [announcement, lumberjack, v16]
+tags: [announcement, lumberjack, v17]
 image: https://pub-2294738bc2c249ff8040505bf960c018.r2.dev/logo.svg
 hide_table_of_contents: false
 ---
