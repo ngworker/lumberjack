@@ -10,7 +10,6 @@ on:
 jobs:
   deploy-docs:
     name: '[Merge] Deploy docs to GitHub Pages'
-    needs: release
     runs-on: ubuntu-latest
     permissions:
       contents: read
