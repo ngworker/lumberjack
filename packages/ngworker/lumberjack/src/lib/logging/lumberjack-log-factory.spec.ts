@@ -4,6 +4,7 @@ import { FakeTimeService } from '@internal/test-util';
 
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
+import { provideLumberjack } from '../configuration/provide-lumberjack';
 
 import { LumberjackLogFactory } from './lumberjack-log-factory';
 import { LumberjackLogBuilder } from './lumberjack-log.builder';
@@ -11,7 +12,11 @@ import { LumberjackLogBuilder } from './lumberjack-log.builder';
 describe(LumberjackLogFactory.name, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }, LumberjackLogFactory],
+      providers: [
+        provideLumberjack(),
+        { provide: LumberjackTimeService, useClass: FakeTimeService },
+        LumberjackLogFactory,
+      ],
     });
 
     fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;

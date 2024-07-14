@@ -115,57 +115,13 @@ export interface LumberjackHttpDriverRetryOptions {
 
 The `sendLog` method has been optimized to run outside Angular's `NgZone`, avoiding unnecessary change detection cycles.
 
-### LumberjackHttpDriverModule
+### provideLumberjackHttpDriver
 
-> Note: Lumberjack NgModules are deprecated and will be removed in version 18. Use the Standalone API, provider functions, instead.
+The `provideLumberjackHttpDriver` is similar to the `provideLumberjackConsoleDriver`.
 
-The `LumberjackHttpDriverModule` is similar to the `LumberjackConsoleDriverModule`.
-
-Novelty appears with the static `withOptions` function that allows us to pass `LumberjackHttpDriverOptions` to fall back to the settings in `LumberjackLogDriverConfig`.
+Novelty appears with the `withHttpOptions` and `withHttpConfig` functions that allow to allow to configure the driver.
 
 Additionally, we can configure the underlaying `HttpClient` by passing any features it receives like interceptors.
-
-```typescript
-@NgModule()
-export class LumberjackHttpDriverModule {
-  /**
-   * Configure and register the HTTP driver, including settings that log drivers
-   * have in common.
-   *
-   * @param config Settings used by the HTTP driver.
-   */
-  static forRoot(
-    config: LumberjackHttpDriverConfig,
-    ...features: HttpClientFeatures
-  ): ModuleWithProviders<LumberjackHttpDriverRootModule> {
-    return {
-      ngModule: LumberjackHttpDriverRootModule,
-      providers: [provideLumberjackHttpDriver(withHttpConfig(config), ...features)],
-    };
-  }
-
-  /**
-   * Configure and register the HTTP driver, but fall back on the default log
-   * driver settings for settings that log drivers have in common.
-   * @param options Settings used by the HTTP driver.
-   */
-  static withOptions(
-    options: LumberjackHttpDriverOptions,
-    ...features: HttpClientFeatures
-  ): ModuleWithProviders<LumberjackHttpDriverRootModule> {
-    return {
-      ngModule: LumberjackHttpDriverRootModule,
-      providers: [provideLumberjackHttpDriver(withHttpOptions(options), ...features)],
-    };
-  }
-
-  constructor() {
-    throw new Error('Do not import LumberjackHttpDriverModule directly. Use LumberjackHttpDriverModule.forRoot.');
-  }
-}
-```
-
-The most interesting behavior exist on the `provideLumberjackHttpDriver` function
 
 ```typescript
 export type LumberjackHttpDriverConfigurationKind = 'options' | 'config';
@@ -226,65 +182,9 @@ export function provideLumberjackHttpDriver<Kind extends LumberjackHttpDriverCon
 }
 ```
 
-This is our Standalone API, ready for everyone using Angular >v14.
-
-This is where the heaviest configuration happens and it is used to boost the classic APIs
-
 The following is an example of how both API can be used
 
-Classic:
-
-> Note: Lumberjack NgModules are deprecated and will be removed in version 18. Use the Standalone API, provider functions, instead.
-
 ```typescript
-@NgModule({
-  ...,
-  imports: [
-    ...,
-    LumberjackModule.forRoot(),
-    LumberjackConsoleDriverModule.forRoot(),
-    LumberjackHttpDriverModule.forRoot({
-      levels: ['error'],
-      origin: 'ForestApp',
-      retryOptions: { maxRetries: 5, delayMs: 250 },
-      storeUrl: '/api/logs',
-    },
-      withInterceptors([
-        (req, next) => {
-          const easy = inject(easyToken);
-          console.log('are interceptors working?', easy);
-          return next(req);
-        },
-      ])
-    ),
-    ...
-  ],
-  ...
-})
-export class AppModule {}
-```
-
-or
-
-```typescript
-@NgModule({
-  ...,
-  providers: [
-    ...,
-    provideLumberjack(), provideLumberjackConsoleDriver(), provideLumberjackHttpDriver(withHttpConfig({
-      levels: ['error'],
-      origin: 'ForestApp',
-      retryOptions: { maxRetries: 5, delayMs: 250 },
-      storeUrl: '/api/logs',
-    }))
-    ...
-  ],
-  ...
-})
-export class AppModule {}
-
-Standalone:
-
 bootstrapApplication(AppComponent, {
   providers: [
     provideLumberjack(),

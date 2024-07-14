@@ -8,7 +8,7 @@ import {
   LumberjackLogDriverLog,
   lumberjackLogDriverToken,
   LumberjackLogLevel,
-  LumberjackModule,
+  provideLumberjack,
 } from '@ngworker/lumberjack';
 
 import { ObjectDriver } from './object.driver';
@@ -21,8 +21,7 @@ describe(ObjectDriver.name, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [LumberjackModule.forRoot()],
-      providers: [provideObjectDriver()],
+      providers: [provideLumberjack(), provideObjectDriver()],
     });
 
     [objectDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver<ObjectPayload>[];

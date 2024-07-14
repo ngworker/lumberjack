@@ -55,11 +55,11 @@ function createHttpConfig(
 const createHttpDriver = (
   {
     config,
-    isLumberjackModuleProvidedFirst = true,
+    isLumberjackProvidedFirst = true,
     features = [],
   }: {
     config: LumberjackHttpDriverConfig;
-    isLumberjackModuleProvidedFirst?: boolean;
+    isLumberjackProvidedFirst?: boolean;
     features?: HttpClientFeatures;
   } = {
     config: createHttpConfig(['verbose'], LumberjackHttpDriver.driverIdentifier),
@@ -67,9 +67,9 @@ const createHttpDriver = (
 ) => {
   TestBed.configureTestingModule({
     providers: [
-      isLumberjackModuleProvidedFirst ? provideLumberjack() : [],
+      isLumberjackProvidedFirst ? provideLumberjack() : [],
       provideLumberjackHttpDriver(withHttpConfig(config), ...features),
-      isLumberjackModuleProvidedFirst ? [] : provideLumberjack(),
+      isLumberjackProvidedFirst ? [] : provideLumberjack(),
     ],
   });
 
@@ -80,20 +80,20 @@ const createHttpDriver = (
 
 const createHttpDriverWithOptions = (
   {
-    isLumberjackModuleProvidedFirst = true,
+    isLumberjackProvidedFirst = true,
     options,
     features = [],
   }: {
-    isLumberjackModuleProvidedFirst?: boolean;
+    isLumberjackProvidedFirst?: boolean;
     options: LumberjackHttpDriverOptions;
     features?: HttpClientFeatures;
   } = { options: createHttpOptions() }
 ) => {
   TestBed.configureTestingModule({
     providers: [
-      isLumberjackModuleProvidedFirst ? provideLumberjack() : [],
+      isLumberjackProvidedFirst ? provideLumberjack() : [],
       provideLumberjackHttpDriver(withHttpOptions(options), ...features),
-      isLumberjackModuleProvidedFirst ? [] : provideLumberjack(),
+      isLumberjackProvidedFirst ? [] : provideLumberjack(),
     ],
   });
 
@@ -133,7 +133,7 @@ describe(provideLumberjackHttpDriver.name, () => {
 
       const httpDriver = createHttpDriver({
         config: expectedConfig,
-        isLumberjackModuleProvidedFirst: false,
+        isLumberjackProvidedFirst: false,
       });
 
       const actualConfig = httpDriver.config;
@@ -213,7 +213,7 @@ describe(provideLumberjackHttpDriver.name, () => {
 
       const httpDriver = createHttpDriverWithOptions({
         options,
-        isLumberjackModuleProvidedFirst: false,
+        isLumberjackProvidedFirst: false,
       });
 
       const actualConfig = httpDriver.config;

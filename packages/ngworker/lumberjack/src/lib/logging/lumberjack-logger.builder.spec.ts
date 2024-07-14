@@ -2,11 +2,11 @@ import { TestBed } from '@angular/core/testing';
 
 import { FakeTimeService } from '@internal/test-util';
 
-import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LogLevel, LumberjackLogLevel } from '../logs/lumberjack-log-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
+import { provideLumberjack } from '../configuration/provide-lumberjack';
 
 import { LumberjackLogBuilder } from './lumberjack-log.builder';
 import { LumberjackLoggerBuilder } from './lumberjack-logger.builder';
@@ -23,8 +23,7 @@ describe(LumberjackLoggerBuilder.name, () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [LumberjackModule.forRoot()],
-      providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
+      providers: [provideLumberjack(), { provide: LumberjackTimeService, useClass: FakeTimeService }],
     });
 
     fakeTime = TestBed.inject(LumberjackTimeService) as FakeTimeService;

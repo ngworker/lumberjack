@@ -1,11 +1,7 @@
-import { isClass } from '@internal/test-util';
-
 import {
   LumberjackHttpDriverConfig,
-  LumberjackHttpDriverModule,
   LumberjackHttpDriverOptions,
   LumberjackHttpDriverRetryOptions,
-  LumberjackHttpDriverRootModule,
   provideLumberjackHttpDriver,
   withHttpConfig,
   withHttpOptions,
@@ -31,20 +27,6 @@ describe('Configuration API', () => {
       const value: LumberjackHttpDriverOptions | undefined = undefined;
 
       expect(value).toBeUndefined();
-    });
-  });
-
-  describe('Angular modules', () => {
-    it(`exposes ${LumberjackHttpDriverModule.name}`, () => {
-      const sut = LumberjackHttpDriverModule;
-
-      expect(isClass(sut)).toBeTruthy();
-    });
-
-    it(`exposes ${LumberjackHttpDriverRootModule.name}`, () => {
-      const sut = LumberjackHttpDriverRootModule;
-
-      expect(isClass(sut)).toBeTruthy();
     });
   });
 

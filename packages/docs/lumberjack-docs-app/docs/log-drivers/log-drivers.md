@@ -48,35 +48,6 @@ Log drivers should make it possible to configure the logging levels on a per dri
 For example, we could use the default logging levels for the console driver, but only enable the critical and error
 levels for the HTTP driver as seen in the following example.
 
-> Note: Lumberjack NgModules are deprecated and will be removed in version 18. Use the Standalone API, provider functions, instead.
-
-```ts
-import { NgModule } from '@angular/core';
-import { Level as LumberjackLevel, LumberjackModule } from '@ngworker/lumberjack';
-import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
-import { LumberjackHttpDriverModule } from '@ngworker/lumberjack/http-driver';
-
-@NgModule({
-  imports: [
-    LumberjackModule.forRoot({
-      levels: ['verbose'],
-    }),
-    LumberjackConsoleDriverModule.forRoot(),
-    LumberjackHttpDriverModule.forRoot({
-      levels: ['critical', 'error'],
-      origin: 'ForestApp',
-      storeUrl: '/api/logs',
-      retryOptions: { maxRetries: 5, delayMs: 250 },
-    }),
-    // (...)
-  ],
-  // (...)
-})
-export class AppModule {}
-```
-
-Or use the standalone version of the API
-
 ```ts
 import { bootstrapApplication } from '@angular/platform-browser';
 
@@ -229,7 +200,7 @@ export class ConsoleDriver implements LumberjackLogDriver<AnalyticsPayload> {
 }
 ```
 
-#### Creating a custom log driver module and provider functions
+#### Creating a custom log driver provider functions
 
 The provide functions provides configuration and other dependencies to a log driver. It also provides the log driver,
 making
@@ -269,36 +240,6 @@ export function provideLumberjackConsoleDriver(config: Partial<LumberjackConsole
 }
 ```
 
-The driver module then acts as a wrapper for the log driver and the provide function.
-
-> Note: Lumberjack NgModules are deprecated and will be removed in version 18. Use the Standalone API, provider functions, instead.
-
-```ts
-import { ModuleWithProviders, NgModule } from '@angular/core';
-
-import { LumberjackConsoleDriverRootModule } from './lumberjack-console-driver-root.module';
-import { LumberjackConsoleDriverConfig } from './lumberjack-console-driver.config';
-import { provideLumberjackConsoleDriver } from './lumberjack-console-driver.providers';
-
-@NgModule()
-export class LumberjackConsoleDriverModule {
-  static forRoot(
-    config: Partial<LumberjackConsoleDriverConfig> = {}
-  ): ModuleWithProviders<LumberjackConsoleDriverRootModule> {
-    return {
-      ngModule: LumberjackConsoleDriverRootModule,
-      providers: [provideLumberjackConsoleDriver(config)],
-    };
-  }
-
-  constructor() {
-    throw new Error('Do not import LumberjackConsoleDriverModule directly. Use LumberjackConsoleDriverModule.forRoot.');
-  }
-}
-```
-
-The static `forRoot()` method provides the `consoleDriverConfigToken`.
-
 If no configuration is passed, then the root `LogDriverConfig` is used.
 
 ```ts
@@ -314,32 +255,16 @@ This is possible because the `ConsoleDriver` has the same configuration options 
 only have to include the driver identifier since it cannot be predefined.
 
 For adding custom settings,
-see [LumberjackHttpDriver](https://github.com/ngworker/lumberjack/blob/main/packages/ngworker/lumberjack/http-driver/src/lib/configuration/lumberjack-http-driver-root.module.ts).
+see [LumberjackHttpDriver](https://github.com/ngworker/lumberjack/blob/main/packages/ngworker/lumberjack/http-driver/src/lib/configuration/provide-lumberjack-http-driver.ts).
 
-The most important thing about the `LumberjackConsoleDriverModule` is that it provides the `LumberjackConsoleDriver`
+The most important thing about the `provideLumberjackConsoleDriver` function is that it provides the `LumberjackConsoleDriver`
 using the `lumberjackLogDriverToken` with the `multi` flag on. This allows us to provide multiple log drivers for
 Lumberjack at the same time.
 
 #### Using a custom log driver
 
-The last step is to import this module at the root module of our application, as seen in the first [_Usage_](../usage)
+The last step is to provide this driver at the `bootstrapApplication` function, as seen in the first [_Usage_](../usage)
 section.
-
-> Note: Lumberjack NgModules are deprecated and will be removed in version 18. Use the Standalone API, provider functions, instead.
-
-```ts
-@NgModule({
-  imports: [
-    LumberjackModule.forRoot(),
-    ConsoleDriverModule.forRoot(),
-    // (...)
-  ],
-  // (...)
-})
-export class AppModule {}
-```
-
-Or using the standalone API.
 
 ```typescript
 import { bootstrapApplication } from '@angular/platform-browser';

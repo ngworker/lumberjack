@@ -8,9 +8,7 @@ export { LumberjackFormatFunction } from './lib/configuration/lumberjack-format-
 export { LumberjackLogDriverConfig } from './lib/configuration/lumberjack-log-driver.config';
 export { lumberjackLogDriverConfigToken } from './lib/configuration/lumberjack-log-driver-config.token';
 export { LumberjackConfig } from './lib/configuration/lumberjack.config';
-export { LumberjackModule } from './lib/configuration/lumberjack.module';
 export { LumberjackOptions } from './lib/configuration/lumberjack.options';
-export { LumberjackRootModule } from './lib/configuration/lumberjack-root.module';
 export { provideLumberjack } from './lib/configuration/provide-lumberjack';
 
 // Log drivers

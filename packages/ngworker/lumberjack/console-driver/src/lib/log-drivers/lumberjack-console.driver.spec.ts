@@ -5,25 +5,25 @@ import {
   LumberjackLogDriver,
   lumberjackLogDriverToken,
   LumberjackLogFactory,
-  LumberjackModule,
+  provideLumberjack,
 } from '@ngworker/lumberjack';
 
-import { LumberjackConsoleDriverModule } from '../configuration/lumberjack-console-driver.module';
 import { lumberjackConsoleToken } from '../console/lumberjack-console.token';
+import { provideLumberjackConsoleDriver } from '../configuration/provide-lumberjack-console-driver';
 
 import { LumberjackConsoleDriver } from './lumberjack-console.driver';
 
 describe(LumberjackConsoleDriver.name, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [
-        LumberjackModule.forRoot(),
-        LumberjackConsoleDriverModule.forRoot({
+      providers: [
+        provideLumberjack(),
+        provideLumberjackConsoleDriver({
           levels: ['verbose'],
           identifier: LumberjackConsoleDriver.driverIdentifier,
         }),
+        provideSpyConsole(),
       ],
-      providers: [provideSpyConsole()],
     });
 
     const [_driver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];

@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { LumberjackModule } from '@ngworker/lumberjack';
+import { provideLumberjack } from '@ngworker/lumberjack';
 
 import { AppComponent } from './app.component';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [LumberjackModule.forRoot()],
+      providers: [provideLumberjack()],
     }).compileComponents();
   });
 
