@@ -1,0 +1,41 @@
+name: Release NPM packages
+
+env:
+  NODE_OPTIONS: --max-old-space-size=6144
+  NX_MAX_PARALLEL: 2
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy-docs:
+    name: '[Merge] Deploy docs to GitHub Pages'
+    needs: release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      actions: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out the source code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Setup
+        uses: ./.github/actions/setup
+      # Uses the cache generated in the distributed step
+      - name: Build docs
+        run: pnpm exec nx build docs-lumberjack-docs-app
+      - name: Set up GitHub Pages
+        uses: actions/configure-pages@v4
+      - name: Upload docs to GitHub Pages
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/packages/docs/lumberjack-docs-app/
+      - name: Deploy docs to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
