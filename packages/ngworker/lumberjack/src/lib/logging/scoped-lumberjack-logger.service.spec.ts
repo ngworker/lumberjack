@@ -3,10 +3,10 @@ import { TestBed } from '@angular/core/testing';
 
 import { FakeTimeService } from '@internal/test-util';
 
-import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
+import { provideLumberjack } from '../configuration/provide-lumberjack';
 
 import { LumberjackLogFactory } from './lumberjack-log-factory';
 import { LumberjackService } from './lumberjack.service';
@@ -31,8 +31,7 @@ export class TestLogger extends ScopedLumberjackLogger {
 describe(ScopedLumberjackLogger.name, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [LumberjackModule.forRoot()],
-      providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
+      providers: [provideLumberjack(), { provide: LumberjackTimeService, useClass: FakeTimeService }],
     });
     logger = TestBed.inject(TestLogger);
     logFactory = TestBed.inject(LumberjackLogFactory);

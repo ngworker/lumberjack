@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { LumberjackModule } from '../configuration/lumberjack.module';
+import { provideLumberjack } from '../configuration/provide-lumberjack';
 
 import { LumberjackTimeService } from './lumberjack-time.service';
 
 describe(LumberjackTimeService.name, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [LumberjackModule.forRoot()],
+      providers: [provideLumberjack()],
     });
     service = TestBed.inject(LumberjackTimeService);
   });

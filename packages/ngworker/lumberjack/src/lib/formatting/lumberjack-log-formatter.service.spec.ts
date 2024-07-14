@@ -2,11 +2,11 @@ import { TestBed } from '@angular/core/testing';
 
 import { FakeTimeService } from '@internal/test-util';
 
-import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackOptions } from '../configuration/lumberjack.options';
 import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
 import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
+import { provideLumberjack } from '../configuration/provide-lumberjack';
 
 import { LumberjackLogFormatter } from './lumberjack-log-formatter.service';
 
@@ -24,8 +24,7 @@ const logFormattingErrorScope = 'LumberjackLogFormattingError';
 describe(LumberjackLogFormatter.name, () => {
   function setup(options?: LumberjackOptions) {
     TestBed.configureTestingModule({
-      imports: [LumberjackModule.forRoot(options)],
-      providers: [{ provide: LumberjackTimeService, useClass: FakeTimeService }],
+      providers: [provideLumberjack(options), { provide: LumberjackTimeService, useClass: FakeTimeService }],
     });
 
     const service = TestBed.inject(LumberjackLogFormatter);

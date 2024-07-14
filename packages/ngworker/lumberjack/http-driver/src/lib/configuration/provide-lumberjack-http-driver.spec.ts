@@ -55,11 +55,11 @@ function createHttpConfig(
 const createHttpDriver = (
   {
     config,
-    isLumberjackModuleProvidedFirst = true,
+    isLumberjackProvidedFirst = true,
     features = [],
   }: {
     config: LumberjackHttpDriverConfig;
-    isLumberjackModuleProvidedFirst?: boolean;
+    isLumberjackProvidedFirst?: boolean;
     features?: HttpClientFeatures;
   } = {
     config: createHttpConfig(['verbose'], LumberjackHttpDriver.driverIdentifier),
@@ -67,9 +67,9 @@ const createHttpDriver = (
 ) => {
   TestBed.configureTestingModule({
     providers: [
-      isLumberjackModuleProvidedFirst ? provideLumberjack() : [],
+      isLumberjackProvidedFirst ? provideLumberjack() : [],
       provideLumberjackHttpDriver(withHttpConfig(config), ...features),
-      isLumberjackModuleProvidedFirst ? [] : provideLumberjack(),
+      isLumberjackProvidedFirst ? [] : provideLumberjack(),
     ],
   });
 
@@ -133,7 +133,7 @@ describe(provideLumberjackHttpDriver.name, () => {
 
       const httpDriver = createHttpDriver({
         config: expectedConfig,
-        isLumberjackModuleProvidedFirst: false,
+        isLumberjackProvidedFirst: false,
       });
 
       const actualConfig = httpDriver.config;

@@ -15,16 +15,16 @@ import { provideLumberjackConsoleDriver } from './provide-lumberjack-console-dri
 
 const createConsoleDriver = ({
   config,
-  isLumberjackModuleProvidedFirst = true,
+  isLumberjackProvidedFirst = true,
 }: {
   config?: LumberjackConsoleDriverConfig;
-  isLumberjackModuleProvidedFirst?: boolean;
+  isLumberjackProvidedFirst?: boolean;
 } = {}) => {
   TestBed.configureTestingModule({
     providers: [
-      isLumberjackModuleProvidedFirst ? provideLumberjack() : [],
+      isLumberjackProvidedFirst ? provideLumberjack() : [],
       provideLumberjackConsoleDriver(config),
-      isLumberjackModuleProvidedFirst ? [] : provideLumberjack(),
+      isLumberjackProvidedFirst ? [] : provideLumberjack(),
     ],
   });
 
@@ -87,7 +87,7 @@ describe(provideLumberjackConsoleDriver.name, () => {
 
     const consoleDriver = createConsoleDriver({
       config: expectedConfig,
-      isLumberjackModuleProvidedFirst: false,
+      isLumberjackProvidedFirst: false,
     });
 
     const actualConfig = consoleDriver.config;

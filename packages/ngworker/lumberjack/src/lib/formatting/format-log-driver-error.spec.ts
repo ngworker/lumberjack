@@ -2,13 +2,13 @@ import { TestBed } from '@angular/core/testing';
 
 import { NoopDriver, provideNoopDriver } from '@internal/test-util';
 
-import { LumberjackModule } from '../configuration/lumberjack.module';
 import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
 import { LumberjackLogDriverError } from '../log-drivers/lumberjack-log-driver-error';
 import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
 import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackLog } from '../logs/lumberjack.log';
+import { provideLumberjack } from '../configuration/provide-lumberjack';
 
 import { formatLogDriverError } from './format-log-driver-error';
 import { lumberjackFormatLog } from './lumberjack-format-log';
@@ -16,8 +16,7 @@ import { lumberjackFormatLog } from './lumberjack-format-log';
 describe(formatLogDriverError.name, () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [LumberjackModule.forRoot()],
-      providers: [provideNoopDriver()],
+      providers: [provideLumberjack(), provideNoopDriver()],
     });
     const [_logDriver] = TestBed.inject(lumberjackLogDriverToken) as unknown as LumberjackLogDriver[];
     logDriver = _logDriver;

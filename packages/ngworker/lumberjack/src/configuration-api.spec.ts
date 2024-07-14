@@ -1,6 +1,6 @@
 import { InjectionToken } from '@angular/core';
 
-import { isClass, isFunction } from '@internal/test-util';
+import { isFunction } from '@internal/test-util';
 
 import {
   LumberjackConfig,
@@ -8,9 +8,7 @@ import {
   LumberjackFormatFunction,
   LumberjackLogDriverConfig,
   lumberjackLogDriverConfigToken,
-  LumberjackModule,
   LumberjackOptions,
-  LumberjackRootModule,
   provideLumberjack,
 } from './index';
 
@@ -40,20 +38,6 @@ describe('Configuration API', () => {
       const value: LumberjackOptions | undefined = undefined;
 
       expect(value).toBeUndefined();
-    });
-  });
-
-  describe('Angular modules', () => {
-    it(`exposes ${LumberjackModule.name}`, () => {
-      const sut = LumberjackModule;
-
-      expect(isClass(sut)).toBeTruthy();
-    });
-
-    it(`exposes ${LumberjackRootModule.name}`, () => {
-      const sut = LumberjackRootModule;
-
-      expect(isClass(sut)).toBeTruthy();
     });
   });
 
