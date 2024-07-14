@@ -2,6 +2,19 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [18.0.0](https://github.com/ngworker/lumberjack/compare/v17.0.1...v18.0.0) (2024-07-14)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove ng modules (#210)
+* upgrade to nx 19.1 and angular 18 (#209)
+
+### Features
+
+* remove ng modules ([#210](https://github.com/ngworker/lumberjack/issues/210)) ([7cb8941](https://github.com/ngworker/lumberjack/commit/7cb8941ba4a34e4dbe7de0d8ae33125e9aa4e3fa))
+* upgrade to nx 19.1 and angular 18 ([#209](https://github.com/ngworker/lumberjack/issues/209)) ([e6bd458](https://github.com/ngworker/lumberjack/commit/e6bd458e747dbcd7146ab0a0c35c72525b2ef4c6))
+
 ## [17.0.1](https://github.com/ngworker/lumberjack/compare/v17.0.0...v17.0.1) (2024-02-04)
 
 
