@@ -80,20 +80,20 @@ const createHttpDriver = (
 
 const createHttpDriverWithOptions = (
   {
-    isLumberjackModuleProvidedFirst = true,
+    isLumberjackProvidedFirst = true,
     options,
     features = [],
   }: {
-    isLumberjackModuleProvidedFirst?: boolean;
+    isLumberjackProvidedFirst?: boolean;
     options: LumberjackHttpDriverOptions;
     features?: HttpClientFeatures;
   } = { options: createHttpOptions() }
 ) => {
   TestBed.configureTestingModule({
     providers: [
-      isLumberjackModuleProvidedFirst ? provideLumberjack() : [],
+      isLumberjackProvidedFirst ? provideLumberjack() : [],
       provideLumberjackHttpDriver(withHttpOptions(options), ...features),
-      isLumberjackModuleProvidedFirst ? [] : provideLumberjack(),
+      isLumberjackProvidedFirst ? [] : provideLumberjack(),
     ],
   });
 
@@ -213,7 +213,7 @@ describe(provideLumberjackHttpDriver.name, () => {
 
       const httpDriver = createHttpDriverWithOptions({
         options,
-        isLumberjackModuleProvidedFirst: false,
+        isLumberjackProvidedFirst: false,
       });
 
       const actualConfig = httpDriver.config;

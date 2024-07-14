@@ -6,25 +6,7 @@ title: Usage
 > For a complete walkthrough video please
 > visit [@ngworker/lumberjack v2 - Show & Tell BLS024](https://youtu.be/OV1ONtLAJnI)
 
-To register Lumberjack, add `LumberjackModule.forRoot()` to your root or core Angular module.
-
-> Note: Lumberjack NgModules are deprecated and will be removed in version 18. Use the Standalone API, provider functions, instead.
-
-```ts
-// (...)
-import {LumberjackModule} from '@ngworker/lumberjack';
-
-@NgModule({
-  imports: [
-    // (...)
-    LumberjackModule.forRoot(),
-    // (...)
-  ],
-  // (...)
-})
-```
-
-Or if you prefer a prefer standalone approach using the `provideLumberjack()`.
+To register Lumberjack, add `provideLumberjack()` to your root or `bootstrapApplication` function.
 
 ```ts
 bootstrapApplication(AppComponent, {
@@ -36,36 +18,9 @@ bootstrapApplication(AppComponent, {
 });
 ```
 
-You must also register the log driver modules for the log drivers that you want to enable.
+You must also register the log driver provider functions for the log drivers that you want to enable.
 
 If you want to add the `LumberjackHttpDriver` and the `LumberjackConsoleDriver`, add the following code
-
-> Note: Lumberjack NgModules are deprecated and will be removed in version 18. Use the Standalone API, provider functions, instead.
-
-```ts
-// (...)
-import { LumberjackModule } from '@ngworker/lumberjack';
-import { LumberjackHttpDriverModule } from '@ngworker/lumberjack/http-driver';
-import { LumberjackConsoleDriverModule } from '@ngworker/lumberjack/console-driver';
-
-@NgModule({
-  imports: [
-    // (...)
-    LumberjackModule.forRoot(),
-    LumberjackConsoleDriverModule.forRoot(),
-    LumberjackHttpDriverModule.withOptions({
-      origin: '<app-name>',
-      storeUrl: '/api/logs',
-      retryOptions: { maxRetries: 5, delayMs: 250 },
-    }),
-    // (...)
-  ],
-  // (...)
-})
-export class AppModule {}
-```
-
-Or using the standalone version
 
 ```ts
 bootstrapApplication(AppComponent, {
@@ -160,9 +115,9 @@ export class MyComponent implements OnInit {
 
 > Each log level has its associated shorthand version: `'info'` is `logInfo`, `'debug'` is `logDebug`, etc.
 
-### LumberjackModule and provideLumberjack
+### provideLumberjack
 
-Optionally, we can pass one or more options to `LumberjackModule.forRoot` or to the `provideLumberjack` function.
+Optionally, we can pass one or more options to the `provideLumberjack` function.
 
 | Option   | Type                           | Optional? | Description                                                          |
 | -------- | ------------------------------ | --------- | -------------------------------------------------------------------- |
