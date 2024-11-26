@@ -2,7 +2,6 @@ import { TestBed } from '@angular/core/testing';
 import { HttpHandlerFn, HttpRequest, withInterceptors } from '@angular/common/http';
 
 import {
-  ConfigLevels,
   LumberjackConfigLevels,
   LumberjackLogDriver,
   lumberjackLogDriverToken,
@@ -23,7 +22,7 @@ import { LumberjackHttpDriverInternalConfig } from './lumberjack-http-driver-int
 import { LumberjackHttpDriverOptions } from './lumberjack-http-driver.options';
 
 function createHttpOptions(
-  extraOptions: { levels?: ConfigLevels; identifier?: string } = {}
+  extraOptions: { levels?: LumberjackConfigLevels; identifier?: string } = {}
 ): LumberjackHttpDriverOptions {
   return {
     origin: 'TEST_MODULE',
@@ -33,10 +32,7 @@ function createHttpOptions(
   };
 }
 
-function createHttpConfig(
-  levels: LumberjackConfigLevels | ConfigLevels,
-  identifier?: string
-): LumberjackHttpDriverConfig {
+function createHttpConfig(levels: LumberjackConfigLevels, identifier?: string): LumberjackHttpDriverConfig {
   const config: Writable<LumberjackHttpDriverConfig> = {
     levels,
     origin: 'TEST_MODULE',
@@ -169,7 +165,7 @@ describe(provideLumberjackHttpDriver.name, () => {
     });
 
     it('registers the specified options with custom levels', () => {
-      const customLevels: ConfigLevels = ['critical'];
+      const customLevels: LumberjackConfigLevels = ['critical'];
       const options = createHttpOptions({ levels: customLevels });
 
       const httpDriver = createHttpDriverWithOptions({ options });
@@ -228,7 +224,7 @@ describe(provideLumberjackHttpDriver.name, () => {
     it('does register the specified log driver options WITH HttpClient features', () => {
       const testInterceptor = jest.fn((req, next) => next(req));
       const features: HttpClientFeatures = [withInterceptors([testInterceptor])];
-      const customLevels: ConfigLevels = ['critical'];
+      const customLevels: LumberjackConfigLevels = ['critical'];
       const options = createHttpOptions({ levels: customLevels });
 
       const httpDriver = createHttpDriverWithOptions({ options, features });

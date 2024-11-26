@@ -1,4 +1,4 @@
-import { ConfigLevels, LumberjackConfigLevels } from '../logs/lumberjack-config-levels';
+import { LumberjackConfigLevels } from '../logs/lumberjack-config-levels';
 
 /**
  * Settings for a log driver.
@@ -9,7 +9,7 @@ export interface LumberjackLogDriverConfig {
    *
    * `['verbose']` indicates that all log levels are allowed.
    */
-  readonly levels: LumberjackConfigLevels | ConfigLevels;
+  readonly levels: LumberjackConfigLevels;
 
   /**
    * Driver Identifier, necessary for driver filtering.

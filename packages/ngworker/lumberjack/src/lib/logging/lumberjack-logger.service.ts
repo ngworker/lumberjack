@@ -1,6 +1,6 @@
 import { inject, Injectable } from '@angular/core';
 
-import { LogLevel, LumberjackLogLevel } from '../logs/lumberjack-log-level';
+import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
@@ -65,10 +65,7 @@ export abstract class LumberjackLogger<TPayload extends LumberjackLogPayload | v
   /**
    * Create a logger builder for a log with the specified log level and message.
    */
-  protected createLoggerBuilder(
-    level: LumberjackLogLevel | LogLevel,
-    message: string
-  ): LumberjackLoggerBuilder<TPayload> {
+  protected createLoggerBuilder(level: LumberjackLogLevel, message: string): LumberjackLoggerBuilder<TPayload> {
     return new LumberjackLoggerBuilder<TPayload>(this.lumberjack, this.time, level, message);
   }
 }

@@ -6,7 +6,7 @@ import { LumberjackLogDriver } from '../log-drivers/lumberjack-log-driver';
 import { LumberjackLogDriverError } from '../log-drivers/lumberjack-log-driver-error';
 import { LumberjackLogDriverLogger } from '../log-drivers/lumberjack-log-driver-logger';
 import { lumberjackLogDriverToken } from '../log-drivers/lumberjack-log-driver.token';
-import { LogLevel, LumberjackLogLevel } from '../logs/lumberjack-log-level';
+import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
@@ -167,9 +167,9 @@ export class LumberjackService<TPayload extends LumberjackLogPayload | void = vo
    * @param driver The configured log driver.
    * @param logLevel The log's log level.
    */
-  #canDriveLog(driver: LumberjackLogDriver<TPayload>, logLevel: LumberjackLogLevel | LogLevel): boolean {
+  #canDriveLog(driver: LumberjackLogDriver<TPayload>, logLevel: LumberjackLogLevel): boolean {
     const hasVerboseLogging = driver.config.levels.length === 1 && driver.config.levels[0] === 'verbose';
-    const acceptsLogLevel = (driver.config.levels as (LumberjackLogLevel | LogLevel)[]).includes(logLevel);
+    const acceptsLogLevel = (driver.config.levels as LumberjackLogLevel[]).includes(logLevel);
 
     return hasVerboseLogging || acceptsLogLevel;
   }

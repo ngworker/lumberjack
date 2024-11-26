@@ -2,8 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { LumberjackLogFactory } from '../logging/lumberjack-log-factory';
 import { LumberjackLogBuilder } from '../logging/lumberjack-log.builder';
-import { LumberjackLevel } from '../logs/lumberjack-level';
-import { LogLevel, LumberjackLogLevel } from '../logs/lumberjack-log-level';
+import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
 import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 import { provideLumberjack } from '../configuration/provide-lumberjack';
@@ -38,20 +37,7 @@ describe(lumberjackFormatLog.name, () => {
   let logFactory: LumberjackLogFactory;
 
   describe('Log level', () => {
-    const logLevels: (LumberjackLogLevel | LogLevel)[] = [
-      LumberjackLevel.Critical,
-      LumberjackLevel.Debug,
-      LumberjackLevel.Error,
-      LumberjackLevel.Info,
-      LumberjackLevel.Trace,
-      LumberjackLevel.Warning,
-      'critical',
-      'debug',
-      'error',
-      'info',
-      'trace',
-      'warn',
-    ];
+    const logLevels: LumberjackLogLevel[] = ['critical', 'debug', 'error', 'info', 'trace', 'warn'];
 
     logLevels.forEach((expectedLevel) => {
       it(`prefixes the message with log level "${expectedLevel}"`, () => {
@@ -78,7 +64,7 @@ describe(lumberjackFormatLog.name, () => {
       it('adds the 0 hours UTC offset with milliseconds resolution', () => {
         const log: LumberjackLog = {
           createdAt: unixEpochTicks,
-          level: LumberjackLevel.Debug,
+          level: 'debug',
           message: 'Timestamp test',
           scope: 'Timestamp',
         };

@@ -1,4 +1,4 @@
-import { LogLevel, LumberjackLogLevel } from '../logs/lumberjack-log-level';
+import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
 
@@ -9,13 +9,13 @@ export class LumberjackLoggerBuilder<TPayload extends LumberjackLogPayload | voi
   #payload?: TPayload;
   readonly #lumberjack: LumberjackService<TPayload>;
   readonly #time: LumberjackTimeService;
-  readonly #level: LumberjackLogLevel | LogLevel;
+  readonly #level: LumberjackLogLevel;
   readonly #message: string;
 
   constructor(
     lumberjack: LumberjackService<TPayload>,
     time: LumberjackTimeService,
-    level: LumberjackLogLevel | LogLevel,
+    level: LumberjackLogLevel,
     message: string
   ) {
     this.#lumberjack = lumberjack;
