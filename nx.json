@@ -37,6 +37,9 @@
       "cache": true,
       "dependsOn": ["^build"],
       "inputs": ["production", "^production"]
+    },
+    "e2e-ci--**/*": {
+      "dependsOn": ["^^build", "^build:production"]
     }
   },
   "workspaceLayout": { "appsDir": "e2e", "libsDir": "packages" },
@@ -63,7 +66,18 @@
         "ciTargetName": "e2e-ci"
       }
     },
-    { "plugin": "@nx/eslint/plugin", "options": { "targetName": "lint" } }
+    {
+      "plugin": "@nx/eslint/plugin",
+      "options": {
+        "targetName": "lint"
+      }
+    },
+    {
+      "plugin": "@nx/jest/plugin",
+      "options": {
+        "targetName": "test"
+      }
+    }
   ],
   "nxCloudAccessToken": "OTNjMDE5MjItZjQ3Mi00NTM0LTgxNjYtODBjY2EyMTgzYzhlfHJlYWQtd3JpdGU=",
   "defaultBase": "main"

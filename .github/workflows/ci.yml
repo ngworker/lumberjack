@@ -35,17 +35,16 @@ jobs:
         with:
           fetch-depth: 0
 
-      # Connect your workspace on nx.app and uncomment this to enable task distribution.
-      # The "--stop-agents-after" is optional, but allows idle agents to shut down once the "build" targets have been requested
-      # - run: npx nx-cloud start-ci-run --distribute-on="5 linux-medium-js" --stop-agents-after="build"
-
       - uses: pnpm/action-setup@v2
         with:
-          version: 9
+          version: 9.5
       # Cache node_modules
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      # Connect your workspace on nx.app and uncomment this to enable task distribution.
+      # The "--stop-agents-after" is optional, but allows idle agents to shut down once the "build" targets have been requested
+      - run: pnpm dlx nx-cloud start-ci-run --distribute-on="4 linux-medium-js"
 
       - uses: nrwl/nx-set-shas@v4
 
@@ -96,8 +95,7 @@ jobs:
       - name: Run NX Commands
         run: |
           pnpm exec nx-cloud record -- nx format:check
-          pnpm exec nx affected -t lint test build
-          pnpm exec nx affected -t e2e-ci --parallel=1
+          pnpm exec nx affected -t lint test build e2e-ci
 
   sonarcloud:
     name: SonarCloud

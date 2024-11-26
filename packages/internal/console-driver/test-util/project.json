@@ -7,27 +7,27 @@
   "tags": ["scope:internal", "type:test-util"],
   "targets": {
     "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "packages/internal/console-driver/test-util/jest.config.ts",
+        "passWithNoTests": true,
         "reporters": ["default", "github-actions"]
       },
       "configurations": {
-        "coverage": {
-          "codeCoverage": true,
+        "ci": {
           "ci": true,
-          "coverageReporters": ["lcovonly", "text-summary"]
+          "coverage": true
+        },
+        "coverage": {
+          "ci": true,
+          "coverageReporters": ["lcovonly", "text-summary"],
+          "coverage": true
         }
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
       "configurations": {
         "report": {
           "format": "json",
-          "force": true,
-          "outputFile": "reports/packages/internal/console-driver/test-util/lint/report.json"
+          "output-file": "reports/packages/internal/console-driver/test-util/lint/report.json"
         }
       }
     }
