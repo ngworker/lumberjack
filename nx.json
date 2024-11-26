@@ -1,8 +1,6 @@
 {
   "$schema": "./node_modules/nx/schemas/nx-schema.json",
-  "cli": {
-    "packageManager": "pnpm"
-  },
+  "cli": { "packageManager": "pnpm" },
   "generators": {
     "@nx/angular:application": {
       "e2eTestRunner": "cypress",
@@ -10,53 +8,25 @@
       "style": "scss",
       "unitTestRunner": "jest"
     },
-    "@nx/angular:library": {
-      "linter": "eslint",
-      "unitTestRunner": "jest"
-    },
-    "@nx/angular:component": {
-      "style": "scss"
-    }
+    "@nx/angular:library": { "linter": "eslint", "unitTestRunner": "jest" },
+    "@nx/angular:component": { "style": "scss" }
   },
   "defaultProject": "examples-lumberjack-app",
   "targetDefaults": {
     "build": {
-      "dependsOn": [
-        {
-          "target": "build",
-          "dependencies": true
-        }
-      ],
+      "dependsOn": [{ "target": "build", "dependencies": true }],
       "inputs": ["production", "^production"],
       "cache": true
     },
-    "e2e": {
-      "inputs": ["default", "^production"],
-      "cache": true
-    },
-    "e2e-ci": {
-      "inputs": ["default", "^production"],
-      "cache": true
-    },
-    "start": {
-      "dependsOn": ["^build"],
-      "inputs": ["production", "^production"]
-    },
-    "build-package": {
-      "cache": true
-    },
+    "e2e": { "inputs": ["default", "^production"], "cache": true },
+    "e2e-ci": { "inputs": ["default", "^production"], "cache": true },
+    "start": { "dependsOn": ["^build"], "inputs": ["production", "^production"] },
+    "build-package": { "cache": true },
     "@nx/jest:jest": {
       "inputs": ["default", "^production", "{workspaceRoot}/jest.preset.js"],
       "cache": true,
-      "options": {
-        "passWithNoTests": true
-      },
-      "configurations": {
-        "ci": {
-          "ci": true,
-          "codeCoverage": true
-        }
-      }
+      "options": { "passWithNoTests": true },
+      "configurations": { "ci": { "ci": true, "codeCoverage": true } }
     },
     "@nx/eslint:lint": {
       "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
@@ -69,10 +39,7 @@
       "inputs": ["production", "^production"]
     }
   },
-  "workspaceLayout": {
-    "appsDir": "e2e",
-    "libsDir": "packages"
-  },
+  "workspaceLayout": { "appsDir": "e2e", "libsDir": "packages" },
   "namedInputs": {
     "default": ["{projectRoot}/**/*", "sharedGlobals", "projectSpecificFiles"],
     "sharedGlobals": [],
@@ -96,13 +63,8 @@
         "ciTargetName": "e2e-ci"
       }
     },
-    {
-      "plugin": "@nx/eslint/plugin",
-      "options": {
-        "targetName": "lint"
-      }
-    }
+    { "plugin": "@nx/eslint/plugin", "options": { "targetName": "lint" } }
   ],
-  "nxCloudAccessToken": "M2I0MTZlMmMtYmQ5ZC00ZDg1LWFjOTQtZjU5ZGFkYWM3YjM2fHJlYWQ=",
+  "nxCloudAccessToken": "OTNjMDE5MjItZjQ3Mi00NTM0LTgxNjYtODBjY2EyMTgzYzhlfHJlYWQtd3JpdGU=",
   "defaultBase": "main"
 }
