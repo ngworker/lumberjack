@@ -73,21 +73,20 @@
         "buildTarget": "examples-lumberjack-app:build"
       }
     },
-    "lint": {
-      "executor": "@nx/eslint:lint"
-    },
     "test": {
-      "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "packages/examples/lumberjack-app/jest.config.ts",
+        "passWithNoTests": true,
         "reporters": ["default", "github-actions"]
       },
       "configurations": {
-        "coverage": {
-          "codeCoverage": true,
+        "ci": {
           "ci": true,
-          "coverageReporters": ["lcovonly", "text-summary"]
+          "coverage": true
+        },
+        "coverage": {
+          "ci": true,
+          "coverageReporters": ["lcovonly", "text-summary"],
+          "coverage": true
         }
       }
     },
