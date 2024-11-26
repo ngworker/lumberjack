@@ -41,7 +41,7 @@ jobs:
 
       - uses: pnpm/action-setup@v2
         with:
-          version: 9
+          version: 9.5
       # Cache node_modules
       - uses: actions/setup-node@v4
         with:

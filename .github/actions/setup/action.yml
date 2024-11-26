@@ -32,7 +32,7 @@ runs:
 
     - uses: pnpm/action-setup@v2
       with:
-        version: 9
+        version: 9.5
 
     - name: Use Node.js
       uses: actions/setup-node@v4
