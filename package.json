@@ -26,6 +26,7 @@
     "node": "20",
     "pnpm": "9.5.0"
   },
+  "packageManager": "pnpm@9.5.0",
   "dependencies": {
     "@angular/animations": "19.0.0",
     "@angular/common": "19.0.0",
