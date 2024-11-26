@@ -1,6 +1,6 @@
 {
   "name": "@ngworker/lumberjack",
-  "version": "18.0.0",
+  "version": "19.0.0",
   "description": "Lumberjack is a versatile Angular logging library, specifically designed to be extended and customized",
   "homepage": "https://ngworker.github.io/lumberjack/",
   "license": "MIT",
@@ -37,8 +37,8 @@
     "url": "https://github.com/ngworker/lumberjack/issues?q=is:issue+is:open+"
   },
   "peerDependencies": {
-    "@angular/core": "^18.0.0",
-    "@angular/common": "^18.0.0",
+    "@angular/core": "^19.0.0",
+    "@angular/common": "^19.0.0",
     "rxjs": ">= 7.8.1 < 8.0.0"
   },
   "peerDependenciesMeta": {
