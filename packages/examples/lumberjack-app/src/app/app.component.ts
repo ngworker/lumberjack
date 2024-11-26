@@ -6,10 +6,10 @@ import { ForestService } from './forest.service';
 import { NxWelcomeComponent } from './nx-welcome.component';
 
 @Component({
-    imports: [NxWelcomeComponent],
-    selector: 'app-root',
-    templateUrl: './app.component.html',
-    styleUrls: ['./app.component.scss']
+  imports: [NxWelcomeComponent],
+  selector: 'app-root',
+  templateUrl: './app.component.html',
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent implements OnInit, OnDestroy {
   readonly #forest = inject(ForestService);
