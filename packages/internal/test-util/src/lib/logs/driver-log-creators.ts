@@ -1,7 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
 import {
-  LogLevel,
   LumberjackLogDriverLog,
   LumberjackLogLevel,
   LumberjackLogPayload,
@@ -10,7 +9,7 @@ import {
 
 export const createDriverLog = <TPayload extends LumberjackLogPayload | void = void>(
   formattedLog: string,
-  level: LumberjackLogLevel | LogLevel,
+  level: LumberjackLogLevel,
   message = '',
   scope = 'Test',
   payload?: TPayload
