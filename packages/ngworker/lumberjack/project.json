@@ -76,8 +76,7 @@
           "format": "json",
           "output-file": "reports/packages/ngworker/lumberjack/lint/report.json"
         }
-      },
-      "outputs": ["reports/packages/ngworker/lumberjack/lint/report.json", "{options.outputFile}"]
+      }
     },
     "version": {
       "dependsOn": ["build"],

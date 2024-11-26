@@ -29,8 +29,7 @@
           "format": "json",
           "output-file": "reports/packages/internal/test-util/lint/report.json"
         }
-      },
-      "outputs": ["reports/packages/internal/test-util/lint/report.json", "{options.outputFile}"]
+      }
     }
   }
 }
