@@ -82,14 +82,9 @@
         "ci": {
           "ci": true,
           "coverage": true
-        },
-        "coverage": {
-          "ci": true,
-          "coverageReporters": ["lcovonly", "text-summary"],
-          "coverage": true
         }
       },
-      "defaultConfiguration": "coverage"
+      "defaultConfiguration": "ci"
     },
     "serve-static": {
       "executor": "@nx/web:file-server",

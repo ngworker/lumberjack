@@ -62,14 +62,9 @@
         "ci": {
           "ci": true,
           "coverage": true
-        },
-        "coverage": {
-          "ci": true,
-          "coverageReporters": ["lcovonly", "text-summary"],
-          "coverage": true
         }
       },
-      "defaultConfiguration": "coverage"
+      "defaultConfiguration": "ci"
     },
     "lint": {
       "outputs": ["{workspaceRoot}/reports/packages/ngworker/lumberjack/lint/report.json"],
