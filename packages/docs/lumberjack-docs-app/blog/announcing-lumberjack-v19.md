@@ -1,7 +1,7 @@
 ---
 title: 'Announcing Lumberjack v19: Angular 19 and no more Enum-based levels'
 description: Lumberjack v19 is here and it brings compatibility with Angular 19 and removes the old and depricated Enum-based levels.
-slug: announcing-lumberjack-v18
+slug: announcing-lumberjack-v19
 authors:
   - name: Nacho Vazquez
     title: NgWorker and core maintainer of Lumberjack
