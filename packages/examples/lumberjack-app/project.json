@@ -82,11 +82,6 @@
         "ci": {
           "ci": true,
           "coverage": true
-        },
-        "coverage": {
-          "ci": true,
-          "coverageReporters": ["lcovonly", "text-summary"],
-          "coverage": true
         }
       }
     },
@@ -97,6 +92,15 @@
         "port": 4200,
         "staticFilePath": "dist/packages/examples/lumberjack-app/browser",
         "spa": true
+      }
+    },
+    "lint": {
+      "outputs": ["{workspaceRoot}/reports/packages/examples/lumberjack-app/lint/report.json"],
+      "configurations": {
+        "report": {
+          "format": "json",
+          "output-file": "../../../reports/packages/examples/lumberjack-app/lint/report.json"
+        }
       }
     }
   }

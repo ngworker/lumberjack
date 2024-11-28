@@ -1,8 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 
 import {
-  LogLevel,
-  LumberjackLevel,
   LumberjackLogDriver,
   LumberjackLogDriverLog,
   lumberjackLogDriverToken,
@@ -33,26 +31,20 @@ describe(ErrorThrowingDriver.name, () => {
   }
 
   describe.each([
-    [LumberjackLevel.Critical, (driver) => driver.logCritical],
-    [LumberjackLevel.Debug, (driver) => driver.logDebug],
-    [LumberjackLevel.Error, (driver) => driver.logError],
-    [LumberjackLevel.Info, (driver) => driver.logInfo],
-    [LumberjackLevel.Trace, (driver) => driver.logTrace],
-    [LumberjackLevel.Warning, (driver) => driver.logWarning],
     ['critical', (driver) => driver.logCritical],
     ['debug', (driver) => driver.logDebug],
     ['error', (driver) => driver.logError],
     ['info', (driver) => driver.logInfo],
     ['trace', (driver) => driver.logTrace],
     ['warn', (driver) => driver.logWarning],
-  ] as ReadonlyArray<[LumberjackLogLevel | LogLevel, (driver: LumberjackLogDriver) => (driverLog: LumberjackLogDriverLog) => void]>)(
+  ] as ReadonlyArray<[LumberjackLogLevel, (driver: LumberjackLogDriver) => (driverLog: LumberjackLogDriverLog) => void]>)(
     `implements a spy when using the %s log level`,
     (logLevel, logMethod) => {
       it('throws an error on first log when the default log driver configuration is used', () => {
         const { driver } = setup();
         const driverLog = createDriverLog(logLevel, logLevel, '', 'ErrorThrowingDriverDefaultTest');
 
-        expect(() => logMethod(driver).call(driver, driverLog)).toThrowError();
+        expect(() => logMethod(driver).call(driver, driverLog)).toThrow();
       });
 
       describe.each([0, 1, 2, 3])(
@@ -64,7 +56,7 @@ describe(ErrorThrowingDriver.name, () => {
             const act = () => logMethod(driver).call(driver, driverLog);
             repeatSideEffect(logsBeforeThrowing, act);
 
-            expect(act).toThrowError();
+            expect(act).toThrow();
           });
         }
       );

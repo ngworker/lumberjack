@@ -4,6 +4,7 @@ export default {
   preset: '../../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   globals: {},
+  coverageReporters: ['lcovonly', 'text-summary'],
   coverageDirectory: '../../../../coverage/packages/internal/console-driver/test-util',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [

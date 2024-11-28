@@ -15,19 +15,15 @@
         "ci": {
           "ci": true,
           "coverage": true
-        },
-        "coverage": {
-          "ci": true,
-          "coverageReporters": ["lcovonly", "text-summary"],
-          "coverage": true
         }
       }
     },
     "lint": {
+      "outputs": ["{workspaceRoot}/reports/packages/internal/console-driver/test-util/lint/report.json"],
       "configurations": {
         "report": {
           "format": "json",
-          "output-file": "reports/packages/internal/console-driver/test-util/lint/report.json"
+          "output-file": "../../../../reports/packages/internal/console-driver/test-util/lint/report.json"
         }
       }
     }

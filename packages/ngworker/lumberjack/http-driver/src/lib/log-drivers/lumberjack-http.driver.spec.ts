@@ -4,8 +4,6 @@ import { VERSION } from '@angular/platform-browser';
 
 import { createCriticalDriverLog, createDriverLog, repeatSideEffect } from '@internal/test-util';
 import {
-  LogLevel,
-  LumberjackLevel,
   LumberjackLogDriver,
   LumberjackLogDriverLog,
   lumberjackLogDriverToken,
@@ -104,19 +102,13 @@ describe(LumberjackHttpDriver.name, () => {
   });
 
   describe.each([
-    [LumberjackLevel.Critical, (driver) => driver.logCritical],
-    [LumberjackLevel.Debug, (driver) => driver.logDebug],
-    [LumberjackLevel.Error, (driver) => driver.logError],
-    [LumberjackLevel.Info, (driver) => driver.logInfo],
-    [LumberjackLevel.Trace, (driver) => driver.logTrace],
-    [LumberjackLevel.Warning, (driver) => driver.logWarning],
     ['critical', (driver) => driver.logCritical],
     ['debug', (driver) => driver.logDebug],
     ['error', (driver) => driver.logError],
     ['info', (driver) => driver.logInfo],
     ['trace', (driver) => driver.logTrace],
     ['warn', (driver) => driver.logWarning],
-  ] as ReadonlyArray<[LumberjackLogLevel | LogLevel, (driver: LumberjackLogDriver<HttpDriverPayload>) => (driverLog: LumberjackLogDriverLog<HttpDriverPayload>) => void]>)(
+  ] as ReadonlyArray<[LumberjackLogLevel, (driver: LumberjackLogDriver<HttpDriverPayload>) => (driverLog: LumberjackLogDriverLog<HttpDriverPayload>) => void]>)(
     'logs to a web API using the %s log level',
     (logLevel, logMethod) => {
       it('sends the driver log to the configured URL', () => {

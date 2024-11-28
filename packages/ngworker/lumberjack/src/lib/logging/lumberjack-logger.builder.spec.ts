@@ -2,7 +2,7 @@ import { TestBed } from '@angular/core/testing';
 
 import { FakeTimeService } from '@internal/test-util';
 
-import { LogLevel, LumberjackLogLevel } from '../logs/lumberjack-log-level';
+import { LumberjackLogLevel } from '../logs/lumberjack-log-level';
 import { LumberjackLogPayload } from '../logs/lumberjack-log-payload';
 import { LumberjackLog } from '../logs/lumberjack.log';
 import { LumberjackTimeService } from '../time/lumberjack-time.service';
@@ -16,7 +16,7 @@ interface TestPayload extends LumberjackLogPayload {
   testProperty: string;
 }
 
-const lumberjackLogLevels: (LumberjackLogLevel | LogLevel)[] = ['critical', 'error'];
+const lumberjackLogLevels: LumberjackLogLevel[] = ['critical', 'error'];
 
 describe(LumberjackLoggerBuilder.name, () => {
   const testMessage = 'Test Message';

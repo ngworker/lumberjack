@@ -30,8 +30,7 @@
     },
     "@nx/eslint:lint": {
       "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
-      "cache": true,
-      "outputs": ["{options.outputFile}"]
+      "cache": true
     },
     "@angular-devkit/build-angular:application": {
       "cache": true,
