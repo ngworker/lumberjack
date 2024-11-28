@@ -88,7 +88,8 @@
           "coverageReporters": ["lcovonly", "text-summary"],
           "coverage": true
         }
-      }
+      },
+      "defaultConfiguration": "coverage"
     },
     "serve-static": {
       "executor": "@nx/web:file-server",
@@ -98,6 +99,16 @@
         "staticFilePath": "dist/packages/examples/lumberjack-app/browser",
         "spa": true
       }
+    },
+    "lint": {
+      "outputs": ["{workspaceRoot}/reports/packages/examples/lumberjack-app/lint/report.json"],
+      "configurations": {
+        "report": {
+          "format": "json",
+          "output-file": "../../../reports/packages/examples/lumberjack-app/lint/report.json"
+        }
+      },
+      "defaultConfiguration": "report"
     }
   }
 }

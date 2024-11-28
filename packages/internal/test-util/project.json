@@ -21,15 +21,18 @@
           "coverageReporters": ["lcovonly", "text-summary"],
           "coverage": true
         }
-      }
+      },
+      "defaultConfiguration": "coverage"
     },
     "lint": {
+      "outputs": ["{workspaceRoot}/reports/packages/internal/test-util/lint/report.json"],
       "configurations": {
         "report": {
           "format": "json",
-          "output-file": "reports/packages/internal/test-util/lint/report.json"
+          "output-file": "../../../reports/packages/internal/test-util/lint/report.json"
         }
-      }
+      },
+      "defaultConfiguration": "report"
     }
   }
 }
