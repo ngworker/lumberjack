@@ -63,8 +63,7 @@
           "ci": true,
           "coverage": true
         }
-      },
-      "defaultConfiguration": "ci"
+      }
     },
     "lint": {
       "outputs": ["{workspaceRoot}/reports/packages/ngworker/lumberjack/lint/report.json"],
@@ -73,8 +72,7 @@
           "format": "json",
           "output-file": "../../../reports/packages/ngworker/lumberjack/lint/report.json"
         }
-      },
-      "defaultConfiguration": "report"
+      }
     },
     "version": {
       "dependsOn": ["build"],

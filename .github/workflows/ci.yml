@@ -99,7 +99,6 @@ jobs:
 
   sonarcloud:
     name: SonarCloud
-    needs: main
     runs-on: ubuntu-latest
     permissions:
       id-token: write
@@ -114,16 +113,16 @@ jobs:
         uses: ./.github/actions/setup
       # Uses the cache generated in the distributed step (Needed for the sonar eslint reports).
       - name: Lint with reports
-        run: pnpm exec nx run-many --all --target=lint --configuration=report --parallel=2 --max-warnings=0
+        run: pnpm exec nx run-many --target=lint --configuration=report --parallel=2 --max-warnings=0
         # Uses the cache generated in the distributed step (Needed for the sonar jest coverage reports).
       - name: Tests with coverage
-        run: pnpm exec nx run-many --all --target=test --configuration=coverage --parallel=1 --max-workers=2
+        run: pnpm exec nx run-many --target=test --configuration=ci --parallel=1 --max-workers=2
 
       - name: Configure Sonar report paths
         run: pnpm run configure-sonar-report-paths
 
       - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@v2.1.1
+        uses: sonarsource/sonarcloud-github-action@v3.1.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

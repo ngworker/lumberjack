@@ -16,8 +16,7 @@
           "ci": true,
           "coverage": true
         }
-      },
-      "defaultConfiguration": "ci"
+      }
     },
     "lint": {
       "outputs": ["{workspaceRoot}/reports/packages/internal/console-driver/test-util/lint/report.json"],
@@ -26,8 +25,7 @@
           "format": "json",
           "output-file": "../../../../reports/packages/internal/console-driver/test-util/lint/report.json"
         }
-      },
-      "defaultConfiguration": "report"
+      }
     }
   }
 }

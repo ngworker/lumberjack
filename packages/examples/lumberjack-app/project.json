@@ -83,8 +83,7 @@
           "ci": true,
           "coverage": true
         }
-      },
-      "defaultConfiguration": "ci"
+      }
     },
     "serve-static": {
       "executor": "@nx/web:file-server",
@@ -102,8 +101,7 @@
           "format": "json",
           "output-file": "../../../reports/packages/examples/lumberjack-app/lint/report.json"
         }
-      },
-      "defaultConfiguration": "report"
+      }
     }
   }
 }
