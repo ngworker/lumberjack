@@ -2,6 +2,19 @@
 
 This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
 
+## [19.0.0](https://github.com/ngworker/lumberjack/compare/v18.0.0...v19.0.0) (2024-11-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* remove deprecated enum levels (#216)
+* update to the latest nx (#215)
+
+### Features
+
+* remove deprecated enum levels ([#216](https://github.com/ngworker/lumberjack/issues/216)) ([60cf185](https://github.com/ngworker/lumberjack/commit/60cf185c35e15246298380e0cbe71466c0f186b7))
+* update to the latest nx ([#215](https://github.com/ngworker/lumberjack/issues/215)) ([762206f](https://github.com/ngworker/lumberjack/commit/762206fbe948d2a6479573b96b01f32e1c9146d7)), closes [#213](https://github.com/ngworker/lumberjack/issues/213)
+
 ## [18.0.0](https://github.com/ngworker/lumberjack/compare/v17.0.1...v18.0.0) (2024-07-14)
 
 
