@@ -51,7 +51,7 @@ levels for the HTTP driver as seen in the following example.
 ```ts
 import { bootstrapApplication } from '@angular/platform-browser';
 
-import { Level as LumberjackLevel, provideLumberjack } from '@ngworker/lumberjack';
+import { LumberjackLevel, provideLumberjack } from '@ngworker/lumberjack';
 import { provideLumberjackConsoleDriver } from '@ngworker/lumberjack/console-driver';
 import { provideLumberjackHttpDriver, withHttpConfig } from '@ngworker/lumberjack/http-driver';
 
