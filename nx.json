@@ -127,7 +127,6 @@
       "commitArgs": "--no-verify"
     },
     "changelog": {
-      "automaticFromRef": true,
       "projectChangelogs": {
         "createRelease": "github",
         "file": false
