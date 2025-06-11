@@ -122,7 +122,7 @@ jobs:
         run: pnpm run configure-sonar-report-paths
 
       - name: SonarCloud Scan
-        uses: sonarsource/sonarcloud-github-action@v3.1.0
+        uses: SonarSource/sonarqube-scan-action@v5.2.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
