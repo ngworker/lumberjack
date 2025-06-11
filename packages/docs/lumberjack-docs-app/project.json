@@ -26,6 +26,7 @@
     },
     "start": {
       "command": "docusaurus start",
+      "continuous": true,
       "options": {
         "cwd": "packages/docs/lumberjack-docs-app"
       }

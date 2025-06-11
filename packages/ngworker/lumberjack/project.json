@@ -73,34 +73,6 @@
           "output-file": "../../../reports/packages/ngworker/lumberjack/lint/report.json"
         }
       }
-    },
-    "version": {
-      "dependsOn": ["build"],
-      "executor": "@jscutlery/semver:version",
-      "options": {
-        "preset": "conventional",
-        "tagPrefix": "v",
-        "noVerify": true,
-        "push": true,
-        "preid": "beta",
-        "syncVersions": false,
-        "commitMessageFormat": "release(${projectName}): 🎸 cut release to ${version}",
-        "postTargets": ["build", "github", "publish"]
-      }
-    },
-    "github": {
-      "executor": "@jscutlery/semver:github",
-      "options": {
-        "tag": "${tag}",
-        "notes": "${notes}"
-      }
-    },
-    "publish": {
-      "executor": "ngx-deploy-npm:deploy",
-      "options": {
-        "access": "public",
-        "distFolderPath": "dist/packages/ngworker/lumberjack"
-      }
     }
   }
 }
