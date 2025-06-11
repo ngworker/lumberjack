@@ -4,18 +4,10 @@
   "projectType": "library",
   "sourceRoot": "packages/ngworker/lumberjack/src",
   "prefix": "ngworker",
-  "tags": [
-    "scope:public",
-    "type:package"
-  ],
-  "implicitDependencies": [
-    "!internal-console-driver-test-util",
-    "!internal-test-util"
-  ],
+  "tags": ["scope:public", "type:package"],
+  "implicitDependencies": ["!internal-console-driver-test-util", "!internal-test-util"],
   "namedInputs": {
-    "projectSpecificFiles": [
-      "{workspaceRoot}/README.md"
-    ]
+    "projectSpecificFiles": ["{workspaceRoot}/README.md"]
   },
   "targets": {
     "build": {
@@ -43,15 +35,11 @@
         }
       },
       "defaultConfiguration": "production",
-      "outputs": [
-        "{workspaceRoot}/dist/packages/ngworker/lumberjack"
-      ]
+      "outputs": ["{workspaceRoot}/dist/packages/ngworker/lumberjack"]
     },
     "build-package": {
       "executor": "@nx/angular:package",
-      "outputs": [
-        "{workspaceRoot}/dist/{projectRoot}"
-      ],
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
         "project": "packages/ngworker/lumberjack/ng-package.json"
       },
@@ -68,10 +56,7 @@
     "test": {
       "options": {
         "passWithNoTests": true,
-        "reporters": [
-          "default",
-          "github-actions"
-        ]
+        "reporters": ["default", "github-actions"]
       },
       "configurations": {
         "ci": {
@@ -81,48 +66,12 @@
       }
     },
     "lint": {
-      "outputs": [
-        "{workspaceRoot}/reports/packages/ngworker/lumberjack/lint/report.json"
-      ],
+      "outputs": ["{workspaceRoot}/reports/packages/ngworker/lumberjack/lint/report.json"],
       "configurations": {
         "report": {
           "format": "json",
           "output-file": "../../../reports/packages/ngworker/lumberjack/lint/report.json"
         }
-      }
-    },
-    "version": {
-      "dependsOn": [
-        "build"
-      ],
-      "executor": "@jscutlery/semver:version",
-      "options": {
-        "preset": "conventional",
-        "tagPrefix": "v",
-        "noVerify": true,
-        "push": true,
-        "preid": "beta",
-        "syncVersions": false,
-        "commitMessageFormat": "release(${projectName}): 🎸 cut release to ${version}",
-        "postTargets": [
-          "build",
-          "github",
-          "publish"
-        ]
-      }
-    },
-    "github": {
-      "executor": "@jscutlery/semver:github",
-      "options": {
-        "tag": "${tag}",
-        "notes": "${notes}"
-      }
-    },
-    "publish": {
-      "executor": "ngx-deploy-npm:deploy",
-      "options": {
-        "access": "public",
-        "distFolderPath": "dist/packages/ngworker/lumberjack"
       }
     }
   }

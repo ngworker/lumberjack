@@ -1,65 +1,73 @@
-name: Release NPM packages
-
-env:
-  NODE_OPTIONS: --max-old-space-size=6144
-  NX_MAX_PARALLEL: 2
+name: Release
 
 on:
-  workflow_dispatch:
-    inputs:
-      release_as:
-        type: 'choice'
-        description: 'The release type. It can be one of: major, minor, patch, premajor, preminor, prepatch, or prerelease. Defaults to "patch"'
-        required: true
-        default: 'patch'
-        options:
-          - major
-          - minor
-          - patch
-          - premajor
-          - preminor
-          - prepatch
-          - prerelease
+  release:
+    types: [published]
 
 jobs:
   release:
     runs-on: ubuntu-latest
-
-    # Only release from the main branch
-    if: github.ref == 'refs/heads/main'
+    permissions:
+      contents: read
+      id-token: write # needed for provenance data generation
 
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
         with:
-          # Necessary for nx affected commands
           fetch-depth: 0
-      - name: Setup
-        uses: ./.github/actions/setup
-        with:
-          git_bot_token: ${{ secrets.GIT_BOT_TOKEN }}
+          filter: tree:0
 
-      - name: Release @ngworker/lumberjack
+      - uses: pnpm/action-setup@v2
+        with:
+          version: 9
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'pnpm'
+          registry-url: 'https://registry.npmjs.org'
+
+      - run: pnpm install --frozen-lockfile
+
+      - name: Print Environment Info
+        run: npx nx report
+        shell: bash
+
+      - name: Extract Project from GitHub Release Tag
+        id: extract-project
+        run: |
+          RELEASE_TAG=${{ github.event.release.tag_name }}
+          PROJECT_NAME=$(echo $RELEASE_TAG | sed -E 's/(.+)@v.*/\1/')
+          echo "PROJECT_NAME=$PROJECT_NAME" >> $GITHUB_ENV
+          echo "RELEASE_TAG=$RELEASE_TAG" >> $GITHUB_ENV
+          echo "Project name: $PROJECT_NAME extracted from tag: $RELEASE_TAG"
+        shell: bash
+
+      - name: Determine if Prerelease
+        id: check-prerelease
+        run: |
+          IS_PRERELEASE=${{ github.event.release.prerelease }}
+          NPM_TAG="latest"
+          if [ "$IS_PRERELEASE" = "true" ]; then
+            NPM_TAG="next"
+          fi
+          echo "NPM_TAG=$NPM_TAG" >> $GITHUB_ENV
+          echo "Publishing with NPM tag: $NPM_TAG"
+        shell: bash
+
+      - name: Build
+        run: pnpm exec nx build ${{ env.PROJECT_NAME }}
+        shell: bash
+
+      - name: Publish Package
+        shell: bash
+        run: pnpm exec nx release publish --projects=${{ env.PROJECT_NAME }} --tag=${{ env.NPM_TAG }}
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          GH_TOKEN: ${{ secrets.GH_TOKEN }}
-        # Generates the changelog commit and tags and pushes them to Github.
-        # Use two post actions to Create a release in Github and for Publishing the package to NPM
-        shell: bash
-        run: pnpm exec nx version ngworker-lumberjack --releaseAs=${{ github.event.inputs.release_as }}
-
-      # Needed if we want to automize multiple releases with the affected commands.
-      - name: Tag last-release
-        shell: bash
-        run: git tag -f last-release
-
-      - name: Push changes
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GH_TOKEN }}
-          branch: ${{ github.ref }}
-          force: true
-          tags: true
+          NPM_CONFIG_PROVENANCE: true
+          # This is needed for actions/setup-node authentication to work
+          npm_config_registry: https://registry.npmjs.org
 
   deploy-docs:
     name: '[Merge] Deploy docs to GitHub Pages'

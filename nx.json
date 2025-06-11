@@ -112,5 +112,28 @@
     }
   ],
   "nxCloudAccessToken": "OTNjMDE5MjItZjQ3Mi00NTM0LTgxNjYtODBjY2EyMTgzYzhlfHJlYWQtd3JpdGU=",
-  "defaultBase": "main"
+  "defaultBase": "main",
+  "release": {
+    "releaseTagPattern": "v{version}",
+    "projects": ["ngworker-lumberjack"],
+    "projectsRelationship": "independent",
+    "version": {
+      "useLegacyVersioning": false,
+      "preVersionCommand": "pnpm exec nx run-many -t build",
+      "conventionalCommits": true
+    },
+    "git": {
+      "commit": true,
+      "commitArgs": "--no-verify"
+    },
+    "changelog": {
+      "automaticFromRef": true,
+      "projectChangelogs": {
+        "createRelease": "github",
+        "file": false
+      },
+      "workspaceChangelog": false,
+      "commitMessageFormat": "conventional"
+    }
+  }
 }

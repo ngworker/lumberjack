@@ -1,109 +1,93 @@
-# Changelog
-
-This file was generated using [@jscutlery/semver](https://github.com/jscutlery/semver).
-
 ## [19.0.0](https://github.com/ngworker/lumberjack/compare/v18.0.0...v19.0.0) (2024-11-28)
-
 
 ### ⚠ BREAKING CHANGES
 
-* remove deprecated enum levels (#216)
-* update to the latest nx (#215)
+- remove deprecated enum levels (#216)
+- update to the latest nx (#215)
 
 ### Features
 
-* remove deprecated enum levels ([#216](https://github.com/ngworker/lumberjack/issues/216)) ([60cf185](https://github.com/ngworker/lumberjack/commit/60cf185c35e15246298380e0cbe71466c0f186b7))
-* update to the latest nx ([#215](https://github.com/ngworker/lumberjack/issues/215)) ([762206f](https://github.com/ngworker/lumberjack/commit/762206fbe948d2a6479573b96b01f32e1c9146d7)), closes [#213](https://github.com/ngworker/lumberjack/issues/213)
+- remove deprecated enum levels ([#216](https://github.com/ngworker/lumberjack/issues/216)) ([60cf185](https://github.com/ngworker/lumberjack/commit/60cf185c35e15246298380e0cbe71466c0f186b7))
+- update to the latest nx ([#215](https://github.com/ngworker/lumberjack/issues/215)) ([762206f](https://github.com/ngworker/lumberjack/commit/762206fbe948d2a6479573b96b01f32e1c9146d7)), closes [#213](https://github.com/ngworker/lumberjack/issues/213)
 
 ## [18.0.0](https://github.com/ngworker/lumberjack/compare/v17.0.1...v18.0.0) (2024-07-14)
 
-
 ### ⚠ BREAKING CHANGES
 
-* remove ng modules (#210)
-* upgrade to nx 19.1 and angular 18 (#209)
+- remove ng modules (#210)
+- upgrade to nx 19.1 and angular 18 (#209)
 
 ### Features
 
-* remove ng modules ([#210](https://github.com/ngworker/lumberjack/issues/210)) ([7cb8941](https://github.com/ngworker/lumberjack/commit/7cb8941ba4a34e4dbe7de0d8ae33125e9aa4e3fa))
-* upgrade to nx 19.1 and angular 18 ([#209](https://github.com/ngworker/lumberjack/issues/209)) ([e6bd458](https://github.com/ngworker/lumberjack/commit/e6bd458e747dbcd7146ab0a0c35c72525b2ef4c6))
+- remove ng modules ([#210](https://github.com/ngworker/lumberjack/issues/210)) ([7cb8941](https://github.com/ngworker/lumberjack/commit/7cb8941ba4a34e4dbe7de0d8ae33125e9aa4e3fa))
+- upgrade to nx 19.1 and angular 18 ([#209](https://github.com/ngworker/lumberjack/issues/209)) ([e6bd458](https://github.com/ngworker/lumberjack/commit/e6bd458e747dbcd7146ab0a0c35c72525b2ef4c6))
 
 ## [17.0.1](https://github.com/ngworker/lumberjack/compare/v17.0.0...v17.0.1) (2024-02-04)
 
-
 ### Bug Fixes
 
-* release workflow ([#205](https://github.com/ngworker/lumberjack/issues/205)) ([8253fdb](https://github.com/ngworker/lumberjack/commit/8253fdb4e9e41a3bbf10cf9cfd0183ae17cb2f3d))
+- release workflow ([#205](https://github.com/ngworker/lumberjack/issues/205)) ([8253fdb](https://github.com/ngworker/lumberjack/commit/8253fdb4e9e41a3bbf10cf9cfd0183ae17cb2f3d))
 
 ## [17.0.0](https://github.com/ngworker/lumberjack/compare/v16.0.0...v17.0.0) (2024-01-31)
 
-
 ### ⚠ BREAKING CHANGES
 
-* upgrade to angular 17 and nx 17.2 (#203)
-* add support for string literals and deprecate enums (#199)
+- upgrade to angular 17 and nx 17.2 (#203)
+- add support for string literals and deprecate enums (#199)
 
 ### Features
 
-* add support for string literals and deprecate enums ([#199](https://github.com/ngworker/lumberjack/issues/199)) ([e4016fc](https://github.com/ngworker/lumberjack/commit/e4016fcdeb6a05e0d211fbc2b2ef99a6e958a8ce)), closes [#192](https://github.com/ngworker/lumberjack/issues/192)
-
+- add support for string literals and deprecate enums ([#199](https://github.com/ngworker/lumberjack/issues/199)) ([e4016fc](https://github.com/ngworker/lumberjack/commit/e4016fcdeb6a05e0d211fbc2b2ef99a6e958a8ce)), closes [#192](https://github.com/ngworker/lumberjack/issues/192)
 
 ### Bug Fixes
 
-* lumberjack, angular peer dependency versions ([#202](https://github.com/ngworker/lumberjack/issues/202)) ([52ebcb7](https://github.com/ngworker/lumberjack/commit/52ebcb725819818b70b131f49a9faaf4acbbf74f))
-
+- lumberjack, angular peer dependency versions ([#202](https://github.com/ngworker/lumberjack/issues/202)) ([52ebcb7](https://github.com/ngworker/lumberjack/commit/52ebcb725819818b70b131f49a9faaf4acbbf74f))
 
 ### Miscellaneous Chores
 
-* upgrade to angular 17 and nx 17.2 ([#203](https://github.com/ngworker/lumberjack/issues/203)) ([6d75549](https://github.com/ngworker/lumberjack/commit/6d75549f35bf10205f092bc3f4de6f62a97d475e))
+- upgrade to angular 17 and nx 17.2 ([#203](https://github.com/ngworker/lumberjack/issues/203)) ([6d75549](https://github.com/ngworker/lumberjack/commit/6d75549f35bf10205f092bc3f4de6f62a97d475e))
 
 ## [16.0.0](https://github.com/ngworker/lumberjack/compare/v15.0.5...v16.0.0) (2024-01-20)
 
-
 ### ⚠ BREAKING CHANGES
 
-* deprecate ng modules (#196)
+- deprecate ng modules (#196)
 
 ### Features
 
-* add log level-scoped methods to `LumberjackService` ([#186](https://github.com/ngworker/lumberjack/issues/186)) ([d446427](https://github.com/ngworker/lumberjack/commit/d446427c094f4b75a0d0a4759bd7b554ddf46fc6)), closes [#140](https://github.com/ngworker/lumberjack/issues/140) [#181](https://github.com/ngworker/lumberjack/issues/181)
-* deprecate ng modules ([#196](https://github.com/ngworker/lumberjack/issues/196)) ([882638d](https://github.com/ngworker/lumberjack/commit/882638d638377264ebbec5f8616f873cc4f346f8)), closes [#190](https://github.com/ngworker/lumberjack/issues/190)
+- add log level-scoped methods to `LumberjackService` ([#186](https://github.com/ngworker/lumberjack/issues/186)) ([d446427](https://github.com/ngworker/lumberjack/commit/d446427c094f4b75a0d0a4759bd7b554ddf46fc6)), closes [#140](https://github.com/ngworker/lumberjack/issues/140) [#181](https://github.com/ngworker/lumberjack/issues/181)
+- deprecate ng modules ([#196](https://github.com/ngworker/lumberjack/issues/196)) ([882638d](https://github.com/ngworker/lumberjack/commit/882638d638377264ebbec5f8616f873cc4f346f8)), closes [#190](https://github.com/ngworker/lumberjack/issues/190)
 
 ## [15.0.5](https://github.com/ngworker/lumberjack/compare/v15.0.4...v15.0.5) (2023-08-19)
 
-
 ### Reverts
 
-* revert "fix: add support for version 16 of Angular" (#176) ([5766da2](https://github.com/ngworker/lumberjack/commit/5766da201e97b8256a9e888d9a866d04e6a88219)), closes [#176](https://github.com/ngworker/lumberjack/issues/176)
+- revert "fix: add support for version 16 of Angular" (#176) ([5766da2](https://github.com/ngworker/lumberjack/commit/5766da201e97b8256a9e888d9a866d04e6a88219)), closes [#176](https://github.com/ngworker/lumberjack/issues/176)
 
 ## [15.0.4](https://github.com/ngworker/lumberjack/compare/v15.0.3...v15.0.4) (2023-08-16)
 
-
 ### Bug Fixes
 
-* make rxjs version dynamic to support newest versions of Angular ([#175](https://github.com/ngworker/lumberjack/issues/175)) ([177a7e3](https://github.com/ngworker/lumberjack/commit/177a7e3278356192d71b67938259433f54c0543f))
+- make rxjs version dynamic to support newest versions of Angular ([#175](https://github.com/ngworker/lumberjack/issues/175)) ([177a7e3](https://github.com/ngworker/lumberjack/commit/177a7e3278356192d71b67938259433f54c0543f))
 
 ## [15.0.3](https://github.com/ngworker/lumberjack/compare/v15.0.2...v15.0.3) (2023-08-16)
 
-
 ### Bug Fixes
 
-* manually set @angular/platform-browser as optional peerDependency ([#174](https://github.com/ngworker/lumberjack/issues/174)) ([3c9b3b1](https://github.com/ngworker/lumberjack/commit/3c9b3b10f42ff22e5933005b1a028bc1d903ddfe)), closes [#170](https://github.com/ngworker/lumberjack/issues/170)
+- manually set @angular/platform-browser as optional peerDependency ([#174](https://github.com/ngworker/lumberjack/issues/174)) ([3c9b3b1](https://github.com/ngworker/lumberjack/commit/3c9b3b10f42ff22e5933005b1a028bc1d903ddfe)), closes [#170](https://github.com/ngworker/lumberjack/issues/170)
 
 ## [15.0.2](https://github.com/ngworker/lumberjack/compare/v15.0.1...v15.0.2) (2023-08-16)
 
-
 ### Bug Fixes
 
-* add support for version 16 of Angular ([#171](https://github.com/ngworker/lumberjack/issues/171)) ([1b71853](https://github.com/ngworker/lumberjack/commit/1b718535b72196a845f4601c089ce5e318229b59)), closes [#170](https://github.com/ngworker/lumberjack/issues/170)
-* pushing the tags and commits is necessary ([#173](https://github.com/ngworker/lumberjack/issues/173)) ([8ad9046](https://github.com/ngworker/lumberjack/commit/8ad904686b246d7cd02d47a100f7216393940981))
+- add support for version 16 of Angular ([#171](https://github.com/ngworker/lumberjack/issues/171)) ([1b71853](https://github.com/ngworker/lumberjack/commit/1b718535b72196a845f4601c089ce5e318229b59)), closes [#170](https://github.com/ngworker/lumberjack/issues/170)
+- pushing the tags and commits is necessary ([#173](https://github.com/ngworker/lumberjack/issues/173)) ([8ad9046](https://github.com/ngworker/lumberjack/commit/8ad904686b246d7cd02d47a100f7216393940981))
 
 ## [15.0.1](///compare/v15.0.0...v15.0.1) (2023-06-16)
 
-
 ### Bug Fixes
 
-* format issues ([#161](undefined/undefined/undefined/issues/161)) 15a230f
+- format issues ([#161](undefined/undefined/undefined/issues/161)) 15a230f
 
 ## [15.0.0](///compare/v14.0.0...v15.0.0) (2023-06-12)
 
