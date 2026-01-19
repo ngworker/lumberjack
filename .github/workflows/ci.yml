@@ -44,7 +44,7 @@ jobs:
           node-version: 22
       # Connect your workspace on nx.app and uncomment this to enable task distribution.
       # The "--stop-agents-after" is optional, but allows idle agents to shut down once the "build" targets have been requested
-      - run: pnpm dlx nx-cloud start-ci-run --distribute-on="4 linux-medium-js"
+      # - run: pnpm dlx nx-cloud start-ci-run --distribute-on="4 linux-medium-js"
 
       - uses: nrwl/nx-set-shas@v4
 
