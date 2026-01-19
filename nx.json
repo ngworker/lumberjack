@@ -163,7 +163,6 @@
       }
     }
   ],
-  "nxCloudAccessToken": "OTNjMDE5MjItZjQ3Mi00NTM0LTgxNjYtODBjY2EyMTgzYzhlfHJlYWQtd3JpdGU=",
   "defaultBase": "main",
   "release": {
     "projects": ["ngworker-lumberjack"],
@@ -187,5 +186,6 @@
     "releaseTag": {
       "pattern": "v{version}"
     }
-  }
+  },
+  "nxCloudId": "67453b3bcfbda5adf9827c70"
 }
