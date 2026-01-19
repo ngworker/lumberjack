@@ -1,4 +1,3 @@
-/* eslint-disable */
 module.exports = {
   displayName: 'examples-lumberjack-app',
   preset: '../../../jest.preset.js',

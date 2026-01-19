@@ -1,4 +1,3 @@
-/* eslint-disable */
 module.exports = {
   displayName: 'internal-console-driver-test-util',
   preset: '../../../../jest.preset.js',

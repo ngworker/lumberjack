@@ -1,4 +1,3 @@
-/* eslint-disable */
 module.exports = {
   displayName: 'ngworker-lumberjack',
   preset: '../../../jest.preset.js',
