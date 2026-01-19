@@ -87,6 +87,7 @@ jobs:
           CI: 1
         run: |
           pnpm install --frozen-lockfile
+          pnpm exec cypress install
           pnpm exec cypress cache path
           pnpm exec cypress cache list
           pnpm exec cypress verify
