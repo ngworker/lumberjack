@@ -169,7 +169,6 @@
     "projects": ["ngworker-lumberjack"],
     "projectsRelationship": "independent",
     "version": {
-      "useLegacyVersioning": false,
       "preVersionCommand": "pnpm exec nx run-many -t build",
       "conventionalCommits": true
     },
