@@ -41,15 +41,14 @@
       "executor": "@nx/angular:package",
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
-        "project": "packages/ngworker/lumberjack/ng-package.json"
+        "project": "packages/ngworker/lumberjack/ng-package.json",
+        "tsConfig": "packages/ngworker/lumberjack/tsconfig.lib.json"
       },
       "configurations": {
         "production": {
           "tsConfig": "packages/ngworker/lumberjack/tsconfig.lib.prod.json"
         },
-        "development": {
-          "tsConfig": "packages/ngworker/lumberjack/tsconfig.lib.json"
-        }
+        "development": {}
       },
       "defaultConfiguration": "production"
     },
