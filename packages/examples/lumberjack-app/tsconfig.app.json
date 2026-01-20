@@ -7,7 +7,8 @@
       "@ngworker/lumberjack": ["dist/packages/ngworker/lumberjack"],
       "@ngworker/lumberjack/console-driver": ["dist/packages/ngworker/lumberjack/console-driver"],
       "@ngworker/lumberjack/http-driver": ["dist/packages/ngworker/lumberjack/http-driver"]
-    }
+    },
+    "moduleResolution": "bundler"
   },
   "files": ["src/main.ts"],
   "include": ["src/**/*.d.ts"],

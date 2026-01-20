@@ -15,7 +15,59 @@
       "unitTestRunner": "jest"
     },
     "@nx/angular:component": {
-      "style": "scss"
+      "style": "scss",
+      "type": "component"
+    },
+    "@schematics/angular:component": {
+      "type": "component"
+    },
+    "@nx/angular:directive": {
+      "type": "directive"
+    },
+    "@schematics/angular:directive": {
+      "type": "directive"
+    },
+    "@nx/angular:service": {
+      "type": "service"
+    },
+    "@schematics/angular:service": {
+      "type": "service"
+    },
+    "@nx/angular:scam": {
+      "type": "component"
+    },
+    "@nx/angular:scam-directive": {
+      "type": "directive"
+    },
+    "@nx/angular:guard": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:guard": {
+      "typeSeparator": "."
+    },
+    "@nx/angular:interceptor": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:interceptor": {
+      "typeSeparator": "."
+    },
+    "@nx/angular:module": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:module": {
+      "typeSeparator": "."
+    },
+    "@nx/angular:pipe": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:pipe": {
+      "typeSeparator": "."
+    },
+    "@nx/angular:resolver": {
+      "typeSeparator": "."
+    },
+    "@schematics/angular:resolver": {
+      "typeSeparator": "."
     }
   },
   "defaultProject": "examples-lumberjack-app",
@@ -111,14 +163,11 @@
       }
     }
   ],
-  "nxCloudAccessToken": "OTNjMDE5MjItZjQ3Mi00NTM0LTgxNjYtODBjY2EyMTgzYzhlfHJlYWQtd3JpdGU=",
   "defaultBase": "main",
   "release": {
-    "releaseTagPattern": "v{version}",
     "projects": ["ngworker-lumberjack"],
     "projectsRelationship": "independent",
     "version": {
-      "useLegacyVersioning": false,
       "preVersionCommand": "pnpm exec nx run-many -t build",
       "conventionalCommits": true
     },
@@ -133,6 +182,10 @@
       },
       "workspaceChangelog": false,
       "commitMessageFormat": "conventional"
+    },
+    "releaseTag": {
+      "pattern": "v{version}"
     }
-  }
+  },
+  "nxCloudId": "67453b3bcfbda5adf9827c70"
 }

@@ -37,14 +37,14 @@ jobs:
 
       - uses: pnpm/action-setup@v2
         with:
-          version: 9.5
+          version: 10
       # Cache node_modules
       - uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: 22
       # Connect your workspace on nx.app and uncomment this to enable task distribution.
       # The "--stop-agents-after" is optional, but allows idle agents to shut down once the "build" targets have been requested
-      - run: pnpm dlx nx-cloud start-ci-run --distribute-on="4 linux-medium-js"
+      # - run: pnpm dlx nx-cloud start-ci-run --distribute-on="4 linux-medium-js"
 
       - uses: nrwl/nx-set-shas@v4
 
@@ -58,9 +58,9 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.npm
-          key: ${{ runner.os }}-node-${{ github.ref }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-node-${{ github.ref }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+            ${{ runner.os }}-node-
 
       # we use the exact restore key to avoid Cypress binary snowballing
       # https://glebbahmutov.com/blog/do-not-let-cypress-cache-snowball/
@@ -68,18 +68,18 @@ jobs:
         uses: actions/cache@v4
         with:
           path: ~/.cache/Cypress
-          key: cypress-${{ runner.os }}-cypress-${{ github.ref }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: cypress-${{ runner.os }}-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            cypress-${{ runner.os }}-cypress-${{ github.ref }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+            cypress-${{ runner.os }}-
 
       # Cache local node_modules to pass to testing jobs
       - name: Cache local node_modules
         uses: actions/cache@v4
         with:
           path: node_modules
-          key: ${{ runner.os }}-node-modules-${{ github.ref }}-${{ hashFiles('**/pnpm-lock.yaml') }}
+          key: ${{ runner.os }}-node-modules-${{ hashFiles('**/pnpm-lock.yaml') }}
           restore-keys: |
-            ${{ runner.os }}-node-modules-${{ github.ref }}-
+            ${{ runner.os }}-node-modules-
 
       - name: install dependencies and verify Cypress
         env:
@@ -87,6 +87,7 @@ jobs:
           CI: 1
         run: |
           pnpm install --frozen-lockfile
+          pnpm exec cypress install
           pnpm exec cypress cache path
           pnpm exec cypress cache list
           pnpm exec cypress verify
@@ -95,7 +96,7 @@ jobs:
       - name: Run NX Commands
         run: |
           pnpm exec nx-cloud record -- nx format:check
-          pnpm exec nx affected -t lint test:ci build e2e-ci
+          pnpm exec nx affected -t lint test:ci build e2e
 
   sonarcloud:
     name: SonarCloud

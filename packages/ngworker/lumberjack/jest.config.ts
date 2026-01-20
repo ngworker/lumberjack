@@ -1,5 +1,4 @@
-/* eslint-disable */
-export default {
+module.exports = {
   displayName: 'ngworker-lumberjack',
   preset: '../../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
@@ -7,15 +6,15 @@ export default {
   coverageReporters: ['lcovonly', 'text-summary'],
   coverageDirectory: '../../../coverage/packages/ngworker/lumberjack',
   transform: {
-    '^.+\\.(ts|mjs|js|html)$': [
+    [String.raw`^.+\.(ts|mjs|js|html)$`]: [
       'jest-preset-angular',
       {
         tsconfig: '<rootDir>/tsconfig.spec.json',
-        stringifyContentPathRegex: '\\.(html|svg)$',
+        stringifyContentPathRegex: String.raw`\.(html|svg)$`,
       },
     ],
   },
-  transformIgnorePatterns: ['node_modules/(?!.*\\.mjs$)'],
+  transformIgnorePatterns: [String.raw`node_modules/(?!.*\.mjs$)`],
   snapshotSerializers: [
     'jest-preset-angular/build/serializers/no-ng-attributes',
     'jest-preset-angular/build/serializers/ng-snapshot',

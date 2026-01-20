@@ -1,9 +1,8 @@
 import { Component, ViewEncapsulation } from '@angular/core';
 
-/* eslint-disable */
-
 @Component({
   standalone: true,
+  // eslint-disable-next-line @angular-eslint/component-selector
   selector: 'ngworker-nx-welcome',
   template: `
     <!--
