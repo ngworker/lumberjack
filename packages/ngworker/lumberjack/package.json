@@ -1,6 +1,6 @@
 {
   "name": "@ngworker/lumberjack",
-  "version": "21.0.0",
+  "version": "21.0.1",
   "description": "Lumberjack is a versatile Angular logging library, specifically designed to be extended and customized",
   "homepage": "https://ngworker.github.io/lumberjack/",
   "license": "MIT",
