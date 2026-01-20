@@ -121,6 +121,11 @@
     },
     "e2e-ci--**/*": {
       "dependsOn": ["^^build", "^build:production"]
+    },
+    "nx-release-publish": {
+      "options": {
+        "packageRoot": "dist/{projectRoot}"
+      }
     }
   },
   "workspaceLayout": {
