@@ -13,7 +13,8 @@
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
     "moduleResolution": "bundler",
-    "lib": ["dom", "es2022"]
+    "lib": ["dom", "es2022"],
+    "ignoreDeprecations": "6.0"
   },
   "include": ["src/**/*.ts", "src/**/*.js", "cypress.config.ts"]
 }

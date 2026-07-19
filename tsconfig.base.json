@@ -21,7 +21,12 @@
       "@ngworker/lumberjack": ["packages/ngworker/lumberjack/src/index.ts"],
       "@ngworker/lumberjack/console-driver": ["packages/ngworker/lumberjack/console-driver/src/index.ts"],
       "@ngworker/lumberjack/http-driver": ["packages/ngworker/lumberjack/http-driver/src/index.ts"]
-    }
+    },
+    "strict": false,
+    "noUncheckedSideEffectImports": false,
+    "types": ["*"],
+    "esModuleInterop": false,
+    "ignoreDeprecations": "6.0"
   },
   "exclude": ["node_modules", "tmp"]
 }

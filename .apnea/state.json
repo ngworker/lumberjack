@@ -1,0 +1,37 @@
+{
+  "version": 1,
+  "slug": "let-s-migrate-to-the-latest-nx-and-angular-in-or",
+  "step": "committing",
+  "phase_index": 1,
+  "phase_count_hint": null,
+  "rounds": {
+    "plan_review": 1,
+    "phase-01/code_review": 1
+  },
+  "vcs": "jj",
+  "allow_dirty": false,
+  "goal": "let's migrate to the latest nx and angular in order to release the new breaking change version of hte package",
+  "last_error": null,
+  "pending_artifact": null,
+  "pending_role": null,
+  "pending_pane_id": null,
+  "pending_pane_label": null,
+  "role_panes": {
+    "planner": {
+      "pane_id": "w2:p3",
+      "label": "apnea:planner:mrrzh0a0-pkup"
+    },
+    "reviewer": {
+      "pane_id": "w2:p4",
+      "label": "apnea:reviewer:mrrzkekv-szi8"
+    },
+    "coder": {
+      "pane_id": "w2:p5",
+      "label": "apnea:coder:mrrzo4x0-zg9k"
+    }
+  },
+  "package_root": "/Users/nachovazquez/work/1-projects/naxodev/pi-apnea",
+  "reviewer_tree_fingerprint": null,
+  "current_phase_package": ".apnea/artifacts/phase-01/round-1/phase-package.md",
+  "current_code_review": ".apnea/artifacts/phase-01/round-1/code-review.md"
+}
