@@ -58,3 +58,7 @@ migrations.json
 .nx/polygraph
 .nx/self-healing
 .nx/migrate-runs
+
+# Local agent harness + Nx migration scratch (never product)
+.apnea/
+tools/ai-migrations/
