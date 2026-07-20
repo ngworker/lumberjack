@@ -1,0 +1,780 @@
+$ pnpm exec nx release version --dry-run
+
+ NX   Executing pre-version command
+
+
+ NX   Running release version for project: ngworker-lumberjack
+
+ngworker-lumberjack 🏷️  Resolved the current version as 21.0.1 from git tag "v21.0.1", based on releaseTag.pattern "v{version}"
+ngworker-lumberjack 📄 Resolved the specifier as "minor" using git history and the conventional commits standard
+ngworker-lumberjack ❓ Applied semver relative bump "minor", derived from conventional commits data, to get new version 21.1.0
+ngworker-lumberjack ✍️  New version 21.1.0 written to manifest: packages/ngworker/lumberjack/package.json
+
+
+    "name": "@ngworker/lumberjack",
+-   "version": "21.0.1",
++   "version": "21.1.0",
+    "description": "Lumberjack is a versatile Angular logging library, specifically designed to be extended and customized",
+
+
+ NX   Committing changes with git
+
+UPDATE packages/ngworker/lumberjack/package.json [dry-run]
+
+NOTE: The "dryRun" flag means no changes were made.
+exit=0
+
+$ pnpm exec nx format:check
+exit=0
+
+$ pnpm run ci
+
+> lumberjack@0.0.0 ci /Users/nachovazquez/work/1-projects/ngworkers/lumberjack
+> pnpm run lint && pnpm run test && pnpm run build && pnpm run e2e
+
+
+> lumberjack@0.0.0 lint /Users/nachovazquez/work/1-projects/ngworkers/lumberjack
+> nx run-many --target=lint --max-warnings=0
+
+
+ NX   Running target lint for 7 projects:
+
+- internal-console-driver-test-util
+- docs-lumberjack-docs-app
+- docs-lumberjack-docs-app-e2e
+- examples-lumberjack-app
+- examples-lumberjack-app-e2e
+- ngworker-lumberjack
+- internal-test-util
+
+With additional flags:
+  --max-warnings=0
+
+
+
+> nx run ngworker-lumberjack:lint --max-warnings=0  [existing outputs match the cache, left as is]
+
+> eslint . --max-warnings=0
+
+
+> nx run examples-lumberjack-app:lint --max-warnings=0  [existing outputs match the cache, left as is]
+
+> eslint . --max-warnings=0
+
+
+> nx run docs-lumberjack-docs-app:lint --max-warnings=0  [existing outputs match the cache, left as is]
+
+> eslint . --max-warnings=0
+
+
+> nx run internal-test-util:lint --max-warnings=0  [existing outputs match the cache, left as is]
+
+> eslint . --max-warnings=0
+
+
+> nx run internal-console-driver-test-util:lint --max-warnings=0  [existing outputs match the cache, left as is]
+
+> eslint . --max-warnings=0
+
+
+> nx run examples-lumberjack-app-e2e:lint --max-warnings=0  [existing outputs match the cache, left as is]
+
+> eslint . --max-warnings=0
+
+
+> nx run docs-lumberjack-docs-app-e2e:lint --max-warnings=0  [existing outputs match the cache, left as is]
+
+> eslint . --max-warnings=0
+
+
+
+
+ NX   Successfully ran target lint for 7 projects
+
+Nx read the output from the cache instead of running the command for 7 out of 7 tasks.
+
+View logs and run details at https://nx.app/runs/GrCcEFH2g1
+
+  Run duration:      54ms
+  Cache:             7/7 hit (100%)
+  Critical path:     6ms (1 task)
+  Recoverable time:  <1ms
+
+> lumberjack@0.0.0 test /Users/nachovazquez/work/1-projects/ngworkers/lumberjack
+> nx run-many --target=test
+
+
+ NX   Running target test for 4 projects:
+
+- internal-console-driver-test-util
+- examples-lumberjack-app
+- ngworker-lumberjack
+- internal-test-util
+
+
+
+> nx run ngworker-lumberjack:test  [existing outputs match the cache, left as is]
+
+> jest --passWithNoTests=true
+
+watchman warning: Recrawled this watch 7 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/nachovazquez/work/1-projects/ngworkers/lumberjack' ; watchman watch-project '/Users/nachovazquez/work/1-projects/ngworkers/lumberjack'`
+
+ts-jest[config] (WARN) [94mmessage[0m[90m TS151001: [0mIf you have issues related to imports, you should consider setting `esModuleInterop` to `true` in your TypeScript configuration file (usually `tsconfig.json`). See https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/#easier-ecmascript-module-interoperability for more information.
+ts-jest[config] (WARN) [94mmessage[0m[90m TS151001: [0mIf you have issues related to imports, you should consider setting `esModuleInterop` to `true` in your TypeScript configuration file (usually `tsconfig.json`). See https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/#easier-ecmascript-module-interoperability for more information.
+ts-jest[config] (WARN) [94mmessage[0m[90m TS151001: [0mIf you have issues related to imports, you should consider setting `esModuleInterop` to `true` in your TypeScript configuration file (usually `tsconfig.json`). See https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/#easier-ecmascript-module-interoperability for more information.
+ts-jest[config] (WARN) [94mmessage[0m[90m TS151001: [0mIf you have issues related to imports, you should consider setting `esModuleInterop` to `true` in your TypeScript configuration file (usually `tsconfig.json`). See https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/#easier-ecmascript-module-interoperability for more information.
+ts-jest[config] (WARN) [94mmessage[0m[90m TS151001: [0mIf you have issues related to imports, you should consider setting `esModuleInterop` to `true` in your TypeScript configuration file (usually `tsconfig.json`). See https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/#easier-ecmascript-module-interoperability for more information.
+ts-jest[config] (WARN) [94mmessage[0m[90m TS151001: [0mIf you have issues related to imports, you should consider setting `esModuleInterop` to `true` in your TypeScript configuration file (usually `tsconfig.json`). See https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/#easier-ecmascript-module-interoperability for more information.
+ts-jest[config] (WARN) [94mmessage[0m[90m TS151001: [0mIf you have issues related to imports, you should consider setting `esModuleInterop` to `true` in your TypeScript configuration file (usually `tsconfig.json`). See https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/#easier-ecmascript-module-interoperability for more information.
+ts-jest[config] (WARN) [94mmessage[0m[90m TS151001: [0mIf you have issues related to imports, you should consider setting `esModuleInterop` to `true` in your TypeScript configuration file (usually `tsconfig.json`). See https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/#easier-ecmascript-module-interoperability for more information.
+ts-jest[config] (WARN) [94mmessage[0m[90m TS151001: [0mIf you have issues related to imports, you should consider setting `esModuleInterop` to `true` in your TypeScript configuration file (usually `tsconfig.json`). See https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/#easier-ecmascript-module-interoperability for more information.
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/lib/configuration/[22m[1mprovide-lumberjack.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/lib/formatting/[22m[1mlumberjack-log-formatter.service.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/lib/logging/[22m[1mlumberjack-logger.builder.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/lib/formatting/[22m[1mlumberjack-format-log.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/lib/logging/[22m[1mscoped-lumberjack-logger.service.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/lib/logging/[22m[1mlumberjack-log-factory.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mhttp-driver/src/lib/configuration/[22m[1mprovide-lumberjack-http-driver.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mhttp-driver/src/lib/log-drivers/[22m[1mlumberjack-http.driver.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/lib/logging/[22m[1mlumberjack-log.builder.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mhttp-driver/src/[22m[1merrors-api.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mconsole-driver/src/lib/log-drivers/[22m[1mlumberjack-console.driver.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/lib/logging/[22m[1mlumberjack.service.spec.ts[22m
+  [1m● [22mConsole
+
+    [2mconsole.log[22m
+      ErrorThrowingDriver {
+        config: {
+          levels: [ 'verbose' ],
+          logsBeforeThrowing: 1,
+          identifier: 'ErrorThrowingDriver'
+        }
+      }
+[2m[22m
+[2m      [2mat [22m[2m[0m[36msrc/lib/logging/lumberjack.service.spec.ts[39m[0m[2m:191:17[22m[2m[22m
+
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mhttp-driver/src/[22m[1mlog-drivers-api.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/[22m[1mconfiguration-api.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/lib/logging/[22m[1mlumberjack-logger.service.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/lib/time/[22m[1mlumberjack-time.service.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mconsole-driver/src/lib/configuration/[22m[1mlumberjack-console-driver-config.token.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/[22m[1mlogging-api.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mconsole-driver/src/lib/configuration/[22m[1mprovide-lumberjack-console-driver.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/lib/log-drivers/[22m[1mlumberjack-log-driver-logger.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mconsole-driver/src/[22m[1mconsole-api.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/lib/formatting/[22m[1mformat-log-driver-error.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mhttp-driver/src/lib/errors/[22m[1mlumberjack-http-driver.error.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mhttp-driver/src/[22m[1mlogs-api.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mconsole-driver/src/[22m[1mconfiguration-api.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mconsole-driver/src/lib/console/[22m[1mlumberjack-console.token.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/lib/formatting/[22m[1mutc-timestamp-for.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/[22m[1mlogs-api.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/[22m[1mtime-api.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mconsole-driver/src/[22m[1mlog-drivers-api.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mhttp-driver/src/[22m[1mconfiguration-api.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/[22m[1mlog-drivers-api.spec.ts[22m
+
+[1mTest Suites: [22m[1m[32m32 passed[39m[22m, 32 total
+[1mTests:       [22m[1m[32m194 passed[39m[22m, 194 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        [1m[33m4.056 s[39m[22m
+[2mRan all test suites[22m[2m.[22m
+
+> nx run examples-lumberjack-app:test  [existing outputs match the cache, left as is]
+
+> jest --passWithNoTests=true
+
+watchman warning: Recrawled this watch 7 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/nachovazquez/work/1-projects/ngworkers/lumberjack' ; watchman watch-project '/Users/nachovazquez/work/1-projects/ngworkers/lumberjack'`
+
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m examples-lumberjack-app [39m[27m[0m [2msrc/app/[22m[1mapp.component.spec.ts[22m
+  AppComponent
+    [32m✓[39m [2mshould create the app (154 ms)[22m
+    [32m✓[39m [2mshould have as title 'lumberjack-app' (19 ms)[22m
+    [32m✓[39m [2mshould render title (19 ms)[22m
+
+[1mTest Suites: [22m[1m[32m1 passed[39m[22m, 1 total
+[1mTests:       [22m[1m[32m3 passed[39m[22m, 3 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1.87 s
+[2mRan all test suites[22m[2m.[22m
+
+> nx run internal-console-driver-test-util:test  [existing outputs match the cache, left as is]
+
+> jest --passWithNoTests=true
+
+watchman warning: Recrawled this watch 7 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/nachovazquez/work/1-projects/ngworkers/lumberjack' ; watchman watch-project '/Users/nachovazquez/work/1-projects/ngworkers/lumberjack'`
+
+ts-jest[config] (WARN) [94mmessage[0m[90m TS151001: [0mIf you have issues related to imports, you should consider setting `esModuleInterop` to `true` in your TypeScript configuration file (usually `tsconfig.json`). See https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/#easier-ecmascript-module-interoperability for more information.
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m internal-console-driver-test-util [39m[27m[0m [2msrc/lib/spy-console/[22m[1mspy-console.service.spec.ts[22m
+  SpyConsole
+    [32m✓[39m [2mcan be passed a lot of arguments (3 ms)[22m
+    [32m✓[39m [2mcan reset spy tracking (3 ms)[22m
+
+[1mTest Suites: [22m[1m[32m1 passed[39m[22m, 1 total
+[1mTests:       [22m[1m[32m2 passed[39m[22m, 2 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1.654 s
+[2mRan all test suites[22m[2m.[22m
+
+> nx run internal-test-util:test  [existing outputs match the cache, left as is]
+
+> jest --passWithNoTests=true
+
+watchman warning: Recrawled this watch 7 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/nachovazquez/work/1-projects/ngworkers/lumberjack' ; watchman watch-project '/Users/nachovazquez/work/1-projects/ngworkers/lumberjack'`
+
+ts-jest[config] (WARN) [94mmessage[0m[90m TS151001: [0mIf you have issues related to imports, you should consider setting `esModuleInterop` to `true` in your TypeScript configuration file (usually `tsconfig.json`). See https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/#easier-ecmascript-module-interoperability for more information.
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m internal-test-util [39m[27m[0m [2msrc/lib/error-throwing-driver/[22m[1merror-throwing.driver.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m internal-test-util [39m[27m[0m [2msrc/lib/spy-driver/[22m[1mspy.driver.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m internal-test-util [39m[27m[0m [2msrc/lib/object-driver/[22m[1mobject.driver.spec.ts[22m
+
+[1mTest Suites: [22m[1m[32m3 passed[39m[22m, 3 total
+[1mTests:       [22m[1m[32m48 passed[39m[22m, 48 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1.541 s
+[2mRan all test suites[22m[2m.[22m
+
+
+
+ NX   Successfully ran target test for 4 projects
+
+Nx read the output from the cache instead of running the command for 4 out of 4 tasks.
+
+View logs and run details at https://nx.app/runs/VVzS8S73ko
+
+  Run duration:      45ms
+  Cache:             4/4 hit (100%)
+  Critical path:     22ms (1 task)
+  Recoverable time:  <1ms
+
+> lumberjack@0.0.0 build /Users/nachovazquez/work/1-projects/ngworkers/lumberjack
+> nx run-many --target=build --all
+
+
+ NX   Running target build for 3 projects and 1 task they depend on:
+
+- docs-lumberjack-docs-app
+- examples-lumberjack-app
+- ngworker-lumberjack
+
+
+
+> nx run ngworker-lumberjack:build-package:production  [local cache]
+
+[34mBuilding Angular Package[39m
+[37m
+------------------------------------------------------------------------------[39m
+[37mBuilding entry point '@ngworker/lumberjack'[39m
+[37m------------------------------------------------------------------------------[39m
+- Compiling with Angular sources in partial compilation mode.
+Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+- Copying assets
+[32m✔[39m Copying assets
+- Writing package manifest
+[32m✔[39m Writing package manifest
+[32m✔[39m Built @ngworker/lumberjack
+[37m
+------------------------------------------------------------------------------[39m
+[37mBuilding entry point '@ngworker/lumberjack/console-driver'[39m
+[37m------------------------------------------------------------------------------[39m
+- Compiling with Angular sources in partial compilation mode.
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+[32m✔[39m Built @ngworker/lumberjack/console-driver
+[37m
+------------------------------------------------------------------------------[39m
+[37mBuilding entry point '@ngworker/lumberjack/http-driver'[39m
+[37m------------------------------------------------------------------------------[39m
+- Compiling with Angular sources in partial compilation mode.
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+[32m✔[39m Built @ngworker/lumberjack/http-driver
+[32m
+------------------------------------------------------------------------------[39m
+[32mBuilt Angular Package
+- from: /Users/nachovazquez/work/1-projects/ngworkers/lumberjack/packages/ngworker/lumberjack
+- to:   /Users/nachovazquez/work/1-projects/ngworkers/lumberjack/dist/packages/ngworker/lumberjack[39m
+[32m------------------------------------------------------------------------------[39m
+[37m[37m
+Build at: [1m2026-07-20T16:20:35.084Z[22m - Time: [1m890[22mms
+[39m[39m
+
+> nx run docs-lumberjack-docs-app:build  [existing outputs match the cache, left as is]
+
+> mkdir -p ../../../dist/packages/docs/lumberjack-docs-app
+
+> docusaurus build
+
+[33m[1m[WARNING][22m [36m[4m"package.json"[24m[39m[33m file not found at CWD: [36m[4m"/Users/nachovazquez/work/1-projects/ngworkers/lumberjack/packages/docs/lumberjack-docs-app"[24m[39m[33m.[39m
+[36m[1m[INFO][22m[39m This is non-critical, but could lead to undesired behavior downstream. Docusaurus assumes that [36m[4m"package.json"[24m[39m exists at CWD, because it's where the package manager looks up the script at. A common reason is because you have changed directory in the script. Instead of writing [36m`"start": "cd website && docusaurus start"`[39m, consider using the [36m`[siteDir]`[39m argument: [36m`"start": "docusaurus start website"`[39m.
+[33m[39m
+[33m ------------------------------------------------------------------------------ [39m[33m [39m                                                                              [33m [39m[33m [39m                       Update available [2m3.3.2[22m → [32m3.10.2[39m                        [33m [39m[33m [39m                                                                              [33m [39m[33m [39m       To upgrade Docusaurus packages with the latest version, run the        [33m [39m[33m [39m                             following command:                               [33m [39m[33m [39m                                   [36m`npm i `[39m                                   [33m [39m[33m [39m                                                                              [33m [39m[33m ------------------------------------------------------------------------------ [39m
+[33m[39m
+[36m[1m[INFO][22m[39m [34m[1m[en][22m[39m Creating an optimized production build...
+[36mℹ[39m Compiling Client
+[36mℹ[39m Compiling Server
+[32m✔[39m Server: Compiled successfully in 892.76ms
+[32m✔[39m Client: Compiled successfully in 943.22ms
+[32m[1m[SUCCESS][22m[39m Generated static files in [36m[4m"build"[24m[39m.
+[36m[1m[INFO][22m[39m Use [36m`npm run serve`[39m command to test your build locally.
+> rm -rf ../../../dist/packages/docs/lumberjack-docs-app/*
+
+> cp -R build/* ../../../dist/packages/docs/lumberjack-docs-app/
+
+
+> nx run ngworker-lumberjack:build:production  [local cache]
+
+> nx run ngworker-lumberjack:build-package:production
+
+
+[2m> [22m[2mnx run[22m ngworker-lumberjack:build-package:production  [2m[existing outputs match the cache, left as is][22m
+
+[34mBuilding Angular Package[39m
+[37m
+------------------------------------------------------------------------------[39m
+[37mBuilding entry point '@ngworker/lumberjack'[39m
+[37m------------------------------------------------------------------------------[39m
+- Compiling with Angular sources in partial compilation mode.
+Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+- Copying assets
+[32m✔[39m Copying assets
+- Writing package manifest
+[32m✔[39m Writing package manifest
+[32m✔[39m Built @ngworker/lumberjack
+[37m
+------------------------------------------------------------------------------[39m
+[37mBuilding entry point '@ngworker/lumberjack/console-driver'[39m
+[37m------------------------------------------------------------------------------[39m
+- Compiling with Angular sources in partial compilation mode.
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+[32m✔[39m Built @ngworker/lumberjack/console-driver
+[37m
+------------------------------------------------------------------------------[39m
+[37mBuilding entry point '@ngworker/lumberjack/http-driver'[39m
+[37m------------------------------------------------------------------------------[39m
+- Compiling with Angular sources in partial compilation mode.
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+[32m✔[39m Built @ngworker/lumberjack/http-driver
+[32m
+------------------------------------------------------------------------------[39m
+[32mBuilt Angular Package
+- from: /Users/nachovazquez/work/1-projects/ngworkers/lumberjack/packages/ngworker/lumberjack
+- to:   /Users/nachovazquez/work/1-projects/ngworkers/lumberjack/dist/packages/ngworker/lumberjack[39m
+[32m------------------------------------------------------------------------------[39m
+[37m[37m
+Build at: [1m2026-07-20T16:20:35.084Z[22m - Time: [1m890[22mms
+[39m[39m
+
+[2m[32m[39m[22m
+
+[7m[1m[32m NX [39m[22m[27m  [32mSuccessfully ran target [1mbuild-package[22m for project ngworker-lumberjack[39m
+
+[2mNx read the output from the cache instead of running the command for 1 out of 1 tasks.[22m
+
+  Run duration:      105ms
+  Cache:             1/1 hit (100%)
+  Critical path:     6ms (1 task)
+  Recoverable time:  <1ms
+> pnpm exec copy README.md dist/packages/ngworker/lumberjack
+
+[32m✔[39m dist/packages/ngworker/lumberjack/README.md
+
+> nx run examples-lumberjack-app:build:production  [existing outputs match the cache, left as is]
+
+[33m❯[39m Building...
+Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[32m✔[39m Building...
+[37m[1mInitial chunk files[22m  [2m | [22m[1mNames[22m        [2m | [22m [1mRaw size[22m[2m | [22m[1mEstimated transfer size[22m
+[32mmain-6XB2AJXB.js[37m     [2m | [22m[2mmain[22m         [2m | [22m[36m164.59 kB[37m[2m | [22m               [36m47.20 kB[37m
+[32mpolyfills-4CC7B7AK.js[37m[2m | [22m[2mpolyfills[22m    [2m | [22m [36m35.78 kB[37m[2m | [22m               [36m11.63 kB[37m
+[32mstyles-5INURTSO.css[37m  [2m | [22m[2mstyles[22m       [2m | [22m  [36m0 bytes[37m[2m | [22m                [36m0 bytes[37m
+
+[1m [22m                    [2m | [22m[1mInitial total[22m[2m | [22m[1m200.38 kB[22m[2m | [22m               [1m58.83 kB[22m
+
+Application bundle generation complete. [2.613 seconds] - 2026-07-20T16:20:40.864Z
+[39m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mangular:styles/component:scss;6934c880072788f42d4280b00e374e6c86f9bcbb2df0d4a309bd08a5f22d03b9;/Users/nachovazquez/work/1-projects/ngworkers/lumberjack/packages/examples/lumberjack-app/src/app/nx-welcome.component.ts exceeded maximum budget. Budget 2.00 kB was not met by 4.85 kB with a total of 6.85 kB.[0m
+
+[39m[22m
+[37mOutput location: /Users/nachovazquez/work/1-projects/ngworkers/lumberjack/dist/packages/examples/lumberjack-app
+[39m
+
+
+
+ NX   Successfully ran target build for 3 projects and 1 task they depend on
+
+Nx read the output from the cache instead of running the command for 4 out of 4 tasks.
+
+View logs and run details at https://nx.app/runs/v4SjZTXOJ9
+
+  Run duration:      72ms
+  Cache:             4/4 hit (100%)
+  Critical path:     39ms (3 tasks)
+  Recoverable time:  <1ms
+
+> lumberjack@0.0.0 e2e /Users/nachovazquez/work/1-projects/ngworkers/lumberjack
+> nx run-many --target=e2e --parallel=1
+
+
+ NX   Running target e2e for 2 projects and 3 tasks they depend on:
+
+- docs-lumberjack-docs-app-e2e
+- examples-lumberjack-app-e2e
+
+
+
+> nx run ngworker-lumberjack:build-package:production  [local cache]
+
+[34mBuilding Angular Package[39m
+[37m
+------------------------------------------------------------------------------[39m
+[37mBuilding entry point '@ngworker/lumberjack'[39m
+[37m------------------------------------------------------------------------------[39m
+- Compiling with Angular sources in partial compilation mode.
+Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+- Copying assets
+[32m✔[39m Copying assets
+- Writing package manifest
+[32m✔[39m Writing package manifest
+[32m✔[39m Built @ngworker/lumberjack
+[37m
+------------------------------------------------------------------------------[39m
+[37mBuilding entry point '@ngworker/lumberjack/console-driver'[39m
+[37m------------------------------------------------------------------------------[39m
+- Compiling with Angular sources in partial compilation mode.
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+[32m✔[39m Built @ngworker/lumberjack/console-driver
+[37m
+------------------------------------------------------------------------------[39m
+[37mBuilding entry point '@ngworker/lumberjack/http-driver'[39m
+[37m------------------------------------------------------------------------------[39m
+- Compiling with Angular sources in partial compilation mode.
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+[32m✔[39m Built @ngworker/lumberjack/http-driver
+[32m
+------------------------------------------------------------------------------[39m
+[32mBuilt Angular Package
+- from: /Users/nachovazquez/work/1-projects/ngworkers/lumberjack/packages/ngworker/lumberjack
+- to:   /Users/nachovazquez/work/1-projects/ngworkers/lumberjack/dist/packages/ngworker/lumberjack[39m
+[32m------------------------------------------------------------------------------[39m
+[37m[37m
+Build at: [1m2026-07-20T16:20:35.084Z[22m - Time: [1m890[22mms
+[39m[39m
+
+> nx run docs-lumberjack-docs-app-e2e:e2e  [existing outputs match the cache, left as is]
+
+> cypress run
+
+[35m[95mWarning:[39m[35m The [33mallowCypressEnv[39m[35m configuration option is enabled. This allows any browser code to read values from [33mCypress.env()[39m[35m. This is insecure and will be removed in a future major version.[39m
+[35m[39m
+[35m1. Replace [33mCypress.env()[39m[35m calls with [33mcy.env()[39m[35m (for sensitive values) or [33mCypress.expose()[39m[35m (for public configuration)[39m
+[35m2. Set [33mallowCypressEnv: false[39m[35m in your Cypress configuration to disable [33mCypress.env()[39m[35m[39m
+[35m[39m
+[35mLearn more: https://on.cypress.io/cypress-env-migration[39m
+[35m[39m
+(node:64812) Warning: Setting the NODE_TLS_REJECT_UNAUTHORIZED environment variable to '0' makes TLS connections and HTTPS requests insecure by disabling certificate verification.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+[2m> [22m[2mnx run[22m docs-lumberjack-docs-app:serve
+
+[2m> [22mdocusaurus serve
+
+[36m[1m[INFO][22m[39m This is non-critical, but could lead to undesired behavior downstream. Docusaurus assumes that [36m[4m"package.json"[24m[39m exists at CWD, because it's where the package manager looks up the script at. A common reason is because you have changed directory in the script. Instead of writing [36m`"start": "cd website && docusaurus start"`[39m, consider using the [36m`[siteDir]`[39m argument: [36m`"start": "docusaurus start website"`[39m.
+[33m[1m[WARNING][22m [36m[4m"package.json"[24m[39m[33m file not found at CWD: [36m[4m"/Users/nachovazquez/work/1-projects/ngworkers/lumberjack/packages/docs/lumberjack-docs-app"[24m[39m[33m.[39m
+[33m[39m
+[33m ------------------------------------------------------------------------------ [39m[33m [39m                                                                              [33m [39m[33m [39m                       Update available [2m3.3.2[22m → [32m3.10.2[39m                        [33m [39m[33m [39m                                                                              [33m [39m[33m [39m       To upgrade Docusaurus packages with the latest version, run the        [33m [39m[33m [39m                             following command:                               [33m [39m[33m [39m                                   [36m`npm i `[39m                                   [33m [39m[33m [39m                                                                              [33m [39m[33m ------------------------------------------------------------------------------ [39m
+[33m[39m
+[32m[1m[SUCCESS][22m[39m Serving [36m[4m"build"[24m[39m directory at: [36m[4mhttp://localhost:3000/lumberjack/[24m[39m
+
+[90m================================================================================[39m
+
+[0m  ([4m[1mRun Starting[22m[24m)[0m
+
+[90m  ┌[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┐[39m
+[90m  │[39m [90mCypress:[39m        15.18.1                                                                        [90m│[39m
+[90m  │[39m [90mBrowser:[39m        Electron 138 [90m(headless)[39m                                                        [90m│[39m
+[90m  │[39m [90mNode Version:[39m   [0mv22.18.0 (/Users/nachovazquez/Library/Application Support/fnm/node-versions/v2[0m [90m│[39m
+[90m  │[39m                 [0m2.18.0/installation/bin/node)[0m                                                  [90m│[39m
+[90m  │[39m [90mSpecs:[39m          [0m1 found (home.cy.ts)[0m                                                           [90m│[39m
+[90m  │[39m [90mSearched:[39m       [0msrc/**/*.cy.{js,jsx,ts,tsx}[0m                                                    [90m│[39m
+[90m  └[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┘[39m
+
+
+[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m
+                                                                                                    
+  Running:  [90mhome.cy.ts[39m                                                                      [90m(1 of 1)[39m
+
+[0m[0m
+[0m  Home page[0m
+  [32m  ✓[0m[90m displays a title[0m[90m (151ms)[0m
+  [32m  ✓[0m[90m links to the documentation[0m[90m (165ms)[0m
+
+
+[92m [0m[32m 2 passing[0m[90m (341ms)[0m
+
+
+[32m  ([4m[1mResults[22m[24m)[39m
+
+[90m  ┌[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┐[39m
+[90m  │[39m [90mTests:[39m        [32m2[39m                                                                                [90m│[39m
+[90m  │[39m [90mPassing:[39m      [32m2[39m                                                                                [90m│[39m
+[90m  │[39m [90mFailing:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mPending:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mSkipped:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mScreenshots:[39m  [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mVideo:[39m        [32mfalse[39m                                                                            [90m│[39m
+[90m  │[39m [90mDuration:[39m     [32m0 seconds[39m                                                                        [90m│[39m
+[90m  │[39m [90mSpec Ran:[39m     [32m[32mhome.cy.ts[32m[39m                                                                       [90m│[39m
+[90m  └[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┘[39m
+
+
+[90m================================================================================[39m
+
+[0m  ([4m[1mRun Finished[22m[24m)[0m
+
+
+[90m   [39m    [90mSpec[39m                                              [90mTests[39m  [90mPassing[39m  [90mFailing[39m  [90mPending[39m  [90mSkipped[39m [90m [39m
+[90m  ┌[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┐[39m
+[90m  │[39m [32m✔[39m  [0mhome.cy.ts[0m                               [90m343ms[39m        [0m2[0m        [32m2[39m        [90m-[39m        [90m-[39m        [90m-[39m [90m│[39m
+[90m  └[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┘[39m
+[90m   [39m [32m✔[39m  [32mAll specs passed![39m                        [90m343ms[39m        [0m2[0m        [32m2[39m        [90m-[39m        [90m-[39m        [90m-[39m [90m [39m
+
+
+> nx run ngworker-lumberjack:build:production  [local cache]
+
+> nx run ngworker-lumberjack:build-package:production
+
+
+[2m> [22m[2mnx run[22m ngworker-lumberjack:build-package:production  [2m[existing outputs match the cache, left as is][22m
+
+[34mBuilding Angular Package[39m
+[37m
+------------------------------------------------------------------------------[39m
+[37mBuilding entry point '@ngworker/lumberjack'[39m
+[37m------------------------------------------------------------------------------[39m
+- Compiling with Angular sources in partial compilation mode.
+Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+- Copying assets
+[32m✔[39m Copying assets
+- Writing package manifest
+[32m✔[39m Writing package manifest
+[32m✔[39m Built @ngworker/lumberjack
+[37m
+------------------------------------------------------------------------------[39m
+[37mBuilding entry point '@ngworker/lumberjack/console-driver'[39m
+[37m------------------------------------------------------------------------------[39m
+- Compiling with Angular sources in partial compilation mode.
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+[32m✔[39m Built @ngworker/lumberjack/console-driver
+[37m
+------------------------------------------------------------------------------[39m
+[37mBuilding entry point '@ngworker/lumberjack/http-driver'[39m
+[37m------------------------------------------------------------------------------[39m
+- Compiling with Angular sources in partial compilation mode.
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+[32m✔[39m Built @ngworker/lumberjack/http-driver
+[32m
+------------------------------------------------------------------------------[39m
+[32mBuilt Angular Package
+- from: /Users/nachovazquez/work/1-projects/ngworkers/lumberjack/packages/ngworker/lumberjack
+- to:   /Users/nachovazquez/work/1-projects/ngworkers/lumberjack/dist/packages/ngworker/lumberjack[39m
+[32m------------------------------------------------------------------------------[39m
+[37m[37m
+Build at: [1m2026-07-20T16:20:35.084Z[22m - Time: [1m890[22mms
+[39m[39m
+
+[2m[32m[39m[22m
+
+[7m[1m[32m NX [39m[22m[27m  [32mSuccessfully ran target [1mbuild-package[22m for project ngworker-lumberjack[39m
+
+[2mNx read the output from the cache instead of running the command for 1 out of 1 tasks.[22m
+
+  Run duration:      105ms
+  Cache:             1/1 hit (100%)
+  Critical path:     6ms (1 task)
+  Recoverable time:  <1ms
+> pnpm exec copy README.md dist/packages/ngworker/lumberjack
+
+[32m✔[39m dist/packages/ngworker/lumberjack/README.md
+
+> nx run examples-lumberjack-app:serve:development
+
+
+> nx run examples-lumberjack-app-e2e:e2e  [existing outputs match the cache, left as is]
+
+> cypress run
+
+[35m[95mWarning:[39m[35m The [33mallowCypressEnv[39m[35m configuration option is enabled. This allows any browser code to read values from [33mCypress.env()[39m[35m. This is insecure and will be removed in a future major version.[39m
+[35m[39m
+[35m1. Replace [33mCypress.env()[39m[35m calls with [33mcy.env()[39m[35m (for sensitive values) or [33mCypress.expose()[39m[35m (for public configuration)[39m
+[35m2. Set [33mallowCypressEnv: false[39m[35m in your Cypress configuration to disable [33mCypress.env()[39m[35m[39m
+[35m[39m
+[35mLearn more: https://on.cypress.io/cypress-env-migration[39m
+[35m[39m
+Reusing the server already running on http://localhost:4200
+
+[90m================================================================================[39m
+
+[0m  ([4m[1mRun Starting[22m[24m)[0m
+
+[90m  ┌[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┐[39m
+[90m  │[39m [90mCypress:[39m        15.18.1                                                                        [90m│[39m
+[90m  │[39m [90mBrowser:[39m        Electron 138 [90m(headless)[39m                                                        [90m│[39m
+[90m  │[39m [90mNode Version:[39m   [0mv22.18.0 (/Users/nachovazquez/Library/Application Support/fnm/node-versions/v2[0m [90m│[39m
+[90m  │[39m                 [0m2.18.0/installation/bin/node)[0m                                                  [90m│[39m
+[90m  │[39m [90mSpecs:[39m          [0m2 found (app.cy.ts, console-driver.cy.ts)[0m                                      [90m│[39m
+[90m  │[39m [90mSearched:[39m       [0msrc/**/*.cy.{js,jsx,ts,tsx}[0m                                                    [90m│[39m
+[90m  └[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┘[39m
+
+
+[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m
+                                                                                                    
+  Running:  [90mapp.cy.ts[39m                                                                       [90m(1 of 2)[39m
+
+[0m[0m
+[0m  lumberjack-app[0m
+  [32m  ✓[0m[90m Smoke test: It displays a title[0m[90m (237ms)[0m
+
+
+[92m [0m[32m 1 passing[0m[90m (265ms)[0m
+
+
+[32m  ([4m[1mResults[22m[24m)[39m
+
+[90m  ┌[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┐[39m
+[90m  │[39m [90mTests:[39m        [32m1[39m                                                                                [90m│[39m
+[90m  │[39m [90mPassing:[39m      [32m1[39m                                                                                [90m│[39m
+[90m  │[39m [90mFailing:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mPending:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mSkipped:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mScreenshots:[39m  [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mVideo:[39m        [32mfalse[39m                                                                            [90m│[39m
+[90m  │[39m [90mDuration:[39m     [32m0 seconds[39m                                                                        [90m│[39m
+[90m  │[39m [90mSpec Ran:[39m     [32m[32mapp.cy.ts[32m[39m                                                                        [90m│[39m
+[90m  └[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┘[39m
+
+
+[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m
+                                                                                                    
+  Running:  [90mconsole-driver.cy.ts[39m                                                            [90m(2 of 2)[39m
+
+[0m[0m
+[0m  Console log driver[0m
+  [32m  ✓[0m[90m logs a greeting info message[0m[90m (195ms)[0m
+  [32m  ✓[0m[90m logs a critical forest fire message after 2 seconds[0m[90m (73ms)[0m
+
+
+[92m [0m[32m 2 passing[0m[90m (296ms)[0m
+
+
+[32m  ([4m[1mResults[22m[24m)[39m
+
+[90m  ┌[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┐[39m
+[90m  │[39m [90mTests:[39m        [32m2[39m                                                                                [90m│[39m
+[90m  │[39m [90mPassing:[39m      [32m2[39m                                                                                [90m│[39m
+[90m  │[39m [90mFailing:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mPending:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mSkipped:[39m      [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mScreenshots:[39m  [32m0[39m                                                                                [90m│[39m
+[90m  │[39m [90mVideo:[39m        [32mfalse[39m                                                                            [90m│[39m
+[90m  │[39m [90mDuration:[39m     [32m0 seconds[39m                                                                        [90m│[39m
+[90m  │[39m [90mSpec Ran:[39m     [32m[32mconsole-driver.cy.ts[32m[39m                                                             [90m│[39m
+[90m  └[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┘[39m
+
+
+[90m================================================================================[39m
+
+[0m  ([4m[1mRun Finished[22m[24m)[0m
+
+
+[90m   [39m    [90mSpec[39m                                              [90mTests[39m  [90mPassing[39m  [90mFailing[39m  [90mPending[39m  [90mSkipped[39m [90m [39m
+[90m  ┌[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┐[39m
+[90m  │[39m [32m✔[39m  [0mapp.cy.ts[0m                                [90m268ms[39m        [0m1[0m        [32m1[39m        [90m-[39m        [90m-[39m        [90m-[39m [90m│[39m
+[90m  ├[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┤[39m
+[90m  │[39m [32m✔[39m  [0mconsole-driver.cy.ts[0m                     [90m299ms[39m        [0m2[0m        [32m2[39m        [90m-[39m        [90m-[39m        [90m-[39m [90m│[39m
+[90m  └[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m─[39m[90m┘[39m
+[90m   [39m [32m✔[39m  [32mAll specs passed![39m                        [90m567ms[39m        [0m3[0m        [32m3[39m        [90m-[39m        [90m-[39m        [90m-[39m [90m [39m
+
+
+
+
+ NX   Successfully ran target e2e for 2 projects and 3 tasks they depend on
+
+Nx read the output from the cache instead of running the command for 4 out of 5 tasks.
+
+View logs and investigate cache misses at https://nx.app/runs/8h93uCaHCi
+
+  Run duration:      82ms
+  Cache:             4/5 hit (80%)
+  Critical path:     34ms (2 tasks)
+  Recoverable time:  <1ms
+exit=0
+
+$ git status --short
+ A .apnea/artifacts/phase-04/round-1/code-review.md
+ A .apnea/artifacts/phase-04/round-1/coder-result.md
+ A .apnea/artifacts/phase-04/round-1/phase-package.md
+ M .apnea/state.json
+ A .apnea/tasks/code-p4-r1-1784564348697.md
+ A .apnea/tasks/code_review-p4-r1-1784564572010.md
+ A .apnea/tasks/phase_package-p4-r1-1784564244872.md
+ M nx.json
+exit=0
+
+$ git tag --sort=-creatordate | head -3
+v21.0.1
+v21.0.0
+v20.0.0
+exit=0
+

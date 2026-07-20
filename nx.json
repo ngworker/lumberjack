@@ -174,11 +174,11 @@
     "projectsRelationship": "independent",
     "version": {
       "preVersionCommand": "pnpm exec nx run-many -t build",
-      "conventionalCommits": true
-    },
-    "git": {
-      "commit": true,
-      "commitArgs": "--no-verify"
+      "conventionalCommits": true,
+      "git": {
+        "commit": true,
+        "commitArgs": "--no-verify"
+      }
     },
     "changelog": {
       "projectChangelogs": {
@@ -186,7 +186,10 @@
         "file": false
       },
       "workspaceChangelog": false,
-      "commitMessageFormat": "conventional"
+      "git": {
+        "commit": true,
+        "commitArgs": "--no-verify"
+      }
     },
     "releaseTag": {
       "pattern": "v{version}"

@@ -2,13 +2,14 @@
   "version": 1,
   "slug": "let-s-migrate-to-the-latest-nx-and-angular-in-or",
   "step": "committing",
-  "phase_index": 3,
+  "phase_index": 4,
   "phase_count_hint": null,
   "rounds": {
     "plan_review": 1,
     "phase-01/code_review": 1,
     "phase-02/code_review": 1,
-    "phase-03/code_review": 1
+    "phase-03/code_review": 1,
+    "phase-04/code_review": 1
   },
   "vcs": "jj",
   "allow_dirty": false,
@@ -34,6 +35,6 @@
   },
   "package_root": "/Users/nachovazquez/work/1-projects/naxodev/pi-apnea",
   "reviewer_tree_fingerprint": null,
-  "current_phase_package": ".apnea/artifacts/phase-03/round-1/phase-package.md",
-  "current_code_review": ".apnea/artifacts/phase-03/round-1/code-review.md"
+  "current_phase_package": ".apnea/artifacts/phase-04/round-1/phase-package.md",
+  "current_code_review": ".apnea/artifacts/phase-04/round-1/code-review.md"
 }
