@@ -1,0 +1,570 @@
+$ pnpm exec nx build ngworker-lumberjack
+
+ NX   Running target build for project ngworker-lumberjack and 1 task it depends on:
+
+
+
+> nx run ngworker-lumberjack:build-package:production  [local cache]
+
+[34mBuilding Angular Package[39m
+[37m
+------------------------------------------------------------------------------[39m
+[37mBuilding entry point '@ngworker/lumberjack'[39m
+[37m------------------------------------------------------------------------------[39m
+- Compiling with Angular sources in partial compilation mode.
+Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+- Copying assets
+[32m✔[39m Copying assets
+- Writing package manifest
+[32m✔[39m Writing package manifest
+[32m✔[39m Built @ngworker/lumberjack
+[37m
+------------------------------------------------------------------------------[39m
+[37mBuilding entry point '@ngworker/lumberjack/console-driver'[39m
+[37m------------------------------------------------------------------------------[39m
+- Compiling with Angular sources in partial compilation mode.
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+[32m✔[39m Built @ngworker/lumberjack/console-driver
+[37m
+------------------------------------------------------------------------------[39m
+[37mBuilding entry point '@ngworker/lumberjack/http-driver'[39m
+[37m------------------------------------------------------------------------------[39m
+- Compiling with Angular sources in partial compilation mode.
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+[32m✔[39m Built @ngworker/lumberjack/http-driver
+[32m
+------------------------------------------------------------------------------[39m
+[32mBuilt Angular Package
+- from: /Users/nachovazquez/work/1-projects/ngworkers/lumberjack/packages/ngworker/lumberjack
+- to:   /Users/nachovazquez/work/1-projects/ngworkers/lumberjack/dist/packages/ngworker/lumberjack[39m
+[32m------------------------------------------------------------------------------[39m
+[37m[37m
+Build at: [1m2026-07-20T16:13:43.015Z[22m - Time: [1m779[22mms
+[39m[39m
+
+> nx run ngworker-lumberjack:build:production  [local cache]
+
+> nx run ngworker-lumberjack:build-package:production
+
+
+[2m> [22m[2mnx run[22m ngworker-lumberjack:build-package:production  [2m[existing outputs match the cache, left as is][22m
+
+[34mBuilding Angular Package[39m
+[37m
+------------------------------------------------------------------------------[39m
+[37mBuilding entry point '@ngworker/lumberjack'[39m
+[37m------------------------------------------------------------------------------[39m
+- Compiling with Angular sources in partial compilation mode.
+Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+- Copying assets
+[32m✔[39m Copying assets
+- Writing package manifest
+[32m✔[39m Writing package manifest
+[32m✔[39m Built @ngworker/lumberjack
+[37m
+------------------------------------------------------------------------------[39m
+[37mBuilding entry point '@ngworker/lumberjack/console-driver'[39m
+[37m------------------------------------------------------------------------------[39m
+- Compiling with Angular sources in partial compilation mode.
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+[32m✔[39m Built @ngworker/lumberjack/console-driver
+[37m
+------------------------------------------------------------------------------[39m
+[37mBuilding entry point '@ngworker/lumberjack/http-driver'[39m
+[37m------------------------------------------------------------------------------[39m
+- Compiling with Angular sources in partial compilation mode.
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+[32m✔[39m Built @ngworker/lumberjack/http-driver
+[32m
+------------------------------------------------------------------------------[39m
+[32mBuilt Angular Package
+- from: /Users/nachovazquez/work/1-projects/ngworkers/lumberjack/packages/ngworker/lumberjack
+- to:   /Users/nachovazquez/work/1-projects/ngworkers/lumberjack/dist/packages/ngworker/lumberjack[39m
+[32m------------------------------------------------------------------------------[39m
+[37m[37m
+Build at: [1m2026-07-20T16:13:43.015Z[22m - Time: [1m779[22mms
+[39m[39m
+
+[2m[32m[39m[22m
+
+[7m[1m[32m NX [39m[22m[27m  [32mSuccessfully ran target [1mbuild-package[22m for project ngworker-lumberjack[39m
+
+[2mNx read the output from the cache instead of running the command for 1 out of 1 tasks.[22m
+
+  Run duration:      56ms
+  Cache:             1/1 hit (100%)
+  Critical path:     18ms (1 task)
+  Recoverable time:  <1ms
+> pnpm exec copy README.md dist/packages/ngworker/lumberjack
+
+[32m✔[39m dist/packages/ngworker/lumberjack/README.md
+
+
+
+ NX   Successfully ran target build for project ngworker-lumberjack and 1 task it depends on
+
+Nx read the output from the cache instead of running the command for 2 out of 2 tasks.
+
+View logs and run details at https://nx.app/runs/DzU9Agi4KB
+
+  Run duration:      80ms
+  Cache:             2/2 hit (100%)
+  Critical path:     35ms (2 tasks)
+  Recoverable time:  <1ms
+exit=0
+
+$ node -e "const p=require('./dist/packages/ngworker/lumberjack/package.json'); console.log(p.version, JSON.stringify(p.peerDependencies)); if(p.peerDependencies['@angular/core']!=='^22.0.0'||p.peerDependencies['@angular/common']!=='^22.0.0') process.exit(1)"
+21.0.1 {"@angular/core":"^22.0.0","@angular/common":"^22.0.0","rxjs":">= 7.8.1 < 8.0.0"}
+exit=0
+
+$ node -e "const p=require('./dist/packages/ngworker/lumberjack/package.json'); const e=p.exports||{}; if(!e['./console-driver']||!e['./http-driver']) { console.error('missing secondary entry point exports', Object.keys(e)); process.exit(1) } console.log('exports ok')"
+exports ok
+exit=0
+
+$ test -d dist/packages/ngworker/lumberjack/console-driver && test -d dist/packages/ngworker/lumberjack/http-driver && echo "entry point dirs ok"
+entry point dirs ok
+exit=0
+
+$ grep -n "| 22.x" packages/docs/lumberjack-docs-app/docs/compatibility.md
+10:| 22.x            | 22.x               |
+exit=0
+
+$ pnpm run lint
+
+> lumberjack@0.0.0 lint /Users/nachovazquez/work/1-projects/ngworkers/lumberjack
+> nx run-many --target=lint --max-warnings=0
+
+
+ NX   Running target lint for 7 projects:
+
+- internal-console-driver-test-util
+- docs-lumberjack-docs-app
+- docs-lumberjack-docs-app-e2e
+- examples-lumberjack-app
+- examples-lumberjack-app-e2e
+- ngworker-lumberjack
+- internal-test-util
+
+With additional flags:
+  --max-warnings=0
+
+
+
+> nx run ngworker-lumberjack:lint --max-warnings=0  [existing outputs match the cache, left as is]
+
+> eslint . --max-warnings=0
+
+
+> nx run examples-lumberjack-app:lint --max-warnings=0  [existing outputs match the cache, left as is]
+
+> eslint . --max-warnings=0
+
+
+> nx run docs-lumberjack-docs-app:lint --max-warnings=0  [existing outputs match the cache, left as is]
+
+> eslint . --max-warnings=0
+
+
+> nx run internal-test-util:lint --max-warnings=0  [existing outputs match the cache, left as is]
+
+> eslint . --max-warnings=0
+
+
+> nx run internal-console-driver-test-util:lint --max-warnings=0  [existing outputs match the cache, left as is]
+
+> eslint . --max-warnings=0
+
+
+> nx run examples-lumberjack-app-e2e:lint --max-warnings=0  [existing outputs match the cache, left as is]
+
+> eslint . --max-warnings=0
+
+
+> nx run docs-lumberjack-docs-app-e2e:lint --max-warnings=0  [existing outputs match the cache, left as is]
+
+> eslint . --max-warnings=0
+
+
+
+
+ NX   Successfully ran target lint for 7 projects
+
+Nx read the output from the cache instead of running the command for 7 out of 7 tasks.
+
+View logs and run details at https://nx.app/runs/tZHKLWt7xq
+
+  Run duration:      78ms
+  Cache:             7/7 hit (100%)
+  Critical path:     26ms (1 task)
+  Recoverable time:  <1ms
+exit=0
+
+$ pnpm run test
+
+> lumberjack@0.0.0 test /Users/nachovazquez/work/1-projects/ngworkers/lumberjack
+> nx run-many --target=test
+
+
+ NX   Running target test for 4 projects:
+
+- internal-console-driver-test-util
+- examples-lumberjack-app
+- ngworker-lumberjack
+- internal-test-util
+
+
+
+> nx run ngworker-lumberjack:test  [existing outputs match the cache, left as is]
+
+> jest --passWithNoTests=true
+
+watchman warning: Recrawled this watch 7 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/nachovazquez/work/1-projects/ngworkers/lumberjack' ; watchman watch-project '/Users/nachovazquez/work/1-projects/ngworkers/lumberjack'`
+
+ts-jest[config] (WARN) [94mmessage[0m[90m TS151001: [0mIf you have issues related to imports, you should consider setting `esModuleInterop` to `true` in your TypeScript configuration file (usually `tsconfig.json`). See https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/#easier-ecmascript-module-interoperability for more information.
+ts-jest[config] (WARN) [94mmessage[0m[90m TS151001: [0mIf you have issues related to imports, you should consider setting `esModuleInterop` to `true` in your TypeScript configuration file (usually `tsconfig.json`). See https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/#easier-ecmascript-module-interoperability for more information.
+ts-jest[config] (WARN) [94mmessage[0m[90m TS151001: [0mIf you have issues related to imports, you should consider setting `esModuleInterop` to `true` in your TypeScript configuration file (usually `tsconfig.json`). See https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/#easier-ecmascript-module-interoperability for more information.
+ts-jest[config] (WARN) [94mmessage[0m[90m TS151001: [0mIf you have issues related to imports, you should consider setting `esModuleInterop` to `true` in your TypeScript configuration file (usually `tsconfig.json`). See https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/#easier-ecmascript-module-interoperability for more information.
+ts-jest[config] (WARN) [94mmessage[0m[90m TS151001: [0mIf you have issues related to imports, you should consider setting `esModuleInterop` to `true` in your TypeScript configuration file (usually `tsconfig.json`). See https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/#easier-ecmascript-module-interoperability for more information.
+ts-jest[config] (WARN) [94mmessage[0m[90m TS151001: [0mIf you have issues related to imports, you should consider setting `esModuleInterop` to `true` in your TypeScript configuration file (usually `tsconfig.json`). See https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/#easier-ecmascript-module-interoperability for more information.
+ts-jest[config] (WARN) [94mmessage[0m[90m TS151001: [0mIf you have issues related to imports, you should consider setting `esModuleInterop` to `true` in your TypeScript configuration file (usually `tsconfig.json`). See https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/#easier-ecmascript-module-interoperability for more information.
+ts-jest[config] (WARN) [94mmessage[0m[90m TS151001: [0mIf you have issues related to imports, you should consider setting `esModuleInterop` to `true` in your TypeScript configuration file (usually `tsconfig.json`). See https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/#easier-ecmascript-module-interoperability for more information.
+ts-jest[config] (WARN) [94mmessage[0m[90m TS151001: [0mIf you have issues related to imports, you should consider setting `esModuleInterop` to `true` in your TypeScript configuration file (usually `tsconfig.json`). See https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/#easier-ecmascript-module-interoperability for more information.
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/lib/logging/[22m[1mlumberjack-logger.builder.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/lib/formatting/[22m[1mlumberjack-format-log.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/lib/configuration/[22m[1mprovide-lumberjack.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/lib/logging/[22m[1mlumberjack-log-factory.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/lib/logging/[22m[1mscoped-lumberjack-logger.service.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mhttp-driver/src/lib/log-drivers/[22m[1mlumberjack-http.driver.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/lib/formatting/[22m[1mlumberjack-log-formatter.service.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mhttp-driver/src/lib/configuration/[22m[1mprovide-lumberjack-http-driver.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/lib/formatting/[22m[1mformat-log-driver-error.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/lib/logging/[22m[1mlumberjack.service.spec.ts[22m
+  [1m● [22mConsole
+
+    [2mconsole.log[22m
+      ErrorThrowingDriver {
+        config: {
+          levels: [ 'verbose' ],
+          logsBeforeThrowing: 1,
+          identifier: 'ErrorThrowingDriver'
+        }
+      }
+[2m[22m
+[2m      [2mat [22m[2m[0m[36msrc/lib/logging/lumberjack.service.spec.ts[39m[0m[2m:191:17[22m[2m[22m
+
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/lib/log-drivers/[22m[1mlumberjack-log-driver-logger.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mconsole-driver/src/lib/configuration/[22m[1mprovide-lumberjack-console-driver.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/lib/logging/[22m[1mlumberjack-logger.service.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mconsole-driver/src/lib/log-drivers/[22m[1mlumberjack-console.driver.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/[22m[1mconfiguration-api.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mconsole-driver/src/[22m[1mconfiguration-api.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/lib/logging/[22m[1mlumberjack-log.builder.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/[22m[1mlogging-api.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mconsole-driver/src/lib/configuration/[22m[1mlumberjack-console-driver-config.token.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mhttp-driver/src/lib/errors/[22m[1mlumberjack-http-driver.error.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/lib/time/[22m[1mlumberjack-time.service.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mhttp-driver/src/[22m[1mlogs-api.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mhttp-driver/src/[22m[1merrors-api.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mconsole-driver/src/[22m[1mconsole-api.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mhttp-driver/src/[22m[1mlog-drivers-api.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mconsole-driver/src/lib/console/[22m[1mlumberjack-console.token.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/lib/formatting/[22m[1mutc-timestamp-for.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/[22m[1mlog-drivers-api.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/[22m[1mlogs-api.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2msrc/[22m[1mtime-api.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mconsole-driver/src/[22m[1mlog-drivers-api.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m ngworker-lumberjack [39m[27m[0m [2mhttp-driver/src/[22m[1mconfiguration-api.spec.ts[22m
+
+[1mTest Suites: [22m[1m[32m32 passed[39m[22m, 32 total
+[1mTests:       [22m[1m[32m194 passed[39m[22m, 194 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        [1m[33m3.082 s[39m[22m
+[2mRan all test suites[22m[2m.[22m
+
+> nx run examples-lumberjack-app:test  [existing outputs match the cache, left as is]
+
+> jest --passWithNoTests=true
+
+watchman warning: Recrawled this watch 7 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/nachovazquez/work/1-projects/ngworkers/lumberjack' ; watchman watch-project '/Users/nachovazquez/work/1-projects/ngworkers/lumberjack'`
+
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m examples-lumberjack-app [39m[27m[0m [2msrc/app/[22m[1mapp.component.spec.ts[22m
+  AppComponent
+    [32m✓[39m [2mshould create the app (111 ms)[22m
+    [32m✓[39m [2mshould have as title 'lumberjack-app' (12 ms)[22m
+    [32m✓[39m [2mshould render title (14 ms)[22m
+
+[1mTest Suites: [22m[1m[32m1 passed[39m[22m, 1 total
+[1mTests:       [22m[1m[32m3 passed[39m[22m, 3 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1.651 s, estimated 2 s
+[2mRan all test suites[22m[2m.[22m
+
+> nx run internal-console-driver-test-util:test  [existing outputs match the cache, left as is]
+
+> jest --passWithNoTests=true
+
+watchman warning: Recrawled this watch 7 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/nachovazquez/work/1-projects/ngworkers/lumberjack' ; watchman watch-project '/Users/nachovazquez/work/1-projects/ngworkers/lumberjack'`
+
+ts-jest[config] (WARN) [94mmessage[0m[90m TS151001: [0mIf you have issues related to imports, you should consider setting `esModuleInterop` to `true` in your TypeScript configuration file (usually `tsconfig.json`). See https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/#easier-ecmascript-module-interoperability for more information.
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m internal-console-driver-test-util [39m[27m[0m [2msrc/lib/spy-console/[22m[1mspy-console.service.spec.ts[22m
+  SpyConsole
+    [32m✓[39m [2mcan be passed a lot of arguments (4 ms)[22m
+    [32m✓[39m [2mcan reset spy tracking (1 ms)[22m
+
+[1mTest Suites: [22m[1m[32m1 passed[39m[22m, 1 total
+[1mTests:       [22m[1m[32m2 passed[39m[22m, 2 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1.469 s
+[2mRan all test suites[22m[2m.[22m
+
+> nx run internal-test-util:test  [existing outputs match the cache, left as is]
+
+> jest --passWithNoTests=true
+
+watchman warning: Recrawled this watch 7 times, most recently because:
+MustScanSubDirs UserDroppedTo resolve, please review the information on
+https://facebook.github.io/watchman/docs/troubleshooting.html#recrawl
+To clear this warning, run:
+`watchman watch-del '/Users/nachovazquez/work/1-projects/ngworkers/lumberjack' ; watchman watch-project '/Users/nachovazquez/work/1-projects/ngworkers/lumberjack'`
+
+ts-jest[config] (WARN) [94mmessage[0m[90m TS151001: [0mIf you have issues related to imports, you should consider setting `esModuleInterop` to `true` in your TypeScript configuration file (usually `tsconfig.json`). See https://blogs.msdn.microsoft.com/typescript/2018/01/31/announcing-typescript-2-7/#easier-ecmascript-module-interoperability for more information.
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m internal-test-util [39m[27m[0m [2msrc/lib/error-throwing-driver/[22m[1merror-throwing.driver.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m internal-test-util [39m[27m[0m [2msrc/lib/spy-driver/[22m[1mspy.driver.spec.ts[22m
+[0m[7m[1m[32m PASS [39m[22m[27m[0m [0m[7m[37m internal-test-util [39m[27m[0m [2msrc/lib/object-driver/[22m[1mobject.driver.spec.ts[22m
+
+[1mTest Suites: [22m[1m[32m3 passed[39m[22m, 3 total
+[1mTests:       [22m[1m[32m48 passed[39m[22m, 48 total
+[1mSnapshots:   [22m0 total
+[1mTime:[22m        1.427 s
+[2mRan all test suites[22m[2m.[22m
+
+
+
+ NX   Successfully ran target test for 4 projects
+
+Nx read the output from the cache instead of running the command for 4 out of 4 tasks.
+
+View logs and run details at https://nx.app/runs/1NcGT9syYK
+
+  Run duration:      98ms
+  Cache:             4/4 hit (100%)
+  Critical path:     24ms (1 task)
+  Recoverable time:  <1ms
+exit=0
+
+$ pnpm run build
+
+> lumberjack@0.0.0 build /Users/nachovazquez/work/1-projects/ngworkers/lumberjack
+> nx run-many --target=build --all
+
+
+ NX   Running target build for 3 projects and 1 task they depend on:
+
+- docs-lumberjack-docs-app
+- examples-lumberjack-app
+- ngworker-lumberjack
+
+
+
+> nx run ngworker-lumberjack:build-package:production  [local cache]
+
+[34mBuilding Angular Package[39m
+[37m
+------------------------------------------------------------------------------[39m
+[37mBuilding entry point '@ngworker/lumberjack'[39m
+[37m------------------------------------------------------------------------------[39m
+- Compiling with Angular sources in partial compilation mode.
+Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+- Copying assets
+[32m✔[39m Copying assets
+- Writing package manifest
+[32m✔[39m Writing package manifest
+[32m✔[39m Built @ngworker/lumberjack
+[37m
+------------------------------------------------------------------------------[39m
+[37mBuilding entry point '@ngworker/lumberjack/console-driver'[39m
+[37m------------------------------------------------------------------------------[39m
+- Compiling with Angular sources in partial compilation mode.
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+[32m✔[39m Built @ngworker/lumberjack/console-driver
+[37m
+------------------------------------------------------------------------------[39m
+[37mBuilding entry point '@ngworker/lumberjack/http-driver'[39m
+[37m------------------------------------------------------------------------------[39m
+- Compiling with Angular sources in partial compilation mode.
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+[32m✔[39m Built @ngworker/lumberjack/http-driver
+[32m
+------------------------------------------------------------------------------[39m
+[32mBuilt Angular Package
+- from: /Users/nachovazquez/work/1-projects/ngworkers/lumberjack/packages/ngworker/lumberjack
+- to:   /Users/nachovazquez/work/1-projects/ngworkers/lumberjack/dist/packages/ngworker/lumberjack[39m
+[32m------------------------------------------------------------------------------[39m
+[37m[37m
+Build at: [1m2026-07-20T16:13:43.015Z[22m - Time: [1m779[22mms
+[39m[39m
+
+> nx run docs-lumberjack-docs-app:build  [existing outputs match the cache, left as is]
+
+> mkdir -p ../../../dist/packages/docs/lumberjack-docs-app
+
+> docusaurus build
+
+[33m[1m[WARNING][22m [36m[4m"package.json"[24m[39m[33m file not found at CWD: [36m[4m"/Users/nachovazquez/work/1-projects/ngworkers/lumberjack/packages/docs/lumberjack-docs-app"[24m[39m[33m.[39m
+[36m[1m[INFO][22m[39m This is non-critical, but could lead to undesired behavior downstream. Docusaurus assumes that [36m[4m"package.json"[24m[39m exists at CWD, because it's where the package manager looks up the script at. A common reason is because you have changed directory in the script. Instead of writing [36m`"start": "cd website && docusaurus start"`[39m, consider using the [36m`[siteDir]`[39m argument: [36m`"start": "docusaurus start website"`[39m.
+[33m[39m
+[33m ------------------------------------------------------------------------------ [39m[33m [39m                                                                              [33m [39m[33m [39m                       Update available [2m3.3.2[22m → [32m3.10.2[39m                        [33m [39m[33m [39m                                                                              [33m [39m[33m [39m       To upgrade Docusaurus packages with the latest version, run the        [33m [39m[33m [39m                             following command:                               [33m [39m[33m [39m                                   [36m`npm i `[39m                                   [33m [39m[33m [39m                                                                              [33m [39m[33m ------------------------------------------------------------------------------ [39m
+[33m[39m
+[36m[1m[INFO][22m[39m [34m[1m[en][22m[39m Creating an optimized production build...
+[36mℹ[39m Compiling Client
+[36mℹ[39m Compiling Server
+[32m✔[39m Server: Compiled successfully in 4.66s
+[32m✔[39m Client: Compiled successfully in 4.95s
+[32m[1m[SUCCESS][22m[39m Generated static files in [36m[4m"build"[24m[39m.
+[36m[1m[INFO][22m[39m Use [36m`npm run serve`[39m command to test your build locally.
+> rm -rf ../../../dist/packages/docs/lumberjack-docs-app/*
+
+> cp -R build/* ../../../dist/packages/docs/lumberjack-docs-app/
+
+
+> nx run ngworker-lumberjack:build:production  [local cache]
+
+> nx run ngworker-lumberjack:build-package:production
+
+
+[2m> [22m[2mnx run[22m ngworker-lumberjack:build-package:production  [2m[existing outputs match the cache, left as is][22m
+
+[34mBuilding Angular Package[39m
+[37m
+------------------------------------------------------------------------------[39m
+[37mBuilding entry point '@ngworker/lumberjack'[39m
+[37m------------------------------------------------------------------------------[39m
+- Compiling with Angular sources in partial compilation mode.
+Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+- Copying assets
+[32m✔[39m Copying assets
+- Writing package manifest
+[32m✔[39m Writing package manifest
+[32m✔[39m Built @ngworker/lumberjack
+[37m
+------------------------------------------------------------------------------[39m
+[37mBuilding entry point '@ngworker/lumberjack/console-driver'[39m
+[37m------------------------------------------------------------------------------[39m
+- Compiling with Angular sources in partial compilation mode.
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+[32m✔[39m Built @ngworker/lumberjack/console-driver
+[37m
+------------------------------------------------------------------------------[39m
+[37mBuilding entry point '@ngworker/lumberjack/http-driver'[39m
+[37m------------------------------------------------------------------------------[39m
+- Compiling with Angular sources in partial compilation mode.
+[32m✔[39m Compiling with Angular sources in partial compilation mode.
+- Writing FESM and DTS bundles
+[32m✔[39m Writing FESM and DTS bundles
+[32m✔[39m Built @ngworker/lumberjack/http-driver
+[32m
+------------------------------------------------------------------------------[39m
+[32mBuilt Angular Package
+- from: /Users/nachovazquez/work/1-projects/ngworkers/lumberjack/packages/ngworker/lumberjack
+- to:   /Users/nachovazquez/work/1-projects/ngworkers/lumberjack/dist/packages/ngworker/lumberjack[39m
+[32m------------------------------------------------------------------------------[39m
+[37m[37m
+Build at: [1m2026-07-20T16:13:43.015Z[22m - Time: [1m779[22mms
+[39m[39m
+
+[2m[32m[39m[22m
+
+[7m[1m[32m NX [39m[22m[27m  [32mSuccessfully ran target [1mbuild-package[22m for project ngworker-lumberjack[39m
+
+[2mNx read the output from the cache instead of running the command for 1 out of 1 tasks.[22m
+
+  Run duration:      56ms
+  Cache:             1/1 hit (100%)
+  Critical path:     18ms (1 task)
+  Recoverable time:  <1ms
+> pnpm exec copy README.md dist/packages/ngworker/lumberjack
+
+[32m✔[39m dist/packages/ngworker/lumberjack/README.md
+
+> nx run examples-lumberjack-app:build:production  [existing outputs match the cache, left as is]
+
+[33m❯[39m Building...
+Browserslist: browsers data (caniuse-lite) is 7 months old. Please run:
+  npx update-browserslist-db@latest
+  Why you should do it regularly: https://github.com/browserslist/update-db#readme
+[32m✔[39m Building...
+[37m[1mInitial chunk files[22m  [2m | [22m[1mNames[22m        [2m | [22m [1mRaw size[22m[2m | [22m[1mEstimated transfer size[22m
+[32mmain-6XB2AJXB.js[37m     [2m | [22m[2mmain[22m         [2m | [22m[36m164.59 kB[37m[2m | [22m               [36m47.20 kB[37m
+[32mpolyfills-4CC7B7AK.js[37m[2m | [22m[2mpolyfills[22m    [2m | [22m [36m35.78 kB[37m[2m | [22m               [36m11.63 kB[37m
+[32mstyles-5INURTSO.css[37m  [2m | [22m[2mstyles[22m       [2m | [22m  [36m0 bytes[37m[2m | [22m                [36m0 bytes[37m
+
+[1m [22m                    [2m | [22m[1mInitial total[22m[2m | [22m[1m200.38 kB[22m[2m | [22m               [1m58.83 kB[22m
+
+Application bundle generation complete. [2.396 seconds] - 2026-07-20T16:14:11.572Z
+[39m
+[1m[33m[33m▲ [43;33m[[43;30mWARNING[43;33m][0m [1mangular:styles/component:scss;6934c880072788f42d4280b00e374e6c86f9bcbb2df0d4a309bd08a5f22d03b9;/Users/nachovazquez/work/1-projects/ngworkers/lumberjack/packages/examples/lumberjack-app/src/app/nx-welcome.component.ts exceeded maximum budget. Budget 2.00 kB was not met by 4.85 kB with a total of 6.85 kB.[0m
+
+[39m[22m
+[37mOutput location: /Users/nachovazquez/work/1-projects/ngworkers/lumberjack/dist/packages/examples/lumberjack-app
+[39m
+
+
+
+ NX   Successfully ran target build for 3 projects and 1 task they depend on
+
+Nx read the output from the cache instead of running the command for 4 out of 4 tasks.
+
+View logs and run details at https://nx.app/runs/c5q6XsJ9Bc
+
+  Run duration:      87ms
+  Cache:             4/4 hit (100%)
+  Critical path:     39ms (3 tasks)
+  Recoverable time:  <1ms
+exit=0
+
