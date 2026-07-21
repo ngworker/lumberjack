@@ -1,4 +1,4 @@
-import { provideHttpClient, withXhr } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { EnvironmentProviders, makeEnvironmentProviders, Provider } from '@angular/core';
 
 import { LumberjackLogDriverConfig, lumberjackLogDriverConfigToken } from '@ngworker/lumberjack';
@@ -82,7 +82,7 @@ export function provideLumberjackHttpDriver<Kind extends LumberjackHttpDriverCon
   ...features: HttpClientFeatures
 ): EnvironmentProviders[] {
   return [
-    provideHttpClient(withXhr(), ...features),
+    provideHttpClient(...features),
     makeEnvironmentProviders([lumberjackHttpDriverProvider]),
     configuration.providers,
   ];

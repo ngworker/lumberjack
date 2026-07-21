@@ -81,10 +81,12 @@ export default tseslint.config(
       '@typescript-eslint/prefer-readonly': 'error',
     },
   },
-  // Keep only the sonarjs rule that was explicitly configured pre-migration.
-  // eslint-plugin-sonarjs v4's recommended set enables many new rules that
-  // were not enforced under v0.17. eslint-plugin-etc, eslint-plugin-rxjs, and
-  // eslint-plugin-ordered-imports do not support ESLint 9 and were removed.
+  // sonarjs v4's recommended set enables many style rules that were not enforced
+  // under v0.17, so we opt in explicitly rather than adopting `recommended`. Keep
+  // the pre-migration cognitive-complexity rule and re-enable the bug-pattern rules
+  // that recommended provided (copy-paste and identical-branch defects) — those
+  // catch real logic errors, not style. eslint-plugin-etc, eslint-plugin-rxjs, and
+  // eslint-plugin-ordered-imports do not support ESLint 9 and remain removed.
   {
     files: ['**/*.{ts,tsx,js,jsx}'],
     plugins: {
@@ -92,13 +94,20 @@ export default tseslint.config(
     },
     rules: {
       'sonarjs/cognitive-complexity': ['error', 8],
+      'sonarjs/no-identical-expressions': 'error',
+      'sonarjs/no-all-duplicated-branches': 'error',
+      'sonarjs/no-identical-conditions': 'error',
+      'sonarjs/no-element-overwrite': 'error',
+      'sonarjs/no-ignored-return': 'error',
+      'sonarjs/no-use-of-empty-return-value': 'error',
     },
   },
   // Angular v22's change-detection-eager migration writes ChangeDetectionStrategy.Eager
-  // to preserve pre-v22 Default behavior. That trips prefer-on-push (a preset default
-  // that was not user-configured). Keep migration output; disable the preset rule.
+  // to preserve pre-v22 Default behavior in the example app. That trips prefer-on-push
+  // (a preset default that was not user-configured). Scope the disable to the example
+  // project so the guardrail stays active for library and future component code.
   {
-    files: ['**/*.ts'],
+    files: ['packages/examples/**/*.ts'],
     rules: {
       '@angular-eslint/prefer-on-push-component-change-detection': 'off',
     },
