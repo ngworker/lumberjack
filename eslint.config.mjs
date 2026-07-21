@@ -116,15 +116,5 @@ export default tseslint.config(
       'sonarjs/no-ignored-return': 'error',
       'sonarjs/no-use-of-empty-return-value': 'error',
     },
-  },
-  // Angular v22's change-detection-eager migration writes ChangeDetectionStrategy.Eager
-  // to preserve pre-v22 Default behavior in the example app. That trips prefer-on-push
-  // (a preset default that was not user-configured). Scope the disable to the example
-  // project so the guardrail stays active for library and future component code.
-  {
-    files: ['packages/examples/**/*.ts'],
-    rules: {
-      '@angular-eslint/prefer-on-push-component-change-detection': 'off',
-    },
   }
 );
