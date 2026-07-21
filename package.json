@@ -72,6 +72,7 @@
     "@nx/web": "23.1.0",
     "@nx/workspace": "23.1.0",
     "@schematics/angular": "22.0.7",
+    "@smarttools/eslint-plugin-rxjs": "^1.0.22",
     "@swc-node/register": "1.12.1",
     "@swc/core": "1.15.8",
     "@swc/helpers": "0.5.23",

@@ -134,6 +134,9 @@ importers:
       '@schematics/angular':
         specifier: 22.0.7
         version: 22.0.7(chokidar@5.0.0)
+      '@smarttools/eslint-plugin-rxjs':
+        specifier: ^1.0.22
+        version: 1.0.22(eslint@9.9.1(jiti@2.6.1))(typescript@6.0.3)
       '@swc-node/register':
         specifier: 1.12.1
         version: 1.12.1(@swc/core@1.15.8(@swc/helpers@0.5.23))(@swc/types@0.1.27)(typescript@6.0.3)
@@ -5832,6 +5835,12 @@ packages:
   '@slorber/remark-comment@1.0.0':
     resolution:
       { integrity: sha512-RCE24n7jsOj1M0UPvIQCHTe7fI0sFL4S2nwKVWwHyVr/wI/H8GosgsJGyhnsZoGFnD/P2hLf1mSbrrgSLN93NA== }
+
+  '@smarttools/eslint-plugin-rxjs@1.0.22':
+    resolution:
+      { integrity: sha512-uxKH15xTSuvKK2R+LAnxP2yYhnE2ZHn6RRyJNlQFokqAmiJ3s242aYxLwQeeE5TLpco4brAvW2wwvNpg9wJVow== }
+    peerDependencies:
+      typescript: '>=4.0.0'
 
   '@standard-schema/spec@1.1.0':
     resolution:
@@ -23209,6 +23218,15 @@ snapshots:
       micromark-factory-space: 1.1.0
       micromark-util-character: 1.2.0
       micromark-util-symbol: 1.1.0
+
+  '@smarttools/eslint-plugin-rxjs@1.0.22(eslint@9.9.1(jiti@2.6.1))(typescript@6.0.3)':
+    dependencies:
+      '@typescript-eslint/utils': 8.64.0(eslint@9.9.1(jiti@2.6.1))(typescript@6.0.3)
+      ts-api-utils: 2.5.0(typescript@6.0.3)
+      typescript: 6.0.3
+    transitivePeerDependencies:
+      - eslint
+      - supports-color
 
   '@standard-schema/spec@1.1.0': {}
 
