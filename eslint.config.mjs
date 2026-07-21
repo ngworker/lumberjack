@@ -1,5 +1,6 @@
 import nx from '@nx/eslint-plugin';
 import rxjs from '@smarttools/eslint-plugin-rxjs';
+import angular from 'angular-eslint';
 import eslintPluginSonarjs from 'eslint-plugin-sonarjs';
 import tseslint from 'typescript-eslint';
 import { dirname } from 'path';
@@ -81,6 +82,21 @@ export default tseslint.config(
       // Explicitly configured before the ESLint 9 migration.
       '@typescript-eslint/prefer-readonly': 'error',
     },
+  },
+  // angular-eslint ships as a dependency but was never wired into the flat config
+  // during the ESLint 9 migration, so no Angular-specific rule ran at all.
+  // tsRecommended covers component/directive metadata and lifecycle correctness;
+  // templateRecommended covers Angular template syntax and templateAccessibility
+  // adds the a11y checks (alt-text, keyboard handlers, aria). processInlineTemplates
+  // extends template linting to components declaring `template:` inline.
+  {
+    files: ['**/*.ts'],
+    extends: [...angular.configs.tsRecommended],
+    processor: angular.processInlineTemplates,
+  },
+  {
+    files: ['**/*.html'],
+    extends: [...angular.configs.templateRecommended, ...angular.configs.templateAccessibility],
   },
   // Restore the pre-migration RxJS lint coverage. The original eslint-plugin-rxjs
   // has no ESLint 9 support, so we use the maintained @smarttools fork, which ships
