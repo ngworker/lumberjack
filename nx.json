@@ -172,28 +172,22 @@
   "release": {
     "projects": ["ngworker-lumberjack"],
     "projectsRelationship": "independent",
+    "git": {
+      "commit": true,
+      "commitArgs": "--no-verify",
+      "tag": true,
+      "push": true
+    },
     "version": {
       "preVersionCommand": "pnpm exec nx run-many -t build",
-      "conventionalCommits": true,
-      "git": {
-        "commit": true,
-        "commitArgs": "--no-verify",
-        "tag": true,
-        "push": true
-      }
+      "conventionalCommits": true
     },
     "changelog": {
       "projectChangelogs": {
         "createRelease": "github",
         "file": false
       },
-      "workspaceChangelog": false,
-      "git": {
-        "commit": true,
-        "commitArgs": "--no-verify",
-        "tag": true,
-        "push": true
-      }
+      "workspaceChangelog": false
     },
     "releaseTag": {
       "pattern": "v{version}"

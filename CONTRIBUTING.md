@@ -49,6 +49,15 @@ Dry-run first if unsure:
 pnpm exec nx release --skip-publish --dry-run
 ```
 
+Always confirm the resolved version before running without `--dry-run`. Squash-merge
+PR bodies can confuse the conventional-commits parser (e.g. a `feat!:` title may
+still resolve as a patch). Force the version when needed:
+
+```bash
+pnpm exec nx release 22.0.0 --skip-publish --dry-run
+pnpm exec nx release 22.0.0 --skip-publish
+```
+
 ### 2. Publish (CI)
 
 Pushing tag `v*` triggers [`.github/workflows/release.yml`](.github/workflows/release.yml):
@@ -69,12 +78,12 @@ versions use `latest`.
 On [npmjs.com](https://www.npmjs.com/package/@ngworker/lumberjack) → package
 settings → **Trusted Publisher**, add:
 
-| Field | Value |
-| --- | --- |
-| Repository owner | `ngworker` |
-| Repository name | `lumberjack` |
-| Workflow filename | `release.yml` |
-| Environment | _(leave empty)_ |
+| Field             | Value           |
+| ----------------- | --------------- |
+| Repository owner  | `ngworker`      |
+| Repository name   | `lumberjack`    |
+| Workflow filename | `release.yml`   |
+| Environment       | _(leave empty)_ |
 
 OIDC requires npm ≥ 11.5.1 on the runner (the workflow upgrades npm for this).
 
