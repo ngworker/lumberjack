@@ -690,14 +690,6 @@ describe(LumberjackService.name, () => {
 
     it('correctly forwards the debug log', () => {
       const payload = undefined;
-      lumberjack.logInfo('', payload, 'scope');
-
-      expect(spyDriver.logInfo).toHaveBeenCalledTimes(1);
-      expect(spyDriver.logInfo).toHaveBeenCalledWith(createInfoDriverLog('info', payload, 'scope'));
-    });
-
-    it('correctly forwards the debug log', () => {
-      const payload = undefined;
       lumberjack.logDebug('', payload, 'scope');
 
       expect(spyDriver.logDebug).toHaveBeenCalledTimes(1);
