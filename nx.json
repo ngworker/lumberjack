@@ -177,7 +177,9 @@
       "conventionalCommits": true,
       "git": {
         "commit": true,
-        "commitArgs": "--no-verify"
+        "commitArgs": "--no-verify",
+        "tag": true,
+        "push": true
       }
     },
     "changelog": {
@@ -188,7 +190,9 @@
       "workspaceChangelog": false,
       "git": {
         "commit": true,
-        "commitArgs": "--no-verify"
+        "commitArgs": "--no-verify",
+        "tag": true,
+        "push": true
       }
     },
     "releaseTag": {

@@ -29,6 +29,55 @@ pnpm exec start
 pnpm exec build
 ```
 
+## Releasing
+
+Versioning and publishing are separate steps.
+
+### 1. Version (maintainer machine)
+
+```bash
+pnpm exec nx release --skip-publish
+```
+
+This uses conventional commits to bump `@ngworker/lumberjack`, updates the package
+manifest, commits, creates tag `v{version}`, pushes, and opens a GitHub Release.
+Do **not** publish from this step — CI owns the registry.
+
+Dry-run first if unsure:
+
+```bash
+pnpm exec nx release --skip-publish --dry-run
+```
+
+### 2. Publish (CI)
+
+Pushing tag `v*` triggers [`.github/workflows/release.yml`](.github/workflows/release.yml):
+
+1. Check out the tag
+2. Assert source `package.json` version matches the tag
+3. Skip if that version is already on npm (idempotent re-runs)
+4. Build, assert dist version matches the tag
+5. `npm publish dist/packages/ngworker/lumberjack` via **OIDC trusted publishing**
+   (no `NPM_TOKEN`; provenance is automatic)
+6. Verify the version is live, then deploy docs
+
+Prerelease versions (containing `-`) publish under the `next` dist-tag; stable
+versions use `latest`.
+
+### npm trusted publisher setup (one-time)
+
+On [npmjs.com](https://www.npmjs.com/package/@ngworker/lumberjack) → package
+settings → **Trusted Publisher**, add:
+
+| Field | Value |
+| --- | --- |
+| Repository owner | `ngworker` |
+| Repository name | `lumberjack` |
+| Workflow filename | `release.yml` |
+| Environment | _(leave empty)_ |
+
+OIDC requires npm ≥ 11.5.1 on the runner (the workflow upgrades npm for this).
+
 ## <a name="rules"></a> Coding Rules
 
 To ensure consistency throughout the source code, keep these rules in mind as you are working:
