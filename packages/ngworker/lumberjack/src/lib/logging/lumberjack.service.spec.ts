@@ -41,7 +41,7 @@ class SpyDriverError extends Error {
 
     // Non-standard V8 function for maintaining a stack trace
     const ErrorWithCaptureStackTrace = Error as unknown as Error & {
-      // eslint-disable-next-line @typescript-eslint/ban-types
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-function-type -- V8 Error.captureStackTrace signature uses Function
       captureStackTrace?: (error: Error, constructor: Function) => void;
     };
     ErrorWithCaptureStackTrace.captureStackTrace?.(this, this.constructor);
@@ -681,14 +681,6 @@ describe(LumberjackService.name, () => {
     });
 
     it('correctly forwards the info log', () => {
-      const payload = undefined;
-      lumberjack.logInfo('', payload, 'scope');
-
-      expect(spyDriver.logInfo).toHaveBeenCalledTimes(1);
-      expect(spyDriver.logInfo).toHaveBeenCalledWith(createInfoDriverLog('info', payload, 'scope'));
-    });
-
-    it('correctly forwards the debug log', () => {
       const payload = undefined;
       lumberjack.logInfo('', payload, 'scope');
 

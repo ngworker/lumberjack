@@ -96,7 +96,10 @@ jobs:
       - name: Run NX Commands
         run: |
           pnpm exec nx-cloud record -- nx format:check
-          pnpm exec nx affected -t lint test:ci build e2e
+          pnpm exec nx affected -t lint build e2e
+          # `ci` is a configuration of the `test` target, not a target itself.
+          # Passing `test:ci` to `-t` matched no target, so unit tests never ran.
+          pnpm exec nx affected -t test --configuration=ci
 
   sonarcloud:
     name: SonarCloud

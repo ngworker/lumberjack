@@ -1,0 +1,136 @@
+import nx from '@nx/eslint-plugin';
+import rxjs from '@smarttools/eslint-plugin-rxjs';
+import angular from 'angular-eslint';
+import eslintPluginSonarjs from 'eslint-plugin-sonarjs';
+import tseslint from 'typescript-eslint';
+import { dirname } from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = dirname(fileURLToPath(import.meta.url));
+
+export default tseslint.config(
+  ...nx.configs['flat/base'],
+  {
+    ignores: [
+      '**/dist/**',
+      '**/coverage/**',
+      '**/node_modules/**',
+      '**/.docusaurus/**',
+      '**/build/**',
+      '**/tmp/**',
+      '**/out-tsc/**',
+      // Docusaurus config is not part of any project tsconfig; type-aware rules cannot load it.
+      '**/docusaurus.config.ts',
+    ],
+  },
+  {
+    files: ['**/*.ts', '**/*.tsx', '**/*.js', '**/*.jsx'],
+    rules: {
+      '@nx/enforce-module-boundaries': [
+        'error',
+        {
+          enforceBuildableLibDependency: true,
+          allowCircularSelfDependency: true,
+          allow: [],
+          depConstraints: [
+            {
+              sourceTag: 'scope:public',
+              onlyDependOnLibsWithTags: ['scope:public'],
+            },
+            {
+              sourceTag: 'scope:internal',
+              onlyDependOnLibsWithTags: ['scope:public', 'scope:internal'],
+            },
+            {
+              sourceTag: 'type:app',
+              onlyDependOnLibsWithTags: ['type:package'],
+            },
+            {
+              sourceTag: 'type:package',
+              onlyDependOnLibsWithTags: ['type:package', 'type:test-util'],
+            },
+            {
+              sourceTag: 'type:e2e',
+              onlyDependOnLibsWithTags: ['type:app'],
+            },
+          ],
+        },
+      ],
+    },
+    ignores: ['**/*.spec.ts'],
+  },
+  ...nx.configs['flat/typescript'],
+  {
+    files: ['**/*.spec.ts', '**/*.spec.tsx', '**/*.spec.js', '**/*.spec.jsx'],
+    rules: {
+      '@nx/enforce-module-boundaries': 'off',
+    },
+  },
+  ...nx.configs['flat/javascript'],
+  // Type-aware linting. projectService finds the nearest tsconfig per file so
+  // lint targets that run with cwd set to a project root still resolve correctly.
+  {
+    files: ['**/*.ts', '**/*.tsx'],
+    languageOptions: {
+      parser: tseslint.parser,
+      parserOptions: {
+        projectService: true,
+        tsconfigRootDir: __dirname,
+      },
+    },
+    rules: {
+      // Explicitly configured before the ESLint 9 migration.
+      '@typescript-eslint/prefer-readonly': 'error',
+    },
+  },
+  // angular-eslint ships as a dependency but was never wired into the flat config
+  // during the ESLint 9 migration, so no Angular-specific rule ran at all.
+  // tsRecommended covers component/directive metadata and lifecycle correctness;
+  // templateRecommended covers Angular template syntax and templateAccessibility
+  // adds the a11y checks (alt-text, keyboard handlers, aria). processInlineTemplates
+  // extends template linting to components declaring `template:` inline.
+  {
+    files: ['**/*.ts'],
+    extends: [...angular.configs.tsRecommended],
+    processor: angular.processInlineTemplates,
+  },
+  {
+    files: ['**/*.html'],
+    extends: [...angular.configs.templateRecommended, ...angular.configs.templateAccessibility],
+  },
+  // Restore the pre-migration RxJS lint coverage. The original eslint-plugin-rxjs
+  // has no ESLint 9 support, so we use the maintained @smarttools fork, which ships
+  // the same `recommended` bug-pattern set (no-nested-subscribe, no-unsafe-takeuntil,
+  // no-ignored-*, etc.). Type-aware, so scope to TS; the projectService parser is
+  // configured in the type-aware block above. eslint-plugin-etc and
+  // eslint-plugin-ordered-imports have no ESLint 9 support and remain removed.
+  {
+    files: ['**/*.ts', '**/*.tsx'],
+    plugins: {
+      '@smarttools/rxjs': rxjs,
+    },
+    rules: {
+      ...rxjs.configs.recommended.rules,
+    },
+  },
+  // sonarjs v4's recommended set enables many style rules that were not enforced
+  // under v0.17, so we opt in explicitly rather than adopting `recommended`. Keep
+  // the pre-migration cognitive-complexity rule and re-enable the bug-pattern rules
+  // that recommended provided (copy-paste and identical-branch defects) — those
+  // catch real logic errors, not style.
+  {
+    files: ['**/*.{ts,tsx,js,jsx}'],
+    plugins: {
+      sonarjs: eslintPluginSonarjs,
+    },
+    rules: {
+      'sonarjs/cognitive-complexity': ['error', 8],
+      'sonarjs/no-identical-expressions': 'error',
+      'sonarjs/no-all-duplicated-branches': 'error',
+      'sonarjs/no-identical-conditions': 'error',
+      'sonarjs/no-element-overwrite': 'error',
+      'sonarjs/no-ignored-return': 'error',
+      'sonarjs/no-use-of-empty-return-value': 'error',
+    },
+  }
+);

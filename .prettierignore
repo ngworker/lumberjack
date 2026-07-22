@@ -13,4 +13,8 @@ packages/**/CHANGELOG.md
 /.nx/cache
 .angular
 
+# Apnea harness artifacts/tasks (not product code)
+.apnea/
+
 /.nx/workspace-data
+.nx/self-healing

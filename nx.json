@@ -111,7 +111,7 @@
       }
     },
     "@nx/eslint:lint": {
-      "inputs": ["default", "{workspaceRoot}/.eslintrc.json"],
+      "inputs": ["default", "^default", "{workspaceRoot}/eslint.config.mjs", "{workspaceRoot}/tools/eslint-rules/**/*"],
       "cache": true
     },
     "@angular-devkit/build-angular:application": {
@@ -140,7 +140,7 @@
       "!{projectRoot}/**/?(*.)+(spec|test).[jt]s?(x)?(.snap)",
       "!{projectRoot}/tsconfig.spec.json",
       "!{projectRoot}/jest.config.[jt]s",
-      "!{projectRoot}/.eslintrc.json",
+      "!{projectRoot}/eslint.config.mjs",
       "!{projectRoot}/src/test-setup.[jt]s"
     ],
     "projectSpecificFiles": []
@@ -174,11 +174,11 @@
     "projectsRelationship": "independent",
     "version": {
       "preVersionCommand": "pnpm exec nx run-many -t build",
-      "conventionalCommits": true
-    },
-    "git": {
-      "commit": true,
-      "commitArgs": "--no-verify"
+      "conventionalCommits": true,
+      "git": {
+        "commit": true,
+        "commitArgs": "--no-verify"
+      }
     },
     "changelog": {
       "projectChangelogs": {
@@ -186,7 +186,10 @@
         "file": false
       },
       "workspaceChangelog": false,
-      "commitMessageFormat": "conventional"
+      "git": {
+        "commit": true,
+        "commitArgs": "--no-verify"
+      }
     },
     "releaseTag": {
       "pattern": "v{version}"
