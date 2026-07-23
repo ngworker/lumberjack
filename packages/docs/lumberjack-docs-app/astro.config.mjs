@@ -6,6 +6,7 @@ import { defineConfig, fontProviders } from 'astro/config';
 export default defineConfig({
   site: 'https://ngworker.github.io',
   base: '/lumberjack',
+  server: { port: 3000 },
   output: 'static',
   outDir: '../../../dist/packages/docs/lumberjack-docs-app',
   markdown: {

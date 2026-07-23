@@ -5,9 +5,7 @@ export default defineConfig({
   e2e: {
     ...nxE2EPreset(__filename, {
       cypressDir: 'src',
-      // Docusaurus has no serve:development/production configs — use `start` (dev
-      // server, no pre-build) so e2e does not race the static `serve` target that
-      // requires packages/docs/lumberjack-docs-app/build.
+      // Astro dev server (docs-lumberjack-docs-app:start) — no pre-build needed; port pinned to 3000 in astro.config.mjs.
       webServerCommands: {
         default: 'nx run docs-lumberjack-docs-app:start',
       },
