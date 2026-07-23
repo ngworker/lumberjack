@@ -63,6 +63,11 @@ export default defineConfig({
           href: 'https://github.com/ngworker/lumberjack',
         },
         {
+          icon: 'npm',
+          label: 'npm',
+          href: 'https://www.npmjs.com/package/@ngworker/lumberjack',
+        },
+        {
           icon: 'discord',
           label: 'Discord',
           href: 'https://discord.gg/UDUa8MA6Ef',
