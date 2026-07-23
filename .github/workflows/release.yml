@@ -1,21 +1,68 @@
 name: Release
 
+# Versioning is local (or a protected maintainer machine):
+#   pnpm exec nx release --skip-publish
+# That bumps package.json, commits, tags vX.Y.Z, pushes, and opens the GitHub Release.
+# This workflow only publishes the tagged commit to npm (and deploys docs).
+
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'v*'
   workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Release tag to publish, e.g. v22.0.0'
+        required: true
+        type: string
+
+permissions:
+  contents: read
+  id-token: write # required for npm OIDC trusted publishing + provenance
 
 jobs:
-  release:
+  publish:
+    name: Publish to npm
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write # needed for provenance data generation
+    timeout-minutes: 15
+    concurrency:
+      # One run per tag; never cancel a production publish mid-flight.
+      group: publish-${{ github.event_name == 'push' && github.ref_name || inputs.tag }}
+      cancel-in-progress: false
 
     steps:
-      - name: Checkout repository
+      - name: Resolve release tag
+        id: meta
+        # Tag format is `v{version}` (nx.json releaseTag.pattern).
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            TAG="${{ github.ref_name }}"
+          else
+            TAG="${{ inputs.tag }}"
+          fi
+          if [[ "$TAG" =~ ^v(.+)$ ]]; then
+            VERSION="${BASH_REMATCH[1]}"
+          else
+            echo "::error::Unrecognized release tag '$TAG' (expected vX.Y.Z)"
+            exit 1
+          fi
+          # Prereleases (any version containing '-') go to the `next` dist-tag.
+          case "$VERSION" in
+            *-*) DIST_TAG="next" ;;
+            *)   DIST_TAG="latest" ;;
+          esac
+          {
+            echo "tag=$TAG"
+            echo "version=$VERSION"
+            echo "dist_tag=$DIST_TAG"
+          } >> "$GITHUB_OUTPUT"
+          echo "Publishing @ngworker/lumberjack@$VERSION under dist-tag $DIST_TAG"
+        shell: bash
+
+      - name: Checkout release tag
         uses: actions/checkout@v4
         with:
+          ref: refs/tags/${{ steps.meta.outputs.tag }}
           fetch-depth: 0
           filter: tree:0
 
@@ -23,34 +70,102 @@ jobs:
         with:
           version: 10
 
+      # setup-node provides node + npm. No registry-url on purpose: it writes an
+      # .npmrc with //registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}, and an
+      # empty/unresolved token there breaks OIDC trusted publishing.
       - uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: 'pnpm'
-          registry-url: 'https://registry.npmjs.org'
 
       - run: pnpm install --frozen-lockfile
 
+      - name: Upgrade npm for OIDC trusted publishing
+        # npm OIDC trusted publishing needs npm >= 11.5.1; Node 22 ships 10.x.
+        run: npm install -g npm@11
+        shell: bash
+
       - name: Print Environment Info
-        run: npx nx report
+        run: pnpm exec nx report
+        shell: bash
+
+      - name: Assert source manifest matches tag
+        # The release commit (created by `nx release --skip-publish`) is the
+        # tagged commit, so the source package.json must already carry the
+        # tag's version. A mismatch means we're about to publish the wrong bits.
+        run: |
+          MANIFEST_VERSION=$(node -p "require('./packages/ngworker/lumberjack/package.json').version")
+          if [ "$MANIFEST_VERSION" != "${{ steps.meta.outputs.version }}" ]; then
+            echo "::error::packages/ngworker/lumberjack/package.json is at $MANIFEST_VERSION but tag says ${{ steps.meta.outputs.version }}"
+            exit 1
+          fi
+        shell: bash
+
+      - name: Check whether version is already published
+        id: published
+        # npm versions are immutable. If this exact version is already live
+        # (e.g. a re-run after a green publish), skip the remaining steps and
+        # succeed — re-publishing would hard-fail, and there is nothing to do.
+        run: |
+          if npm view "@ngworker/lumberjack@${{ steps.meta.outputs.version }}" version >/dev/null 2>&1; then
+            echo "::notice::@ngworker/lumberjack@${{ steps.meta.outputs.version }} is already on the registry — nothing to publish."
+            echo "skip=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "skip=false" >> "$GITHUB_OUTPUT"
+          fi
         shell: bash
 
       - name: Build
+        if: steps.published.outputs.skip != 'true'
         run: pnpm exec nx build ngworker-lumberjack
         shell: bash
 
-      - name: Publish Package
+      - name: Assert dist manifest matches tag
+        if: steps.published.outputs.skip != 'true'
+        # Publish packs dist/. Guards the historical failure mode where a stale
+        # dist/ at the old version was silently re-tagged instead of published.
+        run: |
+          DIST_VERSION=$(node -p "require('./dist/packages/ngworker/lumberjack/package.json').version")
+          if [ "$DIST_VERSION" != "${{ steps.meta.outputs.version }}" ]; then
+            echo "::error::dist/packages/ngworker/lumberjack is at $DIST_VERSION but tag says ${{ steps.meta.outputs.version }}"
+            exit 1
+          fi
         shell: bash
-        run: pnpm exec nx release publish --projects=ngworker-lumberjack
+
+      - name: Publish package
+        if: steps.published.outputs.skip != 'true'
+        # Tokenless publish via npm OIDC trusted publishing (configure on npmjs
+        # for this workflow file + repo). Direct `npm publish` of the built dist
+        # dir — NOT `nx release publish` — so OIDC engages and provenance is
+        # emitted automatically. Relies on id-token: write.
+        run: |
+          npm publish "dist/packages/ngworker/lumberjack" \
+            --tag "${{ steps.meta.outputs.dist_tag }}" \
+            --access public
+        shell: bash
         env:
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-          NPM_CONFIG_PROVENANCE: true
-          # This is needed for actions/setup-node authentication to work
           npm_config_registry: https://registry.npmjs.org
 
+      - name: Verify package is live
+        if: steps.published.outputs.skip != 'true'
+        run: |
+          PKG="@ngworker/lumberjack"
+          VERSION="${{ steps.meta.outputs.version }}"
+          for attempt in 1 2 3 4 5; do
+            if npm view "$PKG@$VERSION" version >/dev/null 2>&1; then
+              echo "✓ $PKG@$VERSION is live"
+              exit 0
+            fi
+            echo "… $PKG@$VERSION not visible yet (attempt $attempt/5), retrying"
+            sleep 5
+          done
+          echo "::error::$PKG@$VERSION not found on the registry after publish"
+          exit 1
+        shell: bash
+
   deploy-docs:
-    name: '[Merge] Deploy docs to GitHub Pages'
-    needs: release
+    name: Deploy docs to GitHub Pages
+    needs: publish
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -64,10 +179,11 @@ jobs:
       - name: Check out the source code
         uses: actions/checkout@v4
         with:
+          # Publish checked out the tag; docs should match the same release.
+          ref: ${{ github.event_name == 'push' && github.ref || format('refs/tags/{0}', inputs.tag) }}
           fetch-depth: 0
       - name: Setup
         uses: ./.github/actions/setup
-      # Uses the cache generated in the distributed step
       - name: Build docs
         run: pnpm exec nx build docs-lumberjack-docs-app
       - name: Set up GitHub Pages
