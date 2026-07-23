@@ -1,0 +1,67 @@
+/* ── Table of Contents: active indicator (Fumadocs-style) ──────── */
+
+starlight-toc nav ul {
+  padding-inline-start: 1rem;
+}
+
+starlight-toc a {
+  position: relative;
+  transition: color 0.15s;
+}
+
+/* Neutralize Starlight's aria-current styling — our scroll-based
+   tracking (toc-path.ts) uses .toc-active instead. !important is
+   required because Starlight sets aria-current via its own
+   IntersectionObserver independently of our scroll tracking. */
+starlight-toc a[aria-current='true'] {
+  color: inherit !important;
+}
+
+:root[data-theme='dark'] starlight-toc a.toc-active {
+  color: var(--color-accent-500) !important;
+}
+
+:root[data-theme='light'] starlight-toc a.toc-active {
+  color: var(--color-accent-500) !important;
+}
+
+/* Wrapper for SVG path (created by toc-path.ts) */
+.toc-items-wrapper {
+  position: relative;
+}
+
+.toc-path-svg {
+  position: absolute;
+  inset-inline-start: 0;
+  top: 0;
+  pointer-events: none;
+}
+
+.toc-path-bg {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.toc-path-active {
+  fill: none;
+  stroke: var(--color-accent-500);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  filter: drop-shadow(
+    0 0 3px color-mix(in srgb, var(--color-accent-500) 40%, transparent)
+  );
+  transition: clip-path 0.25s ease;
+}
+
+:root[data-theme='light'] .toc-path-bg {
+  stroke: rgba(var(--sl-color-white-rgb), 0.1);
+}
+
+:root[data-theme='light'] .toc-path-active {
+  stroke: var(--color-accent-500);
+  filter: drop-shadow(
+    0 0 3px color-mix(in srgb, var(--color-accent-500) 25%, transparent)
+  );
+}

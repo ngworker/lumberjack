@@ -1,0 +1,96 @@
+/* ── Theme custom properties ─────────────────────────────────────── */
+/* Dark/light Starlight overrides + pagefind + scrollbar colors      */
+
+@theme {
+  /* ── Accent: Lumberjack red ───────────────────────────────────────── */
+  --color-accent-50: #fef2f2;
+  --color-accent-100: #fee2e2;
+  --color-accent-200: #fecaca;
+  --color-accent-300: #fca5a5;
+  --color-accent-400: #f87171;
+  --color-accent-500: #dd1b16;
+  --color-accent-600: #c71814;
+  --color-accent-700: #a6120d;
+  --color-accent-800: #8d0f0b;
+  --color-accent-900: #740d09;
+  --color-accent-950: #450a0a;
+}
+
+:root[data-theme='dark'] {
+  --sl-color-bg: #04060b;
+  --sl-color-text-accent: var(--color-accent-500);
+  --sl-color-bg-sidebar: #07090f;
+  --sl-color-backdrop-overlay: rgba(4, 6, 11, 0.8);
+  --sl-color-bg-nav: #07090f;
+  --pagefind-ui-primary: var(--color-accent-500);
+  --pagefind-ui-text: #ececf0;
+  --pagefind-ui-background: #0b0e16;
+  --pagefind-ui-border: rgba(255, 255, 255, 0.1);
+  --pagefind-ui-tag: color-mix(in srgb, var(--color-accent-500) 10%, transparent);
+  --scrollbar-idle: rgba(255, 255, 255, 0.08);
+  --scrollbar-hover: rgba(255, 255, 255, 0.15);
+}
+
+:root[data-theme='light'] {
+  --sl-color-bg: #fafafa;
+  --sl-color-text-accent: var(--color-accent-700);
+  --sl-color-bg-sidebar: #f4f4f4;
+  --sl-color-bg-nav: #f4f4f4;
+  --sl-color-hairline-shade: rgba(28, 28, 28, 0.08);
+  --sl-color-white: #1c1c1c;
+  --sl-color-black: #fafafa;
+  --sl-color-text: #2e2e2e;
+  --sl-color-gray-1: #2e2e2e;
+  --sl-color-gray-2: #404040;
+  --sl-color-gray-3: #606060;
+  --sl-color-gray-4: #a3a3a3;
+  --sl-color-gray-5: #d9d9d9;
+  --sl-color-gray-6: #ececec;
+  --pagefind-ui-primary: var(--color-accent-500);
+  --pagefind-ui-text: #1c1c1c;
+  --pagefind-ui-background: #fafafa;
+  --pagefind-ui-border: rgba(28, 28, 28, 0.1);
+  --pagefind-ui-tag: color-mix(in srgb, var(--color-accent-500) 8%, transparent);
+  --scrollbar-idle: rgba(28, 28, 28, 0.08);
+  --scrollbar-hover: rgba(28, 28, 28, 0.15);
+}
+
+/* ── Shared-theme tokens ──────────────────────────────────────────── */
+/* Bespoke site-specific values referenced by the structural CSS in    */
+/* docs/docs-theme/src/styles/*.css. Extraction did not change any of  */
+/* these colors, only where they're declared — keep values in sync     */
+/* with docs/nx-cloudflare-docs/src/styles/theme-vars.css's own set.   */
+:root {
+  /* rgb triples (no alpha) so shared CSS can compose rgba(var(...), a) */
+  --sl-color-white-rgb: 28, 28, 28;
+  --color-accent-500-rgb: 221, 27, 22;
+
+  /* Muted dark-mode text, reused between code-block headers and sidebar links */
+  --muted-text-dark: #9a9aa3;
+  --sidebar-link-hover-dark: #d6d6dc;
+  --sidebar-link-muted-light: #5a5a5a;
+
+  /* Code block chrome */
+  --code-header-bg-dark: rgba(20, 17, 40, 0.5);
+  --code-header-fg-light: #6a6a6a;
+  --code-header-bg-light: rgba(238, 235, 248, 0.6);
+  --code-block-bg-dark: rgba(20, 17, 40, 0.4);
+  --code-block-bg-light: rgba(238, 235, 248, 0.5);
+
+  /* Bespoke inline-code tint (brighter than accent-500) for legibility on the dark bg */
+  --code-inline-fg-dark: var(--color-accent-300);
+
+  /* Search dialog surfaces */
+  --search-dialog-bg-dark: rgba(20, 17, 40, 0.85);
+  --search-dialog-bg-light: rgba(250, 249, 253, 0.9);
+
+  /* One-off accent-adjacent glow/gradient colors that don't map onto the accent scale */
+  --h2-border-glow-rgb: 221, 27, 22;
+  --stats-gradient-stop2-rgb: 141, 15, 11;
+  --gradient-accent-to-1: var(--color-accent-700);
+  --gradient-accent-to-2: var(--color-accent-800);
+
+  /* Feature-card hover lift (disabled by setting these to `none`) */
+  --feature-item-hover-transform: translateY(-4px);
+  --feature-item-hover-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+}

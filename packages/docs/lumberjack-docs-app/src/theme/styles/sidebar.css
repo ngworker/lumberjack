@@ -1,0 +1,139 @@
+/* ── Sidebar: contrast, active states & layout ─────────────────── */
+
+/* Section group headers — kicker style */
+nav.sidebar .top-level > li > details > summary,
+nav.sidebar .top-level > li > a.large {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+
+:root[data-theme='dark'] nav.sidebar .top-level > li > details > summary,
+:root[data-theme='dark'] nav.sidebar .top-level > li > a.large {
+  color: var(--pagefind-ui-text);
+}
+
+:root[data-theme='light'] nav.sidebar .top-level > li > details > summary,
+:root[data-theme='light'] nav.sidebar .top-level > li > a.large {
+  color: var(--sl-color-white);
+}
+
+/* Sidebar links — dark mode */
+:root[data-theme='dark'] nav.sidebar a:not(.sidebar-logo) {
+  color: var(--muted-text-dark);
+  transition: color 0.15s, background-color 0.15s;
+}
+
+:root[data-theme='dark'] nav.sidebar a:not(.sidebar-logo):hover {
+  color: var(--sidebar-link-hover-dark);
+  background-color: color-mix(in srgb, var(--color-accent-500) 4%, transparent);
+}
+
+:root[data-theme='dark'] nav.sidebar a[aria-current='page'] {
+  color: var(--pagefind-ui-text);
+  background-color: color-mix(in srgb, var(--color-accent-500) 8%, transparent);
+  border-inline-start: 2px solid var(--color-accent-500);
+  font-weight: 500;
+}
+
+/* Sidebar links — light mode */
+:root[data-theme='light'] nav.sidebar a:not(.sidebar-logo) {
+  color: var(--sidebar-link-muted-light);
+}
+
+:root[data-theme='light'] nav.sidebar a:not(.sidebar-logo):hover {
+  color: var(--sl-color-white);
+  background-color: color-mix(in srgb, var(--color-accent-500) 4%, transparent);
+}
+
+:root[data-theme='light'] nav.sidebar a[aria-current='page'] {
+  color: var(--sl-color-white);
+  background-color: color-mix(in srgb, var(--color-accent-500) 8%, transparent);
+  border-inline-start: 2px solid var(--color-accent-500);
+  font-weight: 500;
+}
+
+/* Sidebar border & background */
+:root[data-theme='dark'] .sidebar-pane {
+  background-color: #07090f;
+  border-inline-end-color: rgba(255, 255, 255, 0.06);
+}
+
+:root[data-theme='light'] .sidebar-pane {
+  background-color: var(--sl-color-bg-sidebar);
+  border-inline-end-color: rgba(var(--sl-color-white-rgb), 0.08);
+}
+
+/* ── Sidebar layout: fixed top/bottom, scrollable nav ────────────
+   These override Starlight's default sidebar layout to support a
+   fixed chrome area at top and bottom with a scrollable nav in
+   between. The !important declarations are necessary because
+   Starlight applies inline-level specificity on these elements. */
+
+.sidebar-content {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  min-height: 0 !important;
+}
+
+.sidebar-content sl-sidebar-state-persist {
+  display: block !important;
+  flex: 1 1 0% !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+}
+
+.sidebar-bottom {
+  flex-shrink: 0;
+}
+
+@media (min-width: 50rem) {
+  .sidebar-pane {
+    overflow: hidden !important;
+  }
+
+  .sidebar-content {
+    overflow: hidden !important;
+  }
+
+  .sidebar-content sl-sidebar-state-persist {
+    scrollbar-width: thin;
+    scrollbar-color: var(--scrollbar-idle) transparent;
+  }
+
+  .sidebar-content sl-sidebar-state-persist:hover {
+    scrollbar-color: var(--scrollbar-hover) transparent;
+  }
+
+  .sidebar-chrome {
+    flex-shrink: 0;
+  }
+}
+
+/* ── Sidebar animations ──────────────────────────────────────────── */
+
+nav.sidebar details > ul {
+  overflow: hidden;
+  transition: max-height 0.25s ease-out, opacity 0.2s ease-out;
+}
+
+nav.sidebar details:not([open]) > ul {
+  max-height: 0;
+  opacity: 0;
+}
+
+nav.sidebar details[open] > ul {
+  max-height: 100vh;
+  opacity: 1;
+}
+
+nav.sidebar details > summary svg {
+  transition: transform 0.2s ease-out;
+}
+
+nav.sidebar details[open] > summary svg {
+  transform: rotate(90deg);
+}

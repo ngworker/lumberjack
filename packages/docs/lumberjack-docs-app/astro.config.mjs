@@ -1,6 +1,7 @@
 import sitemap from '@astrojs/sitemap';
 import starlight from '@astrojs/starlight';
-import { defineConfig } from 'astro/config';
+import tailwindcss from '@tailwindcss/vite';
+import { defineConfig, fontProviders } from 'astro/config';
 
 export default defineConfig({
   site: 'https://ngworker.github.io',
@@ -9,6 +10,26 @@ export default defineConfig({
   outDir: '../../../dist/packages/docs/lumberjack-docs-app',
   markdown: {
     gfm: true,
+    shikiConfig: {
+      themes: {
+        light: 'github-light',
+        dark: 'github-dark',
+      },
+      defaultColor: false,
+      transformers: [
+        {
+          name: 'meta-title',
+          pre(node) {
+            const raw = this.options.meta?.__raw;
+            if (!raw) return;
+            const match = raw.match(/title="([^"]+)"/);
+            if (match) {
+              node.properties['data-title'] = match[1];
+            }
+          },
+        },
+      ],
+    },
   },
   redirects: {
     // Destinations include base explicitly — Astro does not auto-prepend base on redirect targets.
@@ -48,6 +69,15 @@ export default defineConfig({
       ],
       editLink: {
         baseUrl: 'https://github.com/ngworker/lumberjack/edit/main/packages/docs/lumberjack-docs-app/',
+      },
+      customCss: ['./src/styles/custom.css'],
+      expressiveCode: false,
+      components: {
+        Header: './src/components/Header.astro',
+        Sidebar: './src/components/Sidebar.astro',
+        ThemeSelect: './src/components/ThemeSelect.astro',
+        Head: './src/theme/components/Head.astro',
+        Pagination: './src/theme/components/Pagination.astro',
       },
       sidebar: [
         {
@@ -89,5 +119,24 @@ export default defineConfig({
       pagination: true,
     }),
     sitemap(),
+  ],
+  vite: {
+    plugins: [tailwindcss()],
+  },
+  fonts: [
+    {
+      provider: fontProviders.google(),
+      name: 'Inter',
+      cssVariable: '--font-heading',
+      weights: [400, 500, 600, 700],
+      fallbacks: ['system-ui', 'sans-serif'],
+    },
+    {
+      provider: fontProviders.google(),
+      name: 'JetBrains Mono',
+      cssVariable: '--font-code',
+      weights: [400, 500],
+      fallbacks: ['monospace'],
+    },
   ],
 });

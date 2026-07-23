@@ -1,0 +1,13 @@
+@layer base, starlight, theme, components, utilities;
+
+@import '@astrojs/starlight-tailwind';
+@import 'tailwindcss/theme.css' layer(theme);
+@import 'tailwindcss/utilities.css' layer(utilities);
+
+@import './theme-vars.css';
+@import '../theme/styles/code-blocks.css';
+@import '../theme/styles/sidebar.css';
+@import '../theme/styles/layout.css';
+@import '../theme/styles/toc.css';
+@import '../theme/styles/components.css';
+@import '../theme/styles/base.css';

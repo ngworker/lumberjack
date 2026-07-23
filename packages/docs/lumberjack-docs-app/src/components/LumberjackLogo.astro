@@ -1,0 +1,35 @@
+---
+interface Props {
+  height?: number;
+}
+const { height = 22 } = Astro.props;
+---
+
+<a href="/lumberjack/" class="plugin-logo" style={`--logo-height: ${height}px`}>
+  <img src="/lumberjack/img/logo.svg" alt="" width={height} height={height} class="logo-icon" />
+  <span class="logo-text">Lumberjack</span>
+</a>
+
+<style>
+  .plugin-logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .logo-icon {
+    flex-shrink: 0;
+    height: calc(var(--logo-height) * 1.2);
+    width: auto;
+  }
+
+  .logo-text {
+    font-family: var(--font-display);
+    font-size: calc(var(--logo-height) * 0.82);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    line-height: 1;
+  }
+</style>
