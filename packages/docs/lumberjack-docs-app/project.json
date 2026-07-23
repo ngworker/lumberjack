@@ -30,6 +30,7 @@
     "serve": {
       "command": "astro preview",
       "continuous": true,
+      "dependsOn": ["build"],
       "options": {
         "cwd": "packages/docs/lumberjack-docs-app"
       }
