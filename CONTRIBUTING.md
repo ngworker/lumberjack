@@ -43,18 +43,18 @@ This uses conventional commits to bump `@ngworker/lumberjack`, updates the packa
 manifest, commits, creates tag `v{version}`, pushes, and opens a GitHub Release.
 Do **not** publish from this step — CI owns the registry.
 
-Dry-run first if unsure:
+Dry-run first and confirm the resolved version before running without `--dry-run`:
 
 ```bash
 pnpm exec nx release --skip-publish --dry-run
 ```
 
-Always confirm the resolved version before running without `--dry-run`. Squash-merge
-PR bodies can confuse the conventional-commits parser (e.g. a `feat!:` title may
-still resolve as a patch). Force the version when needed:
+`release.conventionalCommits.useCommitScope` is `false` (single publishable package),
+so conventional commit types/`!` apply from file-affected history regardless of scope
+(e.g. `feat(core)!: …` still majors). Force an exact version only when you need to
+override the resolver:
 
 ```bash
-pnpm exec nx release 22.0.0 --skip-publish --dry-run
 pnpm exec nx release 22.0.0 --skip-publish
 ```
 

@@ -182,6 +182,9 @@
       "preVersionCommand": "pnpm exec nx run-many -t build",
       "conventionalCommits": true
     },
+    "conventionalCommits": {
+      "useCommitScope": false
+    },
     "changelog": {
       "projectChangelogs": {
         "createRelease": "github",
