@@ -15,3 +15,18 @@ hero:
       icon: external
       variant: minimal
 ---
+
+import { Card, CardGrid } from '@astrojs/starlight/components';
+
+<CardGrid stagger>
+  <Card title="Easy to use" icon="rocket">
+    Lumberjack is ruled by the principle of making the simple easy and the complex possible.
+  </Card>
+  <Card title="Extensible" icon="puzzle">
+    Being powered by a Plugin Architecture allows anyone to create its drivers and make Lumberjack fit their needs.
+  </Card>
+  <Card title="Configurable" icon="setting">
+    Custom Plugins are not the only way to customize Lumberjack. It is possible to modify almost every aspect of your
+    logs' processing, from the format function to the log levels allowed.
+  </Card>
+</CardGrid>
