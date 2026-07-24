@@ -1,28 +1,26 @@
 const LANGUAGE_CLASS = /language-(\w+)/;
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
+function fencedCodeMarkdown(el: Element, text: string): string[] {
+  const lang = LANGUAGE_CLASS.exec(el.className ?? '')?.[1] || '';
+  return ['```' + lang, text, '```', ''];
+}
+
+function headingMarkdown(tag: string, text: string): string[] {
+  const level = '#'.repeat(Number.parseInt(tag[1]!, 10));
+  return [`${level} ${text}`, ''];
+}
+
 function elementToMarkdown(el: Element): string[] {
   const tag = el.tagName.toLowerCase();
   const text = el.textContent?.trim() || '';
 
   if (tag === 'code' && el.parentElement?.tagName === 'PRE') {
-    const lang = LANGUAGE_CLASS.exec(el.className ?? '')?.[1] || '';
-    return ['```' + lang, text, '```', ''];
+    return fencedCodeMarkdown(el, text);
   }
-
-  if (tag.startsWith('h')) {
-    const level = '#'.repeat(Number.parseInt(tag[1]!, 10));
-    return [`${level} ${text}`, ''];
-  }
-
-  if (tag === 'li') {
-    return [`- ${text}`];
-  }
-
-  if (tag === 'blockquote') {
-    return [`> ${text}`, ''];
-  }
-
+  if (tag.startsWith('h')) return headingMarkdown(tag, text);
+  if (tag === 'li') return [`- ${text}`];
+  if (tag === 'blockquote') return [`> ${text}`, ''];
   return [text, ''];
 }
 
