@@ -1,6 +1,10 @@
 const LANGUAGE_CLASS = /language-(\w+)/;
 const SVG_NS = 'http://www.w3.org/2000/svg';
 
+function isFencedCode(el: Element, tag: string): boolean {
+  return tag === 'code' && el.parentElement?.tagName === 'PRE';
+}
+
 function fencedCodeMarkdown(el: Element, text: string): string[] {
   const lang = LANGUAGE_CLASS.exec(el.className ?? '')?.[1] || '';
   return ['```' + lang, text, '```', ''];
@@ -11,17 +15,18 @@ function headingMarkdown(tag: string, text: string): string[] {
   return [`${level} ${text}`, ''];
 }
 
+const SIMPLE_BLOCK: Record<string, (text: string) => string[]> = {
+  li: (text) => [`- ${text}`],
+  blockquote: (text) => [`> ${text}`, ''],
+};
+
 function elementToMarkdown(el: Element): string[] {
   const tag = el.tagName.toLowerCase();
   const text = el.textContent?.trim() || '';
 
-  if (tag === 'code' && el.parentElement?.tagName === 'PRE') {
-    return fencedCodeMarkdown(el, text);
-  }
+  if (isFencedCode(el, tag)) return fencedCodeMarkdown(el, text);
   if (tag.startsWith('h')) return headingMarkdown(tag, text);
-  if (tag === 'li') return [`- ${text}`];
-  if (tag === 'blockquote') return [`> ${text}`, ''];
-  return [text, ''];
+  return SIMPLE_BLOCK[tag]?.(text) ?? [text, ''];
 }
 
 /** Convert a DOM element's content to a markdown string. */
