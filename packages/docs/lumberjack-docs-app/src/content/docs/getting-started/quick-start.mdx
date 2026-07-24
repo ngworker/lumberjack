@@ -1,0 +1,73 @@
+---
+title: Quick Start
+description: Install Lumberjack, register it with a console driver, and emit your first log.
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+Get from zero to a log line in the browser console. Assumes an existing Angular
+22 application using standalone APIs.
+
+## Before you start
+
+- Angular **22.x** (Lumberjack 22 peers `@angular/core@^22`). See
+  [Compatibility](/lumberjack/getting-started/compatibility/) for other lines.
+- A project you can bootstrap with `bootstrapApplication`.
+
+## Steps
+
+<Steps>
+
+1. **Install the package**
+
+   ```sh
+   pnpm add @ngworker/lumberjack
+   ```
+
+   npm: `npm install @ngworker/lumberjack` · yarn: `yarn add @ngworker/lumberjack`
+
+2. **Register Lumberjack and the console driver**
+
+   ```ts title="src/main.ts"
+   import { bootstrapApplication } from '@angular/platform-browser';
+   import { provideLumberjack } from '@ngworker/lumberjack';
+   import { provideLumberjackConsoleDriver } from '@ngworker/lumberjack/console-driver';
+
+   import { AppComponent } from './app/app.component';
+
+   bootstrapApplication(AppComponent, {
+     providers: [provideLumberjack(), provideLumberjackConsoleDriver()],
+   });
+   ```
+
+3. **Emit a log**
+
+   ```ts title="src/app/app.component.ts"
+   import { Component, inject, OnInit } from '@angular/core';
+   import { LumberjackService } from '@ngworker/lumberjack';
+
+   @Component({
+     selector: 'app-root',
+     template: `<h1>Forest</h1>`,
+   })
+   export class AppComponent implements OnInit {
+     readonly #lumberjack = inject(LumberjackService);
+
+     ngOnInit(): void {
+       this.#lumberjack.logInfo('Hello, Forest!', undefined, 'AppComponent');
+     }
+   }
+   ```
+
+</Steps>
+
+## Verify
+
+Start the app and open the browser console. You should see a formatted info log
+that includes the message and the `AppComponent` scope.
+
+## Next steps
+
+- [Write a logger](/lumberjack/guides/write-a-logger/) — prefer typed logger classes over calling the service everywhere
+- [Configure Lumberjack](/lumberjack/guides/configure-lumberjack/) — levels and format
+- [Send logs over HTTP](/lumberjack/guides/send-logs-over-http/) — remote store

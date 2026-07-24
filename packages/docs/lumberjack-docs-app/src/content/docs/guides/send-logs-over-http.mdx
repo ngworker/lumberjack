@@ -1,0 +1,89 @@
+---
+title: Send Logs over HTTP
+description: How to register LumberjackHttpDriver to POST logs to a remote store.
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Use
+[`provideLumberjackHttpDriver`](/lumberjack/reference/http-driver/functions/providelumberjackhttpdriver/)
+with [`withHttpConfig`](/lumberjack/reference/http-driver/functions/withhttpconfig/)
+or [`withHttpOptions`](/lumberjack/reference/http-driver/functions/withhttpoptions/)
+to POST logs to an endpoint that accepts the driver’s payload.
+
+## Before you start
+
+- `provideLumberjack()` already in the app providers.
+- An HTTP endpoint that accepts **POST** (the driver does not fall back to other verbs).
+
+## Steps
+
+<Steps>
+
+1. **Register the HTTP driver**
+
+   ```ts title="src/main.ts"
+   import { bootstrapApplication } from '@angular/platform-browser';
+   import { provideLumberjack } from '@ngworker/lumberjack';
+   import { provideLumberjackConsoleDriver } from '@ngworker/lumberjack/console-driver';
+   import {
+     provideLumberjackHttpDriver,
+     withHttpConfig,
+   } from '@ngworker/lumberjack/http-driver';
+
+   import { AppComponent } from './app/app.component';
+
+   bootstrapApplication(AppComponent, {
+     providers: [
+       provideLumberjack(),
+       provideLumberjackConsoleDriver(),
+       provideLumberjackHttpDriver(
+         withHttpConfig({
+           origin: 'ForestApp',
+           storeUrl: '/api/logs',
+           retryOptions: { maxRetries: 5, delayMs: 250 },
+           levels: ['critical', 'error'],
+         }),
+       ),
+     ],
+   });
+   ```
+
+   `provideLumberjackHttpDriver` also registers `provideHttpClient` (pass extra
+   `HttpClient` features as further arguments if needed).
+
+2. **Choose config vs options**
+
+   | Helper | Use when |
+   | ------ | -------- |
+   | `withHttpConfig(config)` | You pass a full HTTP driver config (levels optional; defaults merge from root). |
+   | `withHttpOptions(options)` | You only set HTTP-exclusive fields (`origin`, `storeUrl`, `retryOptions`) plus optional level overrides. |
+
+</Steps>
+
+## Required HTTP settings
+
+| Field | Purpose |
+| ----- | ------- |
+| `origin` | Application id sent with each log for store-side grouping |
+| `storeUrl` | POST URL of the log store |
+| `retryOptions.maxRetries` | Attempts before the request fails |
+| `retryOptions.delayMs` | Delay between retries |
+
+Optional: `levels`, `identifier` (defaults to the HTTP driver id).
+
+<Aside type="note">
+  Failed driver requests are retried per `retryOptions`. If a driver throws,
+  Lumberjack forwards a driver-error log to remaining stable drivers (see
+  [Understanding](/lumberjack/understanding/log-drivers/)).
+</Aside>
+
+## Verify
+
+Trigger a critical or error log and confirm a POST to `storeUrl`. With the
+example `levels`, info/debug logs only hit the console driver.
+
+## Next steps
+
+- [Configure Lumberjack](/lumberjack/guides/configure-lumberjack/)
+- [Reference: HTTP driver](/lumberjack/reference/http-driver/readme/)

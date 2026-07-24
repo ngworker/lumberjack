@@ -1,0 +1,116 @@
+---
+title: Write a Logger
+description: How to create structured application loggers with LumberjackLogger and ScopedLumberjackLogger.
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Extend [`LumberjackLogger`](/lumberjack/reference/core/classes/lumberjacklogger/)
+(or [`ScopedLumberjackLogger`](/lumberjack/reference/core/classes/scopedlumberjacklogger/))
+so each log message lives once, with a fixed level and optional scope/payload.
+Call sites stay one-liners and stay easy to spy in tests.
+
+## Before you start
+
+- Lumberjack registered with a driver ([Quick start](/lumberjack/getting-started/quick-start/)).
+
+## Steps
+
+<Steps>
+
+1. **Create a scoped logger class**
+
+   ```ts title="src/app/app.logger.ts"
+   import { Injectable } from '@angular/core';
+   import { ScopedLumberjackLogger } from '@ngworker/lumberjack';
+
+   @Injectable({ providedIn: 'root' })
+   export class AppLogger extends ScopedLumberjackLogger {
+     readonly scope = 'Forest App';
+
+     readonly helloForest = this.createInfoLogger('Hello, Forest!').build();
+
+     readonly forestOnFire = this.createCriticalLogger('The forest is on fire!').build();
+   }
+   ```
+
+   `build()` returns a zero-arg function that emits the log when called.
+
+2. **Inject and call it**
+
+   ```ts title="src/app/app.component.ts"
+   import { Component, inject, OnInit } from '@angular/core';
+
+   import { AppLogger } from './app.logger';
+
+   @Component({
+     selector: 'app-root',
+     template: ``,
+   })
+   export class AppComponent implements OnInit {
+     readonly #logger = inject(AppLogger);
+
+     ngOnInit(): void {
+       this.#logger.helloForest();
+     }
+   }
+   ```
+
+</Steps>
+
+## Variations
+
+### Without a shared scope
+
+Extend `LumberjackLogger` and set scope per builder:
+
+```ts
+import { Injectable } from '@angular/core';
+import { LumberjackLogger } from '@ngworker/lumberjack';
+
+@Injectable({ providedIn: 'root' })
+export class AppLogger extends LumberjackLogger {
+  readonly helloForest = this.createInfoLogger('Hello, Forest!')
+    .withScope('Forest App')
+    .build();
+}
+```
+
+### With a payload type
+
+```ts
+import { Injectable, VERSION } from '@angular/core';
+import { LumberjackLogPayload, ScopedLumberjackLogger } from '@ngworker/lumberjack';
+
+interface LogPayload extends LumberjackLogPayload {
+  readonly angularVersion: string;
+}
+
+@Injectable({ providedIn: 'root' })
+export class AppLogger extends ScopedLumberjackLogger<LogPayload> {
+  readonly scope = 'Forest App';
+
+  readonly helloForest = this.createInfoLogger('Hello, Forest!')
+    .withPayload({ angularVersion: VERSION.full })
+    .build();
+}
+```
+
+Drivers that understand the payload can read `log.payload` on
+`LumberjackLogDriverLog`. See [How log drivers work](/lumberjack/understanding/log-drivers/).
+
+### Dynamic payload at call time
+
+If you omit `withPayload` on the builder, `build()` returns a function that
+accepts the payload argument when the log type requires one.
+
+## Verify
+
+Trigger the call path and confirm the console (or HTTP store) shows the fixed
+message and scope.
+
+## Next steps
+
+- [Log with LumberjackService](/lumberjack/guides/log-with-the-service/) — when a factory or one-off log is enough
+- [Create a custom driver](/lumberjack/guides/create-a-custom-driver/)
+- [Reference: ScopedLumberjackLogger](/lumberjack/reference/core/classes/scopedlumberjacklogger/)

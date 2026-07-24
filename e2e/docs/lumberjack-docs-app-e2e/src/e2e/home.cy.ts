@@ -11,6 +11,6 @@ describe('Home page', () => {
   it('links to the documentation', () => {
     home.getCallToAction().click();
 
-    cy.url().should('include', app.url('/getting-started/introduction'));
+    cy.url().should('include', app.url('/getting-started/quick-start'));
   });
 });
