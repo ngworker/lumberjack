@@ -59,4 +59,4 @@ Thanks, Diego!
 
 ## Wrapping Up
 
-That's it, folks. Last time, we promised to release a new version of Lumberjack quickly, and we did it. We are happy to be able to keep our promises. Now that we are up to date with Angular, you should expect more news on our [secret project](https://ngworker.github.io/lumberjack/blog/announcing-lumberjack-v16/#ambitious-secret-project) soon
+That's it, folks. Last time, we promised to release a new version of Lumberjack quickly, and we did it. We are happy to be able to keep our promises. Now that we are up to date with Angular, you should expect more news on our [secret project](/lumberjack/whats-new/announcing-lumberjack-v16/#ambitious-secret-project) soon

@@ -13,7 +13,7 @@ With the new version of Angular out, we are happy to announce that Lumberjack is
 
 ## NgModules removal
 
-In version 16, we deprecated our NgModule APIs and announced they would be removed in version 18. See [here](https://ngworker.github.io/lumberjack/blog/announcing-lumberjack-v16). Well, here we are. NgModules are gone.
+In version 16, we deprecated our NgModule APIs and announced they would be removed in version 18. See [here](/lumberjack/whats-new/announcing-lumberjack-v16/). Well, here we are. NgModules are gone.
 
 This change simplifies the API and reduces the library bundle size.
 

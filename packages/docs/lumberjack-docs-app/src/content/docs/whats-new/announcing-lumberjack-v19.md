@@ -13,7 +13,7 @@ This closes issue: [#213](https://github.com/ngworker/lumberjack/issues/213)
 
 ## Enum-based levels removal
 
-In version 17, we deprecated the usage of Enum-based levels in favor of string literal unions and announced they would be removed in version 19. See [here](https://ngworker.github.io/lumberjack/blog/announcing-lumberjack-v17). Mission accomplished.
+In version 17, we deprecated the usage of Enum-based levels in favor of string literal unions and announced they would be removed in version 19. See [here](/lumberjack/whats-new/announcing-lumberjack-v17/). Mission accomplished.
 
 This change simplifies the API and reduces the library bundle size.
 

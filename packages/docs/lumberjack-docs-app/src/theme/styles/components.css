@@ -27,16 +27,14 @@
   background: rgba(var(--sl-color-white-rgb), 0.6);
   border: 1px solid rgba(255, 255, 255, 0.06);
   border-radius: 0.75rem;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04),
-    0 4px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 4px 24px rgba(0, 0, 0, 0.2);
   backdrop-filter: blur(8px);
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 :root[data-theme='dark'] .card:hover {
   border-color: color-mix(in srgb, var(--color-accent-500) 15%, transparent);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04),
-    0 4px 24px rgba(0, 0, 0, 0.2),
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 4px 24px rgba(0, 0, 0, 0.2),
     0 0 20px color-mix(in srgb, var(--color-accent-500) 6%, transparent);
 }
 
@@ -44,15 +42,13 @@
   background: rgba(255, 255, 255, 0.6);
   border: 1px solid rgba(var(--sl-color-white-rgb), 0.08);
   border-radius: 0.75rem;
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8),
-    0 4px 24px rgba(0, 0, 0, 0.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 4px 24px rgba(0, 0, 0, 0.06);
   transition: border-color 0.2s, box-shadow 0.2s;
 }
 
 :root[data-theme='light'] .card:hover {
   border-color: color-mix(in srgb, var(--color-accent-500) 15%, transparent);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8),
-    0 4px 24px rgba(0, 0, 0, 0.06),
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 4px 24px rgba(0, 0, 0, 0.06),
     0 0 20px color-mix(in srgb, var(--color-accent-500) 6%, transparent);
 }
 
@@ -62,13 +58,11 @@
 }
 
 :root[data-theme='dark'] .sl-markdown-content a:not([class]):hover {
-  text-shadow: 0 0 12px
-    color-mix(in srgb, var(--color-accent-500) 30%, transparent);
+  text-shadow: 0 0 12px color-mix(in srgb, var(--color-accent-500) 30%, transparent);
 }
 
 :root[data-theme='light'] .sl-markdown-content a:not([class]):hover {
-  text-shadow: 0 0 12px
-    color-mix(in srgb, var(--color-accent-500) 15%, transparent);
+  text-shadow: 0 0 12px color-mix(in srgb, var(--color-accent-500) 15%, transparent);
 }
 
 /* Asides/Callouts: glass-card treatment */
@@ -91,8 +85,7 @@
 site-search dialog {
   opacity: 0;
   transform: scale(0.95) translateY(-12px);
-  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1),
-    transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
     display 0.25s ease-out allow-discrete;
 }
 
@@ -113,8 +106,7 @@ site-search dialog[open] {
   backdrop-filter: blur(20px) saturate(1.2);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 0.75rem;
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6), 0 0 1px rgba(255, 255, 255, 0.1),
-    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6), 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.04);
 }
 
 :root[data-theme='light'] site-search dialog {
@@ -122,14 +114,12 @@ site-search dialog[open] {
   backdrop-filter: blur(20px) saturate(1.2);
   border: 1px solid rgba(var(--sl-color-white-rgb), 0.1);
   border-radius: 0.75rem;
-  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.12),
-    0 0 1px rgba(var(--sl-color-white-rgb), 0.08);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.12), 0 0 1px rgba(var(--sl-color-white-rgb), 0.08);
 }
 
 site-search dialog::backdrop {
   background-color: rgba(5, 8, 16, 0);
-  transition: background-color 0.25s ease-out,
-    display 0.25s ease-out allow-discrete;
+  transition: background-color 0.25s ease-out, display 0.25s ease-out allow-discrete;
 }
 
 site-search dialog[open]::backdrop {
