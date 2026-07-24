@@ -1,6 +1,50 @@
-const COPY_ICON = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></svg>`;
-const CHECK_ICON = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>`;
-const ERROR_ICON = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>`;
+const SVG_NS = 'http://www.w3.org/2000/svg';
+
+function iconSvg(children: Array<{ tag: string; attrs: Record<string, string> }>): SVGSVGElement {
+  const svg = document.createElementNS(SVG_NS, 'svg');
+  svg.setAttribute('width', '14');
+  svg.setAttribute('height', '14');
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('fill', 'none');
+  svg.setAttribute('stroke', 'currentColor');
+  svg.setAttribute('stroke-width', '2');
+  svg.setAttribute('stroke-linecap', 'round');
+  svg.setAttribute('stroke-linejoin', 'round');
+
+  for (const child of children) {
+    const el = document.createElementNS(SVG_NS, child.tag);
+    for (const [key, value] of Object.entries(child.attrs)) {
+      el.setAttribute(key, value);
+    }
+    svg.appendChild(el);
+  }
+  return svg;
+}
+
+function copyIcon(): SVGSVGElement {
+  return iconSvg([
+    { tag: 'rect', attrs: { width: '14', height: '14', x: '8', y: '8', rx: '2', ry: '2' } },
+    {
+      tag: 'path',
+      attrs: { d: 'M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2' },
+    },
+  ]);
+}
+
+function checkIcon(): SVGSVGElement {
+  return iconSvg([{ tag: 'polyline', attrs: { points: '20 6 9 17 4 12' } }]);
+}
+
+function errorIcon(): SVGSVGElement {
+  return iconSvg([
+    { tag: 'line', attrs: { x1: '18', y1: '6', x2: '6', y2: '18' } },
+    { tag: 'line', attrs: { x1: '6', y1: '6', x2: '18', y2: '18' } },
+  ]);
+}
+
+function setButtonIcon(btn: HTMLElement, icon: SVGSVGElement): void {
+  btn.replaceChildren(icon);
+}
 
 /** Enhance all `.astro-code` blocks with copy buttons and optional title bars. Idempotent. */
 export function enhanceCodeBlocks(root: ParentNode = document): void {
@@ -10,7 +54,7 @@ export function enhanceCodeBlocks(root: ParentNode = document): void {
     const wrapper = document.createElement('div');
     wrapper.className = 'code-block';
 
-    const title = block.getAttribute('data-title') || '';
+    const title = (block as HTMLElement).dataset['title'] || '';
     if (title) {
       const header = document.createElement('div');
       header.className = 'code-block-header';
@@ -25,20 +69,20 @@ export function enhanceCodeBlocks(root: ParentNode = document): void {
     copyBtn.className = 'code-copy-btn';
     copyBtn.type = 'button';
     copyBtn.setAttribute('aria-label', 'Copy to clipboard');
-    copyBtn.innerHTML = COPY_ICON;
+    setButtonIcon(copyBtn, copyIcon());
     copyBtn.addEventListener('click', async () => {
       const code = block.querySelector('code')?.textContent || block.textContent || '';
       try {
         await navigator.clipboard.writeText(code);
-        copyBtn.innerHTML = CHECK_ICON;
+        setButtonIcon(copyBtn, checkIcon());
         setTimeout(() => {
-          copyBtn.innerHTML = COPY_ICON;
+          setButtonIcon(copyBtn, copyIcon());
         }, 2000);
       } catch {
-        copyBtn.innerHTML = ERROR_ICON;
+        setButtonIcon(copyBtn, errorIcon());
         copyBtn.setAttribute('aria-label', 'Copy failed — try selecting text manually');
         setTimeout(() => {
-          copyBtn.innerHTML = COPY_ICON;
+          setButtonIcon(copyBtn, copyIcon());
           copyBtn.setAttribute('aria-label', 'Copy to clipboard');
         }, 2000);
       }

@@ -10,23 +10,23 @@ class PageFeedback extends HTMLElement {
     const stored = safeGetItem(`feedback:${pageId}`);
 
     if (stored) {
-      const btn = [...this.querySelectorAll<HTMLElement>('.feedback-btn')].find((b) => b.dataset.value === stored);
+      const btn = [...this.querySelectorAll<HTMLElement>('.feedback-btn')].find((b) => b.dataset['value'] === stored);
       if (btn) {
-        btn.setAttribute('data-selected', 'true');
+        btn.dataset['selected'] = 'true';
         btn.setAttribute('aria-pressed', 'true');
       }
     }
 
-    this.querySelectorAll('.feedback-btn').forEach((btn) => {
+    this.querySelectorAll<HTMLElement>('.feedback-btn').forEach((btn) => {
       btn.addEventListener(
         'click',
         () => {
-          const value = (btn as HTMLElement).dataset.value;
-          this.querySelectorAll('.feedback-btn').forEach((b) => {
-            b.removeAttribute('data-selected');
+          const value = btn.dataset['value'];
+          this.querySelectorAll<HTMLElement>('.feedback-btn').forEach((b) => {
+            delete b.dataset['selected'];
             b.setAttribute('aria-pressed', 'false');
           });
-          btn.setAttribute('data-selected', 'true');
+          btn.dataset['selected'] = 'true';
           btn.setAttribute('aria-pressed', 'true');
           safeSetItem(`feedback:${pageId}`, value || '');
         },

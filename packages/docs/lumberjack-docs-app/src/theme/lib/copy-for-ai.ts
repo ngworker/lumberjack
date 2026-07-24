@@ -1,25 +1,65 @@
+const LANGUAGE_CLASS = /language-(\w+)/;
+const SVG_NS = 'http://www.w3.org/2000/svg';
+
+function elementToMarkdown(el: Element): string[] {
+  const tag = el.tagName.toLowerCase();
+  const text = el.textContent?.trim() || '';
+
+  if (tag === 'code' && el.parentElement?.tagName === 'PRE') {
+    const lang = LANGUAGE_CLASS.exec(el.className ?? '')?.[1] || '';
+    return ['```' + lang, text, '```', ''];
+  }
+
+  if (tag.startsWith('h')) {
+    const level = '#'.repeat(Number.parseInt(tag[1]!, 10));
+    return [`${level} ${text}`, ''];
+  }
+
+  if (tag === 'li') {
+    return [`- ${text}`];
+  }
+
+  if (tag === 'blockquote') {
+    return [`> ${text}`, ''];
+  }
+
+  return [text, ''];
+}
+
 /** Convert a DOM element's content to a markdown string. */
 export function domToMarkdown(root: Element): string {
   const lines: string[] = [];
 
   root.querySelectorAll('h1, h2, h3, h4, h5, h6, p, li, pre code, blockquote').forEach((el) => {
-    const tag = el.tagName.toLowerCase();
-    if (tag === 'code' && el.parentElement?.tagName === 'PRE') {
-      const lang = el.className?.match(/language-(\w+)/)?.[1] || '';
-      lines.push('```' + lang, el.textContent?.trim() || '', '```', '');
-    } else if (tag.startsWith('h')) {
-      const level = '#'.repeat(parseInt(tag[1]));
-      lines.push(`${level} ${el.textContent?.trim()}`, '');
-    } else if (tag === 'li') {
-      lines.push(`- ${el.textContent?.trim()}`);
-    } else if (tag === 'blockquote') {
-      lines.push(`> ${el.textContent?.trim()}`, '');
-    } else {
-      lines.push(el.textContent?.trim() || '', '');
-    }
+    lines.push(...elementToMarkdown(el));
   });
 
   return lines.join('\n').replace(/\n{3,}/g, '\n\n');
+}
+
+function iconSvg(children: Array<{ tag: string; attrs: Record<string, string> }>): SVGSVGElement {
+  const svg = document.createElementNS(SVG_NS, 'svg');
+  svg.setAttribute('width', '14');
+  svg.setAttribute('height', '14');
+  svg.setAttribute('viewBox', '0 0 24 24');
+  svg.setAttribute('fill', 'none');
+  svg.setAttribute('stroke', 'currentColor');
+  svg.setAttribute('stroke-width', '2');
+  svg.setAttribute('stroke-linecap', 'round');
+  svg.setAttribute('stroke-linejoin', 'round');
+
+  for (const child of children) {
+    const el = document.createElementNS(SVG_NS, child.tag);
+    for (const [key, value] of Object.entries(child.attrs)) {
+      el.setAttribute(key, value);
+    }
+    svg.appendChild(el);
+  }
+  return svg;
+}
+
+function setButtonContent(btn: Element, icon: SVGSVGElement, label: string): void {
+  btn.replaceChildren(icon, document.createTextNode(` ${label}`));
 }
 
 const BOUND_ATTR = 'data-copy-for-ai-bound';
@@ -31,6 +71,18 @@ export function initCopyForAi(): void {
     btn.setAttribute(BOUND_ATTR, '');
 
     let resetTimer: ReturnType<typeof setTimeout> | undefined;
+    const idleLabel = btn.textContent?.trim() || 'Copy for AI';
+    const idleIcon = (): SVGSVGElement =>
+      iconSvg([
+        {
+          tag: 'rect',
+          attrs: { width: '14', height: '14', x: '8', y: '8', rx: '2', ry: '2' },
+        },
+        {
+          tag: 'path',
+          attrs: { d: 'M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2' },
+        },
+      ]);
 
     btn.addEventListener('click', async () => {
       const content = document.querySelector('.sl-markdown-content');
@@ -42,15 +94,21 @@ export function initCopyForAi(): void {
       const markdown = `# ${title}\nSource: ${url}\n\n${domToMarkdown(content)}`;
 
       clearTimeout(resetTimer);
-      const original = btn.innerHTML;
       try {
         await navigator.clipboard.writeText(markdown);
-        btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg> Copied!`;
+        setButtonContent(btn, iconSvg([{ tag: 'polyline', attrs: { points: '20 6 9 17 4 12' } }]), 'Copied!');
       } catch {
-        btn.innerHTML = `<svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg> Copy failed`;
+        setButtonContent(
+          btn,
+          iconSvg([
+            { tag: 'line', attrs: { x1: '18', y1: '6', x2: '6', y2: '18' } },
+            { tag: 'line', attrs: { x1: '6', y1: '6', x2: '18', y2: '18' } },
+          ]),
+          'Copy failed'
+        );
       }
       resetTimer = setTimeout(() => {
-        btn.innerHTML = original;
+        setButtonContent(btn, idleIcon(), idleLabel);
       }, 2000);
     });
   });
