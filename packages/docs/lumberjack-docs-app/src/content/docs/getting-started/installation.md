@@ -1,6 +1,6 @@
 ---
 title: Installation
-description: How to install @ngworker/lumberjack with pnpm, npm, or yarn.
+description: How to install @ngworker/lumberjack with pnpm, bun, npm, or yarn.
 ---
 
 Add the package to your Angular application. Secondary entry points
@@ -12,11 +12,12 @@ Add the package to your Angular application. Secondary entry points
 pnpm add @ngworker/lumberjack
 ```
 
-| Toolchain | Command |
-| --------- | ------- |
-| pnpm | `pnpm add @ngworker/lumberjack` |
-| npm | `npm install @ngworker/lumberjack` |
-| yarn | `yarn add @ngworker/lumberjack` |
+| Toolchain | Command                            |
+| --------- | ---------------------------------- |
+| pnpm      | `pnpm add @ngworker/lumberjack`    |
+| bun       | `bun add @ngworker/lumberjack`     |
+| npm       | `npm install @ngworker/lumberjack` |
+| yarn      | `yarn add @ngworker/lumberjack`    |
 
 ## Peer dependency
 

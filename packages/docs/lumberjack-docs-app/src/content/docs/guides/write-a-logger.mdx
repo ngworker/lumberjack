@@ -70,9 +70,7 @@ import { LumberjackLogger } from '@ngworker/lumberjack';
 
 @Injectable({ providedIn: 'root' })
 export class AppLogger extends LumberjackLogger {
-  readonly helloForest = this.createInfoLogger('Hello, Forest!')
-    .withScope('Forest App')
-    .build();
+  readonly helloForest = this.createInfoLogger('Hello, Forest!').withScope('Forest App').build();
 }
 ```
 
@@ -90,9 +88,7 @@ interface LogPayload extends LumberjackLogPayload {
 export class AppLogger extends ScopedLumberjackLogger<LogPayload> {
   readonly scope = 'Forest App';
 
-  readonly helloForest = this.createInfoLogger('Hello, Forest!')
-    .withPayload({ angularVersion: VERSION.full })
-    .build();
+  readonly helloForest = this.createInfoLogger('Hello, Forest!').withPayload({ angularVersion: VERSION.full }).build();
 }
 ```
 

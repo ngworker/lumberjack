@@ -20,10 +20,10 @@ Every driver implements `LumberjackLogDriver`:
 
 Built-in drivers:
 
-| Driver | Entry point | Typical use |
-| ------ | ----------- | ----------- |
-| Console | `@ngworker/lumberjack/console-driver` | Local development |
-| HTTP | `@ngworker/lumberjack/http-driver` | Remote log store over POST |
+| Driver  | Entry point                           | Typical use                |
+| ------- | ------------------------------------- | -------------------------- |
+| Console | `@ngworker/lumberjack/console-driver` | Local development          |
+| HTTP    | `@ngworker/lumberjack/http-driver`    | Remote log store over POST |
 
 ## Registration
 

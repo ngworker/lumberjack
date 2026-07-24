@@ -26,11 +26,11 @@ Lumberjack keeps that plumbing out of feature code:
 
 ## What you get out of the box
 
-| Package | Role |
-| ------- | ---- |
-| [`@ngworker/lumberjack`](/lumberjack/reference/core/readme/) | Core: `provideLumberjack`, `LumberjackService`, loggers, types |
-| [`@ngworker/lumberjack/console-driver`](/lumberjack/reference/console-driver/readme/) | Browser console driver |
-| [`@ngworker/lumberjack/http-driver`](/lumberjack/reference/http-driver/readme/) | POST logs to an HTTP store with retries |
+| Package                                                                               | Role                                                           |
+| ------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| [`@ngworker/lumberjack`](/lumberjack/reference/core/readme/)                          | Core: `provideLumberjack`, `LumberjackService`, loggers, types |
+| [`@ngworker/lumberjack/console-driver`](/lumberjack/reference/console-driver/readme/) | Browser console driver                                         |
+| [`@ngworker/lumberjack/http-driver`](/lumberjack/reference/http-driver/readme/)       | POST logs to an HTTP store with retries                        |
 
 Community drivers cover other backends; see
 [Use a community driver](/lumberjack/guides/use-community-drivers/).

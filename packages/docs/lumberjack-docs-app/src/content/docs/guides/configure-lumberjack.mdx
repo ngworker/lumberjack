@@ -56,10 +56,10 @@ to change the default level filter and the text format shared by drivers.
 
 ## Defaults when options are omitted
 
-| Option | Development | Production |
-| ------ | ----------- | ---------- |
-| `levels` | `['verbose']` (all levels) | `['critical', 'error', 'info', 'warn']` |
-| `format` | `` `${level} ${utcTimestamp}${scope?} ${message}` `` | same |
+| Option   | Development                                          | Production                              |
+| -------- | ---------------------------------------------------- | --------------------------------------- |
+| `levels` | `['verbose']` (all levels)                           | `['critical', 'error', 'info', 'warn']` |
+| `format` | `` `${level} ${utcTimestamp}${scope?} ${message}` `` | same                                    |
 
 Production vs development is taken from Angular’s production mode flag inside
 Lumberjack’s config factory.
