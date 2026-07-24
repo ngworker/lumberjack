@@ -3,21 +3,43 @@ title: Installation
 description: How to install @ngworker/lumberjack with pnpm, bun, npm, or yarn.
 ---
 
+import { Tabs, TabItem } from '@astrojs/starlight/components';
+
 Add the package to your Angular application. Secondary entry points
 (`console-driver`, `http-driver`) ship in the same package — no extra installs.
 
 ## Install
 
+<Tabs syncKey="package-manager">
+  <TabItem label="pnpm">
+
 ```sh
 pnpm add @ngworker/lumberjack
 ```
 
-| Toolchain | Command                            |
-| --------- | ---------------------------------- |
-| pnpm      | `pnpm add @ngworker/lumberjack`    |
-| bun       | `bun add @ngworker/lumberjack`     |
-| npm       | `npm install @ngworker/lumberjack` |
-| yarn      | `yarn add @ngworker/lumberjack`    |
+  </TabItem>
+  <TabItem label="bun">
+
+```sh
+bun add @ngworker/lumberjack
+```
+
+  </TabItem>
+  <TabItem label="npm">
+
+```sh
+npm install @ngworker/lumberjack
+```
+
+  </TabItem>
+  <TabItem label="yarn">
+
+```sh
+yarn add @ngworker/lumberjack
+```
+
+  </TabItem>
+</Tabs>
 
 ## Peer dependency
 

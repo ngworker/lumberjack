@@ -3,7 +3,7 @@ title: Quick Start
 description: Install Lumberjack, register it with a console driver, and emit your first log.
 ---
 
-import { Steps } from '@astrojs/starlight/components';
+import { Steps, Tabs, TabItem } from '@astrojs/starlight/components';
 
 Get from zero to a log line in the browser console. Assumes an existing Angular
 22 application using standalone APIs.
@@ -20,11 +20,36 @@ Get from zero to a log line in the browser console. Assumes an existing Angular
 
 1. **Install the package**
 
+   <Tabs syncKey="package-manager">
+  <TabItem label="pnpm">
+
    ```sh
    pnpm add @ngworker/lumberjack
    ```
 
-   bun: `bun add @ngworker/lumberjack` · npm: `npm install @ngworker/lumberjack` · yarn: `yarn add @ngworker/lumberjack`
+     </TabItem>
+  <TabItem label="bun">
+
+   ```sh
+   bun add @ngworker/lumberjack
+   ```
+
+     </TabItem>
+  <TabItem label="npm">
+
+   ```sh
+   npm install @ngworker/lumberjack
+   ```
+
+     </TabItem>
+  <TabItem label="yarn">
+
+   ```sh
+   yarn add @ngworker/lumberjack
+   ```
+
+     </TabItem>
+</Tabs>
 
 2. **Register Lumberjack and the console driver**
 
