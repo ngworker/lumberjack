@@ -27,8 +27,7 @@ export function enhanceCodeBlocks(root: ParentNode = document): void {
     copyBtn.setAttribute('aria-label', 'Copy to clipboard');
     copyBtn.innerHTML = COPY_ICON;
     copyBtn.addEventListener('click', async () => {
-      const code =
-        block.querySelector('code')?.textContent || block.textContent || '';
+      const code = block.querySelector('code')?.textContent || block.textContent || '';
       try {
         await navigator.clipboard.writeText(code);
         copyBtn.innerHTML = CHECK_ICON;
@@ -37,10 +36,7 @@ export function enhanceCodeBlocks(root: ParentNode = document): void {
         }, 2000);
       } catch {
         copyBtn.innerHTML = ERROR_ICON;
-        copyBtn.setAttribute(
-          'aria-label',
-          'Copy failed — try selecting text manually'
-        );
+        copyBtn.setAttribute('aria-label', 'Copy failed — try selecting text manually');
         setTimeout(() => {
           copyBtn.innerHTML = COPY_ICON;
           copyBtn.setAttribute('aria-label', 'Copy to clipboard');

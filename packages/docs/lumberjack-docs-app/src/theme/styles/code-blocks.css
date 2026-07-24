@@ -115,8 +115,7 @@
 :root[data-theme='dark'] .astro-code {
   background: var(--code-block-bg-dark) !important;
   border: 1px solid rgba(255, 255, 255, 0.08);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04),
-    0 4px 24px rgba(0, 0, 0, 0.25);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 4px 24px rgba(0, 0, 0, 0.25);
 }
 
 :root[data-theme='light'] .astro-code,
@@ -128,6 +127,5 @@
 :root[data-theme='light'] .astro-code {
   background: var(--code-block-bg-light) !important;
   border: 1px solid rgba(var(--sl-color-white-rgb), 0.1);
-  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6),
-    0 4px 24px rgba(0, 0, 0, 0.06);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 4px 24px rgba(0, 0, 0, 0.06);
 }

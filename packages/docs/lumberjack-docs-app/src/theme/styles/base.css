@@ -5,12 +5,9 @@
   /* ── Typography ──────────────────────────────────────────────────── */
   /* Body shares the heading face (Inter); aliased here so Astro registers Inter once */
   --font-body: var(--font-heading);
-  --font-sans: var(--font-body, 'Inter'), 'SF Pro Display', -apple-system,
-    BlinkMacSystemFont, system-ui, sans-serif;
-  --font-mono: var(--font-code, 'JetBrains Mono'), 'SF Mono', 'Geist Mono',
-    ui-monospace, Menlo, monospace;
-  --font-display: var(--font-heading, 'Inter'), 'SF Pro Display', -apple-system,
-    system-ui, sans-serif;
+  --font-sans: var(--font-body, 'Inter'), 'SF Pro Display', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+  --font-mono: var(--font-code, 'JetBrains Mono'), 'SF Mono', 'Geist Mono', ui-monospace, Menlo, monospace;
+  --font-display: var(--font-heading, 'Inter'), 'SF Pro Display', -apple-system, system-ui, sans-serif;
 
   /* ── Gray: Ocean-tinted navy scale (anchored to text hierarchy) ──── */
   --color-gray-50: #e7ecf3;
@@ -189,11 +186,7 @@ html:hover {
 
 .stats-container h2 {
   margin-bottom: 1rem;
-  background: linear-gradient(
-    135deg,
-    var(--color-accent-500) 0%,
-    var(--gradient-accent-to-1) 100%
-  );
+  background: linear-gradient(135deg, var(--color-accent-500) 0%, var(--gradient-accent-to-1) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
@@ -224,11 +217,7 @@ html:hover {
 }
 
 .action-button.primary {
-  background: linear-gradient(
-    135deg,
-    var(--color-accent-500) 0%,
-    var(--gradient-accent-to-1) 100%
-  );
+  background: linear-gradient(135deg, var(--color-accent-500) 0%, var(--gradient-accent-to-1) 100%);
   color: white;
 }
 
@@ -250,11 +239,7 @@ html:hover {
 }
 
 .action-button.primary:hover {
-  background: linear-gradient(
-    135deg,
-    var(--color-accent-600) 0%,
-    var(--gradient-accent-to-2) 100%
-  );
+  background: linear-gradient(135deg, var(--color-accent-600) 0%, var(--gradient-accent-to-2) 100%);
 }
 
 @media (max-width: 49.9999rem) {

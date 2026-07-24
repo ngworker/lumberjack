@@ -10,9 +10,7 @@ class PageFeedback extends HTMLElement {
     const stored = safeGetItem(`feedback:${pageId}`);
 
     if (stored) {
-      const btn = [...this.querySelectorAll<HTMLElement>('.feedback-btn')].find(
-        (b) => b.dataset.value === stored
-      );
+      const btn = [...this.querySelectorAll<HTMLElement>('.feedback-btn')].find((b) => b.dataset.value === stored);
       if (btn) {
         btn.setAttribute('data-selected', 'true');
         btn.setAttribute('aria-pressed', 'true');

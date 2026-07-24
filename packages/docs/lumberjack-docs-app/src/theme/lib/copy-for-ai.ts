@@ -2,24 +2,22 @@
 export function domToMarkdown(root: Element): string {
   const lines: string[] = [];
 
-  root
-    .querySelectorAll('h1, h2, h3, h4, h5, h6, p, li, pre code, blockquote')
-    .forEach((el) => {
-      const tag = el.tagName.toLowerCase();
-      if (tag === 'code' && el.parentElement?.tagName === 'PRE') {
-        const lang = el.className?.match(/language-(\w+)/)?.[1] || '';
-        lines.push('```' + lang, el.textContent?.trim() || '', '```', '');
-      } else if (tag.startsWith('h')) {
-        const level = '#'.repeat(parseInt(tag[1]));
-        lines.push(`${level} ${el.textContent?.trim()}`, '');
-      } else if (tag === 'li') {
-        lines.push(`- ${el.textContent?.trim()}`);
-      } else if (tag === 'blockquote') {
-        lines.push(`> ${el.textContent?.trim()}`, '');
-      } else {
-        lines.push(el.textContent?.trim() || '', '');
-      }
-    });
+  root.querySelectorAll('h1, h2, h3, h4, h5, h6, p, li, pre code, blockquote').forEach((el) => {
+    const tag = el.tagName.toLowerCase();
+    if (tag === 'code' && el.parentElement?.tagName === 'PRE') {
+      const lang = el.className?.match(/language-(\w+)/)?.[1] || '';
+      lines.push('```' + lang, el.textContent?.trim() || '', '```', '');
+    } else if (tag.startsWith('h')) {
+      const level = '#'.repeat(parseInt(tag[1]));
+      lines.push(`${level} ${el.textContent?.trim()}`, '');
+    } else if (tag === 'li') {
+      lines.push(`- ${el.textContent?.trim()}`);
+    } else if (tag === 'blockquote') {
+      lines.push(`> ${el.textContent?.trim()}`, '');
+    } else {
+      lines.push(el.textContent?.trim() || '', '');
+    }
+  });
 
   return lines.join('\n').replace(/\n{3,}/g, '\n\n');
 }
@@ -41,9 +39,7 @@ export function initCopyForAi(): void {
       const title = document.querySelector('h1')?.textContent?.trim() || '';
       const url = window.location.href;
 
-      const markdown = `# ${title}\nSource: ${url}\n\n${domToMarkdown(
-        content
-      )}`;
+      const markdown = `# ${title}\nSource: ${url}\n\n${domToMarkdown(content)}`;
 
       clearTimeout(resetTimer);
       const original = btn.innerHTML;

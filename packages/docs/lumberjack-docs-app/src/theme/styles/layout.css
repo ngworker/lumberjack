@@ -27,8 +27,7 @@
 
   .page > .header {
     background-color: var(--sl-color-bg-nav);
-    border-bottom: 1px solid
-      var(--sl-color-hairline-shade, rgba(255, 255, 255, 0.06));
+    border-bottom: 1px solid var(--sl-color-hairline-shade, rgba(255, 255, 255, 0.06));
   }
 
   :root[data-theme='light'] .page > .header {

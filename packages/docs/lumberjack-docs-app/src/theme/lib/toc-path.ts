@@ -40,8 +40,7 @@ export function resolveActiveIndex(
 
   const offset =
     distToBottom < nearBottomZone
-      ? baseOffset +
-        (1 - distToBottom / nearBottomZone) * (viewportHeight / 2 - baseOffset)
+      ? baseOffset + (1 - distToBottom / nearBottomZone) * (viewportHeight / 2 - baseOffset)
       : baseOffset;
 
   let active = 0;
