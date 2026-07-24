@@ -48,6 +48,9 @@ migrations.json
 .docusaurus/
 .cache-loader/
 
+# TypeDoc auto-generated API reference (starlight-typedoc)
+**/src/content/docs/reference/
+
 .nx/cache
 .nx/workspace-data
 .angular

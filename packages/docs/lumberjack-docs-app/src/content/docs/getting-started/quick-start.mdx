@@ -1,0 +1,97 @@
+---
+title: Quick Start
+description: Install Lumberjack, register it with a console driver, and emit your first log.
+---
+
+import { Steps, Tabs, TabItem } from '@astrojs/starlight/components';
+
+Get from zero to a log line in the browser console. Assumes an existing Angular
+22 application using standalone APIs.
+
+## Before you start
+
+- Angular **22.x** (Lumberjack 22 requires `@angular/core` ^22). See
+  [Compatibility](/lumberjack/getting-started/compatibility/) for other lines.
+
+## Install
+
+<Tabs syncKey="package-manager">
+  <TabItem label="pnpm">
+
+```sh
+pnpm add @ngworker/lumberjack
+```
+
+  </TabItem>
+  <TabItem label="bun">
+
+```sh
+bun add @ngworker/lumberjack
+```
+
+  </TabItem>
+  <TabItem label="npm">
+
+```sh
+npm install @ngworker/lumberjack
+```
+
+  </TabItem>
+  <TabItem label="yarn">
+
+```sh
+yarn add @ngworker/lumberjack
+```
+
+  </TabItem>
+</Tabs>
+
+## Steps
+
+<Steps>
+
+1. **Register Lumberjack and the console driver**
+
+   ```ts title="src/main.ts"
+   import { bootstrapApplication } from '@angular/platform-browser';
+   import { provideLumberjack } from '@ngworker/lumberjack';
+   import { provideLumberjackConsoleDriver } from '@ngworker/lumberjack/console-driver';
+
+   import { AppComponent } from './app/app.component';
+
+   bootstrapApplication(AppComponent, {
+     providers: [provideLumberjack(), provideLumberjackConsoleDriver()],
+   });
+   ```
+
+2. **Emit a log**
+
+   ```ts title="src/app/app.component.ts"
+   import { Component, inject, OnInit } from '@angular/core';
+   import { LumberjackService } from '@ngworker/lumberjack';
+
+   @Component({
+     selector: 'app-root',
+     template: `<h1>Forest</h1>`,
+   })
+   export class AppComponent implements OnInit {
+     readonly #lumberjack = inject(LumberjackService);
+
+     ngOnInit(): void {
+       this.#lumberjack.logInfo('Hello, Forest!');
+     }
+   }
+   ```
+
+</Steps>
+
+## Verify
+
+Start the app and open the browser console. You should see a formatted info line
+such as `info 2026-07-24T12:00:00.000Z Hello, Forest!`.
+
+## Next steps
+
+- [Write a logger](/lumberjack/guides/write-a-logger/) — prefer typed logger classes over calling the service everywhere
+- [Configure Lumberjack](/lumberjack/guides/configure-lumberjack/) — levels and format
+- [Send logs over HTTP](/lumberjack/guides/send-logs-over-http/) — remote store

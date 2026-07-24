@@ -1,23 +1,24 @@
 ---
 title: Compatibility
-description: Angular and Lumberjack version compatibility table.
+description: Angular and Lumberjack major-version pairing table.
 ---
 
-Refer to the following table to determine which version of Lumberjack is compatible with your Angular version.
+Use the Lumberjack major that matches your Angular major.
 
-| Angular version | Lumberjack version |
-| --------------- | ------------------ |
-| 22.x            | 22.x               |
-| 21.x            | 21.x               |
-| 20.x            | 20.x               |
-| 19.x            | 19.x               |
-| 18.x            | 18.x               |
-| 17.x            | 17.x               |
-| 16.x            | 16.x               |
-| 15.x            | 15.x               |
-| 14.x            | 14.x               |
-| 13.x            | 2.x                |
-| 12.x            | 2.x                |
-| 11.x            | 2.x                |
-| 10.x            | 2.x                |
-| 9.x             | 2.x                |
+| Angular  | Lumberjack |
+| -------- | ---------- |
+| 22.x     | 22.x       |
+| 21.x     | 21.x       |
+| 20.x     | 20.x       |
+| 19.x     | 19.x       |
+| 18.x     | 18.x       |
+| 17.x     | 17.x       |
+| 16.x     | 16.x       |
+| 15.x     | 15.x       |
+| 14.x     | 14.x       |
+| 9.x–13.x | 2.x        |
+
+## Next steps
+
+- [Installation](/lumberjack/getting-started/installation/)
+- [Quick start](/lumberjack/getting-started/quick-start/)
