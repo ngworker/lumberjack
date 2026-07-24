@@ -168,30 +168,14 @@ jobs:
     needs: publish
     runs-on: ubuntu-latest
     permissions:
+      actions: write # workflow_dispatch of release-docs.yml
       contents: read
-      actions: read
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Check out the source code
-        uses: actions/checkout@v4
-        with:
-          # Publish checked out the tag; docs should match the same release.
-          ref: ${{ github.event_name == 'push' && github.ref || format('refs/tags/{0}', inputs.tag) }}
-          fetch-depth: 0
-      - name: Setup
-        uses: ./.github/actions/setup
-      - name: Build docs
-        run: pnpm exec nx build docs-lumberjack-docs-app
-      - name: Set up GitHub Pages
-        uses: actions/configure-pages@v4
-      - name: Upload docs to GitHub Pages
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: dist/packages/docs/lumberjack-docs-app/
-      - name: Deploy docs to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      # The github-pages environment only allows deploys from `main` (branch
+      # policy). This workflow runs on tag refs (v*), so deploying Pages here
+      # is rejected. Hand off to Release Docs on main instead — the release
+      # commit is already on main when the tag is pushed.
+      - name: Trigger docs deploy on main
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run release-docs.yml --repo "${{ github.repository }}" --ref main
