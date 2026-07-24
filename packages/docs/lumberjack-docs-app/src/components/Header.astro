@@ -1,0 +1,35 @@
+---
+import LumberjackLogo from './LumberjackLogo.astro';
+---
+
+<div class="header">
+  <LumberjackLogo height={18} />
+</div>
+
+<style>
+  .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    gap: 0.5rem;
+  }
+
+  :global(:root[data-theme='dark']) .header {
+    color: white;
+  }
+
+  :global(:root[data-theme='light']) .header {
+    color: #1c1c1c;
+  }
+
+  .header:hover {
+    opacity: 0.8;
+  }
+
+  @media (min-width: 50rem) {
+    .header {
+      display: none;
+    }
+  }
+</style>

@@ -1,0 +1,235 @@
+/* ── Content components: inline code, cards, links, asides ──────── */
+
+/* Inline code pills */
+.sl-markdown-content :not(pre) > code {
+  padding: 0.1em 0.4em;
+  border-radius: 0.3rem;
+  font-size: 0.875em;
+}
+
+:root[data-theme='dark'] .sl-markdown-content :not(pre) > code {
+  background: color-mix(in srgb, var(--color-accent-500) 8%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-accent-500) 12%, transparent);
+  /* Bespoke light tint (brighter than accent-500) for legibility on the dark bg */
+  color: var(--code-inline-fg-dark);
+}
+
+:root[data-theme='light'] .sl-markdown-content :not(pre) > code {
+  background: color-mix(in srgb, var(--color-accent-500) 6%, transparent);
+  border: 1px solid color-mix(in srgb, var(--color-accent-500) 10%, transparent);
+  /* Darker brand shade: accent-500 fails AA contrast on the light bg */
+  color: var(--color-accent-700);
+}
+
+/* Glass cards (Starlight Card components) — unlayered CSS overrides
+   Starlight's layered defaults per cascade layer best practices. */
+:root[data-theme='dark'] .card {
+  background: rgba(var(--sl-color-white-rgb), 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 0.75rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 4px 24px rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(8px);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+:root[data-theme='dark'] .card:hover {
+  border-color: color-mix(in srgb, var(--color-accent-500) 15%, transparent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 4px 24px rgba(0, 0, 0, 0.2),
+    0 0 20px color-mix(in srgb, var(--color-accent-500) 6%, transparent);
+}
+
+:root[data-theme='light'] .card {
+  background: rgba(255, 255, 255, 0.6);
+  border: 1px solid rgba(var(--sl-color-white-rgb), 0.08);
+  border-radius: 0.75rem;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 4px 24px rgba(0, 0, 0, 0.06);
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+:root[data-theme='light'] .card:hover {
+  border-color: color-mix(in srgb, var(--color-accent-500) 15%, transparent);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.8), 0 4px 24px rgba(0, 0, 0, 0.06),
+    0 0 20px color-mix(in srgb, var(--color-accent-500) 6%, transparent);
+}
+
+/* Link glow on hover */
+.sl-markdown-content a:not([class]) {
+  transition: color 0.15s, text-shadow 0.15s;
+}
+
+:root[data-theme='dark'] .sl-markdown-content a:not([class]):hover {
+  text-shadow: 0 0 12px color-mix(in srgb, var(--color-accent-500) 30%, transparent);
+}
+
+:root[data-theme='light'] .sl-markdown-content a:not([class]):hover {
+  text-shadow: 0 0 12px color-mix(in srgb, var(--color-accent-500) 15%, transparent);
+}
+
+/* Asides/Callouts: glass-card treatment */
+:root[data-theme='dark'] .starlight-aside {
+  background: rgba(var(--sl-color-white-rgb), 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 0.75rem;
+  border-inline-start-width: 3px;
+}
+
+:root[data-theme='light'] .starlight-aside {
+  background: rgba(var(--sl-color-white-rgb), 0.03);
+  border: 1px solid rgba(var(--sl-color-white-rgb), 0.08);
+  border-radius: 0.75rem;
+  border-inline-start-width: 3px;
+}
+
+/* ── Search dialog ───────────────────────────────────────────────── */
+
+site-search dialog {
+  opacity: 0;
+  transform: scale(0.95) translateY(-12px);
+  transition: opacity 0.25s cubic-bezier(0.16, 1, 0.3, 1), transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    display 0.25s ease-out allow-discrete;
+}
+
+site-search dialog[open] {
+  opacity: 1;
+  transform: scale(1) translateY(0);
+}
+
+@starting-style {
+  site-search dialog[open] {
+    opacity: 0;
+    transform: scale(0.95) translateY(-12px);
+  }
+}
+
+:root[data-theme='dark'] site-search dialog {
+  background: var(--search-dialog-bg-dark);
+  backdrop-filter: blur(20px) saturate(1.2);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 0.75rem;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6), 0 0 1px rgba(255, 255, 255, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+:root[data-theme='light'] site-search dialog {
+  background: var(--search-dialog-bg-light);
+  backdrop-filter: blur(20px) saturate(1.2);
+  border: 1px solid rgba(var(--sl-color-white-rgb), 0.1);
+  border-radius: 0.75rem;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.12), 0 0 1px rgba(var(--sl-color-white-rgb), 0.08);
+}
+
+site-search dialog::backdrop {
+  background-color: rgba(5, 8, 16, 0);
+  transition: background-color 0.25s ease-out, display 0.25s ease-out allow-discrete;
+}
+
+site-search dialog[open]::backdrop {
+  background-color: rgba(5, 8, 16, 0.75);
+}
+
+@starting-style {
+  site-search dialog[open]::backdrop {
+    background-color: rgba(5, 8, 16, 0);
+  }
+}
+
+:root[data-theme='light'] site-search dialog[open]::backdrop {
+  background-color: rgba(var(--sl-color-white-rgb), 0.3);
+}
+
+.sidebar-search button[data-open-modal] kbd {
+  display: inline-flex;
+  font-family: var(--font-mono);
+  font-size: 0.65rem;
+  padding: 0.1em 0.4em;
+  border-radius: 0.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+  margin-inline-start: auto;
+}
+
+/* ── Feedback buttons ────────────────────────────────────────────── */
+
+.feedback-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--sl-color-gray-2);
+  cursor: pointer;
+  font-size: 0.8rem;
+  transition: border-color 0.15s, background-color 0.15s, color 0.15s;
+}
+
+.feedback-btn:hover {
+  border-color: color-mix(in srgb, var(--color-accent-500) 20%, transparent);
+  background: color-mix(in srgb, var(--color-accent-500) 6%, transparent);
+  color: var(--color-accent-500);
+}
+
+.feedback-btn[data-selected='true'] {
+  border-color: color-mix(in srgb, var(--color-accent-500) 30%, transparent);
+  background: color-mix(in srgb, var(--color-accent-500) 10%, transparent);
+  color: var(--color-accent-500);
+}
+
+:root[data-theme='light'] .feedback-btn {
+  border-color: rgba(var(--sl-color-white-rgb), 0.12);
+  background: rgba(var(--sl-color-white-rgb), 0.03);
+}
+
+:root[data-theme='light'] .feedback-btn:hover {
+  border-color: color-mix(in srgb, var(--color-accent-500) 20%, transparent);
+  background: color-mix(in srgb, var(--color-accent-500) 6%, transparent);
+  color: var(--color-accent-500);
+}
+
+:root[data-theme='light'] .feedback-btn[data-selected='true'] {
+  border-color: color-mix(in srgb, var(--color-accent-500) 30%, transparent);
+  background: color-mix(in srgb, var(--color-accent-500) 8%, transparent);
+  color: var(--color-accent-500);
+}
+
+/* ── Focus indicators (keyboard accessibility) ──────────────────── */
+
+:focus-visible {
+  outline: 2px solid var(--color-accent-500);
+  outline-offset: 2px;
+  border-radius: 0.25rem;
+}
+
+:root[data-theme='light'] :focus-visible {
+  outline-color: var(--color-accent-500);
+}
+
+/* ── Hero primary CTA ───────────────────────────────────────────── */
+/* Starlight uses --sl-color-black for .sl-link-button.primary text;
+   in dark mode that token is near-black, so red-on-black fails contrast.
+   Force white on the filled accent button in both themes. */
+.sl-link-button.primary,
+.sl-link-button.primary:hover {
+  color: #fff;
+}
+
+/* ── Reduced motion ─────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  nav.sidebar details > ul,
+  nav.sidebar details > summary svg,
+  site-search dialog,
+  site-search dialog::backdrop,
+  .toc-path-active,
+  .code-copy-btn,
+  .feedback-btn,
+  starlight-toc a {
+    transition-duration: 0s !important;
+    animation-duration: 0s !important;
+  }
+
+  ::view-transition-old(main-content),
+  ::view-transition-new(main-content) {
+    animation-duration: 0s !important;
+  }
+}

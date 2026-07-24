@@ -27,6 +27,12 @@
     "pnpm": ">=10"
   },
   "packageManager": "pnpm@10.11.1",
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "sharp"
+    ]
+  },
   "dependencies": {
     "@angular/animations": "22.0.7",
     "@angular/common": "22.0.7",
@@ -36,14 +42,6 @@
     "@angular/platform-browser": "22.0.7",
     "@angular/platform-browser-dynamic": "22.0.7",
     "@angular/router": "22.0.7",
-    "@docusaurus/core": "3.3.2",
-    "@docusaurus/preset-classic": "3.3.2",
-    "@mdx-js/react": "^3.0.1",
-    "clsx": "^2.1.1",
-    "prism-react-renderer": "^2.3.1",
-    "prop-types": "^15.8.1",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
     "rxjs": "7.8.1",
     "tslib": "2.4.1",
     "zone.js": "0.16.2"
@@ -60,8 +58,10 @@
     "@angular/language-service": "22.0.7",
     "@commitlint/cli": "19.0.1",
     "@commitlint/config-conventional": "19.0.0",
-    "@docusaurus/module-type-aliases": "3.3.2",
-    "@docusaurus/types": "3.0.0",
+    "@astrojs/check": "^0.9.4",
+    "@astrojs/sitemap": "^3.7.1",
+    "@astrojs/starlight": "^0.39.0",
+    "@astrojs/starlight-tailwind": "^5.0.0",
     "@nx/angular": "23.1.0",
     "@nx/cypress": "23.1.0",
     "@nx/devkit": "23.1.0",
@@ -76,7 +76,7 @@
     "@swc-node/register": "1.12.1",
     "@swc/core": "1.15.8",
     "@swc/helpers": "0.5.23",
-    "@tsconfig/docusaurus": "^1.0.7",
+    "@tailwindcss/vite": "^4.2.2",
     "@types/copy": "0.3.2",
     "@types/jest": "30.0.0",
     "@types/node": "22.16.0",
@@ -84,6 +84,7 @@
     "@typescript-eslint/parser": "8.64.0",
     "@typescript-eslint/utils": "8.64.0",
     "angular-eslint": "^22.0.0",
+    "astro": "^6.1.0",
     "autoprefixer": "^10.4.0",
     "copy": "0.3.2",
     "cypress": "15.18.1",
@@ -106,6 +107,8 @@
     "prettier": "2.8.1",
     "replace-in-file": "6.3.5",
     "rimraf": "3.0.2",
+    "sharp": "^0.34.2",
+    "tailwindcss": "^4.2.2",
     "ts-jest": "29.4.9",
     "ts-node": "10.9.1",
     "typescript": "6.0.3",

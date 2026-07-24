@@ -6,27 +6,31 @@
   "prefix": "ngworker",
   "targets": {
     "build": {
-      "executor": "nx:run-commands",
+      "outputs": ["{workspaceRoot}/dist/packages/docs/lumberjack-docs-app"],
+      "command": "astro build",
+      "cache": true,
       "options": {
-        "commands": [
-          "mkdir -p ../../../dist/packages/docs/lumberjack-docs-app",
-          "docusaurus build",
-          "rm -rf ../../../dist/packages/docs/lumberjack-docs-app/*",
-          "cp -R build/* ../../../dist/packages/docs/lumberjack-docs-app/"
-        ],
-        "parallel": false,
         "cwd": "packages/docs/lumberjack-docs-app"
       }
     },
-    "serve": {
-      "command": "docusaurus serve",
+    "typecheck": {
+      "command": "astro check",
+      "cache": true,
       "options": {
         "cwd": "packages/docs/lumberjack-docs-app"
       }
     },
     "start": {
-      "command": "docusaurus start",
+      "command": "astro dev",
       "continuous": true,
+      "options": {
+        "cwd": "packages/docs/lumberjack-docs-app"
+      }
+    },
+    "serve": {
+      "command": "astro preview",
+      "continuous": true,
+      "dependsOn": ["build"],
       "options": {
         "cwd": "packages/docs/lumberjack-docs-app"
       }

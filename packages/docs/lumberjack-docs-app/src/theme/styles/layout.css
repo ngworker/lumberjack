@@ -1,0 +1,67 @@
+/* ── Layout: desktop/mobile header & view transitions ────────────── */
+
+/* Hide header on desktop (Fumadocs pattern) */
+@media (min-width: 50rem) {
+  :root {
+    --sl-nav-height: 0rem;
+  }
+
+  .page > .header {
+    display: none;
+  }
+
+  .sidebar-pane {
+    inset-block-start: 0;
+  }
+
+  .main-frame {
+    padding-top: 0;
+  }
+}
+
+/* Thin mobile header */
+@media (max-width: 49.9999rem) {
+  :root {
+    --sl-nav-height: 2.5rem;
+  }
+
+  .page > .header {
+    background-color: var(--sl-color-bg-nav);
+    border-bottom: 1px solid var(--sl-color-hairline-shade, rgba(255, 255, 255, 0.06));
+  }
+
+  :root[data-theme='light'] .page > .header {
+    background-color: var(--sl-color-bg-sidebar);
+    border-bottom: 1px solid rgba(var(--sl-color-white-rgb), 0.08);
+  }
+}
+
+/* Mobile ToC bar */
+:root[data-theme='dark'] starlight-toc mobile-starlight-toc {
+  background-color: #07090f;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+/* Content area background — descending gradient */
+:root[data-theme='dark'] .main-frame {
+  background: linear-gradient(180deg, #0b0e16 0%, #04060b 40%);
+}
+
+/* ── View Transitions ────────────────────────────────────────────── */
+/* Prevent sidebar flash during client-side navigation by isolating
+   main content and sidebar into their own transition groups. */
+
+.main-frame {
+  view-transition-name: main-content;
+}
+
+.sidebar-pane {
+  view-transition-name: sidebar;
+}
+
+::view-transition-old(main-content),
+::view-transition-new(main-content),
+::view-transition-old(sidebar),
+::view-transition-new(sidebar) {
+  animation-duration: 0s;
+}

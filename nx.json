@@ -196,5 +196,6 @@
       "pattern": "v{version}"
     }
   },
-  "nxCloudId": "67453b3bcfbda5adf9827c70"
+  "nxCloudId": "67453b3bcfbda5adf9827c70",
+  "analytics": false
 }

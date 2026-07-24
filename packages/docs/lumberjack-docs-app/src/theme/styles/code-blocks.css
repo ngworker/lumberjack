@@ -1,0 +1,131 @@
+/* ── Code blocks: Shiki with glass treatment ───────────────────── */
+
+/* Wrapper added by JS (code-blocks.ts) */
+.code-block {
+  position: relative;
+  margin: 1rem 0;
+}
+
+/* Title bar (file tab) */
+.code-block-header {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 1rem;
+  font-family: var(--font-code, 'JetBrains Mono'), monospace;
+  font-size: 0.75rem;
+  font-weight: 500;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 0.5rem 0.5rem 0 0;
+}
+
+:root[data-theme='dark'] .code-block-header {
+  background: var(--code-header-bg-dark);
+  color: var(--muted-text-dark);
+}
+
+:root[data-theme='light'] .code-block-header {
+  background: var(--code-header-bg-light);
+  color: var(--code-header-fg-light);
+  border-bottom-color: rgba(var(--sl-color-white-rgb), 0.08);
+}
+
+.code-block-header + .astro-code {
+  border-top-left-radius: 0;
+  border-top-right-radius: 0;
+  margin-top: 0;
+}
+
+/* Copy button */
+.code-copy-btn {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.375rem;
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--sl-color-gray-3);
+  cursor: pointer;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s, color 0.15s, background 0.15s;
+}
+
+.code-block:hover .code-copy-btn,
+.code-block:focus-within .code-copy-btn,
+.code-copy-btn:focus-visible {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (hover: none), (pointer: coarse) {
+  .code-copy-btn {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.code-copy-btn:hover {
+  color: var(--color-accent-500);
+  background: color-mix(in srgb, var(--color-accent-500) 10%, transparent);
+  border-color: color-mix(in srgb, var(--color-accent-500) 20%, transparent);
+}
+
+/* If there's a header, push copy button below it */
+.code-block-header ~ .code-copy-btn {
+  top: calc(0.5rem + 2rem + 1px);
+}
+
+:root[data-theme='light'] .code-copy-btn {
+  border-color: rgba(var(--sl-color-white-rgb), 0.1);
+  background: rgba(255, 255, 255, 0.6);
+}
+
+:root[data-theme='light'] .code-copy-btn:hover {
+  color: var(--color-accent-500);
+  background: color-mix(in srgb, var(--color-accent-500) 8%, transparent);
+  border-color: color-mix(in srgb, var(--color-accent-500) 20%, transparent);
+}
+
+/* Base code block styling */
+.astro-code {
+  padding: 1rem 1.25rem;
+  border-radius: 0.5rem;
+  font-family: var(--font-code, 'JetBrains Mono'), monospace;
+  font-size: 0.875rem;
+  line-height: 1.7;
+  overflow-x: auto;
+  tab-size: 2;
+  margin: 0;
+}
+
+/* Shiki inlines styles on <span> elements — !important is the only
+   way to override inline styles and apply our glass treatment. */
+:root[data-theme='dark'] .astro-code,
+:root[data-theme='dark'] .astro-code span {
+  color: var(--shiki-dark) !important;
+  background-color: transparent !important;
+}
+
+:root[data-theme='dark'] .astro-code {
+  background: var(--code-block-bg-dark) !important;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 4px 24px rgba(0, 0, 0, 0.25);
+}
+
+:root[data-theme='light'] .astro-code,
+:root[data-theme='light'] .astro-code span {
+  color: var(--shiki-light) !important;
+  background-color: transparent !important;
+}
+
+:root[data-theme='light'] .astro-code {
+  background: var(--code-block-bg-light) !important;
+  border: 1px solid rgba(var(--sl-color-white-rgb), 0.1);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.6), 0 4px 24px rgba(0, 0, 0, 0.06);
+}

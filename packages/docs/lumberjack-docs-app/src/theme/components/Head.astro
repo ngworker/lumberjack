@@ -1,0 +1,27 @@
+---
+import { Font } from 'astro:assets';
+import { ClientRouter } from 'astro:transitions';
+
+const { head } = Astro.locals.starlightRoute;
+---
+
+{head.map(({ tag: Tag, attrs, content }) => <Tag {...attrs} set:html={content} />)}
+<Font cssVariable="--font-heading" preload />
+<Font cssVariable="--font-code" />
+<ClientRouter />
+<script>
+  import { enhanceCodeBlocks } from '../lib/code-blocks';
+  import { initTocPath, cleanupTocPath } from '../lib/toc-path';
+  import { initCopyForAi } from '../lib/copy-for-ai';
+
+  enhanceCodeBlocks();
+  initTocPath();
+  initCopyForAi();
+
+  document.addEventListener('astro:before-swap', cleanupTocPath);
+  document.addEventListener('astro:after-swap', () => {
+    enhanceCodeBlocks();
+    requestAnimationFrame(initTocPath);
+    initCopyForAi();
+  });
+</script>
