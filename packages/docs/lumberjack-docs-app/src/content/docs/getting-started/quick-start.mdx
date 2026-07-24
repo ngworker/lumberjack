@@ -14,44 +14,44 @@ Get from zero to a log line in the browser console. Assumes an existing Angular
   [Compatibility](/lumberjack/getting-started/compatibility/) for other lines.
 - A project you can bootstrap with `bootstrapApplication`.
 
+## Install
+
+<Tabs syncKey="package-manager">
+  <TabItem label="pnpm">
+
+```sh
+pnpm add @ngworker/lumberjack
+```
+
+  </TabItem>
+  <TabItem label="bun">
+
+```sh
+bun add @ngworker/lumberjack
+```
+
+  </TabItem>
+  <TabItem label="npm">
+
+```sh
+npm install @ngworker/lumberjack
+```
+
+  </TabItem>
+  <TabItem label="yarn">
+
+```sh
+yarn add @ngworker/lumberjack
+```
+
+  </TabItem>
+</Tabs>
+
 ## Steps
 
 <Steps>
 
-1. **Install the package**
-
-   <Tabs syncKey="package-manager">
-  <TabItem label="pnpm">
-
-   ```sh
-   pnpm add @ngworker/lumberjack
-   ```
-
-     </TabItem>
-  <TabItem label="bun">
-
-   ```sh
-   bun add @ngworker/lumberjack
-   ```
-
-     </TabItem>
-  <TabItem label="npm">
-
-   ```sh
-   npm install @ngworker/lumberjack
-   ```
-
-     </TabItem>
-  <TabItem label="yarn">
-
-   ```sh
-   yarn add @ngworker/lumberjack
-   ```
-
-     </TabItem>
-</Tabs>
-
-2. **Register Lumberjack and the console driver**
+1. **Register Lumberjack and the console driver**
 
    ```ts title="src/main.ts"
    import { bootstrapApplication } from '@angular/platform-browser';
@@ -65,7 +65,7 @@ Get from zero to a log line in the browser console. Assumes an existing Angular
    });
    ```
 
-3. **Emit a log**
+2. **Emit a log**
 
    ```ts title="src/app/app.component.ts"
    import { Component, inject, OnInit } from '@angular/core';
