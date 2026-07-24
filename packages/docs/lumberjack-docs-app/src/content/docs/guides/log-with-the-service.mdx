@@ -39,8 +39,14 @@ when you need a one-off log or a thin wrapper. Prefer
    `logInfo`, `logDebug`, `logTrace`.
 
    ```ts
+   this.#lumberjack.logInfo('Hello, Forest!');
+   ```
+
+   Optional second and third arguments are `payload` and `scope`. Pass
+   `undefined` for the payload when you only need a scope:
+
+   ```ts
    this.#lumberjack.logInfo('Hello, Forest!', undefined, 'ForestComponent');
-   //                    message               payload    scope
    ```
 
 3. **Or pass a full log object**
@@ -48,19 +54,24 @@ when you need a one-off log or a thin wrapper. Prefer
    Use this when you already built a `LumberjackLog` (for example with
    [`LumberjackLogFactory`](/lumberjack/reference/core/classes/lumberjacklogfactory/)).
 
-   ```ts
-   import { inject } from '@angular/core';
+   ```ts title="src/app/forest.component.ts"
+   import { Component, inject } from '@angular/core';
    import { LumberjackLogFactory, LumberjackService } from '@ngworker/lumberjack';
 
-   readonly #lumberjack = inject(LumberjackService);
-   readonly #logs = inject(LumberjackLogFactory);
+   @Component({
+     selector: 'app-forest',
+     template: ``,
+   })
+   export class ForestComponent {
+     readonly #lumberjack = inject(LumberjackService);
+     readonly #logFactory = inject(LumberjackLogFactory);
 
-   const log = this.#logs
-     .createInfoLog('Hello, Forest!')
-     .withScope('ForestComponent')
-     .build();
+     greet(): void {
+       const log = this.#logFactory.createInfoLog('Hello, Forest!').withScope('ForestComponent').build();
 
-   this.#lumberjack.log(log);
+       this.#lumberjack.log(log);
+     }
+   }
    ```
 
 </Steps>

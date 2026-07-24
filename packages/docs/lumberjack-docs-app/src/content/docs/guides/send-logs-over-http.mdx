@@ -51,10 +51,10 @@ to POST logs to an endpoint that accepts the driver’s payload.
 
 2. **Choose config vs options**
 
-   | Helper                     | Use when                                                                                                 |
-   | -------------------------- | -------------------------------------------------------------------------------------------------------- |
-   | `withHttpConfig(config)`   | You pass a full HTTP driver config (levels optional; defaults merge from root).                          |
-   | `withHttpOptions(options)` | You only set HTTP-exclusive fields (`origin`, `storeUrl`, `retryOptions`) plus optional level overrides. |
+   | Helper                     | Use when                                                                                                           |
+   | -------------------------- | ------------------------------------------------------------------------------------------------------------------ |
+   | `withHttpConfig(config)`   | Full driver config: `origin`, `storeUrl`, `retryOptions`, and `levels` are required; `identifier` is optional.     |
+   | `withHttpOptions(options)` | HTTP fields only (`origin`, `storeUrl`, `retryOptions`); `levels` and `identifier` fall back to the root defaults. |
 
 </Steps>
 
@@ -67,7 +67,8 @@ to POST logs to an endpoint that accepts the driver’s payload.
 | `retryOptions.maxRetries` | Attempts before the request fails                         |
 | `retryOptions.delayMs`    | Delay between retries                                     |
 
-Optional: `levels`, `identifier` (defaults to the HTTP driver id).
+With `withHttpOptions`, `levels` and `identifier` are optional (`identifier`
+defaults to `LumberjackHttpDriver`).
 
 <Aside type="note">
   Failed driver requests are retried per `retryOptions`. If a driver throws, Lumberjack forwards a driver-error log to

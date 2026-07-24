@@ -14,7 +14,7 @@ docs.
 - [@ngworker/lumberjack-firestore-driver](https://github.com/marcinmilewicz/lumberjack-firestore-driver) —
   [Cloud Firestore](https://firebase.google.com/docs/firestore) store
 - [@ngworker/lumberjack-applicationinsights-driver](https://github.com/ngworker/lumberjack-applicationinsights-driver) —
-  [Azure Application Insights](https://docs.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview)
+  [Azure Application Insights](https://learn.microsoft.com/en-us/azure/azure-monitor/app/app-insights-overview)
 
 ## List your driver
 

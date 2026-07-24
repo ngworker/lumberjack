@@ -42,26 +42,34 @@ to change the default level filter and the text format shared by drivers.
 
 2. **Optional: custom format**
 
-   ```ts
+   ```ts title="src/main.ts"
+   import { bootstrapApplication } from '@angular/platform-browser';
    import { LumberjackLog, provideLumberjack } from '@ngworker/lumberjack';
+   import { provideLumberjackConsoleDriver } from '@ngworker/lumberjack/console-driver';
+
+   import { AppComponent } from './app/app.component';
 
    function formatLog(log: LumberjackLog): string {
      return `[${log.level}] ${log.message}`;
    }
 
-   provideLumberjack({ format: formatLog });
+   bootstrapApplication(AppComponent, {
+     providers: [provideLumberjack({ format: formatLog }), provideLumberjackConsoleDriver()],
+   });
    ```
 
 </Steps>
 
 ## Defaults when options are omitted
 
-| Option   | Development                                          | Production                              |
-| -------- | ---------------------------------------------------- | --------------------------------------- |
-| `levels` | `['verbose']` (all levels)                           | `['critical', 'error', 'info', 'warn']` |
-| `format` | `` `${level} ${utcTimestamp}${scope?} ${message}` `` | same                                    |
+| Option   | Development                                                      | Production                              |
+| -------- | ---------------------------------------------------------------- | --------------------------------------- |
+| `levels` | `['verbose']` (all levels)                                       | `['critical', 'error', 'info', 'warn']` |
+| `format` | e.g. `info 2026-07-24T12:00:00.000Z [Forest App] Hello, Forest!` | same shape                              |
 
-Production vs development is taken from Angular’s production mode flag inside
+The default format is
+`` `${level} ${utcTimestamp}${scope ? ` [${scope}]` : ''} ${message}` ``.
+Production vs development comes from Angular’s production mode flag inside
 Lumberjack’s config factory.
 
 ## Per-driver levels

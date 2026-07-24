@@ -12,17 +12,12 @@ You register Lumberjack once at bootstrap, enable the drivers you need, then
 emit logs through `LumberjackService` or — preferably — small
 application-specific logger classes.
 
-## Why a driver model?
-
-Most apps need more than `console.log`. Logs may need different destinations
-per environment, different severity filters per destination, and structured
-fields (scope, payload) that survive the trip to a log store.
-
-Lumberjack keeps that plumbing out of feature code:
-
-1. Feature code calls a logger method with a message (and optional payload).
-2. Lumberjack formats the log and filters by level.
-3. Each registered driver that accepts the level receives the log.
+Most apps need more than `console.log`: different destinations per environment,
+different severity filters per destination, and structured fields that survive
+the trip to a log store. Lumberjack keeps that plumbing out of feature code —
+feature code logs once, and every registered driver that accepts the log’s level
+receives it. [How log drivers work](/lumberjack/understanding/log-drivers/)
+covers the full pipeline.
 
 ## What you get out of the box
 

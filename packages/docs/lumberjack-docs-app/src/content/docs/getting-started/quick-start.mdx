@@ -10,9 +10,8 @@ Get from zero to a log line in the browser console. Assumes an existing Angular
 
 ## Before you start
 
-- Angular **22.x** (Lumberjack 22 peers `@angular/core@^22`). See
+- Angular **22.x** (Lumberjack 22 requires `@angular/core` ^22). See
   [Compatibility](/lumberjack/getting-started/compatibility/) for other lines.
-- A project you can bootstrap with `bootstrapApplication`.
 
 ## Install
 
@@ -79,7 +78,7 @@ yarn add @ngworker/lumberjack
      readonly #lumberjack = inject(LumberjackService);
 
      ngOnInit(): void {
-       this.#lumberjack.logInfo('Hello, Forest!', undefined, 'AppComponent');
+       this.#lumberjack.logInfo('Hello, Forest!');
      }
    }
    ```
@@ -88,8 +87,8 @@ yarn add @ngworker/lumberjack
 
 ## Verify
 
-Start the app and open the browser console. You should see a formatted info log
-that includes the message and the `AppComponent` scope.
+Start the app and open the browser console. You should see a formatted info line
+such as `info 2026-07-24T12:00:00.000Z Hello, Forest!`.
 
 ## Next steps
 
