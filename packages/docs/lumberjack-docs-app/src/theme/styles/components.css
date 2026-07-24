@@ -214,6 +214,15 @@ site-search dialog[open]::backdrop {
   outline-color: var(--color-accent-500);
 }
 
+/* ── Hero primary CTA ───────────────────────────────────────────── */
+/* Starlight uses --sl-color-black for .sl-link-button.primary text;
+   in dark mode that token is near-black, so red-on-black fails contrast.
+   Force white on the filled accent button in both themes. */
+.sl-link-button.primary,
+.sl-link-button.primary:hover {
+  color: #fff;
+}
+
 /* ── Reduced motion ─────────────────────────────────────────────── */
 
 @media (prefers-reduced-motion: reduce) {
