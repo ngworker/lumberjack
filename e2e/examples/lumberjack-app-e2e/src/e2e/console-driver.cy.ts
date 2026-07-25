@@ -1,15 +1,15 @@
 import { VERSION } from '@angular/core';
 
-describe('Console log driver', () => {
-  function visit() {
-    cy.visit('/', {
-      onBeforeLoad(win): void {
-        cy.stub(win.console, 'error').as('consoleError');
-        cy.stub(win.console, 'info').as('consoleInfo');
-      },
-    });
-  }
+function visit() {
+  cy.visit('/', {
+    onBeforeLoad(win): void {
+      cy.stub(win.console, 'error').as('consoleError');
+      cy.stub(win.console, 'info').as('consoleInfo');
+    },
+  });
+}
 
+describe('Console log driver', () => {
   const expectedPayload = {
     angularVersion: VERSION.major,
   };

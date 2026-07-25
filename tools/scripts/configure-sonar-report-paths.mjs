@@ -49,7 +49,5 @@ function listLintReports() {
   return listFilePaths('reports/**/lint/report.json');
 }
 
-(async () => {
-  await configureCoverageReportPaths();
-  await configureLintReportPaths();
-})();
+await configureCoverageReportPaths();
+await configureLintReportPaths();
