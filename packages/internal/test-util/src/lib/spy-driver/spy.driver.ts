@@ -13,7 +13,7 @@ import { spyDriverConfigToken } from './spy-driver-config.token';
 export class SpyDriver<TPayload extends LumberjackLogPayload | void = void>
   implements LumberjackLogDriver<TPayload>, jest.Mocked<LumberjackLogDriver>
 {
-  static driverIdentifier = 'SpyDriver';
+  static readonly driverIdentifier = 'SpyDriver';
 
   readonly config = inject(spyDriverConfigToken);
   readonly logCritical = jest.fn();

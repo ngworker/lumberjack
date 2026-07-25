@@ -123,7 +123,7 @@ describe(LumberjackLogFactory.name, () => {
       expect(new Date(log.createdAt)).toEqual(fakeNow);
     });
 
-    it('timestamps the log with the current date and time', () => {
+    it('timestamps every log with the date and time of its creation', () => {
       const firstLog = logFactory.createWarningLog(testMessage).build();
       const fakeLater = new Date('2021-01-23T23:23:23Z');
       fakeTime.setTime(fakeLater);
