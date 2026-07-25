@@ -1,0 +1,88 @@
+---
+title: Log with LumberjackService
+description: How to emit logs programmatically with LumberjackService.
+---
+
+import { Aside, Steps } from '@astrojs/starlight/components';
+
+Call [`LumberjackService`](/lumberjack/reference/core/classes/lumberjackservice/)
+when you need a one-off log or a thin wrapper. Prefer
+[writing a logger](/lumberjack/guides/write-a-logger/) for anything that repeats.
+
+## Before you start
+
+- Lumberjack registered with at least one driver (see
+  [Quick start](/lumberjack/getting-started/quick-start/)).
+
+## Steps
+
+<Steps>
+
+1. **Inject the service**
+
+   ```ts title="src/app/forest.component.ts"
+   import { Component, inject } from '@angular/core';
+   import { LumberjackService } from '@ngworker/lumberjack';
+
+   @Component({
+     selector: 'app-forest',
+     template: ``,
+   })
+   export class ForestComponent {
+     readonly #lumberjack = inject(LumberjackService);
+   }
+   ```
+
+2. **Use a level shorthand**
+
+   Each severity has a method: `logCritical`, `logError`, `logWarning`,
+   `logInfo`, `logDebug`, `logTrace`.
+
+   ```ts
+   this.#lumberjack.logInfo('Hello, Forest!');
+   ```
+
+   Optional second and third arguments are `payload` and `scope`. Pass
+   `undefined` for the payload when you only need a scope:
+
+   ```ts
+   this.#lumberjack.logInfo('Hello, Forest!', undefined, 'ForestComponent');
+   ```
+
+3. **Or pass a full log object**
+
+   Use this when you already built a `LumberjackLog` (for example with
+   [`LumberjackLogFactory`](/lumberjack/reference/core/classes/lumberjacklogfactory/)).
+
+   ```ts title="src/app/forest.component.ts"
+   import { Component, inject } from '@angular/core';
+   import { LumberjackLogFactory, LumberjackService } from '@ngworker/lumberjack';
+
+   @Component({
+     selector: 'app-forest',
+     template: ``,
+   })
+   export class ForestComponent {
+     readonly #lumberjack = inject(LumberjackService);
+     readonly #logFactory = inject(LumberjackLogFactory);
+
+     greet(): void {
+       const log = this.#logFactory.createInfoLog('Hello, Forest!').withScope('ForestComponent').build();
+
+       this.#lumberjack.log(log);
+     }
+   }
+   ```
+
+</Steps>
+
+<Aside type="tip">
+  Shorthand methods stamp `createdAt` via `LumberjackTimeService`. Prefer them over hand-built objects unless you need a
+  payload type or factory reuse in tests.
+</Aside>
+
+## Next steps
+
+- [Write a logger](/lumberjack/guides/write-a-logger/)
+- [Configure Lumberjack](/lumberjack/guides/configure-lumberjack/)
+- [Reference: LumberjackService](/lumberjack/reference/core/classes/lumberjackservice/)

@@ -3,7 +3,7 @@ import * as app from '../support/app.po';
 describe('Site chrome', () => {
   // Splash hides the full sidebar; exercise chrome on a normal docs page.
   beforeEach(() => {
-    cy.visit(app.url('/guides/usage/'));
+    cy.visit(app.url('/guides/log-with-the-service/'));
   });
 
   it('toggles dark/light theme', () => {

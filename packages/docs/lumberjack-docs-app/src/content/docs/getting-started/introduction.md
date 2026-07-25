@@ -1,18 +1,37 @@
 ---
 title: Introduction
-description: What is Lumberjack and why use it for Angular logging?
+description: What Lumberjack is and when to use it for Angular logging.
 ---
 
-Lumberjack is a versatile Angular logging library, published as `@ngworker/lumberjack`. It is specifically designed to be extended and customized, with a few simple log drivers out-of-the-box.
+Lumberjack (`@ngworker/lumberjack`) is an Angular logging library built around
+**log drivers**: small plugins that receive structured logs and write them
+somewhere (the browser console, an HTTP store, a community backend, or your own
+sink).
 
-> Chop and cut Angular logs like a professional lumberjack.
+You register Lumberjack once at bootstrap, enable the drivers you need, then
+emit logs through `LumberjackService` or — preferably — small
+application-specific logger classes.
 
-Lumberjack is powered by a plugin-based log driver architecture. You can enable the built-in drivers or create custom ones so logs are output or persisted the way your application needs.
+Most apps need more than `console.log`: different destinations per environment,
+different severity filters per destination, and structured fields that survive
+the trip to a log store. Lumberjack keeps that plumbing out of feature code —
+feature code logs once, and every registered driver that accepts the log’s level
+receives it. [How log drivers work](/lumberjack/understanding/log-drivers/)
+covers the full pipeline.
 
-## Why Lumberjack?
+## What you get out of the box
 
-- **Easy to use** — Lumberjack is ruled by the principle of making the simple easy and the complex possible.
-- **Extensible** — Being powered by a Plugin Architecture allows anyone to create its drivers and make Lumberjack fit their needs.
-- **Configurable** — Custom Plugins are not the only way to customize Lumberjack. It is possible to modify almost every aspect of your logs' processing, from the format function to the log levels allowed.
+| Package                                                                               | Role                                                           |
+| ------------------------------------------------------------------------------------- | -------------------------------------------------------------- |
+| [`@ngworker/lumberjack`](/lumberjack/reference/core/readme/)                          | Core: `provideLumberjack`, `LumberjackService`, loggers, types |
+| [`@ngworker/lumberjack/console-driver`](/lumberjack/reference/console-driver/readme/) | Browser console driver                                         |
+| [`@ngworker/lumberjack/http-driver`](/lumberjack/reference/http-driver/readme/)       | POST logs to an HTTP store with retries                        |
 
-Ready to try it? Start with the [installation guide](/lumberjack/getting-started/installation/).
+Community drivers cover other backends; see
+[Use a community driver](/lumberjack/guides/use-community-drivers/).
+
+## Next steps
+
+- [Quick start](/lumberjack/getting-started/quick-start/) — install, register, log once
+- [Write a logger](/lumberjack/guides/write-a-logger/) — structured app loggers
+- [How log drivers work](/lumberjack/understanding/log-drivers/) — mental model

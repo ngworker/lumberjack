@@ -1,0 +1,130 @@
+---
+title: Create a Custom Driver
+description: How to implement and register a LumberjackLogDriver.
+---
+
+import { Steps } from '@astrojs/starlight/components';
+
+Implement [`LumberjackLogDriver`](/lumberjack/reference/core/interfaces/lumberjacklogdriver/)
+and register it with `lumberjackLogDriverToken` (`multi: true`) so Lumberjack
+forwards matching logs to your sink.
+
+## Before you start
+
+- Familiarity with [how log drivers work](/lumberjack/understanding/log-drivers/).
+- Lumberjack registered via `provideLumberjack()`.
+
+## Steps
+
+<Steps>
+
+1. **Implement the driver**
+
+   Each method receives a `LumberjackLogDriverLog` with `formattedLog` and `log`.
+
+   ```ts title="src/app/logging/analytics.driver.ts"
+   import { inject, Injectable } from '@angular/core';
+   import {
+     LumberjackLogDriver,
+     LumberjackLogDriverConfig,
+     LumberjackLogDriverLog,
+     lumberjackLogDriverConfigToken,
+   } from '@ngworker/lumberjack';
+
+   @Injectable()
+   export class AnalyticsDriver implements LumberjackLogDriver {
+     static readonly driverIdentifier = 'AnalyticsDriver';
+
+     readonly config: LumberjackLogDriverConfig = {
+       ...inject(lumberjackLogDriverConfigToken),
+       identifier: AnalyticsDriver.driverIdentifier,
+     };
+
+     logCritical({ formattedLog }: LumberjackLogDriverLog): void {
+       console.error(formattedLog);
+     }
+
+     logDebug({ formattedLog }: LumberjackLogDriverLog): void {
+       console.debug(formattedLog);
+     }
+
+     logError({ formattedLog }: LumberjackLogDriverLog): void {
+       console.error(formattedLog);
+     }
+
+     logInfo({ formattedLog }: LumberjackLogDriverLog): void {
+       console.info(formattedLog);
+     }
+
+     logTrace({ formattedLog }: LumberjackLogDriverLog): void {
+       console.trace(formattedLog);
+     }
+
+     logWarning({ formattedLog }: LumberjackLogDriverLog): void {
+       console.warn(formattedLog);
+     }
+   }
+   ```
+
+2. **Provide it with the multi token**
+
+   ```ts title="src/app/logging/provide-analytics-driver.ts"
+   import { Provider } from '@angular/core';
+   import { lumberjackLogDriverToken } from '@ngworker/lumberjack';
+
+   import { AnalyticsDriver } from './analytics.driver';
+
+   export function provideAnalyticsDriver(): Provider[] {
+     return [
+       {
+         provide: lumberjackLogDriverToken,
+         useClass: AnalyticsDriver,
+         multi: true,
+       },
+     ];
+   }
+   ```
+
+3. **Register at bootstrap**
+
+   ```ts title="src/main.ts"
+   import { bootstrapApplication } from '@angular/platform-browser';
+   import { provideLumberjack } from '@ngworker/lumberjack';
+
+   import { AppComponent } from './app/app.component';
+   import { provideAnalyticsDriver } from './app/logging/provide-analytics-driver';
+
+   bootstrapApplication(AppComponent, {
+     providers: [provideLumberjack(), provideAnalyticsDriver()],
+   });
+   ```
+
+</Steps>
+
+## Variations
+
+### Driver-specific config
+
+Mirror the console/HTTP drivers: create a config token, merge
+`lumberjackLogDriverConfigToken` with your options (and a stable `identifier`),
+then inject that token on the driver. See
+[`provideLumberjackConsoleDriver`](/lumberjack/reference/console-driver/functions/providelumberjackconsoledriver/)
+and
+[`provideLumberjackHttpDriver`](/lumberjack/reference/http-driver/functions/providelumberjackhttpdriver/)
+in the reference.
+
+### Typed payloads
+
+Parameterize `LumberjackLogDriver<MyPayload>` and read `log.payload` inside each
+method. Feature loggers must use the same payload type.
+
+## Verify
+
+Emit a log through `LumberjackService` or a logger and confirm your driver’s
+method runs (breakpoint or sink assertion).
+
+## Next steps
+
+- [Send logs over HTTP](/lumberjack/guides/send-logs-over-http/)
+- [Understanding: log drivers](/lumberjack/understanding/log-drivers/)
+- [Reference: LumberjackLogDriver](/lumberjack/reference/core/interfaces/lumberjacklogdriver/)
